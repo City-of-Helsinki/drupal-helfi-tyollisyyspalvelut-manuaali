@@ -1,0 +1,11 @@
+services:
+  appserver:
+    xdebug: true
+    config:
+      php: .lando.php.ini
+    overrides:
+      #   ports:
+        #        - "0.0.0.0::80"
+      environment:
+        ENVIRONMENT: "local"
+        PHP_IDE_CONFIG: "serverName=appserver"
