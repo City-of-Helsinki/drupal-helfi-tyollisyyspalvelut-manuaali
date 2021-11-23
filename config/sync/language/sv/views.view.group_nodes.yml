@@ -1,0 +1,72 @@
+label: Gruppnoder
+display:
+  default:
+    display_title: Huvud
+    display_options:
+      exposed_form:
+        options:
+          submit_button: Verkställ
+          reset_button_label: Återställ
+          exposed_sorts_label: 'Sortera efter'
+          sort_asc_label: Stigande
+          sort_desc_label: Fallande
+      pager:
+        options:
+          tags:
+            previous: ‹‹
+            next: ››
+            first: '« Första'
+            last: 'Sista »'
+          expose:
+            items_per_page_label: 'Inlägg per sida'
+            items_per_page_options_all_label: '- Alla -'
+            offset_label: Kompensera
+      fields:
+        title:
+          label: Titel
+          separator: ', '
+        type:
+          label: Innehållstyp
+          separator: ', '
+        status:
+          label: Status
+          settings:
+            format_custom_true: Publicerad
+            format_custom_false: 'Ej publicerad'
+          separator: ', '
+        changed:
+          label: Uppdaterad
+          separator: ', '
+        delete_group_content:
+          text: 'Radera relation'
+        delete_node:
+          text: 'Radera nod'
+        dropbutton:
+          label: Funktioner
+      filters:
+        status:
+          expose:
+            label: 'Status för publicering'
+          group_info:
+            label: 'Status för publicering'
+            group_items:
+              1:
+                title: Publicerad
+              2:
+                title: 'Ej publicerad'
+        type:
+          expose:
+            label: Typ
+      empty:
+        area_text_custom:
+          content: 'Inget innehåll tillgängligt.'
+      arguments:
+        gid:
+          exception:
+            title: Alla
+      title: Noder
+  page_1:
+    display_title: Sida
+    display_options:
+      menu:
+        title: Noder

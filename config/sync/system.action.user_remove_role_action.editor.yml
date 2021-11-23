@@ -1,0 +1,14 @@
+uuid: 0c8bfa9c-756c-4ed7-87df-0239049400ad
+langcode: fi
+status: true
+dependencies:
+  config:
+    - user.role.editor
+  module:
+    - user
+id: user_remove_role_action.editor
+label: 'Remove the Sisällöntuottaja role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: editor
