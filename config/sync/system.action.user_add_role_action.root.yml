@@ -1,0 +1,14 @@
+uuid: 6dda2ed3-0767-48dd-a750-1087b63506ff
+langcode: fi
+status: true
+dependencies:
+  config:
+    - user.role.root
+  module:
+    - user
+id: user_add_role_action.root
+label: 'Add the Root role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: root

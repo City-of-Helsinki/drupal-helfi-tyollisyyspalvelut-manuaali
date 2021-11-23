@@ -1,4 +1,21 @@
+name: helfi-manuska
+recipe: drupal8
+config:
+  via: nginx
+  webroot: web
+  php: 7.4
+  database: mariadb:10.3
+  composer_version: 1.10.17
+proxy:
+  mailhog:
+    - mail.sakkyfid8.lndo.site
 services:
+  mailhog:
+    type: mailhog
+    hogfrom:
+      - appserver
+  redis:
+    type: redis
   appserver:
     xdebug: true
     config:
@@ -9,3 +26,45 @@ services:
       environment:
         ENVIRONMENT: "local"
         PHP_IDE_CONFIG: "serverName=appserver"
+    run:
+      # Install platform.sh CLI tools
+      - "mkdir -p /var/www/.platformsh && mkdir -p /var/www/.platformsh/bin"
+      - "curl -fsSL -o /var/www/.platformsh/bin/platform https://github.com/platformsh/platformsh-cli/releases/download/v3.36.0/platform.phar"
+      - "chmod ug+x /var/www/.platformsh/bin/platform"
+#    overrides:
+#      services:
+#        environment:
+          # Add app based parameters for Behat
+          # BEHAT_PARAMS: '{"extensions" : {"Behat\\MinkExtension": {"base_url": "http://{{PROJECT_NAME}}.lndo.site/"}, "Drupal\\DrupalExtension": {"drush": { "root": "/app/web" }}}}'
+tooling:
+  # Create additional commands for lando
+  install-drupal:
+    service: appserver
+    description: Run Citrus specific Drupal 8 installation script
+    cmd: /app/scripts/citrus/install-drupal-lando.sh
+  create-drupal-theme:
+    service: appserver
+    description: Create Drupal 8 theme for current environment
+    cmd: /app/scripts/citrus/create-drupal-theme-lando.sh
+  test:
+    service: appserver
+    description: Run Drupal 8 tests
+    cmd:
+      - /app/vendor/bin/phpcs -n --report=full web/modules/custom web/themes
+      - /app/vendor/bin/behat --config=/app/tests/behat-lando.yml
+  platform:
+    service: appserver
+    description: Run Platform CLI commands
+    cmd: /var/www/.platformsh/bin/platform
+  phplint:
+    service: appserver
+    cmd: /app/vendor/bin/phplint
+  phpcs:
+    service: appserver
+    cmd: /app/vendor/bin/phpcs
+  phpunit:
+    service: appserver
+    cmd: /app/vendor/bin/phpunit
+  behat:
+    service: appserver
+    cmd: /app/vendor/bin/behat --config=/app/tests/behat-lando.yml

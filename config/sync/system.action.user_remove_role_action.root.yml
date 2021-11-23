@@ -1,0 +1,14 @@
+uuid: b6bbbbf8-cd68-43c0-b839-d5ba8f7cc0cf
+langcode: fi
+status: true
+dependencies:
+  config:
+    - user.role.root
+  module:
+    - user
+id: user_remove_role_action.root
+label: 'Remove the Root role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: root
