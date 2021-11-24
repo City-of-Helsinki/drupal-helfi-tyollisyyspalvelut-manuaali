@@ -22,11 +22,11 @@ $settings['file_scan_ignore_directories'] = [
 $settings['config_sync_directory'] = '../config/sync';
 
 // Automatic Platform.sh settings.
-if (file_exists($app_root . '/' . $site_path . '/settings.platformsh.php')) {
+if (getenv('PLATFORM_VARIABLES')) {
   include $app_root . '/' . $site_path . '/settings.platformsh.php';
 }
 // Lando settings.
-if (file_exists($app_root . '/' . $site_path . '/settings.lando.php')) {
+if (isset($_ENV['LANDO_INFO'])) {
   include $app_root . '/' . $site_path . '/settings.lando.php';
 }
 // Local settings. These come last so that they can override anything.
