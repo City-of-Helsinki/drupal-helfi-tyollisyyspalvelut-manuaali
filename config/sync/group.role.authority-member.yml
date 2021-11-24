@@ -1,0 +1,17 @@
+uuid: 7113391a-4758-4db4-98dd-7f5918e5fcf9
+langcode: fi
+status: true
+dependencies:
+  config:
+    - group.type.authority
+id: authority-member
+label: Jäsen
+weight: -100
+internal: true
+audience: member
+group_type: authority
+permissions_ui: true
+permissions:
+  - 'leave group'
+  - 'view group'
+  - 'view group_membership content'

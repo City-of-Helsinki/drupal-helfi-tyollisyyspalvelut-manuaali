@@ -1,0 +1,16 @@
+uuid: df33188c-fe7a-4962-b6ef-3dc4e79991cb
+langcode: fi
+status: true
+dependencies:
+  config:
+    - group.type.service_provider
+id: service_provider-group_admin
+label: 'Group admin'
+weight: 6
+internal: false
+audience: member
+group_type: service_provider
+permissions_ui: true
+permissions:
+  - 'access group_node overview'
+  - 'administer members'

@@ -1,0 +1,29 @@
+uuid: a198b0c0-219b-4bc5-a540-759fcde19aa2
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.group.field_responsible_authority
+    - group.type.authority
+    - group.type.service_provider
+id: group.service_provider.field_responsible_authority
+field_name: field_responsible_authority
+entity_type: group
+bundle: service_provider
+label: 'Responsible authority'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:group'
+  handler_settings:
+    target_bundles:
+      authority: authority
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

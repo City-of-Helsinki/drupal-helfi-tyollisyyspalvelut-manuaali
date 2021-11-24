@@ -1,0 +1,33 @@
+uuid: 777c42f1-3c51-4921-9e7f-7e494789c009
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.field.group.service_provider.field_responsible_authority
+    - group.type.service_provider
+id: group.service_provider.default
+targetEntityType: group
+bundle: service_provider
+mode: default
+content:
+  field_responsible_authority:
+    weight: -4
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  label:
+    label: hidden
+    type: string
+    weight: -5
+    region: content
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+hidden:
+  changed: true
+  created: true
+  langcode: true
+  uid: true
