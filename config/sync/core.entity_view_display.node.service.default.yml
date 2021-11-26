@@ -1,0 +1,20 @@
+uuid: 94f145f3-db94-4902-9f77-bfd7d289d42b
+langcode: fi
+status: true
+dependencies:
+  config:
+    - node.type.service
+  module:
+    - user
+id: node.service.default
+targetEntityType: node
+bundle: service
+mode: default
+content:
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  langcode: true

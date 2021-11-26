@@ -1,0 +1,54 @@
+uuid: f5067aa6-030d-446d-be2a-12c954850ee8
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.field.group.service_provider.field_responsible_authority
+    - group.type.service_provider
+  module:
+    - path
+id: group.service_provider.default
+targetEntityType: group
+bundle: service_provider
+mode: default
+content:
+  field_responsible_authority:
+    weight: 121
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  label:
+    type: string_textfield
+    weight: -5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 2
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 120
+    region: content
+    third_party_settings: {  }
+hidden:
+  uid: true

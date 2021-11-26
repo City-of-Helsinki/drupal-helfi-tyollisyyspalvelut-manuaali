@@ -1,0 +1,17 @@
+uuid: 0ec6ceed-4fcf-4f11-8227-1de3c1fc8d34
+langcode: fi
+status: true
+dependencies:
+  config:
+    - group.type.organisation
+id: organisation-member
+label: Jäsen
+weight: -100
+internal: true
+audience: member
+group_type: organisation
+permissions_ui: true
+permissions:
+  - 'access group_node overview'
+  - 'leave group'
+  - 'view group_membership content'

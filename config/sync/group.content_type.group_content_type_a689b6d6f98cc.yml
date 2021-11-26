@@ -1,0 +1,17 @@
+uuid: 79bc4576-90e7-4211-beaf-c4f68d23075b
+langcode: fi
+status: true
+dependencies:
+  config:
+    - group.type.service_provider
+  module:
+    - user
+id: group_content_type_a689b6d6f98cc
+label: 'Service provider: Ryhmän jäsenyys'
+description: 'Adds users to groups as members.'
+group_type: service_provider
+content_plugin: group_membership
+plugin_config:
+  group_cardinality: 0
+  entity_cardinality: 1
+  use_creation_wizard: false

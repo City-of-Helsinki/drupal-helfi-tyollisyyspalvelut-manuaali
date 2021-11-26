@@ -1,0 +1,17 @@
+uuid: 79b22b1a-da44-4f22-a82e-a6016c07b9c3
+langcode: fi
+status: true
+dependencies:
+  config:
+    - group.type.service_provider
+id: service_provider-member
+label: Jäsen
+weight: -100
+internal: true
+audience: member
+group_type: service_provider
+permissions_ui: true
+permissions:
+  - 'leave group'
+  - 'view group'
+  - 'view group_membership content'
