@@ -1,0 +1,19 @@
+uuid: edf9642d-3cee-487c-99c6-8f3cf77aec4a
+langcode: fi
+status: true
+dependencies:
+  config:
+    - group.type.service_provider
+    - node.type.service
+  module:
+    - gnode
+    - node
+id: group_content_type_c7845b3bab623
+label: 'Service provider: Group node (Service)'
+description: 'Adds <em class="placeholder">Service</em> content to groups both publicly and privately.'
+group_type: service_provider
+content_plugin: 'group_node:service'
+plugin_config:
+  group_cardinality: 0
+  entity_cardinality: 1
+  use_creation_wizard: false

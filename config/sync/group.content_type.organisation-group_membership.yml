@@ -1,15 +1,15 @@
-uuid: 9c989301-88dd-4603-a8e8-3bd0c0c211fb
+uuid: b3a8d392-d4ec-4ee3-9843-2e1cc1eb2ef1
 langcode: fi
 status: true
 dependencies:
   config:
-    - group.type.authority
+    - group.type.organisation
   module:
     - user
-id: authority-group_membership
-label: 'Authority: Ryhmän jäsenyys'
+id: organisation-group_membership
+label: 'Organisation: Ryhmän jäsenyys'
 description: 'Adds users to groups as members.'
-group_type: authority
+group_type: organisation
 content_plugin: group_membership
 plugin_config:
   group_cardinality: 0

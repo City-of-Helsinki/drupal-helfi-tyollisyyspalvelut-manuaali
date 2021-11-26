@@ -4,7 +4,7 @@ status: true
 dependencies:
   config:
     - field.storage.group.field_responsible_authority
-    - group.type.authority
+    - group.type.organisation
     - group.type.service_provider
 id: group.service_provider.field_responsible_authority
 field_name: field_responsible_authority
@@ -20,7 +20,7 @@ settings:
   handler: 'default:group'
   handler_settings:
     target_bundles:
-      authority: authority
+      organisation: organisation
     sort:
       field: _none
       direction: ASC
