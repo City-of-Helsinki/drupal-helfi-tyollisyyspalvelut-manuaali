@@ -1,0 +1,22 @@
+uuid: d8261288-1b5e-40b2-8381-cb34089e9725
+langcode: fi
+status: true
+dependencies:
+  config:
+    - group.type.organisation
+id: group.organisation.status
+field_name: status
+entity_type: group
+bundle: organisation
+label: Julkaistu
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: Käytössä
+  off_label: 'Pois päältä'
+field_type: boolean
