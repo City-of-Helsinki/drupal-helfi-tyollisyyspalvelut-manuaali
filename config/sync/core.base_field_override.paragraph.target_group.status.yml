@@ -1,0 +1,22 @@
+uuid: 64e2bc2b-3603-4f2d-8b36-434a91659e36
+langcode: fi
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.target_group
+id: paragraph.target_group.status
+field_name: status
+entity_type: paragraph
+bundle: target_group
+label: Julkaistu
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: Käytössä
+  off_label: 'Pois päältä'
+field_type: boolean

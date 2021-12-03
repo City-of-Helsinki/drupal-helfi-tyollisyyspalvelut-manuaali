@@ -1,0 +1,22 @@
+uuid: b8b1eb82-32d6-436a-b4df-c3f9a25d9410
+langcode: fi
+status: true
+dependencies:
+  config:
+    - group.type.service_provider
+id: group.service_provider.status
+field_name: status
+entity_type: group
+bundle: service_provider
+label: Julkaistu
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: Käytössä
+  off_label: 'Pois päältä'
+field_type: boolean

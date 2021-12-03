@@ -1,0 +1,20 @@
+uuid: 1755b4db-7426-4b72-a1e8-471979dd556c
+langcode: fi
+status: true
+dependencies:
+  config:
+    - group.type.service_provider
+id: group.service_provider.uid
+field_name: uid
+entity_type: group
+bundle: service_provider
+label: 'Group creator'
+description: 'The username of the group creator.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: 'Drupal\group\Entity\Group::getDefaultEntityOwner'
+settings:
+  handler: default
+  handler_settings: {  }
+field_type: entity_reference

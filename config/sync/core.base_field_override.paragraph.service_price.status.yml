@@ -1,0 +1,22 @@
+uuid: 0d915608-ff89-4a63-b44c-15638ac24798
+langcode: fi
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.service_price
+id: paragraph.service_price.status
+field_name: status
+entity_type: paragraph
+bundle: service_price
+label: Julkaistu
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: Käytössä
+  off_label: 'Pois päältä'
+field_type: boolean
