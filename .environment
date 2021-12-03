@@ -1,0 +1,19 @@
+# Statements in this file will be executed (sourced) by the shell in SSH
+# sessions, in deploy hooks, in cron jobs, and in the application's runtime
+# environment. This file must be placed in the root of the application, not
+# necessarily the git repository's root. In case of multiple applications,
+# each application can have its own .environment file.
+
+# Allow executable app dependencies from Composer to be run from the path.
+export PATH="/app/vendor/bin:$PATH"
+
+# Add colorcoded projectname/branch to bash prompt.
+if [ ! -z "$TERM" ] && [ "$PLATFORM_BRANCH" = master ] ; then
+  export PS1="\u@\h[\[\033[38;5;9m\]$PROJECT_NAME:$PLATFORM_BRANCH\[$(tput sgr0)\]]:\w$ "
+fi
+if [ ! -z "$TERM" ] && [ "$PLATFORM_BRANCH" = develop ] ; then
+  export PS1="\u@\h[\[\033[38;5;10m\]$PROJECT_NAME:$PLATFORM_BRANCH\[$(tput sgr0)\]]:\w$ "
+fi
+if [ ! -z "$TERM" ] && [ "$PLATFORM_BRANCH" != master ] && [ "$PLATFORM_BRANCH" != develop ] ; then
+  export PS1="\u@\h[\[\033[38;5;11m\]$PROJECT_NAME:$PLATFORM_BRANCH\[$(tput sgr0)\]]:\w$ "
+fi
