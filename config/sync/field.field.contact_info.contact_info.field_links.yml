@@ -1,0 +1,23 @@
+uuid: 74fc0985-7527-407f-845a-ffcafe42b33e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.contact_info.field_links
+  module:
+    - hel_tpm_contact_info
+    - link
+id: contact_info.contact_info.field_links
+field_name: field_links
+entity_type: contact_info
+bundle: contact_info
+label: Links
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 16
+  title: 2
+field_type: link

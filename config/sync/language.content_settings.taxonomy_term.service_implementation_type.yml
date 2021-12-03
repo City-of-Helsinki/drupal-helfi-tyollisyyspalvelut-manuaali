@@ -1,0 +1,16 @@
+uuid: e5dcf621-6ddd-4da8-a27c-79b57b3ca01b
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.service_implementation_type
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+id: taxonomy_term.service_implementation_type
+target_entity_type_id: taxonomy_term
+target_bundle: service_implementation_type
+default_langcode: current_interface
+language_alterable: true

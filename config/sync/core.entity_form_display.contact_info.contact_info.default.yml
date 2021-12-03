@@ -1,0 +1,60 @@
+uuid: c99123ba-8090-4917-b3a0-103423944476
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.contact_info.contact_info.field_email
+    - field.field.contact_info.contact_info.field_first_name
+    - field.field.contact_info.contact_info.field_last_name
+    - field.field.contact_info.contact_info.field_links
+  module:
+    - hel_tpm_contact_info
+    - link
+id: contact_info.contact_info.default
+targetEntityType: contact_info
+bundle: contact_info
+mode: default
+content:
+  field_email:
+    weight: 2
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: email_default
+    region: content
+  field_first_name:
+    weight: 0
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_last_name:
+    weight: 1
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_links:
+    weight: 3
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
+    region: content
+  status:
+    type: boolean_checkbox
+    weight: 4
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+hidden:
+  created: true
+  title: true
+  uid: true

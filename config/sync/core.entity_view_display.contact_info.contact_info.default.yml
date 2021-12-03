@@ -1,0 +1,50 @@
+uuid: 3191c55b-b17f-4f5e-a08a-ad090db4d13a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.contact_info.contact_info.field_email
+    - field.field.contact_info.contact_info.field_first_name
+    - field.field.contact_info.contact_info.field_last_name
+    - field.field.contact_info.contact_info.field_links
+  module:
+    - hel_tpm_contact_info
+    - link
+id: contact_info.contact_info.default
+targetEntityType: contact_info
+bundle: contact_info
+mode: default
+content:
+  field_email:
+    weight: 1
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_links:
+    weight: 2
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    type: link
+    region: content
+  title:
+    type: string
+    weight: 0
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+hidden:
+  created: true
+  field_first_name: true
+  field_last_name: true
+  status: true
+  uid: true

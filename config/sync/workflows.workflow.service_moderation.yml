@@ -11,31 +11,82 @@ label: 'Service moderation'
 type: content_moderation
 type_settings:
   states:
+    archived:
+      published: false
+      default_revision: true
+      label: Archived
+      weight: 2
     draft:
       label: Draft
       published: false
       default_revision: false
+      weight: -3
+    outdated:
+      published: false
+      default_revision: true
+      label: Outdated
       weight: 0
     published:
       label: Published
       published: true
       default_revision: true
+      weight: -1
+    ready_to_publish:
+      published: false
+      default_revision: true
+      label: 'Ready to publish'
+      weight: -2
+    temporarily_archived:
+      published: false
+      default_revision: true
+      label: 'Temporarily archived'
       weight: 1
   transitions:
+    archived:
+      label: Archived
+      from:
+        - archived
+        - outdated
+        - published
+        - temporarily_archived
+      to: archived
+      weight: 3
     create_new_draft:
       label: 'Create New Draft'
       to: draft
-      weight: 0
+      weight: -2
       from:
         - draft
         - published
+    outdated:
+      label: Outdated
+      from:
+        - outdated
+        - published
+      to: outdated
+      weight: 1
     publish:
       label: Publish
       to: published
-      weight: 1
+      weight: 0
+      from:
+        - published
+        - ready_to_publish
+    ready_to_publish:
+      label: 'Ready to publish'
       from:
         - draft
+        - ready_to_publish
+      to: ready_to_publish
+      weight: -1
+    temporarily_archived:
+      label: 'Temporarily archived'
+      from:
+        - outdated
         - published
+        - temporarily_archived
+      to: temporarily_archived
+      weight: 2
   entity_types:
     node:
       - service

@@ -8,9 +8,9 @@ dependencies:
 _core:
   default_config_hash: d_YYDAS1Anyj4eLOXI9DnSIAbSX6Kk-qpa71pawlLYI
 id: watchdog
-label: Watchdog
+label: Vahtikoira
 module: views
-description: 'Recent log messages'
+description: 'Viimeisimmät lokimerkinnät'
 tag: ''
 base_table: watchdog
 base_field: wid
@@ -148,7 +148,7 @@ display:
           field: nothing
           relationship: none
           group_type: group
-          admin_label: Icon
+          admin_label: Ikoni
           label: ''
           exclude: false
           alter:
@@ -247,7 +247,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Severity
+          label: Vakavuus
           exclude: true
           alter:
             alter_text: false
@@ -346,7 +346,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Date
+          label: Päivämäärä
           exclude: false
           alter:
             alter_text: false
@@ -398,7 +398,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Message
+          label: Viesti
           exclude: false
           alter:
             alter_text: false
@@ -448,7 +448,7 @@ display:
           relationship: uid
           group_type: group
           admin_label: ''
-          label: User
+          label: Käyttäjä
           exclude: false
           alter:
             alter_text: false
@@ -610,7 +610,7 @@ display:
           exposed: true
           expose:
             operator_id: severity_op
-            label: Severity
+            label: Vakavuus
             description: ''
             use_operator: false
             operator: severity_op
@@ -651,7 +651,7 @@ display:
           expose:
             label: ''
           plugin_id: standard
-      title: 'Recent log messages'
+      title: 'Viimeisimmät lokimerkinnät'
       header: {  }
       footer: {  }
       empty:
@@ -661,10 +661,10 @@ display:
           field: area_text_custom
           relationship: none
           group_type: group
-          admin_label: 'No log messages available.'
+          admin_label: 'Yhtään lokimerkintää ei ole saatavilla.'
           empty: true
           tokenize: false
-          content: 'No log messages available.'
+          content: 'Yhtään lokimerkintää ei ole saatavilla.'
           plugin_id: text_custom
       relationships:
         uid:

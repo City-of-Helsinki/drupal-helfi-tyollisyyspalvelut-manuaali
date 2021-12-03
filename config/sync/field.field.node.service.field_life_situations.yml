@@ -1,0 +1,29 @@
+uuid: 311f7869-4b67-4d37-95d6-d1c67e231c16
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_life_situations
+    - node.type.service
+    - taxonomy.vocabulary.life_situation
+id: node.service.field_life_situations
+field_name: field_life_situations
+entity_type: node
+bundle: service
+label: 'Life situations'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      life_situation: life_situation
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

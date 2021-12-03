@@ -1,0 +1,16 @@
+uuid: 773d63ea-455d-4f4f-8454-6418c78f4278
+langcode: fi
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.service_set
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+id: taxonomy_term.service_set
+target_entity_type_id: taxonomy_term
+target_bundle: service_set
+default_langcode: current_interface
+language_alterable: true

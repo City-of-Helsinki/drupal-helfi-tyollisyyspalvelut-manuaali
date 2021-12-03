@@ -1,0 +1,23 @@
+uuid: 6ed899e0-6729-4489-9f5a-240f515b6d16
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_client_consent
+    - node.type.service
+id: node.service.field_client_consent
+field_name: field_client_consent
+entity_type: node
+bundle: service
+label: 'Client consent'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

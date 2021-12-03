@@ -1,0 +1,23 @@
+uuid: 2b9039d2-fa6a-47ab-8d99-320b69bf6ff0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_service_links_external
+    - node.type.service
+  module:
+    - link
+id: node.service.field_service_links_external
+field_name: field_service_links_external
+entity_type: node
+bundle: service
+label: 'Service links (external)'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 2
+field_type: link

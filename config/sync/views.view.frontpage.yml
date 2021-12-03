@@ -11,9 +11,9 @@ dependencies:
 _core:
   default_config_hash: HAnuLuk87TQ6QDwuJNjLTJYoBftdp6XtJh8RdBx3-TY
 id: frontpage
-label: Frontpage
+label: Etusivu
 module: node
-description: 'All content promoted to the front page.'
+description: 'Kaikki etusivulle nostettu sisältö.'
 tag: default
 base_table: node_field_data
 base_field: nid
@@ -65,7 +65,7 @@ display:
       exposed_form:
         type: basic
         options:
-          submit_button: Apply
+          submit_button: Käytä
           reset_button: false
           reset_button_label: Reset
           exposed_sorts_label: 'Sort by'
@@ -260,7 +260,7 @@ display:
   feed_1:
     display_plugin: feed
     id: feed_1
-    display_title: Feed
+    display_title: Syöte
     position: 2
     display_options:
       sitename_title: true

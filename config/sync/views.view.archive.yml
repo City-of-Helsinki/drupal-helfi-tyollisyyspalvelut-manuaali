@@ -10,9 +10,9 @@ dependencies:
 _core:
   default_config_hash: aVFSA0rdfiHbCTxD12qEFYHF3ZbwwRGa3KQsdHmK-Uo
 id: archive
-label: Archive
+label: Arkisto
 module: node
-description: 'All content, by month.'
+description: 'Kaikki sisältö, kuukausittain lajiteltuna.'
 tag: default
 base_table: node_field_data
 base_field: nid
@@ -31,7 +31,7 @@ display:
           distinct: false
           replica: false
           query_tags: {  }
-      title: 'Monthly archive'
+      title: Arkisto
       access:
         type: perm
         options:
@@ -42,7 +42,7 @@ display:
       exposed_form:
         type: basic
         options:
-          submit_button: Apply
+          submit_button: Käytä
           reset_button: false
           reset_button_label: Reset
           exposed_sorts_label: 'Sort by'
@@ -187,7 +187,7 @@ display:
       tags: {  }
   block_1:
     id: block_1
-    display_title: Block
+    display_title: Lohko
     display_plugin: block
     position: 1
     display_options:

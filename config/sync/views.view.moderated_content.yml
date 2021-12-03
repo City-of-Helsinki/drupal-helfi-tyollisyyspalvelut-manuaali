@@ -11,7 +11,7 @@ dependencies:
 _core:
   default_config_hash: RKnL13CZ61m1tYbO5jkEJ9f8jhlmvQdBTMp6DucLS4A
 id: moderated_content
-label: 'Moderated content'
+label: 'Moderoitu sisältö'
 module: views
 description: 'Find and moderate content.'
 tag: ''
@@ -135,7 +135,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Title
+          label: Otsikko
           exclude: false
           alter:
             alter_text: false
@@ -200,7 +200,7 @@ display:
           relationship: nid
           group_type: group
           admin_label: ''
-          label: 'Content type'
+          label: Sisältötyyppi
           exclude: false
           alter:
             alter_text: false
@@ -557,7 +557,7 @@ display:
           exposed: true
           expose:
             operator_id: title_op
-            label: Title
+            label: Otsikko
             description: ''
             use_operator: false
             operator: title_op
@@ -599,7 +599,7 @@ display:
           exposed: true
           expose:
             operator_id: type_op
-            label: 'Content type'
+            label: Sisältötyyppi
             description: ''
             use_operator: false
             operator: type_op
@@ -758,7 +758,7 @@ display:
           entity_type: node
           plugin_id: moderation_state_filter
       sorts: {  }
-      title: 'Moderated content'
+      title: 'Moderoitu sisältö'
       header: {  }
       footer: {  }
       empty:
@@ -815,7 +815,7 @@ display:
   moderated_content:
     display_plugin: page
     id: moderated_content
-    display_title: 'Moderated content'
+    display_title: 'Moderoitu sisältö'
     position: 1
     display_options:
       display_extenders: {  }

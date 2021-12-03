@@ -1,0 +1,34 @@
+uuid: f7c91115-5a69-4344-b67b-f89937fde1f2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_client_consent_description
+    - node.type.service
+    - paragraphs.paragraphs_type.content
+  module:
+    - entity_reference_revisions
+id: node.service.field_client_consent_description
+field_name: field_client_consent_description
+entity_type: node
+bundle: service
+label: 'Client consent description'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles:
+      content: content
+    target_bundles_drag_drop:
+      contact_information:
+        weight: 3
+        enabled: false
+      content:
+        enabled: true
+        weight: 4
+field_type: entity_reference_revisions
