@@ -40,7 +40,7 @@ display:
       exposed_form:
         type: basic
         options:
-          submit_button: Apply
+          submit_button: Käytä
           reset_button: false
           reset_button_label: Reset
           exposed_sorts_label: 'Sort by'
@@ -178,7 +178,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Title
+          label: Otsikko
           exclude: false
           alter:
             alter_text: false
@@ -243,7 +243,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: 'Content type'
+          label: Sisältötyyppi
           exclude: false
           alter:
             alter_text: false
@@ -861,7 +861,7 @@ display:
           admin_label: ''
           empty: true
           tokenize: false
-          content: 'No content available.'
+          content: 'Ei sisältöä.'
           plugin_id: text_custom
       relationships:
         group_content:
@@ -914,7 +914,7 @@ display:
           entity_field: gid
           plugin_id: numeric
       display_extenders: {  }
-      title: Nodes
+      title: Solmut
     cache_metadata:
       max-age: -1
       contexts:
@@ -936,7 +936,7 @@ display:
       path: group/%group/nodes
       menu:
         type: tab
-        title: Nodes
+        title: Solmut
         description: ''
         expanded: false
         parent: ''

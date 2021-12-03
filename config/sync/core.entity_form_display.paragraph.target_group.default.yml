@@ -1,0 +1,50 @@
+uuid: 3ebf447d-704e-4e0f-afe4-b29e0411d93f
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.target_group.field_age
+    - field.field.paragraph.target_group.field_description
+    - field.field.paragraph.target_group.field_municipality
+    - paragraphs.paragraphs_type.target_group
+  module:
+    - range
+    - text
+id: paragraph.target_group.default
+targetEntityType: paragraph
+bundle: target_group
+mode: default
+content:
+  field_age:
+    weight: 0
+    settings:
+      placeholder:
+        from: ''
+        to: ''
+      label:
+        from: Lähettäjä
+        to: to
+    third_party_settings: {  }
+    type: range
+    region: content
+  field_description:
+    weight: 1
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_municipality:
+    weight: 2
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+hidden:
+  created: true
+  status: true

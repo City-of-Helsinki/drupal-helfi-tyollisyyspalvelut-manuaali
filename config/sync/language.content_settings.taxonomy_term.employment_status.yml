@@ -1,0 +1,16 @@
+uuid: 7c3fd5a4-3d74-46f5-ad1f-0dcd010fca36
+langcode: fi
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.employment_status
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+id: taxonomy_term.employment_status
+target_entity_type_id: taxonomy_term
+target_bundle: employment_status
+default_langcode: current_interface
+language_alterable: true

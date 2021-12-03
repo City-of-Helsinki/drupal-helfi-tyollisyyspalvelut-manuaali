@@ -8,9 +8,9 @@ dependencies:
 _core:
   default_config_hash: 12Bd0mJQFIaXAkRfMVCAAcZ0oaxm94PoK8oHR9hkLmY
 id: content
-label: Content
+label: Sisältö
 module: node
-description: 'Find and manage content.'
+description: 'Etsi ja ylläpidä sisältöä.'
 tag: default
 base_table: node_field_data
 base_field: nid
@@ -160,7 +160,7 @@ display:
           id: title
           table: node_field_data
           field: title
-          label: Title
+          label: Otsikko
           exclude: false
           alter:
             alter_text: false
@@ -183,7 +183,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: 'Content type'
+          label: Sisältötyyppi
           exclude: false
           alter:
             alter_text: false
@@ -368,7 +368,7 @@ display:
           exposed: true
           expose:
             operator_id: title_op
-            label: Title
+            label: Otsikko
             description: ''
             use_operator: false
             operator: title_op
@@ -410,7 +410,7 @@ display:
           exposed: true
           expose:
             operator_id: type_op
-            label: 'Content type'
+            label: Sisältötyyppi
             description: ''
             use_operator: false
             operator: type_op
@@ -544,14 +544,14 @@ display:
             operator_limit_selection: false
             operator_list: {  }
       sorts: {  }
-      title: Content
+      title: Sisältö
       empty:
         area_text_custom:
           id: area_text_custom
           table: views
           field: area_text_custom
           empty: true
-          content: 'No content available.'
+          content: 'Ei sisältöä.'
           plugin_id: text_custom
       arguments: {  }
       relationships:
@@ -588,14 +588,14 @@ display:
       path: admin/content/node
       menu:
         type: 'default tab'
-        title: Content
+        title: Sisältö
         description: ''
         menu_name: admin
         weight: -10
         context: ''
       tab_options:
         type: normal
-        title: Content
+        title: Sisältö
         description: 'Find and manage content'
         menu_name: admin
         weight: -10

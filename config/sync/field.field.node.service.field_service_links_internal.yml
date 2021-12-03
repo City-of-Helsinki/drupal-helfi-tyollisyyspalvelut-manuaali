@@ -1,0 +1,23 @@
+uuid: 4ccb9156-10f9-4bf1-8ea6-1e9f181ad216
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_service_links_internal
+    - node.type.service
+  module:
+    - link
+id: node.service.field_service_links_internal
+field_name: field_service_links_internal
+entity_type: node
+bundle: service
+label: 'Service links (internal)'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 1
+field_type: link

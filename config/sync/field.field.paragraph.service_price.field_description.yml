@@ -1,0 +1,21 @@
+uuid: 15953a58-0c29-4a47-a631-ecf2588b7a05
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_description
+    - paragraphs.paragraphs_type.service_price
+  module:
+    - text
+id: paragraph.service_price.field_description
+field_name: field_description
+entity_type: paragraph
+bundle: service_price
+label: Description
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

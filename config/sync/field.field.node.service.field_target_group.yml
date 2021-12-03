@@ -1,0 +1,37 @@
+uuid: 525064dc-a185-4079-9108-6ed1e4d0640c
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_target_group
+    - node.type.service
+    - paragraphs.paragraphs_type.target_group
+  module:
+    - entity_reference_revisions
+id: node.service.field_target_group
+field_name: field_target_group
+entity_type: node
+bundle: service
+label: 'Target group'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles:
+      target_group: target_group
+    target_bundles_drag_drop:
+      contact_information:
+        weight: 4
+        enabled: false
+      content:
+        weight: 5
+        enabled: false
+      target_group:
+        enabled: true
+        weight: 6
+field_type: entity_reference_revisions

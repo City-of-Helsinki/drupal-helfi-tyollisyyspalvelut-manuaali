@@ -1,0 +1,29 @@
+uuid: 9d255a54-af50-4996-8fbf-de63a39d5e54
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_municipality
+    - paragraphs.paragraphs_type.target_group
+    - taxonomy.vocabulary.municipality
+id: paragraph.target_group.field_municipality
+field_name: field_municipality
+entity_type: paragraph
+bundle: target_group
+label: Municipality
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      municipality: municipality
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

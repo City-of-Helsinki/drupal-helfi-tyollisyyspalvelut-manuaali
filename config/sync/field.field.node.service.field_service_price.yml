@@ -1,0 +1,40 @@
+uuid: c117f095-6c57-4739-a739-50f19b81d0c4
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_service_price
+    - node.type.service
+    - paragraphs.paragraphs_type.service_price
+  module:
+    - entity_reference_revisions
+id: node.service.field_service_price
+field_name: field_service_price
+entity_type: node
+bundle: service
+label: 'Service price'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles:
+      service_price: service_price
+    target_bundles_drag_drop:
+      contact_information:
+        weight: 5
+        enabled: false
+      content:
+        weight: 6
+        enabled: false
+      service_price:
+        enabled: true
+        weight: 7
+      target_group:
+        weight: 8
+        enabled: false
+field_type: entity_reference_revisions

@@ -7,9 +7,9 @@ dependencies:
 _core:
   default_config_hash: hdAKtAm0H-umA4Nzn0i1bquaj5iPn3daD_7u-nzFRhM
 id: who_s_new
-label: 'Who''s new'
+label: 'Uudet käyttäjät'
 module: user
-description: 'Shows a list of the newest user accounts on the site.'
+description: 'Näyttää listan sivuston uusimmista käyttäjätileistä.'
 tag: default
 base_table: users_field_data
 base_field: uid
@@ -38,7 +38,7 @@ display:
       exposed_form:
         type: basic
         options:
-          submit_button: Apply
+          submit_button: Käytä
           reset_button: false
           reset_button_label: Reset
           exposed_sorts_label: 'Sort by'
@@ -163,7 +163,7 @@ display:
           plugin_id: date
           entity_type: user
           entity_field: created
-      title: 'Who''s new'
+      title: 'Uudet käyttäjät'
       header: {  }
       footer: {  }
       empty: {  }
@@ -180,12 +180,12 @@ display:
   block_1:
     display_plugin: block
     id: block_1
-    display_title: 'Who''s new'
+    display_title: 'Uudet käyttäjät'
     position: 1
     display_options:
-      display_description: 'A list of new users'
-      block_description: 'Who''s new'
-      block_category: User
+      display_description: 'Lista uusista käyttäjistä'
+      block_description: 'Uudet käyttäjät'
+      block_category: Käyttäjä
       display_extenders: {  }
     cache_metadata:
       contexts:

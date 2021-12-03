@@ -1,0 +1,25 @@
+uuid: 101748f9-3633-4669-8e07-145a2cb0eec4
+langcode: en
+status: true
+dependencies:
+  module:
+    - entity_reference_revisions
+    - field_permissions
+    - hel_tpm_contact_info
+    - node
+third_party_settings:
+  field_permissions:
+    permission_type: custom
+id: node.field_contact_info_internal
+field_name: field_contact_info_internal
+entity_type: node
+type: entity_reference_revisions
+settings:
+  target_type: contact_info
+module: entity_reference_revisions
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,23 @@
+uuid: a24e79f7-0e6e-46f9-b74b-4850ccec74aa
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.contact_information.field_name
+    - paragraphs.paragraphs_type.contact_information
+id: paragraph.contact_information.default
+targetEntityType: paragraph
+bundle: contact_information
+mode: default
+content:
+  field_name:
+    weight: 0
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+hidden:
+  created: true
+  status: true
