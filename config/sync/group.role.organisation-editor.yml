@@ -1,0 +1,29 @@
+uuid: ed74024d-65e1-4759-ad4d-0dcba6c3932c
+langcode: fi
+status: true
+dependencies:
+  config:
+    - group.type.organisation
+id: organisation-editor
+label: Editor
+weight: 8
+internal: false
+audience: member
+group_type: organisation
+permissions_ui: true
+permissions:
+  - 'access content overview'
+  - 'create group_node:service content'
+  - 'create group_node:service entity'
+  - 'delete own group_node:service content'
+  - 'update own group_membership content'
+  - 'update own group_node:service content'
+  - 'update own group_node:service entity'
+  - 'use service_moderation transition create_new_draft'
+  - 'use service_moderation transition ready_to_publish'
+  - 'use service_moderation transition ready_to_publish_to_draft'
+  - 'view group revisions'
+  - 'view group_node:service content'
+  - 'view group_node:service entity'
+  - 'view latest version'
+  - 'view unpublished group_node:service entity'

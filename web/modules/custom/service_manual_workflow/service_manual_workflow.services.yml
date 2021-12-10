@@ -1,0 +1,10 @@
+services:
+  service_ready_to_publish.event_subscriber:
+    class: Drupal\service_manual_workflow\EventSubscriber\ServiceReadyToPublishSubscriber
+    arguments: ['@messenger', '@entity_type.manager', '@service_manual_workflow.content_group_service', '@gcontent_moderation.state_transition_validation']
+    tags:
+      - { name: event_subscriber }
+
+  service_manual_workflow.content_group_service:
+    class: Drupal\service_manual_workflow\ContentGroupService
+    arguments: ['@entity_type.manager']
