@@ -1,0 +1,26 @@
+.sidebar {
+
+  &__inner {
+    @include wrapper;
+
+    display: flex;
+    flex-flow: column nowrap;
+
+    @include xs {
+      padding: 0;
+    }
+  }
+
+  &__primary {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    padding: 0;
+  }
+
+  &__branding {
+    padding: $space-double;
+    max-width: 300px;
+    width: 280px;
+  }
+}

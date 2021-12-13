@@ -1,0 +1,94 @@
+/*
+ * General Layout
+*/
+
+$gutter: $space;
+$main-gutter: $space-septuple;
+$main-width: calc(100% - (#{$sidebar-width} ));
+$main-content-width: calc(100% - (#{$sidebar-width} + #{$main-gutter*2} ));
+
+.layout-container {
+  @include large {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+/*
+ * Layout Using Flexbox (IE11+).
+ * Remove this and uncomment Grid code below to use CSS Grid.
+*/
+.right-column {
+  @include large {
+    order: 2;
+    width: $main-width;
+  }
+}
+.main {
+  @include wrapper;
+
+  padding: 0;
+  margin-bottom: 4em;
+
+  @include xs {
+    padding: 0;
+  }
+
+  @include large {
+    display: flex;
+  }
+}
+
+.main-sidebar {
+  margin-bottom: $space-double;
+  background-color: clr(sidebar-color);
+  border-top-right-radius: 47px;
+  @include large {
+    order: 1;
+    width: $sidebar-width;
+    margin-bottom: 0;
+  }
+}
+
+.main-content {
+  width: 100%;
+
+  @include large {
+    order: 2;
+    &--with-sidebar {
+      margin-right: $main-gutter;
+      margin-left: $main-gutter;
+      width: $main-content-width;
+    }
+  }
+}
+
+/*
+ * Layout Using CSS Grid (NO IE11 support)
+ * Remove Flexbox code above and uncomment this section to use CSS Grid.
+*/
+
+/* .main {
+  @include wrapper;
+
+  margin-bottom: 4em;
+
+  &--with-sidebar {
+    @include large {
+      display: grid;
+      grid-gap: $gutter;
+      grid-template-areas: "content sidebar";
+      grid-template-columns: $main-width #{$sidebar-width};
+    }
+  }
+}
+
+.main-sidebar {
+  grid-area: sidebar;
+  margin-bottom: $space-double;
+}
+
+.main-content {
+  grid-area: content;
+  width: 100%;
+} */
