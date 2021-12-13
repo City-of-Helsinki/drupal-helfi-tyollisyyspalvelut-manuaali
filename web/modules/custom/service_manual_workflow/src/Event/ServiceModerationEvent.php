@@ -21,8 +21,6 @@ class ServiceModerationEvent extends Event {
   public $moderation_state;
   public $account;
 
-  const EVENT_NAME = 'serviceStateUpdated';
-
   /**
    * Constructs the object.
    *

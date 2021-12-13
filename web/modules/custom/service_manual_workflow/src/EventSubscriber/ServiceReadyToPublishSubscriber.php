@@ -3,9 +3,11 @@
 namespace Drupal\service_manual_workflow\EventSubscriber;
 
 use Drupal\content_moderation\Entity\ContentModerationStateInterface;
+use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Session\AccountProxyInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\gcontent_moderation\GroupStateTransitionValidation;
 use Drupal\group\Entity\GroupInterface;
 use Drupal\node\NodeInterface;
@@ -22,6 +24,8 @@ use Drupal\message\Entity\Message;
  */
 class ServiceReadyToPublishSubscriber implements EventSubscriberInterface {
 
+  use StringTranslationTrait;
+
   /**
    * The messenger.
    *
@@ -29,10 +33,19 @@ class ServiceReadyToPublishSubscriber implements EventSubscriberInterface {
    */
   protected $messenger;
 
+  /**
+   * @var \Drupal\Core\Entity\EntityTypeManager
+   */
   protected $entityTypeManager;
 
+  /**
+   * @var \Drupal\service_manual_workflow\ContentGroupService
+   */
   protected $contentGroupService;
 
+  /**
+   * @var \Drupal\gcontent_moderation\GroupStateTransitionValidation
+   */
   protected $stateTransitionValidation;
 
   const MESSAGE_TEMPLATE = 'group_ready_to_publish_notificat';
@@ -41,7 +54,17 @@ class ServiceReadyToPublishSubscriber implements EventSubscriberInterface {
    * Constructs event subscriber.
    *
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
-   *   The messenger.
+   *  Messenger.
+   *
+   * @param \Drupal\Core\Entity\EntityTypeManager $entityTypeManager
+   *  Entity type manager.
+   *
+   * @param \Drupal\service_manual_workflow\ContentGroupService $contentGroupService
+   *  Custom service for content group stuff.
+   *
+   * @param \Drupal\gcontent_moderation\GroupStateTransitionValidation $stateTransitionValidation
+   *  Group content state transition validator.
+   *
    */
   public function __construct(MessengerInterface $messenger, EntityTypeManager $entityTypeManager, ContentGroupService $contentGroupService, GroupStateTransitionValidation $stateTransitionValidation) {
     $this->messenger = $messenger;
@@ -67,30 +90,48 @@ class ServiceReadyToPublishSubscriber implements EventSubscriberInterface {
       return;
     }
 
+    // Get content group.
+    $group = $this->getGroups($entity);
+    if (empty($group)) {
+      return;
+    }
 
-    $accounts = $this->getEntityGroupAdministration($entity);
+    $accounts = $this->getEntityGroupAdministration($entity, $group);
 
+    // Dispatch messages to group administration.
     foreach ($accounts as $user) {
       $this->dispatchMessage($entity, $user);
     }
 
-    $this->messenger->addStatus(__FUNCTION__);
+    $this->messenger->addStatus($this->t('Notified @group administration', ['@group' => $group->label()]));
   }
 
   /**
-   * @param \Drupal\Core\Entity\EntityInterface $entity
+   * @param \Drupal\Core\Entity\ContentEntityInterface $entity
    *
-   * @return array
+   * @return array|false|mixed
    */
-  protected function getEntityGroupAdministration(EntityInterface $entity) : array {
-    $accounts = [];
+  protected function getGroups(ContentEntityInterface $entity) {
     $groups = $this->contentGroupService->getGroupsWithEntity($entity);
 
     if (empty($groups)) {
-      return $accounts;
+      return [];
     }
 
-    $group = reset($groups);
+    return reset($groups);
+  }
+
+  /**
+   * Get all group users with permission to create publish transition.
+   *
+   * @param \Drupal\Core\Entity\ContentEntityInterface $entity
+   * @param $group
+   *
+   * @return array
+   */
+  protected function getEntityGroupAdministration(ContentEntityInterface $entity, $group) : array {
+    $accounts = [];
+
     foreach ($group->getMembers() as $key => $member) {
       $account = $member->getGroupContent()->getEntity();
       $allowed = $this->stateTransitionValidation->allowedTransitions($account, $entity, [$group]);
@@ -116,8 +157,8 @@ class ServiceReadyToPublishSubscriber implements EventSubscriberInterface {
     $message->set('field_node', $node);
     $message->set('field_user', $account);
     $message->save();
-//    $notifier = \Drupal::service('message_notify.sender');
-    //$notifier->send($message);
+    $notifier = \Drupal::service('message_notify.sender');
+    $notifier->send($message);
   }
 
   /**
@@ -129,7 +170,15 @@ class ServiceReadyToPublishSubscriber implements EventSubscriberInterface {
     ];
   }
 
-  protected function notifyGroupAdministration(AccountProxyInterface $account, EntityInterface $node) {
+  /**
+   * Check if current user has publish permission or not.
+   *
+   * @param \Drupal\Core\Session\AccountProxyInterface $account
+   * @param \Drupal\Core\Entity\ContentEntityInterface $node
+   *
+   * @return bool
+   */
+  protected function notifyGroupAdministration(AccountProxyInterface $account, ContentEntityInterface $node) {
     $valid_transitions = $this->stateTransitionValidation->getValidTransitions($node, $account);
     return empty($valid_transitions['publish']);
   }
