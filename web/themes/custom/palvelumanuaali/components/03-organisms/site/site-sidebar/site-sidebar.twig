@@ -1,0 +1,16 @@
+{% set sidebar__base_class = 'sidebar' %}
+{# If `directory` is defined, set the path relative for Drupal.
+ # Otherwise, set the path relative to the Component Library. #}
+{% set sidebar__logo_src = directory ? '/' ~ directory ~ '/images/logo.svg' : 'logo.svg' %}
+
+<aside {{ bem(header__base_class) }}>
+  <div {{ bem('inner', [], sidebar__base_class) }}>
+    <div {{ bem('primary', [], sidebar__base_class) }}>
+      <div {{ bem('branding', [], sidebar__base_class) }}>
+        {% block sidebar__branding %}
+          {% include "@organisms/site/site-sidebar/_site-sidebar-branding.twig" %}
+        {% endblock %}
+      </div>
+    </div>
+  </div>
+</aside>
