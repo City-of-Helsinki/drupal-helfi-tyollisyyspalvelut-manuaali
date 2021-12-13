@@ -27,7 +27,7 @@ function service_manual_workflow_entity_update(EntityInterface $entity) {
   $original_state = $entity->original->moderation_state->value;
   $state = $entity->moderation_state->value;
 
-  // Do not dispatch anything when state hasnt changed.
+  // Do not dispatch anything when state hasn't changed.
   if ($original_state == $state) {
     return;
   }

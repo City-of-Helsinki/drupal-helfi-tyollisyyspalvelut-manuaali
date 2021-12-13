@@ -2,20 +2,17 @@
 
 namespace Drupal\service_manual_workflow\EventSubscriber;
 
-use Drupal\content_moderation\Entity\ContentModerationStateInterface;
+use Drupal;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\gcontent_moderation\GroupStateTransitionValidation;
-use Drupal\group\Entity\GroupInterface;
-use Drupal\node\NodeInterface;
 use Drupal\service_manual_workflow\ContentGroupService;
 use Drupal\service_manual_workflow\Event\ServiceModerationEvent;
 use Drupal\user\UserInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\KernelEvents;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\message\Entity\Message;
 
@@ -157,7 +154,7 @@ class ServiceReadyToPublishSubscriber implements EventSubscriberInterface {
     $message->set('field_node', $node);
     $message->set('field_user', $account);
     $message->save();
-    $notifier = \Drupal::service('message_notify.sender');
+    $notifier = Drupal::service('message_notify.sender');
     $notifier->send($message);
   }
 
