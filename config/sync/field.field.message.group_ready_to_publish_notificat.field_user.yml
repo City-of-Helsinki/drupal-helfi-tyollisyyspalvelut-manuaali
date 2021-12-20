@@ -1,0 +1,29 @@
+uuid: bfe450a1-c2bd-49e1-8e4d-1d29f905e70d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.message.field_user
+    - message.template.group_ready_to_publish_notificat
+id: message.group_ready_to_publish_notificat.field_user
+field_name: field_user
+entity_type: message
+bundle: group_ready_to_publish_notificat
+label: User
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:user'
+  handler_settings:
+    include_anonymous: false
+    filter:
+      type: _none
+    target_bundles: null
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+field_type: entity_reference

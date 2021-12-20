@@ -1,0 +1,18 @@
+uuid: 50946992-b3b7-4108-a91d-ea7b48bbbaa4
+langcode: en
+status: true
+dependencies:
+  config:
+    - message.template.group_ready_to_publish_notificat
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: message.group_ready_to_publish_notificat
+target_entity_type_id: message
+target_bundle: group_ready_to_publish_notificat
+default_langcode: site_default
+language_alterable: true
