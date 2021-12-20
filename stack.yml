@@ -1,0 +1,28 @@
+version: '3.1'
+
+services:
+  drupal:
+    image: tyollisyysmanuaali-drupal
+    ports:
+      - 80:80
+    volumes:
+      - tyomanuaali-files:/var/www/html/sites/default/files/
+      - tyomanuaali-private-files:/var/www/private/
+    environment:
+      ELASTICSEARCH_HOST: elasticsearch
+    restart: always
+  mariadb:
+    image: mariadb:10.6
+    environment:
+      MARIADB_USER: tyomanuaali
+      MARIADB_PASSWORD: qYKR6IfJHU85x1PL9oZh
+      MARIADB_ROOT_PASSWORD: MNHSKzK8maztY1sCzptm
+    volumes:
+       - tyomanuaali-db-data:/var/lib/mysql
+    restart: always
+
+volumes:
+  tyomanuaali-db-data:
+  tyomanuaali-files:
+  tyomanuaali-private-files:
+  tyomanuaali-elasticsearch-data:
