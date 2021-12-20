@@ -1,0 +1,32 @@
+uuid: baf76b96-8646-4b01-8c38-7c4aaaae7d72
+langcode: fi
+status: false
+dependencies:
+  module:
+    - flag_lists
+    - node
+_core:
+  default_config_hash: gv5HCXt_zANnxz5g4ygaALNMnN5yQzI4jy3A7c8phFc
+id: flag_list_template_1
+label: 'Flag list template 1'
+bundles: {  }
+entity_type: node
+global: false
+weight: 0
+flag_short: 'Add this item to the [flagging_collection:name] list'
+flag_long: 'Add this to your flag list'
+flag_message: 'Added to the flag list'
+unflag_short: 'Remove this item from the [flagging_collection:name] list'
+unflag_long: 'Remove this item from your flag list'
+unflag_message: 'Removed from the flag list'
+unflag_denied_text: ''
+flag_type: 'entity:node'
+link_type: ajax_link
+flagTypeConfig:
+  show_in_links: {  }
+  show_as_field: true
+  show_on_form: false
+  show_contextual_link: false
+  extra_permissions:
+    owner: '0'
+linkTypeConfig: {  }

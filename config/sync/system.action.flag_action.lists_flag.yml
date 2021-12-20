@@ -1,0 +1,15 @@
+uuid: 9219c8b7-46a0-46e4-a4a8-6cf7f99cbaf1
+langcode: fi
+status: true
+dependencies:
+  config:
+    - flag.flag.lists
+  module:
+    - flag
+id: flag_action.lists_flag
+label: 'Merkitse listaan'
+type: node
+plugin: 'flag_action:lists_flag'
+configuration:
+  flag_id: lists
+  flag_action: flag
