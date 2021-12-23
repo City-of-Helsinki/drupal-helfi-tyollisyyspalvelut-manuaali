@@ -25,6 +25,12 @@ $settings['config_sync_directory'] = '../config/sync';
 if (getenv('PLATFORM_VARIABLES')) {
   include $app_root . '/' . $site_path . '/settings.platformsh.php';
 }
+
+// Openshift settings.
+if (getenv('ENVIRONMENT') && getenv('ENVIRONMENT') == 'openshift') {
+  include $app_root . '/' . $site_path . '/settings.openshift.php';
+}
+
 // Lando settings.
 if (isset($_ENV['LANDO_INFO'])) {
   include $app_root . '/' . $site_path . '/settings.lando.php';
