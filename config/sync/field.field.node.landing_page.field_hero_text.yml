@@ -1,0 +1,21 @@
+uuid: 1ec55530-f4a2-4582-bf26-477908cc6b86
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_hero_text
+    - node.type.landing_page
+  module:
+    - text
+id: node.landing_page.field_hero_text
+field_name: field_hero_text
+entity_type: node
+bundle: landing_page
+label: Hero-teksti
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

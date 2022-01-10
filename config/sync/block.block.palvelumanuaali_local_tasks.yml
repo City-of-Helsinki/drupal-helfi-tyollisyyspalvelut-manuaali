@@ -1,0 +1,22 @@
+uuid: 12c0c7a5-1d4c-4e92-835b-5ebc96ead6ab
+langcode: fi
+status: true
+dependencies:
+  theme:
+    - palvelumanuaali
+_core:
+  default_config_hash: c-06bbElRY5sKmglk74ppgTW93Et4-EJFyNiUZMb8JY
+id: palvelumanuaali_local_tasks
+theme: palvelumanuaali
+region: content
+weight: -20
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: Välilehdet
+  provider: core
+  label_display: '0'
+  primary: true
+  secondary: true
+visibility: {  }

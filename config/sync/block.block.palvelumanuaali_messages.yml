@@ -1,0 +1,22 @@
+uuid: b406721a-cca7-4543-a053-75bd9a2479cb
+langcode: fi
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - palvelumanuaali
+_core:
+  default_config_hash: 5MNdk3fpMKx_xxBTcz2T11DL4XEU1H5SgHl8BsYdFsA
+id: palvelumanuaali_messages
+theme: palvelumanuaali
+region: header
+weight: 0
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: Tilaviestit
+  provider: system
+  label_display: '0'
+visibility: {  }
