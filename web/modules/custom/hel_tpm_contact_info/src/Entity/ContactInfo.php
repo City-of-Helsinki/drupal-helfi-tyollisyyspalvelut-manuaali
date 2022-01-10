@@ -2,6 +2,7 @@
 
 namespace Drupal\hel_tpm_contact_info\Entity;
 
+use Drupal;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
@@ -68,7 +69,7 @@ class ContactInfo extends RevisionableContentEntityBase implements ContactInfoIn
    */
   public static function preCreate(EntityStorageInterface $storage_controller, array &$values) {
     parent::preCreate($storage_controller, $values);
-    $values += ['uid' => \Drupal::currentUser()->id()];
+    $values += ['uid' => Drupal::currentUser()->id()];
   }
 
   /**

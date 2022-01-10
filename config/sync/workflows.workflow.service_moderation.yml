@@ -50,26 +50,28 @@ type_settings:
         - published
         - temporarily_archived
       to: archived
-      weight: 3
+      weight: 2
     create_new_draft:
       label: 'Create New Draft'
       to: draft
-      weight: -2
+      weight: -4
       from:
         - draft
         - published
     outdated:
       label: Outdated
       from:
+        - draft
         - outdated
         - published
       to: outdated
-      weight: 1
+      weight: 0
     publish:
       label: Publish
       to: published
-      weight: 0
+      weight: -1
       from:
+        - draft
         - published
         - ready_to_publish
     ready_to_publish:
@@ -78,7 +80,13 @@ type_settings:
         - draft
         - ready_to_publish
       to: ready_to_publish
-      weight: -1
+      weight: -3
+    ready_to_publish_to_draft:
+      label: 'Ready to publish to draft'
+      from:
+        - ready_to_publish
+      to: draft
+      weight: -2
     temporarily_archived:
       label: 'Temporarily archived'
       from:
@@ -86,7 +94,7 @@ type_settings:
         - published
         - temporarily_archived
       to: temporarily_archived
-      weight: 2
+      weight: 1
   entity_types:
     node:
       - service
