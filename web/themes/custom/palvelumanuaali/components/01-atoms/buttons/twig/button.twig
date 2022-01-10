@@ -14,9 +14,22 @@
 {% set additional_attributes = {
   class: bem(button_base_class, button_modifiers, button_blockname),
 } %}
-
-<button {{ add_attributes(additional_attributes) }}>
-  {% block button_content %}
-    {{ button_content }}
-  {% endblock %}
-</button>
+{% if button_url %}
+  <a href="{{button__url}}" {{ bem('link-button', button_modifiers, button_blockname) }} >
+{% endif %}
+  <button {{ add_attributes(additional_attributes) }}>
+    {% block button_content %}
+      {% if button_icon %}
+        {% include "@atoms/images/icons/_icon.twig" with {
+          icon_base_class: 'arrow',
+          icon_blockname: 'link',
+          icon_name: 'arrow-right',
+        } %}
+      {% else %}
+        {{ button_content }}
+      {% endif %}
+    {% endblock %}
+  </button>
+{% if button_url %}
+  </a>
+{% endif %}
