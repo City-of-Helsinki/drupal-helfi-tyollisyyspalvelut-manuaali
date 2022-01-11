@@ -1,0 +1,15 @@
+uuid: 39c9c8c4-66e5-43bd-b9cc-7d76e66d3c6b
+langcode: fi
+status: true
+dependencies:
+  config:
+    - flag.flag.cart
+  module:
+    - flag
+id: flag_action.cart_flag
+label: 'Merkitse koriin'
+type: node
+plugin: 'flag_action:cart_flag'
+configuration:
+  flag_id: cart
+  flag_action: flag
