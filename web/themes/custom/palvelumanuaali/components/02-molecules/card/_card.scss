@@ -1,5 +1,20 @@
+.card {
+
+  &.grid__item {
+    background-color: clr(sidebar-color);
+    border-radius: 8px 8px 4px 4px;
+    border-bottom: 4px $blue100 solid;
+  }
+}
+
+.card__content {
+  margin-left: $space-double;
+  margin-right: $space-double;
+  margin-top: $space-two-and-half;
+}
+
 .card__heading {
-  @include heading-large($font-size: 1.3rem);
+  @include heading-xs;
   @include no-bottom;
 
   &-link {
@@ -26,6 +41,10 @@
   @include button-base;
   @include button-color-primary;
   @include button-medium;
+}
+
+.card__button-link {
+  float: right;
 }
 
 /* Variations */

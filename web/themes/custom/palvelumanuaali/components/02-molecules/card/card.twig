@@ -107,10 +107,11 @@
       {% include "@atoms/buttons/twig/button.twig" with {
         button_base_class: card__button__base_class|default('button'),
         button_modifiers: card__button__modifiers,
-        button_blockname: card__base_class,
+        button_blockname: card__button__blockname,
         button_attributes: card__button__attributes,
         button_content: card__button__content,
         button_url: card__button__url,
+        button_icon: card__button_icon_src,
       } %}
     {% endif %}
   </div>

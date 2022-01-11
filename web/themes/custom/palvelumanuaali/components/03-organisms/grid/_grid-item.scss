@@ -3,8 +3,9 @@
   margin-bottom: $space-double;
 
   @include large {
-    margin: 0 $space-double 0 0;
+    margin: 0 $space-double $space-double 0;
     flex-basis: 30%;
+    max-width: 30%;
   }
 
   &:last-child {

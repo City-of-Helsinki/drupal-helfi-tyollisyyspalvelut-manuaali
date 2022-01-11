@@ -1,0 +1,48 @@
+uuid: b9dac4ca-e316-4480-824f-b4b1956ce8e5
+langcode: fi
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.card_lift
+    - field.field.node.landing_page.body
+    - field.field.node.landing_page.field_hero_label
+    - field.field.node.landing_page.field_hero_link
+    - field.field.node.landing_page.field_hero_media
+    - field.field.node.landing_page.field_hero_text
+    - field.field.node.landing_page.field_paragraph
+    - node.type.landing_page
+  module:
+    - text
+    - user
+id: node.landing_page.card_lift
+targetEntityType: node
+bundle: landing_page
+mode: card_lift
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 1
+    settings:
+      trim_length: 100
+    third_party_settings: {  }
+    region: content
+  field_hero_label:
+    weight: 0
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  links:
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_hero_link: true
+  field_hero_media: true
+  field_hero_text: true
+  field_paragraph: true
+  langcode: true
