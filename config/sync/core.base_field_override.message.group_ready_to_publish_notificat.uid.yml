@@ -1,0 +1,20 @@
+uuid: f05cf076-befe-469f-9061-3aa980f0ab0c
+langcode: en
+status: true
+dependencies:
+  config:
+    - message.template.group_ready_to_publish_notificat
+id: message.group_ready_to_publish_notificat.uid
+field_name: uid
+entity_type: message
+bundle: group_ready_to_publish_notificat
+label: 'Created by'
+description: 'The user that created the message.'
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: 'Drupal\message\Entity\Message::getCurrentUserId'
+settings:
+  handler: default
+  handler_settings: {  }
+field_type: entity_reference

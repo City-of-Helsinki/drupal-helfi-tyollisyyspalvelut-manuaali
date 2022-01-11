@@ -1,0 +1,19 @@
+uuid: 36fcb98c-5686-4710-90ac-d4b7b836da4d
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.filtered_html
+template: group_ready_to_publish_notificat
+label: 'Group ready to publish notification'
+description: 'Group ready to publish notification for admins'
+text:
+  -
+    value: "<p>Lorem ipsum dolor sit amet consectur</p>\r\n"
+    format: filtered_html
+settings:
+  'token options':
+    clear: true
+    'token replace': true
+  purge_override: false
+  purge_methods: {  }

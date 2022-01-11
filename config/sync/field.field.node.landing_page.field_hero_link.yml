@@ -1,0 +1,23 @@
+uuid: cca26a69-369a-46e3-94f1-598055fbf9ea
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_hero_link
+    - node.type.landing_page
+  module:
+    - link
+id: node.landing_page.field_hero_link
+field_name: field_hero_link
+entity_type: node
+bundle: landing_page
+label: Hero-linkki
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 1
+field_type: link

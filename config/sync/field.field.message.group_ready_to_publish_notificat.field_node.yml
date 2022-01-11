@@ -1,0 +1,29 @@
+uuid: 5e5c8659-6b4c-4246-9069-9c727dac8530
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.message.field_node
+    - message.template.group_ready_to_publish_notificat
+    - node.type.service
+id: message.group_ready_to_publish_notificat.field_node
+field_name: field_node
+entity_type: message
+bundle: group_ready_to_publish_notificat
+label: Node
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      service: service
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

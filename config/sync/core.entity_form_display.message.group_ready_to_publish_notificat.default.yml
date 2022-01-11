@@ -1,0 +1,56 @@
+uuid: f1560115-ea5a-447d-90ba-0e5f672c11f0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.message.group_ready_to_publish_notificat.field_node
+    - field.field.message.group_ready_to_publish_notificat.field_user
+    - message.template.group_ready_to_publish_notificat
+id: message.group_ready_to_publish_notificat.default
+targetEntityType: message
+bundle: group_ready_to_publish_notificat
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_node:
+    weight: 12
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_user:
+    weight: 13
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  translation:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  uid:
+    type: entity_reference_autocomplete
+    weight: 5
+    '#group': advanced
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+      match_limit: 10
+    region: content
+    third_party_settings: {  }
+hidden: {  }

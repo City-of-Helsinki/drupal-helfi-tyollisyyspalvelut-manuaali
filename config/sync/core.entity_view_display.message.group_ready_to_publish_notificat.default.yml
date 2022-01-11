@@ -1,0 +1,37 @@
+uuid: ef0b164e-d240-4ba4-89f1-f7d6372ec23c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.message.group_ready_to_publish_notificat.field_node
+    - field.field.message.group_ready_to_publish_notificat.field_user
+    - message.template.group_ready_to_publish_notificat
+  module:
+    - user
+id: message.group_ready_to_publish_notificat.default
+targetEntityType: message
+bundle: group_ready_to_publish_notificat
+mode: default
+content:
+  field_node:
+    weight: 1
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_user:
+    weight: 2
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  partial_0:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden: {  }
