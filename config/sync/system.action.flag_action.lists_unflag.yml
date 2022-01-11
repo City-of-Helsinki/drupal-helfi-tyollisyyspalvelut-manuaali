@@ -1,0 +1,15 @@
+uuid: c5b9157d-2d2f-424a-bb8a-74b886a3a1e0
+langcode: fi
+status: true
+dependencies:
+  config:
+    - flag.flag.lists
+  module:
+    - flag
+id: flag_action.lists_unflag
+label: 'Poista listasta'
+type: node
+plugin: 'flag_action:lists_unflag'
+configuration:
+  flag_id: lists
+  flag_action: unflag

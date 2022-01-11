@@ -1,0 +1,15 @@
+uuid: 5f4b6b42-c1d1-4a22-bb01-65879e6779f5
+langcode: fi
+status: true
+dependencies:
+  config:
+    - flag.flag.cart
+  module:
+    - flag
+id: flag_action.cart_unflag
+label: 'Poista korista'
+type: node
+plugin: 'flag_action:cart_unflag'
+configuration:
+  flag_id: cart
+  flag_action: unflag
