@@ -2,8 +2,7 @@ FROM ghcr.io/city-of-helsinki/drupal-docker-base:8.0
 
 COPY / /var/www/html/
 WORKDIR /var/www/html
-RUN mv web public
-RUN composer install --no-progress --profile --prefer-dist --no-interaction --no-dev --optimize-autoloader
+RUN composer install --no-progress --prefer-dist --no-interaction --no-dev --optimize-autoloader
 RUN composer dump-autoload --optimize
 
 # Copy deploy script

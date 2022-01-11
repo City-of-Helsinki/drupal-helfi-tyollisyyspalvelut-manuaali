@@ -1,0 +1,54 @@
+version: '3'
+
+services:
+  web:
+    image: palvelumanuaali:latest
+    volumes:
+      - ./shared/files:/var/www/html/public/sites/default/files
+      - ./shared/private:/var/www/html/private
+    depends_on:
+      - palvelumanuaali_db
+    networks:
+      - proxy
+    labels:
+      traefik.docker.network: traefik
+      traefik.frontend.rule: host:palvelumanuaali.local
+    environment:
+      DRUPAL_WEBROOT: public
+      DRUPAL_DB_NAME: drupal
+      DRUPAL_DB_USER: drupal
+      DRUPAL_DB_PASS: drupal
+      DRUPAL_DB_HOST: palvelumanuaali_db
+      ENVIRONMENT: openshift
+  palvelumanuaali_db:
+    image: mariadb
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    networks:
+      - proxy
+    # volumes:
+      #      - ./conf/db/db.sql:/docker-entrypoint-initdb.d/drupal.sql
+    volumes:
+      - "mysql-data:/var/lib/mysql"
+      - "mysql-log:/var/log/mysql"
+    labels:
+      traefik.docker.network: traefik
+      traefik.port: 3306
+      traefik.frontend.rule: Host:db.palvelumanuaali.local:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: drupal
+      MYSQL_DATABASE: drupal
+      MYSQL_USER: drupal
+      MYSQL_PASSWORD: drupal
+
+volumes:
+  mysql-data:
+    driver: local
+  mysql-log:
+    driver: local
+  mysql-conf:
+    driver: local
+
+networks:
+  proxy:
+    external:
+      name: proxy_default
