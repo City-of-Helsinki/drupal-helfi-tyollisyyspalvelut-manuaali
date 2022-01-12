@@ -1,5 +1,3 @@
-import React from 'react';
-
 import heroText from './hero-text.twig';
 
 import heroTextData from './hero-text.yml';
@@ -9,6 +7,4 @@ import heroTextData from './hero-text.yml';
  */
 export default { title: 'Molecules/Hero Text' };
 
-export const heroTextExample = () => (
-  <div dangerouslySetInnerHTML={{ __html: heroText(heroTextData) }} />
-);
+export const heroTextExample = () => heroText(heroTextData);

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import '../../02-molecules/menus/main-menu/main-menu';
 
 import articleTwig from './article.twig';
@@ -20,31 +18,21 @@ export default {
   },
 };
 
-export const article = () => (
-  <div
-    dangerouslySetInnerHTML={{
-      __html: articleTwig({
-        page_layout_modifier: 'contained',
-        ...mainMenuData,
-        ...breadcrumbData,
-        ...socialMenuData,
-        ...footerMenuData,
-        card__link__text: 'Click here',
-      }),
-    }}
-  />
-);
+export const article = () =>
+  articleTwig({
+    page_layout_modifier: 'contained',
+    ...mainMenuData,
+    ...breadcrumbData,
+    ...socialMenuData,
+    ...footerMenuData,
+    card__link__text: 'Click here',
+  });
 
-export const landingPage = () => (
-  <div
-    dangerouslySetInnerHTML={{
-      __html: landingPageTwig({
-        page_layout_modifier: 'contained',
-        ...mainMenuData,
-        ...breadcrumbData,
-        ...socialMenuData,
-        ...footerMenuData,
-      }),
-    }}
-  />
-);
+export const landingPage = () =>
+  landingPageTwig({
+    page_layout_modifier: 'contained',
+    ...mainMenuData,
+    ...breadcrumbData,
+    ...socialMenuData,
+    ...footerMenuData,
+  });
