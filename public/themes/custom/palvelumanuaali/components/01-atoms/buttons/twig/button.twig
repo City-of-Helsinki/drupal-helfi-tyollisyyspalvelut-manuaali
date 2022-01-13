@@ -1,0 +1,35 @@
+{#
+/**
+ * Available variables:
+ * - button_content - the content of the button (typically text)
+ *
+ * Available blocks:
+ * - button_content - used to replace the content of the button with something other than text
+ *   for example: to insert an icon
+ */
+#}
+
+{% set button_base_class = button_base_class|default('button') %}
+
+{% set additional_attributes = {
+  class: bem(button_base_class, button_modifiers, button_blockname),
+} %}
+{% if button_url %}
+  <a href="{{button__url}}" {{ bem('link-button', button_modifiers, button_blockname) }} >
+{% endif %}
+  <button {{ add_attributes(additional_attributes) }}>
+    {% block button_content %}
+      {% if button_icon %}
+        {% include "@atoms/images/icons/_icon.twig" with {
+          icon_base_class: 'arrow',
+          icon_blockname: 'link',
+          icon_name: 'arrow-right',
+        } %}
+      {% else %}
+        {{ button_content }}
+      {% endif %}
+    {% endblock %}
+  </button>
+{% if button_url %}
+  </a>
+{% endif %}

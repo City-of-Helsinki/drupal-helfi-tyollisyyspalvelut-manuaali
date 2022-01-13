@@ -1,0 +1,54 @@
+.card {
+
+  &.grid__item {
+    background-color: clr(sidebar-color);
+    border-radius: 8px 8px 4px 4px;
+    border-bottom: 4px $blue100 solid;
+  }
+}
+
+.card__content {
+  margin-left: $space-double;
+  margin-right: $space-double;
+  margin-top: $space-two-and-half;
+}
+
+.card__heading {
+  @include heading-xs;
+  @include no-bottom;
+
+  &-link {
+    @include link;
+  }
+}
+
+.card__subheading {
+  @include heading-medium($font-size: 1rem);
+  @include no-bottom;
+
+  color: clr(text);
+}
+
+.card__body {
+  margin: 0.7em 0 1em;
+}
+
+.card__link {
+  @include link;
+}
+
+.card__button {
+  @include button-base;
+  @include button-color-primary;
+  @include button-medium;
+}
+
+.card__button-link {
+  float: right;
+}
+
+/* Variations */
+.card--bg {
+  background-color: clr(highlight-high);
+  padding: 1em;
+}
