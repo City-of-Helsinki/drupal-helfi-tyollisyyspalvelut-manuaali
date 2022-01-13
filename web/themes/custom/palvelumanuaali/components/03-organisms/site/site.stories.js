@@ -1,5 +1,3 @@
-import React from 'react';
-
 import footerTwig from './site-footer/site-footer.twig';
 import siteHeader from './site-header/site-header.twig';
 import siteSidebar from './site-sidebar/site-sidebar.twig';
@@ -16,27 +14,8 @@ import '../../02-molecules/menus/main-menu/main-menu';
  */
 export default { title: 'Organisms/Site' };
 
-export const footer = () => (
-  <div
-    dangerouslySetInnerHTML={{
-      __html: footerTwig({ ...footerSocial, ...footerMenu }),
-    }}
-  />
-);
-export const header = () => (
-  <div
-    dangerouslySetInnerHTML={{
-      __html: siteHeader({
-        ...breadcrumbData,
-        ...mainMenuData,
-      }),
-    }}
-  />
-);
-export const sidebar = () => (
-  <div
-    dangerouslySetInnerHTML={{
-      __html: siteSidebar({}),
-    }}
-  />
-);
+export const footer = () => footerTwig({ ...footerSocial, ...footerMenu });
+
+export const header = () => siteHeader({ ...breadcrumbData, ...mainMenuData });
+
+export const sidebar = () => siteSidebar();
