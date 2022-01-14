@@ -5,7 +5,7 @@
 $gutter: $space;
 $main-gutter: $space-septuple;
 $main-width: calc(100% - (#{$sidebar-width} ));
-$main-content-width: calc(100% - (#{$sidebar-width} + #{$main-gutter*2} ));
+$main-content-width: calc(100% - (#{$sidebar-width} + #{$main-gutter} *2 ));
 
 .layout-container {
   @include large {
