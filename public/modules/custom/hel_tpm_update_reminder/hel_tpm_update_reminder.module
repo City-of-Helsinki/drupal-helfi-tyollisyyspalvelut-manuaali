@@ -1,7 +1,10 @@
 <?php
 
+/**
+ * Implements hook_cron().
+ */
 function hel_tpm_update_reminder_cron() {
-  $ago = time()-(60*60*24*30*6);
+  $ago = strtotime('-6 months');
   $query = \Drupal::entityQuery('node')
     ->condition('type', 'service')
     ->condition('changed', $ago, '<');
@@ -15,7 +18,7 @@ function hel_tpm_update_reminder_cron() {
     $last_reminded = \Drupal::state()->get($state_id);
 
     // We haven't reminded about this yet or in two weeks.
-    if ($last_reminded == NULL || $last_reminded < (time() - (60*60*24*14))) {
+    if ($last_reminded == NULL || $last_reminded < (time() - strtotime('-2 weeks'))) {
       $node = $nodeStorage->load($nid);
       $user = $node->getOwner();
       $email = $user->getEmail();
@@ -32,6 +35,9 @@ function hel_tpm_update_reminder_cron() {
   \Drupal::logger('hel_tpm_update_reminder')->notice('Sent update reminders for %count expired nodes.', ['%count' => $sent]);
 }
 
+/**
+ * Implements hook_mail().
+ */
 function hel_tpm_update_reminder_mail($key, &$message, $params) {
   $variables = [
     '@service' => $params['service_name'],
