@@ -1,0 +1,48 @@
+<?php
+
+function hel_tpm_update_reminder_cron() {
+  $ago = time()-(60*60*24*30*6);
+  $query = \Drupal::entityQuery('node')
+    ->condition('type', 'service')
+    ->condition('changed', $ago, '<');
+  $results = $query->execute();
+
+  $nodeStorage = \Drupal::entityTypeManager()->getStorage('node');
+  \Drupal::logger('hel_tpm_update_reminder')->notice('Found %count expired nodes.', ['%count' => count($results)]);
+  $sent = 0;
+  foreach ($results as $nid) {
+    $state_id = 'hel_tpm.update_reminder.' . $nid;
+    $last_reminded = \Drupal::state()->get($state_id);
+
+    // We haven't reminded about this yet or in two weeks.
+    if ($last_reminded == NULL || $last_reminded < (time() - (60*60*24*14))) {
+      $node = $nodeStorage->load($nid);
+      $user = $node->getOwner();
+      $email = $user->getEmail();
+      $params = [
+        'service_name' => (string) $node->getTitle(),
+        'service_url' => $node->toUrl('edit-form')->setAbsolute()->toString(),
+      ];
+      \Drupal::service('plugin.manager.mail')
+        ->mail('hel_tpm_update_reminder', 'update_reminder', $email, $langcode, $params);
+      \Drupal::state()->set($state_id, time());
+      $sent++;
+    }
+  }
+  \Drupal::logger('hel_tpm_update_reminder')->notice('Sent update reminders for %count expired nodes.', ['%count' => $sent]);
+}
+
+function hel_tpm_update_reminder_mail($key, &$message, $params) {
+  $variables = [
+    '@service' => $params['service_name'],
+    '@url' => $params['service_url'],
+  ];
+  $options['langcode'] = $message['langcode'];
+
+  switch ($key) {
+    case 'update_reminder':
+      $message['subject'] = t('Työllisyyspalvelumanuaali: Remember to update your service', $variables, $options);
+      $message['body'][] = t("Hi,\n\nThe service @service (@url) has not been updated for a long time. Please check that the information is still valid. When checking, open the service node in edit mode and save it again.", $variables, $options);
+      break;
+  }
+}
