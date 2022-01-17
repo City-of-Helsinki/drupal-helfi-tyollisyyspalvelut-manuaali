@@ -4,22 +4,7 @@ display:
   default:
     display_title: Default
     display_options:
-      exposed_form:
-        options:
-          submit_button: Filter
-          reset_button_label: Reset
-          exposed_sorts_label: 'Sort by'
-          sort_asc_label: Asc
-          sort_desc_label: Desc
-      pager:
-        options:
-          expose:
-            items_per_page_label: 'Items per page'
-            items_per_page_options_all_label: '- All -'
-            offset_label: Offset
-          tags:
-            previous: ‹‹
-            next: ››
+      title: 'Recent log messages'
       fields:
         nothing:
           admin_label: Icon
@@ -34,12 +19,33 @@ display:
         message:
           label: Message
           alter:
+            path: 'admin/reports/dblog/event/{{ wid }}'
             alt: '{{ message }}'
         name:
           label: User
           separator: ', '
         link:
           label: Operations
+      pager:
+        options:
+          tags:
+            next: ››
+            previous: ‹‹
+          expose:
+            items_per_page_label: 'Items per page'
+            items_per_page_options_all_label: '- All -'
+            offset_label: Offset
+      exposed_form:
+        options:
+          submit_button: Filter
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      empty:
+        area:
+          admin_label: 'No log messages available.'
+          content: 'No log messages available.'
       filters:
         type:
           expose:
@@ -47,10 +53,5 @@ display:
         severity:
           expose:
             label: Severity
-      title: 'Recent log messages'
-      empty:
-        area:
-          admin_label: 'No log messages available.'
-          content: 'No log messages available.'
   page:
     display_title: Page

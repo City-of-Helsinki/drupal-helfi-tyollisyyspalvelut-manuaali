@@ -16,32 +16,32 @@ bundle: target_group
 mode: default
 content:
   field_age:
-    weight: 0
+    type: range_integer
     label: above
     settings:
-      thousand_separator: ''
       range_separator: '-'
+      thousand_separator: ''
       range_combine: true
       field_prefix_suffix: false
       from_prefix_suffix: false
       to_prefix_suffix: false
       combined_prefix_suffix: false
     third_party_settings: {  }
-    type: range_integer
+    weight: 0
     region: content
   field_description:
-    weight: 1
+    type: text_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    type: text_default
+    weight: 1
     region: content
   field_municipality:
-    weight: 2
+    type: entity_reference_label
     label: above
     settings:
       link: true
     third_party_settings: {  }
-    type: entity_reference_label
+    weight: 2
     region: content
 hidden: {  }
