@@ -20,7 +20,7 @@ function hel_tpm_update_reminder_cron() {
     $last_reminded = \Drupal::state()->get($state_id);
 
     // We haven't reminded about this yet or in two weeks.
-    if ($last_reminded == NULL || $last_reminded < (time() - strtotime('-2 weeks'))) {
+    if ($last_reminded == NULL || $last_reminded < strtotime('-2 weeks')) {
       $node = $nodeStorage->load($nid);
       $account = $node->getOwner();
       $email = $account->getEmail();
