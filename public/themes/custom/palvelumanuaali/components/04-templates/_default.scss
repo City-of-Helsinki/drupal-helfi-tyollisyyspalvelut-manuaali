@@ -19,7 +19,11 @@ $main-content-width: calc(100% - (#{$sidebar-width} + #{$main-gutter} *2 ));
  * Remove this and uncomment Grid code below to use CSS Grid.
 */
 .right-column {
+  margin-left: $space;
+  margin-right: $space;
   @include large {
+    margin-left: 0;
+    margin-right: 0;
     order: 2;
     width: $main-width;
   }
@@ -53,12 +57,20 @@ $main-content-width: calc(100% - (#{$sidebar-width} + #{$main-gutter} *2 ));
 .main-content {
   width: 100%;
 
+
   @include large {
     order: 2;
     &--with-sidebar {
+      margin-right: $space-quadruple;
+      margin-left: $space-quadruple;
+      width: 100%;
+    }
+  }
+
+  @include grid-xl {
+    &--with-sidebar {
       margin-right: $main-gutter;
       margin-left: $main-gutter;
-      width: 100%;
     }
   }
 }

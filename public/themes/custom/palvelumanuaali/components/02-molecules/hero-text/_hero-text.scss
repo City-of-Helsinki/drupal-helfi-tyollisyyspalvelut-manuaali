@@ -22,8 +22,17 @@
 }
 
 .hero-text__heading {
-  @include heading-xl();
+
+  @include heading-small();
   @include no-bottom;
+
+  @include grid-large {
+  @include heading-medium();
+  }
+
+  @include grid-xl {
+    @include heading-xl();
+  }
 
   &-link {
     @include link;

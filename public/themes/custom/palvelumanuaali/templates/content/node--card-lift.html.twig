@@ -75,11 +75,10 @@
 {% embed "@molecules/card/card.twig" with {
   card__extra_classes: ["grid__item"],
   card__heading: label,
-  card__body: content.body,
+  card__body: content.field_description,
   card__button__url: url,
   card__button__content:card__button_icon_src,
   card__button_icon_src: 'yes',
   card__button__modifiers: ["arrow"],
 } %}
-
 {% endembed %}

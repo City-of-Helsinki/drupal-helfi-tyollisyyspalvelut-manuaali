@@ -19,6 +19,11 @@
 {% set heading_base_class = heading_base_class|default('h' ~ heading_level) %}
 
 <h{{ heading_level }} {{ bem(heading_base_class, heading_modifiers, heading_blockname) }}>
+  {% if heading_icon %}
+  <div {{ bem('icon', heading_icon__image__modifiers, heading_icon__base_class) }}>
+      {{ heading_icon }}
+  </div>
+  {% endif %}
   {% if heading_url %}
     {% include "@atoms/links/link/link.twig" with {
       "link_content": heading,
