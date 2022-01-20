@@ -16,14 +16,14 @@ bundle: contact_info
 mode: default
 content:
   field_email:
-    weight: 1
+    type: basic_string
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    type: basic_string
+    weight: 1
     region: content
   field_links:
-    weight: 2
+    type: link
     label: hidden
     settings:
       trim_length: 80
@@ -32,16 +32,16 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
-    type: link
+    weight: 2
     region: content
   title:
     type: string
-    weight: 0
-    region: content
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
+    weight: 0
+    region: content
 hidden:
   created: true
   field_first_name: true

@@ -35,11 +35,26 @@ bundle: service
 mode: card_lift
 content:
   field_description:
-    weight: 0
+    type: basic_string
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    type: basic_string
+    weight: 0
+    region: content
+  flag_cart:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  flag_flag_list_template_1:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  flag_lists:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 10
     region: content
 hidden:
   content_moderation_control: true
