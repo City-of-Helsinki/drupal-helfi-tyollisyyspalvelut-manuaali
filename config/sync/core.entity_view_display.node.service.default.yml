@@ -36,129 +36,129 @@ bundle: service
 mode: default
 content:
   field_client_consent:
-    weight: 17
+    type: boolean
     label: above
     settings:
       format: default
       format_custom_false: ''
       format_custom_true: ''
     third_party_settings: {  }
-    type: boolean
+    weight: 17
     region: content
   field_client_consent_description:
     type: entity_reference_revisions_entity_view
-    weight: 21
     label: above
     settings:
       view_mode: default
       link: ''
     third_party_settings: {  }
+    weight: 21
     region: content
   field_contact_info:
-    weight: 27
+    type: entity_reference_revisions_entity_view
     label: above
     settings:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    type: entity_reference_revisions_entity_view
+    weight: 27
     region: content
   field_contact_info_internal:
     type: entity_reference_revisions_entity_view
-    weight: 20
     label: above
     settings:
       view_mode: default
       link: ''
     third_party_settings: {  }
+    weight: 20
     region: content
   field_description:
-    weight: 3
+    type: basic_string
     label: above
     settings: {  }
     third_party_settings: {  }
-    type: basic_string
+    weight: 3
     region: content
   field_implementation_extra_info:
-    weight: 12
+    type: entity_reference_label
     label: above
     settings:
       link: true
     third_party_settings: {  }
-    type: entity_reference_label
+    weight: 12
     region: content
   field_life_situations:
-    weight: 5
+    type: entity_reference_label
     label: above
     settings:
       link: true
     third_party_settings: {  }
-    type: entity_reference_label
+    weight: 5
     region: content
   field_poma_applicable:
-    weight: 16
+    type: boolean
     label: above
     settings:
       format: default
       format_custom_false: ''
       format_custom_true: ''
     third_party_settings: {  }
-    type: boolean
+    weight: 16
     region: content
   field_poma_applicable_descriptio:
     type: entity_reference_revisions_entity_view
-    weight: 22
     label: above
     settings:
       view_mode: default
       link: ''
     third_party_settings: {  }
+    weight: 22
     region: content
   field_requirements:
     type: entity_reference_revisions_entity_view
-    weight: 24
     label: above
     settings:
       view_mode: default
       link: ''
     third_party_settings: {  }
+    weight: 24
     region: content
   field_service_guidance_guide:
     type: entity_reference_revisions_entity_view
-    weight: 23
     label: above
     settings:
       view_mode: default
       link: ''
     third_party_settings: {  }
+    weight: 23
     region: content
   field_service_id:
-    weight: 1
+    type: string
     label: above
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 1
     region: content
   field_service_implementation:
     type: entity_reference_revisions_entity_view
-    weight: 25
     label: above
     settings:
       view_mode: default
       link: ''
     third_party_settings: {  }
+    weight: 25
     region: content
   field_service_language:
-    weight: 13
+    type: entity_reference_label
     label: above
     settings:
       link: true
     third_party_settings: {  }
-    type: entity_reference_label
+    weight: 13
     region: content
   field_service_links_external:
-    weight: 28
+    type: link
     label: above
     settings:
       trim_length: 80
@@ -167,10 +167,10 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
-    type: link
+    weight: 28
     region: content
   field_service_links_internal:
-    weight: 29
+    type: link
     label: above
     settings:
       trim_length: 80
@@ -179,69 +179,79 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
-    type: link
+    weight: 29
     region: content
   field_service_location:
-    weight: 14
+    type: entity_reference_label
     label: above
     settings:
       link: true
     third_party_settings: {  }
-    type: entity_reference_label
+    weight: 14
     region: content
   field_service_obligations:
     type: entity_reference_revisions_entity_view
-    weight: 26
     label: above
     settings:
       view_mode: default
       link: ''
     third_party_settings: {  }
+    weight: 26
     region: content
   field_service_price:
     type: entity_reference_revisions_entity_view
-    weight: 31
     label: above
     settings:
       view_mode: default
       link: ''
     third_party_settings: {  }
+    weight: 31
     region: content
   field_service_set:
-    weight: 2
+    type: entity_reference_label
     label: above
     settings:
       link: true
     third_party_settings: {  }
-    type: entity_reference_label
+    weight: 2
     region: content
   field_tags:
-    weight: 32
+    type: entity_reference_label
     label: above
     settings:
       link: true
     third_party_settings: {  }
-    type: entity_reference_label
+    weight: 32
     region: content
   field_target_group:
     type: entity_reference_revisions_entity_view
-    weight: 30
     label: above
     settings:
       view_mode: default
       link: ''
     third_party_settings: {  }
+    weight: 30
     region: content
-  links:
-    weight: 0
-    region: content
+  flag_cart:
     settings: {  }
     third_party_settings: {  }
-  flag_cart:
     weight: 2
     region: content
+  flag_flag_list_template_1:
     settings: {  }
     third_party_settings: {  }
+    weight: 10
+    region: content
+  flag_lists:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
 hidden:
   content_moderation_control: true
   langcode: true

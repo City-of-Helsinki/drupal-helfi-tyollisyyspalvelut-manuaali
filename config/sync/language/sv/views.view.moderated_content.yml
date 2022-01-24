@@ -4,24 +4,7 @@ display:
   default:
     display_title: Förvald
     display_options:
-      exposed_form:
-        options:
-          submit_button: Filtrera
-          reset_button_label: Återställ
-          exposed_sorts_label: 'Sortera efter'
-          sort_asc_label: Stigande
-          sort_desc_label: Fallande
-      pager:
-        options:
-          tags:
-            previous: '‹ Föregående'
-            next: 'Nästa ›'
-            first: '« Första'
-            last: 'Sista »'
-          expose:
-            items_per_page_label: 'Inlägg per sida'
-            items_per_page_options_all_label: '- Alla -'
-            offset_label: Kompensera
+      title: 'Modererat innehåll'
       fields:
         title:
           label: Titel
@@ -40,6 +23,27 @@ display:
           separator: ', '
         operations:
           label: Funktioner
+      pager:
+        options:
+          tags:
+            next: 'Nästa ›'
+            previous: '‹ Föregående'
+            first: '« Första'
+            last: 'Sista »'
+          expose:
+            items_per_page_label: 'Inlägg per sida'
+            items_per_page_options_all_label: '- Alla -'
+            offset_label: Kompensera
+      exposed_form:
+        options:
+          submit_button: Filtrera
+          reset_button_label: Återställ
+          exposed_sorts_label: 'Sortera efter'
+          sort_asc_label: Stigande
+          sort_desc_label: Fallande
+      empty:
+        area_text_custom:
+          content: 'Inget modererat innehåll tillgängligt. Endast väntande versioner av innehåll, till exempel utkast, listas här.'
       filters:
         title:
           expose:
@@ -53,9 +57,5 @@ display:
         langcode:
           expose:
             label: Språk
-      title: 'Modererat innehåll'
-      empty:
-        area_text_custom:
-          content: 'Inget modererat innehåll tillgängligt. Endast väntande versioner av innehåll, till exempel utkast, listas här.'
   moderated_content:
     display_title: 'Modererat innehåll'

@@ -1,3 +1,4 @@
+label: 'Ryhmien jäsenyydet'
 display:
   default:
     display_title: Huvud
@@ -31,12 +32,21 @@ display:
           label: Uppdaterad
           separator: ', '
         created:
+          label: Liittyi
           separator: ', '
+        edit_group_content:
+          text: 'Muokkaa jäsentä'
+        delete_group_content:
+          text: 'Poista jäsen'
         dropbutton:
           label: Funktioner
       arguments:
         gid:
           exception:
             title: Alla
+      title: Jäsenet
   page_1:
     display_title: Sida
+    display_options:
+      menu:
+        title: Jäsenet

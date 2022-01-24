@@ -21,14 +21,14 @@ default_value_callback: ''
 settings:
   handler: 'default:paragraph'
   handler_settings:
-    negate: 0
     target_bundles:
       content: content
+    negate: 0
     target_bundles_drag_drop:
       contact_information:
         weight: 3
         enabled: false
       content:
-        enabled: true
         weight: 4
+        enabled: true
 field_type: entity_reference_revisions
