@@ -1,0 +1,21 @@
+uuid: 206fc540-f24c-4c9b-b9e7-e65d2d05218d
+langcode: fi
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.message.mail_subject
+    - message.template.hel_tpm_update_reminder
+  module:
+    - user
+id: message.hel_tpm_update_reminder.mail_subject
+targetEntityType: message
+bundle: hel_tpm_update_reminder
+mode: mail_subject
+content:
+  partial_1:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  partial_0: true

@@ -39,6 +39,7 @@
         "drupal/core-recommended": "^9.1",
         "drupal/emulsify_drupal": "^4.1",
         "drupal/emulsify_twig": "^2.0",
+        "drupal/entity_print": "^2.4",
         "drupal/field_group": "^3.2",
         "drupal/field_permissions": "^1.1",
         "drupal/flag": "^4.0@beta",
@@ -120,6 +121,9 @@
             "drupal/core": "-p2"
         },
         "patches": {
+            "drupal/message": {
+                "https://www.drupal.org/files/issues/2018-06-24/allow_token_contexts-3.patch": "https://www.drupal.org/files/issues/2018-06-24/allow_token_contexts-3.patch"
+            }
         }
     }
 }

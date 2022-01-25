@@ -1,0 +1,41 @@
+<?php
+
+use Drupal\message\Entity\Message;
+
+/**
+ * Implements hook_cron().
+ */
+function hel_tpm_update_reminder_cron() {
+  $ago = strtotime('-6 months');
+  $query = \Drupal::entityQuery('node')
+    ->condition('type', 'service')
+    ->condition('changed', $ago, '<');
+  $results = $query->execute();
+
+  $nodeStorage = \Drupal::entityTypeManager()->getStorage('node');
+  \Drupal::logger('hel_tpm_update_reminder')->notice('Found %count expired nodes.', ['%count' => count($results)]);
+  $sent = 0;
+  foreach ($results as $nid) {
+    $state_id = 'hel_tpm.update_reminder.' . $nid;
+    $last_reminded = \Drupal::state()->get($state_id);
+
+    // We haven't reminded about this yet or in two weeks.
+    if ($last_reminded == NULL || $last_reminded < strtotime('-2 weeks')) {
+      $node = $nodeStorage->load($nid);
+      $account = $node->getOwner();
+      $email = $account->getEmail();
+
+      $message = Message::create(['template' => 'hel_tpm_update_reminder', 'uid' => $account->id()]);
+      $message->setOwner($account)
+        ->addContext('node', $node)
+        ->save();
+
+      $notifier = Drupal::service('message_notify.sender');
+      $notifier->send($message);
+
+      \Drupal::state()->set($state_id, time());
+      $sent++;
+    }
+  }
+  \Drupal::logger('hel_tpm_update_reminder')->notice('Sent update reminders for %count expired nodes.', ['%count' => $sent]);
+}
