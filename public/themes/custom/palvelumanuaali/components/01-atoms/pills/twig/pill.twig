@@ -1,0 +1,29 @@
+{#
+/**
+ * Available variables:
+ * - pill_content - the content of the pill (typically text)
+ *
+ * Available blocks:
+ * - pill_content - used to replace the content of the pill with something other than text
+ *   for example: to insert an icon
+ */
+#}
+
+{% set pill_base_class = pill_base_class|default('pill') %}
+
+{% set additional_attributes = {
+  class: bem(pill_base_class, pill_modifiers, pill_blockname),
+} %}
+  <div {{ add_attributes(additional_attributes) }}>
+    {% block pill_content %}
+      {% if pill_icon %}
+        {% include "@atoms/images/icons/_icon.twig" with {
+          icon_base_class: 'arrow',
+          icon_blockname: 'link',
+          icon_name: 'arrow-right',
+        } %}
+      {% else %}
+        {{ pill_content }}
+      {% endif %}
+    {% endblock %}
+  </div>

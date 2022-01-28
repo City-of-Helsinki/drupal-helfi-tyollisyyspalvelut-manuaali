@@ -94,6 +94,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
+	"./icons/LOGO-white.svg": "./images/icons/LOGO-white.svg",
 	"./icons/arrow-right.svg": "./images/icons/arrow-right.svg",
 	"./icons/facebook.svg": "./images/icons/facebook.svg",
 	"./icons/instagram.svg": "./images/icons/instagram.svg",
@@ -122,6 +123,26 @@ webpackContext.keys = function webpackContextKeys() {
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
 webpackContext.id = "./images sync recursive \\.svg$";
+
+/***/ }),
+
+/***/ "./images/icons/LOGO-white.svg":
+/*!*************************************!*\
+  !*** ./images/icons/LOGO-white.svg ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+      id: "LOGO-white-usage",
+      viewBox: "0 0 207 48",
+      url: __webpack_require__.p + "../dist/icons.svg#LOGO-white",
+      toString: function () {
+        return this.url;
+      }
+    });
 
 /***/ }),
 

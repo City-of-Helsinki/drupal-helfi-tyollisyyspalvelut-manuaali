@@ -39,4 +39,6 @@
  @TODO: THIS CAN BE REMOVED IF WYWSIWYG BEM CLASSES CAN BE APPLIED
 #}
 
-{% include directory ~ "/templates/fields/_field-wysiwyg.twig" %}
+{% for item in items %}
+  {{item.content}}
+{% endfor %}

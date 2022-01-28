@@ -1,8 +1,9 @@
 @mixin link {
   color: clr(accent);
-
+  text-decoration: none;
   &:hover {
     color: clr(accent-high);
+    text-decoration: underline;
   }
 }
 

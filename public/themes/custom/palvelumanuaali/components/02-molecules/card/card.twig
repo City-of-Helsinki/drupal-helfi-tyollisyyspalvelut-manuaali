@@ -58,6 +58,23 @@
   {# Content #}
   <div {{ bem('content', card__content__modifiers, card__base_class) }}>
     {# Heading #}
+    {% if card__caption %}
+      {% include "@atoms/text/headings/_heading.twig" with {
+        heading_base_class: card__caption__base_class|default('caption'),
+        heading_modifiers: card__caption__modifiers,
+        heading_blockname: card__base_class,
+        heading_level: 6,
+        heading: card__caption,
+        heading_url: ccard__caption__link,
+      } %}
+    {% endif %}
+    {% if card__caption__status %}
+      {% include "@atoms/pills/twig/pill.twig" with {
+        pill_base_class: card__caption__status__base_class|default('pill'),
+        pill_modifiers: card__caption__status__modifiers,
+        pill_content: card__caption__status,
+      } %}
+    {% endif %}
     {% if card__heading %}
       {{ title_prefix }}
       {% include "@atoms/text/headings/_heading.twig" with {
@@ -112,6 +129,14 @@
         button_content: card__button__content,
         button_url: card__button__url,
         button_icon: card__button_icon_src,
+      } %}
+    {% endif %}
+    {% if card__date  %}
+      {% include "@atoms/text/text/01-paragraph.twig" with {
+        paragraph_base_class: card__date__base_class|default('date'),
+        paragraph_modifiers: card__date__modifiers,
+        paragraph_blockname: card__base_class,
+        paragraph_content: card__date,
       } %}
     {% endif %}
   </div>
