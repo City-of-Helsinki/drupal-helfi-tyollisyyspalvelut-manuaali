@@ -1,0 +1,78 @@
+uuid: 6a2639ad-7227-4522-b938-ac89ec940892
+langcode: fi
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.view_card_lift
+    - field.field.node.service.field_client_consent
+    - field.field.node.service.field_client_consent_description
+    - field.field.node.service.field_contact_info
+    - field.field.node.service.field_contact_info_internal
+    - field.field.node.service.field_description
+    - field.field.node.service.field_implementation_extra_info
+    - field.field.node.service.field_life_situations
+    - field.field.node.service.field_poma_applicable
+    - field.field.node.service.field_poma_applicable_descriptio
+    - field.field.node.service.field_requirements
+    - field.field.node.service.field_service_guidance_guide
+    - field.field.node.service.field_service_id
+    - field.field.node.service.field_service_implementation
+    - field.field.node.service.field_service_language
+    - field.field.node.service.field_service_links_external
+    - field.field.node.service.field_service_links_internal
+    - field.field.node.service.field_service_location
+    - field.field.node.service.field_service_obligations
+    - field.field.node.service.field_service_price
+    - field.field.node.service.field_service_set
+    - field.field.node.service.field_tags
+    - field.field.node.service.field_target_group
+    - node.type.service
+  module:
+    - user
+id: node.service.view_card_lift
+targetEntityType: node
+bundle: service
+mode: view_card_lift
+content:
+  field_description:
+    type: basic_string
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_service_set:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  content_moderation_control: true
+  field_client_consent: true
+  field_client_consent_description: true
+  field_contact_info: true
+  field_contact_info_internal: true
+  field_implementation_extra_info: true
+  field_life_situations: true
+  field_poma_applicable: true
+  field_poma_applicable_descriptio: true
+  field_requirements: true
+  field_service_guidance_guide: true
+  field_service_id: true
+  field_service_implementation: true
+  field_service_language: true
+  field_service_links_external: true
+  field_service_links_internal: true
+  field_service_location: true
+  field_service_obligations: true
+  field_service_price: true
+  field_tags: true
+  field_target_group: true
+  flag_cart: true
+  flag_flag_list_template_1: true
+  flag_lists: true
+  langcode: true
+  links: true
