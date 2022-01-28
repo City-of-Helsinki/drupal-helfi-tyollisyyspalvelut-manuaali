@@ -70,6 +70,7 @@
     {# Subheading #}
     {# Body #}
     {% if hero_text__body %}
+
         {% include "@atoms/text/text/01-paragraph.twig" with {
           paragraph_base_class: hero_text__body__base_class|default('body'),
           paragraph_modifiers: hero_text__body__modifiers,

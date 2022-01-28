@@ -1,11 +1,16 @@
 @mixin grid-item {
   flex: 1 1 100%;
   margin-bottom: $space-double;
+  @include grid-large {
+    margin: 0 $space $space 0;
+    flex-basis: 47%;
+    max-width: 47%;
+  }
 
-  @include large {
-    margin: 0 $space-double $space-double 0;
-    flex-basis: 30%;
-    max-width: 30%;
+  @include grid-xl {
+    margin: 0 $space-one-and-half $space-one-and-half 0;
+    flex-basis: 31%;
+    max-width: 31%;
   }
 
   &:last-child {
