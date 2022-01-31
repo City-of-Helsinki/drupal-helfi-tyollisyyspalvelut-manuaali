@@ -1,0 +1,40 @@
+uuid: b912d7a6-de1a-47fb-9b8e-f2fab5b597d2
+langcode: fi
+status: true
+dependencies:
+  config:
+    - search_api.index.service_search_index
+    - views.view.service_search
+  module:
+    - views
+    - search_api_autocomplete
+id: service_search
+label: 'Service search'
+index_id: service_search_index
+suggester_settings:
+  live_results:
+    fields: {  }
+    highlight:
+      enabled: false
+      field: ''
+    view_modes:
+      'entity:node':
+        service: ''
+  server:
+    fields: {  }
+suggester_weights:
+  live_results: 0
+  server: 0
+suggester_limits: {  }
+search_settings:
+  'views:service_search':
+    displays:
+      default: true
+      selected: {  }
+options:
+  limit: 10
+  min_length: 1
+  show_count: true
+  delay: null
+  submit_button_selector: ':submit'
+  autosubmit: true
