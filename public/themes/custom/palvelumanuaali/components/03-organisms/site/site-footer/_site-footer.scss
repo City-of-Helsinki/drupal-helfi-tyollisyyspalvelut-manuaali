@@ -1,11 +1,12 @@
 .footer {
   background-color: clr(footer-color);
-  padding: $space 0;
+  padding: 0;
   order: 3;
   width: 100%;
-
+  padding: $space;
   @include large {
     margin-left: $sidebar-width;
+    padding: $space-double;
   }
 
   &__inner {
@@ -17,6 +18,17 @@
     @include large {
       flex-direction: row;
     }
+  }
+}
+
+.footer__branding {
+  .link {
+      display: block;
+      width: 100%;
+  }
+  svg {
+    height: 48px;
+    width: 207px;
   }
 }
 

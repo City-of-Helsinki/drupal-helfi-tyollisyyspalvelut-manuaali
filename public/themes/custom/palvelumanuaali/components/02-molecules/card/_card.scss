@@ -11,6 +11,7 @@
   margin-left: $space-double;
   margin-right: $space-double;
   margin-top: $space-two-and-half;
+  position: relative;
 }
 
 .card__heading {
@@ -51,4 +52,39 @@
 .card--bg {
   background-color: clr(highlight-high);
   padding: 1em;
+}
+
+.card--view-card {
+  background-color: clr(sidebar-color);
+  border-radius: 8px;
+  margin-bottom: $space-one-half;
+  .card__content {
+    padding: $space-one-and-half $space-two-and-half $space-double $space-two-and-half;
+    margin: 0;
+  }
+  .card__caption {
+    color: clr(alt-header-color);
+    font-size: $small-caption;
+    line-height: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
+    margin-bottom: $space-one-half;
+  }
+  .card__heading {
+    @include heading-xxs();
+  }
+  // this should be changed to separate 'pill' atom to handle different colors
+  .pill {
+    position: absolute;
+    margin-top: $space-one-and-half;
+    margin-right: $space-two-and-half;
+    top: 0;
+    right: 0;
+  }
+  .card__date {
+    font-size: $small-caption;
+    margin: 0;
+  }
 }
