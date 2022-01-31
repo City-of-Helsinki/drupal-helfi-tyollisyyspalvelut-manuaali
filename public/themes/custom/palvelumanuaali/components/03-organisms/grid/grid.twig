@@ -16,6 +16,12 @@
   {% include "@atoms/text/headings/_heading.twig" with {
     "heading_level": 2,
     "heading": grid_label,
+    heading_icon: grid_label_icon,
+    heading_icon__image__modifiers: grid_label_icon__modifiers,
+    heading_icon__base_class: grid_label_icon__base_class|default('image'),
+    heading_base_class: grid_base_class,
+    heading_modifiers: grid_modifiers,
+    heading_blockname: grid_blockname,
   } %}
 {% endif %}
 <div {{ bem(grid_base_class, grid_modifiers, grid_blockname) }}>

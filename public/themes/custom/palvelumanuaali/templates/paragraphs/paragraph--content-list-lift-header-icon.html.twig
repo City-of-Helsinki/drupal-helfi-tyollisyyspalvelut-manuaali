@@ -44,8 +44,11 @@
 %}
 {% embed "@organisms/grid/grid.twig" with {
   grid_label: content.field_title,
+  grid_label_icon: content.field_icon,
+  grid_label_icon__modifiers: ['grid-icon'],
   grid_type: 'card',
   item_type: 'card',
+
 } %}
   {% block grid_content %}
     {{ content|without('field_title', 'field_icon') }}

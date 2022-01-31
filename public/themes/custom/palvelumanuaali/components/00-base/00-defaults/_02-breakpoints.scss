@@ -19,6 +19,10 @@ $xl: 1224px;
 // largest breakpoint is regardless of actual pixel value. e.g. removing outer margin on body wrapper
 $max-width: 100%;
 
+$grid-large: 1000px;
+$grid-xl: 1300px;
+
+
 /// Mixin - xs Breakpoint
 /// Allows easier @include xs {} syntax
 @mixin xs {
@@ -63,6 +67,19 @@ $max-width: 100%;
 /// Allows easier @include max-width {} syntax
 @mixin max-width {
   @include breakpoint($max-width) {
+    @content;
+  }
+}
+
+@mixin grid-large {
+  @include breakpoint($grid-large) {
+    @content;
+  }
+}
+
+
+@mixin grid-xl {
+  @include breakpoint($grid-xl) {
     @content;
   }
 }
