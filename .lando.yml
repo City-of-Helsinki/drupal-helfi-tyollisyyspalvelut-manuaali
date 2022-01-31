@@ -24,16 +24,10 @@ services:
       environment:
         ENVIRONMENT: "local"
         PHP_IDE_CONFIG: "serverName=appserver"
-    run:
-      # Install platform.sh CLI tools
-      - "mkdir -p /var/www/.platformsh && mkdir -p /var/www/.platformsh/bin"
-      - "curl -fsSL -o /var/www/.platformsh/bin/platform https://github.com/platformsh/platformsh-cli/releases/download/v3.36.0/platform.phar"
-      - "chmod ug+x /var/www/.platformsh/bin/platform"
-#    overrides:
-#      services:
-#        environment:
-          # Add app based parameters for Behat
-          # BEHAT_PARAMS: '{"extensions" : {"Behat\\MinkExtension": {"base_url": "http://{{PROJECT_NAME}}.lndo.site/"}, "Drupal\\DrupalExtension": {"drush": { "root": "/app/web" }}}}'
+  elastic:
+    type: elasticsearch:7
+    portforward: false
+    mem: 1025m
 tooling:
   # Create additional commands for lando
   install-drupal:

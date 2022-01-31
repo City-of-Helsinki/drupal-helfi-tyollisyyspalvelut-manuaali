@@ -5,6 +5,6 @@ mysqldb:
   disk: 1024
 rediscache:
   type: redis:3.2
-#solrsearch:
-#    type: solr:6.6
-#    disk: 1024
+elastic:
+    type: elasticsearch:7.10
+    disk: 1024
