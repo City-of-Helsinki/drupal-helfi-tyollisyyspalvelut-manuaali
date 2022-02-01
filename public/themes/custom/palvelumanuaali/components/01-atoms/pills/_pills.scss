@@ -1,0 +1,161 @@
+// Sass map to define colors. Each set should have a "Dark" variation when required.
+// e.g. `default` and `default-dark`. Or `purple` and `purple-dark`.
+$pill-colors: (
+  primary: (
+    text: clr(text-inverse),
+    bg: clr(primary),
+    text-hover: clr(primary),
+    bg-hover: clr(highlight),
+  ),
+  primary-dark: (
+    text: clr(text-inverse),
+    bg: clr(primary),
+    text-hover: clr(primary),
+    bg-hover: clr(highlight),
+  ),
+  secondary: (
+    text: clr(text-inverse),
+    bg: clr(secondary),
+    text-hover: clr(secondary),
+    bg-hover: clr(highlight),
+  ),
+  secondary-dark: (
+    text: clr(text-inverse),
+    bg: clr(secondary),
+    text-hover: clr(secondary),
+    bg-hover: clr(highlight),
+  ),
+  warning: (
+    text: clr(text-inverse),
+    bg: clr(warning),
+    text-hover: clr(secondary),
+    bg-hover: clr(highlight),
+  ),
+  warning-dark: (
+    text: clr(text-inverse),
+    bg: clr(warning),
+    text-hover: clr(secondary),
+    bg-hover: clr(highlight),
+  ),
+  gray: (
+    text: clr(text-inverse),
+    bg: clr(gray),
+    text-hover: clr(secondary),
+    bg-hover: clr(highlight),
+  ),
+  gray-dark: (
+    text: clr(text-inverse),
+    bg: clr(gray),
+    text-hover: clr(secondary),
+    bg-hover: clr(highlight),
+  ),
+);
+
+// Mixin to define colors for one or more schemes.
+// Simply pass the color scheme to the mixin to get the colors defined in the map.
+// e.g. @include pillColors(default) will get all of the colors defined in the "default" section.
+@mixin pillColors(
+  $scheme,
+  $pallate: map-get($pill-colors, $scheme),
+  $map: $pill-colors
+) {
+  color: map-get($pallate, text);
+  background-color: map-get($pallate, bg);
+
+}
+
+// The pill-base mixin contains styles that apply to all pills
+// regardless of color or size.
+@mixin pill-base {
+  border: none;
+  display: inline-block;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+  border-radius: 4px;
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  letter-spacing: 1px;
+  line-height: 24px;
+  width: min-content;
+}
+
+// Pill color variations
+// Note how we include dark mode options for each
+@mixin pill-color-primary {
+  @include pillColors(primary);
+
+  @media (prefers-color-scheme: dark) {
+    @include pillColors(primary-dark);
+  }
+}
+
+@mixin pill-color-secondary {
+  @include pillColors(secondary);
+
+  @media (prefers-color-scheme: dark) {
+    @include pillColors(secondary-dark);
+  }
+}
+
+@mixin pill-color-warning {
+  @include pillColors(warning);
+
+  @media (prefers-color-scheme: dark) {
+    @include pillColors(warning-dark);
+  }
+}
+
+@mixin pill-color-gray {
+  @include pillColors(gray);
+
+  @media (prefers-color-scheme: dark) {
+    @include pillColors(gray-dark);
+  }
+}
+
+// Pill size variations
+@mixin pill-medium {
+  line-height: 1.4;
+  padding: $space-three-fourths $space-double;
+}
+
+@mixin pill-large {
+  line-height: 2;
+  padding: $space $space-double;
+}
+
+@mixin pill-small {
+  padding: 0px $space;
+  font-size: $small-caption;
+  letter-spacing: 1px;
+}
+
+
+//pill shape variations
+@mixin pill-round-corners {
+  border-radius: 8px;
+}
+
+@mixin pill-round-top {
+  border-radius: 8px 8px 0 0;
+}
+
+.pill {
+  @include pill-base;
+  @include pill-color-primary;
+  @include pill-small;
+
+  &--warning {
+    @include pill-color-warning;
+    @include pill-small;
+  }
+
+  &--gray {
+    @include pill-small;
+    @include pill-color-gray;
+  }
+}

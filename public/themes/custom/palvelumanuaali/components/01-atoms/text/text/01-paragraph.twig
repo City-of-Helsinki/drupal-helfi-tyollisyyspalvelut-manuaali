@@ -13,8 +13,8 @@
 #}
 {% set paragraph_base_class = paragraph_base_class|default('paragraph') %}
 
-<p {{ bem(paragraph_base_class, paragraph_modifiers, paragraph_blockname) }}>
+<div {{ bem(paragraph_base_class, paragraph_modifiers, paragraph_blockname) }}>
   {% block paragraph_content %}
     {{ paragraph_content }}
   {% endblock %}
-</p>
+</div>

@@ -22,21 +22,27 @@ $space-quintuple: $space * 5;
 $space-sextuple: $space * 6;
 $space-septuple: $space * 7;
 
-// Divided
-$space-one-half: calc($space/2);
-$space-one-third: calc($space/3);
-$space-one-fourth: calc($space/4);
-$space-one-fifth: calc($space/5);
-$space-one-sixth: calc($space/6);
-$space-one-seventh: calc($space/7);
-$space-one-eighth: calc($space/8);
+// Divided #{space}
+$space-one-half: calc(#{$space} / 2);
+$space-one-third: calc(#{$space} / 3);
+$space-one-fourth: calc(#{$space} / 4);
+$space-one-fifth: calc(#{$space} / 5);
+$space-one-sixth: calc(#{$space} / 6);
+$space-one-seventh: calc(#{$space} / 7);
+$space-one-eighth: calc(#{$space} / 8);
 
-$space-one-and-half: $space*1.5;
-$space-two-and-half: $space*2.5;
-$space-three-fourths: $space*0.75;
+$space-one-and-half: $space * 1.5;
+$space-two-and-half: $space * 2.5;
+$space-three-fourths: $space * 0.75;
 
 
 $sidebar-width: 280px;
+
+
+
+// Sizes
+
+$small-caption: 0.875rem;
 
 /*
  * Use this on the outer wrapper of page-level elements.
