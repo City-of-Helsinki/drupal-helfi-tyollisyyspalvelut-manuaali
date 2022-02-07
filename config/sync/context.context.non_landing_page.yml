@@ -1,0 +1,60 @@
+uuid: 3a68be44-6c63-4510-8424-b09189b7365b
+langcode: fi
+status: true
+dependencies:
+  module:
+    - node
+    - system
+label: 'Non-landing page'
+name: non_landing_page
+group: null
+description: ''
+requireAllConditions: false
+disabled: false
+conditions:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    negate: true
+    uuid: 8929085d-db34-45eb-b4bf-ca26cd000a4d
+    context_mapping:
+      node: '@node.node_route_context:node'
+    bundles:
+      landing_page: landing_page
+reactions:
+  blocks:
+    id: blocks
+    uuid: 5a2cd3fe-d7b3-48af-a0b7-794eb091b631
+    blocks:
+      075b01f7-bbd2-4a94-a2a8-bf8dfbe26058:
+        uuid: 075b01f7-bbd2-4a94-a2a8-bf8dfbe26058
+        id: system_breadcrumb_block
+        label: Breadcrumbs
+        provider: system
+        label_display: '0'
+        region: content
+        weight: '0'
+        custom_id: system_breadcrumb_block
+        theme: palvelumanuaali
+        css_class: ''
+        unique: 0
+        context_id: non_landing_page
+        context_mapping: {  }
+        third_party_settings: {  }
+      e377b96b-cdb3-42d3-a8f8-10634c29026d:
+        uuid: e377b96b-cdb3-42d3-a8f8-10634c29026d
+        id: system_main_block
+        label: 'Main page content'
+        provider: system
+        label_display: '0'
+        region: content
+        weight: '1'
+        custom_id: system_main_block
+        theme: palvelumanuaali
+        css_class: ''
+        unique: 0
+        context_id: non_landing_page
+        context_mapping: {  }
+        third_party_settings: {  }
+    include_default_blocks: 0
+    saved: false
+weight: 0

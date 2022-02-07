@@ -1,0 +1,56 @@
+uuid: 32d42069-28cb-4250-a1c9-edbd577132c3
+langcode: fi
+status: true
+dependencies:
+  config:
+    - system.menu.main
+  module:
+    - system
+label: Sitewide
+name: sitewide
+group: null
+description: ''
+requireAllConditions: false
+disabled: false
+conditions: {  }
+reactions:
+  blocks:
+    id: blocks
+    uuid: 270e436a-a6e9-46cb-8def-dc822c1b9e61
+    blocks:
+      8187839e-9b5c-4462-aa0e-708b9d4f990c:
+        uuid: 8187839e-9b5c-4462-aa0e-708b9d4f990c
+        id: system_main_block
+        label: 'Main page content'
+        provider: system
+        label_display: '0'
+        region: content
+        weight: '0'
+        custom_id: system_main_block
+        theme: palvelumanuaali
+        css_class: ''
+        unique: 0
+        context_id: sitewide
+        context_mapping: {  }
+        third_party_settings: {  }
+      821a76bf-7bfa-4a4c-abc2-8b553b454f33:
+        uuid: 821a76bf-7bfa-4a4c-abc2-8b553b454f33
+        id: 'system_menu_block:main'
+        label: 'Main navigation'
+        provider: system
+        label_display: '0'
+        region: header
+        weight: '-10'
+        custom_id: system_menu_block_main
+        theme: palvelumanuaali
+        css_class: ''
+        unique: 0
+        context_id: sitewide
+        context_mapping: {  }
+        level: '1'
+        depth: '0'
+        expand_all_items: 0
+        third_party_settings: {  }
+    include_default_blocks: 0
+    saved: false
+weight: 0
