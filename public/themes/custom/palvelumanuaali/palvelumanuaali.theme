@@ -4,3 +4,16 @@
  * @file
  * Functions to support theming.
  */
+
+
+ /**
+  * Implements hook_preprocess_breadcrumb().
+  */
+ function palvelumanuaali_preprocess_breadcrumb(&$variables){
+   $request = \Drupal::request();
+   $route = \Drupal::routeMatch()->getRouteObject();
+   if ($variables['breadcrumb']) {
+     $variables['title'] = \Drupal::service('title_resolver')->getTitle($request, $route);
+   }
+   $variables['#cache']['contexts'][] = 'url';
+ }
