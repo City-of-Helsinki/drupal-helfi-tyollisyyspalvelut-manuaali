@@ -13,8 +13,9 @@
       } %}
     {% endif %}
       {% include "@atoms/text/headings/_heading.twig" with {
-        heading_level: '2',
+        heading_level: '1',
         heading: node__label,
+        heading_base_class: 'page-heading', 
       }
     %}
   {% endblock %}
