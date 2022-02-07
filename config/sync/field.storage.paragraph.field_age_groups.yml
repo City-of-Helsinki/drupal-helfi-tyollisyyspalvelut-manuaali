@@ -1,0 +1,37 @@
+uuid: 2e697f56-bd7e-400d-b61a-10e6affdd7e1
+langcode: fi
+status: true
+dependencies:
+  module:
+    - field_permissions
+    - options
+    - paragraphs
+third_party_settings:
+  field_permissions:
+    permission_type: public
+id: paragraph.field_age_groups
+field_name: field_age_groups
+entity_type: paragraph
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: under_18
+      label: 'Alle 18 vuotiaat'
+    -
+      value: under_30
+      label: 'Alle 30 vuotiaat'
+    -
+      value: over_30
+      label: 'Yli 30 vuotiaat'
+    -
+      value: over_50
+      label: 'Yli 50 vuotiaat'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

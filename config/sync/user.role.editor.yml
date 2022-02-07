@@ -1,7 +1,19 @@
 uuid: fd34aae0-598d-4516-a64c-c7e3acb431ed
 langcode: fi
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - filter.format.filtered_html
+    - node.type.service
+    - workflows.workflow.service_moderation
+  module:
+    - content_moderation
+    - content_translation
+    - field_permissions
+    - filter
+    - node
+    - paragraphs
+    - paragraphs_type_permissions
 id: editor
 label: Sisällöntuottaja
 weight: 4

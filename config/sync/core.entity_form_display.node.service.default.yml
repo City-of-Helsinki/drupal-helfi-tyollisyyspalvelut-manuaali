@@ -15,7 +15,7 @@ dependencies:
     - field.field.node.service.field_requirements
     - field.field.node.service.field_service_guidance_guide
     - field.field.node.service.field_service_id
-    - field.field.node.service.field_service_implementation
+    - field.field.node.service.field_service_implement
     - field.field.node.service.field_service_language
     - field.field.node.service.field_service_links_external
     - field.field.node.service.field_service_links_internal
@@ -34,6 +34,7 @@ dependencies:
     - link
     - paragraphs
     - path
+    - text
 third_party_settings:
   field_group:
     group_tabs:
@@ -78,8 +79,7 @@ third_party_settings:
         - field_life_situations
         - field_requirements
         - field_service_obligations
-        - field_service_implementation
-        - field_implementation_extra_info
+        - group_service_implementation
         - field_service_location
         - field_service_language
         - field_contact_info
@@ -120,6 +120,21 @@ third_party_settings:
       region: content
       parent_name: group_specialist
       weight: 24
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        description: ''
+        required_fields: true
+    group_service_implementation:
+      children:
+        - field_service_implement
+        - field_implementation_extra_info
+      label: 'Service implementation'
+      region: hidden
+      parent_name: group_customer
+      weight: 17
       format_type: fieldset
       format_settings:
         classes: ''
@@ -225,7 +240,7 @@ content:
     third_party_settings: {  }
   field_implementation_extra_info:
     type: options_buttons
-    weight: 18
+    weight: 15
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -243,16 +258,23 @@ content:
       display_label: true
     third_party_settings: {  }
   field_poma_applicable_descriptio:
-    type: entity_reference_paragraphs
+    type: paragraphs
     weight: 24
     region: content
     settings:
       title: Paragraph
       title_plural: Paragraphs
       edit_mode: open
+      closed_mode: summary
+      autocollapse: none
+      closed_mode_threshold: 0
       add_mode: dropdown
       form_display_mode: default
-      default_paragraph_type: ''
+      default_paragraph_type: _none
+      features:
+        add_above: '0'
+        collapse_edit_all: collapse_edit_all
+        duplicate: duplicate
     third_party_settings:
       conditional_fields:
         2520739e-d8a7-4391-ae43-6e62bf263395:
@@ -285,7 +307,7 @@ content:
       closed_mode_threshold: 0
       add_mode: dropdown
       form_display_mode: default
-      default_paragraph_type: content
+      default_paragraph_type: _none
       features:
         add_above: '0'
         collapse_edit_all: collapse_edit_all
@@ -311,23 +333,13 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-  field_service_implementation:
-    type: paragraphs
-    weight: 17
+  field_service_implement:
+    type: text_textarea
+    weight: 14
     region: content
     settings:
-      title: Paragraph
-      title_plural: Paragraphs
-      edit_mode: open
-      closed_mode: summary
-      autocollapse: none
-      closed_mode_threshold: 0
-      add_mode: dropdown
-      form_display_mode: default
-      default_paragraph_type: ''
-      features:
-        collapse_edit_all: collapse_edit_all
-        duplicate: duplicate
+      rows: 5
+      placeholder: ''
     third_party_settings: {  }
   field_service_language:
     type: options_buttons
@@ -364,14 +376,15 @@ content:
     settings:
       title: Paragraph
       title_plural: Paragraphs
-      edit_mode: preview
-      closed_mode: summary
+      edit_mode: closed
+      closed_mode: preview
       autocollapse: none
       closed_mode_threshold: 0
       add_mode: dropdown
       form_display_mode: default
-      default_paragraph_type: content
+      default_paragraph_type: _none
       features:
+        add_above: '0'
         collapse_edit_all: collapse_edit_all
         duplicate: duplicate
     third_party_settings: {  }
@@ -388,7 +401,7 @@ content:
       closed_mode_threshold: 0
       add_mode: dropdown
       form_display_mode: default
-      default_paragraph_type: service_price
+      default_paragraph_type: _none
       features:
         add_above: '0'
         collapse_edit_all: collapse_edit_all
@@ -419,11 +432,11 @@ content:
       title_plural: Paragraphs
       edit_mode: closed
       closed_mode: summary
-      autocollapse: none
+      autocollapse: all
       closed_mode_threshold: 0
       add_mode: dropdown
       form_display_mode: default
-      default_paragraph_type: target_group
+      default_paragraph_type: _none
       features:
         add_above: '0'
         collapse_edit_all: collapse_edit_all
@@ -431,7 +444,7 @@ content:
     third_party_settings: {  }
   langcode:
     type: language_select
-    weight: 4
+    weight: 5
     region: content
     settings:
       include_locked: true
@@ -478,13 +491,13 @@ content:
       placeholder: ''
     third_party_settings: {  }
   translation:
-    weight: 6
+    weight: 7
     region: content
     settings: {  }
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 5
+    weight: 6
     region: content
     settings:
       match_operator: CONTAINS

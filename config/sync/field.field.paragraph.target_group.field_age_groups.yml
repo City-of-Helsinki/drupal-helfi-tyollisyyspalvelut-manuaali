@@ -1,21 +1,21 @@
-uuid: cc02afd9-c45c-46fb-9913-da6f1be8e518
+uuid: 876a39c1-f8f2-4232-85b6-1e88b1a60478
 langcode: fi
 status: true
 dependencies:
   config:
-    - field.storage.paragraph.field_description
+    - field.storage.paragraph.field_age_groups
     - paragraphs.paragraphs_type.target_group
   module:
-    - text
-id: paragraph.target_group.field_description
-field_name: field_description
+    - options
+id: paragraph.target_group.field_age_groups
+field_name: field_age_groups
 entity_type: paragraph
 bundle: target_group
-label: Kohderyhmäkuvaus
+label: 'Kohderyhmän ikä'
 description: ''
 required: false
 translatable: true
 default_value: {  }
 default_value_callback: ''
 settings: {  }
-field_type: text_long
+field_type: list_string

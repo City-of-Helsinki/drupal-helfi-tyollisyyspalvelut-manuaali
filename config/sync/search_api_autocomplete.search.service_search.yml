@@ -13,7 +13,8 @@ label: 'Service search'
 index_id: service_search_index
 suggester_settings:
   live_results:
-    fields: {  }
+    fields:
+      - rendered_item
     highlight:
       enabled: false
       field: ''
@@ -33,7 +34,7 @@ search_settings:
       selected: {  }
 options:
   limit: 10
-  min_length: 1
+  min_length: 3
   show_count: true
   delay: null
   submit_button_selector: ':submit'

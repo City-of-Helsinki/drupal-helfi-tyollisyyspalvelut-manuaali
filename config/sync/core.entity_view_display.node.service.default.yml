@@ -15,7 +15,7 @@ dependencies:
     - field.field.node.service.field_requirements
     - field.field.node.service.field_service_guidance_guide
     - field.field.node.service.field_service_id
-    - field.field.node.service.field_service_implementation
+    - field.field.node.service.field_service_implement
     - field.field.node.service.field_service_language
     - field.field.node.service.field_service_links_external
     - field.field.node.service.field_service_links_internal
@@ -29,6 +29,7 @@ dependencies:
   module:
     - entity_reference_revisions
     - link
+    - text
     - user
 id: node.service.default
 targetEntityType: node
@@ -140,14 +141,12 @@ content:
     third_party_settings: {  }
     weight: 1
     region: content
-  field_service_implementation:
-    type: entity_reference_revisions_entity_view
+  field_service_implement:
+    type: text_default
     label: above
-    settings:
-      view_mode: default
-      link: ''
+    settings: {  }
     third_party_settings: {  }
-    weight: 25
+    weight: 33
     region: content
   field_service_language:
     type: entity_reference_label
