@@ -75,6 +75,15 @@ $main-content-width: calc(100% - (#{$sidebar-width} + #{$main-gutter} *2 ));
   }
 }
 
+.date {
+  font-weight: bold;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: clr(alt-header-color);
+  margin-bottom: $space;
+}
+
 /*
  * Layout Using CSS Grid (NO IE11 support)
  * Remove Flexbox code above and uncomment this section to use CSS Grid.
