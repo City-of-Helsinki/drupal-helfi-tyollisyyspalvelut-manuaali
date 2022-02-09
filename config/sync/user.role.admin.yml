@@ -1,7 +1,23 @@
 uuid: 22b11b44-72da-491d-ae5b-cc55899db482
 langcode: fi
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - filter.format.filtered_html
+    - filter.format.full_html
+    - workflows.workflow.service_moderation
+  module:
+    - content_moderation
+    - content_translation
+    - field_permissions
+    - filter
+    - group
+    - locale
+    - node
+    - path
+    - shortcut
+    - system
+    - taxonomy
 id: admin
 label: Admin
 weight: 3

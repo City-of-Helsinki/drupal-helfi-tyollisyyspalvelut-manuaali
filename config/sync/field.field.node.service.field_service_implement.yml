@@ -1,0 +1,21 @@
+uuid: f8cf4192-78b4-4496-aef0-7b94e516f338
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_service_implement
+    - node.type.service
+  module:
+    - text
+id: node.service.field_service_implement
+field_name: field_service_implement
+entity_type: node
+bundle: service
+label: 'Palvelun toteutus'
+description: 'Ilmoita, miten palvelu on toteutettu, mitä palvelussa tapahtuu, miten se on ajallisesti saatavilla eri totetutustavoissa (ajankohta, kesto, kellonaika) ja missä se tapahtuu siltä osin kuin on palvelun sisällön suhteen oleellista. '
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

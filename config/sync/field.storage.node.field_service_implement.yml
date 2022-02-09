@@ -1,20 +1,20 @@
-uuid: 4b2de453-69ac-4261-8686-3cfb3b5e7d3b
+uuid: a4bba1ee-6865-4ac3-8b9b-22077c8b6333
 langcode: fi
 status: true
 dependencies:
   module:
     - field_permissions
-    - paragraphs
-    - range
+    - node
+    - text
 third_party_settings:
   field_permissions:
     permission_type: public
-id: paragraph.field_age
-field_name: field_age
-entity_type: paragraph
-type: range_integer
+id: node.field_service_implement
+field_name: field_service_implement
+entity_type: node
+type: text_long
 settings: {  }
-module: range
+module: text
 locked: false
 cardinality: 1
 translatable: true
