@@ -23,16 +23,16 @@ runtime:
 relationships:
   database: "mysqldb:mysql"
   redis: "rediscache:redis"
-  #solr: "solrsearch:solr"
+  elastic: "elastic:elasticsearch"
 
 # The size of the persistent disk of the application (in MB).
-disk: 4096
+disk: 3000
 
 # The 'mounts' describe writable, persistent filesystem mounts in the application. The keys are
 # directory paths, relative to the application root. The values are strings such as
 # 'shared:files/PATH', where PATH is a relative path under the mount's source directory.
 mounts:
-  "/web/sites/default/files": "shared:files/files"
+  "/public/sites/default/files": "shared:files/files"
   "/tmp": "shared:files/tmp"
   "/private": "shared:files/private"
   "/.drush": "shared:files/.drush"
@@ -50,7 +50,7 @@ hooks:
   # The deploy hook runs after your application has been deployed and started.
   deploy: |
     set -e
-    cd web
+    cd public
     drush -y cache-rebuild
     drush -y updatedb
     drush -y cache-rebuild
@@ -58,7 +58,7 @@ hooks:
     drush -y cache-rebuild
   post_deploy: |
     set -e
-    cd web
+    cd public
     drush -y cache-rebuild
     drush -y locale-check
     drush -y locale-update
@@ -116,7 +116,7 @@ web:
       allow: true
       expires: 5m
       passthru: "/index.php"
-      root: "web/sites/default/files"
+      root: "public/sites/default/files"
 
       # Do not execute PHP scripts.
       scripts: false
@@ -130,7 +130,7 @@ web:
 crons:
   drupal:
     spec: "*/30 * * * *"
-    cmd: "cd web ; drush core-cron"
+    cmd: "cd public; drush core-cron"
   snapshot:
     # Force a snapshot each night.
     spec: "0 0 * * *"
@@ -148,4 +148,4 @@ crons:
   lightweightcron:
     # Run lightweight cron.
     spec: "* * * * *"
-    cmd: "cd web; drush scheduler-cron"
+    cmd: "cd public; drush scheduler-cron"
