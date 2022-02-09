@@ -1,1 +1,287 @@
-!function(t){var r={};function n(e){if(r[e])return r[e].exports;var i=r[e]={i:e,l:!1,exports:{}};return t[e].call(i.exports,i,i.exports,n),i.l=!0,i.exports}n.m=t,n.c=r,n.d=function(t,r,e){n.o(t,r)||Object.defineProperty(t,r,{enumerable:!0,get:e})},n.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},n.t=function(t,r){if(1&r&&(t=n(t)),8&r)return t;if(4&r&&"object"==typeof t&&t&&t.__esModule)return t;var e=Object.create(null);if(n.r(e),Object.defineProperty(e,"default",{enumerable:!0,value:t}),2&r&&"string"!=typeof t)for(var i in t)n.d(e,i,function(r){return t[r]}.bind(null,i));return e},n.n=function(t){var r=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(r,"a",r),r},n.o=function(t,r){return Object.prototype.hasOwnProperty.call(t,r)},n.p="",n(n.s=2)}([,,function(t,r,n){var e;(e=n(3)).keys().forEach(e)},function(t,r,n){var e={"./icons/LOGO-white.svg":4,"./icons/arrow-right.svg":5,"./icons/facebook.svg":6,"./icons/instagram.svg":7,"./icons/menu.svg":8,"./icons/twitter.svg":9,"./logo.svg":10,"./symbol.svg":11};function i(t){var r=o(t);return n(r)}function o(t){if(!n.o(e,t)){var r=new Error("Cannot find module '"+t+"'");throw r.code="MODULE_NOT_FOUND",r}return e[t]}i.keys=function(){return Object.keys(e)},i.resolve=o,t.exports=i,i.id=3},function(t,r,n){"use strict";n.r(r),r.default={id:"LOGO-white-usage",viewBox:"0 0 207 48",url:n.p+"../dist/icons.svg#LOGO-white",toString:function(){return this.url}}},function(t,r,n){"use strict";n.r(r),r.default={id:"arrow-right-usage",viewBox:"0 0 24 24",url:n.p+"../dist/icons.svg#arrow-right",toString:function(){return this.url}}},function(t,r,n){"use strict";n.r(r),r.default={id:"facebook-usage",viewBox:"0 0 264 512",url:n.p+"../dist/icons.svg#facebook",toString:function(){return this.url}}},function(t,r,n){"use strict";n.r(r),r.default={id:"instagram-usage",viewBox:"0 0 448 512",url:n.p+"../dist/icons.svg#instagram",toString:function(){return this.url}}},function(t,r,n){"use strict";n.r(r),r.default={id:"menu-usage",viewBox:"0 0 32 32",url:n.p+"../dist/icons.svg#menu",toString:function(){return this.url}}},function(t,r,n){"use strict";n.r(r),r.default={id:"twitter-usage",viewBox:"0 0 26 28",url:n.p+"../dist/icons.svg#twitter",toString:function(){return this.url}}},function(t,r,n){"use strict";n.r(r),r.default=n.p+"cd9a888fd1251802f9415382b3add8a7.svg"},function(t,r,n){"use strict";n.r(r),r.default=n.p+"1d0fccb1328d8099f2308b5bdf6cf50f.svg"}]);
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./webpack/svgSprite.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./images sync recursive \\.svg$":
+/*!****************************!*\
+  !*** ./images sync \.svg$ ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var map = {
+	"./icons/LOGO-white.svg": "./images/icons/LOGO-white.svg",
+	"./icons/arrow-right.svg": "./images/icons/arrow-right.svg",
+	"./icons/facebook.svg": "./images/icons/facebook.svg",
+	"./icons/instagram.svg": "./images/icons/instagram.svg",
+	"./icons/menu.svg": "./images/icons/menu.svg",
+	"./icons/twitter.svg": "./images/icons/twitter.svg",
+	"./logo.svg": "./images/logo.svg",
+	"./symbol.svg": "./images/symbol.svg"
+};
+
+
+function webpackContext(req) {
+	var id = webpackContextResolve(req);
+	return __webpack_require__(id);
+}
+function webpackContextResolve(req) {
+	if(!__webpack_require__.o(map, req)) {
+		var e = new Error("Cannot find module '" + req + "'");
+		e.code = 'MODULE_NOT_FOUND';
+		throw e;
+	}
+	return map[req];
+}
+webpackContext.keys = function webpackContextKeys() {
+	return Object.keys(map);
+};
+webpackContext.resolve = webpackContextResolve;
+module.exports = webpackContext;
+webpackContext.id = "./images sync recursive \\.svg$";
+
+/***/ }),
+
+/***/ "./images/icons/LOGO-white.svg":
+/*!*************************************!*\
+  !*** ./images/icons/LOGO-white.svg ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+      id: "LOGO-white-usage",
+      viewBox: "0 0 207 48",
+      url: __webpack_require__.p + "../dist/icons.svg#LOGO-white",
+      toString: function () {
+        return this.url;
+      }
+    });
+
+/***/ }),
+
+/***/ "./images/icons/arrow-right.svg":
+/*!**************************************!*\
+  !*** ./images/icons/arrow-right.svg ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+      id: "arrow-right-usage",
+      viewBox: "0 0 24 24",
+      url: __webpack_require__.p + "../dist/icons.svg#arrow-right",
+      toString: function () {
+        return this.url;
+      }
+    });
+
+/***/ }),
+
+/***/ "./images/icons/facebook.svg":
+/*!***********************************!*\
+  !*** ./images/icons/facebook.svg ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+      id: "facebook-usage",
+      viewBox: "0 0 264 512",
+      url: __webpack_require__.p + "../dist/icons.svg#facebook",
+      toString: function () {
+        return this.url;
+      }
+    });
+
+/***/ }),
+
+/***/ "./images/icons/instagram.svg":
+/*!************************************!*\
+  !*** ./images/icons/instagram.svg ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+      id: "instagram-usage",
+      viewBox: "0 0 448 512",
+      url: __webpack_require__.p + "../dist/icons.svg#instagram",
+      toString: function () {
+        return this.url;
+      }
+    });
+
+/***/ }),
+
+/***/ "./images/icons/menu.svg":
+/*!*******************************!*\
+  !*** ./images/icons/menu.svg ***!
+  \*******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+      id: "menu-usage",
+      viewBox: "0 0 32 32",
+      url: __webpack_require__.p + "../dist/icons.svg#menu",
+      toString: function () {
+        return this.url;
+      }
+    });
+
+/***/ }),
+
+/***/ "./images/icons/twitter.svg":
+/*!**********************************!*\
+  !*** ./images/icons/twitter.svg ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+      id: "twitter-usage",
+      viewBox: "0 0 26 28",
+      url: __webpack_require__.p + "../dist/icons.svg#twitter",
+      toString: function () {
+        return this.url;
+      }
+    });
+
+/***/ }),
+
+/***/ "./images/logo.svg":
+/*!*************************!*\
+  !*** ./images/logo.svg ***!
+  \*************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "cd9a888fd1251802f9415382b3add8a7.svg");
+
+/***/ }),
+
+/***/ "./images/symbol.svg":
+/*!***************************!*\
+  !*** ./images/symbol.svg ***!
+  \***************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "1d0fccb1328d8099f2308b5bdf6cf50f.svg");
+
+/***/ }),
+
+/***/ "./webpack/svgSprite.js":
+/*!******************************!*\
+  !*** ./webpack/svgSprite.js ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+function requireAll(a){a.keys().forEach(a)}requireAll(__webpack_require__("./images sync recursive \\.svg$"));
+
+/***/ })
+
+/******/ });
+//# sourceMappingURL=svgSprite.js.map

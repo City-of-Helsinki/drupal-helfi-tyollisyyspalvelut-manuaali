@@ -1,0 +1,23 @@
+
+{% embed "@templates/with-content-sidebar.twig" with {
+  content_base_class: service_base_class,
+} %}
+{% block content %} {{content}}{% endblock %}
+  {% block page_content %}
+    {% if service__updated  %}
+      {% include "@atoms/text/text/01-paragraph.twig" with {
+        paragraph_base_class: card__date__base_class|default('date'),
+        paragraph_modifiers: card__date__modifiers,
+        paragraph_blockname: card__base_class,
+        paragraph_content: service__updated,
+      } %}
+    {% endif %}
+      {% include "@atoms/text/headings/_heading.twig" with {
+        heading_level: '1',
+        heading: node__label,
+        heading_base_class: 'page-heading', 
+      }
+    %}
+  {% endblock %}
+
+{% endembed %}

@@ -18,10 +18,11 @@
         {% if item.url %}
           <a {{ bem('link', [], breadcrumb__base_class) }} href="{{ item.url }}">{{ item.text }}</a>
         {% else %}
-          {{ item.text }}
+            {{ item.text }}
         {% endif %}
       </li>
     {% endfor %}
+      <li{{ bem('item', [], breadcrumb__base_class) }} aria-current="page">{{ title }}</li>
     </ol>
   </nav>
 {% endif %}

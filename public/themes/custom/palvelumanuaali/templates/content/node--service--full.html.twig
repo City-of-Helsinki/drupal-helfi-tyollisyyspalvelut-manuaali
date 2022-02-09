@@ -70,27 +70,21 @@
  *   in different view modes.
  */
 #}
-{% set greeting_text = 'Updated '|t  %}
-{% if node.moderation_state.value == 'draft' %}
-  {% set published_state = 'Draft'|t %}
-  {% set status_modifiers = ['warning'] %}
-{% elseif node.moderation_state.value == 'outdated'%}
-  {% set published_state = 'Outdated'|t %}
-  {% set status_modifiers = ['gray'] %}
-{% endif %}
-{# todo: source for card__caption should be added when it is set #}
-{% embed "@molecules/card/card.twig" with {
-  card__blockname: item.card__blockname,
-  card__modifiers: ['view-card'],
-  card__caption: contnet.field_service_set.value,
-  card__caption__status: published_state|default('Published'|t),
-  card__caption__status__modifiers: status_modifiers,
-  card__heading: label,
-  card__heading__link: url,
-  card__body: content.field_description,
-  card__date: greeting_text ~ node.changed.value|date("d.m.Y"),
-} %}
-{% block card__img %}
-  {{ content.moderation_state }}
-{% endblock %}
-{% endembed %}
+
+  {% set greeting_text = 'Updated '|t  %}
+
+  {% embed "@pages/content-types/service.twig" with {
+    hero_text__heading: content.field_hero_label,
+    hero_text__body: content.field_hero_text,
+    hero_text__button__url: content.field_hero_link[0]['#url'],
+    hero_text__button__text: content.field_hero_link[0]['#title'],
+    hero_text__media: content.field_hero_media,
+    hero_text__image__modifiers: ['one-third'],
+    hero_text__content__modifiers: ['half'],
+    service_base_class: 'service',
+    service_modifiers:service_modifiers,
+    service_blockname:service_blockname,
+    service__updated: greeting_text ~ node.changed.value|date("d.m.Y"),
+    node__label: label,
+  } %}
+  {% endembed %}

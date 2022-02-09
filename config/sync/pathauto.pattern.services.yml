@@ -1,0 +1,22 @@
+uuid: e150d93e-23e5-4f6a-9eee-8140b6435257
+langcode: fi
+status: true
+dependencies:
+  module:
+    - node
+id: services
+label: Palvelut
+type: 'canonical_entities:node'
+pattern: '[node:menu-link:parents]/[node:title]'
+selection_criteria:
+  557e6b49-59c6-4832-8c7e-b6e8ba4589bd:
+    id: node_type
+    negate: false
+    uuid: 557e6b49-59c6-4832-8c7e-b6e8ba4589bd
+    context_mapping:
+      node: node
+    bundles:
+      service: service
+selection_logic: and
+weight: -5
+relationships: {  }

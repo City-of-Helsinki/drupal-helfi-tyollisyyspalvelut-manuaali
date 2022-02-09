@@ -1,6 +1,6 @@
-$color-breadcrumb: clr(accent);
+$color-breadcrumb: clr(background-section);
 $color-breadcrumb-hover: clr(accent-high);
-$color-breadcrumb-active: clr(text);
+$color-breadcrumb-active: clr(accent);
 
 .breadcrumb {
   @include list-reset;
@@ -22,9 +22,13 @@ $color-breadcrumb-active: clr(text);
 .breadcrumb__item {
   display: inline-block;
   font-size: 0.75rem;
-
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: bold;
   &::after {
-    content: '/';
+    content: '›';
+    margin: 0px 8px;
+    color: clr(accent);
   }
 
   &:last-child {
@@ -38,4 +42,18 @@ $color-breadcrumb-active: clr(text);
 
 .breadcrumb_link:active {
   color: $color-breadcrumb-active;
+}
+
+#block-system-breadcrumb-block {
+  margin-top: $space-one-and-half;
+  margin-bottom: $space-two-and-half;
+
+  @include large {
+    margin-top: $space-double;
+    margin-bottom: $space-two-and-half;
+  }
+  @include xl {
+    margin-top: $space-quadruple;
+    margin-bottom: $space-two-and-half;
+  }
 }
