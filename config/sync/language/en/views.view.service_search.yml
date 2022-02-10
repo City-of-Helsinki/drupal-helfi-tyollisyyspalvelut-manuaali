@@ -11,3 +11,14 @@ display:
         field_service_language:
           expose:
             label: 'Service language'
+        search_api_fulltext:
+          expose:
+            label: Search
+      exposed_form:
+        options:
+          submit_button: Search
+          exposed_sorts_label: Sort
+      sorts:
+        title:
+          expose:
+            label: Title
