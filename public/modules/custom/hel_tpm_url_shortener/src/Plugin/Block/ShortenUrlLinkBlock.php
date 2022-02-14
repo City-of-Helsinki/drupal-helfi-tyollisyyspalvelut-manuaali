@@ -5,7 +5,7 @@ namespace Drupal\hel_tpm_url_shortener\Plugin\Block;
 use Drupal\Core\Block\BlockBase;
 
 /**
- * Provides an example block.
+ * Provides url shortener link block.
  *
  * @Block(
  *   id = "hel_tpm_url_shortener_form",
