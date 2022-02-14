@@ -1,0 +1,59 @@
+uuid: 8f561973-3932-4b6e-a6e1-c0f2314289ef
+langcode: fi
+status: true
+dependencies:
+  config:
+    - views.view.services
+  module:
+    - system
+    - user
+    - views
+label: 'Front page users'
+name: front_page_users
+group: null
+description: ''
+requireAllConditions: true
+disabled: false
+conditions:
+  request_path:
+    id: request_path
+    negate: false
+    uuid: 47bf667f-d149-45d0-827c-c202e7e41112
+    context_mapping: {  }
+    pages: /node/5
+  user_role:
+    id: user_role
+    negate: false
+    uuid: 4326e0da-3d88-442e-948b-b0b4d69b14e9
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      anonymous: anonymous
+      root: root
+      admin: admin
+      specialist: specialist
+reactions:
+  blocks:
+    id: blocks
+    uuid: 1d6e98dc-d15a-4254-8f61-edc73642519b
+    blocks:
+      e878ea9b-b7a4-400b-9caa-584ab7b35ab1:
+        uuid: e878ea9b-b7a4-400b-9caa-584ab7b35ab1
+        id: 'views_block:services-block_1'
+        label: ''
+        provider: views
+        label_display: visible
+        region: content
+        weight: '0'
+        custom_id: views_block_services_block_1
+        theme: palvelumanuaali
+        css_class: ''
+        unique: 0
+        context_id: front_page_users
+        context_mapping: {  }
+        views_label: ''
+        items_per_page: none
+        third_party_settings: {  }
+    include_default_blocks: 0
+    saved: false
+weight: 0
