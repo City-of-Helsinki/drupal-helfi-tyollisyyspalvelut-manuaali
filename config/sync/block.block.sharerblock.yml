@@ -1,0 +1,28 @@
+uuid: edefae7b-1cee-43b3-a1bb-e8cc660f017c
+langcode: fi
+status: true
+dependencies:
+  module:
+    - hel_tpm_sharer
+    - node
+  theme:
+    - palvelumanuaali
+id: sharerblock
+theme: palvelumanuaali
+region: content
+weight: 0
+provider: null
+plugin: hel_sharer_block
+settings:
+  id: hel_sharer_block
+  label: 'Sharer block'
+  label_display: '0'
+  provider: hel_tpm_sharer
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+    bundles:
+      service: service
