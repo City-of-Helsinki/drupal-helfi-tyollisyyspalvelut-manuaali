@@ -66,13 +66,20 @@ class Shortenerredirect extends ContentEntityBase implements ShortenerredirectIn
     return $this;
   }
 
+  /**
+   * @return string
+   */
   public function getShortUrl() {
     return \Drupal::request()->getSchemeAndHttpHost() . $this->shortened_link->uri;
   }
 
+  /**
+   * @return mixed
+   */
   public function getRedirectSource() {
     return $this->redirect_source->path;
   }
+
   /**
    * {@inheritdoc}
    */

@@ -19,9 +19,7 @@ class ShortenUrlLinkBlock extends BlockBase {
    * {@inheritdoc}
    */
   public function build() {
-    $form = \Drupal::formBuilder()->getForm('Drupal\hel_tpm_url_shortener\Form\ShortenUrlLinkForm');
-
-    return $form;
+    return \Drupal::formBuilder()->getForm('Drupal\hel_tpm_url_shortener\Form\ShortenUrlLinkForm');
   }
 
 }

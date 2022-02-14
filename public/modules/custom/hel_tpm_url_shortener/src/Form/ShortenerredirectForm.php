@@ -23,11 +23,9 @@ class ShortenerredirectForm extends ContentEntityForm {
     $logger_arguments = $message_arguments + ['link' => render($link)];
 
     if ($result == SAVED_NEW) {
-      $this->messenger()->addStatus($this->t('New shortenerredirect %label has been created.', $message_arguments));
       $this->logger('hel_tpm_url_shortener')->notice('Created new shortenerredirect %label', $logger_arguments);
     }
     else {
-      $this->messenger()->addStatus($this->t('The shortenerredirect %label has been updated.', $message_arguments));
       $this->logger('hel_tpm_url_shortener')->notice('Updated new shortenerredirect %label.', $logger_arguments);
     }
 
