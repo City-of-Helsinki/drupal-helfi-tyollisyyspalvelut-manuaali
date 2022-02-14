@@ -59,13 +59,14 @@ class ShortUrlService {
     $params = [];
     $query_params = $request->query->all();
     if (!empty($query_params)) {
-      $params['query'] = $query_params;
+      $params = array_merge($params, $query_params);
     }
 
     if ($request->attributes->has('_entity')) {
       $entity = $request->attributes->get('_entity');
       $params[$entity->getEntityTypeId()] = $entity->id();
     }
+
     $url = Url::fromRoute($route, $params);
 
     if ($url->isExternal())
