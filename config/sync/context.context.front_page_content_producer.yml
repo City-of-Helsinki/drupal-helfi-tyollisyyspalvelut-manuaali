@@ -1,0 +1,56 @@
+uuid: f416470d-34af-46a7-8adc-a2ec2079ecc7
+langcode: fi
+status: true
+dependencies:
+  config:
+    - views.view.services
+  module:
+    - system
+    - user
+    - views
+label: 'Front page content producer'
+name: front_page_content_producer
+group: null
+description: ''
+requireAllConditions: true
+disabled: false
+conditions:
+  user_role:
+    id: user_role
+    negate: false
+    uuid: a3ff9463-e7fe-4f91-a4c9-e4bac86de120
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      editor: editor
+  request_path:
+    id: request_path
+    negate: false
+    uuid: bccdd167-57b5-435f-9287-a2af5d15b17f
+    context_mapping: {  }
+    pages: '<front>'
+reactions:
+  blocks:
+    id: blocks
+    uuid: 57234271-2373-49b4-9f9d-409e498e4e94
+    blocks:
+      8bbc7df0-5cb7-45ae-9a8a-caafbf83382c:
+        uuid: 8bbc7df0-5cb7-45ae-9a8a-caafbf83382c
+        id: 'views_block:services-block_2'
+        label: ''
+        provider: views
+        label_display: visible
+        region: content
+        weight: '0'
+        custom_id: views_block_services_block_2
+        theme: palvelumanuaali
+        css_class: ''
+        unique: 0
+        context_id: front_page_content_producer
+        context_mapping: {  }
+        views_label: ''
+        items_per_page: none
+        third_party_settings: {  }
+    include_default_blocks: 0
+    saved: false
+weight: 0
