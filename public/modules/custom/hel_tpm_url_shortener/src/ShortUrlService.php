@@ -26,6 +26,14 @@ class ShortUrlService {
   protected $requestStack;
 
   /**
+   * @var string[]
+   */
+  protected $entityTypes = [
+    '_entity',
+    'node',
+  ];
+
+  /**
    * Constructs a ShortUrlService object.
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
@@ -47,6 +55,7 @@ class ShortUrlService {
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function generateShortLink() {
+
     $request = $this->requestStack->getCurrentRequest();
     $request->query->remove('ajax_form');
     $request->query->remove('_wrapper_format');
@@ -62,9 +71,11 @@ class ShortUrlService {
       $params = array_merge($params, $query_params);
     }
 
-    if ($request->attributes->has('_entity')) {
-      $entity = $request->attributes->get('_entity');
-      $params[$entity->getEntityTypeId()] = $entity->id();
+    foreach ($this->entityTypes as $entity_type) {
+      if ($request->attributes->has($entity_type)) {
+        $entity = $request->attributes->get($entity_type);
+        $params[$entity->getEntityTypeId()] = $entity->id();
+      }
     }
 
     $url = Url::fromRoute($route, $params);
