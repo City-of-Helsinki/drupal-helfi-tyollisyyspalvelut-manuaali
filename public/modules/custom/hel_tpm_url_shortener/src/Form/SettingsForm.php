@@ -30,7 +30,7 @@ class SettingsForm extends ConfigFormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $form['base_url'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('base_url'),
+      '#title' => $this->t('Base url'),
       '#default_value' => $this->config('hel_tpm_url_shortener.settings')->get('base_url'),
     ];
     return parent::buildForm($form, $form_state);
@@ -40,9 +40,6 @@ class SettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
-    if ($form_state->getValue('example') != 'example') {
-      $form_state->setErrorByName('example', $this->t('The value is not correct.'));
-    }
     parent::validateForm($form, $form_state);
   }
 
@@ -51,7 +48,7 @@ class SettingsForm extends ConfigFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->config('hel_tpm_url_shortener.settings')
-      ->set('example', $form_state->getValue('example'))
+      ->set('base_url', $form_state->getValue('base_url'))
       ->save();
     parent::submitForm($form, $form_state);
   }
