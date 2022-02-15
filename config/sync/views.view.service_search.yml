@@ -161,10 +161,10 @@ display:
       exposed_form:
         type: basic
         options:
-          submit_button: Apply
+          submit_button: Hae
           reset_button: false
           reset_button_label: Reset
-          exposed_sorts_label: 'Sort by'
+          exposed_sorts_label: Järjestä
           expose_sort_order: false
           sort_asc_label: Asc
           sort_desc_label: Desc
@@ -186,7 +186,7 @@ display:
           plugin_id: search_api
           order: DESC
           expose:
-            label: Relevance
+            label: Osuvuus
             field_identifier: search_api_relevance
           exposed: true
         title:
@@ -218,7 +218,7 @@ display:
           exposed: true
           expose:
             operator_id: search_api_fulltext_op
-            label: Search
+            label: Haku
             description: ''
             use_operator: false
             operator: search_api_fulltext_op
@@ -251,7 +251,7 @@ display:
             default_group_multiple: {  }
             group_items: {  }
           parse_mode: terms
-          min_length: 3
+          min_length: 2
           fields: {  }
         search_api_language:
           id: search_api_language

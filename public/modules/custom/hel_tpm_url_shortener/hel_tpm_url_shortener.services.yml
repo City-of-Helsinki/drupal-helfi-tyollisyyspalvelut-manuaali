@@ -1,0 +1,10 @@
+services:
+  hel_tpm_url_shortener.event_subscriber:
+    class: Drupal\hel_tpm_url_shortener\EventSubscriber\HelTpmUrlShortenerSubscriber
+    arguments: ['@messenger']
+    tags:
+      - { name: event_subscriber }
+
+  hel_tpm_url_shortener.short_url_service:
+    class: Drupal\hel_tpm_url_shortener\ShortUrlService
+    arguments: ['@entity_type.manager', '@request_stack']
