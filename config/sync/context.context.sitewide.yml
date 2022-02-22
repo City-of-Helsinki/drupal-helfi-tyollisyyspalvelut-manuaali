@@ -3,6 +3,7 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - system.menu.additional-links-menu
     - system.menu.footer
     - system.menu.main
   module:
@@ -31,7 +32,7 @@ reactions:
         custom_id: system_main_block
         theme: palvelumanuaali
         css_class: ''
-        unique: 0
+        unique: 1
         context_id: sitewide
         context_mapping: {  }
         third_party_settings: {  }
@@ -41,8 +42,8 @@ reactions:
         label: 'Main navigation'
         provider: system
         label_display: '0'
-        region: header
-        weight: '-10'
+        region: sidebar
+        weight: '-1'
         custom_id: system_menu_block_main
         theme: palvelumanuaali
         css_class: ''
@@ -50,8 +51,12 @@ reactions:
         context_id: sitewide
         context_mapping: {  }
         level: '1'
-        depth: '0'
-        expand_all_items: 0
+        depth: '2'
+        expand_all_items: 1
+        third_party_settings: {  }
+      e2e283a8-5381-4f49-8e63-78f292f6fbf4:
+        uuid: e2e283a8-5381-4f49-8e63-78f292f6fbf4
+        id: 'system_menu_block:footer'
         label: Alatunniste
         provider: system
         label_display: '0'
@@ -81,6 +86,24 @@ reactions:
         unique: 0
         context_id: sitewide
         context_mapping: {  }
+      ca686684-6e2c-4cd1-9443-6b36be89947e:
+        uuid: ca686684-6e2c-4cd1-9443-6b36be89947e
+        id: 'system_menu_block:additional-links-menu'
+        label: Lisälinkkivalikko
+        provider: system
+        label_display: '0'
+        region: sidebar
+        weight: '0'
+        custom_id: system_menu_block_additional_links_menu
+        theme: palvelumanuaali
+        css_class: ''
+        unique: 0
+        context_id: sitewide
+        context_mapping: {  }
+        level: '1'
+        depth: '0'
+        expand_all_items: 0
+        third_party_settings: {  }
     include_default_blocks: 0
     saved: false
 weight: 0
