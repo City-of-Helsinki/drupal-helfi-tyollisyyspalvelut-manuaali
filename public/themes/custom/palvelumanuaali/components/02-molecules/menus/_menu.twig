@@ -23,10 +23,10 @@
   We call a macro which calls itself to render the full tree.
   @see http://twig.sensiolabs.org/doc/tags/macro.html
 #}
-{% macro menu_links(items, attributes, menu_level, menu_class, menu_modifiers, menu_blockname, item_base_class, item_modifiers, item_blockname, directory) %}
+
+{% macro menu_links(items, attributes, menu_level, menu_class, menu_modifiers, menu_blockname, item_base_class, item_modifiers, item_blockname, directory, icon_name, icon_base_class) %}
   {% import _self as menus %}
   {% if items %}
-
     {# Set classes #}
     {% set menu_class = menu_class|default('menu') %}
     {% if not menu_modifiers %}
@@ -35,11 +35,14 @@
     {% if menu_level > 0 %}
       {% set menu_modifiers = menu_modifiers|merge(['sub', 'sub-' ~ menu_level]) %}
     {% endif %}
+    {% include "@molecules/menus/_menu-list.twig" with {
+      icon_name: icon_name,
+      icon_base_class: icon_base_class,
+    }%}
 
-    {% include "@molecules/menus/_menu-list.twig" %}
   {% endif %}
 {% endmacro %}
 
 {% import _self as menus %}
 
-{{ menus.menu_links(items, attributes, 0, menu_class, menu_modifiers, menu_blockname, item_base_class, item_modifiers, item_blockname, directory) }}
+{{ menus.menu_links(items, attributes, 0, menu_class, menu_modifiers, menu_blockname, item_base_class, item_modifiers, item_blockname, directory, icon_name, icon_base_class) }}
