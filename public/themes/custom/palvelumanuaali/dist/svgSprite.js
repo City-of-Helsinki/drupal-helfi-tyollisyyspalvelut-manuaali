@@ -260,7 +260,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
       id: "logo-small-usage",
-      viewBox: "0 0 24 24",
+      viewBox: "0 0 28 32",
       url: __webpack_require__.p + "../dist/icons.svg#logo-small",
       toString: function () {
         return this.url;

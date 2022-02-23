@@ -1,8 +1,14 @@
 /* Toggle */
+.toolbar-vertical {
+  .toggle-expand {
+    top: 55px;
+  }
+}
+
 .toggle-expand {
   @include link;
 
-  @include medium {
+  @include large {
     display: none;
   }
   position: absolute;
