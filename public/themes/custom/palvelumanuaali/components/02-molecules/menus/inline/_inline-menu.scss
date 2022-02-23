@@ -1,26 +1,52 @@
 .inline-menu {
   @include list-reset;
+
 }
 
 .inline-menu__item {
-  margin: 0 1em 0.5em 0;
-
+  margin-right: 2rem;
+  margin-bottom: $space-one-and-half;
   @include large {
     display: inline;
-    margin-bottom: 1em;
+    margin-bottom: 0;
   }
 
   &:last-child {
     margin-right: 0;
+    margin-bottom: 0;
   }
 }
 
 .inline-menu__link {
   @include link;
 
-  font-size: 0.75rem;
+  font-size: 1rem;
   font-weight: 600;
   letter-spacing: 1.5px;
   text-decoration: none;
   text-transform: uppercase;
+  &:hover {
+    border-bottom: 1px solid;
+    text-decoration: none;
+  }
+  &--normal-spacing {
+    letter-spacing: unset;
+  }
+  &--white {
+    color: clr(text-inverse);
+    &:hover {
+      color: clr(text-inverse);
+    }
+  }
+  &--chevron {
+    &::before {
+      content: ">";
+      font-size: 1rem;
+      margin-right: $space;
+      color: $blue40;
+    }
+  }
+  &--no-uppercase {
+    text-transform: unset;
+  }
 }
