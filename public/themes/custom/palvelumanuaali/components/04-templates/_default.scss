@@ -44,9 +44,12 @@ $main-content-width: calc(100% - (#{$sidebar-width} + #{$main-gutter} *2 ));
 }
 
 .main-sidebar {
+  display: flex;
+  flex-direction: column;
   margin-bottom: $space-double;
   background-color: clr(sidebar-color);
   border-top-right-radius: 47px;
+
   @include large {
     order: 1;
     width: $sidebar-width;

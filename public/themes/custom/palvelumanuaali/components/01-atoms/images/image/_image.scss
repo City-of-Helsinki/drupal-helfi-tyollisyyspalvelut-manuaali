@@ -16,3 +16,25 @@ figure {
 .figure__caption {
   font-style: italic;
 }
+
+
+.logo__image{
+  &--hidden-mobile {
+    display: none;
+    @include large {
+      display: block;
+    }
+  }
+}
+
+.logo-small__image {
+  &--hidden-lg {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+    @include large {
+      display: none;
+    }
+  }
+}

@@ -1,20 +1,22 @@
 /* Toggle */
+.toolbar-vertical {
+  .toggle-expand {
+    top: 55px;
+  }
+}
+
 .toggle-expand {
   @include link;
 
-  @include medium {
+  @include large {
     display: none;
   }
-
+  position: absolute;
+  top: 15px;
+  margin-left: $space;
   display: inline-block;
   padding: $space;
   text-decoration: none;
-  width: 100%;
-
-  /* See main-menu.js */
-  &--open {
-    background-color: clr(accent);
-  }
 }
 
 .toggle-expand__text {
@@ -34,6 +36,14 @@
   margin: 0 auto;
 }
 
+.toggle-expand-close__icon {
+  height: 3rem;
+  width: 3rem;
+  margin: 0 auto;
+}
+
+
+
 .toggle-expand__open {
   display: inline-block;
   text-align: center;
@@ -46,14 +56,6 @@
 .toggle-expand__close {
   display: none;
   text-align: center;
-
-  &::before {
-    color: clr(background);
-    content: 'X';
-    display: block;
-    font-size: 2.5rem;
-    line-height: 2;
-  }
 
   .toggle-expand--open & {
     display: inline-block;
