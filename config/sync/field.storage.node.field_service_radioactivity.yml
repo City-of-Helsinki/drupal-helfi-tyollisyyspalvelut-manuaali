@@ -1,0 +1,27 @@
+uuid: 3d025e5a-d54b-427e-82a5-765d51676c5e
+langcode: fi
+status: true
+dependencies:
+  module:
+    - field_permissions
+    - node
+    - radioactivity
+third_party_settings:
+  field_permissions:
+    permission_type: custom
+id: node.field_service_radioactivity
+field_name: field_service_radioactivity
+entity_type: node
+type: radioactivity
+settings:
+  profile: decay
+  granularity: 900
+  halflife: 43200
+  cutoff: !!float 1
+module: radioactivity
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
