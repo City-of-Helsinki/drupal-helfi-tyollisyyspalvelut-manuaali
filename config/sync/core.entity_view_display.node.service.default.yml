@@ -22,6 +22,7 @@ dependencies:
     - field.field.node.service.field_service_location
     - field.field.node.service.field_service_obligations
     - field.field.node.service.field_service_price
+    - field.field.node.service.field_service_radioactivity
     - field.field.node.service.field_service_set
     - field.field.node.service.field_tags
     - field.field.node.service.field_target_group
@@ -29,6 +30,7 @@ dependencies:
   module:
     - entity_reference_revisions
     - link
+    - radioactivity
     - text
     - user
 id: node.service.default
@@ -205,6 +207,15 @@ content:
       link: ''
     third_party_settings: {  }
     weight: 31
+    region: content
+  field_service_radioactivity:
+    type: radioactivity_emitter
+    label: above
+    settings:
+      energy: !!float 10
+      display: none
+    third_party_settings: {  }
+    weight: 34
     region: content
   field_service_set:
     type: entity_reference_label
