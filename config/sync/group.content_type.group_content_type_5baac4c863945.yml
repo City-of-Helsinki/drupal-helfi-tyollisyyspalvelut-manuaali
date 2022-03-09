@@ -1,0 +1,19 @@
+uuid: 65c8f183-a79c-41e0-a81a-a8b4fed441b6
+langcode: fi
+status: true
+dependencies:
+  config:
+    - group.type.organisation
+    - node.type.service_location
+  module:
+    - gnode
+    - node
+id: group_content_type_5baac4c863945
+label: 'Organisation: Group node (Service Location)'
+description: 'Adds <em class="placeholder">Service Location</em> content to groups both publicly and privately.'
+group_type: organisation
+content_plugin: 'group_node:service_location'
+plugin_config:
+  group_cardinality: 0
+  entity_cardinality: 1
+  use_creation_wizard: false

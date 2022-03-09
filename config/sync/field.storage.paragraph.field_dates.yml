@@ -1,0 +1,25 @@
+uuid: b7f27beb-c768-481e-925c-90dd4fc71c0b
+langcode: fi
+status: true
+dependencies:
+  module:
+    - date_recur
+    - field_permissions
+    - paragraphs
+third_party_settings:
+  field_permissions:
+    permission_type: public
+id: paragraph.field_dates
+field_name: field_dates
+entity_type: paragraph
+type: date_recur
+settings:
+  datetime_type: datetime
+  rrule_max_length: 256
+module: date_recur
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

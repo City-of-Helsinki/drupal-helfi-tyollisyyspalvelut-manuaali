@@ -293,51 +293,6 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-        field_age_groups:
-          id: field_age_groups
-          table: search_api_index_service_search_index
-          field: field_age_groups
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: search_api_options
-          operator: or
-          value: {  }
-          group: 1
-          exposed: true
-          expose:
-            operator_id: field_age_groups_op
-            label: Ikäryhmä
-            description: ''
-            use_operator: false
-            operator: field_age_groups_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: field_age_groups
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              root: '0'
-              admin: '0'
-              editor: '0'
-              specialist: '0'
-            reduce: false
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          reduce_duplicates: false
         field_municipality:
           id: field_municipality
           table: search_api_index_service_search_index
@@ -388,56 +343,6 @@ display:
           hierarchy: false
           limit: true
           error_message: true
-        field_service_language:
-          id: field_service_language
-          table: search_api_index_service_search_index
-          field: field_service_language
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: search_api_term
-          operator: or
-          value: {  }
-          group: 1
-          exposed: true
-          expose:
-            operator_id: field_service_language_op
-            label: 'Palvelun kieli'
-            description: ''
-            use_operator: false
-            operator: field_service_language_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: field_service_language
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              root: '0'
-              admin: '0'
-              editor: '0'
-              specialist: '0'
-            reduce: false
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          reduce_duplicates: false
-          vid: service_languages
-          type: select
-          hierarchy: false
-          limit: true
-          error_message: true
         field_implementation_extra_info:
           id: field_implementation_extra_info
           table: search_api_index_service_search_index
@@ -484,6 +389,56 @@ display:
             group_items: {  }
           reduce_duplicates: false
           vid: service_implementation_type
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        field_language_1:
+          id: field_language_1
+          table: search_api_index_service_search_index
+          field: field_language_1
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_term
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_language_1_op
+            label: 'Palvelun kieli'
+            description: ''
+            use_operator: false
+            operator: field_language_1_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_language_1
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: service_languages
           type: select
           hierarchy: false
           limit: true

@@ -1,19 +1,19 @@
-uuid: 92e134ec-6359-4bd8-883d-2361ff354fb6
-langcode: en
+uuid: 5847a03c-99f3-4504-8862-3e4d188208c3
+langcode: fi
 status: true
 dependencies:
   config:
-    - field.storage.node.field_service_language
-    - node.type.service
+    - field.storage.paragraph.field_language
+    - paragraphs.paragraphs_type.service_language
     - taxonomy.vocabulary.service_languages
-id: node.service.field_service_language
-field_name: field_service_language
-entity_type: node
-bundle: service
-label: 'Service Language'
+id: paragraph.service_language.field_language
+field_name: field_language
+entity_type: paragraph
+bundle: service_language
+label: Language
 description: ''
 required: true
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:
