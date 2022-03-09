@@ -1,0 +1,44 @@
+uuid: 0ae8d9d8-495c-46fd-b719-bb6dbfae1bb0
+langcode: fi
+status: true
+dependencies:
+  module:
+    - user
+label: 'Sitewide Anonymous'
+name: sitewide_anonymous
+group: null
+description: ''
+requireAllConditions: false
+disabled: false
+conditions:
+  user_role:
+    id: user_role
+    negate: false
+    uuid: ab89a788-9b81-402c-92ee-8e8fcb8f5b39
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      anonymous: anonymous
+reactions:
+  blocks:
+    id: blocks
+    uuid: f65923fd-07d7-489e-be92-be90d113314a
+    blocks:
+      d7c4c554-12fe-4842-89c3-50759ea56afb:
+        uuid: d7c4c554-12fe-4842-89c3-50759ea56afb
+        id: user_login_block
+        label: Kirjautuminen
+        provider: user
+        label_display: '0'
+        region: header
+        weight: '0'
+        custom_id: user_login_block
+        theme: palvelumanuaali
+        css_class: ''
+        unique: 0
+        context_id: sitewide_anonymous
+        context_mapping: {  }
+        third_party_settings: {  }
+    include_default_blocks: 0
+    saved: false
+weight: 0

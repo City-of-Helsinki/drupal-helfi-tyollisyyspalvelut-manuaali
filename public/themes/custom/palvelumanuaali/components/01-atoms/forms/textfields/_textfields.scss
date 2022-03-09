@@ -4,6 +4,10 @@
   max-width: 32em;
 
   @include clearfix;
+
+  &--no-margin {
+    margin-bottom: 0;
+  }
 }
 
 .form-item__label {
@@ -27,7 +31,7 @@
   }
 
   &::placeholder {
-    color: clr(highlight);
+    color: clr(gray);
   }
 }
 
@@ -44,4 +48,8 @@
     margin-left: 1em;
     max-width: 31em;
   }
+}
+
+.views-exposed-form {
+  position: relative;
 }

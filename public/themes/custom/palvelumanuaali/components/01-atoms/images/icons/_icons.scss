@@ -26,6 +26,61 @@
   margin: $space-one-fourth;
 }
 
+.icon--small {
+  height: 24px;
+  width: 24px;
+}
+
+.show {
+  .icon--dropdown {
+    transform: rotate(180deg);
+  }
+}
+
+.icon--white {
+  color: clr(text-inverse);
+}
+
+.icon--absolute-right {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+
+.icon--absolute-right-forty {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+}
+
+.icon--absolute-left-forty {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+}
+
+.icon--absolute-left {
+  position: absolute;
+  left: 20px;
+}
+
+.icon--margin-right {
+  margin-right: $space;
+}
+
+.icon--mobile-margin-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.icon--mobile-margin-left-auto {
+  margin-left: auto;
+}
+
+.icon--margin-left {
+  margin-left: $space-one-and-half;
+}
+
 .link__arrow {
   height: 24px;
   width: 24px;

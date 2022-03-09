@@ -27,3 +27,16 @@ body {
   width: 1px;
   word-wrap: normal;
 }
+
+.hide-mobile {
+  display: none;
+  @include large {
+    display: block;
+  }
+}
+
+.hide-lg {
+  @include large {
+    display: none;
+  }
+}
