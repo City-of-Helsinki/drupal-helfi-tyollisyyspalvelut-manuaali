@@ -1,0 +1,17 @@
+uuid: 36ff69ee-c10d-450c-bced-0fab8972ed0f
+langcode: fi
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.message.mail_subject
+    - message.template.2nd_user_account_expiry_reminder
+id: message.2nd_user_account_expiry_reminder.mail_subject
+targetEntityType: message
+bundle: 2nd_user_account_expiry_reminder
+mode: mail_subject
+content:
+  partial_0:
+    weight: 0
+    region: content
+hidden:
+  partial_1: true
