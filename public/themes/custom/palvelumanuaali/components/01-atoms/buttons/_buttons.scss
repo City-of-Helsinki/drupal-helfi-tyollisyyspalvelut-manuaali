@@ -25,6 +25,18 @@ $button-colors: (
     text-hover: clr(text),
     bg-hover: clr(highlight-high),
   ),
+  blue: (
+    text: clr(text-inverse),
+    bg: clr(background-section),
+    text-hover: clr(text-inverse),
+    bg-hover: clr(alt-header-color),
+  ),
+  no-color: (
+    text: clr(background-section),
+    bg: unset,
+    text-hover: clr(background-section),
+    bg-hover: unset,
+  ),
 );
 
 // Mixin to define colors for one or more schemes.
@@ -76,6 +88,23 @@ $button-colors: (
   }
 }
 
+@mixin button-color-blue {
+  @include buttonColors(blue);
+
+  @media (prefers-color-scheme: dark) {
+    @include buttonColors(blue);
+  }
+}
+
+@mixin button-no-color{
+  @include buttonColors(no-color);
+
+  @media (prefers-color-scheme: dark) {
+    @include buttonColors(no-color);
+  }
+}
+
+
 // Button size variations
 @mixin button-medium {
   line-height: 1.4;
@@ -115,7 +144,35 @@ $button-colors: (
   &--arrow {
     @include button-small;
     @include button-round-top;
-    
+
     float: right;
   }
+}
+
+#loginDropdownButton {
+  @include button-medium;
+  @include button-color-blue;
+  @include button-round-corners;
+}
+
+#languageSwitcherButton {
+  padding: 0;
+  font-size: 9px;
+  @include large {
+    padding: .375rem .75rem;
+    font-size: 15px;
+  }
+}
+
+.toolbar-vertical {
+  #searchDropdownButton {
+    top: 60px;
+  }
+}
+#searchDropdownButton {
+  @include button-medium;
+  @include button-round-corners;
+  position: absolute;
+  top: 20px;
+  right: 0;
 }

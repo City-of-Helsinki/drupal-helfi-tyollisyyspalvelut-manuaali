@@ -56,7 +56,8 @@
     description_display == 'invisible' ? 'visually-hidden',
   ]
 %}
-<div{{ attributes.addClass(classes) }}>
+{% set form_element__base_class = 'form-item' %}
+<div{{ bem(form_element__base_class,form_element__modifiers,form_element__block_name,classes) }}>
   {% if label_display in ['before', 'invisible'] %}
     {{ label }}
   {% endif %}
