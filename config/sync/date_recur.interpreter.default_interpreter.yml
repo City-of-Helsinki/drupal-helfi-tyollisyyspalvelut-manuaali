@@ -3,7 +3,7 @@ langcode: fi
 status: true
 dependencies:
   config:
-    - core.date_format.long
+    - core.date_format.short
 _core:
   default_config_hash: zx_IJn4SosQt8RbdEHFJSrxMvuMTTGiSgVioy1porhY
 id: default_interpreter
@@ -11,6 +11,6 @@ label: 'Default Interpreter'
 plugin: rl
 settings:
   show_start_date: true
-  show_until: true
-  date_format: long
+  show_until: false
+  date_format: short
   show_infinite: true

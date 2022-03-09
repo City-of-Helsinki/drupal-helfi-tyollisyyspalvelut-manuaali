@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - core.date_format.medium
+    - core.date_format.time
     - date_recur.interpreter.default_interpreter
     - field.field.paragraph.service_time_and_place.field_dates
     - field.field.paragraph.service_time_and_place.field_description
@@ -29,7 +30,7 @@ content:
       show_next: 5
       count_per_item: true
       occurrence_format_type: medium
-      same_end_date_format_type: medium
+      same_end_date_format_type: time
       interpreter: default_interpreter
     third_party_settings: {  }
     weight: 1
