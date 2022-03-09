@@ -1,8 +1,11 @@
 .header {
-
+  @include large {
+    position: inherit;
+    bottom: unset;
+  }
   &__inner {
     @include wrapper;
-    
+
     display: flex;
     flex-flow: column nowrap;
 
@@ -12,10 +15,23 @@
   }
 
   &__primary {
+    position: fixed;
+    bottom: 0;
     display: flex;
     flex-flow: row nowrap;
-    justify-content: space-between;
+    justify-content: space-around;
     padding: 0;
+    z-index: 200;
+    background-color: clr(background);
+    width: 100%;
+    margin-left: -15px;
+    padding-top: $space-one-half;
+    @include large {
+      position: relative;
+      bottom: unset;
+      padding: $space-double $space-double $space-one-and-half $space-double;
+      margin-left: unset;
+    }
   }
 
   &__branding {
@@ -24,5 +40,196 @@
     width: 280px;
     background: clr(sidebar-color);
     border-top-right-radius: 47px;
+  }
+
+  .form-text {
+    border: 2px solid #AFCEFD;
+    box-sizing: border-box;
+    border-radius: 8px;
+    background-image: unset !important;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 24px;
+
+    @include large {
+      width: 374px;
+    }
+
+    @include  xl {
+      width: 576px;
+    }
+  }
+
+
+}
+
+
+.header {
+  #block-views-exposed-filter-block-service-search-block-1 {
+    display: none;
+    @include large {
+      display: block;
+    }
+  }
+}
+
+#block-system-menu-block-favorites,
+#block-language-block-language-interface,
+#loginlinkButtonLink {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-size: 9px;
+  justify-content: center;
+  @include large {
+    flex-direction: row;
+    font-size: 15px;
+  }
+}
+
+#block-system-menu-block-favorites {
+  .icon--margin-right {
+    margin-right: auto;
+    @include large {
+      margin-right: 12px;
+    }
+  }
+}
+
+#block-system-menu-block-account {
+  display: flex;
+  align-items: center;
+  #accountMenuButton {
+    display: flex;
+    align-items: center;
+    .views-row {
+      text-align: left;
+      .views-field-name {
+        a {
+          font-weight: 600;
+          font-size: 9px;
+          color: clr(text);
+          text-decoration: none;
+          @include large {
+            font-size: 14px;
+          }
+        }
+      }
+      .views-field-mail {
+        color: clr(text);
+        span {
+            font-size: 9px;
+            @include large {
+              font-size: 12px;
+          }
+        }
+      }
+    }
+  }
+  .dropdown-menu {
+    width: 180px;
+  }
+  .dropdown-menu__item {
+    text-align: left;
+    &:first-child {
+      .dropdown-menu__link {
+        &::before {
+          @include icons;
+          content: "\EA02";
+          color: clr(background-section);
+          margin-right: $space;
+        }
+      }
+    }
+    &:nth-child(2) {
+      .dropdown-menu__link {
+        &::before {
+          @include icons;
+          content: "\EA01";
+          color: clr(background-section);
+          margin-right: $space;
+        }
+      }
+    }
+  }
+}
+
+#block-views-exposed-filter-block-service-search-mobile {
+  position: unset;
+  .dropdown-menu {
+    width: 100%;
+    .form-item {
+      width: 100%;
+      max-width: 100%;
+      input {
+        width: 100%;
+        border: 2px solid #AFCEFD;
+        box-sizing: border-box;
+        border-radius: 8px;
+        background-image: unset !important;
+        padding-top: 12px;
+        padding-bottom: 12px;
+        padding-left: 50px;
+      }
+    }
+  }
+}
+
+#block-user-login-block {
+  .dropdown-menu {
+    margin-top: 70px !important;
+    border-radius: 8px;
+    .form-item {
+      position: relative;
+      label {
+        text-align: left;
+        font-weight: bold;
+        letter-spacing: 1px;
+        color: clr(alt-header-color);
+      }
+      input {
+        border-radius: 4px 4px 0px 0px;
+        border-left: 0;
+        border-top: 0;
+        border-right: 0;
+        border-bottom: 2px solid #AFCEFD;
+        padding-left: 35px;
+      }
+      &:first-child {
+        &::before {
+          @include icons;
+          content: "\EA02";
+          position: absolute;
+          left: 10px;
+          bottom: 15px;
+        }
+      }
+      &:nth-child(2) {
+        &::before {
+          @include icons;
+          content: "\EA04";
+          position: absolute;
+          left: 10px;
+          bottom: 15px;
+        }
+      }
+    }
+    .form-actions{
+      display: flex;
+      justify-content: flex-end;
+      .button {
+        @include button-color-blue;
+        @include button-round-corners;
+      }
+    }
+    ul {
+      list-style: none;
+      display: flex;
+      margin-top: -35px;
+    }
+    a {
+      font-size: 12px;
+      color: clr(background-section);
+    }
   }
 }
