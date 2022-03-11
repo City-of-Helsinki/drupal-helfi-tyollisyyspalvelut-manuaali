@@ -1,12 +1,14 @@
 <?php
 
+use Drupal\Core\Site\Settings;
+
 /**
  * Implements hook_page_attachments_alter().
  */
 function hel_tpm_tracking_page_attachments_alter(array &$attachments) {
   // For some reason the contrib Matomo module doesn't seem to work with Digia
   // Iiris tracking.
-  if (!\Drupal::currentUser()->hasPermission('administer nodes')) {
+  if (Settings::get('hel_tpm_tracking.enable_tracking') === TRUE && !\Drupal::currentUser()->hasPermission('administer nodes')) {
     $attachments['#attached']['html_head'][] = [
       [
         '#type'  => 'html_tag',
