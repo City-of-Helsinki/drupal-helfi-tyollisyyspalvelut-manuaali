@@ -1,0 +1,34 @@
+<?php
+
+/**
+ * Implements hook_page_attachments_alter().
+ */
+function hel_tpm_tracking_page_attachments_alter(array &$attachments) {
+  // For some reason the contrib Matomo module doesn't seem to work with Digia
+  // Iiris tracking.
+  if (!\Drupal::currentUser()->hasPermission('administer nodes')) {
+    $attachments['#attached']['html_head'][] = [
+      [
+        '#type'  => 'html_tag',
+        '#tag'   => 'script',
+        '#value' => <<<'EOD'
+          <!-- Matomo -->
+          <script type="text/javascript">
+            var _paq = window._paq = window._paq || [];
+            /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+            _paq.push(['trackPageView']);
+            _paq.push(['enableLinkTracking']);
+            (function() {
+              var u="//webanalytics.digiaiiris.com/js/";
+              _paq.push(['setTrackerUrl', u+'tracker.php']);
+              _paq.push(['setSiteId', '604']);
+              var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+              g.type='text/javascript'; g.async=true; g.src=u+'piwik.min.js'; s.parentNode.insertBefore(g,s);
+            })();
+          </script>
+          <!-- End Matomo Code -->
+          EOD
+      ], 'hel_tpm_tracking'
+    ];
+  }
+}
