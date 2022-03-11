@@ -1,0 +1,67 @@
+<?php
+
+function hel_tpm_user_expiry_cron() {
+  $templates = [
+    1 => '1st_user_account_expiry_reminder',
+    2 => '2nd_user_account_expiry_reminder',
+  ];
+
+  $logger = \Drupal::logger('hel_tpm_user_expiry');
+
+  // Check that we aren't running already.
+  if (($running = \Drupal::state()->get('hel_tpm_user_expiry.running')) && $running > strtotime('-2 hours')) {
+    $logger->error('Tried restarting already running user expiry cron');
+    return;
+  }
+  \Drupal::state()->set('hel_tpm_user_expiry.running', time());
+
+  $state = \Drupal::state()->get('hel_tpm_user_expiry.notificationdata');
+
+  $database = \Drupal::database();
+  $q = 'SELECT ufd.uid, ufd.access
+    FROM {users_field_data} ufd
+    WHERE ufd.access < :limit AND ufd.status = 1';
+  $res = $database->query($q, [':limit' => strtotime('-2 months')]);
+  foreach ($res as $row) {
+    unset($notification);
+    // Check if the first notification has been sent.
+    if (isset($state[$row->uid]) && $state[$row->uid]['access'] != $row->access) {
+      // The user has logged in since the notification, restart the cycle.
+      unset($state[$row->uid]);
+    }
+
+    // A notification has been already sent, so either second notification or
+    // deactivation.
+    if (isset($state[$row->uid])) {
+      if (isset($state[$row->uid]['notificationtimes'][2]) && $state[$row->uid]['notificationtimes'][2] < strtotime('-2 days')) {
+        $user = \Drupal\user\Entity\User::load($row->uid);
+        $user->set('status', 0);
+        $user->save();
+        $logger->info('Deactivated user :uid', [':uid' => $row->uid]);
+      }
+      elseif ($state[$row->uid]['notificationtimes'][1] < strtotime('-2 weeks')) {
+        $notification = 2;
+      }
+    }
+    else {
+      $notification = 1;
+    }
+
+    if (isset($notification)) {
+      $logger->info('Sending notification :notification to user :uid', [':notification' => $notification, ':uid' => $row->uid]);
+      // Record the access date to see if the user has accessed the site.
+      $state[$row->uid]['access'] = $row->access;
+      $state[$row->uid]['notificationtimes'][$notification] = time();
+
+      $user = \Drupal\user\Entity\User::load($row->uid);
+      $message = \Drupal\message\Entity\Message::create(['template' => $templates[$notification], 'uid' => $row->uid]);
+      $message->save();
+      $notifier = Drupal::service('message_notify.sender');
+      $notifier->send($message);
+    }
+  }
+
+  // Set the updated states to state.
+  \Drupal::state()->set('hel_tpm_user_expiry.notificationdata', $state);
+  \Drupal::state()->delete('hel_tpm_user_expiry.running');
+}
