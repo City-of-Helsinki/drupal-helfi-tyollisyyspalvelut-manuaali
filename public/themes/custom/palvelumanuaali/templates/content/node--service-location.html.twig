@@ -71,7 +71,7 @@
  */
 #}
 
-<article {{ bem("node") }}>
+<article {{ bem("node",'','',['flex-wrap']) }}>
 
   {% if not page %}
     {% include "@atoms/text/headings/_heading.twig" with {
@@ -88,4 +88,3 @@
   </div>
 
 </article>
-
