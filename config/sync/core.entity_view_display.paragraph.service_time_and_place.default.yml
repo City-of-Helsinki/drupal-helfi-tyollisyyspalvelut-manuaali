@@ -1,0 +1,67 @@
+uuid: 91eb25b2-3460-4a86-947c-57f6dbf98697
+langcode: fi
+status: true
+dependencies:
+  config:
+    - core.date_format.medium
+    - core.date_format.time
+    - date_recur.interpreter.default_interpreter
+    - field.field.paragraph.service_time_and_place.field_dates
+    - field.field.paragraph.service_time_and_place.field_description
+    - field.field.paragraph.service_time_and_place.field_service_languages
+    - field.field.paragraph.service_time_and_place.field_service_location
+    - paragraphs.paragraphs_type.service_time_and_place
+  module:
+    - date_recur
+    - entity_reference_revisions
+    - text
+id: paragraph.service_time_and_place.default
+targetEntityType: paragraph
+bundle: service_time_and_place
+mode: default
+content:
+  field_dates:
+    type: date_recur_basic_formatter
+    label: hidden
+    settings:
+      timezone_override: ''
+      format_type: medium
+      separator: '-'
+      show_next: 5
+      count_per_item: true
+      occurrence_format_type: medium
+      same_end_date_format_type: time
+      interpreter: default_interpreter
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_description:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_service_languages:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_service_location:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  search_api_excerpt: true

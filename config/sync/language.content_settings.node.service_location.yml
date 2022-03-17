@@ -1,0 +1,16 @@
+uuid: 409a340d-098c-4d89-a04c-ffb23aae46f7
+langcode: fi
+status: true
+dependencies:
+  config:
+    - node.type.service_location
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+id: node.service_location
+target_entity_type_id: node
+target_bundle: service_location
+default_langcode: current_interface
+language_alterable: true

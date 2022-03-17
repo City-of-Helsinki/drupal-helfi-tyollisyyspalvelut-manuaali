@@ -1,0 +1,28 @@
+uuid: 4abe61a0-a37e-451b-993a-c161e1c981a6
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.language_level.field_example_situations
+    - taxonomy.vocabulary.language_level
+  module:
+    - text
+id: taxonomy_term.language_level.default
+targetEntityType: taxonomy_term
+bundle: language_level
+mode: default
+content:
+  description:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  field_example_situations: true
+  langcode: true
+  search_api_excerpt: true

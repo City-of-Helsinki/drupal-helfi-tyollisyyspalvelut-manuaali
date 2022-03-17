@@ -1,0 +1,46 @@
+uuid: 71e019a5-70e8-4247-98b8-a23a963bf89e
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_service_time_and_location
+    - node.type.service
+    - paragraphs.paragraphs_type.service_time_and_place
+  module:
+    - entity_reference_revisions
+id: node.service.field_service_time_and_location
+field_name: field_service_time_and_location
+entity_type: node
+bundle: service
+label: 'Service time and location'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      service_time_and_place: service_time_and_place
+    negate: 0
+    target_bundles_drag_drop:
+      contact_information:
+        weight: 7
+        enabled: false
+      content:
+        weight: 8
+        enabled: false
+      content_list_lift_header_icon:
+        weight: 9
+        enabled: false
+      service_price:
+        weight: 10
+        enabled: false
+      service_time_and_place:
+        weight: 11
+        enabled: true
+      target_group:
+        weight: 12
+        enabled: false
+field_type: entity_reference_revisions

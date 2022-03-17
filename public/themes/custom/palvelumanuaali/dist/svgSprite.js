@@ -99,6 +99,7 @@ var map = {
 	"./icons/arrow-right.svg": "./images/icons/arrow-right.svg",
 	"./icons/arrow-sm-down.svg": "./images/icons/arrow-sm-down.svg",
 	"./icons/c-question.svg": "./images/icons/c-question.svg",
+	"./icons/calendar.svg": "./images/icons/calendar.svg",
 	"./icons/check.svg": "./images/icons/check.svg",
 	"./icons/close.svg": "./images/icons/close.svg",
 	"./icons/cogwheel.svg": "./images/icons/cogwheel.svg",
@@ -106,6 +107,7 @@ var map = {
 	"./icons/content-icons/uEA02-profile-blue.svg": "./images/icons/content-icons/uEA02-profile-blue.svg",
 	"./icons/content-icons/uEA03-cogwheel.svg": "./images/icons/content-icons/uEA03-cogwheel.svg",
 	"./icons/content-icons/uEA04-lock 2.svg": "./images/icons/content-icons/uEA04-lock 2.svg",
+	"./icons/content-icons/uEA05-arrow-sm-down.svg": "./images/icons/content-icons/uEA05-arrow-sm-down.svg",
 	"./icons/door.svg": "./images/icons/door.svg",
 	"./icons/exit.svg": "./images/icons/exit.svg",
 	"./icons/facebook.svg": "./images/icons/facebook.svg",
@@ -118,6 +120,7 @@ var map = {
 	"./icons/padlock-blue.svg": "./images/icons/padlock-blue.svg",
 	"./icons/padlock.svg": "./images/icons/padlock.svg",
 	"./icons/profile-blue.svg": "./images/icons/profile-blue.svg",
+	"./icons/speech-bubble.svg": "./images/icons/speech-bubble.svg",
 	"./icons/twitter.svg": "./images/icons/twitter.svg",
 	"./icons/world.svg": "./images/icons/world.svg",
 	"./logo.svg": "./images/logo.svg",
@@ -239,6 +242,26 @@ __webpack_require__.r(__webpack_exports__);
       id: "c-question-usage",
       viewBox: "0 0 24 24",
       url: __webpack_require__.p + "../dist/icons.svg#c-question",
+      toString: function () {
+        return this.url;
+      }
+    });
+
+/***/ }),
+
+/***/ "./images/icons/calendar.svg":
+/*!***********************************!*\
+  !*** ./images/icons/calendar.svg ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+      id: "calendar-usage",
+      viewBox: "0 0 24 24",
+      url: __webpack_require__.p + "../dist/icons.svg#calendar",
       toString: function () {
         return this.url;
       }
@@ -379,6 +402,26 @@ __webpack_require__.r(__webpack_exports__);
       id: "uEA04-lock 2-usage",
       viewBox: "0 0 16 16",
       url: __webpack_require__.p + "../dist/icons.svg#uEA04-lock 2",
+      toString: function () {
+        return this.url;
+      }
+    });
+
+/***/ }),
+
+/***/ "./images/icons/content-icons/uEA05-arrow-sm-down.svg":
+/*!************************************************************!*\
+  !*** ./images/icons/content-icons/uEA05-arrow-sm-down.svg ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+      id: "uEA05-arrow-sm-down-usage",
+      viewBox: "0 0 24 24",
+      url: __webpack_require__.p + "../dist/icons.svg#uEA05-arrow-sm-down",
       toString: function () {
         return this.url;
       }
@@ -619,6 +662,26 @@ __webpack_require__.r(__webpack_exports__);
       id: "profile-blue-usage",
       viewBox: "0 0 16 16",
       url: __webpack_require__.p + "../dist/icons.svg#profile-blue",
+      toString: function () {
+        return this.url;
+      }
+    });
+
+/***/ }),
+
+/***/ "./images/icons/speech-bubble.svg":
+/*!****************************************!*\
+  !*** ./images/icons/speech-bubble.svg ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+      id: "speech-bubble-usage",
+      viewBox: "0 0 24 24",
+      url: __webpack_require__.p + "../dist/icons.svg#speech-bubble",
       toString: function () {
         return this.url;
       }
