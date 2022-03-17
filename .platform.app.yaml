@@ -60,6 +60,10 @@ hooks:
     set -e
     cd public
     drush -y cache-rebuild
+    # Import custom translations
+    drush -y locale:import fi ./translations/fi-interface-translations.po
+    drush -y locale:import sv ./translations/sv-interface-translations.po
+    drush -y locale:import en ./translations/en-interface-translations.po
     drush -y locale-check
     drush -y locale-update
     drush -y cache-rebuild

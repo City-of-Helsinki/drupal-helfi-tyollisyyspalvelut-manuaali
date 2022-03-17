@@ -128,3 +128,7 @@ if (getenv('PLATFORM_PROJECT_ENTROPY') && empty($settings['hash_salt'])) {
 if (getenv('PLATFORM_TREE_ID') && empty($settings['deployment_identifier'])) {
   $settings['deployment_identifier'] = getenv('PLATFORM_TREE_ID');
 }
+
+if (getenv('PLATFORM_ENVIRONMENT_TYPE') == 'production') {
+  $settings['hel_tpm_tracking.enable_tracking'] = TRUE;
+}

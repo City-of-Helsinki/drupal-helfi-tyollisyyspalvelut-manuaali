@@ -13,15 +13,13 @@
       {% endblock %}
     {% endembed %}
     </div>
-    <div {{ bem('social', [], footer__base_class) }}>
-      {% block footer__social %}
-        {% include "@molecules/menus/social/social-menu.twig" %}
-      {% endblock %}
-    </div>
     <div {{ bem('menu', [], footer__base_class) }}>
       {% block footer__menu %}
         {% include "@molecules/menus/inline/inline-menu.twig" %}
       {% endblock %}
     </div>
+    <div {{ bem('copy-right', [], footer__base_class) }}>
+      {% block footer__copyright %}{% endblock %}
+     </div>
   </div>
 </footer>

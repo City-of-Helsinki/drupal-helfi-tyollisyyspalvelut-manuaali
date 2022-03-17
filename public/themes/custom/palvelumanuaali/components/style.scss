@@ -1,6 +1,10 @@
 // Libraries
 @import '~normalize.css/normalize';
 @import '~breakpoint-sass/stylesheets/breakpoint';
+@import '../../../../libraries/bootstrap-dist/css/bootstrap.min.css';
+@import '../../../../../vendor/twbs/bootstrap/scss/bootstrap-grid.scss';
+
+
 
 // Components
 @import '00-base/**/*.scss';
@@ -27,4 +31,12 @@ $container-max-widths: (
         xxl: 1610px
 );
 
-@import '../../../../../vendor/twbs/bootstrap/scss/bootstrap-grid.scss';
+@font-face {
+  font-family: "icons";
+  src: url('../fonts/icons.eot');
+  src: url('../fonts/icons.eot?#iefix') format('eot'),
+    url('../fonts/icons.woff2') format('woff2'),
+    url('../fonts/icons.woff') format('woff'),
+    url('../fonts/icons.ttf') format('truetype'),
+    url('../fonts/icons.svg#icons') format('svg');
+}

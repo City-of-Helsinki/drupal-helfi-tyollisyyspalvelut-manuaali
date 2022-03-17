@@ -1,0 +1,29 @@
+uuid: 674179f7-b580-45e3-870e-86faab005c0e
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_level
+    - paragraphs.paragraphs_type.service_language
+    - taxonomy.vocabulary.language_level
+id: paragraph.service_language.field_level
+field_name: field_level
+entity_type: paragraph
+bundle: service_language
+label: Level
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      language_level: language_level
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

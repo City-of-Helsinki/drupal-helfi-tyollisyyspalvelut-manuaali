@@ -3,9 +3,16 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - system.menu.additional-links-menu
+    - system.menu.favorites
+    - system.menu.footer
     - system.menu.main
+    - views.view.service_search
   module:
+    - hel_tpm_url_shortener
+    - language
     - system
+    - views
 label: Sitewide
 name: sitewide
 group: null
@@ -25,11 +32,11 @@ reactions:
         provider: system
         label_display: '0'
         region: content
-        weight: '0'
+        weight: '-1'
         custom_id: system_main_block
         theme: palvelumanuaali
         css_class: ''
-        unique: 0
+        unique: 1
         context_id: sitewide
         context_mapping: {  }
         third_party_settings: {  }
@@ -39,8 +46,8 @@ reactions:
         label: 'Main navigation'
         provider: system
         label_display: '0'
-        region: header
-        weight: '-10'
+        region: sidebar
+        weight: '-4'
         custom_id: system_menu_block_main
         theme: palvelumanuaali
         css_class: ''
@@ -50,6 +57,134 @@ reactions:
         level: '1'
         depth: '0'
         expand_all_items: 0
+        third_party_settings: {  }
+      e2e283a8-5381-4f49-8e63-78f292f6fbf4:
+        uuid: e2e283a8-5381-4f49-8e63-78f292f6fbf4
+        id: 'system_menu_block:footer'
+        label: Alatunniste
+        provider: system
+        label_display: '0'
+        region: footer
+        weight: '-1'
+        custom_id: system_menu_block_footer
+        theme: palvelumanuaali
+        css_class: ''
+        unique: 0
+        context_id: sitewide
+        context_mapping: {  }
+        level: '1'
+        depth: '0'
+        expand_all_items: 0
+        third_party_settings: {  }
+      2e1a937e-1079-40cd-be7b-5630f92219f7:
+        uuid: 2e1a937e-1079-40cd-be7b-5630f92219f7
+        id: hel_tpm_url_shortener_form
+        label: 'Url Shortener'
+        provider: hel_tpm_url_shortener
+        label_display: '0'
+        region: content
+        weight: '0'
+        custom_id: hel_tpm_url_shortener_form
+        theme: palvelumanuaali
+        css_class: ''
+        unique: 0
+        context_id: sitewide
+        context_mapping: {  }
+      ca686684-6e2c-4cd1-9443-6b36be89947e:
+        uuid: ca686684-6e2c-4cd1-9443-6b36be89947e
+        id: 'system_menu_block:additional-links-menu'
+        label: Lisälinkkivalikko
+        provider: system
+        label_display: '0'
+        region: sidebar
+        weight: '-3'
+        custom_id: system_menu_block_additional_links_menu
+        theme: palvelumanuaali
+        css_class: ''
+        unique: 0
+        context_id: sitewide
+        context_mapping: {  }
+        level: '1'
+        depth: '0'
+        expand_all_items: 0
+        third_party_settings: {  }
+      06bc225e-f598-44d9-bf22-8254813752ba:
+        uuid: 06bc225e-f598-44d9-bf22-8254813752ba
+        id: local_tasks_block
+        label: Välilehdet
+        provider: core
+        label_display: '0'
+        region: content
+        weight: '-2'
+        custom_id: local_tasks_block
+        primary: true
+        secondary: true
+      958ca0b0-429c-40f4-b76a-4b453f97dd18:
+        uuid: 958ca0b0-429c-40f4-b76a-4b453f97dd18
+        id: 'language_block:language_interface'
+        label: 'Kielen vaihtaja'
+        provider: language
+        label_display: '0'
+        region: header
+        weight: '-10'
+        custom_id: language_block_language_interface
+        theme: palvelumanuaali
+        css_class: ''
+        unique: 0
+        context_id: sitewide
+        context_mapping: {  }
+        primary: 1
+        secondary: 1
+        third_party_settings: {  }
+      0465a68b-53aa-4eeb-9eb4-b1d83315acdb:
+        uuid: 0465a68b-53aa-4eeb-9eb4-b1d83315acdb
+        id: 'views_exposed_filter_block:service_search-block_1'
+        label: ''
+        provider: views
+        label_display: '0'
+        region: header
+        weight: '-8'
+        custom_id: views_exposed_filter_block_service_search_block_1
+        theme: palvelumanuaali
+        css_class: ''
+        unique: 0
+        context_id: sitewide
+        context_mapping: {  }
+        views_label: ''
+        third_party_settings: {  }
+      c2a714b4-1650-4637-af5f-0f14f06e1d8e:
+        uuid: c2a714b4-1650-4637-af5f-0f14f06e1d8e
+        id: 'system_menu_block:favorites'
+        label: Suosikit
+        provider: system
+        label_display: '0'
+        region: header
+        weight: '-9'
+        custom_id: system_menu_block_favorites
+        theme: palvelumanuaali
+        css_class: ''
+        unique: 0
+        context_id: sitewide
+        context_mapping: {  }
+        level: '1'
+        depth: '0'
+        expand_all_items: 0
+        third_party_settings: {  }
+      51f9570e-37be-4d9e-9f07-76ee354e1389:
+        uuid: 51f9570e-37be-4d9e-9f07-76ee354e1389
+        id: 'views_exposed_filter_block:service_search-mobile'
+        label: ''
+        provider: views
+        label_display: visible
+        region: sidebar
+        weight: '-2'
+        custom_id: views_exposed_filter_block_service_search_mobile
+        theme: palvelumanuaali
+        css_class: hide-lg
+        unique: 0
+        context_id: sitewide
+        context_mapping: {  }
+        views_label: ''
         third_party_settings: {  }
     include_default_blocks: 0
     saved: false

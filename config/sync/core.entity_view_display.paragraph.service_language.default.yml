@@ -1,0 +1,35 @@
+uuid: 6f0dcb32-34c9-4269-814b-280cfaf7e271
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.service_language.field_language
+    - field.field.paragraph.service_language.field_level
+    - paragraphs.paragraphs_type.service_language
+id: paragraph.service_language.default
+targetEntityType: paragraph
+bundle: service_language
+mode: default
+content:
+  field_language:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_level:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  search_api_excerpt: true

@@ -1,0 +1,37 @@
+uuid: 6d8b9e6d-cf13-40ee-8351-06113af361f8
+langcode: fi
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.service_location.field_address
+    - node.type.service_location
+  module:
+    - address
+    - user
+id: node.service_location.teaser
+targetEntityType: node
+bundle: service_location
+mode: teaser
+content:
+  field_address:
+    type: address_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  flag_cart: true
+  flag_flag_list_template_1: true
+  flag_lists: true
+  langcode: true
+  search_api_excerpt: true

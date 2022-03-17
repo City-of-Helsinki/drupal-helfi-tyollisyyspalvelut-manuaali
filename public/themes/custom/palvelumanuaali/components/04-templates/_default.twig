@@ -11,9 +11,7 @@
 
 
 <div {{ bem('layout-container', layout_modifiers) }}>
-    <aside class="main-sidebar" role="complementary">
-      {% include "@organisms/site/site-sidebar/site-sidebar.twig" %}
-    </aside>
+  {% block page_sidebar %}{% endblock %}
   <div {{  bem('right-column') }}>
   {% block page_header %}
     {% include "@organisms/site/site-header/site-header.twig" %}
@@ -27,5 +25,7 @@
       </main>
     </div>
   </div>
-    {% include "@organisms/site/site-footer/site-footer.twig" %}
+    {% block page_footer %}
+      {% include "@organisms/site/site-footer/site-footer.twig" %}
+    {% endblock %}
 </div>

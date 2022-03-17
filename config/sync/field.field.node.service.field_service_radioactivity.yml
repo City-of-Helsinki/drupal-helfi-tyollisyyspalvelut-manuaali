@@ -1,0 +1,24 @@
+uuid: 94b28a81-5940-40dd-a40c-8670dda315ad
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_service_radioactivity
+    - node.type.service
+  module:
+    - radioactivity
+id: node.service.field_service_radioactivity
+field_name: field_service_radioactivity
+entity_type: node
+bundle: service
+label: 'Service popularity'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    energy: !!float 0
+    timestamp: null
+default_value_callback: ''
+settings: {  }
+field_type: radioactivity

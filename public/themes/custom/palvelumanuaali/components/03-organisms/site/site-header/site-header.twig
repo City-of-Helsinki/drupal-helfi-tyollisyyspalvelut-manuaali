@@ -5,11 +5,9 @@
 <header {{ bem(header__base_class) }}>
   <div {{ bem('inner', [], header__base_class) }}>
     <div {{ bem('primary', [], header__base_class) }}>
-      <div {{ bem('menu', [], header__base_class) }}>
-        {% block header__menu %}
-          {% include "@molecules/menus/main-menu/main-menu.twig" %}
-        {% endblock %}
-      </div>
+      {% block header__menu %}
+        {% include "@molecules/menus/main-menu/main-menu.twig" %}
+      {% endblock %}
     </div>
     <div {{ bem('secondary', [], header__base_class) }}>
       {% block header__breadcrumbs %}

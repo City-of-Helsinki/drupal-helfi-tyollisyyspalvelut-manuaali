@@ -1,0 +1,21 @@
+uuid: a204d9cc-c308-4360-99d0-e9e6a7faecf8
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_example_situations
+    - taxonomy.vocabulary.language_level
+  module:
+    - text
+id: taxonomy_term.language_level.field_example_situations
+field_name: field_example_situations
+entity_type: taxonomy_term
+bundle: language_level
+label: 'Example Situations'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

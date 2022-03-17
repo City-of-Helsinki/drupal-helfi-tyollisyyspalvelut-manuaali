@@ -1,0 +1,50 @@
+uuid: 24ef48a8-cf19-455d-a5d9-0e9e1f40daca
+langcode: fi
+status: true
+dependencies:
+  config:
+    - system.menu.account
+  module:
+    - system
+    - user
+label: 'Sitewide logged-in'
+name: sitewide_logged_in
+group: null
+description: ''
+requireAllConditions: false
+disabled: false
+conditions:
+  user_role:
+    id: user_role
+    negate: true
+    uuid: 71ecc74d-ef5f-4466-bddf-438651c48d22
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      anonymous: anonymous
+reactions:
+  blocks:
+    id: blocks
+    uuid: 792b4779-901f-4c7f-93f6-8bddfcee02b1
+    blocks:
+      071aad4a-eb6c-4a74-a280-5abd25197db8:
+        uuid: 071aad4a-eb6c-4a74-a280-5abd25197db8
+        id: 'system_menu_block:account'
+        label: Käyttäjävalikko
+        provider: system
+        label_display: '0'
+        region: header
+        weight: '0'
+        custom_id: system_menu_block_account
+        theme: palvelumanuaali
+        css_class: ''
+        unique: 0
+        context_id: sitewide_logged_in
+        context_mapping: {  }
+        level: '1'
+        depth: '0'
+        expand_all_items: 0
+        third_party_settings: {  }
+    include_default_blocks: 0
+    saved: false
+weight: 0

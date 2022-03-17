@@ -1,0 +1,7 @@
+hel_tpm_url_shortener.settings_form:
+  path: '/admin/config/system/hel-tpm-url-shortener'
+  defaults:
+    _title: 'Hel TPM Url shortener settings'
+    _form: 'Drupal\hel_tpm_url_shortener\Form\SettingsForm'
+  requirements:
+    _permission: 'administer hel_tpm_url_shortener configuration'

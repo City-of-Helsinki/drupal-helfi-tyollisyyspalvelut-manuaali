@@ -1,0 +1,40 @@
+uuid: 5eb4044e-b1e6-45b8-9121-339556201b1f
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_dates
+    - paragraphs.paragraphs_type.service_time_and_place
+  module:
+    - date_recur
+id: paragraph.service_time_and_place.field_dates
+field_name: field_dates
+entity_type: paragraph
+bundle: service_time_and_place
+label: Dates
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    default_date_type: now
+    default_date: now
+    default_end_date_type: ''
+    default_end_date: ''
+    default_date_time_zone: Europe/Helsinki
+    default_time_zone: Europe/Helsinki
+    default_rrule: ''
+default_value_callback: ''
+settings:
+  precreate: P2Y
+  parts:
+    all: true
+    frequencies:
+      SECONDLY: {  }
+      MINUTELY: {  }
+      HOURLY: {  }
+      DAILY: {  }
+      WEEKLY: {  }
+      MONTHLY: {  }
+      YEARLY: {  }
+field_type: date_recur

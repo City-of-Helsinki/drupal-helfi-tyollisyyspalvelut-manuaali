@@ -1,0 +1,22 @@
+{% set ul_base_class = menu_class %}
+{% set ul_modifiers = menu_modifiers %}
+{% set ul_blockname = menu_blockname %}
+
+{# List #}
+{% extends "@atoms/lists/ul.twig" %}
+  {% block list_content %}
+    {% if icon_name %}
+      {% include "@atoms/images/icons/_icon.twig" with {
+        icon_base_class: icon_base_class,
+        icon_blockname: 'icon',
+        icon_name: icon_name,
+      } %}
+    {% endif %}
+    {% for item in items %}
+      {% include "@molecules/menus/main-menu/main-menu-item.twig" with {
+        li_base_class: item_base_class,
+        li_modifiers: item_modifiers,
+        li_blockname: item_blockname,
+      } %}
+    {% endfor %}
+  {% endblock %}

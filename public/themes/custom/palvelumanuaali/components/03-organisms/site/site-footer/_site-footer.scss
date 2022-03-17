@@ -4,6 +4,7 @@
   order: 3;
   width: 100%;
   padding: $space;
+  padding-top: $space-triple;
   @include large {
     margin-left: $sidebar-width;
     padding: $space-double;
@@ -22,6 +23,12 @@
 }
 
 .footer__branding {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: $space-triple;
+  @include large {
+    margin-bottom: 0;
+  }
   .link {
       display: block;
       width: 100%;
@@ -32,20 +39,31 @@
   }
 }
 
-.footer__social {
-  margin-bottom: $space;
-
-  @include large {
-    flex: 0 1 30%;
-    margin-bottom: 0;
-    margin-right: $space;
-  }
-}
 
 .footer__menu {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: $space-quintuple;
   @include large {
     flex: 1 1 100%;
-    margin-left: auto;
     text-align: right;
+    margin-bottom: 0;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
+  .menu {
+    display: flex;
   }
 }
+  .footer__copy-right {
+    margin-left: auto;
+    margin-right: auto;
+    color: clr(text-inverse);
+    @include large {
+      flex: 1 4 100%;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+    }
+  }

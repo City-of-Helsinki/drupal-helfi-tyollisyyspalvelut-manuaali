@@ -1,0 +1,22 @@
+uuid: d4a92eff-24cb-4196-93f4-1a2f86f62ba1
+langcode: fi
+status: true
+dependencies:
+  config:
+    - filter.format.filtered_html
+template: 2nd_user_account_expiry_reminder
+label: '2nd user account expiry reminder'
+description: ''
+text:
+  -
+    value: "<p>Your user account is expiring in two days</p>\r\n"
+    format: filtered_html
+  -
+    value: "<p>Hi,</p>\r\n\r\n<p>your user account [user:name] is about to expire due to inactivity. Please login immediately using the following link to keep your account!</p>\r\n\r\n<p>[user:one-time-login-url]</p>\r\n\r\n<p>Best regards,</p>\r\n\r\n<p>Palvelumanuaali administration</p>\r\n"
+    format: filtered_html
+settings:
+  'token options':
+    clear: false
+    'token replace': true
+  purge_override: false
+  purge_methods: {  }

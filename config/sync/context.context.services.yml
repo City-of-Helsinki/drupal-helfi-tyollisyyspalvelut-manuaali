@@ -1,0 +1,45 @@
+uuid: 95070811-0363-4871-9af9-726a52f8d9a6
+langcode: fi
+status: true
+dependencies:
+  module:
+    - hel_tpm_sharer
+    - node
+label: Services
+name: services
+group: null
+description: ''
+requireAllConditions: false
+disabled: false
+conditions:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    negate: false
+    uuid: c042b5de-0622-4b40-9c19-16c71a9fa4eb
+    context_mapping:
+      node: '@node.node_route_context:node'
+    bundles:
+      service: service
+reactions:
+  blocks:
+    id: blocks
+    uuid: 51dbe24b-1af2-4f88-963e-e07563bcbf10
+    blocks:
+      01a5384d-48c0-4be0-aa18-b1772721d941:
+        uuid: 01a5384d-48c0-4be0-aa18-b1772721d941
+        id: hel_sharer_block
+        label: 'Sharer block'
+        provider: hel_tpm_sharer
+        label_display: '0'
+        region: content
+        weight: '0'
+        custom_id: hel_sharer_block
+        theme: palvelumanuaali
+        css_class: ''
+        unique: 0
+        context_id: services
+        context_mapping: {  }
+        third_party_settings: {  }
+    include_default_blocks: 0
+    saved: false
+weight: 0
