@@ -1,5 +1,5 @@
 .card {
-
+  border: 0;
   &.grid__item {
     background-color: clr(sidebar-color);
     border-radius: 8px 8px 4px 4px;
@@ -53,6 +53,28 @@
   background-color: clr(highlight-high);
   padding: 1em;
 }
+.card--bg-light-blue {
+  background-color: clr(background-dropdown);
+}
+
+.card--square-left {
+  border-radius: 0px 16px 16px 0px;
+}
+
+.card--border-left-blue {
+  border-left: 4px solid $blue80;
+}
+
+.card--bottom-gutter {
+  margin-bottom: $space;
+}
+
+.card--padded {
+  padding: $space-double $space-two-and-half $space-one-and-half $space-two-and-half;
+  .card__content {
+    margin: 0;
+  }
+}
 
 .card--view-card {
   background-color: clr(sidebar-color);
@@ -86,5 +108,81 @@
   .card__date {
     font-size: $small-caption;
     margin: 0;
+  }
+}
+
+.card--service-card {
+  .service-time-and-place {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .address {
+    display: flex;
+    color: clr(accent);
+    font-weight: 600;
+    font-size: 1.5rem;
+    line-height: 1.33;
+    margin: 0 0 0.5em;
+    span {
+      margin-left: 5px;
+    }
+  }
+
+  .field--name-field-service-location {
+    width: 100%;
+    order: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .field--name-field-dates {
+    width: 50%;
+    order: 2;
+    display: flex;
+    &.icon {
+      width: 24px;
+      margin-right: $space;
+      order: unset;
+    }
+  }
+
+  .field--name-field-service-languages {
+    width: 50%;
+    order: 3;
+    display: flex;
+    &.icon {
+      width: 24px;
+      margin-right: $space;
+      order: unset;
+      display: block;
+    }
+  }
+
+  .accordion {
+    width: 100%;
+    order: 4;
+    margin-top: $space-double;
+
+    .accordion-button {
+      padding-left: 0;
+      font-weight: 600;
+      background-color: unset;
+      border-bottom: unset;
+      &::after {
+        @include icons;
+        margin-left: 5px;
+        background-image: unset;
+      }
+      svg {
+        transform: rotate(180deg);
+      }
+      &.collapsed {
+        svg {
+          transform: unset;
+        }
+      }
+    }
+    .accordion-collapse {
+      border-bottom: unset;
+    }
   }
 }

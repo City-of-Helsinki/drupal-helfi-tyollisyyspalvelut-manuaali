@@ -1,0 +1,49 @@
+uuid: 29908a30-9921-416d-81ed-ba500f154a0f
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.field.node.service_location.field_address
+    - node.type.service_location
+  module:
+    - address
+id: node.service_location.default
+targetEntityType: node
+bundle: service_location
+mode: default
+content:
+  field_address:
+    type: address_default
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 3
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  translation:
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  created: true
+  moderation_state: true
+  path: true
+  promote: true
+  status: true
+  sticky: true
+  uid: true
+  url_redirects: true
