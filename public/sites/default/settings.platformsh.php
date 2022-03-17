@@ -4,6 +4,23 @@
  * Platform.sh settings.
  */
 
+$platformsh = new \Platformsh\ConfigReader\Config();
+if (!$platformsh->inRuntime()) {
+  return;
+}
+// Update these values to the relationship name (from .platform.app.yaml)
+// and the machine name of the server from your Drupal configuration.
+$relationship_name = 'elastic';
+$es_cluster_name = 'search';
+if ($platformsh->hasRelationship($relationship_name)) {
+  $platformsh->registerFormatter('drupal-elastic', function($creds) {
+    return sprintf('http://%s:%s', $creds['host'], $creds['port']);
+  });
+
+  // Set the connector configuration to the appropriate value, as defined by the formatter above.
+  $config['elasticsearch_connector.cluster.' . $es_cluster_name]['url'] = $platformsh->formattedCredentials($relationship_name, 'drupal-elastic');
+}
+
 // Configure the database.
 if (getenv('PLATFORM_RELATIONSHIPS')) {
   $relationships = json_decode(base64_decode(getenv('PLATFORM_RELATIONSHIPS')), TRUE);
