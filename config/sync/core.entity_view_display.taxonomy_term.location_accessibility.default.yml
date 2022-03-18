@@ -1,0 +1,41 @@
+uuid: 1b1f6f2d-070e-46eb-8121-a7044fdd2084
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.location_accessibility.field_logo
+    - taxonomy.vocabulary.location_accessibility
+  module:
+    - svg_image
+    - text
+id: taxonomy_term.location_accessibility.default
+targetEntityType: taxonomy_term
+bundle: location_accessibility
+mode: default
+content:
+  description:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_logo:
+    type: image
+    label: above
+    settings:
+      image_link: ''
+      image_style: ''
+      svg_attributes:
+        width: null
+        height: null
+      svg_render_as_image: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  langcode: true
+  search_api_excerpt: true

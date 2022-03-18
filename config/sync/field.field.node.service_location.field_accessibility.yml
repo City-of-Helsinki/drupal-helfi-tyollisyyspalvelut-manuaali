@@ -1,0 +1,29 @@
+uuid: a7d449ea-77a2-4a48-8f41-b9bd6a8003b5
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_accessibility
+    - node.type.service_location
+    - taxonomy.vocabulary.location_accessibility
+id: node.service_location.field_accessibility
+field_name: field_accessibility
+entity_type: node
+bundle: service_location
+label: Saavutettavuus
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      location_accessibility: location_accessibility
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference
