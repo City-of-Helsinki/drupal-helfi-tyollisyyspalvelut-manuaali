@@ -2,18 +2,15 @@ display:
   default:
     display_options:
       filters:
-        field_age_groups:
-          expose:
-            label: 'Age group'
         field_municipality:
           expose:
             label: 'Target group municipality'
-        field_service_language:
-          expose:
-            label: 'Service language'
         search_api_fulltext:
           expose:
             label: Search
+        field_language_1:
+          expose:
+            label: Language
       exposed_form:
         options:
           submit_button: Search

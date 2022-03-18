@@ -1,0 +1,28 @@
+uuid: 1bdfc752-a598-4176-a65f-4c32ac25dfc1
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.service_language.field_language
+    - field.field.paragraph.service_language.field_level
+    - paragraphs.paragraphs_type.service_language
+id: paragraph.service_language.default
+targetEntityType: paragraph
+bundle: service_language
+mode: default
+content:
+  field_language:
+    type: options_select
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_level:
+    type: options_select
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

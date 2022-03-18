@@ -1,0 +1,21 @@
+uuid: 38f51aa2-de97-4726-b04c-15d7123da5ae
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_description
+    - paragraphs.paragraphs_type.service_time_and_place
+  module:
+    - text
+id: paragraph.service_time_and_place.field_description
+field_name: field_description
+entity_type: paragraph
+bundle: service_time_and_place
+label: 'Additional info'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

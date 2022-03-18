@@ -1,0 +1,19 @@
+uuid: fe1a3e4c-4eab-4d07-b907-8a5735cb3e3e
+langcode: fi
+status: true
+dependencies:
+  config:
+    - group.type.organisation
+    - node.type.basic_page
+  module:
+    - gnode
+    - node
+id: group_content_type_c7580ab514c81
+label: 'Organisation: Group node (Basic page)'
+description: 'Adds <em class="placeholder">Basic page</em> content to groups both publicly and privately.'
+group_type: organisation
+content_plugin: 'group_node:basic_page'
+plugin_config:
+  group_cardinality: 0
+  entity_cardinality: 1
+  use_creation_wizard: false

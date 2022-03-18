@@ -1,21 +1,22 @@
-uuid: 2efca193-0621-4be6-93d7-73b72c56c244
-langcode: en
+uuid: 8f48b938-7981-483d-b649-5f398d8b521f
+langcode: fi
 status: true
 dependencies:
   module:
+    - entity_reference_revisions
     - field_permissions
     - node
-    - taxonomy
+    - paragraphs
 third_party_settings:
   field_permissions:
     permission_type: public
-id: node.field_service_language
-field_name: field_service_language
+id: node.field_service_time_and_location
+field_name: field_service_time_and_location
 entity_type: node
-type: entity_reference
+type: entity_reference_revisions
 settings:
-  target_type: taxonomy_term
-module: core
+  target_type: paragraph
+module: entity_reference_revisions
 locked: false
 cardinality: -1
 translatable: true
