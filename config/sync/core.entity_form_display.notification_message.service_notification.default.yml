@@ -3,6 +3,7 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - field.field.notification_message.service_notification.field_message_level
     - field.field.notification_message.service_notification.field_services
     - notification_message.type.service_notification
   module:
@@ -13,9 +14,15 @@ targetEntityType: notification_message
 bundle: service_notification
 mode: default
 content:
+  field_message_level:
+    type: options_select
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   field_services:
     type: entity_reference_autocomplete
-    weight: 1
+    weight: 2
     region: content
     settings:
       match_operator: CONTAINS
@@ -33,14 +40,14 @@ content:
     third_party_settings: {  }
   langcode:
     type: language_select
-    weight: 3
+    weight: 4
     region: content
     settings:
       include_locked: true
     third_party_settings: {  }
   message:
     type: text_textarea
-    weight: 2
+    weight: 3
     region: content
     settings:
       rows: 5

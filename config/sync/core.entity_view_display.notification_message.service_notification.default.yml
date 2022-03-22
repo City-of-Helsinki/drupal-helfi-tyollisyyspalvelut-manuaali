@@ -3,9 +3,11 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - field.field.notification_message.service_notification.field_message_level
     - field.field.notification_message.service_notification.field_services
     - notification_message.type.service_notification
   module:
+    - datetime
     - text
 id: notification_message.service_notification.default
 targetEntityType: notification_message
@@ -18,19 +20,38 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 0
+    weight: 2
     region: content
   message:
     type: text_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
+    weight: 3
+    region: content
+  publish_end_date:
+    type: datetime_default
+    label: hidden
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
     weight: 1
+    region: content
+  publish_start_date:
+    type: datetime_default
+    label: hidden
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 0
     region: content
 hidden:
   entity_print_view_epub: true
   entity_print_view_pdf: true
   entity_print_view_word_docx: true
+  field_message_level: true
   field_services: true
   langcode: true
   search_api_excerpt: true
