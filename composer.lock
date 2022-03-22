@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "70e44ef18a38a3fe899bb841f4deec3d",
+    "content-hash": "15cd476bf01bf1f5ec081475829aa001",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3955,6 +3955,56 @@
             "homepage": "https://www.drupal.org/project/message_ui",
             "support": {
                 "source": "https://git.drupalcode.org/project/message_ui"
+            }
+        },
+        {
+            "name": "drupal/notification_message",
+            "version": "1.0.0-rc2",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/notification_message.git",
+                "reference": "8.x-1.0-rc2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/notification_message-8.x-1.0-rc2.zip",
+                "reference": "8.x-1.0-rc2",
+                "shasum": "6c7e4ff3c2b99231c5537a5cef0e95ce36940f4c"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.0-rc2",
+                    "datestamp": "1633981557",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Project has not opted into security advisory coverage!"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Travis Tomka",
+                    "homepage": "https://www.drupal.org/user/718562",
+                    "email": "underoathosx@gmail.com"
+                },
+                {
+                    "name": "gabesullice",
+                    "homepage": "https://www.drupal.org/user/2287430"
+                }
+            ],
+            "description": "Allow site admins to construct and broadcast notification messages.",
+            "homepage": "https://drupal.org/project/notification_message",
+            "support": {
+                "source": "https://git.drupalcode.org/project/notification_message",
+                "issues": "https://www.drupal.org/project/issues/notification_message"
             }
         },
         {
@@ -15004,6 +15054,7 @@
         "drupal/inline_entity_form": 5,
         "drupal/maxlength": 5,
         "drupal/message_ui": 10,
+        "drupal/notification_message": 5,
         "drupal/themable_forms": 10
     },
     "prefer-stable": true,
