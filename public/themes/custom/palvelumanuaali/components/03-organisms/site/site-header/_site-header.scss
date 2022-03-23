@@ -233,3 +233,25 @@
     }
   }
 }
+
+.search-api-autocomplete-search {
+  &.ui-autocomplete {
+    z-index: 210;
+    margin-top: -10px !important;
+    background-color: clr(text-inverse);
+    border: 2px solid #AFCEFD;
+    border-top: 0;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 24px;
+    padding-right: 24px;
+    box-shadow: 0px 8px 16px rgba(30, 64, 182, 0.2);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+  }
+}
