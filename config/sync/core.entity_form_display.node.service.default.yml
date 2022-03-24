@@ -3,6 +3,7 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - field.field.node.service.field_accessibility
     - field.field.node.service.field_client_consent
     - field.field.node.service.field_client_consent_description
     - field.field.node.service.field_contact_info
@@ -155,6 +156,16 @@ content:
     weight: 8
     region: content
     settings: {  }
+    third_party_settings: {  }
+  field_accessibility:
+    type: entity_reference_autocomplete
+    weight: 52
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
   field_client_consent:
     type: boolean_checkbox
