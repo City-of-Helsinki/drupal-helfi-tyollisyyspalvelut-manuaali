@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.taxonomy_term.location_accessibility.field_logo
+    - image.style.medium
     - taxonomy.vocabulary.location_accessibility
   module:
     - svg_image
@@ -18,20 +19,20 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 0
+    weight: 1
     region: content
   field_logo:
     type: image
-    label: above
+    label: hidden
     settings:
       image_link: ''
-      image_style: ''
+      image_style: medium
       svg_attributes:
-        width: null
-        height: null
+        width: 30
+        height: 30
       svg_render_as_image: true
     third_party_settings: {  }
-    weight: 1
+    weight: 0
     region: content
 hidden:
   entity_print_view_epub: true
