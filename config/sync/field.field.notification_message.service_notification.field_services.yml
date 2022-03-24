@@ -1,0 +1,29 @@
+uuid: 26d15f4b-82f1-4e9f-a17c-d8b318da1e66
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.notification_message.field_services
+    - node.type.service
+    - notification_message.type.service_notification
+id: notification_message.service_notification.field_services
+field_name: field_services
+entity_type: notification_message
+bundle: service_notification
+label: Services
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      service: service
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference
