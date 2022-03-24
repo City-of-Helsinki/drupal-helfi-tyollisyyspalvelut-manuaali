@@ -37,7 +37,11 @@
                 "type": "zip"
               }
             }
-      }
+        },
+        {
+          "type": "composer",
+          "url": "https://asset-packagist.org"
+        }
     ],
     "require": {
         "php": ">=7.3",
@@ -69,6 +73,7 @@
         "drupal/message": "^1.2",
         "drupal/message_notify": "^1.2",
         "drupal/message_ui": "^1.0@beta",
+        "drupal/notification_message": "^1.0@RC",
         "drupal/paragraphs": "^1.12",
         "drupal/pathauto": "^1.8",
         "drupal/radioactivity": "^3.1",
@@ -82,6 +87,8 @@
         "drupal/token": "^1.10",
         "drupal/twig_tweak": "^3.1",
         "drush/drush": "^10.3",
+        "npm-asset/jquery-ui-touch-punch": "^0.2.3",
+        "oomphinc/composer-installers-extender": "^2.0",
         "platformsh/config-reader": "^2.4",
         "twbs/bootstrap": "5.0.0-beta1",
         "twbs/bootstrap-dist": "5.0.0-beta1",
@@ -140,7 +147,11 @@
         },
         "installer-paths": {
             "public/core": ["type:drupal-core"],
-            "public/libraries/{$name}": ["type:drupal-library"],
+            "public/libraries/{$name}": [
+                "type:drupal-library",
+                "vendor:npm-asset",
+                "vendor:bower-asset"
+            ],
             "public/modules/contrib/{$name}": ["type:drupal-module"],
             "public/profiles/contrib/{$name}": ["type:drupal-profile"],
             "public/themes/contrib/{$name}": ["type:drupal-theme"],
@@ -153,6 +164,10 @@
         "patches": {
             "drupal/message": {
                 "https://www.drupal.org/files/issues/2018-06-24/allow_token_contexts-3.patch": "https://www.drupal.org/files/issues/2018-06-24/allow_token_contexts-3.patch"
+            },
+            "drupal/notification_message": {
+                "https://www.drupal.org/files/issues/2022-02-03/notification_message-3261643-3.patch": "https://www.drupal.org/files/issues/2022-02-03/notification_message-3261643-3.patch",
+                "https://www.drupal.org/files/issues/2022-03-24/3270975_4_add_notification_msgs_to_views.patch": "https://www.drupal.org/files/issues/2022-03-24/3270975_4_add_notification_msgs_to_views.patch"
             }
         }
     }

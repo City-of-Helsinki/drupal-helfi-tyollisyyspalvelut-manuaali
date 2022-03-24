@@ -1,0 +1,9 @@
+<?php
+
+use Drupal\Core\Entity\EntityTypeInterface;
+
+function hel_tpm_editorial_entity_base_field_info_alter(&$fields, EntityTypeInterface $entity_type) {
+  if ($entity_type->id() == 'notification_message') {
+    $fields['publish_end_date']->addConstraint('NotificationMessageExpiry');
+  }
+}

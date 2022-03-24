@@ -1,0 +1,21 @@
+uuid: bcfb8c92-a59f-4fe2-b87e-a25bbb00434e
+langcode: fi
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.message.mail_subject
+    - message.template.7d_notification_expiry_reminder
+id: message.7d_notification_expiry_reminder.mail_subject
+targetEntityType: message
+bundle: 7d_notification_expiry_reminder
+mode: mail_subject
+content:
+  partial_0:
+    weight: 0
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  partial_1: true
+  search_api_excerpt: true
