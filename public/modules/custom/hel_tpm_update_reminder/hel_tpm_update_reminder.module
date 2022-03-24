@@ -34,7 +34,6 @@ function _hel_tpm_node_update_reminder() {
     if ($last_reminded == NULL || $last_reminded < strtotime('-2 weeks')) {
       $node = $nodeStorage->load($nid);
       $account = $node->getOwner();
-      $email = $account->getEmail();
 
       $message = Message::create(['template' => 'hel_tpm_update_reminder', 'uid' => $account->id()]);
       $message->setOwner($account)
@@ -82,11 +81,9 @@ function _hel_tpm_notification_message_expiry_reminder($days) {
     if ($last_reminded == NULL) {
       $entity = $storage->load($id);
       $account = $entity->getAuthorUser();
-      $email = $account->getEmail();
 
       $message = Message::create(['template' => $days . 'd_notification_expiry_reminder', 'uid' => $account->id(), ]);
       $message->setOwner($account)
-        ->addContext('node', $node)
         ->addContext('notification_message', $entity)
         ->save();
 

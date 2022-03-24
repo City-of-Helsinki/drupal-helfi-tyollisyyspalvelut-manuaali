@@ -370,7 +370,22 @@ display:
         type: tag
         options: {  }
       empty: {  }
-      sorts: {  }
+      sorts:
+        publish_end_date:
+          id: publish_end_date
+          table: notification_message_field_data
+          field: publish_end_date
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: notification_message
+          entity_field: publish_end_date
+          plugin_id: standard
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: ''
+          exposed: false
       arguments:
         field_services_target_id:
           id: field_services_target_id
@@ -420,6 +435,100 @@ display:
           expose:
             operator_limit_selection: false
             operator_list: {  }
+        publish_end_date:
+          id: publish_end_date
+          table: notification_message_field_data
+          field: publish_end_date
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: notification_message
+          entity_field: publish_end_date
+          plugin_id: datetime
+          operator: '>='
+          value:
+            min: ''
+            max: ''
+            value: now
+            type: offset
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            min_placeholder: ''
+            max_placeholder: ''
+            placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        publish_start_date:
+          id: publish_start_date
+          table: notification_message_field_data
+          field: publish_start_date
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: notification_message
+          entity_field: publish_start_date
+          plugin_id: datetime
+          operator: '<='
+          value:
+            min: ''
+            max: ''
+            value: now
+            type: offset
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            min_placeholder: ''
+            max_placeholder: ''
+            placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
       filter_groups:
         operator: AND
         groups:
