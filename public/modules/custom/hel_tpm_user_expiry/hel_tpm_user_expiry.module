@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Implements hook_cron().
+ */
 function hel_tpm_user_expiry_cron() {
   $templates = [
     1 => '1st_user_account_expiry_reminder',
@@ -48,7 +51,7 @@ function hel_tpm_user_expiry_cron() {
     }
 
     if (isset($notification)) {
-      $logger->info('Sending notification :notification to user :uid', [':notification' => $notification, ':uid' => $row->uid]);
+      $logger->info('Sending notification %notification to user %uid', ['%notification' => $notification, '%uid' => $row->uid]);
       // Record the access date to see if the user has accessed the site.
       $state[$row->uid]['access'] = $row->access;
       $state[$row->uid]['notificationtimes'][$notification] = time();
