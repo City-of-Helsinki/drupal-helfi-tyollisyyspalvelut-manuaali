@@ -1,0 +1,29 @@
+uuid: b168da32-51dd-4ca4-aec5-49023a72304d
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_accessibility
+    - node.type.service
+    - taxonomy.vocabulary.service_accessiblity
+id: node.service.field_accessibility
+field_name: field_accessibility
+entity_type: node
+bundle: service
+label: Esteettömyys
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      service_accessiblity: service_accessiblity
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

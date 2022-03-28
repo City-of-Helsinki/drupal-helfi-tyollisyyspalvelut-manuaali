@@ -3,6 +3,7 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - field.field.node.service.field_accessibility
     - field.field.node.service.field_client_consent
     - field.field.node.service.field_client_consent_description
     - field.field.node.service.field_contact_info
@@ -84,7 +85,6 @@ third_party_settings:
         - field_service_implement
         - field_service_obligations
         - field_service_location
-        - field_service_language
         - field_contact_info
         - field_service_links_external
         - field_service_price
@@ -153,6 +153,12 @@ content:
   created:
     type: datetime_timestamp
     weight: 8
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_accessibility:
+    type: options_buttons
+    weight: 52
     region: content
     settings: {  }
     third_party_settings: {  }
