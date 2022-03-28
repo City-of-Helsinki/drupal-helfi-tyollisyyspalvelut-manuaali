@@ -85,7 +85,6 @@ third_party_settings:
         - field_service_implement
         - field_service_obligations
         - field_service_location
-        - field_service_language
         - field_contact_info
         - field_service_links_external
         - field_service_price
@@ -158,14 +157,10 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_accessibility:
-    type: entity_reference_autocomplete
+    type: options_buttons
     weight: 52
     region: content
-    settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
+    settings: {  }
     third_party_settings: {  }
   field_client_consent:
     type: boolean_checkbox
