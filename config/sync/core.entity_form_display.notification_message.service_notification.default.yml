@@ -1,0 +1,56 @@
+uuid: 2f86f4d4-025b-47f3-a181-9f694ae4b6dd
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.field.notification_message.service_notification.field_message_level
+    - field.field.notification_message.service_notification.field_services
+    - notification_message.type.service_notification
+  module:
+    - datetime
+    - text
+id: notification_message.service_notification.default
+targetEntityType: notification_message
+bundle: service_notification
+mode: default
+content:
+  field_message_level:
+    type: options_select
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_services:
+    type: entity_reference_autocomplete
+    weight: 2
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  label:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 4
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  message:
+    type: text_textarea
+    weight: 3
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+hidden: {  }

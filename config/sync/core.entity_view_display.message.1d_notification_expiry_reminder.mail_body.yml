@@ -1,13 +1,13 @@
-uuid: 3f1070aa-6437-4a01-94c8-613c38287d76
+uuid: 2dffa26b-c34f-4d4e-a746-7b1423c6bc62
 langcode: fi
 status: true
 dependencies:
   config:
     - core.entity_view_mode.message.mail_body
-    - message.template.1st_user_account_expiry_reminder
-id: message.1st_user_account_expiry_reminder.mail_body
+    - message.template.1d_notification_expiry_reminder
+id: message.1d_notification_expiry_reminder.mail_body
 targetEntityType: message
-bundle: 1st_user_account_expiry_reminder
+bundle: 1d_notification_expiry_reminder
 mode: mail_body
 content:
   partial_1:

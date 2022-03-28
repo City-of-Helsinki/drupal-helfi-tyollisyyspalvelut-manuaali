@@ -1,0 +1,46 @@
+uuid: 98fb8284-43a2-4052-a9b5-fe024b492754
+langcode: fi
+status: true
+dependencies:
+  module:
+    - group
+label: 'Group links'
+name: group_links
+group: null
+description: ''
+requireAllConditions: false
+disabled: false
+conditions:
+  'entity_bundle:group':
+    id: 'entity_bundle:group'
+    negate: false
+    uuid: d3974166-2201-4613-80aa-07d5dca79a52
+    context_mapping:
+      group: '@group.group_route_context:group'
+    bundles:
+      organisation: organisation
+      service_provider: service_provider
+reactions:
+  blocks:
+    id: blocks
+    uuid: e34e97e5-15f9-48b1-9cec-7b81b9e6d030
+    blocks:
+      a25bd619-31ca-42a8-8858-1c6df800dc47:
+        uuid: a25bd619-31ca-42a8-8858-1c6df800dc47
+        id: group_operations
+        label: 'Group operations'
+        provider: group
+        label_display: '0'
+        region: content
+        weight: '-10'
+        custom_id: group_operations
+        theme: palvelumanuaali
+        css_class: ''
+        unique: 0
+        context_id: group_links
+        context_mapping:
+          group: '@group.group_route_context:group'
+        third_party_settings: {  }
+    include_default_blocks: 0
+    saved: false
+weight: 0
