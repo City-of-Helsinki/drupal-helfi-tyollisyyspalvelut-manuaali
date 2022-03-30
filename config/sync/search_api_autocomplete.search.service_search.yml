@@ -13,15 +13,20 @@ label: 'Service search'
 index_id: service_search_index
 suggester_settings:
   live_results:
-    fields: {  }
+    fields:
+      - rendered_item
     highlight:
       enabled: false
       field: ''
     view_modes:
       'entity:node':
         service: ''
+  server:
+    fields:
+      - title
 suggester_weights:
   live_results: 0
+  server: 0
 suggester_limits: {  }
 search_settings:
   'views:service_search':

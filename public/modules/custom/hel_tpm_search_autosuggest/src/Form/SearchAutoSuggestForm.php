@@ -24,7 +24,6 @@ class SearchAutoSuggestForm extends FormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
     $form['#action'] = sprintf('/%s/search', $language);
-
     $form['search'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Search'),
@@ -32,6 +31,7 @@ class SearchAutoSuggestForm extends FormBase {
       '#attributes' => ['placeholder'=> t('Search'), 'autocomplete' => 'off'],
       '#attached' => ['library' => ['hel_tpm_search_autosuggest/hel_tpm_search_autosuggest']],
       '#required' => TRUE,
+      '#default_value' => \Drupal::request()->query->get('search_api_fulltext'),
     ];
     $form['submit'] = [
       '#type' => 'submit',
