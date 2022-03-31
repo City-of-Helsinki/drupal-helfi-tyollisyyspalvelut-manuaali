@@ -32,7 +32,7 @@ reactions:
         provider: system
         label_display: '0'
         region: content
-        weight: '-1'
+        weight: '-3'
         custom_id: system_main_block
         theme: palvelumanuaali
         css_class: ''
@@ -83,7 +83,7 @@ reactions:
         provider: hel_tpm_url_shortener
         label_display: '0'
         region: content
-        weight: '0'
+        weight: '-2'
         custom_id: hel_tpm_url_shortener_form
         theme: palvelumanuaali
         css_class: ''
@@ -185,6 +185,21 @@ reactions:
         context_id: sitewide
         context_mapping: {  }
         views_label: ''
+        third_party_settings: {  }
+      f521d448-e35c-4629-bad9-1418666bcc02:
+        uuid: f521d448-e35c-4629-bad9-1418666bcc02
+        id: system_breadcrumb_block
+        label: Murupolku
+        provider: system
+        label_display: '0'
+        region: content
+        weight: '-4'
+        custom_id: system_breadcrumb_block
+        theme: palvelumanuaali
+        css_class: ''
+        unique: 0
+        context_id: sitewide
+        context_mapping: {  }
         third_party_settings: {  }
     include_default_blocks: 0
     saved: false

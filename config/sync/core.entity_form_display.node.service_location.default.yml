@@ -3,6 +3,7 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - field.field.node.service_location.field_accessibility
     - field.field.node.service_location.field_address
     - node.type.service_location
   module:
@@ -12,6 +13,12 @@ targetEntityType: node
 bundle: service_location
 mode: default
 content:
+  field_accessibility:
+    type: options_buttons
+    weight: 26
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   field_address:
     type: address_default
     weight: 1

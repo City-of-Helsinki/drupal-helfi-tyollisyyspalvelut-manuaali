@@ -3,6 +3,7 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - field.field.node.service.field_accessibility
     - field.field.node.service.field_client_consent
     - field.field.node.service.field_client_consent_description
     - field.field.node.service.field_contact_info
@@ -37,6 +38,14 @@ targetEntityType: node
 bundle: service
 mode: default
 content:
+  field_accessibility:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 22
+    region: content
   field_client_consent:
     type: boolean
     label: above

@@ -1,0 +1,23 @@
+uuid: 01558dca-8a89-46d3-8a4a-e9e512f523f9
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.notification_message.field_message_level
+    - notification_message.type.service_notification
+  module:
+    - options
+id: notification_message.service_notification.field_message_level
+field_name: field_message_level
+entity_type: notification_message
+bundle: service_notification
+label: Level
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: notice
+default_value_callback: ''
+settings: {  }
+field_type: list_string
