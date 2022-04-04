@@ -15,6 +15,64 @@ function hel_tpm_search_autosuggest_theme() {
   $themes['hel_tpm_search_autocomplete'] = [
     'variables' => [],
   ];
-
   return $themes;
+}
+
+function hel_tpm_search_autosuggest_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state) {
+  $storage = $form_state->getStorage();
+  if (empty($storage['view']) || $storage['view']->id() != 'service_search') {
+    return;
+  }
+  $form['search_wrapper'] = [
+    '#type' => 'container',
+    '#attributes' => ['class' => 'search-autocomplete-wrapper']
+  ];
+
+  $form['search_api_fulltext'] = [
+    '#type' => 'textfield',
+    '#title' => new \Drupal\Core\StringTranslation\TranslatableMarkup('Search'),
+    '#id' => 'hel-tpm-search-autocomplete',
+    '#attributes' => ['placeholder'=> t('Search'), 'autocomplete' => 'off'],
+    '#attached' => ['library' => ['hel_tpm_search_autosuggest/hel_tpm_search_autosuggest']],
+    '#required' => TRUE,
+    '#default_value' => \Drupal::request()->query->get('search_api_fulltext'),
+  ];
+  $form['search_wrapper']['search_api_fulltext'] = $form['search_api_fulltext'];
+  $form['search_wrapper']['list_items'] = [
+    '#theme' => 'hel_tpm_search_autocomplete'
+  ];
+
+  // Generate weights for fields.
+  _hel_tpm_search_autosuggest_reweight_fields($form, $storage['view']);
+
+  // Remove original search_api_fulltext field.
+  unset($form['search_api_fulltext']);
+
+  // Disabled search_api_autocomplete callbacks.
+  $form['#process'] = [];
+
+  return $form;
+}
+
+/**
+ * Helper function to generate weights for exposed filter fields.
+ *
+ * @param $form
+ * @param $view
+ * @return void
+ */
+function _hel_tpm_search_autosuggest_reweight_fields(&$form, $view) {
+  $i = 0;
+  // Re-weight the fields to match proper placement.
+  foreach ($view->filter as $field_key => $filter) {
+    if (!$filter->isExposed()) {
+      continue;
+    }
+    if ($field_key == 'search_api_fulltext') {
+      $field_key = 'search_wrapper';
+    }
+    $form[$field_key]['#weight'] = $i;
+    $i++;
+  }
+  $form['sort_by']['#weight'] = $i;
 }

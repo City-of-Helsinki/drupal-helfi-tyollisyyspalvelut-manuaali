@@ -29,7 +29,7 @@ class SearchAutoSuggestForm extends FormBase {
       '#title' => $this->t('Search'),
       '#id' => 'hel_tpm_search_form',
       '#attributes' => ['placeholder'=> t('Search'), 'autocomplete' => 'off'],
-      '#attached' => ['library' => ['hel_tpm_search_autosuggest/hel_tpm_search_autosuggest']],
+   //   '#attached' => ['library' => ['hel_tpm_search_autosuggest/hel_tpm_search_autosuggest']],
       '#required' => TRUE,
       '#default_value' => \Drupal::request()->query->get('search_api_fulltext'),
     ];

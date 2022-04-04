@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @return void
+ */
+function hel_tpm_search_autosuggest_install() {
+  module_set_weight('hel_tpm_search_autosuggest', 10);
+}
+
+/**
+ * Set module weight to 10.
+ */
+function hel_tpm_search_autosuggest_update_9001() {
+  module_set_weight('hel_tpm_search_autosuggest', 10);
+}

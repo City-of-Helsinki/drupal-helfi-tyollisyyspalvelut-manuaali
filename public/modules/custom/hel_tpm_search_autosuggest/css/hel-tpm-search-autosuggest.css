@@ -1,8 +1,8 @@
-#search-autocomplete {
+.search-wrapper {
   display: none;
   background: white;
 }
-#search-autocomplete .title {
+.search-wrapper .title {
   width: 100%;
   background: #F3F3F3;
   text-align: center;
@@ -11,13 +11,14 @@
 #hel-tpm-search-autosuggest-form .form-item {
   margin-bottom: 0;
 }
-#search-service-list .item-list a {
+.hel-search-autocomplete.item-list a {
   display: block;
   clear: both;
 }
-#search-suggestions .suggestion-item {
+.search-wrapper .suggestion-item {
   display: block;
   width: 100%;
+  cursor: pointer;
 }
 #hel-tpm-search-autosuggest-form .button {
   display: none;

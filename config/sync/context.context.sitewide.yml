@@ -10,7 +10,6 @@ dependencies:
     - views.view.notifications
     - views.view.service_search
   module:
-    - hel_tpm_search_autosuggest
     - hel_tpm_url_shortener
     - language
     - system
@@ -205,20 +204,21 @@ reactions:
         views_label: ''
         items_per_page: none
         third_party_settings: {  }
-      aee173ae-d80f-4375-872f-000a99fd4ef2:
-        uuid: aee173ae-d80f-4375-872f-000a99fd4ef2
-        id: hel_tpm_search_autosuggest_block
-        label: 'HEL TPM Search autosuggest'
-        provider: hel_tpm_search_autosuggest
+      c9162ed7-cb51-4378-9061-41d80b0f564a:
+        uuid: c9162ed7-cb51-4378-9061-41d80b0f564a
+        id: 'views_exposed_filter_block:service_search-block_1'
+        label: ''
+        provider: views
         label_display: '0'
         region: header
         weight: '0'
-        custom_id: hel_tpm_search_autosuggest_block
+        custom_id: views_exposed_filter_block_service_search_block_1
         theme: palvelumanuaali
         css_class: ''
         unique: 0
         context_id: sitewide
         context_mapping: {  }
+        views_label: ''
         third_party_settings: {  }
     include_default_blocks: 0
     saved: false
