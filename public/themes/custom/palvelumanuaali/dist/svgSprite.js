@@ -122,6 +122,7 @@ var map = {
 	"./icons/profile-blue.svg": "./images/icons/profile-blue.svg",
 	"./icons/speech-bubble.svg": "./images/icons/speech-bubble.svg",
 	"./icons/twitter.svg": "./images/icons/twitter.svg",
+	"./icons/warning.svg": "./images/icons/warning.svg",
 	"./icons/world.svg": "./images/icons/world.svg",
 	"./logo.svg": "./images/logo.svg",
 	"./symbol.svg": "./images/symbol.svg"
@@ -702,6 +703,26 @@ __webpack_require__.r(__webpack_exports__);
       id: "twitter-usage",
       viewBox: "0 0 26 28",
       url: __webpack_require__.p + "../dist/icons.svg#twitter",
+      toString: function () {
+        return this.url;
+      }
+    });
+
+/***/ }),
+
+/***/ "./images/icons/warning.svg":
+/*!**********************************!*\
+  !*** ./images/icons/warning.svg ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+      id: "warning-usage",
+      viewBox: "0 0 32 32",
+      url: __webpack_require__.p + "../dist/icons.svg#warning",
       toString: function () {
         return this.url;
       }

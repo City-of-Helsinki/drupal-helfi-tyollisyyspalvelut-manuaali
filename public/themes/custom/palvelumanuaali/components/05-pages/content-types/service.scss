@@ -9,4 +9,17 @@
    padding-right: 32px;
    padding-bottom: 37px;
   }
+
+  .field {
+    .field__label {
+      margin-bottom: $space;
+      font-weight: 600;
+      font-size: 16px;
+    }
+  }
+  .content-column {
+    >.field {
+      margin-bottom: $space-double;
+    }
+  }
 }

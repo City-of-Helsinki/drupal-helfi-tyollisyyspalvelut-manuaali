@@ -53,59 +53,28 @@
   ]
 %}
 
-{% if label_hidden %}
-  {% if multiple %}
-    <div{{ attributes.addClass(classes, 'field__items') }}>
-      {% include "@atoms/images/icons/_icon.twig" with {
-        icon_base_class: 'icon',
-        icon_name: 'speech-bubble',
-        icon_modifiers: ['small'],
-      } %}
-      {% for item in items %}
-        <div{{ item.attributes.addClass('field__item') }}>
-          {{ item.content }}
-          {% if not loop.last %}
-            <p>{{","}}&nbsp;</p>
-          {% endif %}
-        </div>
-      {% endfor %}
-    </div>
-  {% else %}
-    {% include "@atoms/images/icons/_icon.twig" with {
-      icon_base_class: 'icon',
-      icon_name: 'speech-bubble',
-      icon_modifiers: ['small'],
-    } %}
-    {% for item in items %}
-      <div{{ attributes.addClass(classes, 'field__item') }}>
-        {{ item.content }}
-        {% if not loop.last %}
-          <p>{{","}}&nbsp;</p>
+  {% embed "@molecules/card/card.twig" with {
+    card__modifiers: ['bg-light-blue', 'bottom-gutter', 'padded', 'service-accessibility']
+  } %}
+    {% block card__content %}
+      <div{{ attributes.addClass(classes) }}>
+        <div{{ title_attributes.addClass(title_classes) }}><h4>{{ 'Service accessibility'|t}}<h4></div>
+        {% if multiple %}
+          <div class="field__items">
+        {% endif %}
+        {% for item in items %}
+          <div{{ item.attributes.addClass('field__item col-12 col-xl-6') }}>
+            {% include "@atoms/images/icons/_icon.twig" with {
+              icon_base_class: 'icon',
+              icon_name: 'check',
+              icon_modifiers: ['tiny'],
+            } %}
+              {{ item.content }}
+          </div>
+        {% endfor %}
+        {% if multiple %}
+          </div>
         {% endif %}
       </div>
-    {% endfor %}
-  {% endif %}
-{% else %}
-  <div{{ attributes.addClass(classes) }}>
-    {% include "@atoms/images/icons/_icon.twig" with {
-      icon_base_class: 'icon',
-      icon_name: 'speech-bubble',
-      icon_modifiers: ['small'],
-    } %}
-    <div{{ title_attributes.addClass(title_classes) }}>{{ label }}</div>
-    {% if multiple %}
-      <div class="field__items">
-    {% endif %}
-    {% for item in items %}
-      <div{{ item.attributes.addClass('field__item') }}>
-        {{ item.content }}
-        {% if not loop.last %}
-          <p>{{","}}&nbsp;</p>
-        {% endif %}
-      </div>
-    {% endfor %}
-    {% if multiple %}
-      </div>
-    {% endif %}
-  </div>
-{% endif %}
+    {% endblock %}
+  {% endembed %}
