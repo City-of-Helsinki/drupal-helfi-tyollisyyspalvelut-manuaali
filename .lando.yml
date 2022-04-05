@@ -18,6 +18,8 @@ services:
     type: redis
   appserver:
     xdebug: true
+    build:
+      - "/app/vendor/bin/phpcs --config-set installed_paths /app/coder/vendor/drupal/coder/coder_sniffer"
     config:
       php: .lando.php.ini
     overrides:
@@ -42,8 +44,8 @@ tooling:
     service: appserver
     description: Run Drupal 8 tests
     cmd:
-      - /app/vendor/bin/phpcs -n --report=full web/modules/custom web/themes
-      - /app/vendor/bin/behat --config=/app/tests/behat-lando.yml
+      - /app/vendor/bin/phpcs --standard=Drupal,DrupalPractice -n --report=full  public/modules/custom
+#      - /app/vendor/bin/behat --config=/app/tests/behat-lando.yml
   platform:
     service: appserver
     description: Run Platform CLI commands
