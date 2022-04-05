@@ -15,7 +15,7 @@ dependencies:
     - views
 label: Sitewide
 name: sitewide
-group: null
+group: 'Front page'
 description: ''
 requireAllConditions: false
 disabled: false
@@ -32,7 +32,7 @@ reactions:
         provider: system
         label_display: '0'
         region: content
-        weight: '-3'
+        weight: '-2'
         custom_id: system_main_block
         theme: palvelumanuaali
         css_class: ''
@@ -83,7 +83,7 @@ reactions:
         provider: hel_tpm_url_shortener
         label_display: '0'
         region: content
-        weight: '-2'
+        weight: '-3'
         custom_id: hel_tpm_url_shortener_form
         theme: palvelumanuaali
         css_class: ''
@@ -115,8 +115,9 @@ reactions:
         provider: core
         label_display: '0'
         region: content
-        weight: '-2'
+        weight: '-4'
         custom_id: local_tasks_block
+        context_mapping: {  }
         primary: true
         secondary: true
       958ca0b0-429c-40f4-b76a-4b453f97dd18:
@@ -193,7 +194,7 @@ reactions:
         provider: system
         label_display: '0'
         region: content
-        weight: '-4'
+        weight: '-5'
         custom_id: system_breadcrumb_block
         theme: palvelumanuaali
         css_class: ''
