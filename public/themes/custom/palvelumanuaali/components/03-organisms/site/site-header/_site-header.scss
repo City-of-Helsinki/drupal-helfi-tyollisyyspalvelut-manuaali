@@ -223,9 +223,20 @@
   }
 }
 
+
+.main-sidebar {
+  .search-history-wrapper,
+  .hel-search-autocomplete {
+    max-width: unset;
+    @include large {
+      max-width: unset;
+    }
+  }
+}
+
 .search-history-wrapper,
 .hel-search-autocomplete {
-    max-width: 512px;
+
     z-index: 210;
     margin-top: -5px;
     position: relative;
@@ -240,6 +251,14 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 24px;
+    max-width: 512px;
+
+    @include large {
+      max-width: 374px;
+    }
+    @include xl {
+      max-width: 512px;
+    }
 
     .title {
       letter-spacing: 1px;
