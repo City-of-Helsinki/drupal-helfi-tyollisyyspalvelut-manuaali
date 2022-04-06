@@ -26,6 +26,14 @@ services:
       environment:
         ENVIRONMENT: "local"
         PHP_IDE_CONFIG: "serverName=appserver"
+        SIMPLETEST_BASE_URL: "http://helfi-manuska.lndo.site"
+        SIMPLETEST_DB: "mysql://database:database@database/database"
+        MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless"]}}, "http://chrome:9515"]'
+  chrome:
+    type: compose
+    services:
+      image: drupalci/webdriver-chromedriver:production
+      command: chromedriver --log-path=/tmp/chromedriver.log --verbose --whitelisted-ips=
   elastic:
     type: elasticsearch:7
     portforward: false
@@ -41,6 +49,9 @@ tooling:
     description: Create Drupal 8 theme for current environment
     cmd: /app/scripts/citrus/create-drupal-theme-lando.sh
   test:
+    service: appserver
+    cmd: "php /app/vendor/bin/phpunit -c /app/phpunit.xml"
+  test-cs:
     service: appserver
     description: Run Drupal 8 tests
     cmd:

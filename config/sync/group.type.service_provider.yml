@@ -1,7 +1,15 @@
 uuid: 95db36d8-a0c8-4d78-8364-9935dc1ff34c
 langcode: fi
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - subgroup
+third_party_settings:
+  subgroup:
+    depth: 1
+    left: 2
+    right: 3
+    tree: organisation
 id: service_provider
 label: 'Service provider'
 description: ''

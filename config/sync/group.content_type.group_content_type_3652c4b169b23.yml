@@ -1,0 +1,18 @@
+uuid: 24b8a9c8-ca3d-4200-936b-655d13763cda
+langcode: fi
+status: true
+dependencies:
+  config:
+    - group.type.organisation
+    - group.type.service_provider
+  module:
+    - subgroup
+id: group_content_type_3652c4b169b23
+label: 'Organisation: Subgroup (Service provider)'
+description: 'Adds <em class="placeholder">Service provider</em> groups as subgroups.'
+group_type: organisation
+content_plugin: 'subgroup:service_provider'
+plugin_config:
+  group_cardinality: 1
+  entity_cardinality: 1
+  use_creation_wizard: false

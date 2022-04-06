@@ -1,0 +1,23 @@
+uuid: 1d0f736b-5314-4122-bc39-44715cbb814a
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.group.subgroup_depth
+    - group.type.organisation
+id: group.organisation.subgroup_depth
+field_name: subgroup_depth
+entity_type: group
+bundle: organisation
+label: Syvyys
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer
