@@ -20,9 +20,14 @@ function hel_tpm_search_autosuggest_theme() {
 
 function hel_tpm_search_autosuggest_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state) {
   $storage = $form_state->getStorage();
-  if (empty($storage['view']) || $storage['view']->id() != 'service_search') {
+  if (
+    empty($storage['view']) ||
+    $storage['view']->id() != 'service_search' ||
+    $form['#form_id'] !== 'views_exposed_form'
+  ) {
     return;
   }
+
   $form['search_wrapper'] = [
     '#type' => 'container',
     '#attributes' => ['class' => 'search-autocomplete-wrapper']
@@ -30,7 +35,6 @@ function hel_tpm_search_autosuggest_form_alter(&$form, \Drupal\Core\Form\FormSta
 
   $form['search_api_fulltext'] = [
     '#type' => 'textfield',
-    '#title' => new \Drupal\Core\StringTranslation\TranslatableMarkup('Search'),
     '#id' => 'hel-tpm-search-autocomplete',
     '#attributes' => ['placeholder'=> t('Search'), 'autocomplete' => 'off'],
     '#attached' => ['library' => ['hel_tpm_search_autosuggest/hel_tpm_search_autosuggest']],
