@@ -50,7 +50,7 @@ tooling:
     cmd: /app/scripts/citrus/create-drupal-theme-lando.sh
   test:
     service: appserver
-    cmd: "php /app/vendor/bin/phpunit -c /app/phpunit.xml"
+    cmd: "php /app/vendor/bin/phpunit -c /app/phpunit.xml /app/public/modules/custom"
   test-cs:
     service: appserver
     description: Run Drupal 8 tests
