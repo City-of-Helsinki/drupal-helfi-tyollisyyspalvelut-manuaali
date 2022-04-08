@@ -38,7 +38,6 @@ function hel_tpm_search_autosuggest_form_alter(&$form, \Drupal\Core\Form\FormSta
     '#id' => 'hel-tpm-search-autocomplete',
     '#attributes' => ['placeholder'=> t('Search'), 'autocomplete' => 'off'],
     '#attached' => ['library' => ['hel_tpm_search_autosuggest/hel_tpm_search_autosuggest']],
-    '#required' => TRUE,
     '#default_value' => \Drupal::request()->query->get('search_api_fulltext'),
   ];
   $form['search_wrapper']['search_api_fulltext'] = $form['search_api_fulltext'];
