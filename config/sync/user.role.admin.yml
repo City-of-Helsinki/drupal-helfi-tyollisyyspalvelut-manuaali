@@ -5,6 +5,17 @@ dependencies:
   config:
     - filter.format.filtered_html
     - filter.format.full_html
+    - taxonomy.vocabulary.employment_status
+    - taxonomy.vocabulary.language_level
+    - taxonomy.vocabulary.life_situation
+    - taxonomy.vocabulary.location_accessibility
+    - taxonomy.vocabulary.municipality
+    - taxonomy.vocabulary.service_accessiblity
+    - taxonomy.vocabulary.service_implementation_type
+    - taxonomy.vocabulary.service_languages
+    - taxonomy.vocabulary.service_location
+    - taxonomy.vocabulary.service_set
+    - taxonomy.vocabulary.service_tags
     - workflows.workflow.service_moderation
   module:
     - content_moderation
@@ -15,6 +26,7 @@ dependencies:
     - locale
     - node
     - notification_message
+    - paragraphs_type_permissions
     - path
     - shortcut
     - system
@@ -38,6 +50,7 @@ permissions:
   - 'administer users'
   - 'bypass group access'
   - 'bypass node access'
+  - 'bypass paragraphs type content access'
   - 'create content translations'
   - 'create field_contact_info_internal'
   - 'create field_poma_applicable'
@@ -47,8 +60,30 @@ permissions:
   - 'create field_tags'
   - 'create organisation group'
   - 'create service_provider group'
+  - 'create terms in employment_status'
+  - 'create terms in language_level'
+  - 'create terms in life_situation'
+  - 'create terms in location_accessibility'
+  - 'create terms in municipality'
+  - 'create terms in service_accessiblity'
+  - 'create terms in service_implementation_type'
+  - 'create terms in service_languages'
+  - 'create terms in service_location'
+  - 'create terms in service_set'
+  - 'create terms in service_tags'
   - 'delete all revisions'
   - 'delete content translations'
+  - 'delete terms in employment_status'
+  - 'delete terms in language_level'
+  - 'delete terms in life_situation'
+  - 'delete terms in location_accessibility'
+  - 'delete terms in municipality'
+  - 'delete terms in service_accessiblity'
+  - 'delete terms in service_implementation_type'
+  - 'delete terms in service_languages'
+  - 'delete terms in service_location'
+  - 'delete terms in service_set'
+  - 'delete terms in service_tags'
   - 'edit field_contact_info_internal'
   - 'edit field_poma_applicable'
   - 'edit field_service_guidance_guide'
@@ -61,6 +96,17 @@ permissions:
   - 'edit own field_service_id'
   - 'edit own field_service_links_internal'
   - 'edit own field_tags'
+  - 'edit terms in employment_status'
+  - 'edit terms in language_level'
+  - 'edit terms in life_situation'
+  - 'edit terms in location_accessibility'
+  - 'edit terms in municipality'
+  - 'edit terms in service_accessiblity'
+  - 'edit terms in service_implementation_type'
+  - 'edit terms in service_languages'
+  - 'edit terms in service_location'
+  - 'edit terms in service_set'
+  - 'edit terms in service_tags'
   - 'revert all revisions'
   - 'translate any entity'
   - 'translate editable entities'
