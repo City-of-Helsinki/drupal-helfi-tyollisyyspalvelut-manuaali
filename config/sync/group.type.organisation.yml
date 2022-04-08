@@ -1,19 +1,12 @@
 uuid: 6961e958-e0d9-42fc-a78d-6cf50404d96f
 langcode: fi
 status: true
-dependencies:
-  module:
-    - subgroup
-third_party_settings:
-  subgroup:
-    depth: 0
-    left: 1
-    right: 4
-    tree: organisation
+dependencies: {  }
 id: organisation
 label: Organisation
 description: ''
 new_revision: false
-creator_membership: false
+creator_membership: true
 creator_wizard: true
-creator_roles: {  }
+creator_roles:
+  - organisation-administrator

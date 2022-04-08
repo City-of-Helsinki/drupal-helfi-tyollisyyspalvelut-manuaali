@@ -4,10 +4,6 @@ status: true
 dependencies:
   config:
     - field.field.group.service_provider.field_responsible_authority
-    - field.field.group.service_provider.subgroup_depth
-    - field.field.group.service_provider.subgroup_left
-    - field.field.group.service_provider.subgroup_right
-    - field.field.group.service_provider.subgroup_tree
     - group.type.service_provider
   module:
     - path
@@ -55,8 +51,4 @@ content:
       display_label: true
     third_party_settings: {  }
 hidden:
-  subgroup_depth: true
-  subgroup_left: true
-  subgroup_right: true
-  subgroup_tree: true
   uid: true
