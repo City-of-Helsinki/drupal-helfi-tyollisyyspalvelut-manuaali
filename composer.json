@@ -54,7 +54,7 @@
         "drupal/conditional_fields": "^4.x-dev",
         "drupal/context": "^4.1",
         "drupal/core-composer-scaffold": "^9.1",
-        "drupal/core-recommended": "^9.1",
+        "drupal/core-recommended": "~9.3",
         "drupal/date_recur": "^3.1",
         "drupal/date_recur_modular": "^3.0",
         "drupal/elasticsearch_connector": "^7.0@alpha",
@@ -98,9 +98,9 @@
     },
     "require-dev": {
         "citrussolutions/gulp-workflow": "^2.0",
+        "drupal/core-dev": "^9.1",
         "drupal/devel": "^4.1",
         "drupal/devel_kint_extras": "^1.0",
-        "drupal/core-dev": "^9.1",
         "zaporylie/composer-drupal-optimizations": "^1.2"
     },
     "conflict": {
@@ -170,6 +170,9 @@
             "drupal/notification_message": {
                 "https://www.drupal.org/files/issues/2022-02-03/notification_message-3261643-3.patch": "https://www.drupal.org/files/issues/2022-02-03/notification_message-3261643-3.patch",
                 "https://www.drupal.org/files/issues/2022-03-24/3270975_4_add_notification_msgs_to_views.patch": "https://www.drupal.org/files/issues/2022-03-24/3270975_4_add_notification_msgs_to_views.patch"
+            },
+            "drupal/elasticsearch_connector": {
+                "https://www.drupal.org/project/elasticsearch_connector/issues/2912308#comment-14000645": "https://www.drupal.org/files/issues/2021-02-16/partial-search-issue-2912308-14.patch"
             }
         }
     }
