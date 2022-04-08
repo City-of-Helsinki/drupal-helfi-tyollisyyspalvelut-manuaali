@@ -9,4 +9,47 @@
    padding-right: 32px;
    padding-bottom: 37px;
   }
+
+  .field {
+    .field__label {
+      margin-bottom: $space;
+      font-weight: 600;
+      font-size: 16px;
+    }
+  }
+
+  .content-column {
+    >.field {
+      margin-bottom: $space-double;
+    }
+  }
+
+  .field--name-field-description {
+    font-size: 18px;
+    line-height: 32px;
+  }
+
+  .service-price {
+    display: flex;
+    font-size: 16px;
+    p {
+      color: clr(alt-header-color);
+      letter-spacing: 0.01em;
+    }
+    .field--name-field-price {
+      display: flex;
+      .field__label {
+        &:after {
+          content: ":";
+          margin-right: $space-one-and-half;
+        }
+      }
+
+      .field__item {
+        color: clr(alt-header-color);
+        letter-spacing: 0.01em;
+      }
+    }
+  }
+
 }

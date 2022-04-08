@@ -71,6 +71,7 @@
  */
 #}
 
+
 <article {{ bem("node",'','',['flex-wrap']) }}>
 
   {% if not page %}
@@ -84,7 +85,8 @@
   {% endif %}
 
   <div{{ content_attributes }}>
-    {{ content }}
+    {{ content|without('field_accessibility') }}
   </div>
 
 </article>
+{{content.field_accessibility}}

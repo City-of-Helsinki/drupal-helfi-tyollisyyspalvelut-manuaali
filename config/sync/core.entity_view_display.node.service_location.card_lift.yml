@@ -1,22 +1,23 @@
-uuid: 64a5a365-36bd-4c0b-bd76-6850ef52baa7
+uuid: 1b112073-2d50-496e-9d25-08b6e518c5ea
 langcode: fi
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.node.card_lift
     - field.field.node.service_location.field_accessibility
     - field.field.node.service_location.field_address
     - node.type.service_location
   module:
     - address
     - user
-id: node.service_location.default
+id: node.service_location.card_lift
 targetEntityType: node
 bundle: service_location
-mode: default
+mode: card_lift
 content:
   field_accessibility:
     type: entity_reference_entity_view
-    label: above
+    label: hidden
     settings:
       view_mode: reference
       link: false
