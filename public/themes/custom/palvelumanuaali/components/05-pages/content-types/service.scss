@@ -19,6 +19,7 @@
   }
 
   .content-column {
+    padding-right: $space-quadruple;
     >.field {
       margin-bottom: $space-double;
     }
@@ -52,4 +53,20 @@
     }
   }
 
+}
+
+.field--name-field-service-links-external {
+  .field__items {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .field__item {
+    margin-bottom: $space-one-and-half;
+    a {
+      text-decoration: none;
+      color: clr(background-section);
+      font-size: 15px;
+      font-weight: 600;
+    }
+  }
 }
