@@ -1,6 +1,0 @@
-services:
-  hel_tpm_subgroup.event_subscriber:
-    class: Drupal\hel_tpm_subgroup\EventSubscriber\HelTpmSubgroupSubscriber
-    arguments: ['@messenger']
-    tags:
-      - { name: event_subscriber }
