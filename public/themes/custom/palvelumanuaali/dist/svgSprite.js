@@ -108,6 +108,7 @@ var map = {
 	"./icons/content-icons/uEA03-cogwheel.svg": "./images/icons/content-icons/uEA03-cogwheel.svg",
 	"./icons/content-icons/uEA04-lock 2.svg": "./images/icons/content-icons/uEA04-lock 2.svg",
 	"./icons/content-icons/uEA05-arrow-sm-down.svg": "./images/icons/content-icons/uEA05-arrow-sm-down.svg",
+	"./icons/content-icons/uEA06-magnifier2.svg": "./images/icons/content-icons/uEA06-magnifier2.svg",
 	"./icons/door.svg": "./images/icons/door.svg",
 	"./icons/exit.svg": "./images/icons/exit.svg",
 	"./icons/facebook.svg": "./images/icons/facebook.svg",
@@ -116,12 +117,14 @@ var map = {
 	"./icons/lock 2.svg": "./images/icons/lock 2.svg",
 	"./icons/logo-small.svg": "./images/icons/logo-small.svg",
 	"./icons/magnifier.svg": "./images/icons/magnifier.svg",
+	"./icons/magnifier2.svg": "./images/icons/magnifier2.svg",
 	"./icons/menu.svg": "./images/icons/menu.svg",
 	"./icons/padlock-blue.svg": "./images/icons/padlock-blue.svg",
 	"./icons/padlock.svg": "./images/icons/padlock.svg",
 	"./icons/profile-blue.svg": "./images/icons/profile-blue.svg",
 	"./icons/speech-bubble.svg": "./images/icons/speech-bubble.svg",
 	"./icons/twitter.svg": "./images/icons/twitter.svg",
+	"./icons/warning.svg": "./images/icons/warning.svg",
 	"./icons/world.svg": "./images/icons/world.svg",
 	"./logo.svg": "./images/logo.svg",
 	"./symbol.svg": "./images/symbol.svg"
@@ -429,6 +432,26 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./images/icons/content-icons/uEA06-magnifier2.svg":
+/*!*********************************************************!*\
+  !*** ./images/icons/content-icons/uEA06-magnifier2.svg ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+      id: "uEA06-magnifier2-usage",
+      viewBox: "0 0 16 16",
+      url: __webpack_require__.p + "../dist/icons.svg#uEA06-magnifier2",
+      toString: function () {
+        return this.url;
+      }
+    });
+
+/***/ }),
+
 /***/ "./images/icons/door.svg":
 /*!*******************************!*\
   !*** ./images/icons/door.svg ***!
@@ -589,6 +612,26 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./images/icons/magnifier2.svg":
+/*!*************************************!*\
+  !*** ./images/icons/magnifier2.svg ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+      id: "magnifier2-usage",
+      viewBox: "0 0 16 16",
+      url: __webpack_require__.p + "../dist/icons.svg#magnifier2",
+      toString: function () {
+        return this.url;
+      }
+    });
+
+/***/ }),
+
 /***/ "./images/icons/menu.svg":
 /*!*******************************!*\
   !*** ./images/icons/menu.svg ***!
@@ -702,6 +745,26 @@ __webpack_require__.r(__webpack_exports__);
       id: "twitter-usage",
       viewBox: "0 0 26 28",
       url: __webpack_require__.p + "../dist/icons.svg#twitter",
+      toString: function () {
+        return this.url;
+      }
+    });
+
+/***/ }),
+
+/***/ "./images/icons/warning.svg":
+/*!**********************************!*\
+  !*** ./images/icons/warning.svg ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+      id: "warning-usage",
+      viewBox: "0 0 32 32",
+      url: __webpack_require__.p + "../dist/icons.svg#warning",
       toString: function () {
         return this.url;
       }

@@ -7,3 +7,14 @@ function hel_tpm_editorial_entity_base_field_info_alter(&$fields, EntityTypeInte
     $fields['publish_end_date']->addConstraint('NotificationMessageExpiry');
   }
 }
+
+function hel_tpm_editorial_form_views_exposed_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  if (isset($form['moderation_state'])) {
+    $form['moderation_state']['#type'] = 'select';
+    $form['moderation_state']['#options'] = [
+      'published' => t('Published'),
+      'on_hold' => t('On hold'),
+    ];
+    unset($form['moderation_state']['#size']);
+  }
+}

@@ -2,15 +2,12 @@ uuid: 95070811-0363-4871-9af9-726a52f8d9a6
 langcode: fi
 status: true
 dependencies:
-  config:
-    - views.view.notifications
   module:
     - hel_tpm_sharer
     - node
-    - views
 label: Services
 name: services
-group: null
+group: 'Front page'
 description: ''
 requireAllConditions: false
 disabled: false
@@ -43,23 +40,6 @@ reactions:
         context_id: services
         context_mapping: {  }
         third_party_settings: {  }
-      8f27edfc-e561-4e26-928d-5583098ab632:
-        uuid: 8f27edfc-e561-4e26-928d-5583098ab632
-        id: 'views_block:notifications-block_1'
-        label: ''
-        provider: views
-        label_display: '0'
-        region: content
-        weight: '-1'
-        custom_id: views_block_notifications_block_1
-        theme: palvelumanuaali
-        css_class: ''
-        unique: 0
-        context_id: services
-        context_mapping: {  }
-        views_label: ''
-        items_per_page: none
-        third_party_settings: {  }
     include_default_blocks: 0
     saved: false
-weight: 0
+weight: -5

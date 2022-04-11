@@ -42,23 +42,6 @@
     border-top-right-radius: 47px;
   }
 
-  .form-text {
-    border: 2px solid #AFCEFD;
-    box-sizing: border-box;
-    border-radius: 8px;
-    background-image: unset !important;
-    padding-top: 12px;
-    padding-bottom: 12px;
-    padding-left: 24px;
-
-    @include large {
-      width: 374px;
-    }
-
-    @include  xl {
-      width: 576px;
-    }
-  }
 
 
 }
@@ -232,4 +215,112 @@
       color: clr(background-section);
     }
   }
+}
+
+.search-autocomplete-wrapper {
+  position: relative;
+  display: inline-block;
+  >.form-item {
+    margin-bottom: 0;
+  }
+}
+
+
+.main-sidebar {
+  .search-history-wrapper,
+  .hel-search-autocomplete {
+    max-width: unset;
+    @include large {
+      max-width: unset;
+    }
+  }
+}
+
+.search-history-wrapper,
+.hel-search-autocomplete {
+
+    z-index: 210;
+    margin-top: -5px;
+    position: absolute;
+    width: 100%;
+    background-color: clr(text-inverse);
+    border: 2px solid #AFCEFD;
+    border-top: 0;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    box-shadow: 0px 8px 16px rgba(30, 64, 182, 0.2);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    max-width: 512px;
+
+    @include large {
+      max-width: 374px;
+    }
+    @include xl {
+      max-width: 512px;
+    }
+
+    .title {
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: clr(gray);
+      padding: 4px 0 4px 0;
+    }
+
+    #search-history,
+    #search-suggestions {
+      .suggestion-item {
+        &::before {
+          @include icons;
+          content: "\EA06";
+          height: 16px;
+          width: 16px;
+          margin-top: auto;
+          margin-bottom: auto;
+          margin-right: $space;
+          color: $blue40;
+        }
+      }
+    }
+
+    .suggestion-item {
+      padding: $space-one-half $space-one-half $space-one-half $space-one-and-half;
+      display: flex;
+
+      &:first-child {
+        padding-top: $space;
+      }
+      &:last-child {
+        padding-bottom: $space;
+      }
+
+      a {
+        color: clr(text);
+        text-decoration: none;
+        &:hover{
+          text-decoration: underline;
+        }
+      }
+    }
+}
+
+#hel-tpm-search-autocomplete {
+    border: 2px solid #AFCEFD;
+    box-sizing: border-box;
+    border-radius: 8px;
+    background-image: unset !important;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 24px;
+
+    @include large {
+      width: 374px;
+    }
+
+    @include  xl {
+      width: 576px;
+    }
 }

@@ -7,6 +7,7 @@ dependencies:
     - system.menu.favorites
     - system.menu.footer
     - system.menu.main
+    - views.view.notifications
     - views.view.service_search
   module:
     - hel_tpm_url_shortener
@@ -15,7 +16,7 @@ dependencies:
     - views
 label: Sitewide
 name: sitewide
-group: null
+group: 'Front page'
 description: ''
 requireAllConditions: false
 disabled: false
@@ -32,7 +33,7 @@ reactions:
         provider: system
         label_display: '0'
         region: content
-        weight: '-3'
+        weight: '-2'
         custom_id: system_main_block
         theme: palvelumanuaali
         css_class: ''
@@ -83,7 +84,7 @@ reactions:
         provider: hel_tpm_url_shortener
         label_display: '0'
         region: content
-        weight: '-2'
+        weight: '-1'
         custom_id: hel_tpm_url_shortener_form
         theme: palvelumanuaali
         css_class: ''
@@ -137,22 +138,6 @@ reactions:
         primary: 1
         secondary: 1
         third_party_settings: {  }
-      0465a68b-53aa-4eeb-9eb4-b1d83315acdb:
-        uuid: 0465a68b-53aa-4eeb-9eb4-b1d83315acdb
-        id: 'views_exposed_filter_block:service_search-block_1'
-        label: ''
-        provider: views
-        label_display: '0'
-        region: header
-        weight: '-8'
-        custom_id: views_exposed_filter_block_service_search_block_1
-        theme: palvelumanuaali
-        css_class: ''
-        unique: 0
-        context_id: sitewide
-        context_mapping: {  }
-        views_label: ''
-        third_party_settings: {  }
       c2a714b4-1650-4637-af5f-0f14f06e1d8e:
         uuid: c2a714b4-1650-4637-af5f-0f14f06e1d8e
         id: 'system_menu_block:favorites'
@@ -201,6 +186,39 @@ reactions:
         unique: 0
         context_id: sitewide
         context_mapping: {  }
+        third_party_settings: {  }
+      32ccf8db-553a-4d3f-93f9-2c40623c4faf:
+        uuid: 32ccf8db-553a-4d3f-93f9-2c40623c4faf
+        id: 'views_block:notifications-block_1'
+        label: ''
+        provider: views
+        label_display: '0'
+        region: content
+        weight: '-3'
+        custom_id: views_block_notifications_block_1
+        theme: palvelumanuaali
+        css_class: ''
+        unique: 0
+        context_id: sitewide
+        context_mapping: {  }
+        views_label: ''
+        items_per_page: none
+        third_party_settings: {  }
+      c9162ed7-cb51-4378-9061-41d80b0f564a:
+        uuid: c9162ed7-cb51-4378-9061-41d80b0f564a
+        id: 'views_exposed_filter_block:service_search-block_1'
+        label: ''
+        provider: views
+        label_display: '0'
+        region: header
+        weight: '0'
+        custom_id: views_exposed_filter_block_service_search_block_1
+        theme: palvelumanuaali
+        css_class: ''
+        unique: 0
+        context_id: sitewide
+        context_mapping: {  }
+        views_label: ''
         third_party_settings: {  }
     include_default_blocks: 0
     saved: false
