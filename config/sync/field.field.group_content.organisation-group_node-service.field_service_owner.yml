@@ -1,18 +1,18 @@
-uuid: f03762be-99e3-4f0f-94e8-23579c0d4600
+uuid: a3c03389-e748-475d-932b-a05ff86092e3
 langcode: fi
 status: true
 dependencies:
   config:
-    - field.storage.group.field_service_owner
-    - group.type.organisation
-id: group.organisation.field_service_owner
+    - field.storage.group_content.field_service_owner
+    - group.content_type.organisation-group_node-service
+id: group_content.organisation-group_node-service.field_service_owner
 field_name: field_service_owner
-entity_type: group
-bundle: organisation
+entity_type: group_content
+bundle: organisation-group_node-service
 label: Owner
 description: ''
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:
@@ -25,5 +25,5 @@ settings:
     auto_create: false
     filter:
       type: _none
-    include_anonymous: false
+    include_anonymous: true
 field_type: entity_reference

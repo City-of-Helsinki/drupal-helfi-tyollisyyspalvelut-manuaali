@@ -3,21 +3,12 @@ langcode: fi
 status: true
 dependencies:
   config:
-    - field.field.group.organisation.field_service_owner
     - group.type.organisation
 id: group.organisation.default
 targetEntityType: group
 bundle: organisation
 mode: default
 content:
-  field_service_owner:
-    type: entity_reference_label
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: -4
-    region: content
   label:
     type: string
     label: hidden
