@@ -1,0 +1,49 @@
+uuid: faa4f767-34c0-478e-bbe0-c559a8d79ea0
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.field.group_content.group_content_type_c7845b3bab623.field_service_owner
+    - group.content_type.group_content_type_c7845b3bab623
+  module:
+    - path
+id: group_content.group_content_type_c7845b3bab623.default
+targetEntityType: group_content
+bundle: group_content_type_c7845b3bab623
+mode: default
+content:
+  entity_id:
+    type: entity_reference_autocomplete
+    weight: 5
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_service_owner:
+    type: entity_reference_autocomplete
+    weight: 31
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 2
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  uid: true
