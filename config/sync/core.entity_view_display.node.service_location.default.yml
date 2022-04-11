@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.node.service_location.field_accessibility
+    - field.field.node.service_location.field_accessibility_details
     - field.field.node.service_location.field_address
     - node.type.service_location
   module:
@@ -22,6 +23,13 @@ content:
       link: false
     third_party_settings: {  }
     weight: 2
+    region: content
+  field_accessibility_details:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
     region: content
   field_address:
     type: address_default
