@@ -62,17 +62,26 @@
         icon_modifiers: ['small'],
       } %}
       {% for item in items %}
-        <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
+        <div{{ item.attributes.addClass('field__item') }}>
+          {{ item.content }}
+          {% if not loop.last %}
+            <p>{{","}}&nbsp;</p>
+          {% endif %}
+        </div>
       {% endfor %}
     </div>
   {% else %}
+    {% include "@atoms/images/icons/_icon.twig" with {
+      icon_base_class: 'icon',
+      icon_name: 'speech-bubble',
+      icon_modifiers: ['small'],
+    } %}
     {% for item in items %}
       <div{{ attributes.addClass(classes, 'field__item') }}>
-      {% include "@atoms/images/icons/_icon.twig" with {
-        icon_base_class: 'icon',
-        icon_name: 'speech-bubble',
-        icon_modifiers: ['small'],
-      } %}{{ item.content }}
+        {{ item.content }}
+        {% if not loop.last %}
+          <p>{{","}}&nbsp;</p>
+        {% endif %}
       </div>
     {% endfor %}
   {% endif %}
@@ -88,7 +97,12 @@
       <div class="field__items">
     {% endif %}
     {% for item in items %}
-      <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
+      <div{{ item.attributes.addClass('field__item') }}>
+        {{ item.content }}
+        {% if not loop.last %}
+          <p>{{","}}&nbsp;</p>
+        {% endif %}
+      </div>
     {% endfor %}
     {% if multiple %}
       </div>
