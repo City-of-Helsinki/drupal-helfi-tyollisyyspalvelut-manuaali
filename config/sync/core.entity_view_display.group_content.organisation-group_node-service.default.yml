@@ -1,0 +1,28 @@
+uuid: 5415b7d9-98d2-407b-89b8-88a5cc49e5f1
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.field.group_content.organisation-group_node-service.field_service_owner
+    - group.content_type.organisation-group_node-service
+id: group_content.organisation-group_node-service.default
+targetEntityType: group_content
+bundle: organisation-group_node-service
+mode: default
+content:
+  field_service_owner:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: -4
+    region: content
+hidden:
+  entity_id: true
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  langcode: true
+  search_api_excerpt: true
+  uid: true
