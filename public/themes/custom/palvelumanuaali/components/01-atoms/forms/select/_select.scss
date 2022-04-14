@@ -10,9 +10,6 @@
   }
 
   &::after {
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 9px solid clr(accent);
     content: ' ';
     position: absolute;
     top: 42%;
@@ -67,6 +64,34 @@
     &:focus {
       border-color: clr(accent);
       border-radius: 0;
+    }
+  }
+}
+
+.select--white-rounded {
+  background: clr(text-inverse);
+  border: 2px solid $blue40;
+  box-sizing: border-box;
+  border-radius: 8px;
+  margin: 0 8px;
+  height: 100%;
+  margin-top: auto;
+  margin-bottom: auto;
+  select {
+    height: 32px;
+    position: relative;
+    z-index: 20;
+  }
+  .form-select {
+    padding: 4px 48px 4px 24px;
+    font-size: 14px;
+    &.icon {
+      padding: 0;
+      position: absolute;
+      right:0;
+      top: -5px;
+      margin-right: 15px;
+      margin-top: 10px;
     }
   }
 }

@@ -60,7 +60,7 @@
 #block-language-block-language-interface,
 #loginlinkButtonLink {
   display: flex;
-  align-items: center;
+  align-items: start;
   flex-direction: column;
   font-size: 9px;
   justify-content: center;
@@ -81,7 +81,7 @@
 
 #block-system-menu-block-account {
   display: flex;
-  align-items: center;
+  align-items: start;
   #accountMenuButton {
     display: flex;
     align-items: center;
@@ -137,7 +137,8 @@
   }
 }
 
-#block-views-exposed-filter-block-service-search-mobile {
+#block-views-exposed-filter-block-service-search-mobile,
+#block-views-exposed-filter-block-service-search-search-mobile-filters{
   position: unset;
   .dropdown-menu {
     width: 100%;
