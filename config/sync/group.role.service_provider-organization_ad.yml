@@ -1,52 +1,61 @@
-uuid: a2520a1a-1ae0-4dab-9281-fd3dfa49e353
+uuid: bcd21c78-2cca-46bb-a24a-5163766396b4
 langcode: fi
 status: true
 dependencies:
   config:
-    - group.type.organisation
-id: organisation-administrator
-label: 'Group admin'
-weight: 7
+    - group.type.service_provider
+id: service_provider-organization_ad
+label: 'Organization admin'
+weight: -10
 internal: false
 audience: member
-group_type: organisation
+group_type: service_provider
 permissions_ui: true
 permissions:
   - 'access content overview'
+  - 'access group_node overview'
   - 'access subgroup overview'
-  - 'administer group'
   - 'administer members'
-  - 'administer subgroups'
   - 'create group_node:service content'
   - 'create group_node:service entity'
-  - 'create subgroup:service_provider content'
+  - 'create group_node:service_location content'
+  - 'create group_node:service_location entity'
   - 'delete any group_node:service content'
   - 'delete any group_node:service entity'
-  - 'delete any subgroup:service_provider content'
+  - 'delete any group_node:service_location content'
+  - 'delete any group_node:service_location entity'
   - 'delete own group_node:service content'
   - 'delete own group_node:service entity'
-  - 'delete own subgroup:service_provider content'
+  - 'delete own group_node:service_location content'
+  - 'delete own group_node:service_location entity'
   - 'edit group'
+  - 'leave group'
   - 'update any group_node:service content'
   - 'update any group_node:service entity'
-  - 'update any subgroup:service_provider content'
+  - 'update any group_node:service_location content'
+  - 'update any group_node:service_location entity'
   - 'update own group_membership content'
   - 'update own group_node:service content'
   - 'update own group_node:service entity'
-  - 'update own subgroup:service_provider content'
+  - 'update own group_node:service_location content'
+  - 'update own group_node:service_location entity'
   - 'use service_moderation transition archived'
   - 'use service_moderation transition create_new_draft'
   - 'use service_moderation transition outdated'
   - 'use service_moderation transition publish'
+  - 'use service_moderation transition put_on_hold'
   - 'use service_moderation transition ready_to_publish'
   - 'use service_moderation transition ready_to_publish_to_draft'
   - 'use service_moderation transition temporarily_archived'
   - 'view any unpublished group'
+  - 'view group'
   - 'view group revisions'
   - 'view group_membership content'
   - 'view group_node:service content'
   - 'view group_node:service entity'
+  - 'view group_node:service_location content'
+  - 'view group_node:service_location entity'
+  - 'view latest group version'
   - 'view latest version'
-  - 'view own unpublished group'
-  - 'view subgroup:service_provider content'
   - 'view unpublished group_node:service entity'
+  - 'view unpublished group_node:service_location entity'

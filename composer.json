@@ -68,7 +68,7 @@
         "drupal/flag": "^4.0@beta",
         "drupal/flag_lists": "^4.0@RC",
         "drupal/gcontent_moderation": "^1.0@beta",
-        "drupal/ggroup": "^1.0@alpha",
+        "drupal/ggroup": "^1.0.0-alpha",
         "drupal/group": "^1.4",
         "drupal/inline_entity_form": "^1.0@RC",
         "drupal/maxlength": "^2.0@RC",
@@ -178,6 +178,10 @@
             },
             "drupal/elasticsearch_connector": {
                 "https://www.drupal.org/project/elasticsearch_connector/issues/2912308#comment-14000645": "https://www.drupal.org/files/issues/2021-02-16/partial-search-issue-2912308-14.patch"
+            },
+            "drupal/ggroup": {
+                "https://www.drupal.org/project/ggroup/issues/3084153": "./patches/3084153-role-mapper.patch",
+                "https://www.drupal.org/project/ggroup/issues/3238956#comment-14272637": "https://www.drupal.org/files/issues/2021-10-28/no_parent_id-3238956-4.patch"
             }
         }
     }
