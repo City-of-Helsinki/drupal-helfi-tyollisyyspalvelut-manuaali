@@ -18,7 +18,7 @@ base_field: nid
 display:
   default:
     id: default
-    display_title: Isäntä
+    display_title: Master
     display_plugin: default
     position: 0
     display_options:
@@ -34,7 +34,7 @@ display:
           entity_type: node
           entity_field: title
           plugin_id: field
-          label: Otsikko
+          label: Title
           exclude: false
           alter:
             alter_text: false
@@ -231,7 +231,7 @@ display:
           entity_type: node
           entity_field: changed
           plugin_id: field
-          label: Päivitetty
+          label: Updated
           exclude: false
           alter:
             alter_text: false
@@ -442,7 +442,7 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          text: 'Hylkää suhde'
+          text: 'Delete relation'
         edit_node:
           id: edit_node
           table: node
@@ -553,7 +553,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: dropbutton
-          label: Toimenpiteet
+          label: Operations
           exclude: false
           alter:
             alter_text: false
@@ -619,20 +619,20 @@ display:
             last: 'Viimeinen »'
           expose:
             items_per_page: false
-            items_per_page_label: 'Merkintöjä sivua kohti'
+            items_per_page_label: 'Items per page'
             items_per_page_options: '5, 10, 25, 50'
             items_per_page_options_all: false
-            items_per_page_options_all_label: '- Kaikki -'
+            items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
           quantity: 9
       exposed_form:
         type: basic
         options:
-          submit_button: Käytä
+          submit_button: Apply
           reset_button: false
-          reset_button_label: Palauta
-          exposed_sorts_label: Lajittele
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
           expose_sort_order: true
           sort_asc_label: Asc
           sort_desc_label: Desc
@@ -671,7 +671,7 @@ display:
           exception:
             value: all
             title_enable: false
-            title: Kaikki
+            title: All
           title_enable: true
           title: '{{ arguments.gid|placeholder }} nodes'
           default_argument_type: fixed
@@ -928,7 +928,7 @@ display:
       tags: {  }
   page_1:
     id: page_1
-    display_title: Sivu
+    display_title: Page
     display_plugin: page
     position: 1
     display_options:

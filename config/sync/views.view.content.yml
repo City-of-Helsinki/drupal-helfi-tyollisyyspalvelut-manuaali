@@ -47,7 +47,7 @@ display:
           entity_type: node
           entity_field: title
           plugin_id: field
-          label: Otsikko
+          label: Title
           exclude: false
           alter:
             alter_text: false
@@ -236,7 +236,7 @@ display:
           entity_type: node
           entity_field: changed
           plugin_id: field
-          label: Päivitetty
+          label: Updated
           exclude: false
           alter:
             alter_text: false
@@ -259,7 +259,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: entity_operations
-          label: Toimenpiteet
+          label: Operations
           exclude: false
           alter:
             alter_text: false
@@ -315,8 +315,8 @@ display:
         options:
           submit_button: Suodatus
           reset_button: true
-          reset_button_label: Palauta
-          exposed_sorts_label: Lajittele
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
           expose_sort_order: true
           sort_asc_label: Asc
           sort_desc_label: Desc
@@ -353,7 +353,7 @@ display:
           exposed: true
           expose:
             operator_id: title_op
-            label: Otsikko
+            label: Title
             description: ''
             use_operator: false
             operator: title_op
@@ -649,7 +649,7 @@ display:
       tags: {  }
   page_1:
     id: page_1
-    display_title: Sivu
+    display_title: Page
     display_plugin: page
     position: 1
     display_options:
