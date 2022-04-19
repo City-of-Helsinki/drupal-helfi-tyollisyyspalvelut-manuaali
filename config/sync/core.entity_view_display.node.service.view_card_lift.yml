@@ -16,7 +16,6 @@ dependencies:
     - field.field.node.service.field_poma_applicable_descriptio
     - field.field.node.service.field_requirements
     - field.field.node.service.field_service_guidance_guide
-    - field.field.node.service.field_service_id
     - field.field.node.service.field_service_implement
     - field.field.node.service.field_service_links_external
     - field.field.node.service.field_service_links_internal
@@ -51,6 +50,11 @@ content:
     third_party_settings: {  }
     weight: 0
     region: content
+  notifications_entity_view_1:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 10
+    region: content
 hidden:
   content_moderation_control: true
   entity_print_view_epub: true
@@ -67,7 +71,6 @@ hidden:
   field_poma_applicable_descriptio: true
   field_requirements: true
   field_service_guidance_guide: true
-  field_service_id: true
   field_service_implement: true
   field_service_links_external: true
   field_service_links_internal: true
