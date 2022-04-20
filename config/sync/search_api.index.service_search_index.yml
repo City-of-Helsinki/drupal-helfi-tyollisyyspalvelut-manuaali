@@ -7,6 +7,8 @@ dependencies:
     - field.storage.node.field_service_time_and_location
     - field.storage.paragraph.field_language
     - field.storage.paragraph.field_service_languages
+    - field.storage.node.field_address
+    - field.storage.paragraph.field_service_location
     - field.storage.node.field_target_group
     - field.storage.paragraph.field_municipality
     - search_api.server.elastic_search
@@ -101,6 +103,19 @@ field_settings:
       view_mode:
         'entity:node':
           service: full
+  service_locality:
+    label: 'Service time and location » Paragraph » Service location » Content » Address » The locality (i.e. city)'
+    datasource_id: 'entity:node'
+    property_path: 'field_service_time_and_location:entity:field_service_location:entity:field_address:locality'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_address
+        - field.storage.node.field_service_time_and_location
+        - field.storage.paragraph.field_service_location
+      module:
+        - node
+        - paragraphs
   status:
     label: status
     datasource_id: 'entity:node'
@@ -165,6 +180,7 @@ processor_settings:
     fields:
       - moderation_state
       - rendered_item
+      - service_locality
       - title
     title: true
     alt: true
@@ -182,6 +198,7 @@ processor_settings:
     fields:
       - moderation_state
       - rendered_item
+      - service_locality
       - title
   language_with_fallback: {  }
   rendered_item: {  }
@@ -205,6 +222,7 @@ processor_settings:
     fields:
       - moderation_state
       - rendered_item
+      - service_locality
       - title
 tracker_settings:
   default:

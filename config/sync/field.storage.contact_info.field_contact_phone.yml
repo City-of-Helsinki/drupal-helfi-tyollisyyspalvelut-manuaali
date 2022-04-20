@@ -1,22 +1,20 @@
-uuid: 4bc57ff7-47f2-4114-9ca3-deab150c08b0
+uuid: 808f95ca-c09f-4e25-bf5a-2f64b42d071c
 langcode: en
 status: true
 dependencies:
   module:
     - field_permissions
     - hel_tpm_contact_info
+    - telephone
 third_party_settings:
   field_permissions:
     permission_type: public
-id: contact_info.field_first_name
-field_name: field_first_name
+id: contact_info.field_contact_phone
+field_name: field_contact_phone
 entity_type: contact_info
-type: string
-settings:
-  max_length: 255
-  case_sensitive: false
-  is_ascii: false
-module: core
+type: telephone
+settings: {  }
+module: telephone
 locked: false
 cardinality: 1
 translatable: true
