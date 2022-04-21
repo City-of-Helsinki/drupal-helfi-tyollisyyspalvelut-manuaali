@@ -25,8 +25,8 @@
 #}
 {{ attach_library('palvelumanuaali/main-menu') }}
 
-<nav >
-  <a href="#" id="toggle-expand" class="toggle-expand">
+<nav>
+  <a href="#" id="toggle-expand" class="toggle-expand" aria-haspopup="true" aria-expanded="false">
     <span class="toggle-expand__open">
       {% include "@atoms/images/icons/_icon.twig" with {
         icon_base_class: "icon",

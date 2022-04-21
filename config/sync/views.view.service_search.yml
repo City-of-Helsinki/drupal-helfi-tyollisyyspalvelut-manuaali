@@ -1291,7 +1291,7 @@ display:
         - 'config:search_api.index.service_search_index'
   search_mobile_filters:
     id: search_mobile_filters
-    display_title: 'Search page filters'
+    display_title: 'Search page mobile filters'
     display_plugin: block
     position: 1
     display_options:
@@ -1316,7 +1316,7 @@ display:
               input_required: false
               allow_secondary: true
               secondary_label: Lisävaihtoehdot
-              secondary_open: false
+              secondary_open: true
             filter:
               search_api_fulltext:
                 plugin_id: default
@@ -1481,7 +1481,7 @@ display:
           exposed: true
           expose:
             operator_id: field_municipality_op
-            label: 'Kohderyhmän kunta'
+            label: ''
             description: ''
             use_operator: false
             operator: field_municipality_op
@@ -1531,7 +1531,7 @@ display:
           exposed: true
           expose:
             operator_id: field_implementation_extra_info_op
-            label: 'Palvelun toteutustapa'
+            label: ''
             description: ''
             use_operator: false
             operator: field_implementation_extra_info_op
@@ -1581,7 +1581,7 @@ display:
           exposed: true
           expose:
             operator_id: field_language_1_op
-            label: 'Palvelun kieli'
+            label: ''
             description: ''
             use_operator: false
             operator: field_language_1_op
@@ -1699,7 +1699,7 @@ display:
         options:
           submit_button: Hae
           reset_button: false
-          reset_button_label: Reset
+          reset_button_label: Tyhjennä
           exposed_sorts_label: Järjestä
           expose_sort_order: false
           sort_asc_label: Asc
