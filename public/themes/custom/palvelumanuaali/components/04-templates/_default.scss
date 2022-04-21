@@ -2,10 +2,18 @@
  * General Layout
 */
 
+
+  $sidebar-test: $sidebar-md-width;
+  @include  xl {
+    $sidebar-test: $sidebar-width;
+  }
+
+
 $gutter: $space;
 $main-gutter: $space-septuple;
-$main-width: calc(100% - (#{$sidebar-width} ));
-$main-content-width: calc(100% - (#{$sidebar-width} + #{$main-gutter} *2 ));
+
+$main-width: calc(100% - (#{$sidebar-test} ));
+$main-content-width: calc(100% - (#{$sidebar-test} + #{$main-gutter} *2 ));
 
 .layout-container {
   @include large {
@@ -50,7 +58,7 @@ $main-content-width: calc(100% - (#{$sidebar-width} + #{$main-gutter} *2 ));
   background-color: clr(sidebar-color);
   @include large {
     order: 1;
-    width: $sidebar-width;
+    width: $sidebar-test;
     margin-bottom: 0;
     border-top-right-radius: 47px;
   }
