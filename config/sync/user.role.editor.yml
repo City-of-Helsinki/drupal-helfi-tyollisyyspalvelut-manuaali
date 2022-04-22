@@ -11,6 +11,7 @@ dependencies:
     - content_translation
     - field_permissions
     - filter
+    - hel_tpm_contact_info
     - node
     - paragraphs
     - paragraphs_type_permissions
@@ -19,6 +20,7 @@ label: Sisällöntuottaja
 weight: 4
 is_admin: null
 permissions:
+  - 'create contact info'
   - 'create content translations'
   - 'create field_contact_info_internal'
   - 'create field_poma_applicable'
@@ -32,6 +34,7 @@ permissions:
   - 'create paragraph content target_group'
   - 'create service content'
   - 'delete content translations'
+  - 'edit contact info'
   - 'edit field_contact_info_internal'
   - 'edit field_poma_applicable'
   - 'edit field_service_guidance_guide'

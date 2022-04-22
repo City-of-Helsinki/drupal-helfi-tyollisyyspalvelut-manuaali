@@ -50,6 +50,7 @@
         "drupal/address": "^1.10",
         "drupal/admin_toolbar": "^3.0",
         "drupal/better_exposed_filters": "^5.0",
+        "drupal/coder": "8.3.13",
         "drupal/components": "^2.4",
         "drupal/conditional_fields": "^4.x-dev",
         "drupal/context": "^4.1",
@@ -67,6 +68,7 @@
         "drupal/flag": "^4.0@beta",
         "drupal/flag_lists": "^4.0@RC",
         "drupal/gcontent_moderation": "^1.0@beta",
+        "drupal/ggroup": "^1.0@alpha",
         "drupal/group": "^1.4",
         "drupal/inline_entity_form": "^1.0@RC",
         "drupal/maxlength": "^2.0@RC",
@@ -82,6 +84,7 @@
         "drupal/redirect": "^1.7",
         "drupal/search_api": "^1.23",
         "drupal/search_api_autocomplete": "^1.6",
+        "drupal/select2": "^1.13",
         "drupal/smart_date": "^3.5",
         "drupal/svg_image": "^1.15",
         "drupal/themable_forms": "^1.0@beta",
@@ -89,18 +92,22 @@
         "drupal/twig_tweak": "^3.1",
         "drush/drush": "^10.3",
         "npm-asset/jquery-ui-touch-punch": "^0.2.3",
+        "npm-asset/select2": "^4.0",
         "oomphinc/composer-installers-extender": "^2.0",
         "platformsh/config-reader": "^2.4",
         "twbs/bootstrap": "^5",
         "twbs/bootstrap-dist": "^5",
         "vlucas/phpdotenv": "^5.1",
-        "webflo/drupal-finder": "^1.2"
+        "webflo/drupal-finder": "^1.2",
+        "weitzman/logintrait": "^1.2"
     },
     "require-dev": {
         "citrussolutions/gulp-workflow": "^2.0",
-        "drupal/core-dev": "^9.1",
+        "drupal/core-dev": "^9.3",
         "drupal/devel": "^4.1",
         "drupal/devel_kint_extras": "^1.0",
+        "phpspec/prophecy-phpunit": "^2.0",
+        "weitzman/drupal-test-traits": "^1.5",
         "zaporylie/composer-drupal-optimizations": "^1.2"
     },
     "conflict": {
@@ -159,6 +166,7 @@
             "public/themes/contrib/{$name}": ["type:drupal-theme"],
             "drush/Commands/contrib/{$name}": ["type:drupal-drush"]
         },
+        "installer-types": ["bower-asset", "npm-asset"],
         "composer-exit-on-patch-failure": true,
         "patchLevel": {
             "drupal/core": "-p2"
@@ -173,6 +181,9 @@
             },
             "drupal/elasticsearch_connector": {
                 "https://www.drupal.org/project/elasticsearch_connector/issues/2912308#comment-14000645": "https://www.drupal.org/files/issues/2021-02-16/partial-search-issue-2912308-14.patch"
+            },
+            "drupal/themable_forms": {
+                "https://www.drupal.org/files/issues/undefined_index_type_themable_forms_theme_suggestions_form_element_2903660.patch": "https://www.drupal.org/files/issues/undefined_index_type_themable_forms_theme_suggestions_form_element_2903660.patch"
             }
         }
     }

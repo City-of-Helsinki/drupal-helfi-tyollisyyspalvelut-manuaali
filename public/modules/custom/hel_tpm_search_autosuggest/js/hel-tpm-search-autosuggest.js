@@ -29,7 +29,7 @@
       localStorage.setItem('hel_search_history', JSON.stringify(value));
     },
     appendSearchHistory: function(form) {
-      let value = $.trim($('input[name="search"]', form).val());
+      let value = $.trim($('input[name="search_api_fulltext"]', form).val());
       if (value.length <= 0) {
         return;
       }
@@ -140,6 +140,9 @@
             Drupal.behaviors.hel_tpm_search_autocomplete.showHideAutocomplete(this, context);
           });
 
+        $(form).closest('form').on('submit', function(e) {
+          Drupal.behaviors.hel_tpm_search_autocomplete.appendSearchHistory(form);
+        });
       });
 
       jQuery(searchField, form).keyup(function() {
@@ -158,9 +161,6 @@
             Drupal.behaviors.hel_tpm_search_autocomplete.handleSelectionEvents();
           }
         });
-      });
-      $(form).on('submit', function(e) {
-        Drupal.behaviors.hel_tpm_search_autocomplete.appendSearchHistory(form);
       });
     }
   };

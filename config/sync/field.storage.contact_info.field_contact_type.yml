@@ -1,22 +1,28 @@
-uuid: 1b6533e1-2ef9-4aa6-b0dc-7aae4e4ad408
+uuid: dfce83a9-596c-46a7-9cfa-64e8d818bcb1
 langcode: en
 status: true
 dependencies:
   module:
     - field_permissions
     - hel_tpm_contact_info
+    - options
 third_party_settings:
   field_permissions:
     permission_type: public
-id: contact_info.field_last_name
-field_name: field_last_name
+id: contact_info.field_contact_type
+field_name: field_contact_type
 entity_type: contact_info
-type: string
+type: list_string
 settings:
-  max_length: 255
-  case_sensitive: false
-  is_ascii: false
-module: core
+  allowed_values:
+    -
+      value: person
+      label: Person
+    -
+      value: organisation
+      label: Organisaatio
+  allowed_values_function: ''
+module: options
 locked: false
 cardinality: 1
 translatable: true

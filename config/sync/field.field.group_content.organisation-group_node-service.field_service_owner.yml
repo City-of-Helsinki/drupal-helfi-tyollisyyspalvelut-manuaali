@@ -1,0 +1,29 @@
+uuid: a3c03389-e748-475d-932b-a05ff86092e3
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.group_content.field_service_owner
+    - group.content_type.organisation-group_node-service
+id: group_content.organisation-group_node-service.field_service_owner
+field_name: field_service_owner
+entity_type: group_content
+bundle: organisation-group_node-service
+label: Owner
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:user'
+  handler_settings:
+    target_bundles: null
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    filter:
+      type: _none
+    include_anonymous: true
+field_type: entity_reference

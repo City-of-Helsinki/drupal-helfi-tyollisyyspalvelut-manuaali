@@ -118,39 +118,4 @@ class ServiceDateFieldFormatter extends DateRecurBasicFormatter {
     }
   }
 
-  protected function isSameDate($startDate, $endDate) {
-
-  }
-
-  /**
-   * Creates a render array from a date object with ISO date attribute.
-   *
-   * @param \Drupal\Core\Datetime\DrupalDateTime $date
-   *   A date object.
-   *
-   * @return array
-   *   A render array.
-   */
-  /*
-  protected function buildDate(DrupalDateTime $date, $defaultFormat = '"Y-m-d\TH:i:sZ"') {
-    // Create the ISO date in Universal Time.
-    $iso_date = $date->format($defaultFormat) . 'Z';
-
-    $this->setTimeZone($date);
-
-    $build = [
-      '#theme' => 'time',
-      '#text' => $this->formatDate($date),
-      '#attributes' => [
-        'datetime' => $iso_date,
-      ],
-      '#cache' => [
-        'contexts' => [
-          'timezone',
-        ],
-      ],
-    ];
-
-    return $build;
-  }*/
 }

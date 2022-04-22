@@ -23,6 +23,7 @@ dependencies:
     - field_permissions
     - filter
     - group
+    - hel_tpm_contact_info
     - locale
     - node
     - notification_message
@@ -37,6 +38,7 @@ weight: 3
 is_admin: null
 permissions:
   - 'access administration pages'
+  - 'access contact info overview'
   - 'access content overview'
   - 'access group overview'
   - 'access taxonomy overview'
@@ -51,6 +53,7 @@ permissions:
   - 'bypass group access'
   - 'bypass node access'
   - 'bypass paragraphs type content access'
+  - 'create contact info'
   - 'create content translations'
   - 'create field_contact_info_internal'
   - 'create field_poma_applicable'
@@ -72,6 +75,7 @@ permissions:
   - 'create terms in service_set'
   - 'create terms in service_tags'
   - 'delete all revisions'
+  - 'delete contact info'
   - 'delete content translations'
   - 'delete terms in employment_status'
   - 'delete terms in language_level'
@@ -84,6 +88,7 @@ permissions:
   - 'delete terms in service_location'
   - 'delete terms in service_set'
   - 'delete terms in service_tags'
+  - 'edit contact info'
   - 'edit field_contact_info_internal'
   - 'edit field_poma_applicable'
   - 'edit field_service_guidance_guide'
