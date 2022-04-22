@@ -4,9 +4,11 @@ status: true
 dependencies:
   config:
     - system.menu.account
+    - views.view.user_group_memberships
   module:
     - system
     - user
+    - views
 label: 'Sitewide logged-in'
 name: sitewide_logged_in
 group: 'Front page'
@@ -34,7 +36,7 @@ reactions:
         provider: system
         label_display: '0'
         region: header
-        weight: '0'
+        weight: '-10'
         custom_id: system_menu_block_account
         theme: palvelumanuaali
         css_class: ''
@@ -44,6 +46,23 @@ reactions:
         level: '1'
         depth: '0'
         expand_all_items: 0
+        third_party_settings: {  }
+      8eb1c746-aef3-4c5b-8d53-86aa4ec2d023:
+        uuid: 8eb1c746-aef3-4c5b-8d53-86aa4ec2d023
+        id: 'views_block:user_group_memberships-block_1'
+        label: ''
+        provider: views
+        label_display: visible
+        region: sidebar
+        weight: '0'
+        custom_id: views_block_user_group_memberships_block_1
+        theme: palvelumanuaali
+        css_class: ''
+        unique: 0
+        context_id: sitewide_logged_in
+        context_mapping: {  }
+        views_label: ''
+        items_per_page: none
         third_party_settings: {  }
     include_default_blocks: 0
     saved: false

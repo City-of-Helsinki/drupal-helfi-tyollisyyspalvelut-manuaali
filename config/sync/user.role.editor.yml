@@ -4,21 +4,32 @@ status: true
 dependencies:
   config:
     - filter.format.filtered_html
+    - media.type.image
     - node.type.service
+    - node.type.service_location
     - workflows.workflow.service_moderation
   module:
     - content_moderation
     - content_translation
     - field_permissions
     - filter
+    - flag
+    - flag_lists
+    - hel_tpm_contact_info
+    - media
     - node
     - paragraphs
     - paragraphs_type_permissions
+    - system
 id: editor
 label: Sisällöntuottaja
 weight: 4
 is_admin: null
 permissions:
+  - 'access content'
+  - 'access flagging collection overview'
+  - 'add flag lists'
+  - 'create contact info'
   - 'create content translations'
   - 'create field_contact_info_internal'
   - 'create field_poma_applicable'
@@ -26,47 +37,87 @@ permissions:
   - 'create field_service_id'
   - 'create field_service_links_internal'
   - 'create field_tags'
+  - 'create image media'
+  - 'create media'
   - 'create paragraph content contact_information'
   - 'create paragraph content content'
+  - 'create paragraph content service_language'
   - 'create paragraph content service_price'
+  - 'create paragraph content service_time_and_place'
   - 'create paragraph content target_group'
   - 'create service content'
+  - 'create service_location content'
   - 'delete content translations'
+  - 'delete paragraph content service_language'
+  - 'delete paragraph content service_price'
+  - 'delete paragraph content service_time_and_place'
+  - 'edit any image media'
+  - 'edit any service content'
+  - 'edit any service_location content'
+  - 'edit contact info'
   - 'edit field_contact_info_internal'
   - 'edit field_poma_applicable'
   - 'edit field_service_guidance_guide'
+  - 'edit field_service_id'
   - 'edit field_service_links_internal'
+  - 'edit field_tags'
   - 'edit own field_contact_info_internal'
   - 'edit own field_poma_applicable'
   - 'edit own field_service_guidance_guide'
   - 'edit own field_service_id'
   - 'edit own field_service_links_internal'
+  - 'edit own field_tags'
+  - 'edit own flag lists'
   - 'edit own service content'
+  - 'edit own service_location content'
+  - 'flag cart'
+  - 'flag lists'
   - 'translate any entity'
   - 'translate editable entities'
   - 'translate paragraph'
+  - 'translate service node'
+  - 'translate service_location node'
+  - 'unflag cart'
+  - 'unflag lists'
+  - 'update any media'
   - 'update content translations'
+  - 'update paragraph content contact_information'
   - 'update paragraph content content'
+  - 'update paragraph content service_language'
   - 'update paragraph content service_price'
+  - 'update paragraph content service_time_and_place'
   - 'update paragraph content target_group'
+  - 'use service_moderation transition archived'
+  - 'use service_moderation transition create_new_draft'
+  - 'use service_moderation transition outdated'
+  - 'use service_moderation transition put_on_hold'
   - 'use service_moderation transition ready_to_publish'
   - 'use service_moderation transition ready_to_publish_to_draft'
+  - 'use service_moderation transition temporarily_archived'
   - 'use text format filtered_html'
   - 'view any unpublished content'
+  - 'view contact info'
   - 'view field_contact_info_internal'
   - 'view field_poma_applicable'
   - 'view field_service_guidance_guide'
+  - 'view field_service_id'
   - 'view field_service_links_internal'
+  - 'view field_tags'
   - 'view latest version'
+  - 'view media'
   - 'view own field_contact_info_internal'
   - 'view own field_poma_applicable'
   - 'view own field_service_guidance_guide'
   - 'view own field_service_id'
   - 'view own field_service_links_internal'
   - 'view own field_tags'
+  - 'view own unpublished content'
+  - 'view own unpublished media'
   - 'view paragraph content contact_information'
   - 'view paragraph content content'
+  - 'view paragraph content service_language'
   - 'view paragraph content service_price'
+  - 'view paragraph content service_time_and_place'
   - 'view paragraph content target_group'
   - 'view service revisions'
   - 'view unpublished paragraphs'
