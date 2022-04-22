@@ -1,0 +1,49 @@
+uuid: 9f99b904-41d1-471e-b8ef-5126ad5cd68e
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.field.group_content.organisation-group_node-service.field_service_owner
+    - group.content_type.organisation-group_node-service
+  module:
+    - path
+id: group_content.organisation-group_node-service.default
+targetEntityType: group_content
+bundle: organisation-group_node-service
+mode: default
+content:
+  entity_id:
+    type: entity_reference_autocomplete
+    weight: 5
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_service_owner:
+    type: entity_reference_autocomplete
+    weight: 31
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 2
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  uid: true

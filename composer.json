@@ -84,6 +84,7 @@
         "drupal/redirect": "^1.7",
         "drupal/search_api": "^1.23",
         "drupal/search_api_autocomplete": "^1.6",
+        "drupal/select2": "^1.13",
         "drupal/smart_date": "^3.5",
         "drupal/svg_image": "^1.15",
         "drupal/themable_forms": "^1.0@beta",
@@ -91,6 +92,7 @@
         "drupal/twig_tweak": "^3.1",
         "drush/drush": "^10.3",
         "npm-asset/jquery-ui-touch-punch": "^0.2.3",
+        "npm-asset/select2": "^4.0",
         "oomphinc/composer-installers-extender": "^2.0",
         "platformsh/config-reader": "^2.4",
         "twbs/bootstrap": "^5",
@@ -164,6 +166,7 @@
             "public/themes/contrib/{$name}": ["type:drupal-theme"],
             "drush/Commands/contrib/{$name}": ["type:drupal-drush"]
         },
+        "installer-types": ["bower-asset", "npm-asset"],
         "composer-exit-on-patch-failure": true,
         "patchLevel": {
             "drupal/core": "-p2"
@@ -182,6 +185,9 @@
             "drupal/ggroup": {
                 "https://www.drupal.org/project/ggroup/issues/3084153": "./patches/3084153-role-mapper.patch",
                 "https://www.drupal.org/project/ggroup/issues/3238956#comment-14272637": "https://www.drupal.org/files/issues/2021-10-28/no_parent_id-3238956-4.patch"
+            },
+            "drupal/themable_forms": {
+                "https://www.drupal.org/files/issues/undefined_index_type_themable_forms_theme_suggestions_form_element_2903660.patch": "https://www.drupal.org/files/issues/undefined_index_type_themable_forms_theme_suggestions_form_element_2903660.patch"
             }
         }
     }

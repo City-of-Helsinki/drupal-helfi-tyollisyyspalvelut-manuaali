@@ -156,6 +156,9 @@
     width: 50%;
     order: 3;
     display: flex;
+    p {
+      margin-bottom: 0
+    }
     &.icon {
       width: 24px;
       margin-right: $space;
@@ -177,6 +180,7 @@
   .field--name-field-accessibility {
     order: 4;
     width: 100%;
+    margin-top: $space-double;
     .field__label {
       font-weight: 600;
     }
