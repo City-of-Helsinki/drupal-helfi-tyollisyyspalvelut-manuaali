@@ -6,8 +6,11 @@
   padding: $space;
   padding-top: $space-triple;
   @include large {
-    margin-left: $sidebar-width;
+    margin-left: $sidebar-md-width;
     padding: $space-double;
+  }
+  @include xl {
+    margin-left: $sidebar-width;
   }
 
   &__inner {
