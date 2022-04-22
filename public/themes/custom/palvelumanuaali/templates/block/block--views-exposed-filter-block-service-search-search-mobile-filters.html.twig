@@ -28,25 +28,13 @@
 
 
 <div {{ bem('block') }}>
-  <button id="searchDropdownButton" class="btn btn-menu hide-lg" type="button" data-bs-toggle="dropdown" aria-haspopup="true" data-bs-auto-close="false" aria-expanded="false">
-    {% include "@atoms/images/icons/_icon.twig" with {
-      icon_base_class: 'icon',
-      icon_name: 'magnifier',
-      icon_modifiers: ['small'],
-    } %}
-  </button>
   {{ title_prefix }}
   {% if label %}
     <h2{{ title_attributes.addClass('h2') }}>{{ label }}</h2>
   {% endif %}
   {{ title_suffix }}
   {% block content %}
-    <div class="dropdown-menu">
-    {% include "@atoms/images/icons/_icon.twig" with {
-      icon_base_class: 'icon',
-      icon_name: 'arrow-left',
-      icon_modifiers: ['small','absolute-left-forty'],
-    } %}
+    <div class="mobile-filters">
       {{ content }}
       {% include "@atoms/images/icons/_icon.twig" with {
         icon_base_class: 'icon',
