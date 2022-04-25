@@ -4,8 +4,12 @@
 
 $gutter: $space;
 $main-gutter: $space-septuple;
-$main-width: calc(100% - (#{$sidebar-width} ));
-$main-content-width: calc(100% - (#{$sidebar-width} + #{$main-gutter} *2 ));
+
+$main-width-large: calc(100% - (#{$sidebar-md-width} ));
+$main-content-width: calc(100% - (#{$sidebar-md-width} + #{$main-gutter} *2 ));
+
+$main-width-xl: calc(100% - (#{$sidebar-width} ));
+$main-content-width-xl: calc(100% - (#{$sidebar-width} + #{$main-gutter} *2 ));
 
 .layout-container {
   @include large {
@@ -25,7 +29,10 @@ $main-content-width: calc(100% - (#{$sidebar-width} + #{$main-gutter} *2 ));
     margin-left: 0;
     margin-right: 0;
     order: 2;
-    width: $main-width;
+    width: $main-width-large;
+  }
+  @include xl {
+    width: $main-width-xl;
   }
 }
 .main {
@@ -50,9 +57,12 @@ $main-content-width: calc(100% - (#{$sidebar-width} + #{$main-gutter} *2 ));
   background-color: clr(sidebar-color);
   @include large {
     order: 1;
-    width: $sidebar-width;
+    width: $sidebar-md-width;
     margin-bottom: 0;
     border-top-right-radius: 47px;
+  }
+  @include xl {
+    width: $sidebar-width;
   }
 }
 

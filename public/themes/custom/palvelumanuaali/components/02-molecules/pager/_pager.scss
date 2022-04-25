@@ -1,5 +1,10 @@
 .pager {
   margin: 2em 0;
+  width: 100%;
+}
+
+.pagination {
+  width: 100%;
 }
 
 .pager__items {
@@ -20,33 +25,57 @@
 .pager__link,
 .pager__link:link,
 .pager__link:visited {
-  color: clr(text);
   font-weight: 600;
   text-decoration: none;
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
   &.is-active,
   &:hover {
-    color: clr(accent);
+    color: clr(text-inverse);
+    background-color: clr(background-section);
+    border-radius: 4px;
+  }
+  &.pager__link--next,
+  &.pager__link--prev {
+    display: inline-block;
+    width: unset;
+    height: unset;
+    padding-left: 8px;
+    padding-right: 8px;
   }
 }
+
+
+
+.pager__item {
+  &:first-child {
+    margin-left: auto;
+  }
+  &:last-child {
+    margin-right: auto;
+  }
+
+  &.pager__item--prev {
+    margin-right: auto;
+    margin-left: 0;
+  }
+
+  &.pager__item--next {
+    margin-left: auto;
+    margin-right: 0;
+  }
+}
+
+
 
 .pager__link--next,
 .pager__link--prev {
   display: block;
 
-  span {
-    display: none;
-  }
-
   &::before {
-    border: 8px solid clr(text);
-    border-bottom: 6px solid transparent;
-    border-right: 7px solid transparent;
-    border-top: 6px solid transparent;
-    content: '';
-    display: block;
-    position: relative;
-    top: 1px;
   }
 
   &:hover {

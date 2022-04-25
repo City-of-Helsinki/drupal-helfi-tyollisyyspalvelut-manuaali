@@ -1,0 +1,66 @@
+uuid: e90bb7e5-5dfa-4a7c-b6d7-3f4a454130ce
+langcode: fi
+status: true
+dependencies:
+  config:
+    - views.view.service_search
+  module:
+    - system
+    - views
+label: 'Search page only'
+name: search_page
+group: null
+description: ''
+requireAllConditions: false
+disabled: false
+conditions:
+  request_path:
+    id: request_path
+    negate: false
+    uuid: a21666c7-0740-4add-8756-c3089531d371
+    context_mapping: {  }
+    pages: "/haku*\r\n/search*"
+reactions:
+  blocks:
+    id: blocks
+    uuid: 46f828bf-102f-4be8-a776-763fe65b40f6
+    blocks:
+      ec29e5df-ba39-4cc7-9912-7f0a328021c2:
+        uuid: ec29e5df-ba39-4cc7-9912-7f0a328021c2
+        id: 'views_exposed_filter_block:service_search-search_page_filters'
+        label: ''
+        provider: views
+        label_display: '0'
+        region: header
+        weight: '0'
+        custom_id: views_exposed_filter_block_service_search_search_page_filters
+        theme: palvelumanuaali
+        css_class: hide-mobile
+        unique: 0
+        context_id: search_page
+        context_mapping: {  }
+        views_label: ''
+        third_party_settings: {  }
+      dc8269d8-b7b9-4c9e-995a-cd0790e1ce1b:
+        uuid: dc8269d8-b7b9-4c9e-995a-cd0790e1ce1b
+        id: 'views_exposed_filter_block:service_search-search_mobile_filters'
+        label: ''
+        provider: views
+        label_display: '0'
+        region: sidebar
+        weight: '0'
+        custom_id: views_exposed_filter_block_service_search_search_mobile_filters
+        theme: palvelumanuaali
+        css_class: hide-lg
+        unique: 0
+        context_id: search_page
+        context_mapping: {  }
+        views_label: ''
+        third_party_settings: {  }
+    include_default_blocks: 0
+    saved: false
+  body_class:
+    id: body_class
+    body_class: search-page
+    saved: false
+weight: 0
