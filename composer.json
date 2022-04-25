@@ -50,7 +50,7 @@
         "drupal/address": "^1.10",
         "drupal/admin_toolbar": "^3.0",
         "drupal/better_exposed_filters": "^5.0",
-        "drupal/coder": "8.3.13",
+        "drupal/coder": "^8",
         "drupal/components": "^2.4",
         "drupal/conditional_fields": "^4.x-dev",
         "drupal/context": "^4.1",
@@ -68,7 +68,7 @@
         "drupal/flag": "^4.0@beta",
         "drupal/flag_lists": "^4.0@RC",
         "drupal/gcontent_moderation": "^1.0@beta",
-        "drupal/ggroup": "^1.0@alpha",
+        "drupal/ggroup": "^1.0.0-alpha",
         "drupal/ginvite": "^2.0",
         "drupal/group": "^1.4",
         "drupal/inline_entity_form": "^1.0@RC",
@@ -182,6 +182,10 @@
             },
             "drupal/elasticsearch_connector": {
                 "https://www.drupal.org/project/elasticsearch_connector/issues/2912308#comment-14000645": "https://www.drupal.org/files/issues/2021-02-16/partial-search-issue-2912308-14.patch"
+            },
+            "drupal/ggroup": {
+                "https://www.drupal.org/project/ggroup/issues/3084153": "./patches/3084153-role-mapper.patch",
+                "https://www.drupal.org/project/ggroup/issues/3238956#comment-14272637": "https://www.drupal.org/files/issues/2021-10-28/no_parent_id-3238956-4.patch"
             },
             "drupal/themable_forms": {
                 "https://www.drupal.org/files/issues/undefined_index_type_themable_forms_theme_suggestions_form_element_2903660.patch": "https://www.drupal.org/files/issues/undefined_index_type_themable_forms_theme_suggestions_form_element_2903660.patch"
