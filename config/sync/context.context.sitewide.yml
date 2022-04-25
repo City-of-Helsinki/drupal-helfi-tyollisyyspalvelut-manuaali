@@ -8,7 +8,6 @@ dependencies:
     - system.menu.footer
     - system.menu.main
     - views.view.notifications
-    - views.view.service_search
   module:
     - hel_tpm_url_shortener
     - language
@@ -121,57 +120,6 @@ reactions:
         context_mapping: {  }
         primary: true
         secondary: true
-      958ca0b0-429c-40f4-b76a-4b453f97dd18:
-        uuid: 958ca0b0-429c-40f4-b76a-4b453f97dd18
-        id: 'language_block:language_interface'
-        label: 'Kielen vaihtaja'
-        provider: language
-        label_display: '0'
-        region: header
-        weight: '-10'
-        custom_id: language_block_language_interface
-        theme: palvelumanuaali
-        css_class: ''
-        unique: 0
-        context_id: sitewide
-        context_mapping: {  }
-        primary: 1
-        secondary: 1
-        third_party_settings: {  }
-      c2a714b4-1650-4637-af5f-0f14f06e1d8e:
-        uuid: c2a714b4-1650-4637-af5f-0f14f06e1d8e
-        id: 'system_menu_block:favorites'
-        label: Suosikit
-        provider: system
-        label_display: '0'
-        region: header
-        weight: '-9'
-        custom_id: system_menu_block_favorites
-        theme: palvelumanuaali
-        css_class: ''
-        unique: 0
-        context_id: sitewide
-        context_mapping: {  }
-        level: '1'
-        depth: '0'
-        expand_all_items: 0
-        third_party_settings: {  }
-      51f9570e-37be-4d9e-9f07-76ee354e1389:
-        uuid: 51f9570e-37be-4d9e-9f07-76ee354e1389
-        id: 'views_exposed_filter_block:service_search-mobile'
-        label: ''
-        provider: views
-        label_display: visible
-        region: sidebar
-        weight: '-2'
-        custom_id: views_exposed_filter_block_service_search_mobile
-        theme: palvelumanuaali
-        css_class: hide-lg
-        unique: 0
-        context_id: sitewide
-        context_mapping: {  }
-        views_label: ''
-        third_party_settings: {  }
       f521d448-e35c-4629-bad9-1418666bcc02:
         uuid: f521d448-e35c-4629-bad9-1418666bcc02
         id: system_breadcrumb_block
@@ -204,21 +152,38 @@ reactions:
         views_label: ''
         items_per_page: none
         third_party_settings: {  }
-      c9162ed7-cb51-4378-9061-41d80b0f564a:
-        uuid: c9162ed7-cb51-4378-9061-41d80b0f564a
-        id: 'views_exposed_filter_block:service_search-block_1'
-        label: ''
-        provider: views
+      77c3a3fa-ef0d-401c-a4cc-34c323cff7a5:
+        uuid: 77c3a3fa-ef0d-401c-a4cc-34c323cff7a5
+        id: 'language_block:language_interface'
+        label: 'Kielen vaihtaja'
+        provider: language
         label_display: '0'
         region: header
         weight: '0'
-        custom_id: views_exposed_filter_block_service_search_block_1
+        custom_id: language_block_language_interface
         theme: palvelumanuaali
         css_class: ''
         unique: 0
         context_id: sitewide
         context_mapping: {  }
-        views_label: ''
+        third_party_settings: {  }
+      814b94d8-2b91-43bd-8418-bfacc4adcf9c:
+        uuid: 814b94d8-2b91-43bd-8418-bfacc4adcf9c
+        id: 'system_menu_block:favorites'
+        label: Suosikit
+        provider: system
+        label_display: '0'
+        region: header
+        weight: '0'
+        custom_id: system_menu_block_favorites
+        theme: palvelumanuaali
+        css_class: ''
+        unique: 0
+        context_id: sitewide
+        context_mapping: {  }
+        level: '1'
+        depth: '0'
+        expand_all_items: 0
         third_party_settings: {  }
     include_default_blocks: 0
     saved: false
