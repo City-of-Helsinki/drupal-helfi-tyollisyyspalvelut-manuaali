@@ -97,6 +97,10 @@
     letter-spacing: 1px;
     margin: 0;
     margin-bottom: $space-one-half;
+    max-width: 55%;
+    @include medium {
+      max-width: unset;
+    }
   }
   .card__heading {
     @include heading-xxs();

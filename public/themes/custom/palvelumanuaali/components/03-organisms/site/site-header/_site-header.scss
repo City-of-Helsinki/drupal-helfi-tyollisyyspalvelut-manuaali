@@ -160,9 +160,16 @@
 }
 
 #block-user-login-block {
+  @include large {
+    position: absolute;
+    right: 50px;
+  }
   .dropdown-menu {
     margin-top: 70px !important;
     border-radius: 8px;
+    @include large {
+      width: 310px;
+    }
     .form-item {
       position: relative;
       label {
