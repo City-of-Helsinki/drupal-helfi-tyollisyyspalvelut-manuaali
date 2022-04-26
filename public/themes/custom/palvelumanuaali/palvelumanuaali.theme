@@ -130,3 +130,9 @@ function palvelumanuaali_theme_suggestions_views_view_unformatted_alter(array &$
 function palvelumanuaali_theme_suggestions_views_view_field(array $variables) {
     $suggestions[] = 'views_view_field__' . $variables['field']->field;
 }
+
+function palvelumanuaali_theme_suggestions_input_alter(&$suggestions, array $variables) {
+    if ($variables['theme_hook_original'] === "input__submit") {
+      $suggestions[] = 'input__' . $variables['element']['#type'] . '__' . $variables['element']['#form_id'];
+    }
+}
