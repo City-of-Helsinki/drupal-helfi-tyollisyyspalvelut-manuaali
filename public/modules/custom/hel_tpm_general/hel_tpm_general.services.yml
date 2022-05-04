@@ -1,0 +1,5 @@
+services:
+  hel_tpm_general.route_subscriber:
+    class: Drupal\hel_tpm_general\EventSubscriber\BulkInvitationRouteSubscriber
+    tags:
+      - { name: event_subscriber }
