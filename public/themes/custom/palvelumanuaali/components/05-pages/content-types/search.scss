@@ -46,13 +46,29 @@
 }
 
 .search-page {
+  .main-content {
+    >div {
+      @include large {
+        display: flex;
+        flex-wrap: wrap;
+      }
+    }
+  }
+  #block-system-breadcrumb-block {
+    @extend .col-12;
+  }
+
   #block-system-main-block {
+    @extend .col-lg-9;
+    @extend .offset-xl-1;
+    @extend .col-xl-7;
     .views-element-container {
       @extend .col-12;
-      @extend .col-lg-9;
-      @extend .offset-xl-1;
-      @extend .col-xl-7;
     }
+  }
+  #block-hel-tpm-url-shortener-form {
+    @extend .col-lg-3;
+    @extend .col-xl-4;
   }
 }
   #block-views-exposed-filter-block-service-search-search-page-filters {

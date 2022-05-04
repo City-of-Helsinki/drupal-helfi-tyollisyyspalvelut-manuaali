@@ -101,6 +101,7 @@ var map = {
 	"./icons/arrow-sm-down.svg": "./images/icons/arrow-sm-down.svg",
 	"./icons/c-question.svg": "./images/icons/c-question.svg",
 	"./icons/calendar.svg": "./images/icons/calendar.svg",
+	"./icons/chain.svg": "./images/icons/chain.svg",
 	"./icons/check.svg": "./images/icons/check.svg",
 	"./icons/close.svg": "./images/icons/close.svg",
 	"./icons/cogwheel.svg": "./images/icons/cogwheel.svg",
@@ -114,6 +115,7 @@ var map = {
 	"./icons/content-icons/uEA08-Vector.svg": "./images/icons/content-icons/uEA08-Vector.svg",
 	"./icons/content-icons/uEA09-arrow-sm-down 1.svg": "./images/icons/content-icons/uEA09-arrow-sm-down 1.svg",
 	"./icons/content-icons/uEA0A-preferences 2.svg": "./images/icons/content-icons/uEA0A-preferences 2.svg",
+	"./icons/content-icons/uEA0B-chain.svg": "./images/icons/content-icons/uEA0B-chain.svg",
 	"./icons/door.svg": "./images/icons/door.svg",
 	"./icons/exit.svg": "./images/icons/exit.svg",
 	"./icons/facebook.svg": "./images/icons/facebook.svg",
@@ -292,6 +294,26 @@ __webpack_require__.r(__webpack_exports__);
       id: "calendar-usage",
       viewBox: "0 0 24 24",
       url: __webpack_require__.p + "../dist/icons.svg#calendar",
+      toString: function () {
+        return this.url;
+      }
+    });
+
+/***/ }),
+
+/***/ "./images/icons/chain.svg":
+/*!********************************!*\
+  !*** ./images/icons/chain.svg ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+      id: "chain-usage",
+      viewBox: "0 0 24 24",
+      url: __webpack_require__.p + "../dist/icons.svg#chain",
       toString: function () {
         return this.url;
       }
@@ -552,6 +574,26 @@ __webpack_require__.r(__webpack_exports__);
       id: "uEA0A-preferences 2-usage",
       viewBox: "0 0 24 24",
       url: __webpack_require__.p + "../dist/icons.svg#uEA0A-preferences 2",
+      toString: function () {
+        return this.url;
+      }
+    });
+
+/***/ }),
+
+/***/ "./images/icons/content-icons/uEA0B-chain.svg":
+/*!****************************************************!*\
+  !*** ./images/icons/content-icons/uEA0B-chain.svg ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+      id: "uEA0B-chain-usage",
+      viewBox: "0 0 24 24",
+      url: __webpack_require__.p + "../dist/icons.svg#uEA0B-chain",
       toString: function () {
         return this.url;
       }
