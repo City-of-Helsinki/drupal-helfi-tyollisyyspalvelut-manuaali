@@ -71,6 +71,14 @@
 }
 
 #block-system-menu-block-favorites {
+  @include large {
+    top: 50px;
+  }
+  .content {
+    @include large {
+      display: flex;
+    }
+  }
   .icon--margin-right {
     margin-right: auto;
     @include large {
