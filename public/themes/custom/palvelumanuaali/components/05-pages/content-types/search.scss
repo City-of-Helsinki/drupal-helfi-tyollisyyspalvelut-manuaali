@@ -48,8 +48,12 @@
 .search-page {
   .main-content {
     >div {
-      @include large {
+      @include small {
         display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+      @include large {
+
         grid-template-columns: 9fr 3fr;
       }
       @include xl {
@@ -58,15 +62,16 @@
     }
   }
   #block-system-breadcrumb-block {
-    @extend .col-12;
     grid-column-start: 1;
+    grid-column-end: 3;
   }
 
   #block-system-main-block {
-    grid-row-start: 2;
-    grid-row-end: 5;
+    grid-column-start: 2 span;
     padding: $space-one-and-half;
     @include large {
+      grid-row-start: 2;
+      grid-row-end: 5;
       grid-column-start: 1;
       border-right: 2px solid $blue80;
     }
@@ -81,9 +86,9 @@
   #block-hel-tpm-url-shortener-form {
     margin-top: $space-double;
     margin-left: $space-two-and-half;
-    grid-row-start: 3;
-    grid-row-end: 4;
     @include large {
+      grid-row-start: 3;
+      grid-row-end: 4;
       grid-column-start: 2;
     }
     @include xl {
@@ -94,11 +99,12 @@
   #block-hel-print-pdf-block {
     width: max-content;
     display: block;
-    grid-row-start: 2;
-    grid-row-end: 3;
+
     margin-top: $space-double;
     margin-left: $space-two-and-half;
     @include large {
+      grid-row-start: 2;
+      grid-row-end: 3;
       grid-column-start: 2;
     }
     @include xl {
