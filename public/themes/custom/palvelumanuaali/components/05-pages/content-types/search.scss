@@ -3,23 +3,36 @@
   flex-wrap: wrap;
 
   .view-header {
-    @extend .col-12;
+    @extend .col-6;
     @extend .col-xl-6;
-
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    @include large {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+    }
     strong {
       font-size: 15px;
     }
     .total-number {
+      display: inline-block;
+      width: min-content;
       background-color: clr(text-inverse);
       padding: 4px 8px;
       color: clr(background-section);
       border-radius: 8px;
       font-size: 15px;
+      @include large {
+        display: inline-block;
+        height: min-content;
+      }
     }
   }
 
   .view-filters {
-    @extend .col-12;
+    @extend .col-6;
     @extend .col-xl-6;
     display: flex;
     justify-content: flex-end;
@@ -40,6 +53,18 @@
     }
     > .form-item:nth-last-of-type(2) {
       display: flex;
+      flex-direction: column;
+      @include large {
+        flex-direction: row;
+      }
+
+      label {
+        justify-content: end;
+        display: flex;
+        @include large {
+          display: block;
+        }
+      }
     }
   }
 
