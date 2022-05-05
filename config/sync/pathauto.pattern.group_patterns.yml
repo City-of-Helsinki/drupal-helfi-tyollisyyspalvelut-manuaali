@@ -1,0 +1,36 @@
+uuid: dfe297e6-e9df-4992-80ef-1b89353cf175
+langcode: fi
+status: true
+dependencies:
+  module:
+    - group
+    - language
+id: group_patterns
+label: 'Group patterns'
+type: 'canonical_entities:group'
+pattern: '[group:subgroup_left:value]/[group:title]'
+selection_criteria:
+  660ea841-22df-4bc9-87a9-ef2accf92d3b:
+    id: 'entity_bundle:group'
+    negate: false
+    uuid: 660ea841-22df-4bc9-87a9-ef2accf92d3b
+    context_mapping:
+      group: group
+    bundles:
+      organisation: organisation
+      service_provider: service_provider
+  6ed81507-311f-4ca4-832c-785a8c15bd93:
+    id: language
+    negate: false
+    uuid: 6ed81507-311f-4ca4-832c-785a8c15bd93
+    context_mapping:
+      language: 'group:langcode:language'
+    langcodes:
+      fi: fi
+      en: en
+      sv: sv
+selection_logic: and
+weight: -10
+relationships:
+  'group:langcode:language':
+    label: Kieli

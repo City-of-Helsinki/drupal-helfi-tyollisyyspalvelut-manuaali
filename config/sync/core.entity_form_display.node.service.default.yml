@@ -156,10 +156,14 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_accessibility:
-    type: options_buttons
+    type: select2_entity_reference
     weight: 16
     region: content
-    settings: {  }
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
     third_party_settings: {  }
   field_client_consent:
     type: boolean_checkbox
