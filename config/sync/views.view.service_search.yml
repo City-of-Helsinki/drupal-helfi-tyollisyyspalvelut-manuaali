@@ -9,6 +9,7 @@ dependencies:
     - taxonomy.vocabulary.service_languages
   module:
     - better_exposed_filters
+    - entity_print_views
     - search_api
 id: service_search
 label: 'Service search'
@@ -512,7 +513,19 @@ display:
           skip_access: false
           preserve_facet_query_args: false
       relationships: {  }
-      header: {  }
+      header:
+        area_entity_print_views:
+          id: area_entity_print_views
+          table: views
+          field: area_entity_print_views
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: entity_print_views_link
+          empty: false
+          export_type: pdf
+          link_text: 'View PDF'
+          display_id: attachment_1
       footer: {  }
       display_extenders: {  }
     cache_metadata:
@@ -1264,6 +1277,7 @@ display:
         filters: false
         filter_groups: false
         header: false
+        footer: false
       header:
         result:
           id: result
@@ -1275,6 +1289,7 @@ display:
           plugin_id: result
           empty: false
           content: '<strong>Hakutuloksia:</strong> <span class="total-number">@total</span>'
+      footer: {  }
       exposed_block: false
       display_extenders: {  }
       path: search

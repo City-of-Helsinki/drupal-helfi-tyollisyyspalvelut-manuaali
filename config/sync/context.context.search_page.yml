@@ -5,6 +5,7 @@ dependencies:
   config:
     - views.view.service_search
   module:
+    - hel_tpm_print_pdf
     - system
     - views
 label: 'Search page only'
@@ -56,6 +57,21 @@ reactions:
         context_id: search_page
         context_mapping: {  }
         views_label: ''
+        third_party_settings: {  }
+      d11fb52a-215a-473a-97d4-f055be7e21f6:
+        uuid: d11fb52a-215a-473a-97d4-f055be7e21f6
+        id: hel_print_pdf_block
+        label: 'Print pdf block'
+        provider: hel_tpm_print_pdf
+        label_display: '0'
+        region: content
+        weight: '-1'
+        custom_id: hel_print_pdf_block
+        theme: palvelumanuaali
+        css_class: ''
+        unique: 0
+        context_id: search_page
+        context_mapping: {  }
         third_party_settings: {  }
     include_default_blocks: 0
     saved: false
