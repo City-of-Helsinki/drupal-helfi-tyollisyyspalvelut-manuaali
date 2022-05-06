@@ -88,7 +88,7 @@
 
  function palvelumanuaali_theme_suggestions_details_alter(array &$suggestions, array $variables, $hook)
  {
-   if (isset($variables['element']['#type'])) {
+   if (isset($variables['element']['#type']) && isset($variables['element']['#form_id'])) {
      $type = str_replace("-", "_", $variables['element']['#type']);
      $formId = str_replace("-", "_", $variables['element']['#form_id']);
      $suggestions[] = $hook . '__' . $type . '__' . $formId;

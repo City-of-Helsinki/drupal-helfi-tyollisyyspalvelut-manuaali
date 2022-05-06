@@ -11,28 +11,78 @@ use Drupal\service_manual_workflow\Event\ServiceModerationEvent;
  */
 
 /**
+ * Implements hook_entity_insert().
+ *
+ * @param \Drupal\Core\Entity\EntityInterface $entity
+ *
+ * @return void
+ */
+function service_manual_workflow_entity_insert(EntityInterface $entity) {
+  if (!$entity instanceof ContentModerationStateInterface) {
+    return;
+  }
+  $state = $entity->moderation_state->value;
+  // Service is set ready to publish from the start.
+  if ($state == 'ready_to_publish') {
+    $transition = 'service_manual_workflow.draft.to.ready_to_publish';
+    $event = new ServiceModerationEvent($entity, \Drupal::currentUser());
+    Drupal::service('event_dispatcher')->dispatch($transition, $event);
+  }
+
+}
+
+/**
  * Implements hook_entity_update().
  *
  * @param \Drupal\Core\Entity\EntityInterface $entity
+ *
+ * @return void
+ * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+ * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
  */
 function service_manual_workflow_entity_update(EntityInterface $entity) {
   if (!$entity instanceof ContentModerationStateInterface) {
     return;
   }
-
   if (empty($entity->original)) {
     return;
   }
-
-  $original_state = $entity->original->moderation_state->value;
+  $previous_entity = _service_manual_workflow_entity_previous_revision($entity);
+  $original_state = $previous_entity->moderation_state->value;
   $state = $entity->moderation_state->value;
-
   // Do not dispatch anything when state hasn't changed.
   if ($original_state == $state) {
     return;
   }
-
   $transition = sprintf('service_manual_workflow.%s.to.%s', $original_state, $state);
   $event = new ServiceModerationEvent($entity, \Drupal::currentUser());
   Drupal::service('event_dispatcher')->dispatch($transition, $event);
+}
+
+/**
+ * Fetch previous revision for content moderation state.
+ *
+ * @param \Drupal\Core\Entity\EntityInterface $entity
+ *
+ * @return \Drupal\Core\Entity\EntityInterface|null
+ * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+ * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+ */
+function _service_manual_workflow_entity_previous_revision(EntityInterface $entity) {
+  $storage = \Drupal::entityTypeManager()->getStorage('content_moderation_state');
+  $revision = $query = \Drupal::database()->select('content_moderation_state_field_revision', 'cr')
+    ->fields('cr', ['revision_id'])
+    ->condition('cr.id', $entity->id())
+    ->condition('cr.revision_id', $entity->revision_id->value, '<')
+    ->orderBy('cr.revision_id', 'DESC')
+    ->range(0, 1)
+    ->execute()
+    ->fetchAssoc();
+
+  // If no previous revision is found. Return original version.
+  if (empty($revision)) {
+    return $entity->original;
+  }
+
+  return $storage->loadRevision($revision['revision_id']);
 }
