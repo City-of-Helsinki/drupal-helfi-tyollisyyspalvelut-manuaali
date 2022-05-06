@@ -73,28 +73,74 @@
 .search-page {
   .main-content {
     >div {
+      @include small {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
       @include large {
-        display: flex;
-        flex-wrap: wrap;
+
+        grid-template-columns: 9fr 3fr;
+      }
+      @include xl {
+        grid-template-columns: 1fr 7fr 4fr;
       }
     }
   }
   #block-system-breadcrumb-block {
-    @extend .col-12;
+    grid-column-start: 1;
+    grid-column-end: 3;
   }
 
   #block-system-main-block {
-    @extend .col-lg-9;
-    @extend .offset-xl-1;
-    @extend .col-xl-7;
+    grid-column-start: 2 span;
+    padding: $space-one-and-half;
+    @include large {
+      grid-row-start: 2;
+      grid-row-end: 5;
+      grid-column-start: 1;
+      border-right: 2px solid $blue80;
+    }
+    @include xl {
+      grid-column-start: 2;
+    }
+
     .views-element-container {
-      @extend .col-12;
     }
   }
+
   #block-hel-tpm-url-shortener-form {
-    @extend .col-lg-3;
-    @extend .col-xl-4;
+    margin-top: $space-double;
+    margin-left: $space-two-and-half;
+    @include large {
+      grid-row-start: 3;
+      grid-row-end: 4;
+      grid-column-start: 2;
+    }
+    @include xl {
+      grid-column-start: 3;
+    }
   }
+
+  #block-hel-print-pdf-block {
+    width: max-content;
+    display: block;
+
+    margin-top: $space-double;
+    margin-left: $space-two-and-half;
+    @include large {
+      grid-row-start: 2;
+      grid-row-end: 3;
+      grid-column-start: 2;
+    }
+    @include xl {
+      grid-column-start: 3;
+    }
+  }
+
+  #block-views-block-services-block-3 {
+    grid-column-start: 1;
+  }
+
 }
   #block-views-exposed-filter-block-service-search-search-page-filters {
       @extend .col-md-12;
