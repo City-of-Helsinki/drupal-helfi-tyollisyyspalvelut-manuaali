@@ -3,23 +3,36 @@
   flex-wrap: wrap;
 
   .view-header {
-    @extend .col-12;
+    @extend .col-6;
     @extend .col-xl-6;
-
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    @include large {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+    }
     strong {
       font-size: 15px;
     }
     .total-number {
+      display: inline-block;
+      width: min-content;
       background-color: clr(text-inverse);
       padding: 4px 8px;
       color: clr(background-section);
       border-radius: 8px;
       font-size: 15px;
+      @include large {
+        display: inline-block;
+        height: min-content;
+      }
     }
   }
 
   .view-filters {
-    @extend .col-12;
+    @extend .col-6;
     @extend .col-xl-6;
     display: flex;
     justify-content: flex-end;
@@ -40,19 +53,47 @@
     }
     > .form-item:nth-last-of-type(2) {
       display: flex;
+      flex-direction: column;
+      @include large {
+        flex-direction: row;
+      }
+
+      label {
+        justify-content: end;
+        display: flex;
+        @include large {
+          display: block;
+        }
+      }
     }
   }
 
 }
 
 .search-page {
+  .main-content {
+    >div {
+      @include large {
+        display: flex;
+        flex-wrap: wrap;
+      }
+    }
+  }
+  #block-system-breadcrumb-block {
+    @extend .col-12;
+  }
+
   #block-system-main-block {
+    @extend .col-lg-9;
+    @extend .offset-xl-1;
+    @extend .col-xl-7;
     .views-element-container {
       @extend .col-12;
-      @extend .col-lg-9;
-      @extend .offset-xl-1;
-      @extend .col-xl-7;
     }
+  }
+  #block-hel-tpm-url-shortener-form {
+    @extend .col-lg-3;
+    @extend .col-xl-4;
   }
 }
   #block-views-exposed-filter-block-service-search-search-page-filters {
