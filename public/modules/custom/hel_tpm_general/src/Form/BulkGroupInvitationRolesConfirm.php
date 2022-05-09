@@ -48,7 +48,6 @@ class BulkGroupInvitationRolesConfirm extends BulkGroupInvitationConfirm {
     }
 
     batch_set($batch);
-
   }
 
 }
