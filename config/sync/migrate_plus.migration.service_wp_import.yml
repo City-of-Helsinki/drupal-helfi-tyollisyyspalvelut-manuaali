@@ -80,6 +80,9 @@ process:
     map:
       'Aktiivinen': published
     default_value: draft
+  field_requirements:
+    plugin: tpm_content_paragraph
+    source: 'Palvelun edellytykset'
 destination:
   plugin: 'entity:node'
   default_bundle: service
