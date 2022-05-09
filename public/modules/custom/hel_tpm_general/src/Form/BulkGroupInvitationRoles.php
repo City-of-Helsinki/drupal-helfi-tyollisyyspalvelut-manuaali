@@ -4,6 +4,7 @@ namespace Drupal\hel_tpm_general\Form;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\ginvite\Form\BulkGroupInvitation;
+use Drupal\group\Entity\GroupInterface;
 
 class BulkGroupInvitationRoles extends BulkGroupInvitation {
 
@@ -23,11 +24,35 @@ class BulkGroupInvitationRoles extends BulkGroupInvitation {
     $form['roles'] = [
       '#type' => 'select',
       '#title' => t('Roles'),
-      '#options' => _hel_tpm_general_get_group_role_options($group),
+      '#options' => self::getGroupRoleOptions($group),
       '#weight' => 0
     ];
 
     return $form;
+  }
+
+  /**
+   * Fetch group roles for select options.
+   *
+   * @param \Drupal\group\Entity\GroupInterface $group
+   *
+   * @return array
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   */
+  protected function getGroupRoleOptions(GroupInterface $group) {
+    $roles = [];
+    $group_roles = $this->entityTypeManager->getStorage('group_role')->loadByProperties([
+      'group_type' => $group->getGroupType(),
+      'internal' => FALSE,
+    ]);
+    if (empty($group_roles)) {
+      return $roles;
+    }
+    foreach ($group_roles as $id => $role) {
+      $roles[$role->id()] = $role->label();
+    }
+    return $roles;
   }
 
   /**

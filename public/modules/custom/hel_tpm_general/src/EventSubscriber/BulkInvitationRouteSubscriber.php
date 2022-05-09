@@ -21,11 +21,17 @@ class BulkInvitationRouteSubscriber extends RouteSubscriberBase {
 
   private function alterGinviteInvitationBulkRoute(RouteCollection $collection) {
     $route = $collection->get('ginvite.invitation.bulk');
+    if (empty($route)) {
+      return;
+    }
     $route->setDefault('_form', 'Drupal\hel_tpm_general\Form\BulkGroupInvitationRoles');
   }
 
   private function alterGinviteInvitationBulkConfirmRoute(RouteCollection $collection) {
     $route = $collection->get('ginvite.invitation.bulk.confirm');
+    if (empty($route)) {
+      return;
+    }
     $route->setDefault('_form', 'Drupal\hel_tpm_general\Form\BulkGroupInvitationRolesConfirm');
   }
 
