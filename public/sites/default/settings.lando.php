@@ -12,7 +12,7 @@ $databases['default']['default'] = [
   'database' => $database_creds->database,
   'username' => $database_creds->user,
   'password' => $database_creds->password,
-  'host' => $lando_data->database->hostnames[0],
+  'host' => $lando_data->database->internal_connection->host,
   'port' => '3306',
   'driver' => 'mysql'
 ];

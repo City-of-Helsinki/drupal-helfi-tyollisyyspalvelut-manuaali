@@ -1,0 +1,49 @@
+uuid: 8059c9ba-ca9b-4bcb-a387-501bcca0c1b4
+langcode: en
+status: true
+dependencies: {  }
+id: service_wp_import
+class: null
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags: null
+migration_group: null
+label: 'Import services'
+source: 
+  plugin: csv
+  path: '/app/services.csv'
+  delimiter: ','
+  enclosure: '"'
+  header_row_count: 1
+  ids:
+    - 'Tunnuksen numerointi'
+process:
+  title: 'Palvelun nimi'
+  field_description: 'Palvelun tiivistelmä'
+  field_service_set:
+    -
+      plugin: skip_on_empty
+      source: Palvelukokonaisuus
+      method: process
+    -
+      plugin: entity_generate
+      entity_type: taxonomy_term
+      value_key: name
+      bundle_key: vid
+      bundle: service_set
+      ignore_case: true
+  field_service_implement: 'Palvelun toteutus'
+  field_service_links_external/0/uri: 'Palveluun liittyvät linkit'
+  created:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: 'Tallennettu ensimmäisen kerran'
+    -
+      plugin: format_date
+      from_format: 'd/m/y'
+      to_format: 'Y-m-d\T00:00:00'
+destination:
+  plugin: 'entity:node'
+  default_bundle: service
+migration_dependencies: null
