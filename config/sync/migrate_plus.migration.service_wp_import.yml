@@ -17,6 +17,8 @@ source:
   header_row_count: 1
   ids:
     - 'Tunnuksen numerointi'
+  constants:
+    timestamp: '20:59'
 process:
   title: 'Palvelun nimi'
   field_description: 'Palvelun tiivistelmä'
@@ -32,17 +34,52 @@ process:
       bundle_key: vid
       bundle: service_set
       ignore_case: true
+  field_tags:
+    -
+      plugin: skip_on_empty
+      source: 'Palvelun asiasana'
+      method: process
+    -
+      plugin: explode
+      delimiter: ','
+    -
+      plugin: callback
+      callable: trim
+    -
+      plugin: entity_generate
+      entity_type: taxonomy_term
+      value_key: name
+      bundle_key: vid
+      bundle: service_tags
+      ignore_case: true
   field_service_implement: 'Palvelun toteutus'
-  field_service_links_external/0/uri: 'Palveluun liittyvät linkit'
+  field_service_links_external/0/uri:
+    -
+      plugin: skip_on_empty
+      source: 'Palveluun liittyvät linkit'
+      method: process
+    -
+      plugin: tpm_handle_url
   created:
     -
       plugin: skip_on_empty
-      method: process
       source: 'Tallennettu ensimmäisen kerran'
+      method: process
     -
-      plugin: format_date
-      from_format: 'd/m/y'
-      to_format: 'Y-m-d\T00:00:00'
+      plugin: tpm_format_date
+  changed:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: Muokkausajankohta
+    -
+      plugin: tpm_format_date
+  moderation_state:
+    plugin: static_map
+    source: 'Palvelustatus '
+    map:
+      'Aktiivinen': published
+    default_value: draft
 destination:
   plugin: 'entity:node'
   default_bundle: service
