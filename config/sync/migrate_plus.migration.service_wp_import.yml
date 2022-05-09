@@ -52,7 +52,7 @@ process:
       bundle_key: vid
       bundle: service_tags
       ignore_case: true
-  field_service_implement: 'Palvelun toteutus'
+  field_service_implement: 'Palvelun toteutustapa'
   field_service_links_external/0/uri:
     -
       plugin: skip_on_empty
@@ -81,8 +81,37 @@ process:
       'Aktiivinen': published
     default_value: draft
   field_requirements:
-    plugin: tpm_content_paragraph
-    source: 'Palvelun edellytykset'
+    -
+      plugin: skip_on_empty
+      method: process
+      source: 'Palvelun edellytykset'
+    -
+      plugin: tpm_content_paragraph
+      source: 'Palvelun edellytykset'
+  field_target_group:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: Kohderyhmäkuvaus
+    -
+      plugin: tpm_target_group_paragraph
+      source: Kohderyhmäkuvaus
+  field_service_guidance_guide:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: 'Palveluun ohjaus työohjeet'
+    -
+      plugin: tpm_content_paragraph
+      source: 'Palveluun ohjaus työohjeet'
+  field_service_price:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: 'Palvelun maksullisuus'
+    -
+      plugin: tpm_service_price_paragraph
+      source: 'Palvelun maksullisuus'
 destination:
   plugin: 'entity:node'
   default_bundle: service
