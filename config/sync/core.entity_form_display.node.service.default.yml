@@ -18,13 +18,10 @@ dependencies:
     - field.field.node.service.field_service_implement
     - field.field.node.service.field_service_links_external
     - field.field.node.service.field_service_links_internal
-    - field.field.node.service.field_service_location
-    - field.field.node.service.field_service_obligations
     - field.field.node.service.field_service_price
     - field.field.node.service.field_service_radioactivity
     - field.field.node.service.field_service_set
     - field.field.node.service.field_service_time_and_location
-    - field.field.node.service.field_tags
     - field.field.node.service.field_target_group
     - node.type.service
     - workflows.workflow.service_moderation
@@ -367,31 +364,6 @@ content:
       placeholder_url: ''
       placeholder_title: ''
     third_party_settings: {  }
-  field_service_location:
-    type: options_buttons
-    weight: 19
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  field_service_obligations:
-    type: paragraphs
-    weight: 16
-    region: content
-    settings:
-      title: Paragraph
-      title_plural: Paragraphs
-      edit_mode: closed
-      closed_mode: preview
-      autocollapse: none
-      closed_mode_threshold: 0
-      add_mode: dropdown
-      form_display_mode: default
-      default_paragraph_type: _none
-      features:
-        add_above: '0'
-        collapse_edit_all: collapse_edit_all
-        duplicate: duplicate
-    third_party_settings: {  }
   field_service_price:
     type: paragraphs
     weight: 23
@@ -447,16 +419,6 @@ content:
         add_above: '0'
         collapse_edit_all: collapse_edit_all
         duplicate: duplicate
-    third_party_settings: {  }
-  field_tags:
-    type: entity_reference_autocomplete_tags
-    weight: 27
-    region: content
-    settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
     third_party_settings: {  }
   field_target_group:
     type: paragraphs

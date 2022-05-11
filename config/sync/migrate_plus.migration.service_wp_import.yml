@@ -9,19 +9,16 @@ cck_plugin_method: null
 migration_tags: null
 migration_group: null
 label: 'Import services'
-source: 
+source:
   plugin: csv
-  path: '/app/services.csv'
+  path: /app/services.csv
   delimiter: ','
   enclosure: '"'
   header_row_count: 1
   ids:
     - 'Tunnuksen numerointi'
-  constants:
-    timestamp: '20:59'
 process:
   title: 'Palvelun nimi'
-  field_description: 'Palvelun tiivistelmä'
   field_service_set:
     -
       plugin: skip_on_empty
@@ -33,24 +30,6 @@ process:
       value_key: name
       bundle_key: vid
       bundle: service_set
-      ignore_case: true
-  field_tags:
-    -
-      plugin: skip_on_empty
-      source: 'Palvelun asiasana'
-      method: process
-    -
-      plugin: explode
-      delimiter: ','
-    -
-      plugin: callback
-      callable: trim
-    -
-      plugin: entity_generate
-      entity_type: taxonomy_term
-      value_key: name
-      bundle_key: vid
-      bundle: service_tags
       ignore_case: true
   field_service_implement: 'Palvelun toteutustapa'
   field_service_links_external/0/uri:
@@ -78,7 +57,7 @@ process:
     plugin: static_map
     source: 'Palvelustatus '
     map:
-      'Aktiivinen': published
+      Aktiivinen: published
     default_value: draft
   field_requirements:
     -
@@ -87,7 +66,6 @@ process:
       source: 'Palvelun edellytykset'
     -
       plugin: tpm_content_paragraph
-      source: 'Palvelun edellytykset'
   field_target_group:
     -
       plugin: skip_on_empty
@@ -97,13 +75,13 @@ process:
       plugin: tpm_target_group_paragraph
       source: Kohderyhmäkuvaus
   field_service_guidance_guide:
-    -
-      plugin: skip_on_empty
-      method: process
-      source: 'Palveluun ohjaus työohjeet'
-    -
-      plugin: tpm_content_paragraph
-      source: 'Palveluun ohjaus työohjeet'
+    plugin: tpm_content_paragraph
+    titles:
+      - Työohje
+      - 'Palvelun velvoittavuus'
+    source:
+      - 'Palveluun ohjaus työohjeet'
+      - 'Palvelun velvoittavuus'
   field_service_price:
     -
       plugin: skip_on_empty
@@ -111,7 +89,6 @@ process:
       source: 'Palvelun maksullisuus'
     -
       plugin: tpm_service_price_paragraph
-      source: 'Palvelun maksullisuus'
 destination:
   plugin: 'entity:node'
   default_bundle: service
