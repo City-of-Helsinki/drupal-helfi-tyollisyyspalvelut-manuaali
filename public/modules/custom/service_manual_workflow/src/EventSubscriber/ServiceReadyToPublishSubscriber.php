@@ -9,12 +9,15 @@ use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\gcontent_moderation\GroupStateTransitionValidation;
+use Drupal\group\Entity\Group;
+use Drupal\group\Entity\GroupInterface;
 use Drupal\service_manual_workflow\ContentGroupService;
 use Drupal\service_manual_workflow\Event\ServiceModerationEvent;
 use Drupal\user\UserInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\message\Entity\Message;
+use Drupal\Core\Routing\RouteMatchInterface;
 
 /**
  * Service manual workflow event subscriber.
@@ -45,6 +48,11 @@ class ServiceReadyToPublishSubscriber implements EventSubscriberInterface {
    */
   protected $stateTransitionValidation;
 
+  /**
+   * @var \Drupal\Core\Routing\RouteMatchInterface
+   */
+  protected $routeMatch;
+
   const MESSAGE_TEMPLATE = 'group_ready_to_publish_notificat';
 
   /**
@@ -63,11 +71,12 @@ class ServiceReadyToPublishSubscriber implements EventSubscriberInterface {
    *  Group content state transition validator.
    *
    */
-  public function __construct(MessengerInterface $messenger, EntityTypeManager $entityTypeManager, ContentGroupService $contentGroupService, GroupStateTransitionValidation $stateTransitionValidation) {
+  public function __construct(MessengerInterface $messenger, EntityTypeManager $entityTypeManager, ContentGroupService $contentGroupService, GroupStateTransitionValidation $stateTransitionValidation, RouteMatchInterface $routeMatch) {
     $this->messenger = $messenger;
     $this->entityTypeManager = $entityTypeManager;
     $this->contentGroupService = $contentGroupService;
     $this->stateTransitionValidation = $stateTransitionValidation;
+    $this->routeMatch = $routeMatch;
   }
 
   /**
@@ -111,22 +120,29 @@ class ServiceReadyToPublishSubscriber implements EventSubscriberInterface {
   protected function getGroups(ContentEntityInterface $entity) {
     $groups = $this->contentGroupService->getGroupsWithEntity($entity);
 
-    if (empty($groups)) {
+    if (!empty($groups)) {
+      $group = reset($groups);
+    }
+    else {
+      $group = $this->getGroupFromRoute();
+    }
+
+    if (empty($group)) {
       return [];
     }
 
-    return reset($groups);
+    return $group;
   }
 
   /**
    * Get all group users with permission to create publish transition.
    *
    * @param \Drupal\Core\Entity\ContentEntityInterface $entity
-   * @param $group
+   * @param \Drupal\group\Entity\GroupInterface $group
    *
    * @return array
    */
-  protected function getEntityGroupAdministration(ContentEntityInterface $entity, $group) : array {
+  protected function getEntityGroupAdministration(ContentEntityInterface $entity, GroupInterface $group) : array {
     $accounts = [];
 
     foreach ($group->getMembers() as $key => $member) {
@@ -180,4 +196,17 @@ class ServiceReadyToPublishSubscriber implements EventSubscriberInterface {
     return empty($valid_transitions['publish']);
   }
 
+  /**
+   * Get the group from the current route match.
+   *
+   * @return bool|\Drupal\group\Entity\GroupInterface
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   */
+  public function getGroupFromRoute() {
+    $parameters = $this->routeMatch->getParameters()->all();
+    if (empty($parameters['group']) || !$parameters['group'] instanceof GroupInterface) {
+      return FALSE;
+    }
+    return $parameters['group'];
+  }
 }
