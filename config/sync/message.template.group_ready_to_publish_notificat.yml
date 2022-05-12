@@ -6,10 +6,10 @@ dependencies:
     - filter.format.filtered_html
 template: group_ready_to_publish_notificat
 label: 'Group ready to publish notification'
-description: 'Group ready to publish notification for admins'
+description: 'Service is ready to publish and needs audit'
 text:
   -
-    value: "<p>Lorem ipsum dolor sit amet consectur</p>\r\n"
+    value: "<p>Hello!</p>\r\n\r\n<p>[message:author] changed service [message:field_node:entity:url] to ready to publish state.</p>\r\n"
     format: filtered_html
 settings:
   'token options':
