@@ -68,6 +68,12 @@ $button-colors: (
   display: inline-block;
   text-decoration: none;
   text-align: center;
+  font-weight: 700;
+  text-decoration: unset;
+  a {
+    font-weight: 700;
+    text-decoration: unset;
+  }
 }
 
 // Button color variations
@@ -238,10 +244,64 @@ $button-colors: (
     top: 60px;
   }
 }
+
 #searchDropdownButton {
   @include button-medium;
   @include button-round-corners;
   position: absolute;
   top: 20px;
   right: 0;
+}
+
+.flag-cart {
+  @include button-base;
+  @include button-medium;
+  @include button-round-corners;
+  @include button-no-color;
+  border: 2px solid clr(background-section);
+  &::after {
+      @include icons;
+      content: "\EA0D";
+  }
+  &.action-unflag {
+    &::after {
+        @include icons;
+        content: "\EA0E";
+    }
+  }
+  a {
+    text-decoration: none;
+  }
+}
+
+.flag-lists {
+  @include button-base;
+  @include button-medium;
+  @include button-round-corners;
+  @include button-no-color;
+  border: 2px solid clr(background-section);
+  &::after {
+      @include icons;
+      content: "\EA0D";
+  }
+  &.action-unflag {
+    &::after {
+        @include icons;
+        content: "\EA0E";
+    }
+  }
+  a {
+    text-decoration: none;
+  }
+}
+
+#block-hel-tpm-customer-view-link,
+#block-hel-print-internal-guide {
+  a {
+    @include button-base;
+    @include button-medium;
+    @include button-round-corners;
+    @include button-no-color;
+    border: 2px solid clr(background-section);
+  }
 }

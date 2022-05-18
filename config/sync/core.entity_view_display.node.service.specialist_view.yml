@@ -1,0 +1,153 @@
+uuid: 6e535b0c-78c3-40fd-b976-872445d9da91
+langcode: fi
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.specialist_view
+    - field.field.node.service.field_accessibility
+    - field.field.node.service.field_client_consent
+    - field.field.node.service.field_client_consent_description
+    - field.field.node.service.field_contact_info
+    - field.field.node.service.field_contact_info_internal
+    - field.field.node.service.field_description
+    - field.field.node.service.field_implementation_extra_info
+    - field.field.node.service.field_life_situations
+    - field.field.node.service.field_poma_applicable
+    - field.field.node.service.field_poma_applicable_descriptio
+    - field.field.node.service.field_requirements
+    - field.field.node.service.field_service_guidance_guide
+    - field.field.node.service.field_service_implement
+    - field.field.node.service.field_service_links_external
+    - field.field.node.service.field_service_links_internal
+    - field.field.node.service.field_service_location
+    - field.field.node.service.field_service_obligations
+    - field.field.node.service.field_service_price
+    - field.field.node.service.field_service_radioactivity
+    - field.field.node.service.field_service_set
+    - field.field.node.service.field_service_time_and_location
+    - field.field.node.service.field_tags
+    - field.field.node.service.field_target_group
+    - node.type.service
+  module:
+    - entity_reference_revisions
+    - link
+    - paragraphs
+    - user
+id: node.service.specialist_view
+targetEntityType: node
+bundle: service
+mode: specialist_view
+content:
+  field_client_consent:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_client_consent_description:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_contact_info_internal:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 9
+    region: content
+  field_poma_applicable:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_poma_applicable_descriptio:
+    type: paragraph_summary
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  field_service_guidance_guide:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_service_links_internal:
+    type: link
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 8
+    region: content
+  field_tags:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  flag_cart:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  flag_flag_list_template_1:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  flag_lists:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  content_moderation_control: true
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  field_accessibility: true
+  field_contact_info: true
+  field_description: true
+  field_implementation_extra_info: true
+  field_life_situations: true
+  field_requirements: true
+  field_service_implement: true
+  field_service_links_external: true
+  field_service_location: true
+  field_service_obligations: true
+  field_service_price: true
+  field_service_radioactivity: true
+  field_service_set: true
+  field_service_time_and_location: true
+  field_target_group: true
+  langcode: true
+  links: true
+  notifications_entity_view_1: true
+  search_api_excerpt: true

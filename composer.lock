@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d40113a18c800a2e6b5ee512eea13049",
+    "content-hash": "7a5cdbe0de1572b39620d43150bd2e5a",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5427,6 +5427,103 @@
             "support": {
                 "source": "https://git.drupalcode.org/project/variationcache",
                 "issues": "https://drupal.org/project/issues/variationcache"
+            }
+        },
+        {
+            "name": "drupal/view_mode_switch",
+            "version": "2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/view_mode_switch.git",
+                "reference": "2.0.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/view_mode_switch-2.0.2.zip",
+                "reference": "2.0.2",
+                "shasum": "0dd3f35e6bf15bc4439907836471392599a348cc"
+            },
+            "require": {
+                "drupal/core": "^9"
+            },
+            "require-dev": {
+                "drupal/diff": "^1.0",
+                "drupal/paragraphs": "^1.12"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "2.0.2",
+                    "datestamp": "1638893132",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "hctom",
+                    "homepage": "https://www.drupal.org/user/112790"
+                }
+            ],
+            "description": "Provides a field type that allows editors to switch view modes.",
+            "homepage": "https://drupal.org/project/view_mode_switch",
+            "support": {
+                "source": "https://git.drupalcode.org/project/view_mode_switch",
+                "issues": "https://drupal.org/project/view_mode_switch"
+            }
+        },
+        {
+            "name": "drupal/views_url_path_arguments",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/views_url_path_arguments.git",
+                "reference": "8.x-1.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/views_url_path_arguments-8.x-1.1.zip",
+                "reference": "8.x-1.1",
+                "shasum": "55f38957395ae8f35bcdbc44a0f12822e844c73e"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.1",
+                    "datestamp": "1586279325",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "heddn",
+                    "homepage": "https://www.drupal.org/user/1463982"
+                }
+            ],
+            "description": "Simple module to convert a view argument's entity id into its url path.",
+            "homepage": "https://www.drupal.org/project/views_url_path_arguments",
+            "keywords": [
+                "Drupal"
+            ],
+            "support": {
+                "source": "http://cgit.drupalcode.org/views_url_path_arguments",
+                "issues": "https://www.drupal.org/project/issues/views_url_path_arguments"
             }
         },
         {

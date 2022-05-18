@@ -1,3 +1,26 @@
+.service-page {
+  #block-system-main-block {
+    @include large {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .flag-lists {
+    margin-right: $space;
+    }
+    .flag-cart {
+      margin-left: auto;
+      margin-right: $space;
+    }
+    .service{
+      margin-top: $space;
+      @include large {
+        width: 100%;
+        margin-top: $space-double;
+      }
+    }
+  }
+}
+
 .service {
   background: clr(sidebar-color);
   border-radius: 16px;
@@ -9,7 +32,6 @@
    padding-right: 32px;
    padding-bottom: 37px;
   }
-
   .field {
     .field__label {
       margin-bottom: $space;

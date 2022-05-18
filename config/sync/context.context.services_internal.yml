@@ -1,0 +1,24 @@
+uuid: 9f19f399-103e-49a4-b215-01bda159e065
+langcode: fi
+status: true
+dependencies: {  }
+label: 'Services Internal'
+name: services_internal
+group: null
+description: ''
+requireAllConditions: false
+disabled: false
+conditions:
+  view_inclusion:
+    id: view_inclusion
+    negate: false
+    uuid: 3c2dacc2-272a-4fcd-938a-88b0f1558e6e
+    context_mapping: {  }
+    view_inclusion:
+      view-specialist_content-page_1: view-specialist_content-page_1
+reactions:
+  body_class:
+    id: body_class
+    body_class: service-page
+    saved: false
+weight: 0
