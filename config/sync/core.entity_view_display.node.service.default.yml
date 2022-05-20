@@ -18,13 +18,10 @@ dependencies:
     - field.field.node.service.field_service_implement
     - field.field.node.service.field_service_links_external
     - field.field.node.service.field_service_links_internal
-    - field.field.node.service.field_service_location
-    - field.field.node.service.field_service_obligations
     - field.field.node.service.field_service_price
     - field.field.node.service.field_service_radioactivity
     - field.field.node.service.field_service_set
     - field.field.node.service.field_service_time_and_location
-    - field.field.node.service.field_tags
     - field.field.node.service.field_target_group
     - node.type.service
   module:
@@ -89,15 +86,6 @@ content:
     third_party_settings: {  }
     weight: 13
     region: content
-  field_service_obligations:
-    type: entity_reference_revisions_entity_view
-    label: hidden
-    settings:
-      view_mode: default
-      link: ''
-    third_party_settings: {  }
-    weight: 11
-    region: content
   field_service_price:
     type: entity_reference_revisions_entity_view
     label: hidden
@@ -115,14 +103,6 @@ content:
       link: ''
     third_party_settings: {  }
     weight: 7
-    region: content
-  field_tags:
-    type: entity_reference_label
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 15
     region: content
   field_target_group:
     type: entity_reference_revisions_entity_view
@@ -172,7 +152,6 @@ hidden:
   field_poma_applicable_descriptio: true
   field_service_guidance_guide: true
   field_service_links_internal: true
-  field_service_location: true
   field_service_radioactivity: true
   field_service_set: true
   langcode: true
