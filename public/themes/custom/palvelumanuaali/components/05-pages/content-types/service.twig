@@ -1,12 +1,13 @@
 
 {{content.flag_cart}}
 {{content.flag_lists}}
+{{content.view_mode_switcher}}
 {% embed "@templates/with-content-sidebar.twig" with {
   content_base_class: service_base_class,
   main_content_id: main_content_id,
 } %}
 
-{% block content %} {{content|without('flag_cart','flag_lists')}}{% endblock %}
+{% block content %} {{content|without('flag_cart','flag_lists','view_mode_switcher')}}{% endblock %}
   {% block page_content %}
     {% if service__updated  %}
       {% include "@atoms/text/text/01-paragraph.twig" with {
