@@ -3,32 +3,18 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.contact_info.contact_info.field_contact_link
     - field.field.contact_info.contact_info.field_contact_name
     - field.field.contact_info.contact_info.field_contact_phone
     - field.field.contact_info.contact_info.field_contact_type
     - field.field.contact_info.contact_info.field_email
   module:
     - hel_tpm_contact_info
-    - link
     - telephone
 id: contact_info.contact_info.default
 targetEntityType: contact_info
 bundle: contact_info
 mode: default
 content:
-  field_contact_link:
-    type: link
-    label: above
-    settings:
-      trim_length: 80
-      url_only: false
-      url_plain: false
-      rel: ''
-      target: ''
-    third_party_settings: {  }
-    weight: 3
-    region: content
   field_contact_name:
     type: string
     label: above

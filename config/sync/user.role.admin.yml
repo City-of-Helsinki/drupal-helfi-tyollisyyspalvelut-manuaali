@@ -13,9 +13,7 @@ dependencies:
     - taxonomy.vocabulary.service_accessiblity
     - taxonomy.vocabulary.service_implementation_type
     - taxonomy.vocabulary.service_languages
-    - taxonomy.vocabulary.service_location
     - taxonomy.vocabulary.service_set
-    - taxonomy.vocabulary.service_tags
     - workflows.workflow.service_moderation
   module:
     - content_moderation
@@ -71,9 +69,7 @@ permissions:
   - 'create terms in service_accessiblity'
   - 'create terms in service_implementation_type'
   - 'create terms in service_languages'
-  - 'create terms in service_location'
   - 'create terms in service_set'
-  - 'create terms in service_tags'
   - 'delete all revisions'
   - 'delete contact info'
   - 'delete content translations'
@@ -85,9 +81,7 @@ permissions:
   - 'delete terms in service_accessiblity'
   - 'delete terms in service_implementation_type'
   - 'delete terms in service_languages'
-  - 'delete terms in service_location'
   - 'delete terms in service_set'
-  - 'delete terms in service_tags'
   - 'edit contact info'
   - 'edit field_contact_info_internal'
   - 'edit field_poma_applicable'
@@ -109,9 +103,7 @@ permissions:
   - 'edit terms in service_accessiblity'
   - 'edit terms in service_implementation_type'
   - 'edit terms in service_languages'
-  - 'edit terms in service_location'
   - 'edit terms in service_set'
-  - 'edit terms in service_tags'
   - 'revert all revisions'
   - 'translate any entity'
   - 'translate editable entities'
