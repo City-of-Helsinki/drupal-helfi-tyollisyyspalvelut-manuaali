@@ -3285,15 +3285,15 @@ display:
                   collapsible: false
                   is_secondary: true
               field_service_set:
-                plugin_id: bef_select2
+                plugin_id: default
                 advanced:
                   sort_options: false
                   rewrite:
-                    filter_rewrite_values: ''
+                    filter_rewrite_values: '- Kaikki -|Palveluryhmä'
                   collapsible: false
                   is_secondary: true
               field_life_situations:
-                plugin_id: bef_select2
+                plugin_id: default
                 advanced:
                   sort_options: false
                   rewrite:
@@ -3333,11 +3333,11 @@ display:
                   collapsible: false
                   is_secondary: true
               field_level:
-                plugin_id: bef_select2
+                plugin_id: default
                 advanced:
                   sort_options: false
                   rewrite:
-                    filter_rewrite_values: ''
+                    filter_rewrite_values: '- Kaikki -|Kielitaso'
                   collapsible: false
                   is_secondary: true
               field_accessibility:
@@ -3345,15 +3345,15 @@ display:
                 advanced:
                   sort_options: false
                   rewrite:
-                    filter_rewrite_values: ''
+                    filter_rewrite_values: '- Kaikki -|Saavutettavuus'
                   collapsible: false
                   is_secondary: true
               field_service_price:
-                plugin_id: bef_select2
+                plugin_id: default
                 advanced:
                   placeholder_text: ''
                   rewrite:
-                    filter_rewrite_values: ''
+                    filter_rewrite_values: '- Kaikki -|Maksuton'
                   collapsible: false
                   is_secondary: true
               moderation_state:
@@ -3802,7 +3802,7 @@ display:
             identifier: field_level
             required: false
             remember: false
-            multiple: true
+            multiple: false
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
@@ -3813,16 +3813,19 @@ display:
             reduce: false
           is_grouped: false
           group_info:
-            label: ''
-            description: ''
-            identifier: ''
+            label: 'Service time and location » Paragraph » Level'
+            description: null
+            identifier: field_level
             optional: true
             widget: select
             multiple: false
             remember: false
             default_group: All
             default_group_multiple: {  }
-            group_items: {  }
+            group_items:
+              1: {  }
+              2: {  }
+              3: {  }
           reduce_duplicates: false
           vid: language_level
           type: select
@@ -3935,6 +3938,13 @@ display:
                   min: ''
                   max: ''
                   value: ''
+              2:
+                title: Ei
+                operator: 'not empty'
+                value:
+                  min: ''
+                  max: ''
+                  value: ''
         moderation_state:
           id: moderation_state
           table: search_api_index_service_search_index
@@ -3995,7 +4005,6 @@ display:
         sorts: false
         filters: false
         filter_groups: false
-      use_ajax: true
       display_description: ''
       exposed_block: true
       display_extenders: {  }
