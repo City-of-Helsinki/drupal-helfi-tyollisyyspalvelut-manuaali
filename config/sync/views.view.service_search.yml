@@ -4,13 +4,20 @@ status: true
 dependencies:
   config:
     - search_api.index.service_search_index
+    - taxonomy.vocabulary.language_level
+    - taxonomy.vocabulary.life_situation
     - taxonomy.vocabulary.municipality
+    - taxonomy.vocabulary.service_accessiblity
     - taxonomy.vocabulary.service_implementation_type
     - taxonomy.vocabulary.service_languages
+    - taxonomy.vocabulary.service_set
+    - user.role.anonymous
+    - user.role.authenticated
   module:
     - better_exposed_filters
     - entity_print_views
     - search_api
+    - user
 id: service_search
 label: 'Service search'
 module: views
@@ -927,8 +934,16 @@ display:
                 collapsible_label: 'Sort options'
                 is_secondary: false
             filter:
-              field_municipality:
+              search_api_fulltext:
                 plugin_id: default
+                advanced:
+                  placeholder_text: ''
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+              field_municipality:
+                plugin_id: bef_select2
                 advanced:
                   sort_options: false
                   rewrite:
@@ -949,6 +964,60 @@ display:
                   sort_options: false
                   rewrite:
                     filter_rewrite_values: '- Kaikki -|Kieli'
+                  collapsible: false
+                  is_secondary: false
+              moderation_state:
+                plugin_id: default
+                advanced:
+                  placeholder_text: ''
+                  collapsible: false
+                  is_secondary: false
+              field_accessibility:
+                plugin_id: default
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+              field_life_situations:
+                plugin_id: default
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+              field_implementation_extra_info_1:
+                plugin_id: default
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+              field_service_price:
+                plugin_id: default
+                advanced:
+                  placeholder_text: ''
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+              field_level:
+                plugin_id: default
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+              field_age_groups:
+                plugin_id: default
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: false
       sorts:
@@ -977,6 +1046,19 @@ display:
           expose:
             label: Otsikko
             field_identifier: title
+          exposed: true
+        changed:
+          id: changed
+          table: search_api_index_service_search_index
+          field: changed
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api
+          order: DESC
+          expose:
+            label: 'Päivitetty viimeksi'
+            field_identifier: changed
           exposed: true
       filters:
         search_api_fulltext:
@@ -1232,7 +1314,7 @@ display:
             max: ''
             value: published
           group: 1
-          exposed: false
+          exposed: true
           expose:
             operator_id: moderation_state_op
             label: 'Moderation state'
@@ -1267,6 +1349,301 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
+        field_accessibility:
+          id: field_accessibility
+          table: search_api_index_service_search_index
+          field: field_accessibility
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_term
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_accessibility_op
+            label: Esteettömyys
+            description: ''
+            use_operator: false
+            operator: field_accessibility_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_accessibility
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: service_accessiblity
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        field_life_situations:
+          id: field_life_situations
+          table: search_api_index_service_search_index
+          field: field_life_situations
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_term
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_life_situations_op
+            label: Elämäntilanne
+            description: ''
+            use_operator: false
+            operator: field_life_situations_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_life_situations
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: life_situation
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        field_implementation_extra_info_1:
+          id: field_implementation_extra_info_1
+          table: search_api_index_service_search_index
+          field: field_implementation_extra_info_1
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_term
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_implementation_extra_info_1_op
+            label: 'Palvelun toteutustavan lisätieto'
+            description: ''
+            use_operator: false
+            operator: field_implementation_extra_info_1_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_implementation_extra_info_1
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: service_implementation_type
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        field_service_price:
+          id: field_service_price
+          table: search_api_index_service_search_index
+          field: field_service_price
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_numeric
+          operator: '='
+          value:
+            min: ''
+            max: ''
+            value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_service_price_op
+            label: 'Service price'
+            description: ''
+            use_operator: false
+            operator: field_service_price_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_service_price
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+            min_placeholder: ''
+            max_placeholder: ''
+            placeholder: ''
+          is_grouped: true
+          group_info:
+            label: 'Palvelu maksuton'
+            description: ''
+            identifier: field_service_price
+            optional: true
+            widget: select
+            multiple: true
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        field_level:
+          id: field_level
+          table: search_api_index_service_search_index
+          field: field_level
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_term
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_level_op
+            label: 'Service time and location » Paragraph » Level'
+            description: ''
+            use_operator: false
+            operator: field_level_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_level
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: language_level
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        field_age_groups:
+          id: field_age_groups
+          table: search_api_index_service_search_index
+          field: field_age_groups
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_options
+          operator: or
+          value:
+            all: all
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_age_groups_op
+            label: 'Target group » Paragraph » Kohderyhmän ikä'
+            description: ''
+            use_operator: false
+            operator: field_age_groups_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_age_groups
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
       filter_groups:
         operator: AND
         groups:
@@ -1341,28 +1718,84 @@ display:
                     filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: false
-              field_municipality:
-                plugin_id: default
+              field_service_set:
+                plugin_id: bef_select2
                 advanced:
                   sort_options: false
                   rewrite:
-                    filter_rewrite_values: '- Kaikki -|Kunta'
+                    filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: true
               field_implementation_extra_info:
-                plugin_id: default
+                plugin_id: bef_select2
                 advanced:
                   sort_options: false
                   rewrite:
                     filter_rewrite_values: '- Kaikki -|Toteutustapa'
                   collapsible: false
                   is_secondary: true
+              field_life_situations:
+                plugin_id: bef_select2
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: true
+              field_age_groups:
+                plugin_id: bef_select2
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: true
+              field_municipality:
+                plugin_id: bef_select2
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: '- Kaikki -|Kunta'
+                  collapsible: false
+                  is_secondary: true
+              field_accessibility:
+                plugin_id: bef_select2
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: true
               field_language_1:
-                plugin_id: default
+                plugin_id: bef_select2
                 advanced:
                   sort_options: false
                   rewrite:
                     filter_rewrite_values: '- Kaikki -|Kieli'
+                  collapsible: false
+                  is_secondary: true
+              field_level:
+                plugin_id: bef_select2
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: true
+              field_implementation_extra_info_1:
+                plugin_id: bef_select2
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: true
+              field_service_price:
+                plugin_id: bef_select2
+                advanced:
+                  placeholder_text: ''
+                  rewrite:
+                    filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: true
       sorts:
@@ -1482,10 +1915,10 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-        field_municipality:
-          id: field_municipality
+        field_service_set:
+          id: field_service_set
           table: search_api_index_service_search_index
-          field: field_municipality
+          field: field_service_set
           relationship: none
           group_type: group
           admin_label: ''
@@ -1495,14 +1928,14 @@ display:
           group: 1
           exposed: true
           expose:
-            operator_id: field_municipality_op
+            operator_id: field_service_set_op
             label: ''
             description: ''
             use_operator: false
-            operator: field_municipality_op
+            operator: field_service_set_op
             operator_limit_selection: false
             operator_list: {  }
-            identifier: field_municipality
+            identifier: field_service_set
             required: false
             remember: false
             multiple: false
@@ -1527,7 +1960,7 @@ display:
             default_group_multiple: {  }
             group_items: {  }
           reduce_duplicates: false
-          vid: municipality
+          vid: service_set
           type: select
           hierarchy: false
           limit: true
@@ -1582,6 +2015,201 @@ display:
           hierarchy: false
           limit: true
           error_message: true
+        field_life_situations:
+          id: field_life_situations
+          table: search_api_index_service_search_index
+          field: field_life_situations
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_term
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_life_situations_op
+            label: ''
+            description: ''
+            use_operator: false
+            operator: field_life_situations_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_life_situations
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: life_situation
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        field_age_groups:
+          id: field_age_groups
+          table: search_api_index_service_search_index
+          field: field_age_groups
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_options
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_age_groups_op
+            label: ''
+            description: ''
+            use_operator: false
+            operator: field_age_groups_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_age_groups
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+        field_municipality:
+          id: field_municipality
+          table: search_api_index_service_search_index
+          field: field_municipality
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_term
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_municipality_op
+            label: ''
+            description: ''
+            use_operator: false
+            operator: field_municipality_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_municipality
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: municipality
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        field_accessibility:
+          id: field_accessibility
+          table: search_api_index_service_search_index
+          field: field_accessibility
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_term
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_accessibility_op
+            label: ''
+            description: ''
+            use_operator: false
+            operator: field_accessibility_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_accessibility
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: service_accessiblity
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
         field_language_1:
           id: field_language_1
           table: search_api_index_service_search_index
@@ -1632,33 +2260,30 @@ display:
           hierarchy: false
           limit: true
           error_message: true
-        moderation_state:
-          id: moderation_state
+        field_level:
+          id: field_level
           table: search_api_index_service_search_index
-          field: moderation_state
+          field: field_level
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: search_api_string
-          operator: '='
-          value:
-            min: ''
-            max: ''
-            value: published
+          plugin_id: search_api_term
+          operator: or
+          value: {  }
           group: 1
-          exposed: false
+          exposed: true
           expose:
-            operator_id: moderation_state_op
-            label: 'Moderation state'
+            operator_id: field_level_op
+            label: ''
             description: ''
             use_operator: false
-            operator: moderation_state_op
+            operator: field_level_op
             operator_limit_selection: false
             operator_list: {  }
-            identifier: moderation_state
+            identifier: field_level
             required: false
             remember: false
-            multiple: false
+            multiple: true
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
@@ -1666,9 +2291,7 @@ display:
               admin: '0'
               editor: '0'
               specialist: '0'
-            min_placeholder: ''
-            max_placeholder: ''
-            placeholder: ''
+            reduce: false
           is_grouped: false
           group_info:
             label: ''
@@ -1681,6 +2304,113 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
+          reduce_duplicates: false
+          vid: language_level
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        field_implementation_extra_info_1:
+          id: field_implementation_extra_info_1
+          table: search_api_index_service_search_index
+          field: field_implementation_extra_info_1
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_term
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_implementation_extra_info_1_op
+            label: ''
+            description: ''
+            use_operator: false
+            operator: field_implementation_extra_info_1_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_implementation_extra_info_1
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: service_implementation_type
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        field_service_price:
+          id: field_service_price
+          table: search_api_index_service_search_index
+          field: field_service_price
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_numeric
+          operator: '='
+          value:
+            min: ''
+            max: ''
+            value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_service_price_op
+            label: 'Service price'
+            description: null
+            use_operator: false
+            operator: field_service_price_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_service_price
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            min_placeholder: null
+            max_placeholder: null
+            placeholder: null
+          is_grouped: true
+          group_info:
+            label: ''
+            description: ''
+            identifier: field_service_price
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items:
+              1:
+                title: Kyllä
+                operator: empty
+                value:
+                  min: ''
+                  max: ''
+                  value: ''
       filter_groups:
         operator: AND
         groups:
@@ -1733,15 +2463,39 @@ display:
               secondary_open: false
             filter:
               search_api_fulltext:
-                plugin_id: default
+                plugin_id: bef_select2
                 advanced:
                   placeholder_text: ''
                   rewrite:
                     filter_rewrite_values: ''
                   collapsible: false
-                  is_secondary: false
+                  is_secondary: true
+              field_service_set:
+                plugin_id: bef_select2
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: true
+              field_life_situations:
+                plugin_id: bef_select2
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: true
+              field_age_groups:
+                plugin_id: bef_select2
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: true
               field_municipality:
-                plugin_id: default
+                plugin_id: bef_select2
                 advanced:
                   sort_options: false
                   rewrite:
@@ -1749,21 +2503,58 @@ display:
                   collapsible: false
                   is_secondary: true
               field_implementation_extra_info:
-                plugin_id: default
+                plugin_id: bef_select2
                 advanced:
                   sort_options: false
                   rewrite:
                     filter_rewrite_values: '- Kaikki -|Toteutustapa'
                   collapsible: false
                   is_secondary: true
+              field_implementation_extra_info_1:
+                plugin_id: bef_select2
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: true
               field_language_1:
-                plugin_id: default
+                plugin_id: bef_select2
                 advanced:
                   sort_options: false
                   rewrite:
                     filter_rewrite_values: '- Kaikki -|Kieli'
                   collapsible: false
                   is_secondary: true
+              field_level:
+                plugin_id: bef_select2
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: true
+              field_accessibility:
+                plugin_id: bef_select2
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: true
+              field_service_price:
+                plugin_id: bef_select2
+                advanced:
+                  placeholder_text: ''
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: true
+      access:
+        type: role
+        options:
+          role:
+            anonymous: anonymous
       sorts:
         search_api_relevance:
           id: search_api_relevance
@@ -1841,6 +2632,56 @@ display:
           parse_mode: terms
           min_length: 2
           fields: {  }
+        field_service_set:
+          id: field_service_set
+          table: search_api_index_service_search_index
+          field: field_service_set
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_term
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_service_set_op
+            label: Palveluryhmä
+            description: ''
+            use_operator: false
+            operator: field_service_set_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_service_set
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: service_set
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
         search_api_language:
           id: search_api_language
           table: search_api_index_service_search_index
@@ -1881,6 +2722,102 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
+        field_life_situations:
+          id: field_life_situations
+          table: search_api_index_service_search_index
+          field: field_life_situations
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_term
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_life_situations_op
+            label: Elämäntilanne
+            description: ''
+            use_operator: false
+            operator: field_life_situations_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_life_situations
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: life_situation
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        field_age_groups:
+          id: field_age_groups
+          table: search_api_index_service_search_index
+          field: field_age_groups
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_options
+          operator: or
+          value:
+            all: all
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_age_groups_op
+            label: Ikä
+            description: ''
+            use_operator: false
+            operator: field_age_groups_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_age_groups
+            required: false
+            remember: false
+            multiple: true
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
         field_municipality:
           id: field_municipality
           table: search_api_index_service_search_index
@@ -1981,6 +2918,56 @@ display:
           hierarchy: false
           limit: true
           error_message: true
+        field_implementation_extra_info_1:
+          id: field_implementation_extra_info_1
+          table: search_api_index_service_search_index
+          field: field_implementation_extra_info_1
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_term
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_implementation_extra_info_1_op
+            label: Toteutustapa
+            description: ''
+            use_operator: false
+            operator: field_implementation_extra_info_1_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_implementation_extra_info_1
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: service_implementation_type
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
         field_language_1:
           id: field_language_1
           table: search_api_index_service_search_index
@@ -2031,6 +3018,162 @@ display:
           hierarchy: false
           limit: true
           error_message: true
+        field_level:
+          id: field_level
+          table: search_api_index_service_search_index
+          field: field_level
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_term
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_level_op
+            label: Kielitaso
+            description: ''
+            use_operator: false
+            operator: field_level_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_level
+            required: false
+            remember: false
+            multiple: true
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: language_level
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        field_accessibility:
+          id: field_accessibility
+          table: search_api_index_service_search_index
+          field: field_accessibility
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_term
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_accessibility_op
+            label: Esteettömyys
+            description: ''
+            use_operator: false
+            operator: field_accessibility_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_accessibility
+            required: false
+            remember: false
+            multiple: true
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: service_accessiblity
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        field_service_price:
+          id: field_service_price
+          table: search_api_index_service_search_index
+          field: field_service_price
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_numeric
+          operator: 'not empty'
+          value:
+            min: ''
+            max: ''
+            value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_service_price_op
+            label: Maksuton
+            description: ''
+            use_operator: false
+            operator: field_service_price_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_service_price
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+            min_placeholder: ''
+            max_placeholder: ''
+            placeholder: ''
+          is_grouped: true
+          group_info:
+            label: 'Palvelu maksuton'
+            description: ''
+            identifier: field_service_price
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items:
+              1:
+                title: Kyllä
+                operator: empty
+                value:
+                  min: ''
+                  max: ''
+                  value: ''
         moderation_state:
           id: moderation_state
           table: search_api_index_service_search_index
@@ -2085,6 +3228,7 @@ display:
         groups:
           1: AND
       defaults:
+        access: false
         exposed_form: false
         sorts: false
         filters: false
@@ -2100,5 +3244,769 @@ display:
         - url.query_args
         - user
         - 'user.node_grants:view'
+        - user.roles
+      tags:
+        - 'config:search_api.index.service_search_index'
+  special_search_filters:
+    id: special_search_filters
+    display_title: 'Specialist Search page filters'
+    display_plugin: block
+    position: 1
+    display_options:
+      exposed_form:
+        type: bef
+        options:
+          submit_button: Hae
+          reset_button: false
+          reset_button_label: Tyhjennä
+          exposed_sorts_label: Järjestä
+          expose_sort_order: false
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+          text_input_required: 'Valitse mikä tahansa suodatin ja klikkaa Suorita nähdäksesi tulokset'
+          text_input_required_format: filtered_html
+          bef:
+            general:
+              autosubmit: true
+              autosubmit_exclude_textfield: false
+              autosubmit_textfield_delay: 500
+              autosubmit_hide: true
+              input_required: false
+              allow_secondary: true
+              secondary_label: Lisävaihtoehdot
+              secondary_open: false
+            filter:
+              search_api_fulltext:
+                plugin_id: default
+                advanced:
+                  placeholder_text: ''
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: true
+              field_service_set:
+                plugin_id: bef_select2
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: true
+              field_life_situations:
+                plugin_id: bef_select2
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: '- Kaikki -|Elämäntilanne'
+                  collapsible: false
+                  is_secondary: true
+              field_age_groups:
+                plugin_id: bef_select2
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: '- Kaikki -|Ikä'
+                  collapsible: false
+                  is_secondary: true
+              field_municipality:
+                plugin_id: bef_select2
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: '- Kaikki -|Kunta'
+                  collapsible: false
+                  is_secondary: true
+              field_implementation_extra_info_1:
+                plugin_id: bef_select2
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: '- Kaikki -|Toteutustapa'
+                  collapsible: false
+                  is_secondary: true
+              field_language_1:
+                plugin_id: bef_select2
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: '- Kaikki -|Kieli'
+                  collapsible: false
+                  is_secondary: true
+              field_level:
+                plugin_id: bef_select2
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: true
+              field_accessibility:
+                plugin_id: bef_select2
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: true
+              field_service_price:
+                plugin_id: bef_select2
+                advanced:
+                  placeholder_text: ''
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: true
+              moderation_state:
+                plugin_id: default
+                advanced:
+                  placeholder_text: ''
+                  collapsible: false
+                  is_secondary: true
+      access:
+        type: role
+        options:
+          role:
+            authenticated: authenticated
+      sorts:
+        search_api_relevance:
+          id: search_api_relevance
+          table: search_api_index_service_search_index
+          field: search_api_relevance
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api
+          order: DESC
+          expose:
+            label: Osuvuus
+            field_identifier: search_api_relevance
+          exposed: false
+        title:
+          id: title
+          table: search_api_index_service_search_index
+          field: title
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api
+          order: DESC
+          expose:
+            label: Otsikko
+            field_identifier: title
+          exposed: false
+      filters:
+        search_api_fulltext:
+          id: search_api_fulltext
+          table: search_api_index_service_search_index
+          field: search_api_fulltext
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_fulltext
+          operator: or
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: search_api_fulltext_op
+            label: Haku
+            description: ''
+            use_operator: false
+            operator: search_api_fulltext_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: search_api_fulltext
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+            expose_fields: false
+            placeholder: ''
+            searched_fields_id: search_api_fulltext_searched_fields
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          parse_mode: terms
+          min_length: 2
+          fields: {  }
+        field_service_set:
+          id: field_service_set
+          table: search_api_index_service_search_index
+          field: field_service_set
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_term
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_service_set_op
+            label: Palveluryhmä
+            description: ''
+            use_operator: false
+            operator: field_service_set_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_service_set
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: service_set
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        search_api_language:
+          id: search_api_language
+          table: search_api_index_service_search_index
+          field: search_api_language
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_language
+          operator: in
+          value:
+            '***LANGUAGE_language_interface***': '***LANGUAGE_language_interface***'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        field_life_situations:
+          id: field_life_situations
+          table: search_api_index_service_search_index
+          field: field_life_situations
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_term
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_life_situations_op
+            label: Elämäntilanne
+            description: ''
+            use_operator: false
+            operator: field_life_situations_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_life_situations
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: life_situation
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        field_age_groups:
+          id: field_age_groups
+          table: search_api_index_service_search_index
+          field: field_age_groups
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_options
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_age_groups_op
+            label: Ikä
+            description: ''
+            use_operator: false
+            operator: field_age_groups_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_age_groups
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+        field_municipality:
+          id: field_municipality
+          table: search_api_index_service_search_index
+          field: field_municipality
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_term
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_municipality_op
+            label: 'Kohderyhmän kunta'
+            description: ''
+            use_operator: false
+            operator: field_municipality_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_municipality
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: municipality
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        field_implementation_extra_info_1:
+          id: field_implementation_extra_info_1
+          table: search_api_index_service_search_index
+          field: field_implementation_extra_info_1
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_term
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_implementation_extra_info_1_op
+            label: Toteutustapa
+            description: ''
+            use_operator: false
+            operator: field_implementation_extra_info_1_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_implementation_extra_info_1
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: service_implementation_type
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        field_language_1:
+          id: field_language_1
+          table: search_api_index_service_search_index
+          field: field_language_1
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_term
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_language_1_op
+            label: 'Palvelun kieli'
+            description: ''
+            use_operator: false
+            operator: field_language_1_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_language_1
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: service_languages
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        field_level:
+          id: field_level
+          table: search_api_index_service_search_index
+          field: field_level
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_term
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_level_op
+            label: Kielitaso
+            description: ''
+            use_operator: false
+            operator: field_level_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_level
+            required: false
+            remember: false
+            multiple: true
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: language_level
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        field_accessibility:
+          id: field_accessibility
+          table: search_api_index_service_search_index
+          field: field_accessibility
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_term
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_accessibility_op
+            label: Esteettömyys
+            description: ''
+            use_operator: false
+            operator: field_accessibility_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_accessibility
+            required: false
+            remember: false
+            multiple: true
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: service_accessiblity
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        field_service_price:
+          id: field_service_price
+          table: search_api_index_service_search_index
+          field: field_service_price
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_numeric
+          operator: 'not empty'
+          value:
+            min: ''
+            max: ''
+            value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_service_price_op
+            label: Maksuton
+            description: ''
+            use_operator: false
+            operator: field_service_price_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_service_price
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+            min_placeholder: ''
+            max_placeholder: ''
+            placeholder: ''
+          is_grouped: true
+          group_info:
+            label: 'Palvelu maksuton'
+            description: ''
+            identifier: field_service_price
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items:
+              1:
+                title: Kyllä
+                operator: empty
+                value:
+                  min: ''
+                  max: ''
+                  value: ''
+        moderation_state:
+          id: moderation_state
+          table: search_api_index_service_search_index
+          field: moderation_state
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_string
+          operator: '='
+          value:
+            min: ''
+            max: ''
+            value: published
+          group: 1
+          exposed: true
+          expose:
+            operator_id: moderation_state_op
+            label: 'Palvelun tila'
+            description: ''
+            use_operator: false
+            operator: moderation_state_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: moderation_state
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+            min_placeholder: ''
+            max_placeholder: ''
+            placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+      defaults:
+        access: false
+        use_ajax: false
+        exposed_form: false
+        sorts: false
+        filters: false
+        filter_groups: false
+      use_ajax: true
+      display_description: ''
+      exposed_block: true
+      display_extenders: {  }
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+        - user
+        - 'user.node_grants:view'
+        - user.roles
       tags:
         - 'config:search_api.index.service_search_index'
