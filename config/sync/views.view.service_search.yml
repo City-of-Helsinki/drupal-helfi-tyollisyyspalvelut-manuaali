@@ -1047,6 +1047,19 @@ display:
             label: Otsikko
             field_identifier: title
           exposed: true
+        changed:
+          id: changed
+          table: search_api_index_service_search_index
+          field: changed
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api
+          order: DESC
+          expose:
+            label: 'Päivitetty viimeksi'
+            field_identifier: changed
+          exposed: true
       filters:
         search_api_fulltext:
           id: search_api_fulltext
