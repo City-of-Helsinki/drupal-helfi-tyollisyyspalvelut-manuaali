@@ -1,0 +1,47 @@
+uuid: 0d34bcc6-24c8-4c75-a956-f6d1dd568e68
+langcode: fi
+status: true
+dependencies:
+  module:
+    - context
+    - user
+  theme:
+    - palvelumanuaali
+id: kirjautuminen
+theme: palvelumanuaali
+region: header
+weight: 1
+provider: null
+plugin: user_login_block
+settings:
+  id: user_login_block
+  label: Kirjautuminen
+  label_display: '0'
+  provider: user
+visibility:
+  context_all:
+    id: context_all
+    negate: null
+    values: ''
+  user_status:
+    id: user_status
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    user_status:
+      viewing_profile: '0'
+      logged_viewing_profile: '0'
+      own_page_true: '0'
+      field_value: '0'
+    user_fields: uid
+  context:
+    id: context
+    negate: null
+    values: ''
+  user_role:
+    id: user_role
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      anonymous: anonymous

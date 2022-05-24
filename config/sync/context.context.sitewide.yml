@@ -4,13 +4,11 @@ status: true
 dependencies:
   config:
     - system.menu.additional-links-menu
-    - system.menu.favorites
     - system.menu.footer
     - system.menu.main
     - views.view.notifications
   module:
     - hel_tpm_url_shortener
-    - language
     - system
     - views
 label: Sitewide
@@ -137,39 +135,6 @@ reactions:
         views_label: ''
         items_per_page: none
         third_party_settings: {  }
-      77c3a3fa-ef0d-401c-a4cc-34c323cff7a5:
-        uuid: 77c3a3fa-ef0d-401c-a4cc-34c323cff7a5
-        id: 'language_block:language_interface'
-        label: 'Kielen vaihtaja'
-        provider: language
-        label_display: '0'
-        region: header
-        weight: '0'
-        custom_id: language_block_language_interface
-        theme: palvelumanuaali
-        css_class: ''
-        unique: 0
-        context_id: sitewide
-        context_mapping: {  }
-        third_party_settings: {  }
-      814b94d8-2b91-43bd-8418-bfacc4adcf9c:
-        uuid: 814b94d8-2b91-43bd-8418-bfacc4adcf9c
-        id: 'system_menu_block:favorites'
-        label: Suosikit
-        provider: system
-        label_display: '0'
-        region: header
-        weight: '0'
-        custom_id: system_menu_block_favorites
-        theme: palvelumanuaali
-        css_class: ''
-        unique: 0
-        context_id: sitewide
-        context_mapping: {  }
-        level: '1'
-        depth: '0'
-        expand_all_items: 0
-        third_party_settings: {  }
       fab0c882-93d9-4c41-81e9-7fa189c3d2d0:
         uuid: fab0c882-93d9-4c41-81e9-7fa189c3d2d0
         id: local_actions_block
@@ -185,6 +150,6 @@ reactions:
         context_id: sitewide
         context_mapping: {  }
         third_party_settings: {  }
-    include_default_blocks: 0
+    include_default_blocks: 1
     saved: false
 weight: 0
