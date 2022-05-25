@@ -1,11 +1,14 @@
 
-{{content.flag_cart}}
-{{content.flag_lists}}
-{{content.view_mode_switcher}}
-{% embed "@templates/with-content-sidebar.twig" with {
-  content_base_class: service_base_class,
-  main_content_id: main_content_id,
-} %}
+<div class='link-wrapper'>
+  {{content.flag_cart}}
+  {{content.flag_lists}}
+  <div id="view-mode-switcher-link"> {{content.view_mode_switcher}}</div>
+  </div>
+  {% embed "@templates/with-content-sidebar.twig" with {
+    content_base_class: service_base_class,
+    main_content_id: main_content_id,
+  } %}
+
 
 {% block content %} {{content|without('flag_cart','flag_lists','view_mode_switcher')}}{% endblock %}
   {% block page_content %}
