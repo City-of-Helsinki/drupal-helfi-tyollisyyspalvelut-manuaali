@@ -24,7 +24,9 @@ dependencies:
     - field.field.node.service.field_service_time_and_location
     - field.field.node.service.field_target_group
     - node.type.service
+    - workflows.workflow.service_moderation
   module:
+    - content_moderation
     - field_group
     - paragraphs
     - path
@@ -53,7 +55,6 @@ third_party_settings:
     group_specialist:
       children:
         - field_service_guidance_guide
-        - field_service_obligations
         - field_contact_info_internal
         - field_service_links_internal
         - group_consent
@@ -149,7 +150,6 @@ third_party_settings:
         - field_service_set
         - field_description
         - field_implementation_extra_info
-        - field_service_location
         - field_service_implement
         - field_service_price
         - field_target_group
@@ -195,7 +195,6 @@ third_party_settings:
         required_fields: true
     group_add:
       children:
-        - field_tags
         - langcode
         - moderation_state
         - field_life_situations
@@ -487,12 +486,10 @@ content:
       include_locked: true
     third_party_settings: {  }
   moderation_state:
-    type: string_textfield
+    type: moderation_state_default
     weight: 3
     region: content
-    settings:
-      size: 60
-      placeholder: ''
+    settings: {  }
     third_party_settings: {  }
   path:
     type: path
