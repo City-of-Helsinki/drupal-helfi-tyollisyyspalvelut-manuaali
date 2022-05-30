@@ -20,6 +20,7 @@
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-around;
+    align-items: center;
     padding: 0;
     z-index: 200;
     background-color: clr(background);
@@ -49,17 +50,23 @@
 
 .header {
   #block-views-exposed-filter-block-service-search-special-search-filters,
+  #block-nakyvakaavakeservice-searchspecial-search-filters,
+  #block-nakyvakaavakeservice-searchsearch-page-filters,
   #block-views-exposed-filter-block-service-search-block-1 {
     display: none;
+    > h2 {
+      @extend .visually-hidden;
+    }
     @include large {
+      width: 100%;
       display: block;
     }
   }
 }
 
-#block-system-menu-block-favorites,
-#block-language-block-language-interface,
-#loginlinkButtonLink {
+#block-suosikit,
+#block-kielenvaihtaja,
+#block-kirjautuminen {
   display: flex;
   align-items: start;
   flex-direction: column;
@@ -71,9 +78,9 @@
   }
 }
 
-#block-system-menu-block-favorites {
+#block-suosikit {
   @include large {
-    top: 50px;
+    //top: 50px;
   }
   .content {
     @include large {
@@ -88,7 +95,15 @@
   }
 }
 
-#block-system-menu-block-account {
+#block-kielenvaihtaja {
+  .content {
+    @include large {
+      display: flex;
+    }
+  }
+}
+
+#block-kayttajavalikko {
   display: flex;
   align-items: start;
   #accountMenuButton {
@@ -168,7 +183,7 @@
   }
 }
 
-#block-user-login-block {
+#block-kirjautuminen {
   @include large {
     position: absolute;
     right: 50px;

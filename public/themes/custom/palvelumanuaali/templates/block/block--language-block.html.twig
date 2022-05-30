@@ -34,7 +34,8 @@
   ]
 %}
 {% if lang_count > 1 %}
-  <nav{{ attributes.addClass(classes) }}>
+  <nav{{ bem('','','',classes) }}>
+  <div class='content'>
     {% include "@atoms/images/icons/_icon.twig" with {
       icon_base_class: 'icon',
       icon_name: 'world',
@@ -46,5 +47,6 @@
     {% block content %}
       {{ content }}
     {% endblock %}
+    </div>
   </nav>
 {% endif %}

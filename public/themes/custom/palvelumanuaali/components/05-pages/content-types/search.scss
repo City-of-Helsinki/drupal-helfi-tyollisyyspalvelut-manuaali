@@ -245,7 +245,6 @@
       padding-bottom: 28px;
       @extend .col-md-12;
 
-
       .form-item {
         margin-bottom: 0;
       }
@@ -267,15 +266,18 @@
 // header override for search page
 .search-page {
   .header {
-    #block-system-menu-block-favorites,
-    #block-language-block-language-interface,
-    #loginlinkButtonLink,
-    #block-system-menu-block-account  {
-      position: absolute;
+    #block-suosikit,
+    #block-kielenvaihtaja,
+    #block-kirjautuminen,
+    #block-kayttajavalikko  {
+      @include large {
+        position: absolute;
+      }
     }
-      #block-system-menu-block-favorites {left:50px;}
-      #block-language-block-language-interface {left:100px;}
-      #loginlinkButtonLink, #block-system-menu-block-account  {right:50px;}
+      #block-suosikit {@include large {left:50px; top: 50px; z-index: 100;}}
+      #block-kielenvaihtaja {@include large {left:180px; top:50px; z-index: 100;}}
+      #block-kirjautuminen {@include large {right:50px; top: 33px; z-index: 100;}}
+      #block-kayttajavalikko {@include large {right:50px; top: 25px; z-index: 100;}}
   }
   .main-sidebar {
     background-color: unset;
