@@ -1,0 +1,56 @@
+uuid: cee12ede-90b2-4372-9890-364f05136d02
+langcode: fi
+status: true
+dependencies:
+  config:
+    - views.view.service_search
+  module:
+    - context
+    - system
+    - user
+    - views
+  theme:
+    - palvelumanuaali
+id: nakyvakaavakeservice_searchspecial_search_filters
+theme: palvelumanuaali
+region: header
+weight: -1
+provider: null
+plugin: 'views_exposed_filter_block:service_search-special_search_filters'
+settings:
+  id: 'views_exposed_filter_block:service_search-special_search_filters'
+  label: ''
+  label_display: '0'
+  provider: views
+  views_label: ''
+visibility:
+  context_all:
+    id: context_all
+    negate: null
+    values: ''
+  user_status:
+    id: user_status
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    user_status:
+      viewing_profile: '0'
+      logged_viewing_profile: '0'
+      own_page_true: '0'
+      field_value: '0'
+    user_fields: uid
+  context:
+    id: context
+    negate: null
+    values: ''
+  request_path:
+    id: request_path
+    negate: false
+    pages: "/search\r\n/search/*\r\n/haku\r\n/haku/*"
+  user_role:
+    id: user_role
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      authenticated: authenticated

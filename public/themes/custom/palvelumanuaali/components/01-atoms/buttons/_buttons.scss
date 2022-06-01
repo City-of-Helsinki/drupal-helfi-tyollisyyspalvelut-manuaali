@@ -227,8 +227,10 @@ $button-colors: (
 #languageSwitcherButton {
   padding: 0;
   font-size: 9px;
+  margin-left: 10px;
   @include large {
-    padding: .375rem .75rem;
+    margin-left: unset;
+    padding: 0 .75rem .375rem .75rem;
     font-size: 15px;
   }
 }
