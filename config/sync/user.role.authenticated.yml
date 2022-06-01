@@ -8,6 +8,7 @@ dependencies:
     - content_moderation
     - content_translation
     - entity_print_views
+    - flag
     - flag_lists
     - hel_tpm_contact_info
     - media
@@ -22,10 +23,11 @@ weight: 1
 is_admin: false
 permissions:
   - 'access content'
-  - 'add flag lists'
   - 'edit own flag lists'
   - 'entity print views access'
+  - 'flag cart'
   - 'translate editable entities'
+  - 'unflag cart'
   - 'use search_api_autocomplete for service_search'
   - 'use service_moderation transition archived'
   - 'use service_moderation transition create_new_draft'
@@ -35,6 +37,6 @@ permissions:
   - 'use service_moderation transition ready_to_publish_to_draft'
   - 'use service_moderation transition temporarily_archived'
   - 'view contact info'
+  - 'view flag lists'
   - 'view media'
-  - 'view own flag lists'
   - 'view own unpublished content'

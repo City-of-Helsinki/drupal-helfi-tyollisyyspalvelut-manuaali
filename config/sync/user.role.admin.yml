@@ -25,6 +25,8 @@ dependencies:
     - content_translation
     - field_permissions
     - filter
+    - flag
+    - flag_lists
     - group
     - hel_tpm_contact_info
     - locale
@@ -46,6 +48,7 @@ permissions:
   - 'access administration pages'
   - 'access contact info overview'
   - 'access content overview'
+  - 'access flagging collection overview'
   - 'access group overview'
   - 'access media overview'
   - 'access shortcuts'
@@ -53,6 +56,7 @@ permissions:
   - 'access taxonomy overview'
   - 'access toolbar'
   - 'access user profiles'
+  - 'add flag lists'
   - 'administer media'
   - 'administer menu'
   - 'administer nodes'
@@ -121,9 +125,11 @@ permissions:
   - 'edit terms in service_implementation_type'
   - 'edit terms in service_languages'
   - 'edit terms in service_set'
+  - 'flag lists'
   - 'revert all revisions'
   - 'translate editable entities'
   - 'translate interface'
+  - 'unflag lists'
   - 'update content translations'
   - 'use admin toolbar search'
   - 'use service_moderation transition publish'
