@@ -290,7 +290,7 @@ display:
     display_plugin: block
     position: 1
     display_options:
-      title: 'New services'
+      title: 'Uusimmat julkaisut:'
       style:
         type: default
         options:
@@ -324,6 +324,7 @@ display:
     display_plugin: block
     position: 2
     display_options:
+      title: 'Viimeksi päivitetyt:'
       fields:
         title:
           id: title
@@ -582,6 +583,7 @@ display:
           relationship: none
           view_mode: view_card_lift
       defaults:
+        title: false
         style: false
         row: false
         fields: false
@@ -604,7 +606,7 @@ display:
     display_plugin: block
     position: 3
     display_options:
-      title: 'Popular services'
+      title: 'Katsotuimmat palvelut: '
       sorts:
         field_service_radioactivity_energy:
           id: field_service_radioactivity_energy
