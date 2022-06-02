@@ -49,6 +49,18 @@
     margin-top: 10px;
   }
 }
-.form-actions {
-  
+
+.page-controls {
+  margin-bottom: 1rem;
+  .btn-next {
+    float: right;
+  }
+  .button {
+    @include button-base;
+    @include button-medium;
+    @include button-round-corners;
+    @include button-no-color;
+    border: 2px solid clr(background-section);
+    padding-right: $space-double;
+  }
 }

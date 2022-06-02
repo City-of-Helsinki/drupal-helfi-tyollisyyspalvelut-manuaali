@@ -52,12 +52,13 @@ function hel_tpm_editorial_form_node_service_edit_form_alter(&$form, &$form_stat
   ];
   $actions = $form['actions'];
   $weight = 999;
+  $form['actions']['#weight'] = $weight--;
   $form['controls'] = [
     '#type' => 'actions',
     '#weight' => $weight,
+    '#attributes' => ['class' => ['page-controls']]
   ];
 
-  $form['actions']['#weight'] = $weight++;
 
   $controls = ['next', 'prev'];
 
@@ -66,6 +67,10 @@ function hel_tpm_editorial_form_node_service_edit_form_alter(&$form, &$form_stat
     if (empty($actions[$ctrl])) {
       continue;
     }
+
+    $actions[$ctrl]['#attributes']['class'][] = 'button';
+    $actions[$ctrl]['#attributes']['class'][] = sprintf('btn-%s', $ctrl);
+
     $actions[$ctrl]['#validate'][0] = "_hel_tpm_editorial_multipage_form_validate";
     if (!empty($actions[$ctrl]['#submit'])) {
       $actions[$ctrl]['#submit'][0] = '_hel_tpm_editorial_multipage_form_submit';
