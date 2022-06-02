@@ -1,0 +1,54 @@
+.node-service-edit-form-pager {
+  .multistep-nav-wrapper {
+    width: 100%;
+  }
+  .multistep-nav {
+    position: relative;
+    position: relative;
+    display: inline-block;
+    width: 20%;
+    hr {
+      height: 2px;
+      color: $blue20-1;
+      position: absolute;
+      top: 0;
+      width: 100%;
+      right: -50%;
+      z-index: -9;
+      opacity: 1;
+    }
+  }
+  .nav-icon {
+    margin: auto;
+    font-weight: bold;
+    height: 32px;
+    width: 32px;
+    background-color: white;
+    border-radius: 19px;
+    text-align: center;
+    line-height: 32px;
+    color: $blue100;
+  }
+  .active, .done {
+    .nav-icon {
+      background-color: $blue100;
+      color: white;
+    }
+  }
+  .done {
+    .nav-icon path {
+      fill: white !important;
+    }
+    hr {
+      color: $blue100;
+    }
+  }
+  .label {
+    color: $blue150;
+    text-align: center;
+    margin-top: 10px;
+  }
+}
+.form-actions {
+  
+}

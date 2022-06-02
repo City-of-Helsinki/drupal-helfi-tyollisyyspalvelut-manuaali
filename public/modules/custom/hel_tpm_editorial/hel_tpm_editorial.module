@@ -1,5 +1,6 @@
 <?php
 
+use Drupal\Core\Entity\EntityFormInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 
 function hel_tpm_editorial_entity_base_field_info_alter(&$fields, EntityTypeInterface $entity_type) {
@@ -49,6 +50,131 @@ function hel_tpm_editorial_form_node_service_edit_form_alter(&$form, &$form_stat
     '#theme' => 'multistep_navigation',
     '#navigation' => _hel_tpm_editorial_node_pager_navigation($form, $form_state)
   ];
+  $actions = $form['actions'];
+  $weight = 999;
+  $form['controls'] = [
+    '#type' => 'actions',
+    '#weight' => $weight,
+  ];
+
+  $form['actions']['#weight'] = $weight++;
+
+  $controls = ['next', 'prev'];
+
+  $form['#submit'][0] = '_hel_tpm_editorial_multipage_form_submit';
+  foreach ($controls as $ctrl) {
+    if (empty($actions[$ctrl])) {
+      continue;
+    }
+    $actions[$ctrl]['#validate'][0] = "_hel_tpm_editorial_multipage_form_validate";
+    if (!empty($actions[$ctrl]['#submit'])) {
+      $actions[$ctrl]['#submit'][0] = '_hel_tpm_editorial_multipage_form_submit';
+    }
+    $form['controls'][$ctrl] = $actions[$ctrl];
+    unset($form['actions'][$ctrl]);
+  }
+}
+
+/**
+ * Validate function for ajaxified form.
+ *
+ * In AJAX this is only submitted when the final submit button is clicked,
+ * but in the non-javascript situation, it is submitted with every
+ * button click.
+ */
+function _hel_tpm_editorial_multipage_form_validate($form, &$form_state) {
+  $entity_form = $form_state->getFormObject();
+
+  if ($entity_form instanceof EntityFormInterface) {
+    $entity_updated = $entity_form->buildEntity($form, $form_state);
+    $entity_form->setEntity($entity_updated);
+  }
+
+  $parents_reverse = [];
+
+  if (!is_null($form_state->getTriggeringElement())) {
+    $triggeringelement = $form_state->getTriggeringElement();
+    $parents_reverse = array_reverse($triggeringelement['#array_parents']);
+  }
+
+  // Increment or decrement the step as needed. Recover values if they exist.
+  if (!isset($parents_reverse[1])) {
+    $parents_reverse[1] = '';
+  }
+  if ($parents_reverse[1] == 'controls' && ($parents_reverse[0] == 'next' || $parents_reverse[0] == 'skip')) {
+    $increment = $form_state->get('field_group_ajaxified_multipage_step');
+    $increment++;
+    $form_state->set('field_group_ajaxified_multipage_step', $increment);
+  }
+  if (!is_null($form_state->getValues())) {
+    $values = $form_state->getValues();
+    $allval = [];
+    if (!is_null($form_state->get('all'))) {
+      $allval = $form_state->get('all');
+    }
+    foreach ($values as $key => $value) {
+      if (!empty($value) && is_string($value) && strpos($key, 'form') === FALSE) {
+        $allval['values'][$key] = $value;
+      }
+    }
+    $form_state->set('all', $allval);
+  }
+  // If they're done, submit.
+  if ($parents_reverse[1] == 'controls' && ($parents_reverse[0] == 'submit')) {
+    $form_state->setRebuild(FALSE);
+    return;
+  }
+
+  // Otherwise, we still have work to do.
+  $form_state->setRebuild(TRUE);
+}
+
+/**
+ * Submit function for ajaxified form.
+ *
+ * In AJAX this is only submitted when the final submit button is clicked,
+ * but in the non-javascript situation, it is submitted with every
+ * button click.
+ */
+function _hel_tpm_editorial_multipage_form_submit($form, &$form_state) {
+  $parents_reverse = [];
+  if (!is_null($form_state->getTriggeringElement())) {
+    $triggeringelement = $form_state->getTriggeringElement();
+    $parents_reverse = array_reverse($triggeringelement['#array_parents']);
+  }
+  if ($parents_reverse[1] == 'controls' && ($parents_reverse[0] == 'prev')) {
+
+    /*
+     * @todo : when going back to previous step , clear the current step values
+     * to start fresh
+     *         when returning back. should be configurable
+     */
+    $decrement = $form_state->get('field_group_ajaxified_multipage_step');
+    $decrement--;
+    $form_state->set('field_group_ajaxified_multipage_step', $decrement);
+  }
+
+  // If they're done, submit.
+  if ($parents_reverse[1] == 'controls' && ($parents_reverse[0] == 'submit')) {
+    if (!is_null($form_state->getValues())) {
+      $values = $form_state->getValues();
+      $allval = [];
+      if (!is_null($form_state->get('all'))) {
+        $allval = $form_state->get('all');
+      }
+      foreach ($values as $key => $value) {
+        if (!empty($value) && is_string($value) && strpos($key, 'form') === FALSE) {
+          $allval['values'][$key] = $value;
+        }
+      }
+      $form_state->set('all', $allval);
+    }
+    $form_state->setRebuild(FALSE);
+    return;
+  }
+
+  // Otherwise, we still have work to do.
+  $form_state->setRebuild(TRUE);
 }
 
 /**
