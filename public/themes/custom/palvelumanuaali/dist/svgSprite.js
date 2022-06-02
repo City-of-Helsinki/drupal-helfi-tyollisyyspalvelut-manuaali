@@ -117,7 +117,7 @@ var map = {
 	"./icons/content-icons/uEA0A-preferences 2.svg": "./images/icons/content-icons/uEA0A-preferences 2.svg",
 	"./icons/content-icons/uEA0B-chain.svg": "./images/icons/content-icons/uEA0B-chain.svg",
 	"./icons/content-icons/uEA0C-external.svg": "./images/icons/content-icons/uEA0C-external.svg",
-	"./icons/content-icons/uEA0D-viewmode.svg": "./images/icons/content-icons/uEA0D-viewmode.svg",
+	"./icons/content-icons/uEA0D-check.svg": "./images/icons/content-icons/uEA0D-check.svg",
 	"./icons/content-icons/uEA0E-heart.svg": "./images/icons/content-icons/uEA0E-heart.svg",
 	"./icons/content-icons/uEA0F-heart-minus.svg": "./images/icons/content-icons/uEA0F-heart-minus.svg",
 	"./icons/door.svg": "./images/icons/door.svg",
@@ -628,19 +628,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./images/icons/content-icons/uEA0D-viewmode.svg":
-/*!*******************************************************!*\
-  !*** ./images/icons/content-icons/uEA0D-viewmode.svg ***!
-  \*******************************************************/
+/***/ "./images/icons/content-icons/uEA0D-check.svg":
+/*!****************************************************!*\
+  !*** ./images/icons/content-icons/uEA0D-check.svg ***!
+  \****************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
-      id: "uEA0D-viewmode-usage",
-      viewBox: "0 0 24 24",
-      url: __webpack_require__.p + "../dist/icons.svg#uEA0D-viewmode",
+      id: "uEA0D-check-usage",
+      viewBox: "0 0 16 12",
+      url: __webpack_require__.p + "../dist/icons.svg#uEA0D-check",
       toString: function () {
         return this.url;
       }
