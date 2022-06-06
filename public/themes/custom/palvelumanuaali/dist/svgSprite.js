@@ -119,6 +119,8 @@ var map = {
 	"./icons/content-icons/uEA0B-chain.svg": "./images/icons/content-icons/uEA0B-chain.svg",
 	"./icons/content-icons/uEA0C-external.svg": "./images/icons/content-icons/uEA0C-external.svg",
 	"./icons/content-icons/uEA0D-check.svg": "./images/icons/content-icons/uEA0D-check.svg",
+	"./icons/content-icons/uEA0E-arrow-left.svg": "./images/icons/content-icons/uEA0E-arrow-left.svg",
+	"./icons/content-icons/uEA0F-arrow-right.svg": "./images/icons/content-icons/uEA0F-arrow-right.svg",
 	"./icons/door.svg": "./images/icons/door.svg",
 	"./icons/exit.svg": "./images/icons/exit.svg",
 	"./icons/external.svg": "./images/icons/external.svg",
@@ -658,6 +660,46 @@ __webpack_require__.r(__webpack_exports__);
       id: "uEA0D-check-usage",
       viewBox: "0 0 16 12",
       url: __webpack_require__.p + "../dist/icons.svg#uEA0D-check",
+      toString: function () {
+        return this.url;
+      }
+    });
+
+/***/ }),
+
+/***/ "./images/icons/content-icons/uEA0E-arrow-left.svg":
+/*!*********************************************************!*\
+  !*** ./images/icons/content-icons/uEA0E-arrow-left.svg ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+      id: "uEA0E-arrow-left-usage",
+      viewBox: "0 0 24 24",
+      url: __webpack_require__.p + "../dist/icons.svg#uEA0E-arrow-left",
+      toString: function () {
+        return this.url;
+      }
+    });
+
+/***/ }),
+
+/***/ "./images/icons/content-icons/uEA0F-arrow-right.svg":
+/*!**********************************************************!*\
+  !*** ./images/icons/content-icons/uEA0F-arrow-right.svg ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+      id: "uEA0F-arrow-right-usage",
+      viewBox: "0 0 24 24",
+      url: __webpack_require__.p + "../dist/icons.svg#uEA0F-arrow-right",
       toString: function () {
         return this.url;
       }

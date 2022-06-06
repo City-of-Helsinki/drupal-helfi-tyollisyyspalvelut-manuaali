@@ -1,0 +1,84 @@
+.node-service-edit-form {
+  @extend .offset-lg-1;
+  @extend .col-lg-10;
+  display: grid;
+  grid-template-columns: 7fr 3fr;
+  grid-column-gap: 24px;
+
+  .h2 {
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  
+
+  .node-service-edit-form-pager  {
+    grid-column: 1/3;
+    grid-row: 1;
+
+    .multistep-nav-wrapper {
+      width: 50%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  >.form-fieldset {
+    grid-column: 1/2;
+    grid-row:2;
+    background-color: clr(text-inverse);
+    max-width: unset;
+
+    @include large {
+      padding: 48px 56px;
+      border-radius: 8px;
+
+    }
+
+    .fieldgroup,
+    .form-item {
+      max-width: unset;
+    }
+
+    >.form-wrapper {
+      padding: 24px 24px 32px 24px;
+      background-color: clr(background-dropdown);
+      border: 2px solid clr(background-border);
+      border-radius: 8px;
+      margin-bottom: $space;
+    }
+  }
+
+  .edit-advanced-content-wrapper {
+    grid-column: 2/3;
+    grid-row:2;
+  }
+
+  .edit-advanced-form {
+    background-color: clr(text-inverse);
+    border-radius: 8px;
+    @include large {
+      padding: 40px 32px 48px 32px;
+    }
+    .vertical-tabs {
+      border: 0;
+      margin: 0;
+      li {
+        background-color: unset;
+        border: 0;
+      }
+      .vertical-tabs__menu {
+        float: unset;
+        width: 100%;
+        margin: 0;
+        border: 0;
+      }
+    }
+  }
+
+  .page-controls {
+    grid-column: 1/2;
+    grid-row:3;
+  }
+}

@@ -1,4 +1,7 @@
 .node-service-edit-form-pager {
+  margin-top: 32px;
+  margin-bottom: 44px;
+  
   .multistep-nav-wrapper {
     width: 100%;
   }
@@ -52,9 +55,6 @@
 
 .page-controls {
   margin-bottom: 1rem;
-  .btn-next {
-    float: right;
-  }
   .button {
     @include button-base;
     @include button-medium;
@@ -62,5 +62,26 @@
     @include button-no-color;
     border: 2px solid clr(background-section);
     padding-right: $space-double;
+    width: unset;
+    font-size: 15px;
+    line-height: 24px;
+    font-weight: 700;
+  }
+  .btn-prev {
+    &::before {
+      @include icons;
+      content: "\EA0E";
+      margin-right: $space;
+    }
+  }
+  .btn-next {
+    float: right;
+    @include button-color-blue;
+    &::after {
+      @include icons;
+      content: "\EA0F";
+      color: clr(text-inverse);
+      margin-left: $space;
+    }
   }
 }
