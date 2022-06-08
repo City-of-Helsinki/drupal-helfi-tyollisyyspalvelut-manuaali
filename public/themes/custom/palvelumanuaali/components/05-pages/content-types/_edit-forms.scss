@@ -1,3 +1,19 @@
+.form-background--white {
+  background-color: clr(text-inverse);
+}
+
+.form-background--regular-padding {
+  @include large {
+    padding: 48px 56px;
+    border-radius: 8px;
+  }
+}
+
+#content-view-tabs,
+.field-group-tabs-wrapper .horizontal-tabs {
+  border: 0;
+}
+
 .node-service-edit-form {
   @extend .offset-lg-1;
   @extend .col-lg-10;
@@ -5,22 +21,92 @@
   grid-template-columns: 7fr 3fr;
   grid-column-gap: 24px;
 
+  .horizontal-tabs {
+
+    .horizontal-tabs-list {
+        border-bottom: 2px solid clr(form-border);
+        padding-left: 16px;
+        background-color: unset;
+    }
+
+    .horizontal-tab-button {
+      border-radius: 8px 8px 0px 0px;
+      background-color: clr(background);
+      color: clr(background-section);
+      border: unset;
+
+      &.selected {
+        border-bottom: unset;
+        background-color: clr(background-section);
+
+        a {
+          color: clr(text-inverse);
+          padding: 12px 48px;
+        }
+      }
+
+      a {
+        padding: 12px 48px;
+      }
+    }
+  }
+
   .h2 {
     font-weight: 600;
     font-size: 24px;
     line-height: 32px;
   }
 
-  
+  .field--name-field-service-time-and-location {
+
+    .button {
+      @include button-medium;
+      @include button-no-color;
+      @include button-round-corners;
+      border: 2px solid $blue100;
+    }
+
+  }
+
+  .field-add-more-submit,
+  .paragraphs-icon-button {
+    @include button-medium;
+    @include button-no-color;
+    @include button-round-corners;
+    border: 2px solid $blue100;
+  }
+
+  .field-group-fieldset
+
+  .date-recur-modular-alpha-widget {
+    display: flex;
+    flex-direction: column;
+
+    .dates {
+      order: 1;
+    }
+
+    .container-inline {
+      order: 2;
+    }
+
+  }
+
+  .form-item__dropdown {
+    border: 0;
+  }
 
   .node-service-edit-form-pager  {
     grid-column: 1/3;
     grid-row: 1;
 
     .multistep-nav-wrapper {
-      width: 50%;
+
+      width: 65%;
       margin-left: auto;
       margin-right: auto;
+      display: flex;
+      flex-wrap: wrap;
     }
   }
 
@@ -39,14 +125,47 @@
     .fieldgroup,
     .form-item {
       max-width: unset;
+      margin-left: 0;
     }
 
     >.form-wrapper {
-      padding: 24px 24px 32px 24px;
-      background-color: clr(background-dropdown);
-      border: 2px solid clr(background-border);
-      border-radius: 8px;
       margin-bottom: $space;
+
+      legend {
+        @extend .form-item__label;
+        font-size: 1rem;
+      }
+
+      > .h2 {
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 32px;
+      }
+
+    }
+  }
+
+  #edit-group-basic-information {
+    background-color: unset;
+    max-width: unset;
+
+
+    @include large {
+      padding: 0;
+      border-radius: unset;
+    }
+    // hide basic information header as it is shown under another fieldset
+    > .h2 {
+      display: none;
+    }
+
+    .form-fieldset {
+      margin-left: 0;
+    }
+
+    div &.select--white-rounded {
+      margin-left: 0;
+      background-color: unset;
     }
   }
 
