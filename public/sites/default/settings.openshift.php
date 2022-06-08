@@ -27,3 +27,8 @@ if ($ssl_ca_path = getenv('AZURE_SQL_SSL_CA_PATH')) {
 
   $config['system.performance']['cache']['page']['max_age'] = 86400;
 }
+
+$elasticsearch_env_name = 'ELASTICSEARCH_TYOLLISYYSPTV_' . strtoupper(getenv('REDIS_PREFIX')) . '_ES_INTERNAL_HTTP_PORT';
+if (getenv($elasticsearch_env_name)) {
+  $config['elasticsearch_connector.cluster.search']['url'] = str_replace('tcp:', 'http:', getenv($elasticsearch_env_name));
+}
