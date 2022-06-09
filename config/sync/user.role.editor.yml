@@ -9,6 +9,7 @@ dependencies:
     - node.type.service_location
     - workflows.workflow.service_moderation
   module:
+    - admin_toolbar_search
     - content_moderation
     - content_translation
     - field_permissions
@@ -20,14 +21,17 @@ dependencies:
     - node
     - paragraphs
     - paragraphs_type_permissions
+    - shortcut
     - system
+    - toolbar
 id: editor
 label: Sisällöntuottaja
 weight: 4
 is_admin: null
 permissions:
   - 'access content'
-  - 'access flagging collection overview'
+  - 'access shortcuts'
+  - 'access toolbar'
   - 'add flag lists'
   - 'create contact info'
   - 'create content translations'
@@ -41,6 +45,7 @@ permissions:
   - 'create media'
   - 'create paragraph content contact_information'
   - 'create paragraph content content'
+  - 'create paragraph content content_list_lift_header_icon'
   - 'create paragraph content service_language'
   - 'create paragraph content service_price'
   - 'create paragraph content service_time_and_place'
@@ -48,9 +53,6 @@ permissions:
   - 'create service content'
   - 'create service_location content'
   - 'delete content translations'
-  - 'delete paragraph content service_language'
-  - 'delete paragraph content service_price'
-  - 'delete paragraph content service_time_and_place'
   - 'edit any image media'
   - 'edit any service content'
   - 'edit any service_location content'
@@ -70,23 +72,19 @@ permissions:
   - 'edit own flag lists'
   - 'edit own service content'
   - 'edit own service_location content'
-  - 'flag cart'
   - 'flag lists'
-  - 'translate any entity'
   - 'translate editable entities'
-  - 'translate paragraph'
-  - 'translate service node'
-  - 'translate service_location node'
-  - 'unflag cart'
   - 'unflag lists'
   - 'update any media'
   - 'update content translations'
   - 'update paragraph content contact_information'
   - 'update paragraph content content'
+  - 'update paragraph content content_list_lift_header_icon'
   - 'update paragraph content service_language'
   - 'update paragraph content service_price'
   - 'update paragraph content service_time_and_place'
   - 'update paragraph content target_group'
+  - 'use admin toolbar search'
   - 'use service_moderation transition archived'
   - 'use service_moderation transition create_new_draft'
   - 'use service_moderation transition outdated'
@@ -95,7 +93,6 @@ permissions:
   - 'use service_moderation transition ready_to_publish_to_draft'
   - 'use service_moderation transition temporarily_archived'
   - 'use text format filtered_html'
-  - 'view any unpublished content'
   - 'view contact info'
   - 'view field_contact_info_internal'
   - 'view field_poma_applicable'
@@ -115,9 +112,11 @@ permissions:
   - 'view own unpublished media'
   - 'view paragraph content contact_information'
   - 'view paragraph content content'
+  - 'view paragraph content content_list_lift_header_icon'
   - 'view paragraph content service_language'
   - 'view paragraph content service_price'
   - 'view paragraph content service_time_and_place'
   - 'view paragraph content target_group'
   - 'view service revisions'
+  - 'view the administration theme'
   - 'view unpublished paragraphs'

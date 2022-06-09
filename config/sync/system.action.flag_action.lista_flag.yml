@@ -1,0 +1,15 @@
+uuid: 27e7ca36-4bbc-4abf-b307-fc1503b961eb
+langcode: fi
+status: true
+dependencies:
+  config:
+    - flag.flag.lista
+  module:
+    - flag
+id: flag_action.lista_flag
+label: 'Flag this item'
+type: node
+plugin: 'flag_action:lista_flag'
+configuration:
+  flag_id: lista
+  flag_action: flag
