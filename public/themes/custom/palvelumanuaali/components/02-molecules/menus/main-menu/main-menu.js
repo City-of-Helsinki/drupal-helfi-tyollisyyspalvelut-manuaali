@@ -9,9 +9,10 @@ Drupal.behaviors.mainMenu = {
       // Mobile Menu Show/Hide.
       toggleExpand.addEventListener('click', (e) => {
         toggleExpand.classList.toggle('toggle-expand--open');
-        additionalMenu.classList.toggle('additional-links-menu-nav--open');
+        if (additionalMenu) {
+          additionalMenu.classList.toggle('additional-links-menu-nav--open');
+        }
         menu.classList.toggle('main-nav--open');
-        console.log(additionalMenu);
         e.preventDefault();
       });
 
