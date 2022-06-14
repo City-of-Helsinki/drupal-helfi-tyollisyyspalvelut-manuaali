@@ -118,10 +118,13 @@ var map = {
 	"./icons/content-icons/uEA0B-chain.svg": "./images/icons/content-icons/uEA0B-chain.svg",
 	"./icons/content-icons/uEA0C-external.svg": "./images/icons/content-icons/uEA0C-external.svg",
 	"./icons/content-icons/uEA0D-check.svg": "./images/icons/content-icons/uEA0D-check.svg",
+	"./icons/content-icons/uEA0E-heart.svg": "./images/icons/content-icons/uEA0E-heart.svg",
+	"./icons/content-icons/uEA0F-heart-minus.svg": "./images/icons/content-icons/uEA0F-heart-minus.svg",
 	"./icons/door.svg": "./images/icons/door.svg",
 	"./icons/exit.svg": "./images/icons/exit.svg",
 	"./icons/external.svg": "./images/icons/external.svg",
 	"./icons/facebook.svg": "./images/icons/facebook.svg",
+	"./icons/heart-minus.svg": "./images/icons/heart-minus.svg",
 	"./icons/heart.svg": "./images/icons/heart.svg",
 	"./icons/instagram.svg": "./images/icons/instagram.svg",
 	"./icons/lock 2.svg": "./images/icons/lock 2.svg",
@@ -136,6 +139,7 @@ var map = {
 	"./icons/profile-blue.svg": "./images/icons/profile-blue.svg",
 	"./icons/speech-bubble.svg": "./images/icons/speech-bubble.svg",
 	"./icons/twitter.svg": "./images/icons/twitter.svg",
+	"./icons/viewmode.svg": "./images/icons/viewmode.svg",
 	"./icons/warning.svg": "./images/icons/warning.svg",
 	"./icons/world.svg": "./images/icons/world.svg",
 	"./logo.svg": "./images/logo.svg",
@@ -644,6 +648,46 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./images/icons/content-icons/uEA0E-heart.svg":
+/*!****************************************************!*\
+  !*** ./images/icons/content-icons/uEA0E-heart.svg ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+      id: "uEA0E-heart-usage",
+      viewBox: "0 0 24 22",
+      url: __webpack_require__.p + "../dist/icons.svg#uEA0E-heart",
+      toString: function () {
+        return this.url;
+      }
+    });
+
+/***/ }),
+
+/***/ "./images/icons/content-icons/uEA0F-heart-minus.svg":
+/*!**********************************************************!*\
+  !*** ./images/icons/content-icons/uEA0F-heart-minus.svg ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+      id: "uEA0F-heart-minus-usage",
+      viewBox: "0 0 24 22",
+      url: __webpack_require__.p + "../dist/icons.svg#uEA0F-heart-minus",
+      toString: function () {
+        return this.url;
+      }
+    });
+
+/***/ }),
+
 /***/ "./images/icons/door.svg":
 /*!*******************************!*\
   !*** ./images/icons/door.svg ***!
@@ -717,6 +761,26 @@ __webpack_require__.r(__webpack_exports__);
       id: "facebook-usage",
       viewBox: "0 0 264 512",
       url: __webpack_require__.p + "../dist/icons.svg#facebook",
+      toString: function () {
+        return this.url;
+      }
+    });
+
+/***/ }),
+
+/***/ "./images/icons/heart-minus.svg":
+/*!**************************************!*\
+  !*** ./images/icons/heart-minus.svg ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+      id: "heart-minus-usage",
+      viewBox: "0 0 24 22",
+      url: __webpack_require__.p + "../dist/icons.svg#heart-minus",
       toString: function () {
         return this.url;
       }
@@ -997,6 +1061,26 @@ __webpack_require__.r(__webpack_exports__);
       id: "twitter-usage",
       viewBox: "0 0 26 28",
       url: __webpack_require__.p + "../dist/icons.svg#twitter",
+      toString: function () {
+        return this.url;
+      }
+    });
+
+/***/ }),
+
+/***/ "./images/icons/viewmode.svg":
+/*!***********************************!*\
+  !*** ./images/icons/viewmode.svg ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+      id: "viewmode-usage",
+      viewBox: "0 0 24 24",
+      url: __webpack_require__.p + "../dist/icons.svg#viewmode",
       toString: function () {
         return this.url;
       }
