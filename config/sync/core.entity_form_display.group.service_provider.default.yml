@@ -3,6 +3,7 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - field.field.group.service_provider.field_group_prioritise_in_search
     - field.field.group.service_provider.field_responsible_authority
     - group.type.service_provider
   module:
@@ -12,6 +13,13 @@ targetEntityType: group
 bundle: service_provider
 mode: default
 content:
+  field_group_prioritise_in_search:
+    type: boolean_checkbox
+    weight: 122
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
   field_responsible_authority:
     type: entity_reference_autocomplete
     weight: 121

@@ -1,0 +1,5 @@
+services:
+  search_boost_subscriber:
+    class: \Drupal\hel_tpm_search\EventSubscriber\SearchBoostSubscriber
+    tags:
+      - { name: 'event_subscriber' }
