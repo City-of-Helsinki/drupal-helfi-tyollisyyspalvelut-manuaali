@@ -9,7 +9,6 @@
   {% set main_modifiers = main_modifiers|merge(['with-sidebar']) %}
   {% set main_content_modifiers = main_content_modifiers|merge(['with-sidebar']) %}
 
-
 <div {{ bem('layout-container', layout_modifiers) }}>
   {% block page_sidebar %}{% endblock %}
   <div {{  bem('right-column') }}>
@@ -18,7 +17,7 @@
     {% endblock %}
     {% block page_system %}
     {% endblock %}
-    <div {{ bem(main_base_class, main_modifiers, main_blockname) }}>
+    <div {{ bem(main_base_class, main_modifiers, main_blockname, main_extra_class) }}>
       <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
       <main role="main" {{ bem(main_content_base_class, main_content_modifiers, main_content_blockname) }}>
         {% block page_content %}{% endblock %}
