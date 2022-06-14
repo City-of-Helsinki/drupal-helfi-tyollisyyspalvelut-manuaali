@@ -61,7 +61,7 @@ function _hel_tpm_general_create_switcher_links(EntityInterface $entity, $view_m
     return NULL;
   }
 
-  $route = $routes[$view_mode];
+  $route = !empty($routes[$view_mode]) ? $routes[$view_mode] : $routes['full'];
 
   return Link::createFromRoute(t($route['label']), $route['route'], ['node' => $entity->id()]);
 
