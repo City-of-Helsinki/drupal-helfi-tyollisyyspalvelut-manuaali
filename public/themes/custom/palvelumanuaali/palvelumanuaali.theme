@@ -132,7 +132,7 @@ function palvelumanuaali_theme_suggestions_views_view_field(array $variables) {
 }
 
 function palvelumanuaali_theme_suggestions_input_alter(&$suggestions, array $variables) {
-    if ($variables['theme_hook_original'] === "input__submit") {
+    if ($variables['theme_hook_original'] === "input__submit" && !empty($variables['element']['#form_id'])) {
       $suggestions[] = 'input__' . $variables['element']['#type'] . '__' . $variables['element']['#form_id'];
     }
 }
