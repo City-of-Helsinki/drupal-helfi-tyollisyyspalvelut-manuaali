@@ -123,6 +123,7 @@ var map = {
 	"./icons/external.svg": "./images/icons/external.svg",
 	"./icons/facebook.svg": "./images/icons/facebook.svg",
 	"./icons/heart.svg": "./images/icons/heart.svg",
+	"./icons/info.svg": "./images/icons/info.svg",
 	"./icons/instagram.svg": "./images/icons/instagram.svg",
 	"./icons/lock 2.svg": "./images/icons/lock 2.svg",
 	"./icons/logo-small.svg": "./images/icons/logo-small.svg",
@@ -737,6 +738,26 @@ __webpack_require__.r(__webpack_exports__);
       id: "heart-usage",
       viewBox: "0 0 24 22",
       url: __webpack_require__.p + "../dist/icons.svg#heart",
+      toString: function () {
+        return this.url;
+      }
+    });
+
+/***/ }),
+
+/***/ "./images/icons/info.svg":
+/*!*******************************!*\
+  !*** ./images/icons/info.svg ***!
+  \*******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+      id: "info-usage",
+      viewBox: "0 0 32 32",
+      url: __webpack_require__.p + "../dist/icons.svg#info",
       toString: function () {
         return this.url;
       }
