@@ -241,11 +241,14 @@
     #block-kielenvaihtaja,
     #block-kirjautuminen,
     #block-kayttajavalikko  {
-      position: absolute;
+      @include large {
+        position: absolute;
+      }
     }
-      #block-suosikit {left:50px;}
-      #block-kielenvaihtaja {left:100px;}
-      #block-kirjautuminen, #block-kayttajavalikko  {right:50px;}
+    #block-suosikit {@include large {left:50px; top: 50px; z-index: 100;}}
+    #block-kielenvaihtaja {@include large {left:180px; top:50px; z-index: 100;}}
+    #block-kirjautuminen {@include large {right:50px; top: 33px; z-index: 100;}}
+    #block-kayttajavalikko {@include large {right:50px; top: 25px; z-index: 100;}}
   }
   .view-header {
     margin-bottom: $space;

@@ -8,7 +8,9 @@ Drupal.behaviors.mainMenu = {
 
       // Mobile Menu Show/Hide.
       toggleExpand.addEventListener('click', (e) => {
+        if (toggleExpand) {
         toggleExpand.classList.toggle('toggle-expand--open');
+        }
         if (additionalMenu) {
           additionalMenu.classList.toggle('additional-links-menu-nav--open');
         }
@@ -21,9 +23,12 @@ Drupal.behaviors.mainMenu = {
         item.addEventListener('click', (e) => {
           const menuItem = e.currentTarget;
           const subMenu = menuItem.nextElementSibling;
-
-          menuItem.classList.toggle('expand-sub--open');
-          subMenu.classList.toggle('main-menu--sub-open');
+          if (menuItem) {
+              menuItem.classList.toggle('expand-sub--open');
+          }
+          if (subMenu) {
+            subMenu.classList.toggle('main-menu--sub-open');
+          }
         });
       });
     }
