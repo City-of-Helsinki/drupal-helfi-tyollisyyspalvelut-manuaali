@@ -3,6 +3,7 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.node.view_card_lift
     - node.type.service
     - workflows.workflow.service_moderation
   module:
@@ -289,9 +290,23 @@ display:
     display_plugin: block
     position: 1
     display_options:
-      title: 'New services'
+      title: 'Uusimmat julkaisut:'
+      style:
+        type: default
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+          uses_fields: false
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: view_card_lift
       defaults:
         title: false
+        style: false
+        row: false
       display_description: ''
       display_extenders: {  }
     cache_metadata:
@@ -309,6 +324,7 @@ display:
     display_plugin: block
     position: 2
     display_options:
+      title: 'Viimeksi päivitetyt:'
       fields:
         title:
           id: title
@@ -554,7 +570,22 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
+      style:
+        type: default
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+          uses_fields: false
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: view_card_lift
       defaults:
+        title: false
+        style: false
+        row: false
         fields: false
         filters: true
         filter_groups: true
@@ -575,7 +606,7 @@ display:
     display_plugin: block
     position: 3
     display_options:
-      title: 'Popular services'
+      title: 'Katsotuimmat palvelut: '
       sorts:
         field_service_radioactivity_energy:
           id: field_service_radioactivity_energy
@@ -606,8 +637,22 @@ display:
             field_identifier: ''
           exposed: false
           granularity: second
+      style:
+        type: default
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+          uses_fields: false
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: view_card_lift
       defaults:
         title: false
+        style: false
+        row: false
         sorts: false
       display_description: ''
       display_extenders: {  }
