@@ -2,7 +2,10 @@ uuid: 0c71919f-4386-41d2-8a74-f935d580476f
 langcode: fi
 status: true
 dependencies:
+  config:
+    - workflows.workflow.service_moderation
   module:
+    - content_moderation
     - node
     - user
   enforced:
@@ -590,8 +593,11 @@ display:
           plugin_id: moderation_state_filter
           operator: in
           value:
-            editorial-draft: editorial-draft
-            editorial-archived: editorial-archived
+            service_moderation-draft: service_moderation-draft
+            service_moderation-ready_to_publish: service_moderation-ready_to_publish
+            service_moderation-on_hold: service_moderation-on_hold
+            service_moderation-outdated: service_moderation-outdated
+            service_moderation-temporarily_archived: service_moderation-temporarily_archived
           group: 1
           exposed: true
           expose:
@@ -609,7 +615,10 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
-              administrator: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
             reduce: true
           is_grouped: false
           group_info:
@@ -677,7 +686,7 @@ display:
           plugin_id: moderation_state_filter
           operator: 'not in'
           value:
-            editorial-published: editorial-published
+            service_moderation-published: service_moderation-published
           group: 1
           exposed: false
           expose:
@@ -811,7 +820,8 @@ display:
         - url.query_args
         - 'user.node_grants:view'
         - user.permissions
-      tags: {  }
+      tags:
+        - 'config:workflow_list'
   moderated_content:
     id: moderated_content
     display_title: 'Moderoitu sisältö'
@@ -830,4 +840,5 @@ display:
         - url.query_args
         - 'user.node_grants:view'
         - user.permissions
-      tags: {  }
+      tags:
+        - 'config:workflow_list'
