@@ -236,20 +236,6 @@
 
 // header override for search page
 .cart-page {
-  .header {
-    #block-suosikit,
-    #block-kielenvaihtaja,
-    #block-kirjautuminen,
-    #block-kayttajavalikko  {
-      @include large {
-        position: absolute;
-      }
-    }
-    #block-suosikit {@include large {left:50px; top: 50px; z-index: 100;}}
-    #block-kielenvaihtaja {@include large {left:180px; top:50px; z-index: 100;}}
-    #block-kirjautuminen {@include large {right:50px; top: 33px; z-index: 100;}}
-    #block-kayttajavalikko {@include large {right:50px; top: 25px; z-index: 100;}}
-  }
   .view-header {
     margin-bottom: $space;
   }
