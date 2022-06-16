@@ -1,0 +1,16 @@
+uuid: 5a583382-7ad8-4c22-b4b9-79d174ed86ef
+langcode: fi
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.location_accessibility
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+id: taxonomy_term.location_accessibility
+target_entity_type_id: taxonomy_term
+target_bundle: location_accessibility
+default_langcode: site_default
+language_alterable: true

@@ -65,6 +65,10 @@
   border-left: 4px solid $blue80;
 }
 
+.card--border-left-yellow {
+  border-left: 4px solid $yellow;
+}
+
 .card--bottom-gutter {
   margin-bottom: $space;
 }
@@ -93,6 +97,10 @@
     letter-spacing: 1px;
     margin: 0;
     margin-bottom: $space-one-half;
+    max-width: 55%;
+    @include medium {
+      max-width: 70%;
+    }
   }
   .card__heading {
     @include heading-xxs();
@@ -115,6 +123,9 @@
   .service-time-and-place {
     display: flex;
     flex-wrap: wrap;
+    .field {
+      margin-bottom: 0;
+    }
   }
   .address {
     display: flex;
@@ -149,11 +160,49 @@
     width: 50%;
     order: 3;
     display: flex;
+    p {
+      margin-bottom: 0
+    }
     &.icon {
       width: 24px;
       margin-right: $space;
       order: unset;
       display: block;
+    }
+    >.field__item {
+      display: flex;
+    }
+    .service-language {
+      display: flex;
+    }
+  }
+
+  .term {
+    display: flex;
+  }
+
+  .field--name-field-accessibility {
+    order: 4;
+    width: 100%;
+    margin-top: $space-double;
+    .field__label {
+      font-weight: 600;
+    }
+
+    .field__items {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .field__item {
+      display: flex;
+      margin-bottom: 0;
+      p {
+        margin-bottom: 0;
+      }
+    }
+    .field--name-name {
+      word-wrap: break-word;
     }
   }
 
@@ -184,5 +233,62 @@
     .accordion-collapse {
       border-bottom: unset;
     }
+  }
+}
+
+.card--service-accessibility {
+ padding-top: $space-two-and-half;
+ padding-bottom: 2rem;
+
+ .card__content {
+   .field--name-field-accessibility {
+     .field__label {
+       margin-bottom: $space-double;
+       h4 {
+        font-weight: 600;
+       }
+     }
+   }
+ }
+
+ .icon {
+   margin-right: $space;
+ }
+
+ .field__items {
+   display: flex;
+   flex-wrap: wrap;
+ }
+
+ .field__item {
+   margin-bottom: 20px;
+   color: clr(alt-header-color);
+   text-decoration: none;
+   font-weight: 700;
+   a {
+     color: clr(alt-header-color);
+     text-decoration: none;
+     font-weight: 700;
+   }
+ }
+}
+
+.card--service-notification {
+  padding-top: $space-two-and-half;
+  .views-field-label {
+    margin-bottom: $space-one-and-half;
+    .field-content {
+      display: flex;
+      h4 {
+        font-weight: 600;
+      }
+    }
+    .icon {
+      margin-right: $space;
+    }
+  }
+  .views-field-publish-end-date {
+    font-size: 14px;
+    font-weight: 600;
   }
 }

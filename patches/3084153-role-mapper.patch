@@ -1,0 +1,805 @@
+diff --git a/modules/ggroup_role_mapper/ggroup_role_mapper.info.yml b/modules/ggroup_role_mapper/ggroup_role_mapper.info.yml
+new file mode 100644
+index 0000000..0d43694
+--- /dev/null
++++ b/modules/ggroup_role_mapper/ggroup_role_mapper.info.yml
+@@ -0,0 +1,7 @@
++name: 'Subgroup role mapper'
++description: 'Allows map roles between parent groups and subgroups'
++package: 'Group'
++type: 'module'
++core_version_requirement: ^8 || ^9
++dependencies:
++  - 'ggroup'
+diff --git a/modules/ggroup_role_mapper/ggroup_role_mapper.module b/modules/ggroup_role_mapper/ggroup_role_mapper.module
+new file mode 100644
+index 0000000..e071f52
+--- /dev/null
++++ b/modules/ggroup_role_mapper/ggroup_role_mapper.module
+@@ -0,0 +1,111 @@
++<?php
++
++/**
++ * @file
++ * Enables Subgroup role mapper functionality.
++ */
++
++use Drupal\group\Entity\GroupType;
++
++/**
++ * Implements hook_form_alter().
++ */
++function ggroup_role_mapper_form_group_content_type_add_form_alter (
++  &$form,
++  \Drupal\Core\Form\FormStateInterface $form_state,
++  $form_id
++) {
++  $route_matcher = \Drupal::service('current_route_match');
++  $group_type_id = $route_matcher->getParameter('group_type');
++  $plugin_id = $route_matcher->getParameter('plugin_id');
++  if (strpos($plugin_id, 'subgroup:') === FALSE) {
++    return;
++  }
++  $subgroup_type_id = str_replace('subgroup:', '', $plugin_id);
++
++  _ggroup_role_mapper_mapping_form($form, $plugin_id, $group_type_id, $subgroup_type_id);
++}
++
++/**
++ * Implements hook_form_alter().
++ */
++function ggroup_role_mapper_form_group_content_type_edit_form_alter (
++  &$form,
++  \Drupal\Core\Form\FormStateInterface $form_state,
++  $form_id
++) {
++  $route_matcher = \Drupal::service('current_route_match');
++  $group_content_type = $route_matcher->getParameter('group_content_type');
++  $group_type_id = $group_content_type->getGroupTypeId();
++  $subgroup_type_id = $group_content_type->getContentPlugin()->getEntityBundle();
++  $plugin_id = $group_content_type->getContentPluginId();
++  if (strpos($plugin_id, 'subgroup:') === FALSE) {
++    return;
++  }
++  _ggroup_role_mapper_mapping_form($form, $plugin_id, $group_type_id, $subgroup_type_id);
++}
++
++/**
++ * Adds mapping settings between parent and sub groups.
++ *
++ * @param array $form
++ *   Form array.
++ * @param string $plugin_id
++ *   Plugin ID.
++ * @param string $group_type_id
++ *   Group type id.
++ * @param $subgroup_type_id
++ *   Group type id.
++ */
++function _ggroup_role_mapper_mapping_form(&$form, $plugin_id, $group_type_id, $subgroup_type_id) {
++
++  // We handle only subgroup plugins.
++  $group_type = GroupType::load($group_type_id);
++  $sub_group_type = GroupType::load($subgroup_type_id);
++  $collection = \Drupal::service('plugin.manager.group_content_enabler')->getInstalled($group_type);
++  $configuration = $collection->getConfiguration();
++
++  // We create form field to map parent roles to child roles, and map child
++  // roles to parent roles. This allow for permissions/membership to
++  // propogate up/down.
++  $parent_roles = $group_type->getRoles();
++  $parent_options = [];
++  foreach ($parent_roles as $role_id => $role) {
++    $parent_options[$role_id] = $role->label();
++  }
++
++  $child_roles = $sub_group_type->getRoles();
++  $child_options = [];
++  foreach ($child_roles as $role_id => $role) {
++    $child_options[$role_id] = $role->label();
++  }
++
++  $form['parent_role_mapping'] = [
++    '#type' => 'fieldset',
++    '#title' => t('Map group roles to subgroup roles to allow group membership and permissions to be inherited by the subgroup.'),
++    '#tree' => TRUE,
++  ];
++  foreach ($parent_options as $roleid => $rolename) {
++    $form['parent_role_mapping'][$roleid] = [
++      '#type' => 'select',
++      '#title' => $rolename,
++      '#options' => $child_options,
++      '#empty_option' => t('- None -'),
++      '#default_value' => $configuration[$plugin_id]['parent_role_mapping'][$roleid] ?? NULL,
++    ];
++  }
++  $form['child_role_mapping'] = [
++    '#type' => 'fieldset',
++    '#title' => t('Map subgroup roles to group roles to allow subgroup membership and permissions to be propogated to the group.'),
++    '#tree' => TRUE,
++  ];
++  foreach ($child_options as $roleid => $rolename) {
++    $form['child_role_mapping'][$roleid] = [
++      '#type' => 'select',
++      '#title' => $rolename,
++      '#options' => $parent_options,
++      '#empty_option' => t('- None -'),
++      '#default_value' => $configuration[$plugin_id]['child_role_mapping'][$roleid] ?? NULL,
++    ];
++  }
++}
+diff --git a/modules/ggroup_role_mapper/ggroup_role_mapper.services.yml b/modules/ggroup_role_mapper/ggroup_role_mapper.services.yml
+new file mode 100644
+index 0000000..62879c1
+--- /dev/null
++++ b/modules/ggroup_role_mapper/ggroup_role_mapper.services.yml
+@@ -0,0 +1,9 @@
++services:
++  ggroup_role_mapper.group_role_inheritance:
++    class: Drupal\ggroup_role_mapper\GroupRoleInheritance
++    arguments: ['@ggroup.group_graph_storage', '@entity_type.manager', '@cache.default']
++  ggroup_role_mapper.inherit_calculator:
++    class: 'Drupal\ggroup_role_mapper\Access\InheritGroupPermissionCalculator'
++    arguments: ['@entity_type.manager', '@ggroup.group_hierarchy_manager', '@group.membership_loader', '@ggroup_role_mapper.group_role_inheritance']
++    tags:
++      - { name: group_permission_calculator, priority: -110 }
+diff --git a/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php b/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php
+new file mode 100644
+index 0000000..8b0fc71
+--- /dev/null
++++ b/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php
+@@ -0,0 +1,330 @@
++<?php
++
++namespace Drupal\ggroup_role_mapper\Access;
++
++use Drupal\Core\Entity\EntityTypeManagerInterface;
++use Drupal\Core\Session\AccountInterface;
++use Drupal\ggroup\GroupHierarchyManager;
++use Drupal\ggroup\Plugin\GroupContentEnabler\Subgroup;
++use Drupal\group\Access\GroupPermissionCalculatorBase;
++use Drupal\group\Access\RefinableCalculatedGroupPermissions;
++use Drupal\group\Access\CalculatedGroupPermissionsItem;
++use Drupal\group\Access\CalculatedGroupPermissionsItemInterface;
++use Drupal\group\Entity\Group;
++use Drupal\group\Entity\GroupInterface;
++use Drupal\group\GroupMembership;
++use Drupal\group\GroupMembershipLoader;
++use Drupal\ggroup_role_mapper\GroupRoleInheritanceInterface;
++
++/**
++ * Calculates group permissions for an account.
++ */
++class InheritGroupPermissionCalculator extends GroupPermissionCalculatorBase {
++
++  /**
++   * The group hierarchy manager.
++   *
++   * @var \Drupal\ggroup\GroupHierarchyManager
++   */
++  protected $hierarchyManager;
++
++  /**
++   * The entity type manager.
++   *
++   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
++   */
++  protected $entityTypeManager;
++
++  /**
++   * The group membership loader.
++   *
++   * @var \Drupal\group\GroupMembershipLoader
++   */
++  protected $membershipLoader;
++
++  /**
++   * The group role inheritance manager.
++   *
++   * @var \Drupal\ggroup_role_mapper\GroupRoleInheritanceInterface
++   */
++  protected $groupRoleInheritanceManager;
++
++  /**
++   * Static cache for all group memberships per user.
++   *
++   * A nested array with all group memberships keyed by user ID.
++   *
++   * @var \Drupal\group\GroupMembership[][]
++   */
++  protected $userMemberships = [];
++
++  /**
++   * Static cache for all inherited group roles by user.
++   *
++   * A nested array with all inherited roles keyed by user ID and group ID.
++   *
++   * @var array
++   */
++  protected $mappedRoles = [];
++
++  /**
++   * Static cache for all outsider roles of group type.
++   *
++   * A nested array with all outsider roles keyed by group type ID and role ID.
++   *
++   * @var array
++   */
++  protected $groupTypeOutsiderRoles = [];
++
++  /**
++   * Constructs a InheritGroupPermissionCalculator object.
++   *
++   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
++   *   The entity type manager.
++   * @param \Drupal\ggroup\GroupHierarchyManager $hierarchy_manager
++   *   The group hierarchy manager.
++   * @param \Drupal\group\GroupMembershipLoader $membership_loader
++   *   The group membership loader.
++   * @param \Drupal\ggroup_role_mapper\GroupRoleInheritanceInterface $group_role_inheritance_manager
++   *   The group membership loader.
++   */
++  public function __construct(EntityTypeManagerInterface $entity_type_manager, GroupHierarchyManager $hierarchy_manager, GroupMembershipLoader $membership_loader, GroupRoleInheritanceInterface $group_role_inheritance_manager) {
++    $this->entityTypeManager = $entity_type_manager;
++    $this->hierarchyManager = $hierarchy_manager;
++    $this->membershipLoader = $membership_loader;
++    $this->groupRoleInheritanceManager = $group_role_inheritance_manager;
++  }
++
++  /**
++   * Getter for mapped roles.
++   *
++   * @param string $account_id
++   *   Account id.
++   * @param string|null $group_id
++   *   Group id.
++   *
++   * @return array
++   *   Mapped roles, defaults to empty array.
++   */
++  public function getMappedRoles($account_id, $group_id = NULL) {
++    if (!empty($group_id)) {
++      return $this->mappedRoles[$account_id][$group_id] ?? [];
++    }
++    return $this->mappedRoles[$account_id] ?? [];
++  }
++
++  /**
++   * Checker for mapped roles.
++   *
++   * @param string $account_id
++   *   Account id.
++   * @param string|null $group_id
++   *   Group id.
++   *
++   * @return bool
++   *   TRUE if there are mapped roles
++   *   for given account id (optionally group id).
++   */
++  public function hasMappedRoles($account_id, $group_id = NULL) {
++    return !empty($this->getMappedRoles($account_id, $group_id));
++  }
++
++  /**
++   * Get all (inherited) group roles a user account inherits for a group.
++   *
++   * Check if the account is a direct member of any subgroups/supergroups of
++   * the group. For each subgroup/supergroup, we check which roles we are
++   * allowed to map. The result contains a list of all roles the user has have
++   * inherited from 1 or more subgroups or supergroups.
++   *
++   * @param \Drupal\Core\Session\AccountInterface $account
++   *   An account to map only the roles for a specific user.
++   *
++   * @return \Drupal\group\Entity\GroupRoleInterface[]
++   *   An array of group roles inherited for the given group.
++   */
++  public function calculateMemberPermissions(AccountInterface $account) {
++    $calculated_permissions = new RefinableCalculatedGroupPermissions();
++    $calculated_permissions->addCacheContexts(['user']);
++
++    $user = $this->entityTypeManager->getStorage('user')->load($account->id());
++    $calculated_permissions->addCacheableDependency($user);
++
++    $group_types_processed = [];
++    $group_type_cache_tags = [];
++    foreach ($this->membershipLoader->loadByUser($account) as $group_membership) {
++      $group = $group_membership->getGroup();
++      $group_type = $group->getGroupType();
++      // Flag the already processed group types so we don't process them twice.
++      if (!isset($group_types_processed[$group_type->id()])) {
++        $group_types_processed[$group_type->id()] = TRUE;
++        $content_plugins = $group_type->getInstalledContentPlugins();
++
++        foreach ($content_plugins as $content_plugin) {
++          if ($content_plugin instanceof Subgroup) {
++            $group_type_cache_tags[] = 'group_content_list:' . $group_type->id() . '-subgroup-' . $content_plugin->getPluginDefinition()['entity_bundle'];
++          }
++        }
++      }
++
++      $group_role_array = $this->getInheritedGroupRoleIdsByMembership($group_membership, $account);
++       foreach ($group_role_array as $group_id => $group_roles) {
++         $permission_sets = [];
++         foreach ($group_roles as $group_role) {
++           $permission_sets[] = $group_role->getPermissions();
++           $calculated_permissions->addCacheableDependency($group_role);
++         }
++         $permissions = $permission_sets ? array_merge(...$permission_sets) : [];
++         if ($group_roles) {
++           $item = new CalculatedGroupPermissionsItem(
++             CalculatedGroupPermissionsItemInterface::SCOPE_GROUP,
++             (string) $group_id,
++             $permissions
++           );
++           $calculated_permissions->addItem($item);
++           $calculated_permissions->addCacheableDependency($group);
++        }
++      }
++    }
++    // Add cache tags according to invalidate the cache when the subgroups hierarchy changes.
++    $calculated_permissions->addCacheTags($group_type_cache_tags);
++
++    return $calculated_permissions;
++  }
++
++  /**
++   * {@inheritdoc}
++   */
++  public function getInheritedGroupRoleIdsByMembership(GroupMembership $group_membership, AccountInterface $account) {
++    $account_id = $account->id();
++    $group = $group_membership->getGroup();
++    $group_id = $group->id();
++    $roles = array_keys($group_membership->getRoles());
++
++    if ($this->hasMappedRoles($account_id, $group_id)) {
++      return $this->getMappedRoles($account_id, $group_id);
++    }
++
++    // Statically cache the memberships of a user since this method could get
++    // called a lot.
++    if (empty($this->userMemberships[$account_id])) {
++      $this->userMemberships[$account_id] = $this->membershipLoader->loadByUser($account);
++    }
++
++    $role_map = $this->groupRoleInheritanceManager->getAllInheritedGroupRoleIds($group);
++
++    $mapped_role_ids = [[]];
++    foreach ($this->userMemberships[$account_id] as $membership) {
++      $membership_gid = $membership->getGroup()->id();
++
++      $subgroup_ids = $this->hierarchyManager->getGroupSupergroupIds($membership_gid) + $this->hierarchyManager->getGroupSubgroupIds($membership_gid);;
++      foreach ($subgroup_ids as $subgroup_id) {
++        if (!empty($role_map[$subgroup_id][$group_id])) {
++          $mapped_role_ids[$subgroup_id] = array_merge(isset($mapped_role_ids[$subgroup_id]) ? $mapped_role_ids[$subgroup_id] : [], array_intersect_key($role_map[$subgroup_id][$group_id], array_flip($roles)));
++        }
++      }
++    }
++
++    foreach ($mapped_role_ids as $group_id => $role_ids) {
++      if (!empty(array_unique($role_ids))) {
++        $this->mappedRoles[$account_id][$group_id] = array_merge($this->getMappedRoles($account_id, $group_id), $this->entityTypeManager->getStorage('group_role')->loadMultiple(array_unique($role_ids)));
++      }
++    }
++
++    return $this->getMappedRoles($account_id);
++  }
++
++  /**
++   * {@inheritdoc}
++   */
++  public function getInheritedGroupOutsiderRoleIds(GroupInterface $group, AccountInterface $account) {
++
++    $account_id = $account->id();
++    $group_id = $group->id();
++
++    if ($this->hasMappedRoles($account_id, $group_id)) {
++      return $this->getMappedRoles($account_id, $group_id);
++    }
++
++    if (empty($this->userMemberships[$account_id])) {
++      $this->userMemberships[$account_id] = $this->membershipLoader->loadByUser($account);
++    }
++
++    $role_map = $this->groupRoleInheritanceManager->getAllInheritedGroupRoleIds($group);
++
++    $mapped_role_ids = [[]];
++    foreach ($this->userMemberships[$account_id] as $membership) {
++      $membership_gid = $membership->getGroupContent()->gid->target_id;
++      $role_mapping = [];
++
++      // Get all outsider roles.
++      $outsider_roles = $this->getOutsiderGroupRoles($membership->getGroupContent()->getGroup());
++      if (!empty($role_map[$membership_gid][$group_id])) {
++        $role_mapping = array_intersect_key($role_map[$membership_gid][$group_id], $outsider_roles);
++      }
++      else if (!empty($role_map[$group_id][$membership_gid])) {
++        $role_mapping = array_intersect_key($role_map[$group_id][$membership_gid], $outsider_roles);
++      }
++
++      $mapped_role_ids[] = $role_mapping;
++    }
++
++    $mapped_role_ids = array_replace_recursive(...$mapped_role_ids);
++
++    $this->mappedRoles[$account_id][$group_id] = $this->entityTypeManager->getStorage('group_role')->loadMultiple(array_unique($mapped_role_ids));
++
++    return $this->getMappedRoles($account_id, $group_id);
++  }
++
++  /**
++   * Get outsider group type roles.
++   *
++   * @param Group $group
++   *   Group.
++   * @return array
++   *   Group type roles.
++   */
++  protected function getOutsiderGroupRoles(Group $group) {
++    if (!isset($this->groupTypeOutsiderRoles[$group->getGroupType()->id()])) {
++      $storage = $this->entityTypeManager->getStorage('group_role');
++      $outsider_roles = $storage->loadSynchronizedByGroupTypes([$group->getGroupType()->id()]);
++      $outsider_roles[$group->getGroupType()->getOutsiderRoleId()] = $group->getGroupType()->getOutsiderRole();
++      $this->groupTypeOutsiderRoles[$group->getGroupType()->id()] = $outsider_roles;
++    }
++    return $this->groupTypeOutsiderRoles[$group->getGroupType()->id()];
++  }
++
++  /**
++   * {@inheritdoc}
++   */
++  public function getInheritedGroupAnonymousRoleIds(GroupInterface $group, array $groups) {
++    // Anonymous user doesn't have id, but we want to cache it.
++    $account_id = 0;
++    $group_id = $group->id();
++
++    $role_map = $this->groupRoleInheritanceManager->getAllInheritedGroupRoleIds($group);
++    $mapped_role_ids = [[]];
++    foreach ($groups as $group_item) {
++      $group_item_gid = $group_item->id();
++      $role_mapping = [];
++
++      $anonymous_role = [$group_item->getGroupType()->getAnonymousRoleId() => $group_item->getGroupType()->getAnonymousRole()];
++
++      if (!empty($role_map[$group_item_gid][$group_id])) {
++        $role_mapping = array_intersect_key($role_map[$group_item_gid][$group_id], $anonymous_role);
++      }
++      else if (!empty($role_map[$group_id][$group_item_gid])) {
++        $role_mapping = array_intersect_key($role_map[$group_id][$group_item_gid], $anonymous_role);
++      }
++
++      $mapped_role_ids[] = $role_mapping;
++    }
++
++    $mapped_role_ids = array_replace_recursive(...$mapped_role_ids);
++
++    $this->mappedRoles[$account_id][$group_id] = $this->entityTypeManager->getStorage('group_role')->loadMultiple(array_unique($mapped_role_ids));
++
++    return $this->getMappedRoles($account_id, $group_id);
++  }
++
++}
+diff --git a/modules/ggroup_role_mapper/src/GroupRoleInheritance.php b/modules/ggroup_role_mapper/src/GroupRoleInheritance.php
+new file mode 100644
+index 0000000..eabdd06
+--- /dev/null
++++ b/modules/ggroup_role_mapper/src/GroupRoleInheritance.php
+@@ -0,0 +1,282 @@
++<?php
++
++namespace Drupal\ggroup_role_mapper;
++
++use Drupal\Core\Cache\Cache;
++use Drupal\Core\Cache\CacheBackendInterface;
++use Drupal\Core\Entity\EntityTypeManagerInterface;
++use Drupal\ggroup\Graph\GroupGraphStorageInterface;
++use Drupal\ggroup\Plugin\GroupContentEnabler\Subgroup;
++use Drupal\group\Entity\GroupContentType;
++
++/**
++ * Provides all direct and indirect group relations and the inherited roles.
++ */
++class GroupRoleInheritance implements GroupRoleInheritanceInterface {
++
++  /**
++   * The group graph storage.
++   *
++   * @var \Drupal\ggroup\Graph\GroupGraphStorageInterface
++   */
++  protected $groupGraphStorage;
++
++  /**
++   * The entity type manager.
++   *
++   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
++   */
++  protected $entityTypeManager;
++
++  /**
++   * The cache backend.
++   *
++   * @var \Drupal\Core\Cache\CacheBackendInterface
++   */
++  protected $cache;
++
++  /**
++   * Static cache for the total role map.
++   *
++   * @var array[]
++   */
++  protected $roleMap = [];
++
++  /**
++   * Static cache for config of all installed subgroups.
++   *
++   * @var array[]
++   */
++  protected $subgroupConfig = [];
++
++  /**
++   * Static cache of all group content types for subgroup group content.
++   *
++   * This nested array is keyed by subgroup ID and group ID.
++   *
++   * @var string[][]
++   */
++  protected $subgroupRelations = [];
++
++  /**
++   * Constructs a new GroupHierarchyManager.
++   *
++   * @param \Drupal\ggroup\Graph\GroupGraphStorageInterface $group_graph_storage
++   *   The group graph storage service.
++   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
++   *   The entity type manager.
++   * @param \Drupal\Core\Cache\CacheBackendInterface $cache
++   *   The cache backend.
++   */
++  public function __construct(GroupGraphStorageInterface $group_graph_storage, EntityTypeManagerInterface $entity_type_manager, CacheBackendInterface $cache) {
++    $this->groupGraphStorage = $group_graph_storage;
++    $this->entityTypeManager = $entity_type_manager;
++    $this->cache = $cache;
++  }
++
++  /**
++   * {@inheritdoc}
++   */
++  public function getAllInheritedGroupRoleIds($group) {
++    $group_id = $group->id();
++    if (!empty($this->roleMap[$group_id])) {
++      return $this->roleMap[$group_id];
++    }
++    $cid = GroupRoleInheritanceInterface::ROLE_MAP_CID . ':' . $group_id;
++
++    $cache = $this->cache->get($cid);
++    if ($cache && $cache->valid) {
++      $this->roleMap[$group_id] = $cache->data;
++      return $this->roleMap[$group_id];
++    }
++
++    $this->roleMap[$group_id] = $this->build($group_id);
++
++    $cache_tags = ["group:$group_id"];
++    // Add group content types to cache tags.
++    $plugins = $group->getGroupType()->getInstalledContentPlugins();
++    foreach ($plugins as $plugin) {
++      if ($plugin instanceof Subgroup) {
++        $group_content_types = GroupContentType::loadByContentPluginId($plugin->getPluginId());
++        foreach ($group_content_types as $group_content_type) {
++          $cache_tags[] = "config:group.content_type.{$group_content_type->id()}";
++        }
++        // Add a tag to invalidate cache when hierarchy changes.
++        $cache_tags[] = "group_content_list:{$group->getGroupType()->id()}-subgroup-{$plugin->getPluginDefinition()['entity_bundle']}";
++      }
++    }
++
++    $this->cache->set($cid, $this->roleMap[$group_id], Cache::PERMANENT, $cache_tags);
++
++    return $this->roleMap[$group_id];
++  }
++
++  /**
++   * Build a nested array with all inherited roles for all group relations.
++   *
++   * @return array
++   *   A nested array with all inherited roles for all direct/indirect group
++   *   relations. The array is in the form of:
++   *   $map[$group_a_id][$group_b_id][$group_b_role_id] = $group_a_role_id;
++   */
++  protected function build($gid) {
++    $role_map = [];
++    $group_relations = array_reverse($this->groupGraphStorage->getGraph($gid));
++
++    foreach ($group_relations as $group_relation) {
++      $group_id = $group_relation->start_vertex;
++      $subgroup_id = $group_relation->end_vertex;
++      $paths = $this->groupGraphStorage->getPath($group_id, $subgroup_id);
++
++      foreach ($paths as $path) {
++        $path_role_map = [];
++
++        // Get all direct role mappings.
++        foreach ($path as $key => $path_subgroup_id) {
++          // We reached the end of the path, store mapped role IDs.
++          if ($path_subgroup_id === $group_id) {
++            break;
++          }
++
++          // Get the supergroup ID from the next element.
++          $path_supergroup_id = isset($path[$key + 1]) ? $path[$key + 1] : NULL;
++
++          if (!$path_supergroup_id) {
++            continue;
++          }
++
++          // Get mapped roles for relation type. Filter array to remove
++          // unmapped roles.
++          if ($relation_config = $this->getSubgroupRelationConfig($path_supergroup_id, $path_subgroup_id)) {
++            $path_role_map[$path_supergroup_id][$path_subgroup_id] = array_filter($relation_config['child_role_mapping']);
++            $path_role_map[$path_subgroup_id][$path_supergroup_id] = array_filter($relation_config['parent_role_mapping']);
++          }
++        }
++        $role_map[] = $path_role_map;
++
++        // Add all indirectly inherited subgroup roles (bottom up).
++        $role_map[] = $this->mapIndirectPathRoles($path, $path_role_map);
++
++        // Add all indirectly inherited group roles between groups.
++        $role_map[] = $this->mapIndirectPathRoles(array_reverse($path), $path_role_map);
++      }
++    }
++
++    return !empty($role_map) ? array_replace_recursive(...$role_map) : [];
++  }
++
++  /**
++   * Map all the indirectly inherited roles in a path between group A and B.
++   *
++   * Within a graph, getting the role inheritance for every direct relation is
++   * relatively easy and cheap. There are also a lot of indirectly inherited
++   * roles in a path between 2 groups though. When there is a relation between
++   * groups like '1 => 20 => 300 => 4000', this method calculates the role
++   * inheritance for every indirect relationship in the path:
++   * 1 => 300
++   * 1 => 4000
++   * 20 => 4000
++   *
++   * @param array $path
++   *   An array containing all group IDs in a path between group A and B.
++   * @param array $path_role_map
++   *   A nested array containing all directly inherited roles for the path
++   *   between group A and B.
++   *
++   * @return array
++   *   A nested array with all indirectly inherited roles for a path between 2
++   *   groups. The array is in the form of:
++   *   $map[$group_a_id][$group_b_id][$group_b_role_id] = $group_a_role_id;
++   */
++  protected function mapIndirectPathRoles(array $path, array $path_role_map) {
++    $indirect_role_map = [];
++    foreach ($path as $from_group_key => $path_from_group_id) {
++      $inherited_roles_map = [];
++      foreach ($path as $to_group_key => $path_to_group_id) {
++        if ($to_group_key <= $from_group_key) {
++          continue;
++        }
++
++        // Get the previous group ID from the previous element.
++        $path_direct_to_group_id = isset($path[$to_group_key - 1]) ? $path[$to_group_key - 1] : NULL;
++
++        if (!$path_direct_to_group_id) {
++          continue;
++        }
++
++        $direct_role_map = isset($path_role_map[$path_to_group_id][$path_direct_to_group_id]) ? $path_role_map[$path_to_group_id][$path_direct_to_group_id] : NULL;
++
++        if (empty($inherited_roles_map) && isset($direct_role_map)) {
++          $inherited_roles_map = $direct_role_map;
++        }
++
++        foreach ($inherited_roles_map as $from_group_role_id => $to_group_role_id) {
++          if (isset($direct_role_map[$to_group_role_id])) {
++            $indirect_role_map[$path_to_group_id][$path_from_group_id][$from_group_role_id] = $direct_role_map[$to_group_role_id];
++            $inherited_roles_map[$from_group_role_id] = $direct_role_map[$to_group_role_id];
++          }
++        }
++      }
++    }
++    return $indirect_role_map;
++  }
++
++  /**
++   * Get the config for all installed subgroup relations.
++   *
++   * @return array[]
++   *   A nested array with configuration values keyed by subgroup relation ID.
++   */
++  protected function getSubgroupRelationsConfig() {
++    // We create a static cache with the configuration for all subgroup
++    // relations since having separate queries for every relation has a big
++    // impact on performance.
++    if (!$this->subgroupConfig) {
++      foreach ($this->entityTypeManager->getStorage('group_type')->loadMultiple() as $group_type) {
++        $plugin_id = 'subgroup:' . $group_type->id();
++        /** @var \Drupal\group\Entity\Storage\GroupContentTypeStorageInterface $storage */
++        $storage = $this->entityTypeManager->getStorage('group_content_type');
++        $subgroup_content_types = $storage->loadByContentPluginId($plugin_id);
++        foreach ($subgroup_content_types as $subgroup_content_type) {
++          /** @var \Drupal\group\Entity\GroupContentTypeInterface $subgroup_content_type */
++          $this->subgroupConfig[$subgroup_content_type->id()] = $subgroup_content_type->getContentPlugin()->getConfiguration();
++        }
++      }
++    }
++    return $this->subgroupConfig;
++  }
++
++  /**
++   * Get the config for a relation between a group and a subgroup.
++   *
++   * @param int $group_id
++   *   The group for which to get the configuration.
++   * @param int $subgroup_id
++   *   The subgroup for which to get the configuration.
++   *
++   * @return array[]
++   *   A nested array with configuration values.
++   */
++  protected function getSubgroupRelationConfig($group_id, $subgroup_id) {
++    $subgroup_relations_config = $this->getSubgroupRelationsConfig();
++
++    // We need the type of each relation to fetch the configuration. We create
++    // a static cache for the types of all subgroup relations since fetching
++    // each relation independently has a big impact on performance.
++    if (!$this->subgroupRelations || empty($this->subgroupRelations[$group_id])) {
++      // Get all  type between the supergroup and subgroup.
++      $group_contents = $this->entityTypeManager->getStorage('group_content')
++        ->loadByProperties([
++          'type' => array_keys($subgroup_relations_config),
++          'gid' => [$group_id],
++        ]);
++      foreach ($group_contents as $group_content) {
++        $this->subgroupRelations[$group_content->gid->target_id][$group_content->entity_id->target_id] = $group_content->bundle();
++      }
++    }
++
++    $type = isset($this->subgroupRelations[$group_id][$subgroup_id]) ? $this->subgroupRelations[$group_id][$subgroup_id] : NULL;
++    return isset($subgroup_relations_config[$type]) ? $subgroup_relations_config[$type] : NULL;
++  }
++
++}
+diff --git a/modules/ggroup_role_mapper/src/GroupRoleInheritanceInterface.php b/modules/ggroup_role_mapper/src/GroupRoleInheritanceInterface.php
+new file mode 100644
+index 0000000..b6c83d2
+--- /dev/null
++++ b/modules/ggroup_role_mapper/src/GroupRoleInheritanceInterface.php
+@@ -0,0 +1,30 @@
++<?php
++
++namespace Drupal\ggroup_role_mapper;
++
++/**
++ * An interface for the group role inheritance manager.
++ */
++interface GroupRoleInheritanceInterface {
++
++  /**
++   * Inherited group role map cache ID.
++   */
++  const ROLE_MAP_CID = 'ggroup:role_map';
++
++  /**
++   * Get all (inherited) group roles.
++   *
++   * For all (direct/indirect) relations between groups, we check if there are
++   * roles we should map. We map the roles up/down for each relation in the full
++   * path between all groups. The result contains all inherited roles between
++   * all groups.
++   *
++   * @return array
++   *   A nested array with all inherited roles for all direct/indirect group
++   *   relations. The array is in the form of:
++   *   $map[$group_a_id][$group_b_id][$group_b_role_id] = $group_a_role_id;
++   */
++  public function getAllInheritedGroupRoleIds($group);
++
++}

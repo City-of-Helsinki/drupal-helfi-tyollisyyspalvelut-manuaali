@@ -3,6 +3,7 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - field.field.node.service.field_accessibility
     - field.field.node.service.field_client_consent
     - field.field.node.service.field_client_consent_description
     - field.field.node.service.field_contact_info
@@ -14,17 +15,13 @@ dependencies:
     - field.field.node.service.field_poma_applicable_descriptio
     - field.field.node.service.field_requirements
     - field.field.node.service.field_service_guidance_guide
-    - field.field.node.service.field_service_id
     - field.field.node.service.field_service_implement
     - field.field.node.service.field_service_links_external
     - field.field.node.service.field_service_links_internal
-    - field.field.node.service.field_service_location
-    - field.field.node.service.field_service_obligations
     - field.field.node.service.field_service_price
     - field.field.node.service.field_service_radioactivity
     - field.field.node.service.field_service_set
     - field.field.node.service.field_service_time_and_location
-    - field.field.node.service.field_tags
     - field.field.node.service.field_target_group
     - node.type.service
     - workflows.workflow.service_moderation
@@ -32,10 +29,9 @@ dependencies:
     - content_moderation
     - field_group
     - inline_entity_form
-    - link
     - paragraphs
-    - path
-    - radioactivity
+    - redirect
+    - select2
     - text
 third_party_settings:
   field_group:
@@ -45,27 +41,26 @@ third_party_settings:
         - group_specialist
       label: Tabs
       region: content
-      parent_name: ''
-      weight: 3
+      parent_name: group_servi
+      weight: 10
       format_type: tabs
       format_settings:
         classes: ''
         show_empty_fields: false
-        id: ''
+        id: content-view-tabs
         direction: horizontal
         width_breakpoint: 640
     group_specialist:
       children:
         - field_service_guidance_guide
-        - group_consent
-        - group_poma
         - field_contact_info_internal
         - field_service_links_internal
-        - field_tags
+        - group_consent
+        - group_poma
       label: Specialist
       region: content
       parent_name: group_tabs
-      weight: 22
+      weight: 6
       format_type: tab
       format_settings:
         classes: ''
@@ -76,23 +71,12 @@ third_party_settings:
         required_fields: true
     group_customer:
       children:
-        - field_description
-        - field_target_group
-        - field_life_situations
-        - field_requirements
-        - field_service_time_and_location
-        - field_service_implement
-        - field_service_obligations
-        - field_service_location
-        - field_service_language
         - field_contact_info
         - field_service_links_external
-        - field_service_price
-        - group_service_implementation
       label: Customer
       region: content
       parent_name: group_tabs
-      weight: 13
+      weight: 5
       format_type: tab
       format_settings:
         classes: ''
@@ -108,12 +92,13 @@ third_party_settings:
       label: Consent
       region: content
       parent_name: group_specialist
-      weight: 23
-      format_type: fieldset
+      weight: 14
+      format_type: tab
       format_settings:
         classes: ''
         show_empty_fields: false
         id: ''
+        formatter: closed
         description: ''
         required_fields: true
     group_poma:
@@ -123,7 +108,7 @@ third_party_settings:
       label: POMA
       region: content
       parent_name: group_specialist
-      weight: 24
+      weight: 16
       format_type: fieldset
       format_settings:
         classes: ''
@@ -131,20 +116,158 @@ third_party_settings:
         id: ''
         description: ''
         required_fields: true
-    group_service_implementation:
+    group_multistep_group:
       children:
-        - field_implementation_extra_info
-      label: 'Service implementation'
-      region: hidden
-      parent_name: group_customer
-      weight: 17
-      format_type: fieldset
+        - group_basic_information
+        - group_pla
+        - group_servi
+        - group_add
+      label: 'Multistep group'
+      region: content
+      parent_name: ''
+      weight: 0
+      format_type: multipage_group
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        description: ''
+        page_header: 0
+        page_counter: 0
+        move_button: 1
+        ajaxify: 1
+        scroll_top: 0
+        button_label: '0'
+        button_label_next: ''
+        button_label_prev: ''
+        required_fields: true
+        nonjs_multistep: false
+    group_basic_information:
+      children:
+        - group_basic_info_1
+        - group_basic_info_2
+        - group_basic_info_3
+      label: 'Basic information'
+      region: content
+      parent_name: group_multistep_group
+      weight: 20
+      format_type: multipage
       format_settings:
         classes: ''
         show_empty_fields: false
         id: ''
         description: ''
         required_fields: true
+    group_pla:
+      children:
+        - field_service_time_and_location
+      label: 'Place and time'
+      region: content
+      parent_name: group_multistep_group
+      weight: 21
+      format_type: multipage
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        description: ''
+        required_fields: true
+    group_servi:
+      children:
+        - group_tabs
+      label: 'Service description'
+      region: content
+      parent_name: group_multistep_group
+      weight: 22
+      format_type: multipage
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        description: ''
+        required_fields: true
+    group_add:
+      children:
+        - langcode
+        - moderation_state
+        - field_requirements
+      label: 'Additional info'
+      region: content
+      parent_name: group_multistep_group
+      weight: 24
+      format_type: multipage
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        description: ''
+        required_fields: true
+    group_basic_info_1:
+      children:
+        - title
+        - field_description
+        - field_service_set
+        - field_service_implement
+        - field_service_price
+      label: Perustiedot
+      region: content
+      parent_name: group_basic_information
+      weight: 5
+      format_type: fieldset
+      format_settings:
+        classes: 'form-background--white form-background--regular-padding'
+        show_empty_fields: false
+        id: ''
+        description: ''
+        required_fields: false
+    group_basic_info_2:
+      children:
+        - field_life_situations
+        - field_target_group
+        - field_implementation_extra_info
+      label: Kohderyhmä
+      region: content
+      parent_name: group_basic_information
+      weight: 6
+      format_type: fieldset
+      format_settings:
+        classes: 'form-background--white form-background--regular-padding'
+        show_empty_fields: false
+        id: ''
+        description: ''
+        required_fields: true
+    group_basic_info_3:
+      children:
+        - field_accessibility
+      label: Saavutettavuus
+      region: content
+      parent_name: group_basic_information
+      weight: 9
+      format_type: fieldset
+      format_settings:
+        classes: 'form-background--white form-background--regular-padding'
+        show_empty_fields: false
+        id: ''
+        description: ''
+        required_fields: true
+    group_details_sidebar:
+      children:
+        - status
+        - created
+        - uid
+      label: details-sidebar
+      region: content
+      parent_name: ''
+      weight: 1
+      format_type: details_sidebar
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: details-sidebar
+        open: false
+        description: ''
+        required_fields: true
+        weight: 0
 id: node.service.default
 targetEntityType: node
 bundle: service
@@ -152,20 +275,29 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 8
+    weight: 5
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_client_consent:
-    type: boolean_checkbox
-    weight: 20
+  field_accessibility:
+    type: select2_entity_reference
+    weight: 10
     region: content
     settings:
-      display_label: true
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
+    third_party_settings: {  }
+  field_client_consent:
+    type: options_buttons
+    weight: 9
+    region: content
+    settings: {  }
     third_party_settings: {  }
   field_client_consent_description:
     type: paragraphs
-    weight: 21
+    weight: 11
     region: content
     settings:
       title: Paragraph
@@ -176,8 +308,9 @@ content:
       closed_mode_threshold: 0
       add_mode: dropdown
       form_display_mode: default
-      default_paragraph_type: ''
+      default_paragraph_type: _none
       features:
+        add_above: '0'
         collapse_edit_all: collapse_edit_all
         duplicate: duplicate
     third_party_settings:
@@ -200,69 +333,55 @@ content:
             effect_options: {  }
             selector: ''
   field_contact_info:
-    type: inline_entity_form_complex
-    weight: 21
+    type: options_buttons
+    weight: 8
     region: content
-    settings:
-      form_mode: default
-      override_labels: false
-      label_singular: ''
-      label_plural: ''
-      allow_new: true
-      allow_existing: true
-      match_operator: CONTAINS
-      allow_duplicate: false
-      collapsible: false
-      collapsed: false
-      revision: true
+    settings: {  }
     third_party_settings: {  }
   field_contact_info_internal:
-    type: inline_entity_form_complex
-    weight: 25
+    type: options_buttons
+    weight: 12
     region: content
-    settings:
-      form_mode: default
-      override_labels: false
-      label_singular: ''
-      label_plural: ''
-      allow_new: true
-      allow_existing: true
-      match_operator: CONTAINS
-      allow_duplicate: false
-      collapsible: false
-      collapsed: false
-      revision: true
+    settings: {  }
     third_party_settings: {  }
   field_description:
     type: string_textarea
-    weight: 12
+    weight: 4
     region: content
     settings:
       rows: 5
       placeholder: ''
-    third_party_settings: {  }
+    third_party_settings:
+      maxlength:
+        maxlength_js: 250
+        maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
+        maxlength_js_enforce: true
+        maxlength_js_truncate_html: false
   field_implementation_extra_info:
     type: options_buttons
-    weight: 17
+    weight: 11
     region: content
     settings: {  }
     third_party_settings: {  }
   field_life_situations:
+    type: select2_entity_reference
+    weight: 9
+    region: content
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
+    third_party_settings: {  }
+  field_poma_applicable:
     type: options_buttons
-    weight: 14
+    weight: 6
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_poma_applicable:
-    type: boolean_checkbox
-    weight: 22
-    region: content
-    settings:
-      display_label: true
-    third_party_settings: {  }
   field_poma_applicable_descriptio:
     type: paragraphs
-    weight: 24
+    weight: 7
     region: content
     settings:
       title: Paragraph
@@ -299,7 +418,7 @@ content:
             selector: ''
   field_requirements:
     type: paragraphs
-    weight: 15
+    weight: 6
     region: content
     settings:
       title: Paragraph
@@ -317,221 +436,138 @@ content:
         duplicate: duplicate
     third_party_settings: {  }
   field_service_guidance_guide:
-    type: entity_reference_paragraphs
-    weight: 22
+    type: paragraphs
+    weight: 11
     region: content
     settings:
       title: Paragraph
       title_plural: Paragraphs
       edit_mode: open
+      closed_mode: summary
+      autocollapse: none
+      closed_mode_threshold: 0
       add_mode: dropdown
       form_display_mode: default
       default_paragraph_type: ''
-    third_party_settings: {  }
-  field_service_id:
-    type: string_textfield
-    weight: 0
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
+      features:
+        collapse_edit_all: collapse_edit_all
+        duplicate: duplicate
     third_party_settings: {  }
   field_service_implement:
     type: text_textarea
-    weight: 16
+    weight: 7
     region: content
     settings:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
   field_service_links_external:
-    type: link_default
-    weight: 22
-    region: content
-    settings:
-      placeholder_url: ''
-      placeholder_title: ''
-    third_party_settings: {  }
-  field_service_links_internal:
-    type: link_default
-    weight: 26
-    region: content
-    settings:
-      placeholder_url: ''
-      placeholder_title: ''
-    third_party_settings: {  }
-  field_service_location:
-    type: options_buttons
-    weight: 19
+    type: redirect_source
+    weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_service_obligations:
-    type: paragraphs
+  field_service_links_internal:
+    type: redirect_source
+    weight: 13
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_service_price:
+    type: inline_entity_form_simple
+    weight: 8
+    region: content
+    settings:
+      form_mode: default
+      override_labels: false
+      label_singular: ''
+      label_plural: ''
+      collapsible: false
+      collapsed: false
+      revision: false
+    third_party_settings: {  }
+  field_service_set:
+    type: select2_entity_reference
+    weight: 6
+    region: content
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
+    third_party_settings: {  }
+  field_service_time_and_location:
+    type: inline_entity_form_complex
     weight: 16
     region: content
     settings:
-      title: Paragraph
-      title_plural: Paragraphs
-      edit_mode: closed
-      closed_mode: preview
-      autocollapse: none
-      closed_mode_threshold: 0
-      add_mode: dropdown
-      form_display_mode: default
-      default_paragraph_type: _none
-      features:
-        add_above: '0'
-        collapse_edit_all: collapse_edit_all
-        duplicate: duplicate
-    third_party_settings: {  }
-  field_service_price:
-    type: paragraphs
-    weight: 23
-    region: content
-    settings:
-      title: 'Service price'
-      title_plural: 'Service prices'
-      edit_mode: closed
-      closed_mode: summary
-      autocollapse: all
-      closed_mode_threshold: 0
-      add_mode: dropdown
-      form_display_mode: default
-      default_paragraph_type: _none
-      features:
-        add_above: '0'
-        collapse_edit_all: collapse_edit_all
-        duplicate: duplicate
-    third_party_settings: {  }
-  field_service_radioactivity:
-    type: radioactivity_energy
-    weight: 51
-    region: content
-    settings:
-      energy: !!float 0
-      timestamp: '1645987165'
-    third_party_settings: {  }
-  field_service_set:
-    type: options_buttons
-    weight: 2
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  field_service_time_and_location:
-    type: paragraphs
-    weight: 15
-    region: content
-    settings:
-      title: Paragraph
-      title_plural: Paragraphs
-      edit_mode: open
-      closed_mode: summary
-      autocollapse: none
-      closed_mode_threshold: 0
-      add_mode: dropdown
-      form_display_mode: default
-      default_paragraph_type: service_time_and_place
-      features:
-        add_above: '0'
-        collapse_edit_all: collapse_edit_all
-        duplicate: duplicate
-    third_party_settings: {  }
-  field_tags:
-    type: entity_reference_autocomplete_tags
-    weight: 27
-    region: content
-    settings:
+      form_mode: default
+      override_labels: false
+      label_singular: ''
+      label_plural: ''
+      allow_new: true
+      allow_existing: false
       match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
+      allow_duplicate: false
+      collapsible: false
+      collapsed: false
+      revision: false
     third_party_settings: {  }
   field_target_group:
-    type: paragraphs
-    weight: 13
+    type: inline_entity_form_simple
+    weight: 10
     region: content
     settings:
-      title: Paragraph
-      title_plural: Paragraphs
-      edit_mode: closed
-      closed_mode: summary
-      autocollapse: all
-      closed_mode_threshold: 0
-      add_mode: dropdown
-      form_display_mode: default
-      default_paragraph_type: _none
-      features:
-        add_above: '0'
-        collapse_edit_all: collapse_edit_all
-        duplicate: duplicate
+      form_mode: default
+      override_labels: false
+      label_singular: ''
+      label_plural: ''
+      collapsible: false
+      collapsed: false
+      revision: false
     third_party_settings: {  }
   langcode:
     type: language_select
-    weight: 5
+    weight: 2
     region: content
     settings:
       include_locked: true
     third_party_settings: {  }
   moderation_state:
     type: moderation_state_default
-    weight: 12
+    weight: 3
     region: content
     settings: {  }
-    third_party_settings: {  }
-  path:
-    type: path
-    weight: 11
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  promote:
-    type: boolean_checkbox
-    weight: 9
-    region: content
-    settings:
-      display_label: true
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 13
-    region: content
-    settings:
-      display_label: true
-    third_party_settings: {  }
-  sticky:
-    type: boolean_checkbox
-    weight: 10
+    weight: 4
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   title:
     type: string_textfield
-    weight: 1
+    weight: 3
     region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-  translation:
-    weight: 7
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   uid:
-    type: entity_reference_autocomplete
+    type: select2_entity_reference
     weight: 6
     region: content
     settings:
+      width: 100%
+      autocomplete: false
       match_operator: CONTAINS
       match_limit: 10
-      size: 60
-      placeholder: ''
     third_party_settings: {  }
-  url_redirects:
-    weight: 50
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-hidden: {  }
+hidden:
+  field_service_radioactivity: true
+  path: true
+  promote: true
+  sticky: true
+  translation: true
+  url_redirects: true

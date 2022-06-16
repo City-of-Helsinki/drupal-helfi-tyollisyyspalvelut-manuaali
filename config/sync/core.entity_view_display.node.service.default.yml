@@ -3,6 +3,7 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - field.field.node.service.field_accessibility
     - field.field.node.service.field_client_consent
     - field.field.node.service.field_client_consent_description
     - field.field.node.service.field_contact_info
@@ -14,17 +15,13 @@ dependencies:
     - field.field.node.service.field_poma_applicable_descriptio
     - field.field.node.service.field_requirements
     - field.field.node.service.field_service_guidance_guide
-    - field.field.node.service.field_service_id
     - field.field.node.service.field_service_implement
     - field.field.node.service.field_service_links_external
     - field.field.node.service.field_service_links_internal
-    - field.field.node.service.field_service_location
-    - field.field.node.service.field_service_obligations
     - field.field.node.service.field_service_price
     - field.field.node.service.field_service_radioactivity
     - field.field.node.service.field_service_set
     - field.field.node.service.field_service_time_and_location
-    - field.field.node.service.field_tags
     - field.field.node.service.field_target_group
     - node.type.service
   module:
@@ -37,26 +34,15 @@ targetEntityType: node
 bundle: service
 mode: default
 content:
-  field_client_consent:
-    type: boolean
+  field_accessibility:
+    type: entity_reference_label
     label: above
     settings:
-      format: default
-      format_custom_false: ''
-      format_custom_true: ''
+      link: false
     third_party_settings: {  }
-    weight: 11
+    weight: 8
     region: content
   field_contact_info:
-    type: entity_reference_revisions_entity_view
-    label: above
-    settings:
-      view_mode: default
-      link: ''
-    third_party_settings: {  }
-    weight: 17
-    region: content
-  field_contact_info_internal:
     type: entity_reference_revisions_entity_view
     label: above
     settings:
@@ -70,26 +56,7 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 4
-    region: content
-  field_poma_applicable:
-    type: boolean
-    label: above
-    settings:
-      format: default
-      format_custom_false: ''
-      format_custom_true: ''
-    third_party_settings: {  }
-    weight: 10
-    region: content
-  field_poma_applicable_descriptio:
-    type: entity_reference_revisions_entity_view
-    label: above
-    settings:
-      view_mode: default
-      link: ''
-    third_party_settings: {  }
-    weight: 13
+    weight: 5
     region: content
   field_requirements:
     type: entity_reference_revisions_entity_view
@@ -98,23 +65,14 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 15
-    region: content
-  field_service_guidance_guide:
-    type: entity_reference_revisions_entity_view
-    label: above
-    settings:
-      view_mode: default
-      link: ''
-    third_party_settings: {  }
-    weight: 14
+    weight: 10
     region: content
   field_service_implement:
     type: text_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 7
+    weight: 9
     region: content
   field_service_links_external:
     type: link
@@ -126,47 +84,9 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
-    weight: 18
-    region: content
-  field_service_links_internal:
-    type: link
-    label: above
-    settings:
-      trim_length: 80
-      url_only: false
-      url_plain: false
-      rel: ''
-      target: ''
-    third_party_settings: {  }
-    weight: 19
-    region: content
-  field_service_location:
-    type: entity_reference_label
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 9
-    region: content
-  field_service_obligations:
-    type: entity_reference_revisions_entity_view
-    label: above
-    settings:
-      view_mode: default
-      link: ''
-    third_party_settings: {  }
-    weight: 16
+    weight: 13
     region: content
   field_service_price:
-    type: entity_reference_revisions_entity_view
-    label: inline
-    settings:
-      view_mode: default
-      link: ''
-    third_party_settings: {  }
-    weight: 5
-    region: content
-  field_service_time_and_location:
     type: entity_reference_revisions_entity_view
     label: hidden
     settings:
@@ -175,13 +95,14 @@ content:
     third_party_settings: {  }
     weight: 6
     region: content
-  field_tags:
-    type: entity_reference_label
-    label: above
+  field_service_time_and_location:
+    type: entity_reference_revisions_entity_view
+    label: hidden
     settings:
-      link: true
+      view_mode: default
+      link: ''
     third_party_settings: {  }
-    weight: 21
+    weight: 7
     region: content
   field_target_group:
     type: entity_reference_revisions_entity_view
@@ -190,7 +111,7 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 20
+    weight: 14
     region: content
   flag_cart:
     settings: {  }
@@ -212,15 +133,25 @@ content:
     third_party_settings: {  }
     weight: 3
     region: content
+  notifications_entity_view_1:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 4
+    region: content
 hidden:
   content_moderation_control: true
   entity_print_view_epub: true
   entity_print_view_pdf: true
   entity_print_view_word_docx: true
+  field_client_consent: true
   field_client_consent_description: true
+  field_contact_info_internal: true
   field_implementation_extra_info: true
   field_life_situations: true
-  field_service_id: true
+  field_poma_applicable: true
+  field_poma_applicable_descriptio: true
+  field_service_guidance_guide: true
+  field_service_links_internal: true
   field_service_radioactivity: true
   field_service_set: true
   langcode: true

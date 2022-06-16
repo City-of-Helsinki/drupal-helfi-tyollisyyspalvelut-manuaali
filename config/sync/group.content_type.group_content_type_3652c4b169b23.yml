@@ -1,0 +1,35 @@
+uuid: 4d53d1c0-d634-445d-ba95-b3e268329dc2
+langcode: fi
+status: true
+dependencies:
+  config:
+    - group.type.organisation
+    - group.type.service_provider
+id: group_content_type_3652c4b169b23
+label: 'Organisation: Subgroup (Service provider)'
+description: 'Adds <em class="placeholder">Service provider</em> groups to groups both publicly and privately.'
+group_type: organisation
+content_plugin: 'subgroup:service_provider'
+plugin_config:
+  group_cardinality: 0
+  entity_cardinality: 1
+  parent_role_mapping:
+    organisation-0b0baeca9: ''
+    organisation-4200d0219: ''
+    organisation-administrator: service_provider-organization_ad
+    organisation-anonymous: ''
+    organisation-d6c67468e: ''
+    organisation-e7eaf710e: ''
+    organisation-editor: ''
+    organisation-member: ''
+    organisation-outsider: ''
+  child_role_mapping:
+    service_provider-0b0baeca9: ''
+    service_provider-4200d0219: ''
+    service_provider-anonymous: ''
+    service_provider-d6c67468e: ''
+    service_provider-e7eaf710e: ''
+    service_provider-group_admin: ''
+    service_provider-member: ''
+    service_provider-organization_ad: ''
+    service_provider-outsider: ''

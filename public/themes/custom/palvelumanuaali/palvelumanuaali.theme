@@ -22,13 +22,16 @@
  /**
   * Implements hook_preprocess_block__language_switcher().
   */
- function palvelumanuaali_preprocess_block__language_block(&$variables) {
-   // Find the amount of translations current node has.
-   $node = \Drupal::routeMatch()->getParameter('node');
-   if (!empty($node)) {
-     $translation_languages = $node->getTranslationLanguages(TRUE);
-     $variables['lang_count'] = sizeof($translation_languages);
-   }
+function palvelumanuaali_preprocess_block__language_block(&$variables) {
+  // Find the amount of translations current node has.
+  $node = \Drupal::routeMatch()->getParameter('node');
+  if (!empty($node)) {
+    $translation_languages = $node->getTranslationLanguages(TRUE);
+    $variables['lang_count'] = sizeof($translation_languages);
+  }
+  else {
+    $variables['lang_count'] = count($variables['content']['#links']);
+  }
  }
 
  /**
@@ -70,10 +73,65 @@
   * @param array $variables
   * @param $hook
   */
- function palveumanuaali_theme_suggestions_form_element_alter(array &$suggestions, array $variables, $hook)
- {
+ function palvelumanuaali_theme_suggestions_form_element_alter(array &$suggestions, array $variables, $hook) {
    if (isset($variables['element']['#id'])) {
      $id = str_replace("-", "_", $variables['element']['#id']);
      $suggestions[] = $hook . '__' . $id;
    }
  }
+
+ function palvelumanuaali_theme_suggestions_select_alter(array &$suggestions, array $variables, $hook) {
+   if (isset($variables['element']['#name'])) {
+     $id = str_replace("-", "_", $variables['element']['#name']);
+     $suggestions[] = $hook . '__' . $id;
+   }
+ }
+
+ function palvelumanuaali_theme_suggestions_details_alter(array &$suggestions, array $variables, $hook) {
+   if (isset($variables['element']['#type']) && isset($variables['element']['#form_id'])) {
+     $type = str_replace("-", "_", $variables['element']['#type']);
+     $formId = str_replace("-", "_", $variables['element']['#form_id']);
+     $suggestions[] = $hook . '__' . $type . '__' . $formId;
+   }
+ }
+
+ /**
+  * Implements hook_theme_suggestions_taxonomy_term_alter().
+  */
+ function palvelumanuaali_theme_suggestions_taxonomy_term_alter(array &$suggestions, array $variables) {
+   /** @var \Drupal\taxonomy\TermInterface $term */
+   $term = $variables['elements']['#taxonomy_term'];
+   $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
+   // Add view mode theme suggestions.
+   $suggestions[] = 'taxonomy_term__' . $sanitized_view_mode;
+   $suggestions[] = 'taxonomy_term__' . $term->bundle() . '__' . $sanitized_view_mode;
+   $suggestions[] = 'taxonomy_term__' . $term->id() . '__' . $sanitized_view_mode;
+ }
+
+ /**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ *
+ * Add views unformatted template suggestions.
+ *
+ * @inheritdoc
+ */
+function palvelumanuaali_theme_suggestions_views_view_unformatted_alter(array &$suggestions, array $variables) {
+  $suggestions[] =  'views_view_unformatted__' . $variables['view']->id();
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ *
+ * Add views field template suggestions.
+ *
+ * @inheritdoc
+ */
+function palvelumanuaali_theme_suggestions_views_view_field(array $variables) {
+    $suggestions[] = 'views_view_field__' . $variables['field']->field;
+}
+
+function palvelumanuaali_theme_suggestions_input_alter(&$suggestions, array $variables) {
+    if ($variables['theme_hook_original'] === "input__submit") {
+      $suggestions[] = 'input__' . $variables['element']['#type'] . '__' . $variables['element']['#form_id'];
+    }
+}

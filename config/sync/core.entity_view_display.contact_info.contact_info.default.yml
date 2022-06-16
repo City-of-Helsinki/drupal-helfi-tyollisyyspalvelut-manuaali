@@ -3,18 +3,34 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.contact_info.contact_info.field_contact_name
+    - field.field.contact_info.contact_info.field_contact_phone
+    - field.field.contact_info.contact_info.field_contact_type
     - field.field.contact_info.contact_info.field_email
-    - field.field.contact_info.contact_info.field_first_name
-    - field.field.contact_info.contact_info.field_last_name
-    - field.field.contact_info.contact_info.field_links
   module:
     - hel_tpm_contact_info
-    - link
+    - telephone
 id: contact_info.contact_info.default
 targetEntityType: contact_info
 bundle: contact_info
 mode: default
 content:
+  field_contact_name:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_contact_phone:
+    type: telephone_link
+    label: above
+    settings:
+      title: ''
+    third_party_settings: {  }
+    weight: 2
+    region: content
   field_email:
     type: basic_string
     label: hidden
@@ -22,33 +38,13 @@ content:
     third_party_settings: {  }
     weight: 1
     region: content
-  field_links:
-    type: link
-    label: hidden
-    settings:
-      trim_length: 80
-      url_only: false
-      url_plain: false
-      rel: ''
-      target: ''
-    third_party_settings: {  }
-    weight: 2
-    region: content
-  title:
-    type: string
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 0
-    region: content
 hidden:
   created: true
   entity_print_view_epub: true
   entity_print_view_pdf: true
   entity_print_view_word_docx: true
-  field_first_name: true
-  field_last_name: true
+  field_contact_type: true
   search_api_excerpt: true
   status: true
+  title: true
   uid: true

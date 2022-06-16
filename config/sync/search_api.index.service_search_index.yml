@@ -3,16 +3,25 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - field.storage.node.field_accessibility
     - field.storage.node.field_implementation_extra_info
+    - field.storage.node.field_life_situations
+    - field.storage.node.field_service_price
+    - field.storage.node.field_service_set
     - field.storage.node.field_service_time_and_location
+    - field.storage.paragraph.field_level
     - field.storage.paragraph.field_language
     - field.storage.paragraph.field_service_languages
+    - field.storage.node.field_address
+    - field.storage.paragraph.field_service_location
     - field.storage.node.field_target_group
+    - field.storage.paragraph.field_age_groups
     - field.storage.paragraph.field_municipality
     - search_api.server.elastic_search
     - core.entity_view_mode.node.full
   module:
     - node
+    - content_moderation
     - paragraphs
     - search_api
 id: service_search_index
@@ -36,8 +45,35 @@ field_settings:
     dependencies:
       module:
         - node
+  field_accessibility:
+    label: Esteettömyys
+    datasource_id: 'entity:node'
+    property_path: field_accessibility
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_accessibility
+  field_age_groups:
+    label: 'Target group » Paragraph » Kohderyhmän ikä'
+    datasource_id: 'entity:node'
+    property_path: 'field_target_group:entity:field_age_groups'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_target_group
+        - field.storage.paragraph.field_age_groups
+      module:
+        - paragraphs
   field_implementation_extra_info:
     label: 'Implementation extra info'
+    datasource_id: 'entity:node'
+    property_path: field_implementation_extra_info
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_implementation_extra_info
+  field_implementation_extra_info_1:
+    label: 'Palvelun toteutustavan lisätieto'
     datasource_id: 'entity:node'
     property_path: field_implementation_extra_info
     type: integer
@@ -56,6 +92,25 @@ field_settings:
         - field.storage.paragraph.field_service_languages
       module:
         - paragraphs
+  field_level:
+    label: 'Service time and location » Paragraph » Level'
+    datasource_id: 'entity:node'
+    property_path: 'field_service_time_and_location:entity:field_level'
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_service_time_and_location
+        - field.storage.paragraph.field_level
+      module:
+        - paragraphs
+  field_life_situations:
+    label: 'Life situations'
+    datasource_id: 'entity:node'
+    property_path: field_life_situations
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_life_situations
   field_municipality:
     label: 'Target group » Paragraph » Municipality'
     datasource_id: 'entity:node'
@@ -67,6 +122,22 @@ field_settings:
         - field.storage.paragraph.field_municipality
       module:
         - paragraphs
+  field_service_price:
+    label: 'Service price'
+    datasource_id: 'entity:node'
+    property_path: field_service_price
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_service_price
+  field_service_set:
+    label: 'Service set'
+    datasource_id: 'entity:node'
+    property_path: field_service_set
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_service_set
   field_service_time_and_location:
     label: 'Service time and location'
     datasource_id: 'entity:node'
@@ -75,6 +146,14 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_service_time_and_location
+  moderation_state:
+    label: 'Moderation state'
+    datasource_id: 'entity:node'
+    property_path: moderation_state
+    type: string
+    dependencies:
+      module:
+        - content_moderation
   node_grants:
     label: 'Node access information'
     property_path: search_api_node_grants
@@ -92,6 +171,19 @@ field_settings:
       view_mode:
         'entity:node':
           service: full
+  service_locality:
+    label: 'Service time and location » Paragraph » Service location » Content » Address » The locality (i.e. city)'
+    datasource_id: 'entity:node'
+    property_path: 'field_service_time_and_location:entity:field_service_location:entity:field_address:locality'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_address
+        - field.storage.node.field_service_time_and_location
+        - field.storage.paragraph.field_service_location
+      module:
+        - node
+        - paragraphs
   status:
     label: status
     datasource_id: 'entity:node'
@@ -106,7 +198,8 @@ field_settings:
     label: Otsikko
     datasource_id: 'entity:node'
     property_path: title
-    type: string
+    type: text
+    boost: !!float 2
     dependencies:
       module:
         - node
@@ -136,13 +229,27 @@ processor_settings:
     weights:
       preprocess_query: -30
   entity_type: {  }
+  highlight:
+    weights:
+      postprocess_query: 0
+    prefix: '<strong>'
+    suffix: '</strong>'
+    excerpt: true
+    excerpt_always: false
+    excerpt_length: 256
+    exclude_fields: {  }
+    highlight: always
+    highlight_partial: false
   html_filter:
     weights:
-      preprocess_index: -15
+      preprocess_index: -46
       preprocess_query: -15
     all_fields: true
     fields:
+      - field_age_groups
+      - moderation_state
       - rendered_item
+      - service_locality
       - title
     title: true
     alt: true
@@ -154,21 +261,39 @@ processor_settings:
       strong: 2
   ignorecase:
     weights:
-      preprocess_index: -20
+      preprocess_index: -48
       preprocess_query: -20
+    all_fields: true
+    fields:
+      - field_age_groups
+      - moderation_state
+      - rendered_item
+      - service_locality
+      - title
+  language_with_fallback: {  }
+  rendered_item: {  }
+  tokenizer:
+    weights:
+      preprocess_index: -49
+      preprocess_query: -6
     all_fields: true
     fields:
       - rendered_item
       - title
-  language_with_fallback: {  }
-  rendered_item: {  }
+    spaces: ''
+    ignored: ._-
+    overlap_cjk: 1
+    minimum_word_size: '2'
   transliteration:
     weights:
-      preprocess_index: -20
+      preprocess_index: -47
       preprocess_query: -20
     all_fields: true
     fields:
+      - field_age_groups
+      - moderation_state
       - rendered_item
+      - service_locality
       - title
 tracker_settings:
   default:

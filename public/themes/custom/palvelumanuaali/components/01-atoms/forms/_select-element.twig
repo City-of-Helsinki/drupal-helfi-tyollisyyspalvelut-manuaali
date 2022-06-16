@@ -10,8 +10,9 @@
  * @see template_preprocess_select()
  */
 #}
+
 {% spaceless %}
-  <div class="form-item__dropdown">
+  <div class='form-item__dropdown {{select_modifier}}'>
     <select{{ attributes.addClass('form-item__select') }}>
       {% for option in options %}
         {% if option.type == 'optgroup' %}

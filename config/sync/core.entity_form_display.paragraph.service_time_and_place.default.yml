@@ -20,13 +20,13 @@ mode: default
 content:
   field_dates:
     type: date_recur_modular_alpha
-    weight: 0
+    weight: 2
     region: content
     settings: {  }
     third_party_settings: {  }
   field_description:
     type: text_textarea
-    weight: 2
+    weight: 3
     region: content
     settings:
       rows: 5
@@ -38,19 +38,6 @@ content:
         maxlength_js_enforce: false
         maxlength_js_truncate_html: false
   field_service_languages:
-    type: inline_entity_form_simple
-    weight: 4
-    region: content
-    settings:
-      form_mode: default
-      override_labels: false
-      label_singular: ''
-      label_plural: ''
-      collapsible: false
-      collapsed: false
-      revision: false
-    third_party_settings: {  }
-  field_service_location:
     type: inline_entity_form_complex
     weight: 1
     region: content
@@ -60,12 +47,18 @@ content:
       label_singular: ''
       label_plural: ''
       allow_new: true
-      allow_existing: true
+      allow_existing: false
       match_operator: CONTAINS
-      allow_duplicate: true
-      collapsible: true
+      allow_duplicate: false
+      collapsible: false
       collapsed: false
-      revision: true
+      revision: false
+    third_party_settings: {  }
+  field_service_location:
+    type: options_select
+    weight: 0
+    region: content
+    settings: {  }
     third_party_settings: {  }
 hidden:
   created: true

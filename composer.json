@@ -18,10 +18,10 @@
             "type": "package",
             "package": {
               "name": "twbs/bootstrap-dist",
-              "version": "5.0.0-beta1",
+              "version": "5.1.3",
               "type": "drupal-library",
               "dist": {
-                "url": "https://github.com/twbs/bootstrap/releases/download/v5.0.0-beta1/bootstrap-5.0.0-beta1-dist.zip",
+                "url": "https://github.com/twbs/bootstrap/releases/download/v5.1.3/bootstrap-5.1.3-dist.zip",
                 "type": "zip"
               }
             }
@@ -50,22 +50,27 @@
         "drupal/address": "^1.10",
         "drupal/admin_toolbar": "^3.0",
         "drupal/better_exposed_filters": "^5.0",
+        "drupal/coder": "^8",
         "drupal/components": "^2.4",
-        "drupal/conditional_fields": "4.x-dev",
+        "drupal/conditional_fields": "^4.x-dev",
         "drupal/context": "^4.1",
         "drupal/core-composer-scaffold": "^9.1",
-        "drupal/core-recommended": "^9.1",
+        "drupal/core-recommended": "~9.3",
         "drupal/date_recur": "^3.1",
         "drupal/date_recur_modular": "^3.0",
         "drupal/elasticsearch_connector": "^7.0@alpha",
         "drupal/emulsify_drupal": "^4.1",
         "drupal/emulsify_twig": "^2.0",
         "drupal/entity_print": "^2.4",
+        "drupal/eva": "^2.1",
         "drupal/field_group": "^3.2",
+        "drupal/field_group_ajaxified_multipage": "^2.0",
         "drupal/field_permissions": "^1.1",
         "drupal/flag": "^4.0@beta",
         "drupal/flag_lists": "^4.0@RC",
         "drupal/gcontent_moderation": "^1.0@beta",
+        "drupal/ggroup": "^1.0.0-alpha",
+        "drupal/ginvite": "^2.0",
         "drupal/group": "^1.4",
         "drupal/inline_entity_form": "^1.0@RC",
         "drupal/maxlength": "^2.0@RC",
@@ -73,13 +78,19 @@
         "drupal/message": "^1.2",
         "drupal/message_notify": "^1.2",
         "drupal/message_ui": "^1.0@beta",
+        "drupal/migrate_plus": "^6.0",
+        "drupal/migrate_source_csv": "^3.5",
+        "drupal/migrate_tools": "^6.0",
+        "drupal/notification_message": "^1.0@RC",
         "drupal/paragraphs": "^1.12",
         "drupal/pathauto": "^1.8",
+        "drupal/printable": "^2.1",
         "drupal/radioactivity": "^3.1",
         "drupal/range": "^1.3",
         "drupal/redirect": "^1.7",
         "drupal/search_api": "^1.23",
         "drupal/search_api_autocomplete": "^1.6",
+        "drupal/select2": "^1.13",
         "drupal/smart_date": "^3.5",
         "drupal/svg_image": "^1.15",
         "drupal/themable_forms": "^1.0@beta",
@@ -87,18 +98,22 @@
         "drupal/twig_tweak": "^3.1",
         "drush/drush": "^10.3",
         "npm-asset/jquery-ui-touch-punch": "^0.2.3",
+        "npm-asset/select2": "^4.0",
         "oomphinc/composer-installers-extender": "^2.0",
         "platformsh/config-reader": "^2.4",
-        "twbs/bootstrap": "5.0.0-beta1",
-        "twbs/bootstrap-dist": "5.0.0-beta1",
+        "twbs/bootstrap": "^5",
+        "twbs/bootstrap-dist": "^5",
         "vlucas/phpdotenv": "^5.1",
-        "webflo/drupal-finder": "^1.2"
+        "webflo/drupal-finder": "^1.2",
+        "weitzman/logintrait": "^1.2"
     },
     "require-dev": {
         "citrussolutions/gulp-workflow": "^2.0",
+        "drupal/core-dev": "^9.3",
         "drupal/devel": "^4.1",
         "drupal/devel_kint_extras": "^1.0",
-        "drupal/core-dev": "^9.1",
+        "phpspec/prophecy-phpunit": "^2.0",
+        "weitzman/drupal-test-traits": "^1.5",
         "zaporylie/composer-drupal-optimizations": "^1.2"
     },
     "conflict": {
@@ -115,7 +130,8 @@
             "cweagans/composer-patches": true,
             "drupal/core-composer-scaffold": true,
             "zaporylie/composer-drupal-optimizations": true,
-            "dealerdirect/phpcodesniffer-composer-installer": true
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "oomphinc/composer-installers-extender": true
         }
     },
     "autoload": {
@@ -156,6 +172,7 @@
             "public/themes/contrib/{$name}": ["type:drupal-theme"],
             "drush/Commands/contrib/{$name}": ["type:drupal-drush"]
         },
+        "installer-types": ["bower-asset", "npm-asset"],
         "composer-exit-on-patch-failure": true,
         "patchLevel": {
             "drupal/core": "-p2"
@@ -163,6 +180,22 @@
         "patches": {
             "drupal/message": {
                 "https://www.drupal.org/files/issues/2018-06-24/allow_token_contexts-3.patch": "https://www.drupal.org/files/issues/2018-06-24/allow_token_contexts-3.patch"
+            },
+            "drupal/notification_message": {
+                "https://www.drupal.org/files/issues/2022-03-24/3270975_4_add_notification_msgs_to_views.patch": "https://www.drupal.org/files/issues/2022-03-24/3270975_4_add_notification_msgs_to_views.patch"
+            },
+            "drupal/elasticsearch_connector": {
+                "https://www.drupal.org/project/elasticsearch_connector/issues/2912308#comment-14000645": "https://www.drupal.org/files/issues/2021-02-16/partial-search-issue-2912308-14.patch"
+            },
+            "drupal/ggroup": {
+                "https://www.drupal.org/project/ggroup/issues/3084153": "./patches/3084153-role-mapper.patch",
+                "https://www.drupal.org/project/ggroup/issues/3238956#comment-14272637": "https://www.drupal.org/files/issues/2021-10-28/no_parent_id-3238956-4.patch"
+            },
+            "drupal/field_group_ajaxified_multipage": {
+                "https://www.drupal.org/project/field_group_ajaxified_multipage/issues/3280612#comment-14515962" : "https://www.drupal.org/files/issues/2022-05-16/3280612-duplicate-core-version-requirement-1.patch"
+            },
+            "drupal/themable_forms": {
+                "https://www.drupal.org/files/issues/undefined_index_type_themable_forms_theme_suggestions_form_element_2903660.patch": "https://www.drupal.org/files/issues/undefined_index_type_themable_forms_theme_suggestions_form_element_2903660.patch"
             }
         }
     }

@@ -1,0 +1,21 @@
+uuid: 4e32493c-cdcf-4604-87f3-b6d1bd3563dc
+langcode: fi
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.taxonomy_term.reference
+    - field.field.taxonomy_term.location_accessibility.field_logo
+    - taxonomy.vocabulary.location_accessibility
+id: taxonomy_term.location_accessibility.reference
+targetEntityType: taxonomy_term
+bundle: location_accessibility
+mode: reference
+content: {  }
+hidden:
+  description: true
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  field_logo: true
+  langcode: true
+  search_api_excerpt: true

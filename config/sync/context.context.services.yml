@@ -7,7 +7,7 @@ dependencies:
     - node
 label: Services
 name: services
-group: null
+group: 'Front page'
 description: ''
 requireAllConditions: false
 disabled: false
@@ -32,7 +32,7 @@ reactions:
         provider: hel_tpm_sharer
         label_display: '0'
         region: content
-        weight: '0'
+        weight: '1'
         custom_id: hel_sharer_block
         theme: palvelumanuaali
         css_class: ''
@@ -42,4 +42,8 @@ reactions:
         third_party_settings: {  }
     include_default_blocks: 0
     saved: false
-weight: 0
+  body_class:
+    id: body_class
+    body_class: service-page
+    saved: false
+weight: -5

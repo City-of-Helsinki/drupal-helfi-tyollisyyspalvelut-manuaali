@@ -6,7 +6,7 @@ dependencies:
     - group
 label: 'Group links'
 name: group_links
-group: null
+group: 'Front page'
 description: ''
 requireAllConditions: false
 disabled: false
@@ -31,8 +31,8 @@ reactions:
         label: 'Group operations'
         provider: group
         label_display: '0'
-        region: content
-        weight: '-10'
+        region: sidebar
+        weight: '0'
         custom_id: group_operations
         theme: palvelumanuaali
         css_class: ''
@@ -43,4 +43,4 @@ reactions:
         third_party_settings: {  }
     include_default_blocks: 0
     saved: false
-weight: 0
+weight: -2

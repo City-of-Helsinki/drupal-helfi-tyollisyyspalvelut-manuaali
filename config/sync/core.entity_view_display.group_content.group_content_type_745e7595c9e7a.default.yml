@@ -1,0 +1,46 @@
+uuid: 9692562e-2e1a-4a96-b193-f8b9c506b105
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.field.group_content.group_content_type_745e7595c9e7a.group_roles
+    - field.field.group_content.group_content_type_745e7595c9e7a.invitation_status
+    - field.field.group_content.group_content_type_745e7595c9e7a.invitee_mail
+    - group.content_type.group_content_type_745e7595c9e7a
+id: group_content.group_content_type_745e7595c9e7a.default
+targetEntityType: group_content
+bundle: group_content_type_745e7595c9e7a
+mode: default
+content:
+  group_roles:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: -4
+    region: content
+  invitation_status:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: -2
+    region: content
+  invitee_mail:
+    type: email_mailto
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: -3
+    region: content
+hidden:
+  entity_id: true
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  langcode: true
+  search_api_excerpt: true
+  uid: true

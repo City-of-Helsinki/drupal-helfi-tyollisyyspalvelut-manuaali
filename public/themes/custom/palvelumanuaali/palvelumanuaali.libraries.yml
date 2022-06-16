@@ -4,8 +4,13 @@ global:
       dist/style.css: {}
   js:
     ../../../libraries/bootstrap-dist/js/bootstrap.min.js: {}
+    js/breadcrumbs.js: {}
   dependencies:
     - core/popperjs
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings
+
 main-menu:
   js:
     dist/js/02-molecules/menus/main-menu/main-menu.js: {}
@@ -24,3 +29,8 @@ tabs:
     dist/js/02-molecules/tabs/tabs.js: {}
   dependencies:
     - core/drupal
+
+select2.theme:
+  css:
+    component:
+      dist/select2-palvelumanuaali.css: {}

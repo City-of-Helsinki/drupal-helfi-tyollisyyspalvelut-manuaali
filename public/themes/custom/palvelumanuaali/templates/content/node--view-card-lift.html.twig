@@ -79,10 +79,11 @@
   {% set status_modifiers = ['gray'] %}
 {% endif %}
 {# todo: source for card__caption should be added when it is set #}
+
 {% embed "@molecules/card/card.twig" with {
   card__blockname: item.card__blockname,
   card__modifiers: ['view-card'],
-  card__caption: contnet.field_service_set.value,
+  card__caption: content.field_service_set[0]['#title'],
   card__caption__status: published_state|default('Published'|t),
   card__caption__status__modifiers: status_modifiers,
   card__heading: label,

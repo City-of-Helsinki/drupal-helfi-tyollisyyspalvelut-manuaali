@@ -1,0 +1,104 @@
+.service-page {
+  #block-system-main-block {
+    @include large {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .link-wrapper {
+      width: 100%;
+      margin-bottom: $space;
+      @include large {
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+    .flag-lists {
+    margin-right: $space;
+    }
+    .flag-cart {
+      margin-right: $space;
+    }
+    #view-mode-switcher-link {
+        margin-right: $space;
+    }
+    .service{
+      margin-top: $space;
+      @include large {
+        width: 100%;
+        margin-top: $space-double;
+      }
+    }
+  }
+}
+
+.service {
+  background: clr(sidebar-color);
+  border-radius: 16px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  @include large {
+   padding-left: 64px;
+   padding-top: 35px;
+   padding-right: 32px;
+   padding-bottom: 37px;
+  }
+  .field {
+    .field__label {
+      margin-bottom: $space;
+      font-weight: 600;
+      font-size: 16px;
+    }
+  }
+
+  .content-column {
+    padding-right: $space-quadruple;
+    >.field {
+      margin-bottom: $space-double;
+    }
+  }
+
+  .field--name-field-description {
+    font-size: 18px;
+    line-height: 32px;
+  }
+
+  .service-price {
+    display: flex;
+    font-size: 16px;
+    p {
+      color: clr(alt-header-color);
+      letter-spacing: 0.01em;
+    }
+    .field--name-field-price {
+      display: flex;
+      .field__label {
+        &:after {
+          content: ":";
+          margin-right: $space-one-and-half;
+        }
+      }
+
+      .field__item {
+        color: clr(alt-header-color);
+        letter-spacing: 0.01em;
+      }
+    }
+  }
+
+}
+
+.field--name-field-service-links-external {
+  .field__items {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .field__item {
+    margin-bottom: $space-one-and-half;
+    a {
+      text-decoration: none;
+      color: clr(background-section);
+      font-size: 15px;
+      font-weight: 600;
+    }
+  }
+}

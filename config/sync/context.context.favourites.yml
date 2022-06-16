@@ -1,0 +1,47 @@
+uuid: cf74a3fd-56c3-4b09-ab21-7349d54d7be7
+langcode: fi
+status: true
+dependencies:
+  module:
+    - hel_tpm_print_pdf
+    - system
+label: Suosikit
+name: favourites
+group: null
+description: ''
+requireAllConditions: false
+disabled: false
+conditions:
+  request_path:
+    id: request_path
+    negate: false
+    uuid: b6c4c4ca-8745-4107-9536-2d88fa67fb1e
+    context_mapping: {  }
+    pages: "/cart*\r\n/favorites*\r\n/suosikit*"
+reactions:
+  body_class:
+    id: body_class
+    body_class: cart-page
+    saved: false
+  blocks:
+    id: blocks
+    uuid: e3fdf9c9-6ac0-4aec-8afc-c309ef59c5ec
+    blocks:
+      ca3ec0d6-9e9c-4ef9-b7d2-88e1666b7151:
+        uuid: ca3ec0d6-9e9c-4ef9-b7d2-88e1666b7151
+        id: hel_print_pdf_block
+        label: 'Print pdf block'
+        provider: hel_tpm_print_pdf
+        label_display: '0'
+        region: content
+        weight: '0'
+        custom_id: hel_print_pdf_block
+        theme: palvelumanuaali
+        css_class: ''
+        unique: 0
+        context_id: favourites
+        context_mapping: {  }
+        third_party_settings: {  }
+    include_default_blocks: 0
+    saved: false
+weight: 0

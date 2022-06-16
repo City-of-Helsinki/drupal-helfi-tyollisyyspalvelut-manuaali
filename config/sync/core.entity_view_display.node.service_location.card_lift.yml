@@ -1,0 +1,55 @@
+uuid: 1b112073-2d50-496e-9d25-08b6e518c5ea
+langcode: fi
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.card_lift
+    - field.field.node.service_location.field_accessibility
+    - field.field.node.service_location.field_accessibility_details
+    - field.field.node.service_location.field_address
+    - node.type.service_location
+  module:
+    - address
+    - user
+id: node.service_location.card_lift
+targetEntityType: node
+bundle: service_location
+mode: card_lift
+content:
+  field_accessibility:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: reference
+      link: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_accessibility_details:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_address:
+    type: address_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  flag_cart: true
+  flag_flag_list_template_1: true
+  flag_lists: true
+  langcode: true
+  search_api_excerpt: true

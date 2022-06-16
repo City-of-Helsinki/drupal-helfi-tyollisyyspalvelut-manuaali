@@ -27,7 +27,7 @@ if (getenv('PLATFORM_VARIABLES')) {
 }
 
 // Openshift settings.
-if (getenv('ENVIRONMENT') && getenv('ENVIRONMENT') == 'openshift') {
+if (getenv('OPENSHIFT_BUILD_NAMESPACE')) {
   include $app_root . '/' . $site_path . '/settings.openshift.php';
 }
 

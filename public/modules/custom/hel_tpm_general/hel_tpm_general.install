@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * Remove the taxonomy contents.
+ */
+function hel_tpm_general_update_8101() {
+  $q = \Drupal::entityQuery('taxonomy_term');
+  $or = $q->orConditionGroup()
+    ->condition('vid', 'service_location')
+    ->condition('vid', 'service_tags');
+  $q->condition($or);
+  $tids = $q->execute();
+
+  $controller = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
+  $entities = $controller->loadMultiple($tids);
+  $controller->delete($entities);
+}

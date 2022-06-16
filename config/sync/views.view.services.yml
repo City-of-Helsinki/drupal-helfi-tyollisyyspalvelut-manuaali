@@ -3,8 +3,11 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.node.view_card_lift
     - node.type.service
+    - workflows.workflow.service_moderation
   module:
+    - content_moderation
     - node
     - taxonomy
     - user
@@ -197,9 +200,55 @@ display:
           plugin_id: bundle
           value:
             service: service
+          group: 1
           expose:
             operator_limit_selection: false
             operator_list: {  }
+        moderation_state:
+          id: moderation_state
+          table: node_field_data
+          field: moderation_state
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          plugin_id: moderation_state_filter
+          operator: in
+          value:
+            service_moderation-published: service_moderation-published
+          group: 1
+          exposed: false
+          expose:
+            operator_id: moderation_state_op
+            label: 'Moderation state'
+            description: null
+            use_operator: false
+            operator: moderation_state_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: moderation_state
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
       style:
         type: default
         options:
@@ -233,16 +282,31 @@ display:
         - 'languages:language_interface'
         - 'user.node_grants:view'
         - user.permissions
-      tags: {  }
+      tags:
+        - 'config:workflow_list'
   block_1:
     id: block_1
     display_title: 'Front page users'
     display_plugin: block
     position: 1
     display_options:
-      title: 'New services'
+      title: 'Uusimmat julkaisut:'
+      style:
+        type: default
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+          uses_fields: false
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: view_card_lift
       defaults:
         title: false
+        style: false
+        row: false
       display_description: ''
       display_extenders: {  }
     cache_metadata:
@@ -252,13 +316,15 @@ display:
         - 'languages:language_interface'
         - 'user.node_grants:view'
         - user.permissions
-      tags: {  }
+      tags:
+        - 'config:workflow_list'
   block_2:
     id: block_2
     display_title: 'Front page content producers'
     display_plugin: block
     position: 2
     display_options:
+      title: 'Viimeksi päivitetyt:'
       fields:
         title:
           id: title
@@ -504,8 +570,25 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
+      style:
+        type: default
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+          uses_fields: false
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: view_card_lift
       defaults:
+        title: false
+        style: false
+        row: false
         fields: false
+        filters: true
+        filter_groups: true
       display_description: ''
       display_extenders: {  }
     cache_metadata:
@@ -515,14 +598,15 @@ display:
         - 'languages:language_interface'
         - 'user.node_grants:view'
         - user.permissions
-      tags: {  }
+      tags:
+        - 'config:workflow_list'
   block_3:
     id: block_3
     display_title: 'Popular services'
     display_plugin: block
     position: 3
     display_options:
-      title: 'Popular services'
+      title: 'Katsotuimmat palvelut: '
       sorts:
         field_service_radioactivity_energy:
           id: field_service_radioactivity_energy
@@ -553,8 +637,22 @@ display:
             field_identifier: ''
           exposed: false
           granularity: second
+      style:
+        type: default
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+          uses_fields: false
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: view_card_lift
       defaults:
         title: false
+        style: false
+        row: false
         sorts: false
       display_description: ''
       display_extenders: {  }
@@ -566,4 +664,5 @@ display:
         - 'languages:language_interface'
         - 'user.node_grants:view'
         - user.permissions
-      tags: {  }
+      tags:
+        - 'config:workflow_list'
