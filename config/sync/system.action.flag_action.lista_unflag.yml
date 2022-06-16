@@ -1,0 +1,15 @@
+uuid: fcfe5c39-7f3c-4b05-a823-1808b7246066
+langcode: fi
+status: true
+dependencies:
+  config:
+    - flag.flag.lista
+  module:
+    - flag
+id: flag_action.lista_unflag
+label: 'Unflag this item'
+type: node
+plugin: 'flag_action:lista_unflag'
+configuration:
+  flag_id: lista
+  flag_action: unflag

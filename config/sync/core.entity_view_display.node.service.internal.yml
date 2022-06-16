@@ -1,0 +1,79 @@
+uuid: cb75b8c8-f1f8-4113-810b-28d8d205b88c
+langcode: fi
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.internal
+    - field.field.node.service.field_accessibility
+    - field.field.node.service.field_client_consent
+    - field.field.node.service.field_client_consent_description
+    - field.field.node.service.field_contact_info
+    - field.field.node.service.field_contact_info_internal
+    - field.field.node.service.field_description
+    - field.field.node.service.field_implementation_extra_info
+    - field.field.node.service.field_life_situations
+    - field.field.node.service.field_poma_applicable
+    - field.field.node.service.field_poma_applicable_descriptio
+    - field.field.node.service.field_requirements
+    - field.field.node.service.field_service_guidance_guide
+    - field.field.node.service.field_service_implement
+    - field.field.node.service.field_service_links_external
+    - field.field.node.service.field_service_links_internal
+    - field.field.node.service.field_service_price
+    - field.field.node.service.field_service_radioactivity
+    - field.field.node.service.field_service_set
+    - field.field.node.service.field_service_time_and_location
+    - field.field.node.service.field_target_group
+    - node.type.service
+  module:
+    - user
+id: node.service.internal
+targetEntityType: node
+bundle: service
+mode: internal
+content:
+  field_description:
+    type: basic_string
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  content_moderation_control: true
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  field_accessibility: true
+  field_client_consent: true
+  field_client_consent_description: true
+  field_contact_info: true
+  field_contact_info_internal: true
+  field_implementation_extra_info: true
+  field_life_situations: true
+  field_poma_applicable: true
+  field_poma_applicable_descriptio: true
+  field_requirements: true
+  field_service_guidance_guide: true
+  field_service_implement: true
+  field_service_links_external: true
+  field_service_links_internal: true
+  field_service_location: true
+  field_service_obligations: true
+  field_service_price: true
+  field_service_radioactivity: true
+  field_service_set: true
+  field_service_time_and_location: true
+  field_tags: true
+  field_target_group: true
+  flag_cart: true
+  flag_flag_list_template_1: true
+  flag_lists: true
+  langcode: true
+  notifications_entity_view_1: true
+  search_api_excerpt: true

@@ -1,0 +1,68 @@
+<?php
+
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Url;
+use Drupal\Core\Link;
+
+/**
+ * Implements hook_entity_extra_field_info().
+ */
+function hel_tpm_general_entity_extra_field_info() {
+  $extra = [];
+
+  $extra['node']['service']['display']['view_mode_switcher'] = [
+    'label' => t('View mode switcher'),
+    'description' => t('Provides element to switch internal view mode'),
+    'weight' => 100,
+    'visible' => TRUE,
+  ];
+
+  return $extra;
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_view().
+ */
+function hel_tpm_general_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  if ($display->getComponent('view_mode_switcher')) {
+    $link = _hel_tpm_general_create_switcher_links($entity, $view_mode);
+    if (empty($link)) {
+      return;
+    }
+    $build['view_mode_switcher'] = [
+      '#type' => 'markup',
+      '#markup' => $link->toString(),
+    ];
+  }
+}
+
+/**
+ * Helper function to create switcher link.
+ *
+ * @param \Drupal\Core\Entity\EntityInterface $entity
+ * @param $view_mode
+ *
+ * @return \Drupal\Core\Link|null
+ */
+function _hel_tpm_general_create_switcher_links(EntityInterface $entity, $view_mode) {
+  $user = \Drupal::currentUser();
+  $routes = [
+    'internal' =>  [
+      'route' => 'entity.node.canonical',
+      'label' => 'Customer guide',
+    ],
+    'full' =>[
+      'route' => 'entity.node.canonical.internal',
+      'label' => 'Internal guide'
+    ]
+  ];
+  if (!$user->hasPermission('access internal service fields')) {
+    return NULL;
+  }
+
+  $route = $routes[$view_mode];
+
+  return Link::createFromRoute(t($route['label']), $route['route'], ['node' => $entity->id()]);
+
+}

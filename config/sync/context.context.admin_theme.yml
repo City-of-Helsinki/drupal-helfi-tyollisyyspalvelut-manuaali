@@ -1,0 +1,81 @@
+uuid: 236dfbda-0502-4374-b232-913c0d555bc4
+langcode: fi
+status: true
+dependencies:
+  config:
+    - system.menu.main
+  module:
+    - system
+label: Ylläpitoteema
+name: admin_theme
+group: null
+description: ''
+requireAllConditions: false
+disabled: false
+conditions:
+  current_theme:
+    id: current_theme
+    theme: claro
+    negate: 0
+    uuid: b51cddf6-e5e3-4346-ac95-90f8ef8d54f6
+    context_mapping: {  }
+reactions:
+  blocks:
+    id: blocks
+    uuid: f223b554-e3f0-43a9-b5fd-2828724ab81d
+    blocks:
+      85dc34c5-983c-4ba2-b80f-c930614ca971:
+        uuid: 85dc34c5-983c-4ba2-b80f-c930614ca971
+        id: 'system_menu_block:main'
+        label: Päävalikko
+        provider: system
+        label_display: visible
+        region: content
+        custom_id: system_menu_block_main
+        theme: stark
+        css_class: ''
+        unique: 0
+        context_id: admin_theme
+        context_mapping: {  }
+        level: '1'
+        depth: '0'
+        expand_all_items: 0
+        third_party_settings: {  }
+      014178cb-e040-43d4-860a-81ac6546d88c:
+        uuid: 014178cb-e040-43d4-860a-81ac6546d88c
+        id: 'system_menu_block:main'
+        label: Päävalikko
+        provider: system
+        label_display: visible
+        region: content
+        weight: '0'
+        custom_id: system_menu_block_main
+        theme: palvelumanuaali
+        css_class: ''
+        unique: 0
+        context_id: admin_theme
+        context_mapping: {  }
+        level: '1'
+        depth: '0'
+        expand_all_items: 0
+        third_party_settings: {  }
+      1bbdef3e-c139-4b2a-9791-acaa8e16c535:
+        uuid: 1bbdef3e-c139-4b2a-9791-acaa8e16c535
+        id: 'system_menu_block:main'
+        label: Päävalikko
+        provider: system
+        label_display: visible
+        region: content
+        custom_id: system_menu_block_main
+        theme: claro
+        css_class: ''
+        unique: 0
+        context_id: admin_theme
+        context_mapping: {  }
+        level: '1'
+        depth: '0'
+        expand_all_items: 0
+        third_party_settings: {  }
+    include_default_blocks: 1
+    saved: false
+weight: 0
