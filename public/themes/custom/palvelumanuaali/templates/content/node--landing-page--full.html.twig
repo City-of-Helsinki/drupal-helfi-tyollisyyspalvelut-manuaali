@@ -80,24 +80,6 @@
   } %}
     {% block paragraph %}
       {{ content.field_paragraph }}
-      {% include "@molecules/card/card.twig" with {
-        card__blockname: item.card__blockname,
-        card__modifiers: ['view-card'],
-        card__heading: 'Nuorten ammatillinen kuntoutus',
-        card__caption: 'Kelan ja työeläkelaitoksen palvelut',
-        card__caption__status: 'Julkaistu',
-        card__body: 'Korttinoston bodyn testipätkä on tässä kirjoitettuna',
-        card__date: 'Päivitetty 14.12.2021',
-      } %}
-      {% include "@molecules/card/card.twig" with {
-        card__blockname: item.card__blockname,
-        card__modifiers: ['view-card'],
-        card__heading: 'Nuorten ammatillinen kuntoutus',
-        card__caption: 'Kelan ja työeläkelaitoksen palvelut',
-        card__caption__status: 'Julkaistu',
-        card__body: 'Korttinoston bodyn testipätkä on tässä kirjoitettuna',
-        card__date: 'Päivitetty 14.12.2021',
-      } %}
     {% endblock %}
   {% endembed %}
 {% else %}

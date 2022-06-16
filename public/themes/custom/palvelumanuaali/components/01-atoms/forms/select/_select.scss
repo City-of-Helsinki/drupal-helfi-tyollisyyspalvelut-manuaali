@@ -69,20 +69,27 @@
 }
 
 .select--white-rounded {
-  background: clr(text-inverse);
-  border: 2px solid $blue40;
-  box-sizing: border-box;
-  border-radius: 8px;
-  margin: 0 8px;
-  height: 36px;
-  margin-top: auto;
-  margin-bottom: auto;
-  font-size: 14px;
-  line-height: 24px;
-  select {
-    height: 32px;
     position: relative;
+  select,
+  .select2 {
+    background: clr(text-inverse);
+    border: 2px solid $blue40;
+    box-sizing: border-box;
+    border-radius: 8px;
+    margin-top: auto;
+    margin-bottom: auto;
+    font-size: 14px;
+    line-height: 24px;
+    padding: 12px 12px 12px 16px;
     z-index: 20;
+    // height: 48px;
+    border-radius: 8px;
+    border: 2px solid $blue40;
+
+    .select2-selection {
+        line-height: 0;
+        min-height: 0;
+    }
   }
   .form-select {
     padding: 4px 48px 4px 24px;
@@ -96,4 +103,27 @@
       margin-top: 10px;
     }
   }
+}
+
+.select2-selection__choice {
+  background: $blue20 !important;
+  border-radius: 4px !important;
+  padding: 0px 24px 0px 16px !important;
+  line-height: 24px;
+  position: relative;
+  margin-top: 0 !important;
+  margin-bottom: 5px !important;
+  .select2-selection__choice__remove {
+    position: absolute;
+    right: 8px;
+    color: clr(text) !important;
+  }
+}
+
+.select2-dropdown {
+  margin: 0 !important;
+}
+
+.select2-container .select2-selection--single {
+  display: flex;
 }

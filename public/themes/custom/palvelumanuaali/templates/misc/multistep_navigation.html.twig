@@ -1,0 +1,23 @@
+<div class="node-service-edit-form-pager node-form prevent-scroll">
+    <div class="multistep-nav-wrapper">
+    {% for key, item in navigation %}
+        <div class="multistep-nav {% if item.active == true %} active {% endif %} {% if item.page_done == true %} done {% endif %}">
+          <div class="nav-icon">
+              {% if item.page_done == true %}
+              {% include "@atoms/images/icons/_icon.twig" with {
+                  icon_base_class: 'icon',
+                  icon_name: 'check-white',
+                  icon_modifiers: ['smaller'],
+              } %}
+              {% else %}
+                  {{ key + 1 }}
+              {% endif %}
+          </div>
+            {% if key + 1 < 4 %}
+              <hr/>
+            {% endif %}
+          <div class="label">{{ item.label|t }}</div>
+        </div>
+    {% endfor %}
+    </div>
+</div>
