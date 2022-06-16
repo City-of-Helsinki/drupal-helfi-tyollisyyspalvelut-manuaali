@@ -120,8 +120,8 @@ var map = {
 	"./icons/content-icons/uEA0C-external.svg": "./images/icons/content-icons/uEA0C-external.svg",
 	"./icons/content-icons/uEA0D-check.svg": "./images/icons/content-icons/uEA0D-check.svg",
 	"./icons/content-icons/uEA0E-arrow-left.svg": "./images/icons/content-icons/uEA0E-arrow-left.svg",
-	"./icons/content-icons/uEA0F-arrow-right.svg": "./images/icons/content-icons/uEA0F-arrow-right.svg",
 	"./icons/content-icons/uEA0E-heart.svg": "./images/icons/content-icons/uEA0E-heart.svg",
+	"./icons/content-icons/uEA0F-arrow-right.svg": "./images/icons/content-icons/uEA0F-arrow-right.svg",
 	"./icons/content-icons/uEA0F-heart-minus.svg": "./images/icons/content-icons/uEA0F-heart-minus.svg",
 	"./icons/content-icons/uEA10-viewmode.svg": "./images/icons/content-icons/uEA10-viewmode.svg",
 	"./icons/document.svg": "./images/icons/document.svg",
@@ -679,6 +679,22 @@ __webpack_require__.r(__webpack_exports__);
 /*!*********************************************************!*\
   !*** ./images/icons/content-icons/uEA0E-arrow-left.svg ***!
   \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+      id: "uEA0E-arrow-left-usage",
+      viewBox: "0 0 24 24",
+      url: __webpack_require__.p + "../dist/icons.svg#uEA0E-arrow-left",
+      toString: function () {
+        return this.url;
+      }
+    });
+
+/***/ }),
+
 /***/ "./images/icons/content-icons/uEA0E-heart.svg":
 /*!****************************************************!*\
   !*** ./images/icons/content-icons/uEA0E-heart.svg ***!
@@ -689,9 +705,6 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
-      id: "uEA0E-arrow-left-usage",
-      viewBox: "0 0 24 24",
-      url: __webpack_require__.p + "../dist/icons.svg#uEA0E-arrow-left",
       id: "uEA0E-heart-usage",
       viewBox: "0 0 24 22",
       url: __webpack_require__.p + "../dist/icons.svg#uEA0E-heart",
@@ -705,9 +718,6 @@ __webpack_require__.r(__webpack_exports__);
 /***/ "./images/icons/content-icons/uEA0F-arrow-right.svg":
 /*!**********************************************************!*\
   !*** ./images/icons/content-icons/uEA0F-arrow-right.svg ***!
-/***/ "./images/icons/content-icons/uEA0F-heart-minus.svg":
-/*!**********************************************************!*\
-  !*** ./images/icons/content-icons/uEA0F-heart-minus.svg ***!
   \**********************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -718,6 +728,23 @@ __webpack_require__.r(__webpack_exports__);
       id: "uEA0F-arrow-right-usage",
       viewBox: "0 0 24 24",
       url: __webpack_require__.p + "../dist/icons.svg#uEA0F-arrow-right",
+      toString: function () {
+        return this.url;
+      }
+    });
+
+/***/ }),
+
+/***/ "./images/icons/content-icons/uEA0F-heart-minus.svg":
+/*!**********************************************************!*\
+  !*** ./images/icons/content-icons/uEA0F-heart-minus.svg ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
       id: "uEA0F-heart-minus-usage",
       viewBox: "0 0 24 22",
       url: __webpack_require__.p + "../dist/icons.svg#uEA0F-heart-minus",
