@@ -1,0 +1,45 @@
+uuid: de506e01-a04b-41b6-b753-caf86392c625
+langcode: fi
+status: true
+dependencies:
+  config:
+    - system.menu.favorites
+  module:
+    - context
+    - system
+  theme:
+    - palvelumanuaali
+id: suosikit
+theme: palvelumanuaali
+region: header
+weight: -5
+provider: null
+plugin: 'system_menu_block:favorites'
+settings:
+  id: 'system_menu_block:favorites'
+  label: Suosikit
+  label_display: '0'
+  provider: system
+  level: 1
+  depth: 0
+  expand_all_items: false
+visibility:
+  context_all:
+    id: context_all
+    negate: null
+    values: ''
+  user_status:
+    id: user_status
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    user_status:
+      viewing_profile: '0'
+      logged_viewing_profile: '0'
+      own_page_true: '0'
+      field_value: '0'
+    user_fields: uid
+  context:
+    id: context
+    negate: null
+    values: ''

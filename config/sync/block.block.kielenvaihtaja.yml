@@ -1,0 +1,40 @@
+uuid: 8d4979a7-7eff-43da-a97d-9717ca78a479
+langcode: fi
+status: true
+dependencies:
+  module:
+    - context
+    - language
+  theme:
+    - palvelumanuaali
+id: kielenvaihtaja
+theme: palvelumanuaali
+region: header
+weight: -4
+provider: null
+plugin: 'language_block:language_interface'
+settings:
+  id: 'language_block:language_interface'
+  label: 'Kielen vaihtaja'
+  label_display: '0'
+  provider: language
+visibility:
+  context_all:
+    id: context_all
+    negate: null
+    values: ''
+  user_status:
+    id: user_status
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    user_status:
+      viewing_profile: '0'
+      logged_viewing_profile: '0'
+      own_page_true: '0'
+      field_value: '0'
+    user_fields: uid
+  context:
+    id: context
+    negate: null
+    values: ''

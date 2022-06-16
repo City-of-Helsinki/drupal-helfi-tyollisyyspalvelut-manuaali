@@ -3,10 +3,8 @@ langcode: fi
 status: true
 dependencies:
   config:
-    - system.menu.account
     - views.view.user_group_memberships
   module:
-    - system
     - user
     - views
 label: 'Sitewide logged-in'
@@ -29,24 +27,6 @@ reactions:
     id: blocks
     uuid: 792b4779-901f-4c7f-93f6-8bddfcee02b1
     blocks:
-      071aad4a-eb6c-4a74-a280-5abd25197db8:
-        uuid: 071aad4a-eb6c-4a74-a280-5abd25197db8
-        id: 'system_menu_block:account'
-        label: Käyttäjävalikko
-        provider: system
-        label_display: '0'
-        region: header
-        weight: '-10'
-        custom_id: system_menu_block_account
-        theme: palvelumanuaali
-        css_class: ''
-        unique: 0
-        context_id: sitewide_logged_in
-        context_mapping: {  }
-        level: '1'
-        depth: '0'
-        expand_all_items: 0
-        third_party_settings: {  }
       8eb1c746-aef3-4c5b-8d53-86aa4ec2d023:
         uuid: 8eb1c746-aef3-4c5b-8d53-86aa4ec2d023
         id: 'views_block:user_group_memberships-block_1'

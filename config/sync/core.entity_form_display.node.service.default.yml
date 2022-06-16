@@ -24,7 +24,9 @@ dependencies:
     - field.field.node.service.field_service_time_and_location
     - field.field.node.service.field_target_group
     - node.type.service
+    - workflows.workflow.service_moderation
   module:
+    - content_moderation
     - field_group
     - inline_entity_form
     - paragraphs
@@ -145,7 +147,15 @@ third_party_settings:
         - group_basic_info_1
         - group_basic_info_2
         - group_basic_info_3
-      label: Perustiedot
+        - title
+        - field_service_set
+        - field_description
+        - field_implementation_extra_info
+        - field_service_implement
+        - field_service_price
+        - field_target_group
+        - field_accessibility
+      label: 'Basic information'
       region: content
       parent_name: group_multistep_group
       weight: 20
@@ -532,12 +542,10 @@ content:
       include_locked: true
     third_party_settings: {  }
   moderation_state:
-    type: string_textfield
+    type: moderation_state_default
     weight: 3
     region: content
-    settings:
-      size: 60
-      placeholder: ''
+    settings: {  }
     third_party_settings: {  }
   status:
     type: boolean_checkbox
