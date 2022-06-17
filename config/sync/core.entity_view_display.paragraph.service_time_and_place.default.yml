@@ -7,14 +7,12 @@ dependencies:
     - core.date_format.time
     - date_recur.interpreter.default_interpreter
     - field.field.paragraph.service_time_and_place.field_dates
-    - field.field.paragraph.service_time_and_place.field_description
     - field.field.paragraph.service_time_and_place.field_service_languages
     - field.field.paragraph.service_time_and_place.field_service_location
     - paragraphs.paragraphs_type.service_time_and_place
   module:
     - date_recur
     - entity_reference_revisions
-    - text
 id: paragraph.service_time_and_place.default
 targetEntityType: paragraph
 bundle: service_time_and_place
@@ -34,13 +32,6 @@ content:
       interpreter: default_interpreter
     third_party_settings: {  }
     weight: 1
-    region: content
-  field_description:
-    type: text_default
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    weight: 2
     region: content
   field_service_languages:
     type: entity_reference_revisions_entity_view

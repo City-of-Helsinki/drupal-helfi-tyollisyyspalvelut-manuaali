@@ -123,6 +123,9 @@
   .service-time-and-place {
     display: flex;
     flex-wrap: wrap;
+    > article {
+      width: 100%;
+    }
     .field {
       margin-bottom: 0;
     }
@@ -152,6 +155,7 @@
     &.icon {
       width: 24px;
       order: unset;
+      margin-right: 16px;
     }
   }
 
