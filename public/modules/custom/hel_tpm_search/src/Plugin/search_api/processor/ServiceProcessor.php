@@ -71,7 +71,6 @@ class ServiceProcessor extends ProcessorPluginBase {
     $fields = $this->getFieldsHelper()
       ->filterForPropertyPath($fields, 'entity:node', 'hel_tpm_priority_boost');
     foreach ($fields as $field) {
-      $config = $field->getConfiguration();
       $field->addValue($priority_item);
     }
   }

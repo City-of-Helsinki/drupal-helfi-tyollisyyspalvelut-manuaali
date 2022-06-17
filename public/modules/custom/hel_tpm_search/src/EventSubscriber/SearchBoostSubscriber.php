@@ -40,19 +40,18 @@ class SearchBoostSubscriber implements EventSubscriberInterface {
         'function_score' => [
           'query' => $query['query'],
           'boost_mode' => 'sum',
-          'max_boost' => 10,
-          'min_score' => 0,
           'functions' => [
             [
               'field_value_factor' => [
                 'field' => 'hel_tpm_priority_boost',
-                'factor' => 0.00033,
+                'factor' => 1.5,
                 'missing' => 1,
+                'modifier' => "none"
               ],
-            ],
-          ],
-        ],
-      ],
+            ]
+          ]
+        ]
+      ]
     ];
 
     $event->setElasticSearchParams($q);
