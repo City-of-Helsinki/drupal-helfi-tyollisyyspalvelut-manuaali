@@ -2,3 +2,27 @@
 .form-item--checkbox__item {
   @include list-reset;
 }
+
+.form-item--checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+
+  >.form-item {
+    display: flex;
+    align-items: center;
+    width: 30ch;
+    input {
+      margin-right: $space-one-half;
+      width: 16px;
+      height: 16px;
+    }
+    label {
+      max-width: 30ch;
+      word-break: break-word;
+      width: 100%;
+      font-size: 14px;
+      line-height: 24px;
+      font-weight: 400;
+    }
+  }
+}

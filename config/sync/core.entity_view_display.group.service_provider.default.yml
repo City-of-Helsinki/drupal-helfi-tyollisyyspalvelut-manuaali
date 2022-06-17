@@ -3,6 +3,7 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - field.field.group.service_provider.field_group_prioritise_in_search
     - field.field.group.service_provider.field_responsible_authority
     - group.type.service_provider
 id: group.service_provider.default
@@ -10,6 +11,16 @@ targetEntityType: group
 bundle: service_provider
 mode: default
 content:
+  field_group_prioritise_in_search:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: -3
+    region: content
   field_responsible_authority:
     type: entity_reference_label
     label: above

@@ -36,7 +36,7 @@ services:
       command: chromedriver --log-path=/tmp/chromedriver.log --verbose --whitelisted-ips=
   elastic:
     type: elasticsearch:7
-    portforward: false
+    portforward: true
     mem: 1025m
 tooling:
   # Create additional commands for lando

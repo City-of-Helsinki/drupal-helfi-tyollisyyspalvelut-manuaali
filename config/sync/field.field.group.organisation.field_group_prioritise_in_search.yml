@@ -1,0 +1,23 @@
+uuid: d2014b79-57e1-47ba-9403-29763591dc84
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.group.field_group_prioritise_in_search
+    - group.type.organisation
+id: group.organisation.field_group_prioritise_in_search
+field_name: field_group_prioritise_in_search
+entity_type: group
+bundle: organisation
+label: 'Prioritise in search'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: Käytössä
+  off_label: 'Pois päältä'
+field_type: boolean
