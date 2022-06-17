@@ -57,7 +57,12 @@ function _hel_tpm_general_create_switcher_links(EntityInterface $entity, $view_m
       'label' => 'Internal guide'
     ]
   ];
+
   if (!$user->hasPermission('access internal service fields')) {
+    return NULL;
+  }
+
+  if (empty($routes[$view_mode])) {
     return NULL;
   }
 

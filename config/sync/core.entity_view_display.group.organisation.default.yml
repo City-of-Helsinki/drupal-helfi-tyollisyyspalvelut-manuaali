@@ -3,12 +3,23 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - field.field.group.organisation.field_group_prioritise_in_search
     - group.type.organisation
 id: group.organisation.default
 targetEntityType: group
 bundle: organisation
 mode: default
 content:
+  field_group_prioritise_in_search:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: -4
+    region: content
   label:
     type: string
     label: hidden
