@@ -3,9 +3,13 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - field.storage.group_content.field_service_owner
     - node.type.service
   module:
+    - better_exposed_filters
     - content_moderation
+    - group
+    - hel_tpm_general
     - node
     - user
 _core:
@@ -62,17 +66,130 @@ display:
           type: string
           settings:
             link_to_entity: true
-        type:
-          id: type
-          table: node_field_data
-          field: type
-          relationship: none
+        group_super_groups:
+          id: group_super_groups
+          table: groups
+          field: group_super_groups
+          relationship: gid
           group_type: group
           admin_label: ''
-          entity_type: node
-          entity_field: type
+          entity_type: group
+          plugin_id: hel_tpm_general_group_super_groups
+          label: 'Group Super Groups'
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+        label:
+          id: label
+          table: groups_field_data
+          field: label
+          relationship: gid
+          group_type: group
+          admin_label: ''
+          entity_type: group
+          entity_field: label
           plugin_id: field
-          label: Sisältötyyppi
+          label: 'Content Group'
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: true
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        field_service_owner:
+          id: field_service_owner
+          table: group_content__field_service_owner
+          field: field_service_owner
+          relationship: group_content
+          group_type: group
+          admin_label: ''
+          plugin_id: field
+          label: Owner
           exclude: false
           alter:
             alter_text: false
@@ -116,7 +233,7 @@ display:
           click_sort_column: target_id
           type: entity_reference_label
           settings:
-            link: false
+            link: true
           group_column: target_id
           group_columns: {  }
           group_rows: true
@@ -146,28 +263,6 @@ display:
           empty_zero: false
           hide_alter_empty: true
           type: user_name
-        status:
-          id: status
-          table: node_field_data
-          field: status
-          entity_type: node
-          entity_field: status
-          plugin_id: field
-          label: Tila
-          exclude: false
-          alter:
-            alter_text: false
-          element_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          type: boolean
-          settings:
-            format: custom
-            format_custom_false: Julkaisematon
-            format_custom_true: Julkaistu
         moderation_state:
           id: moderation_state
           table: node_field_data
@@ -231,6 +326,28 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
+        status:
+          id: status
+          table: node_field_data
+          field: status
+          entity_type: node
+          entity_field: status
+          plugin_id: field
+          label: Tila
+          exclude: false
+          alter:
+            alter_text: false
+          element_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          type: boolean
+          settings:
+            format: custom
+            format_custom_false: Julkaisematon
+            format_custom_true: Julkaistu
         changed:
           id: changed
           table: node_field_data
@@ -313,7 +430,7 @@ display:
             first: '« Ensimmäinen'
             last: 'Viimeinen »'
       exposed_form:
-        type: basic
+        type: bef
         options:
           submit_button: Suodatus
           reset_button: true
@@ -322,6 +439,29 @@ display:
           expose_sort_order: true
           sort_asc_label: Asc
           sort_desc_label: Desc
+          text_input_required: 'Valitse mikä tahansa suodatin ja klikkaa Suorita nähdäksesi tulokset'
+          text_input_required_format: null
+          bef:
+            general:
+              autosubmit: false
+              autosubmit_exclude_textfield: false
+              autosubmit_textfield_delay: 500
+              autosubmit_hide: false
+              input_required: false
+              allow_secondary: false
+              secondary_label: Lisävaihtoehdot
+              secondary_open: false
+            sort:
+              plugin_id: default
+            filter:
+              title:
+                plugin_id: default
+              status:
+                plugin_id: default
+              langcode:
+                plugin_id: default
+              gid:
+                plugin_id: default
       access:
         type: perm
         options:
@@ -637,6 +777,32 @@ display:
           admin_label: author
           plugin_id: standard
           required: true
+        group_content:
+          id: group_content
+          table: node_field_data
+          field: group_content
+          relationship: none
+          group_type: group
+          admin_label: 'Sisältö group content'
+          entity_type: node
+          plugin_id: group_content_to_entity_reverse
+          required: false
+          group_content_plugins:
+            'group_node:service': 'group_node:service'
+            'group_node:basic_page': '0'
+            'group_node:landing_page': '0'
+            'group_node:service_location': '0'
+        gid:
+          id: gid
+          table: group_content_field_data
+          field: gid
+          relationship: group_content
+          group_type: group
+          admin_label: Group
+          entity_type: group_content
+          entity_field: gid
+          plugin_id: standard
+          required: false
       show_admin_links: false
       display_extenders: {  }
     cache_metadata:
@@ -649,7 +815,8 @@ display:
         - user
         - 'user.node_grants:view'
         - user.permissions
-      tags: {  }
+      tags:
+        - 'config:field.storage.group_content.field_service_owner'
   page_1:
     id: page_1
     display_title: Page
@@ -683,4 +850,5 @@ display:
         - user
         - 'user.node_grants:view'
         - user.permissions
-      tags: {  }
+      tags:
+        - 'config:field.storage.group_content.field_service_owner'
