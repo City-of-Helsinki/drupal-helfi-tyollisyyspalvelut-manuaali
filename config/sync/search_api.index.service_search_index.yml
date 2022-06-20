@@ -24,6 +24,7 @@ dependencies:
     - content_moderation
     - paragraphs
     - search_api
+    - hel_tpm_search
 id: service_search_index
 name: 'Service search index'
 description: ''
@@ -146,6 +147,11 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_service_time_and_location
+  hel_tpm_priority_boost:
+    label: 'HEL TPM group priority boost'
+    datasource_id: 'entity:node'
+    property_path: hel_tpm_priority_boost
+    type: boolean
   moderation_state:
     label: 'Moderation state'
     datasource_id: 'entity:node'
@@ -272,6 +278,7 @@ processor_settings:
       - title
   language_with_fallback: {  }
   rendered_item: {  }
+  service_processor: {  }
   tokenizer:
     weights:
       preprocess_index: -49

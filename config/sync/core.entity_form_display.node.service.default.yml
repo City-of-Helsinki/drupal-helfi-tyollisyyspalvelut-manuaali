@@ -28,10 +28,10 @@ dependencies:
   module:
     - content_moderation
     - field_group
+    - inline_entity_form
     - paragraphs
-    - path
-    - radioactivity
     - redirect
+    - select2
     - text
 third_party_settings:
   field_group:
@@ -47,9 +47,7 @@ third_party_settings:
       format_settings:
         classes: ''
         show_empty_fields: false
-        id: ''
-        description: ''
-        required_fields: true
+        id: content-view-tabs
         direction: horizontal
         width_breakpoint: 640
     group_specialist:
@@ -94,7 +92,7 @@ third_party_settings:
       label: Consent
       region: content
       parent_name: group_specialist
-      weight: 11
+      weight: 14
       format_type: tab
       format_settings:
         classes: ''
@@ -110,7 +108,7 @@ third_party_settings:
       label: POMA
       region: content
       parent_name: group_specialist
-      weight: 12
+      weight: 16
       format_type: fieldset
       format_settings:
         classes: ''
@@ -146,14 +144,9 @@ third_party_settings:
         nonjs_multistep: false
     group_basic_information:
       children:
-        - title
-        - field_service_set
-        - field_description
-        - field_implementation_extra_info
-        - field_service_implement
-        - field_service_price
-        - field_target_group
-        - field_accessibility
+        - group_basic_info_1
+        - group_basic_info_2
+        - group_basic_info_3
       label: 'Basic information'
       region: content
       parent_name: group_multistep_group
@@ -197,12 +190,11 @@ third_party_settings:
       children:
         - langcode
         - moderation_state
-        - field_life_situations
         - field_requirements
       label: 'Additional info'
       region: content
       parent_name: group_multistep_group
-      weight: 23
+      weight: 24
       format_type: multipage
       format_settings:
         classes: ''
@@ -210,6 +202,72 @@ third_party_settings:
         id: ''
         description: ''
         required_fields: true
+    group_basic_info_1:
+      children:
+        - title
+        - field_description
+        - field_service_set
+        - field_service_implement
+        - field_service_price
+      label: Perustiedot
+      region: content
+      parent_name: group_basic_information
+      weight: 5
+      format_type: fieldset
+      format_settings:
+        classes: 'form-background--white form-background--regular-padding'
+        show_empty_fields: false
+        id: ''
+        description: ''
+        required_fields: false
+    group_basic_info_2:
+      children:
+        - field_life_situations
+        - field_target_group
+        - field_implementation_extra_info
+      label: Kohderyhmä
+      region: content
+      parent_name: group_basic_information
+      weight: 6
+      format_type: fieldset
+      format_settings:
+        classes: 'form-background--white form-background--regular-padding'
+        show_empty_fields: false
+        id: ''
+        description: ''
+        required_fields: true
+    group_basic_info_3:
+      children:
+        - field_accessibility
+      label: Saavutettavuus
+      region: content
+      parent_name: group_basic_information
+      weight: 9
+      format_type: fieldset
+      format_settings:
+        classes: 'form-background--white form-background--regular-padding'
+        show_empty_fields: false
+        id: ''
+        description: ''
+        required_fields: true
+    group_details_sidebar:
+      children:
+        - status
+        - created
+        - uid
+      label: details-sidebar
+      region: content
+      parent_name: ''
+      weight: 1
+      format_type: details_sidebar
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: details-sidebar
+        open: false
+        description: ''
+        required_fields: true
+        weight: 0
 id: node.service.default
 targetEntityType: node
 bundle: service
@@ -217,25 +275,29 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 3
+    weight: 5
     region: content
     settings: {  }
     third_party_settings: {  }
   field_accessibility:
+    type: select2_entity_reference
+    weight: 10
+    region: content
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
+    third_party_settings: {  }
+  field_client_consent:
     type: options_buttons
     weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_client_consent:
-    type: options_buttons
-    weight: 11
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   field_client_consent_description:
     type: paragraphs
-    weight: 12
+    weight: 11
     region: content
     settings:
       title: Paragraph
@@ -278,13 +340,13 @@ content:
     third_party_settings: {  }
   field_contact_info_internal:
     type: options_buttons
-    weight: 9
+    weight: 12
     region: content
     settings: {  }
     third_party_settings: {  }
   field_description:
     type: string_textarea
-    weight: 3
+    weight: 4
     region: content
     settings:
       rows: 5
@@ -297,15 +359,19 @@ content:
         maxlength_js_truncate_html: false
   field_implementation_extra_info:
     type: options_buttons
-    weight: 4
+    weight: 11
     region: content
     settings: {  }
     third_party_settings: {  }
   field_life_situations:
-    type: options_buttons
-    weight: 4
+    type: select2_entity_reference
+    weight: 9
     region: content
-    settings: {  }
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
     third_party_settings: {  }
   field_poma_applicable:
     type: options_buttons
@@ -352,7 +418,7 @@ content:
             selector: ''
   field_requirements:
     type: paragraphs
-    weight: 5
+    weight: 6
     region: content
     settings:
       title: Paragraph
@@ -371,7 +437,7 @@ content:
     third_party_settings: {  }
   field_service_guidance_guide:
     type: paragraphs
-    weight: 7
+    weight: 11
     region: content
     settings:
       title: Paragraph
@@ -389,7 +455,7 @@ content:
     third_party_settings: {  }
   field_service_implement:
     type: text_textarea
-    weight: 6
+    weight: 7
     region: content
     settings:
       rows: 5
@@ -403,80 +469,62 @@ content:
     third_party_settings: {  }
   field_service_links_internal:
     type: redirect_source
-    weight: 10
+    weight: 13
     region: content
     settings: {  }
     third_party_settings: {  }
   field_service_price:
-    type: paragraphs
-    weight: 7
-    region: content
-    settings:
-      title: 'Service price'
-      title_plural: 'Service prices'
-      edit_mode: closed
-      closed_mode: summary
-      autocollapse: all
-      closed_mode_threshold: 0
-      add_mode: dropdown
-      form_display_mode: default
-      default_paragraph_type: _none
-      features:
-        add_above: '0'
-        collapse_edit_all: collapse_edit_all
-        duplicate: duplicate
-    third_party_settings: {  }
-  field_service_radioactivity:
-    type: radioactivity_energy
-    weight: 6
-    region: content
-    settings:
-      energy: !!float 0
-      timestamp: '1645987165'
-    third_party_settings: {  }
-  field_service_set:
-    type: options_buttons
-    weight: 2
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  field_service_time_and_location:
-    type: paragraphs
-    weight: 18
-    region: content
-    settings:
-      title: Paragraph
-      title_plural: Paragraphs
-      edit_mode: open
-      closed_mode: summary
-      autocollapse: none
-      closed_mode_threshold: 0
-      add_mode: dropdown
-      form_display_mode: default
-      default_paragraph_type: service_time_and_place
-      features:
-        add_above: '0'
-        collapse_edit_all: collapse_edit_all
-        duplicate: duplicate
-    third_party_settings: {  }
-  field_target_group:
-    type: paragraphs
+    type: inline_entity_form_simple
     weight: 8
     region: content
     settings:
-      title: Paragraph
-      title_plural: Paragraphs
-      edit_mode: closed
-      closed_mode: summary
-      autocollapse: all
-      closed_mode_threshold: 0
-      add_mode: dropdown
-      form_display_mode: default
-      default_paragraph_type: _none
-      features:
-        add_above: '0'
-        collapse_edit_all: collapse_edit_all
-        duplicate: duplicate
+      form_mode: default
+      override_labels: false
+      label_singular: ''
+      label_plural: ''
+      collapsible: false
+      collapsed: false
+      revision: false
+    third_party_settings: {  }
+  field_service_set:
+    type: select2_entity_reference
+    weight: 6
+    region: content
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
+    third_party_settings: {  }
+  field_service_time_and_location:
+    type: inline_entity_form_complex
+    weight: 16
+    region: content
+    settings:
+      form_mode: default
+      override_labels: false
+      label_singular: ''
+      label_plural: ''
+      allow_new: true
+      allow_existing: false
+      match_operator: CONTAINS
+      allow_duplicate: false
+      collapsible: false
+      collapsed: false
+      revision: false
+    third_party_settings: {  }
+  field_target_group:
+    type: inline_entity_form_simple
+    weight: 10
+    region: content
+    settings:
+      form_mode: default
+      override_labels: false
+      label_singular: ''
+      label_plural: ''
+      collapsible: false
+      collapsed: false
+      revision: false
     third_party_settings: {  }
   langcode:
     type: language_select
@@ -491,52 +539,35 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  path:
-    type: path
-    weight: 7
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  promote:
-    type: options_buttons
+  status:
+    type: boolean_checkbox
     weight: 4
     region: content
-    settings: {  }
-    third_party_settings: {  }
-  status:
-    type: options_buttons
-    weight: 8
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  sticky:
-    type: options_buttons
-    weight: 5
-    region: content
-    settings: {  }
+    settings:
+      display_label: true
     third_party_settings: {  }
   title:
     type: string_textfield
-    weight: 1
+    weight: 3
     region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-  translation:
-    weight: 2
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   uid:
-    type: options_buttons
-    weight: 1
+    type: select2_entity_reference
+    weight: 6
     region: content
-    settings: {  }
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
     third_party_settings: {  }
-  url_redirects:
-    weight: 9
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-hidden: {  }
+hidden:
+  field_service_radioactivity: true
+  path: true
+  promote: true
+  sticky: true
+  translation: true
+  url_redirects: true

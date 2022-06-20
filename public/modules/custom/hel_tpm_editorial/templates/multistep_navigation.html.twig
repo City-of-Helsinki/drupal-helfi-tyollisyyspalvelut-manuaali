@@ -1,8 +1,13 @@
-<div class=" .node-service-edit-form .node-form .prevent-scroll">
-    {% for item in navigation %}
-        <li class="multistep-nav
-          {% if item.active == true %} active {% endif %}
-          {% if item.page_done == true %} done {% endif %}
-        "><span>{{ item.label|t }}</span></li>
+<div class="node-service-edit-form-pager node-form prevent-scroll">
+    <div class="multistep-nav-wrapper">
+    {% for key, item in navigation %}
+        <div class="multistep-nav {% if item.active == true %} active {% endif %} {% if item.page_done == true %} done {% endif %}">
+          <div class="nav-icon">{{ key + 1 }}</div>
+            {% if key + 1 < 4 %}
+              <hr/>
+            {% endif %}
+          <div class="label">{{ item.label|t }}</div>
+        </div>
     {% endfor %}
+    </div>
 </div>

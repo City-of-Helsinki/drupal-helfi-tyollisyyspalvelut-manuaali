@@ -26,7 +26,9 @@
 <div {{bem('term')}} >
   {{ title_prefix }}
   {% if name and not page %}
-    <p>{{"("}}<a href="{{ url }}">{{ name }}</a>{{")"}}</p>
+    {% if logged_in %}
+      <p>{{"("}}<a href="{{ url }}">{{ name }}</a>{{")"}}</p>
+    {% endif %}
   {% endif %}
   {{ title_suffix }}
   {{ content }}

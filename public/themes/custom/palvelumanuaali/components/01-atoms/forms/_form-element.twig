@@ -44,10 +44,15 @@
  * @see template_preprocess_form_element()
  */
 #}
+
+{%
+  set additional_class = additional_class
+%}
 {%
   set classes = [
     'js-form-item',
     'form-item',
+    additional_class,
   ]
 %}
 {%
@@ -57,6 +62,9 @@
   ]
 %}
 {% set form_element__base_class = 'form-item' %}
+{% if additional_class == "edit-advanced-form" %}
+<div class="edit-advanced-content-wrapper">
+{% endif %}
 <div{{ bem(form_element__base_class,form_element__modifiers,form_element__block_name,classes) }}>
   {% if label_display in ['before', 'invisible'] %}
     {{ label }}
@@ -87,3 +95,7 @@
     </div>
   {% endif %}
 </div>
+
+{% if additional_class == "edit-advanced-form" %}
+</div>
+{% endif %}
