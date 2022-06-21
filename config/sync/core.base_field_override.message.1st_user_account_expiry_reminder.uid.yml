@@ -1,0 +1,20 @@
+uuid: 5c7882a4-fd1e-477c-bd5c-5e1cca26c36b
+langcode: fi
+status: true
+dependencies:
+  config:
+    - message.template.1st_user_account_expiry_reminder
+id: message.1st_user_account_expiry_reminder.uid
+field_name: uid
+entity_type: message
+bundle: 1st_user_account_expiry_reminder
+label: 'Created by'
+description: 'The user that created the message.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: 'Drupal\message\Entity\Message::getCurrentUserId'
+settings:
+  handler: default
+  handler_settings: {  }
+field_type: entity_reference

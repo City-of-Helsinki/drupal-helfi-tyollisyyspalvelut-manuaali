@@ -1,0 +1,18 @@
+uuid: 8b88df18-4103-46bd-bf7c-0c62e6d8d864
+langcode: fi
+status: true
+dependencies:
+  config:
+    - notification_message.type.service_notification
+id: notification_message.service_notification.changed
+field_name: changed
+entity_type: notification_message
+bundle: service_notification
+label: Muuttunut
+description: 'Ajankohta jolloin solmua viimeksi muokattiin.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: changed

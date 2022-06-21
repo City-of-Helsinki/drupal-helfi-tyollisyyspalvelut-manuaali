@@ -1,0 +1,20 @@
+uuid: c6a9751a-1908-4519-a668-788a8dfd1c24
+langcode: fi
+status: true
+dependencies:
+  config:
+    - notification_message.type.service_notification
+  module:
+    - text
+id: notification_message.service_notification.message
+field_name: message
+entity_type: notification_message
+bundle: service_notification
+label: Viesti
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

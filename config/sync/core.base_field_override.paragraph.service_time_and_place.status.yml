@@ -1,0 +1,22 @@
+uuid: 72a0010d-c88f-4195-8d4a-9acfaf68e93e
+langcode: fi
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.service_time_and_place
+id: paragraph.service_time_and_place.status
+field_name: status
+entity_type: paragraph
+bundle: service_time_and_place
+label: Julkaistu
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: Käytössä
+  off_label: 'Pois päältä'
+field_type: boolean
