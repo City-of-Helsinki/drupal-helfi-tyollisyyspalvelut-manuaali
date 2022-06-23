@@ -2,14 +2,18 @@ uuid: 9b9906de-e177-4cf3-9ef0-c025bcf94b60
 langcode: en
 status: true
 dependencies:
+  config:
+    - filter.format.plain_text_format
   module:
     - field_permissions
+    - filter
     - paragraphs_type_permissions
 id: specialist
 label: Specialist
 weight: 5
 is_admin: null
 permissions:
+  - 'use text format plain_text_format'
   - 'view field_contact_info_internal'
   - 'view field_poma_applicable'
   - 'view field_service_guidance_guide'
