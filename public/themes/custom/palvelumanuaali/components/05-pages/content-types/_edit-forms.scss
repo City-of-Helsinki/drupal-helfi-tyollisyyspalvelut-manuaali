@@ -2,6 +2,12 @@
   background-color: clr(text-inverse);
 }
 
+.js-form-required::after {
+   content:" *";
+   color: red;
+   font-size: 12px;
+ }
+
 .form-background--regular-padding {
   @include large {
     padding: 48px 56px;
@@ -209,7 +215,7 @@
     label {
       font-size: 12px;
       &:after {
-        content: ":";
+        
       }
     }
   }
@@ -243,7 +249,7 @@
    .h2 {
      font-size: 12px !important;
      &::after {
-       content: ":";
+
      }
    }
 
