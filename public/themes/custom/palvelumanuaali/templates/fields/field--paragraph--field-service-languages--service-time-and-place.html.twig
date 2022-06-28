@@ -61,14 +61,16 @@
         icon_name: 'speech-bubble',
         icon_modifiers: ['small'],
       } %}
-      {% for item in items %}
-        <div{{ item.attributes.addClass('field__item') }}>
-          {{ item.content }}
-          {% if not loop.last %}
-            <p>{{","}}&nbsp;</p>
-          {% endif %}
-        </div>
-      {% endfor %}
+      <div class='languages-wrapper'>
+        {% for item in items %}
+          <div{{ item.attributes.addClass('field__item') }}>
+            {{ item.content }}
+            {% if not loop.last %}
+              <p>{{","}}&nbsp;</p>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
     </div>
   {% else %}
     {% include "@atoms/images/icons/_icon.twig" with {
@@ -76,14 +78,16 @@
       icon_name: 'speech-bubble',
       icon_modifiers: ['small'],
     } %}
-    {% for item in items %}
-      <div{{ attributes.addClass(classes, 'field__item') }}>
-        {{ item.content }}
-        {% if not loop.last %}
-          <p>{{","}}&nbsp;</p>
-        {% endif %}
-      </div>
-    {% endfor %}
+    <div class='languages-wrapper'>
+      {% for item in items %}
+        <div{{ attributes.addClass(classes, 'field__item') }}>
+          {{ item.content }}
+          {% if not loop.last %}
+            <p>{{","}}&nbsp;</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
   {% endif %}
 {% else %}
   <div{{ attributes.addClass(classes) }}>
@@ -96,14 +100,17 @@
     {% if multiple %}
       <div class="field__items">
     {% endif %}
-    {% for item in items %}
-      <div{{ item.attributes.addClass('field__item') }}>
-        {{ item.content }}
-        {% if not loop.last %}
-          <p>{{","}}&nbsp;</p>
-        {% endif %}
-      </div>
-    {% endfor %}
+
+    <div class='languages-wrapper'>
+      {% for item in items %}
+        <div{{ item.attributes.addClass('field__item') }}>
+          {{ item.content }}
+          {% if not loop.last %}
+            <p>{{","}}&nbsp;</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>  
     {% if multiple %}
       </div>
     {% endif %}

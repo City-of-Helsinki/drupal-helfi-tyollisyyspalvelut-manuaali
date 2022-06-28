@@ -32,7 +32,22 @@
       {% endif %}
       <ul {{ bem('list', [], status__base_class)}}>
         {% for message in messages %}
-          <li {{ bem(status__base_class, [type])}}>{{ message }}</li>
+          <li {{ bem(status__base_class, [type])}}>
+          {% if type == 'error' %}
+            {% include "@atoms/images/icons/_icon.twig" with {
+              icon_base_class: "icon",
+              icon_name: "warning",
+              icon_modifiers: ["medium","margin-right-double"],
+            } %}
+          {% else %}
+            {% include "@atoms/images/icons/_icon.twig" with {
+              icon_base_class: "icon",
+              icon_name: "info",
+              icon_modifiers: ["medium","margin-right-double"],
+            } %}
+          {% endif %}
+          {{ message }}
+          </li>
         {% endfor %}
       </ul>
     {% if type == 'error' %}

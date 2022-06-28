@@ -21,6 +21,10 @@ $settings['file_scan_ignore_directories'] = [
 
 $settings['config_sync_directory'] = '../config/sync';
 
+if (getenv('SYSTEM_SITE_FRONT')) {
+$config['system.site']['page']['front'] = getenv('SYSTEM_SITE_FRONT');
+}
+
 // Automatic Platform.sh settings.
 if (getenv('PLATFORM_VARIABLES')) {
   include $app_root . '/' . $site_path . '/settings.platformsh.php';
