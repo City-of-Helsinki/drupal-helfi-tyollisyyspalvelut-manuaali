@@ -9,19 +9,32 @@
   margin-bottom: $space-one-half;
   padding: $space-one-half;
   text-align: center;
+  border-radius: 8px;
+  padding-top: $space-one-and-half;
+  padding-bottom: $space-one-and-half;
+  @include basic-text;
+
+  em {
+    background-color: unset;
+    opacity: unset;
+    height: 26px;
+  }
 
   &--warning {
-    color: $gray;
-    background-color: clr(warning);
+    color: clr(footer-color);
+    background-color: clr(background-dropdown);
+    box-shadow: 0px 8px 16px rgba(30, 64, 182, 0.2);
   }
 
   &--error {
-    color: $gray;
-    background-color: clr(error);
+    color: clr(footer-color);
+    background-color: clr(background-dropdown);
+    box-shadow: 0px 8px 16px rgba(30, 64, 182, 0.2);
   }
 
   &--status {
-    color: $gray;
-    background-color: clr(message);
+    color: clr(footer-color);
+    background-color: clr(background-dropdown);
+    box-shadow: 0px 8px 16px rgba(30, 64, 182, 0.2);
   }
 }
