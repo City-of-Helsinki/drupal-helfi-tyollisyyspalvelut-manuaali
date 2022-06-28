@@ -10,7 +10,7 @@
   } %}
 
 
-{% block content %} {{content|without('flag_cart','flag_lists','view_mode_switcher')}}{% endblock %}
+{% block content %} {{content|without('flag_cart','flag_lists','view_mode_switcher', 'field_contact_info')}}{% endblock %}
   {% block page_content %}
     {% if service__updated  %}
       {% include "@atoms/text/text/01-paragraph.twig" with {
@@ -27,5 +27,7 @@
       }
     %}
   {% endblock %}
-
+  {% block page_sidebar %}
+    {{ content.field_contact_info }}
+  {% endblock %}
 {% endembed %}

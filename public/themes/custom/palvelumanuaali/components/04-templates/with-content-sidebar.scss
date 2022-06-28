@@ -1,3 +1,6 @@
 .content-sidebar {
   border-left: 4px solid clr(background);
+  @include xl {
+    padding: $space-one-and-half 0 $space-one-and-half $space-double;
+  }
 }
