@@ -10,7 +10,8 @@ function hel_tpm_editorial_entity_base_field_info_alter(&$fields, EntityTypeInte
 }
 
 function hel_tpm_editorial_form_views_exposed_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
-  if (isset($form['moderation_state'])) {
+  $view = $form_state->getStorage()['view'];
+  if (isset($form['moderation_state']) && $view->id() == "service_search") {
     $form['moderation_state']['#type'] = 'select';
     $form['moderation_state']['#options'] = [
       'published' => t('Published'),
