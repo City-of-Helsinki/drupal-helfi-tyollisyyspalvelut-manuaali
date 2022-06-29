@@ -33,4 +33,5 @@ if (getenv($elasticsearch_env_name)) {
   $config['elasticsearch_connector.cluster.search']['url'] = str_replace('tcp:', 'https:', getenv($elasticsearch_env_name));
   $config['elasticsearch_connector.cluster.search']['options']['username'] = getenv('ELASTICSEARCH_USER');
   $config['elasticsearch_connector.cluster.search']['options']['password'] = getenv('ELASTICSEARCH_PASSWORD');
+  $config['elasticsearch_connector.cluster.search']['options']['insecure'] = TRUE;
 }

@@ -1,0 +1,12 @@
+diff --git a/src/ElasticSearch/ClientManager.php b/src/ElasticSearch/ClientManager.php
+index afbfd23..6e5e05b 100644
+--- a/src/ElasticSearch/ClientManager.php
++++ b/src/ElasticSearch/ClientManager.php
+@@ -60,6 +60,7 @@ class ClientManager implements ClientManagerInterface {
+         'options' => [],
+         'curl' => [
+           CURLOPT_CONNECTTIMEOUT => (!empty($cluster->options['timeout']) ? $cluster->options['timeout'] : Cluster::ELASTICSEARCH_CONNECTOR_DEFAULT_TIMEOUT),
++          CURLOPT_SSL_VERIFYPEER => (!empty($cluster->options['insecure']) ? !$cluster->options['insecure'] : TRUE),
+         ],
+       ];
+ 
