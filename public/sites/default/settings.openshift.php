@@ -31,6 +31,7 @@ if ($ssl_ca_path = getenv('AZURE_SQL_SSL_CA_PATH')) {
 $elasticsearch_env_name = 'ELASTICSEARCH_TYOLLISYYSPTV_' . strtoupper(getenv('REDIS_PREFIX')) . '_ES_INTERNAL_HTTP_PORT';
 if (getenv($elasticsearch_env_name)) {
   $config['elasticsearch_connector.cluster.search']['url'] = str_replace('tcp:', 'https:', getenv($elasticsearch_env_name));
+  $config['elasticsearch_connector.cluster.search']['options']['use_authentication'] = TRUE;
   $config['elasticsearch_connector.cluster.search']['options']['username'] = getenv('ELASTICSEARCH_USER');
   $config['elasticsearch_connector.cluster.search']['options']['password'] = getenv('ELASTICSEARCH_PASSWORD');
   $config['elasticsearch_connector.cluster.search']['options']['insecure'] = TRUE;
