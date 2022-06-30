@@ -18,6 +18,10 @@ if [[ ! -z "${DRUPAL_CRON_KEY}" ]]; then
     drush sset system.cron_key ${DRUPAL_CRON_KEY}
 fi
 
+mkdir /usr/local/share/ca-certificates/extra
+echo "$ELASTICSEARCH_CA_CERT" > /usr/local/share/ca-certificates/extra/helfi-elasticsearch.crt
+update-ca-certificates
+
 echo "To install Drupal for the first time (clears database), execute"
 echo "drush site:install --existing-config"
 echo "in /var/www/html/public via the terminal"
