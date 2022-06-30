@@ -1,0 +1,20 @@
+uuid: 28786006-f74f-4ebd-81f1-af3f5ee7fcf8
+langcode: fi
+status: true
+dependencies:
+  config:
+    - notification_message.type.global
+id: notification_message.global.conditions_required
+field_name: conditions_required
+entity_type: notification_message
+bundle: global
+label: 'All conditions required'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: Käytössä
+  off_label: 'Pois päältä'
+field_type: boolean

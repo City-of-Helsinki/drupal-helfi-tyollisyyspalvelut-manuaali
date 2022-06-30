@@ -2,6 +2,12 @@
   background-color: clr(text-inverse);
 }
 
+.js-form-required::after {
+   content:" *";
+   color: red;
+   font-size: 12px;
+ }
+
 .form-background--regular-padding {
   @include large {
     padding: 48px 56px;
@@ -14,7 +20,8 @@
   border: 0;
 }
 
-.node-service-edit-form {
+.node-service-edit-form,
+.node-service-form {
   @extend .offset-lg-1;
   @extend .col-lg-10;
   display: grid;
@@ -145,6 +152,8 @@
     }
   }
 
+
+
   #edit-group-basic-information {
     background-color: unset;
     max-width: unset;
@@ -201,3 +210,59 @@
     grid-row:3;
   }
 }
+
+.node-form {
+  .form-item {
+    label {
+      font-size: 12px;
+      &:after {
+
+      }
+    }
+  }
+}
+
+#edit-field-service-price-wrapper {
+  padding-top: 8px;
+  legend {
+    display: none;
+  }
+  .field--type-boolean .form-item {
+    width: 100%;
+    display: flex;
+
+    input {
+      margin-right: 8px;
+      width: unset;
+    }
+
+    label {
+      font-weight: 400;
+    }
+  }
+}
+
+.field--name-field-target-group {
+ > fieldset {
+   > legend {
+     display: none !important;
+   }
+   .h2 {
+     font-size: 12px !important;
+     &::after {
+
+     }
+   }
+
+   }
+ }
+ .form-item--checkboxes {
+    .form-item {
+        width: 13ch;
+        label {
+          &::after {
+            content: unset !important;
+          }
+        }
+    }
+ }

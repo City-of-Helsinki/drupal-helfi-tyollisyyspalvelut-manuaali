@@ -160,6 +160,8 @@ third_party_settings:
         required_fields: true
     group_pla:
       children:
+        - field_service_implement
+        - field_implementation_extra_info
         - field_service_time_and_location
       label: 'Place and time'
       region: content
@@ -207,7 +209,6 @@ third_party_settings:
         - title
         - field_description
         - field_service_set
-        - field_service_implement
         - field_service_price
       label: Perustiedot
       region: content
@@ -224,7 +225,6 @@ third_party_settings:
       children:
         - field_life_situations
         - field_target_group
-        - field_implementation_extra_info
       label: Kohderyhmä
       region: content
       parent_name: group_basic_information
@@ -358,10 +358,14 @@ content:
         maxlength_js_enforce: true
         maxlength_js_truncate_html: false
   field_implementation_extra_info:
-    type: options_buttons
-    weight: 11
+    type: select2_entity_reference
+    weight: 7
     region: content
-    settings: {  }
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
     third_party_settings: {  }
   field_life_situations:
     type: select2_entity_reference
@@ -455,7 +459,7 @@ content:
     third_party_settings: {  }
   field_service_implement:
     type: text_textarea
-    weight: 7
+    weight: 6
     region: content
     settings:
       rows: 5
@@ -488,7 +492,7 @@ content:
     third_party_settings: {  }
   field_service_set:
     type: select2_entity_reference
-    weight: 6
+    weight: 5
     region: content
     settings:
       width: 100%
@@ -498,7 +502,7 @@ content:
     third_party_settings: {  }
   field_service_time_and_location:
     type: inline_entity_form_complex
-    weight: 16
+    weight: 8
     region: content
     settings:
       form_mode: default

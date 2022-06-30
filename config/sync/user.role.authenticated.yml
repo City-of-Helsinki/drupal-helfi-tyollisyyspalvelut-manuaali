@@ -3,11 +3,13 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - filter.format.plain_text_format
     - workflows.workflow.service_moderation
   module:
     - content_moderation
     - content_translation
     - entity_print_views
+    - filter
     - flag
     - flag_lists
     - hel_tpm_contact_info
@@ -36,6 +38,7 @@ permissions:
   - 'use service_moderation transition ready_to_publish'
   - 'use service_moderation transition ready_to_publish_to_draft'
   - 'use service_moderation transition temporarily_archived'
+  - 'use text format plain_text_format'
   - 'view contact info'
   - 'view flag lists'
   - 'view media'
