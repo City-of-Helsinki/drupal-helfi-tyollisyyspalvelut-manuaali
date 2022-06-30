@@ -1,0 +1,20 @@
+uuid: dc883f48-8a51-4227-bec6-fb32deb5f5fd
+langcode: fi
+status: true
+dependencies:
+  config:
+    - notification_message.type.service_notification
+id: notification_message.service_notification.conditions_required
+field_name: conditions_required
+entity_type: notification_message
+bundle: service_notification
+label: 'All conditions required'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: Käytössä
+  off_label: 'Pois päältä'
+field_type: boolean

@@ -1,0 +1,18 @@
+uuid: 3f7090f6-4f4c-4f5b-bfc1-ce227cb91a7c
+langcode: fi
+status: true
+dependencies:
+  config:
+    - message.template.1d_notification_expiry_reminder
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: false
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: message.1d_notification_expiry_reminder
+target_entity_type_id: message
+target_bundle: 1d_notification_expiry_reminder
+default_langcode: site_default
+language_alterable: false
