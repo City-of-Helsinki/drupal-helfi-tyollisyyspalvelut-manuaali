@@ -11,6 +11,8 @@ RUN chmod +x /entrypoints/20-deploy.sh
 
 COPY docker/openshift/entrypoints/10-es-cert.sh /entrypoints
 RUN chmod +x /entrypoints/10-es-cert.sh
+# Necessary for the ES cert adding.
+RUN apk add --no-cache su-exec
 
 # Copy cron scripts
 RUN mkdir /crons
