@@ -2,8 +2,11 @@ uuid: 98fb8284-43a2-4052-a9b5-fe024b492754
 langcode: fi
 status: true
 dependencies:
+  config:
+    - views.view.group_as_service_provider_services
   module:
     - group
+    - views
 label: 'Group links'
 name: group_links
 group: 'Front page'
@@ -31,8 +34,8 @@ reactions:
         label: 'Group operations'
         provider: group
         label_display: '0'
-        region: sidebar
-        weight: '0'
+        region: header
+        weight: '-9'
         custom_id: group_operations
         theme: palvelumanuaali
         css_class: ''
@@ -40,6 +43,23 @@ reactions:
         context_id: group_links
         context_mapping:
           group: '@group.group_route_context:group'
+        third_party_settings: {  }
+      f5c655ec-4d4e-4e9e-b808-3e9ab9d2d15d:
+        uuid: f5c655ec-4d4e-4e9e-b808-3e9ab9d2d15d
+        id: 'views_block:group_as_service_provider_services-block_1'
+        label: ''
+        provider: views
+        label_display: visible
+        region: content
+        weight: '0'
+        custom_id: views_block_group_as_service_provider_services_block_1
+        theme: palvelumanuaali
+        css_class: ''
+        unique: 0
+        context_id: group_links
+        context_mapping: {  }
+        views_label: ''
+        items_per_page: none
         third_party_settings: {  }
     include_default_blocks: 0
     saved: false

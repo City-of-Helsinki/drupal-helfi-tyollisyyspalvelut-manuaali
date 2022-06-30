@@ -3277,6 +3277,7 @@ display:
               allow_secondary: true
               secondary_label: Lisävaihtoehdot
               secondary_open: false
+              reset_button_always_show: false
             filter:
               search_api_fulltext:
                 plugin_id: default
@@ -3287,7 +3288,7 @@ display:
                   collapsible: false
                   is_secondary: true
               field_service_set:
-                plugin_id: default
+                plugin_id: bef_select2
                 advanced:
                   sort_options: false
                   rewrite:
