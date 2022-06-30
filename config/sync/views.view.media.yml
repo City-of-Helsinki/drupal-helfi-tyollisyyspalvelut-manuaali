@@ -5,8 +5,8 @@ dependencies:
   config:
     - image.style.thumbnail
   module:
-    - image
     - media
+    - svg_image
     - user
 _core:
   default_config_hash: XMFQya90W1qr0g4mSZ9p5TxBOCfn0aOs9pe17SKVTW0
@@ -135,6 +135,8 @@ display:
           settings:
             image_link: ''
             image_style: thumbnail
+            image_loading:
+              attribute: lazy
           group_column: ''
           group_columns: {  }
           group_rows: true
