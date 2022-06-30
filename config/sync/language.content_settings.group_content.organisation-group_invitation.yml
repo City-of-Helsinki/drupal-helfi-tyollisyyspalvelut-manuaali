@@ -1,0 +1,18 @@
+uuid: a121a422-6c63-4546-8f3b-f9b472b92841
+langcode: fi
+status: true
+dependencies:
+  config:
+    - group.content_type.organisation-group_invitation
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: false
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: group_content.organisation-group_invitation
+target_entity_type_id: group_content
+target_bundle: organisation-group_invitation
+default_langcode: site_default
+language_alterable: false

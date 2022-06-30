@@ -23,15 +23,8 @@
   * Implements hook_preprocess_block__language_switcher().
   */
 function palvelumanuaali_preprocess_block__language_block(&$variables) {
-  // Find the amount of translations current node has.
-  $node = \Drupal::routeMatch()->getParameter('node');
-  if (!empty($node)) {
-    $translation_languages = $node->getTranslationLanguages(TRUE);
-    $variables['lang_count'] = sizeof($translation_languages);
-  }
-  else {
-    $variables['lang_count'] = count($variables['content']['#links']);
-  }
+  // Set force lang count.
+  $variables['lang_count'] = 3;
  }
 
  /**
@@ -39,17 +32,6 @@ function palvelumanuaali_preprocess_block__language_block(&$variables) {
   */
  function palvelumanuaali_preprocess_links__language_block(&$variables) {
    $current_langcode = \Drupal::languageManager()->getCurrentLanguage()->getId();
-
-   // Hide language links to non-translated versions.
-   $node = \Drupal::routeMatch()->getParameter('node');
-   if (isset($node)) {
-     $translation_languages = $node->getTranslationLanguages(TRUE);
-     foreach ($variables['links'] as $langcode => $link) {
-       if (!array_key_exists($langcode, $translation_languages)) {
-         unset($variables['links'][$langcode]);
-       }
-     }
-   }
 
    // Add a new class to each link item and change the language link order:
    // move current language to first position.
@@ -131,7 +113,7 @@ function palvelumanuaali_theme_suggestions_views_view_field(array $variables) {
 }
 
 function palvelumanuaali_theme_suggestions_input_alter(&$suggestions, array $variables) {
-    if ($variables['theme_hook_original'] === "input__submit") {
+    if (!empty($variables['element']['#form_id']) && $variables['theme_hook_original'] === "input__submit") {
       $suggestions[] = 'input__' . $variables['element']['#type'] . '__' . $variables['element']['#form_id'];
     }
 }

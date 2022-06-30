@@ -1,0 +1,20 @@
+uuid: 18efc3be-1b48-45ed-915d-c1ca3e3f4081
+langcode: fi
+status: true
+dependencies:
+  module:
+    - flag_lists
+id: flag_list_item.flag_list_item.user_id
+field_name: user_id
+entity_type: flag_list_item
+bundle: flag_list_item
+label: Kirjoittanut
+description: 'The user ID of author of the Flag list item entity.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: default
+  handler_settings: {  }
+field_type: entity_reference
