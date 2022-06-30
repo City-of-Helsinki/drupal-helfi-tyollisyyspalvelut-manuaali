@@ -1,12 +1,12 @@
-uuid: e7a81af8-3025-49e1-a77d-0f1658234cc5
-langcode: en
+uuid: de56e7c7-22c2-4f1a-abe3-435a64dc50e7
+langcode: fi
 status: true
 dependencies:
   module:
     - entity_reference_revisions
     - field_permissions
-    - hel_tpm_contact_info
     - node
+    - paragraphs
 third_party_settings:
   field_permissions:
     permission_type: public
@@ -15,7 +15,7 @@ field_name: field_contact_info
 entity_type: node
 type: entity_reference_revisions
 settings:
-  target_type: contact_info
+  target_type: paragraph
 module: entity_reference_revisions
 locked: false
 cardinality: -1

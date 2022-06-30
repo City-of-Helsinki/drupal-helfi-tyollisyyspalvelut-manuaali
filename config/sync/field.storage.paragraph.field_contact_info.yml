@@ -1,24 +1,23 @@
-uuid: 3ab6029b-d66b-41a5-8083-536c97997ac0
-langcode: en
+uuid: 77d22e04-018d-451a-b4eb-e9cd4cbb822f
+langcode: fi
 status: true
 dependencies:
   module:
     - field_permissions
+    - hel_tpm_contact_info
     - paragraphs
 third_party_settings:
   field_permissions:
     permission_type: public
-id: paragraph.field_name
-field_name: field_name
+id: paragraph.field_contact_info
+field_name: field_contact_info
 entity_type: paragraph
-type: string
+type: entity_reference
 settings:
-  max_length: 255
-  case_sensitive: false
-  is_ascii: false
+  target_type: contact_info
 module: core
 locked: false
-cardinality: 1
+cardinality: -1
 translatable: true
 indexes: {  }
 persist_with_no_fields: false
