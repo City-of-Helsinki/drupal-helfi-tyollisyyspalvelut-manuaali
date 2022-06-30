@@ -9,6 +9,9 @@ RUN composer dump-autoload --optimize
 COPY docker/openshift/entrypoints/20-deploy.sh /entrypoints
 RUN chmod +x /entrypoints/20-deploy.sh
 
+COPY docker/openshift/entrypoints/10-es-cert.sh /entrypoints
+RUN chmod +x /entrypoints/10-es-cert.sh
+
 # Copy cron scripts
 RUN mkdir /crons
 COPY docker/openshift/crons/ /crons
