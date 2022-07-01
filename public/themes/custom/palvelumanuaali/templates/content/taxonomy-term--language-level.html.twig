@@ -27,17 +27,17 @@
   {{ title_prefix }}
   {% if name and not page %}
     {% if logged_in %}
-      <p>{{"("}}<a class="modal-link" type="button" data-bs-toggle="modal" data-bs-target="{{'#exampleModal-' ~ term.id}}">{{ name }}</a>{{")"}}</p>
+      <p>{{"("}}<a class="modal-link" type="button" data-bs-toggle="modal" data-bs-target="{{'#Modal-' ~ term.id}}">{{ name }}</a>{{")"}}</p>
     {% else %}
       <p>{{"(" ~ content.field_vernacular_title|render|striptags|trim|lower ~ ")"}}</p>
     {% endif %}
   {% endif %}
   {{ title_suffix }}
-  <div class="modal fade" id="{{'exampleModal-' ~ term.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="{{'Modal-' ~ term.id}}" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">{{content.field_vernacular_title}}</h5>
+        <h5 class="modal-title" id="ModalLabel">{{content.field_vernacular_title}}</h5>
         <button type="button" class="close visually-hidden" data-bs-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
