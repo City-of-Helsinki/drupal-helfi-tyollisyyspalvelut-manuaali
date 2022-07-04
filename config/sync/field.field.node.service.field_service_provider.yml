@@ -1,0 +1,31 @@
+uuid: cc523298-9d73-4927-8c1b-38e384d4bbae
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_service_provider
+    - group.type.organisation
+    - group.type.service_provider
+    - node.type.service
+id: node.service.field_service_provider
+field_name: field_service_provider
+entity_type: node
+bundle: service
+label: Palveluntarjoajat
+description: "Valitse palveluntarjoajat. \r\nPalvelu näkyy palveluntarjoajan listoilla mutta palveluntarjoajalla ei ole oikeutta muokata palvelun tietoja."
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:group'
+  handler_settings:
+    target_bundles:
+      organisation: organisation
+      service_provider: service_provider
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: organisation
+field_type: entity_reference

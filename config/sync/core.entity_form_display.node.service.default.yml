@@ -19,6 +19,7 @@ dependencies:
     - field.field.node.service.field_service_links_external
     - field.field.node.service.field_service_links_internal
     - field.field.node.service.field_service_price
+    - field.field.node.service.field_service_provider
     - field.field.node.service.field_service_radioactivity
     - field.field.node.service.field_service_set
     - field.field.node.service.field_service_time_and_location
@@ -193,6 +194,7 @@ third_party_settings:
         - langcode
         - moderation_state
         - field_requirements
+        - field_service_provider
       label: 'Additional info'
       region: content
       parent_name: group_multistep_group
@@ -255,7 +257,7 @@ third_party_settings:
         - status
         - created
         - uid
-      label: details-sidebar
+      label: Details
       region: content
       parent_name: ''
       weight: 1
@@ -321,6 +323,7 @@ content:
           dependee: field_client_consent
           settings:
             state: visible
+            reset: false
             condition: checked
             grouping: AND
             values_set: 1
@@ -331,7 +334,6 @@ content:
             effect: show
             effect_options: {  }
             selector: ''
-            reset: false
   field_contact_info:
     type: paragraphs
     weight: 26
@@ -421,6 +423,7 @@ content:
           dependee: field_poma_applicable
           settings:
             state: visible
+            reset: false
             condition: checked
             grouping: AND
             values_set: 1
@@ -431,10 +434,9 @@ content:
             effect: show
             effect_options: {  }
             selector: ''
-            reset: false
   field_requirements:
     type: paragraphs
-    weight: 6
+    weight: 4
     region: content
     settings:
       title: Paragraph
@@ -501,6 +503,16 @@ content:
       collapsible: false
       collapsed: false
       revision: false
+    third_party_settings: {  }
+  field_service_provider:
+    type: select2_entity_reference
+    weight: 5
+    region: content
+    settings:
+      width: 100%
+      autocomplete: true
+      match_operator: CONTAINS
+      match_limit: 10
     third_party_settings: {  }
   field_service_set:
     type: select2_entity_reference

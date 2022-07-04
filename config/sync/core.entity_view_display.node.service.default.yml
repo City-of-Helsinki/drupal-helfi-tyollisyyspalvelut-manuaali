@@ -19,6 +19,7 @@ dependencies:
     - field.field.node.service.field_service_links_external
     - field.field.node.service.field_service_links_internal
     - field.field.node.service.field_service_price
+    - field.field.node.service.field_service_provider
     - field.field.node.service.field_service_radioactivity
     - field.field.node.service.field_service_set
     - field.field.node.service.field_service_time_and_location
@@ -94,6 +95,14 @@ content:
       link: ''
     third_party_settings: {  }
     weight: 6
+    region: content
+  field_service_provider:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 102
     region: content
   field_service_time_and_location:
     type: entity_reference_revisions_entity_view
