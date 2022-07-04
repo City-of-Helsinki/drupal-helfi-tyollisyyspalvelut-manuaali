@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.taxonomy_term.language_level.field_example_situations
+    - field.field.taxonomy_term.language_level.field_vernacular_title
     - taxonomy.vocabulary.language_level
   module:
     - text
@@ -16,6 +17,14 @@ content:
     type: text_default
     label: hidden
     settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_vernacular_title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
     third_party_settings: {  }
     weight: 0
     region: content
