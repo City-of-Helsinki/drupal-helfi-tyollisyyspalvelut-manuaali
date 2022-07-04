@@ -29,7 +29,7 @@
     {% if logged_in %}
       <p>{{"("}}<a class="modal-link" type="button" data-bs-toggle="modal" data-bs-target="{{'#Modal-' ~ term.id}}">{{ name }}</a>{{")"}}</p>
     {% else %}
-      <p>{{"(" ~ content.field_vernacular_title|render|striptags|trim|lower ~ ")"}}</p>
+      <p>{{"("}}<a class="modal-link" type="button" data-bs-toggle="modal" data-bs-target="{{'#Modal-' ~ term.id}}">{{ content.field_vernacular_title|render|striptags|trim|lower  }}</a>{{")"}}</p>
     {% endif %}
   {% endif %}
   {{ title_suffix }}
