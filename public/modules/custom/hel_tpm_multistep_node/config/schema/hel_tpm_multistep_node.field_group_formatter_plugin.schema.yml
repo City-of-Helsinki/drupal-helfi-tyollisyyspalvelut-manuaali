@@ -1,0 +1,49 @@
+field_group.field_group_formatter_plugin.multipage_group:
+  type: field_group.field_group_formatter_plugin.base
+  label: 'Mapping for the multipage group formatter settings'
+  mapping:
+    description:
+      type: string
+      label: 'Group description'
+    page_header:
+      type: integer
+      label: 'Header type'
+    page_counter:
+      type: integer
+      label: 'Counter type'
+    move_button:
+      type: integer
+      label: 'Move submit button to last multipage'
+    ajaxify:
+      type: integer
+      label: 'If value 1 navigation to next/prev pages will be done using ajax instead of simple javascript'
+    scroll_top:
+      type: integer
+      label: 'Scroll to the top of the page on step change.'
+    button_label:
+      type: string
+      label: 'Change button label'
+    button_label_next:
+      type: string
+      label: 'Next button label'
+    button_label_prev:
+      type: string
+      label: 'Previous button label'
+    required_fields:
+      type: boolean
+      label: 'Mark for required fields'
+    nonjs_multistep:
+      type: boolean
+      label: 'Non Javascript Multistep'
+
+
+field_group.field_group_formatter_plugin.multipage:
+  type: field_group.field_group_formatter_plugin.base
+  label: 'Mapping for the multipage formatter settings'
+  mapping:
+    description:
+      type: string
+      label: 'Group description'
+    required_fields:
+      type: boolean
+      label: 'Non Javascript Multistep'

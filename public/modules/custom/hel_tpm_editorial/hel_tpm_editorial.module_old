@@ -2,7 +2,6 @@
 
 use Drupal\Core\Entity\EntityFormInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
-use Drupal\Core\Form\FormStateInterface;
 
 function hel_tpm_editorial_entity_base_field_info_alter(&$fields, EntityTypeInterface $entity_type) {
   if ($entity_type->id() == 'notification_message') {
@@ -11,8 +10,7 @@ function hel_tpm_editorial_entity_base_field_info_alter(&$fields, EntityTypeInte
 }
 
 function hel_tpm_editorial_form_views_exposed_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
-  $view = $form_state->getStorage()['view'];
-  if (isset($form['moderation_state']) && $view->id() == "service_search") {
+  if (isset($form['moderation_state'])) {
     $form['moderation_state']['#type'] = 'select';
     $form['moderation_state']['#options'] = [
       'published' => t('Published'),
@@ -20,6 +18,22 @@ function hel_tpm_editorial_form_views_exposed_form_alter(&$form, \Drupal\Core\Fo
     ];
     unset($form['moderation_state']['#size']);
   }
+}
+
+/**
+ * Implements hook_theme().
+ *
+ * @return array[]
+ */
+function hel_tpm_editorial_theme() {
+  return [
+    'multistep_navigation' => [
+      'template' => 'multistep_navigation',
+      'variables' => [
+        'navigation' => NULL,
+      ],
+    ]
+  ];
 }
 
 /**
@@ -31,14 +45,11 @@ function hel_tpm_editorial_form_views_exposed_form_alter(&$form, \Drupal\Core\Fo
  *
  * @return void
  */
-function hel_tpm_editorial_form_node_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
-  $bundle = $form_state->getStorage()['form_display']->getTargetBundle();
-
-  // Check that we alter only service bundle.
-  if ($bundle != 'service') {
-    return;
-  }
-
+function hel_tpm_editorial_form_node_service_edit_form_alter(&$form, &$form_state, $form_id) {
+  $form['paging_header'] = [
+    '#theme' => 'multistep_navigation',
+    '#navigation' => _hel_tpm_editorial_node_pager_navigation($form, $form_state)
+  ];
   $actions = $form['actions'];
   $weight = 999;
   $form['actions']['#weight'] = $weight--;
@@ -47,6 +58,7 @@ function hel_tpm_editorial_form_node_form_alter(&$form, FormStateInterface &$for
     '#weight' => $weight,
     '#attributes' => ['class' => ['page-controls']]
   ];
+
 
   $controls = ['next', 'prev'];
 
@@ -94,9 +106,11 @@ function _hel_tpm_editorial_multipage_form_validate($form, &$form_state) {
   if (!isset($parents_reverse[1])) {
     $parents_reverse[1] = '';
   }
-
-  _hel_tpm_editorial_negotiate_step($form_state, $parents_reverse);
-
+  if ($parents_reverse[1] == 'controls' && ($parents_reverse[0] == 'next' || $parents_reverse[0] == 'skip')) {
+    $increment = $form_state->get('field_group_ajaxified_multipage_step');
+    $increment++;
+    $form_state->set('field_group_ajaxified_multipage_step', $increment);
+  }
   if (!is_null($form_state->getValues())) {
     $values = $form_state->getValues();
     $allval = [];
@@ -133,8 +147,17 @@ function _hel_tpm_editorial_multipage_form_submit($form, &$form_state) {
     $triggeringelement = $form_state->getTriggeringElement();
     $parents_reverse = array_reverse($triggeringelement['#array_parents']);
   }
+  if ($parents_reverse[1] == 'controls' && ($parents_reverse[0] == 'prev')) {
 
-  _hel_tpm_editorial_negotiate_step($form_state, $parents_reverse);
+    /*
+     * @todo : when going back to previous step , clear the current step values
+     * to start fresh
+     *         when returning back. should be configurable
+     */
+    $decrement = $form_state->get('field_group_ajaxified_multipage_step');
+    $decrement--;
+    $form_state->set('field_group_ajaxified_multipage_step', $decrement);
+  }
 
   // If they're done, submit.
   if ($parents_reverse[1] == 'controls' && ($parents_reverse[0] == 'submit')) {
@@ -187,28 +210,7 @@ function _hel_tpm_editorial_node_pager_navigation($form, $form_state) {
   }
 
   return $navigation;
-}
 
-/**
- * @param \Drupal\Core\Form\FormStateInterface $form_state
- * @param $parents_reverse
- *
- * @return void
- */
-function _hel_tpm_editorial_negotiate_step(FormStateInterface &$form_state, $parents_reverse) {
-  $step = $form_state->get('field_group_ajaxified_multipage_step');
-
-  // Negotiate proper step.
-  if ($parents_reverse[1] == 'controls') {
-    if ($parents_reverse[0] == 'next' || $parents_reverse[0] == 'skip') {
-      $step++;
-    }
-
-    if ($parents_reverse[0] == 'prev') {
-      $step--;
-    }
-    $form_state->set('field_group_ajaxified_multipage_step', $step);
-  }
 }
 
 /**

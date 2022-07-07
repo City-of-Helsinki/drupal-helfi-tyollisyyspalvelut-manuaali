@@ -1,0 +1,58 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Hel tpm multistep node module.
+ *
+ * @DCG
+ * This file is no longer required in Drupal 8.
+ * @see https://www.drupal.org/node/2217931
+ */
+
+
+/**
+ * Implements hook_theme().
+ *
+ * @return array[]
+ */
+function hel_tpm_multistep_node_theme() {
+  return [
+    'multistep_navigation' => [
+      'template' => 'multistep_navigation',
+      'variables' => [
+        'navigation' => NULL,
+      ],
+    ]
+  ];
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function hel_tpm_multistep_node_form_alter(&$form, &$form_state, $form_id, $no_js_use = FALSE) {
+  $multistep_service = \Drupal::service('hel_tpm_multistep_node.multistep_node_service');
+
+  // Check multistep is enabled for current node form.
+  if (!$multistep_service->multistepEnabled($form)) {
+    return;
+  }
+
+  $step = _hel_tpm_multistep_node_current_step();
+
+  $multistep_service->renderStep($form, $form_state, $step);
+
+  $form = $form;
+}
+
+/**
+ * Get current multipage step.
+ *
+ * @return int
+ */
+function _hel_tpm_multistep_node_current_step() : int {
+  $step = \Drupal::request()->get('step');
+  if (empty($step)) {
+    $step = 0;
+  }
+  return $step;
+}

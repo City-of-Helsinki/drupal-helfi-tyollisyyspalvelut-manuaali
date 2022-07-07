@@ -11,8 +11,7 @@ function hel_tpm_editorial_entity_base_field_info_alter(&$fields, EntityTypeInte
 }
 
 function hel_tpm_editorial_form_views_exposed_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
-  $view = $form_state->getStorage()['view'];
-  if (isset($form['moderation_state']) && $view->id() == "service_search") {
+  if (isset($form['moderation_state'])) {
     $form['moderation_state']['#type'] = 'select';
     $form['moderation_state']['#options'] = [
       'published' => t('Published'),
@@ -20,6 +19,22 @@ function hel_tpm_editorial_form_views_exposed_form_alter(&$form, \Drupal\Core\Fo
     ];
     unset($form['moderation_state']['#size']);
   }
+}
+
+/**
+ * Implements hook_theme().
+ *
+ * @return array[]
+ */
+function hel_tpm_editorial_theme() {
+  return [
+    'multistep_navigation' => [
+      'template' => 'multistep_navigation',
+      'variables' => [
+        'navigation' => NULL,
+      ],
+    ]
+  ];
 }
 
 /**
@@ -31,14 +46,11 @@ function hel_tpm_editorial_form_views_exposed_form_alter(&$form, \Drupal\Core\Fo
  *
  * @return void
  */
-function hel_tpm_editorial_form_node_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
-  $bundle = $form_state->getStorage()['form_display']->getTargetBundle();
-
-  // Check that we alter only service bundle.
-  if ($bundle != 'service') {
-    return;
-  }
-
+function hel_tpm_editorial_form_node_service_edit_form_alter(&$form, &$form_state, $form_id) {
+  $form['paging_header'] = [
+    '#theme' => 'multistep_navigation',
+    '#navigation' => _hel_tpm_editorial_node_pager_navigation($form, $form_state)
+  ];
   $actions = $form['actions'];
   $weight = 999;
   $form['actions']['#weight'] = $weight--;
@@ -47,6 +59,7 @@ function hel_tpm_editorial_form_node_form_alter(&$form, FormStateInterface &$for
     '#weight' => $weight,
     '#attributes' => ['class' => ['page-controls']]
   ];
+
 
   $controls = ['next', 'prev'];
 
@@ -187,6 +200,7 @@ function _hel_tpm_editorial_node_pager_navigation($form, $form_state) {
   }
 
   return $navigation;
+
 }
 
 /**
