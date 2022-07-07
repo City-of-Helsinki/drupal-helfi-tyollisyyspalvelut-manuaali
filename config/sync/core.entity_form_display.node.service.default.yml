@@ -30,6 +30,7 @@ dependencies:
     - content_moderation
     - field_group
     - inline_entity_form
+    - maxlength
     - paragraphs
     - redirect
     - select2
@@ -581,7 +582,10 @@ content:
     settings:
       size: 60
       placeholder: ''
-    third_party_settings: {  }
+    third_party_settings:
+      maxlength:
+        maxlength_js: 120
+        maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
   uid:
     type: select2_entity_reference
     weight: 6
