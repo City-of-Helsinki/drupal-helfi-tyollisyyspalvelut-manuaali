@@ -93,7 +93,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-Drupal.behaviors.mainMenu={attach:function attach(a){var b=a.getElementById("toggle-expand"),c=a.getElementById("main-nav"),d=a.getElementById("additional-links-menu-nav");if(c){var e=c.getElementsByClassName("expand-sub");b.addEventListener("click",function(a){b&&b.classList.toggle("toggle-expand--open"),d&&d.classList.toggle("additional-links-menu-nav--open"),c.classList.toggle("main-nav--open"),a.preventDefault()}),Array.from(e).forEach(function(a){a.addEventListener("click",function(a){var b=a.currentTarget,c=b.nextElementSibling;b&&b.classList.toggle("expand-sub--open"),c&&c.classList.toggle("main-menu--sub-open")})})}}};
+Drupal.behaviors.mainMenu={attach:function attach(){var a=document.getElementById("toggle-expand"),b=document.getElementById("main-nav"),c=document.getElementById("additional-links-menu-nav");if("undefined"!=typeof b||null==b){var d=b.getElementsByClassName("expand-sub");a.addEventListener("click",function(d){a&&a.classList.toggle("toggle-expand--open"),c&&c.classList.toggle("additional-links-menu-nav--open"),b.classList.toggle("main-nav--open"),d.preventDefault()}),Array.from(d).forEach(function(a){a.addEventListener("click",function(a){var b=a.currentTarget,c=b.nextElementSibling;b&&b.classList.toggle("expand-sub--open"),c&&c.classList.toggle("main-menu--sub-open")})})}}};
 
 /***/ })
 

@@ -70,6 +70,8 @@
 
 .select--white-rounded {
     position: relative;
+
+
   select,
   .select2 {
     background: clr(text-inverse);
@@ -120,7 +122,8 @@
   }
 }
 
-.select2-selection__choice {
+.select2-selection__choice,
+.select2-selection--single .select2-selection__rendered {
   background: $blue20 !important;
   border-radius: 4px !important;
   padding: 0px 24px 0px 16px !important;
@@ -129,7 +132,7 @@
   margin-top: 0 !important;
   margin-bottom: 5px !important;
   font-size: 12px !important;
-  &:last-child {
+  &:nth-last-child(2) {
     margin-bottom: 0 !important;
   }
   .select2-selection__choice__remove {

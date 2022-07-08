@@ -1,19 +1,21 @@
-(function($, Drupal, drupalSettings, window, document) {
+(function($, Drupal, drupalSettings, window) {
   Drupal.behaviors.breadcrumbs = {
     attach(context, settings) {
-      let serviceView = context.getElementById("views-exposed-form-service-search-page-1");
-      let serviceNode = context.getElementById("service-page-full");
+      //tsekit näil
 
-      if(!serviceView ){
+        let serviceView = document.getElementById("views-exposed-form-service-search-page-1");
+        let serviceNode = document.getElementById("service-page-full");
+
+      if(typeof serviceView === 'undefined' || serviceView === null ){
           //#serviceViewID element DOES NOT exist
         if(serviceNode && localStorage.getItem("servicelist") != null) {
           //#serviceNode element exists and Servicelist has value
-          let breadcrumbElement = context.getElementById("page-breadcrumb");
-          let li = context.createElement("li");
+          let breadcrumbElement = document.getElementById("page-breadcrumb");
+          let li = document.createElement("li");
           li.className = 'breadcrumb__item';
           li.id = 'generated-service-path';
           breadcrumbElement.insertBefore(li, breadcrumbElement.children[1]);
-          let anchor = context.createElement("a");
+          let anchor = document.createElement("a");
           anchor.className = 'breadcrumb__link';
           anchor.setAttribute('href', localStorage.getItem("servicelist"));
           anchor.textContent = Drupal.t("Services");
