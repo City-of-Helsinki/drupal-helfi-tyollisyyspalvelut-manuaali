@@ -1,0 +1,35 @@
+uuid: dfa100f5-1ffa-48ff-b004-e3608369b3ab
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_age
+    - paragraphs.paragraphs_type.target_group
+  module:
+    - range
+id: paragraph.target_group.field_age
+field_name: field_age
+entity_type: paragraph
+bundle: target_group
+label: 'Kohderyhmän ikä'
+description: 'Kohderyhmän ikä. Näytetään vain asiantuntijoille'
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  field:
+    prefix: ''
+    suffix: vuotta
+  from:
+    prefix: ''
+    suffix: ''
+  to:
+    prefix: ''
+    suffix: ''
+  combined:
+    prefix: ''
+    suffix: ''
+field_type: range_integer
