@@ -9,7 +9,27 @@ dependencies:
     - paragraphs.paragraphs_type.service_time_and_place
   module:
     - date_recur_modular
-    - inline_entity_form
+    - field_group
+    - paragraphs
+    - select2
+third_party_settings:
+  field_group:
+    group_location:
+      children:
+        - field_service_location
+        - field_service_languages
+        - field_dates
+      label: ''
+      region: content
+      parent_name: ''
+      weight: 0
+      format_type: fieldset
+      format_settings:
+        classes: 'group--light-blue group--rounded-corners group--no-margin-bottom'
+        show_empty_fields: false
+        id: ''
+        description: ''
+        required_fields: true
 id: paragraph.service_time_and_place.default
 targetEntityType: paragraph
 bundle: service_time_and_place
@@ -17,32 +37,31 @@ mode: default
 content:
   field_dates:
     type: date_recur_modular_alpha
-    weight: 2
+    weight: 3
     region: content
     settings: {  }
     third_party_settings: {  }
   field_service_languages:
-    type: inline_entity_form_complex
+    type: entity_reference_paragraphs
+    weight: 2
+    region: content
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: button
+      form_display_mode: default
+      default_paragraph_type: service_language
+    third_party_settings: {  }
+  field_service_location:
+    type: select2_entity_reference
     weight: 1
     region: content
     settings:
-      form_mode: default
-      override_labels: false
-      label_singular: ''
-      label_plural: ''
-      allow_new: true
-      allow_existing: false
+      width: 100%
+      autocomplete: true
       match_operator: CONTAINS
-      allow_duplicate: false
-      collapsible: false
-      collapsed: false
-      revision: false
-    third_party_settings: {  }
-  field_service_location:
-    type: options_select
-    weight: 0
-    region: content
-    settings: {  }
+      match_limit: 10
     third_party_settings: {  }
 hidden:
   created: true

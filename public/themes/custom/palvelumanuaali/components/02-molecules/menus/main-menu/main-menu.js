@@ -1,9 +1,16 @@
 Drupal.behaviors.mainMenu = {
   attach(context) {
-    const toggleExpand = context.getElementById('toggle-expand');
-    const menu = context.getElementById('main-nav');
-    const additionalMenu = context.getElementById('additional-links-menu-nav');
-    if (menu) {
+
+      let toggleExpand = document.getElementById('toggle-expand');
+
+
+      let menu = document.getElementById('main-nav');
+
+      let additionalMenu = document.getElementById('additional-links-menu-nav');
+
+
+
+    if (typeof menu !== 'undefined' || menu == null) {
       const expandMenu = menu.getElementsByClassName('expand-sub');
 
       // Mobile Menu Show/Hide.
