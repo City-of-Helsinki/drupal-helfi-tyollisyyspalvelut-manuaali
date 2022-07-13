@@ -3,7 +3,6 @@
 
 {% extends "@atoms/links/link/link.twig" %}
   {% block link_content %}
-    {{ breakpoint() }}
     {% include "@atoms/images/image/responsive-image.twig" with {
       output_image_tag: true,
       image_src: sidebar__logo_src,
