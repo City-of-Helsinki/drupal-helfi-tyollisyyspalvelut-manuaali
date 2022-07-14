@@ -3,18 +3,34 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - field.field.paragraph.target_group.field_age
     - field.field.paragraph.target_group.field_age_groups
     - field.field.paragraph.target_group.field_description
     - field.field.paragraph.target_group.field_municipality
     - paragraphs.paragraphs_type.target_group
   module:
     - options
+    - range
     - text
 id: paragraph.target_group.default
 targetEntityType: paragraph
 bundle: target_group
 mode: default
 content:
+  field_age:
+    type: range_integer
+    label: above
+    settings:
+      range_separator: '-'
+      thousand_separator: ''
+      range_combine: true
+      field_prefix_suffix: false
+      from_prefix_suffix: false
+      to_prefix_suffix: false
+      combined_prefix_suffix: false
+    third_party_settings: {  }
+    weight: 4
+    region: content
   field_age_groups:
     type: list_default
     label: above

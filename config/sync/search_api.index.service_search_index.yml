@@ -16,6 +16,7 @@ dependencies:
     - field.storage.paragraph.field_service_location
     - field.storage.node.field_target_group
     - field.storage.paragraph.field_age_groups
+    - field.storage.paragraph.field_age
     - field.storage.paragraph.field_municipality
     - search_api.server.elastic_search
     - core.entity_view_mode.node.full
@@ -147,6 +148,17 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_service_time_and_location
+  from:
+    label: 'Target group » Paragraph » Kohderyhmän ikä » From value'
+    datasource_id: 'entity:node'
+    property_path: 'field_target_group:entity:field_age:from'
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_target_group
+        - field.storage.paragraph.field_age
+      module:
+        - paragraphs
   hel_tpm_priority_boost:
     label: 'HEL TPM group priority boost'
     datasource_id: 'entity:node'
@@ -209,6 +221,17 @@ field_settings:
     dependencies:
       module:
         - node
+  to:
+    label: 'Target group » Paragraph » Kohderyhmän ikä » To value'
+    datasource_id: 'entity:node'
+    property_path: 'field_target_group:entity:field_age:to'
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_target_group
+        - field.storage.paragraph.field_age
+      module:
+        - paragraphs
   uid:
     label: uid
     datasource_id: 'entity:node'
