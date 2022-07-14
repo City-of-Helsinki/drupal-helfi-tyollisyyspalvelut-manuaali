@@ -1,4 +1,4 @@
-FROM ghcr.io/city-of-helsinki/drupal-docker-base:7.4
+FROM ghcr.io/city-of-helsinki/drupal-docker-base:8.0
 
 COPY / /var/www/html/
 WORKDIR /var/www/html
