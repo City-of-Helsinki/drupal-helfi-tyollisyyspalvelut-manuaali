@@ -1,0 +1,17 @@
+uuid: 30098d8c-1bac-40a6-b923-ea50ad16eee8
+langcode: fi
+status: true
+dependencies:
+  module:
+    - content_translation
+    - flag_lists
+third_party_settings:
+  content_translation:
+    enabled: false
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: flag_list_item.flag_list_item
+target_entity_type_id: flag_list_item
+target_bundle: flag_list_item
+default_langcode: site_default
+language_alterable: false

@@ -123,6 +123,9 @@
   .service-time-and-place {
     display: flex;
     flex-wrap: wrap;
+    > article {
+      width: 100%;
+    }
     .field {
       margin-bottom: 0;
     }
@@ -151,8 +154,8 @@
     display: flex;
     &.icon {
       width: 24px;
-      margin-right: $space;
       order: unset;
+      margin-right: 16px;
     }
   }
 
@@ -160,8 +163,10 @@
     width: 50%;
     order: 3;
     display: flex;
+    flex-wrap: wrap;
     p {
-      margin-bottom: 0
+      margin-bottom: 0;
+      margin-left: 1px;
     }
     &.icon {
       width: 24px;
@@ -169,11 +174,18 @@
       order: unset;
       display: block;
     }
-    >.field__item {
-      display: flex;
+    >.languages-wrapper {
+      >.field__item {
+        display: flex;
+        flex-wrap: wrap;
+      }
     }
     .service-language {
       display: flex;
+
+    }
+    .field--name-field-language {
+      margin-right: 5px;
     }
   }
 

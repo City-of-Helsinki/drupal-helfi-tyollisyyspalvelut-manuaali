@@ -70,6 +70,8 @@
 
 .select--white-rounded {
     position: relative;
+
+
   select,
   .select2 {
     background: clr(text-inverse);
@@ -105,7 +107,23 @@
   }
 }
 
-.select2-selection__choice {
+.details-wrapper {
+  .select--white-rounded {
+    height: 100%;
+    select,
+    .select2 {
+      padding: 4px 48px 4px 24px;
+      // padding: 0;
+      height: 100%;
+      input {
+        width: 100% !important;
+      }
+    }
+  }
+}
+
+.select2-selection__choice,
+.select2-selection--single .select2-selection__rendered {
   background: $blue20 !important;
   border-radius: 4px !important;
   padding: 0px 24px 0px 16px !important;
@@ -113,6 +131,10 @@
   position: relative;
   margin-top: 0 !important;
   margin-bottom: 5px !important;
+  font-size: 12px !important;
+  &:nth-last-child(2) {
+    margin-bottom: 0 !important;
+  }
   .select2-selection__choice__remove {
     position: absolute;
     right: 8px;

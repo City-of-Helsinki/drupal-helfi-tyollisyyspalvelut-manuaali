@@ -43,7 +43,13 @@
     border-top-right-radius: 47px;
   }
 
-
+  #hel-tpm-search-autocomplete {
+    display: none;
+    @include large {
+      width: 374px;
+      display: block;
+    }
+  }
 
 }
 
@@ -185,8 +191,8 @@
 
 #block-kirjautuminen {
   @include large {
-    position: absolute;
-    right: 50px;
+    // position: absolute;
+    // right: 50px;
   }
   .dropdown-menu {
     margin-top: 70px !important;
@@ -347,12 +353,12 @@
     padding-top: 12px;
     padding-bottom: 12px;
     padding-left: 24px;
-
+    display: none;
     @include large {
-      width: 374px;
+      max-width: 374px;
     }
 
     @include  xl {
-      width: 576px;
+      max-width: 576px;
     }
 }

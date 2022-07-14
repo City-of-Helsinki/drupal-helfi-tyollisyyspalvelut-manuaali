@@ -19,6 +19,7 @@ dependencies:
     - field.field.node.service.field_service_links_external
     - field.field.node.service.field_service_links_internal
     - field.field.node.service.field_service_price
+    - field.field.node.service.field_service_provider
     - field.field.node.service.field_service_radioactivity
     - field.field.node.service.field_service_set
     - field.field.node.service.field_service_time_and_location
@@ -160,7 +161,10 @@ third_party_settings:
         required_fields: true
     group_pla:
       children:
+        - field_implementation_extra_info
+        - group_location
         - field_service_time_and_location
+        - field_service_implement
       label: 'Place and time'
       region: content
       parent_name: group_multistep_group
@@ -178,7 +182,7 @@ third_party_settings:
       label: 'Service description'
       region: content
       parent_name: group_multistep_group
-      weight: 22
+      weight: 23
       format_type: multipage
       format_settings:
         classes: ''
@@ -191,6 +195,7 @@ third_party_settings:
         - langcode
         - moderation_state
         - field_requirements
+        - field_service_provider
       label: 'Additional info'
       region: content
       parent_name: group_multistep_group
@@ -207,7 +212,6 @@ third_party_settings:
         - title
         - field_description
         - field_service_set
-        - field_service_implement
         - field_service_price
       label: Perustiedot
       region: content
@@ -224,7 +228,6 @@ third_party_settings:
       children:
         - field_life_situations
         - field_target_group
-        - field_implementation_extra_info
       label: Kohderyhmä
       region: content
       parent_name: group_basic_information
@@ -255,7 +258,7 @@ third_party_settings:
         - status
         - created
         - uid
-      label: details-sidebar
+      label: Details
       region: content
       parent_name: ''
       weight: 1
@@ -333,10 +336,22 @@ content:
             effect_options: {  }
             selector: ''
   field_contact_info:
-    type: options_buttons
-    weight: 8
+    type: paragraphs
+    weight: 26
     region: content
-    settings: {  }
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      closed_mode: summary
+      autocollapse: none
+      closed_mode_threshold: 0
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+      features:
+        collapse_edit_all: collapse_edit_all
+        duplicate: duplicate
     third_party_settings: {  }
   field_contact_info_internal:
     type: options_buttons
@@ -358,10 +373,14 @@ content:
         maxlength_js_enforce: true
         maxlength_js_truncate_html: false
   field_implementation_extra_info:
-    type: options_buttons
-    weight: 11
+    type: select2_entity_reference
+    weight: 16
     region: content
-    settings: {  }
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
     third_party_settings: {  }
   field_life_situations:
     type: select2_entity_reference
@@ -418,7 +437,7 @@ content:
             selector: ''
   field_requirements:
     type: paragraphs
-    weight: 6
+    weight: 11
     region: content
     settings:
       title: Paragraph
@@ -455,7 +474,7 @@ content:
     third_party_settings: {  }
   field_service_implement:
     type: text_textarea
-    weight: 7
+    weight: 19
     region: content
     settings:
       rows: 5
@@ -463,7 +482,7 @@ content:
     third_party_settings: {  }
   field_service_links_external:
     type: redirect_source
-    weight: 9
+    weight: 28
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -486,9 +505,19 @@ content:
       collapsed: false
       revision: false
     third_party_settings: {  }
+  field_service_provider:
+    type: select2_entity_reference
+    weight: 12
+    region: content
+    settings:
+      width: 100%
+      autocomplete: true
+      match_operator: CONTAINS
+      match_limit: 10
+    third_party_settings: {  }
   field_service_set:
     type: select2_entity_reference
-    weight: 6
+    weight: 5
     region: content
     settings:
       width: 100%
@@ -497,21 +526,16 @@ content:
       match_limit: 10
     third_party_settings: {  }
   field_service_time_and_location:
-    type: inline_entity_form_complex
-    weight: 16
+    type: entity_reference_paragraphs
+    weight: 18
     region: content
     settings:
-      form_mode: default
-      override_labels: false
-      label_singular: ''
-      label_plural: ''
-      allow_new: true
-      allow_existing: false
-      match_operator: CONTAINS
-      allow_duplicate: false
-      collapsible: false
-      collapsed: false
-      revision: false
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: button
+      form_display_mode: default
+      default_paragraph_type: service_time_and_place
     third_party_settings: {  }
   field_target_group:
     type: inline_entity_form_simple
@@ -528,14 +552,14 @@ content:
     third_party_settings: {  }
   langcode:
     type: language_select
-    weight: 2
+    weight: 9
     region: content
     settings:
       include_locked: true
     third_party_settings: {  }
   moderation_state:
     type: moderation_state_default
-    weight: 3
+    weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }

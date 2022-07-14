@@ -85,6 +85,47 @@
     }
   }
 
+  .field--name-field-contact-info {
+    >.field__label {
+      font-weight: 600;
+      font-size: 24px;
+      line-height: 32px;
+      margin-bottom: 40px;
+    }
+
+    >.field__items {
+      >.field__item {
+        margin-bottom: 40px;
+      }
+    }
+
+    .field--name-field-municipality-name {
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 24px;
+      margin-bottom: $space;
+      &::after {
+        content: ":";
+      }
+    }
+
+    .field--name-field-description-plain {
+      margin-bottom: $space;
+
+    }
+
+    .field--name-field-contact-info {
+      >.field__item,
+      >.field__items >.field__item {
+        margin-bottom: $space;
+      }
+    }
+
+    .field--name-field-contact-name {
+      font-weight: 600;
+    }
+
+  }
 }
 
 .field--name-field-service-links-external {

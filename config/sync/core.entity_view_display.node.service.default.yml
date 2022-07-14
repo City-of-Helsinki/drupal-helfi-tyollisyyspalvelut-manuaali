@@ -19,6 +19,7 @@ dependencies:
     - field.field.node.service.field_service_links_external
     - field.field.node.service.field_service_links_internal
     - field.field.node.service.field_service_price
+    - field.field.node.service.field_service_provider
     - field.field.node.service.field_service_radioactivity
     - field.field.node.service.field_service_set
     - field.field.node.service.field_service_time_and_location
@@ -49,7 +50,7 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 12
+    weight: 101
     region: content
   field_description:
     type: basic_string
@@ -95,6 +96,14 @@ content:
     third_party_settings: {  }
     weight: 6
     region: content
+  field_service_provider:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 102
+    region: content
   field_service_time_and_location:
     type: entity_reference_revisions_entity_view
     label: hidden
@@ -123,6 +132,11 @@ content:
     third_party_settings: {  }
     weight: 2
     region: content
+  flag_lista:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 10
+    region: content
   flag_lists:
     settings: {  }
     third_party_settings: {  }
@@ -137,6 +151,11 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 4
+    region: content
+  view_mode_switcher:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
     region: content
 hidden:
   content_moderation_control: true

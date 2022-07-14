@@ -1,0 +1,43 @@
+
+.modal-link {
+  color: clr(background-section);
+  text-decoration: underline;
+}
+
+.modal {
+  .modal-title {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 24px;
+    color: clr(alt-header-color);
+  }
+
+  .modal-content {
+    /* Primary/Blue 5 */
+    background: clr(background-dropdown);
+    padding: $space-one-and-half;
+    /* Selected */
+    box-shadow: 0px 8px 16px rgba(30, 64, 182, 0.2);
+    border: 0;
+    border-radius: 8px;
+  }
+
+  .modal-header {
+    padding: 0;
+    border-bottom: 0;
+
+  }
+
+  .modal-body {
+    padding-left: 0;
+    padding-right: 0;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    color: clr(text);
+  }
+
+  .modal-footer {
+
+  }
+}

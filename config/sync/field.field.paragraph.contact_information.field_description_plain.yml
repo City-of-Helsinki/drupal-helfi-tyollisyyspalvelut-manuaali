@@ -1,19 +1,19 @@
-uuid: 0e91e72a-800d-4535-86e7-852ca179bb1f
-langcode: en
+uuid: 6071992b-6ccf-49cf-a436-6f1104e1ac71
+langcode: fi
 status: true
 dependencies:
   config:
-    - field.storage.paragraph.field_name
+    - field.storage.paragraph.field_description_plain
     - paragraphs.paragraphs_type.contact_information
-id: paragraph.contact_information.field_name
-field_name: field_name
+id: paragraph.contact_information.field_description_plain
+field_name: field_description_plain
 entity_type: paragraph
 bundle: contact_information
-label: Name
+label: Kuvaus
 description: ''
 required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
 settings: {  }
-field_type: string
+field_type: string_long

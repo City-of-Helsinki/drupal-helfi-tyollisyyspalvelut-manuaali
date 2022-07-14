@@ -1,0 +1,20 @@
+uuid: b79e4192-103e-4be1-9075-807e5e125832
+langcode: fi
+status: true
+dependencies:
+  config:
+    - flag_lists.flagging_collection_type.flagging_collection_type_1
+id: flagging_collection.flagging_collection_type_1.user_id
+field_name: user_id
+entity_type: flagging_collection
+bundle: flagging_collection_type_1
+label: Kirjoittanut
+description: 'The user ID of author of the Flagging collection entity.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: default
+  handler_settings: {  }
+field_type: entity_reference

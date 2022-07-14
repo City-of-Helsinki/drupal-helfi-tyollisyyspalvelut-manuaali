@@ -17,7 +17,7 @@ mode: default
 content:
   field_contact_name:
     type: string
-    label: above
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
@@ -25,14 +25,14 @@ content:
     region: content
   field_contact_phone:
     type: telephone_link
-    label: above
+    label: hidden
     settings:
       title: ''
     third_party_settings: {  }
     weight: 2
     region: content
   field_email:
-    type: basic_string
+    type: email_mailto
     label: hidden
     settings: {  }
     third_party_settings: {  }

@@ -1,28 +1,49 @@
-uuid: 60d4c3e7-e097-4f4a-93ea-2a401eeabd93
-langcode: en
+uuid: 76d4eb5b-f996-4d46-b93b-09c2e0575e26
+langcode: fi
 status: true
 dependencies:
   config:
     - field.storage.node.field_contact_info
     - node.type.service
+    - paragraphs.paragraphs_type.contact_information
   module:
     - entity_reference_revisions
 id: node.service.field_contact_info
 field_name: field_contact_info
 entity_type: node
 bundle: service
-label: 'Contact info'
+label: Yhteystiedot
 description: ''
-required: true
-translatable: true
+required: false
+translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
-  handler: 'default:contact_info'
+  handler: 'default:paragraph'
   handler_settings:
-    target_bundles: null
-    sort:
-      field: _none
-      direction: ASC
-    auto_create: true
+    target_bundles:
+      contact_information: contact_information
+    negate: 0
+    target_bundles_drag_drop:
+      contact_information:
+        weight: 8
+        enabled: true
+      content:
+        weight: 9
+        enabled: false
+      content_list_lift_header_icon:
+        weight: 10
+        enabled: false
+      service_language:
+        weight: 11
+        enabled: false
+      service_price:
+        weight: 12
+        enabled: false
+      service_time_and_place:
+        weight: 13
+        enabled: false
+      target_group:
+        weight: 14
+        enabled: false
 field_type: entity_reference_revisions

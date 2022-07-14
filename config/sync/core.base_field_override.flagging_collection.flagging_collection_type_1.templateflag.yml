@@ -1,0 +1,20 @@
+uuid: 872a1e1b-97a2-4c73-be76-bd0eccbbcaf9
+langcode: fi
+status: true
+dependencies:
+  config:
+    - flag_lists.flagging_collection_type.flagging_collection_type_1
+id: flagging_collection.flagging_collection_type_1.templateflag
+field_name: templateflag
+entity_type: flagging_collection
+bundle: flagging_collection_type_1
+label: 'Base flag'
+description: 'The flag list used as base'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: default
+  handler_settings: {  }
+field_type: entity_reference

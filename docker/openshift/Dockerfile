@@ -1,4 +1,4 @@
-FROM ghcr.io/city-of-helsinki/drupal-docker-base:7.4
+FROM ghcr.io/city-of-helsinki/drupal-docker-base:8.0
 
 COPY / /var/www/html/
 WORKDIR /var/www/html
@@ -8,6 +8,11 @@ RUN composer dump-autoload --optimize
 # Copy deploy script
 COPY docker/openshift/entrypoints/20-deploy.sh /entrypoints
 RUN chmod +x /entrypoints/20-deploy.sh
+
+COPY docker/openshift/entrypoints/10-es-cert.sh /entrypoints
+RUN chmod +x /entrypoints/10-es-cert.sh
+# Necessary for the ES cert adding.
+RUN apk add --no-cache su-exec
 
 # Copy cron scripts
 RUN mkdir /crons

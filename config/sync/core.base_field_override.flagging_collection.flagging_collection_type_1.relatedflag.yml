@@ -1,0 +1,20 @@
+uuid: 83f64cd2-a461-4e75-ade9-fc33bdd6ae11
+langcode: fi
+status: true
+dependencies:
+  config:
+    - flag_lists.flagging_collection_type.flagging_collection_type_1
+id: flagging_collection.flagging_collection_type_1.relatedflag
+field_name: relatedflag
+entity_type: flagging_collection
+bundle: flagging_collection_type_1
+label: 'Related flag'
+description: 'The related flag used for for this list'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: default
+  handler_settings: {  }
+field_type: entity_reference

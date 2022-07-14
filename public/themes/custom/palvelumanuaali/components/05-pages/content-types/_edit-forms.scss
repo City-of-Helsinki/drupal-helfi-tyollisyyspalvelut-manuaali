@@ -2,6 +2,26 @@
   background-color: clr(text-inverse);
 }
 
+.group--light-blue {
+  border: 2px solid $blue20;
+  background-color: $blue05;
+  padding: $space-one-and-half $space-one-and-half $space-double $space-one-and-half;
+}
+
+.group--rounded-corners {
+  border-radius: 8px;
+}
+
+.group--no-margin-bottom {
+  margin-bottom: 0;
+}
+
+.js-form-required::after {
+   content:" *";
+   color: red;
+   font-size: 12px;
+ }
+
 .form-background--regular-padding {
   @include large {
     padding: 48px 56px;
@@ -14,13 +34,16 @@
   border: 0;
 }
 
-.node-service-edit-form {
+.node-service-edit-form,
+.node-service-form {
   @extend .offset-lg-1;
   @extend .col-lg-10;
   display: grid;
   grid-template-columns: 7fr 3fr;
   grid-column-gap: 24px;
-
+  .field-multiple-drag {
+    display: none;
+  }
   .horizontal-tabs {
 
     .horizontal-tabs-list {
@@ -58,14 +81,26 @@
   }
 
   .field--name-field-service-time-and-location {
-
+    margin-bottom: $space-triple !important;
     .button {
       @include button-medium;
-      @include button-no-color;
+      @include button-color-blue;
       @include button-round-corners;
       border: 2px solid $blue100;
     }
+    > div > div  > .paragraphs-dropbutton-wrapper {
 
+    }
+
+    > div > div  > table > tbody > tr > .table__cell > div > div  {
+      position: relative;
+    }
+
+    > div > div  > table > tbody > tr > .table__cell > div > div > .paragraph-type-top {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
   }
 
   .field-add-more-submit,
@@ -76,7 +111,6 @@
     border: 2px solid $blue100;
   }
 
-  .field-group-fieldset
 
   .date-recur-modular-alpha-widget {
     display: flex;
@@ -142,8 +176,88 @@
         line-height: 32px;
       }
 
+      &.field--name-field-implementation-extra-info  {
+        margin-bottom: $space-triple;
+      }
+
+      &.group--rounded-corners {
+        margin-bottom: 3rem;
+      }
+    }
+
+    table,
+    tbody,
+    thead,
+    tr,
+    td {
+      display: block;
+      width: 100%;
+    }
+
+    .table__heading-cell,
+    .field-multiple-drag,
+    .tabledrag-toggle-weight-wrapper  {
+      display: none;
+    }
+
+    tbody {
+      border-top: 0;
+    }
+
+    .paragraph-type-title {
+      display: none;
+    }
+    .field--name-field-service-languages {
+      .table__cell {
+        > div >.form-wrapper,
+        .ajax-new-content > div > div {
+            display: flex;
+        }
+      }
+      .paragraphs-subform {
+        display: flex;
+        order: 1;
+      }
+      .paragraph-type-top {
+        order: 2;
+        align-items: end;
+      }
+      .field--name-field-language,
+      .field--name-field-level {
+        margin-right: 8px;
+        .js-form-item {
+          margin-bottom: 0;
+        }
+      }
+      .paragraphs-dropbutton-wrapper {
+
+        input[data-drupal-selector*="top-links-remove-button"] {
+          background-color: clr(background-section);
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          padding: 0;
+          background-image: url("/themes/custom/palvelumanuaali/images/icons/minus.svg");
+          color: transparent;
+          background-repeat: no-repeat;
+          background-position: center center;
+        }
+        input[data-drupal-selector*="subform-field-service-languages-add-more-add-more-button-service-language"] {
+          background-color: clr(background-section);
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          padding-left: 0;
+          background-image: url("/themes/custom/palvelumanuaali/images/icons/plus.svg");
+          color: transparent;
+          background-repeat: no-repeat;
+          background-position: center center;
+        }
+      }
     }
   }
+
+
 
   #edit-group-basic-information {
     background-color: unset;
@@ -201,3 +315,71 @@
     grid-row:3;
   }
 }
+
+.node-form {
+  .form-item {
+    label {
+      font-size: 12px;
+      &:after {
+
+      }
+    }
+  }
+}
+
+#edit-field-service-price-wrapper {
+  padding-top: 8px;
+  legend {
+    display: none;
+  }
+  .field--type-boolean .form-item {
+    width: 100%;
+    display: flex;
+
+    input {
+      margin-right: 8px;
+      width: unset;
+    }
+
+    label {
+      font-weight: 400;
+    }
+  }
+}
+
+.field--name-field-target-group {
+ > fieldset {
+   > legend {
+     display: none !important;
+   }
+   .h2 {
+     font-size: 12px !important;
+     &::after {
+
+     }
+   }
+
+   }
+ }
+
+ .field--name-field-dates {
+   h4 {
+     font-weight: 600;
+     font-size: 12px;
+     line-height: 24px;
+     color: clr(text);
+     text-transform: capitalize;
+     letter-spacing: 0px;
+   }
+ }
+
+ .form-item--checkboxes {
+    .form-item {
+        width: 13ch;
+        label {
+          &::after {
+            content: unset !important;
+          }
+        }
+    }
+ }

@@ -20,6 +20,7 @@ dependencies:
     - field.field.node.service.field_service_links_external
     - field.field.node.service.field_service_links_internal
     - field.field.node.service.field_service_price
+    - field.field.node.service.field_service_provider
     - field.field.node.service.field_service_radioactivity
     - field.field.node.service.field_service_set
     - field.field.node.service.field_service_time_and_location
@@ -47,10 +48,20 @@ content:
     third_party_settings: {  }
     weight: 0
     region: content
+  flag_lista:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 10
+    region: content
   notifications_entity_view_1:
     settings: {  }
     third_party_settings: {  }
     weight: 10
+    region: content
+  view_mode_switcher:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
     region: content
 hidden:
   content_moderation_control: true
@@ -72,6 +83,7 @@ hidden:
   field_service_links_external: true
   field_service_links_internal: true
   field_service_price: true
+  field_service_provider: true
   field_service_radioactivity: true
   field_service_time_and_location: true
   field_target_group: true
