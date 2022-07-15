@@ -30,6 +30,7 @@ dependencies:
     - content_moderation
     - field_group
     - inline_entity_form
+    - maxlength
     - paragraphs
     - redirect
     - select2
@@ -538,17 +539,16 @@ content:
       default_paragraph_type: service_time_and_place
     third_party_settings: {  }
   field_target_group:
-    type: inline_entity_form_simple
+    type: entity_reference_paragraphs
     weight: 10
     region: content
     settings:
-      form_mode: default
-      override_labels: false
-      label_singular: ''
-      label_plural: ''
-      collapsible: false
-      collapsed: false
-      revision: false
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: target_group
     third_party_settings: {  }
   langcode:
     type: language_select
@@ -577,7 +577,10 @@ content:
     settings:
       size: 60
       placeholder: ''
-    third_party_settings: {  }
+    third_party_settings:
+      maxlength:
+        maxlength_js: 120
+        maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
   uid:
     type: select2_entity_reference
     weight: 6

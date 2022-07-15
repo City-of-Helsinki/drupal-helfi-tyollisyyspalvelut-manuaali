@@ -28,11 +28,14 @@ if ($ssl_ca_path = getenv('AZURE_SQL_SSL_CA_PATH')) {
   $config['system.performance']['cache']['page']['max_age'] = 86400;
 }
 
-$elasticsearch_env_name = 'ELASTICSEARCH_TYOLLISYYSPTV_' . strtoupper(getenv('REDIS_PREFIX')) . '_ES_INTERNAL_HTTP_PORT';
-if (getenv($elasticsearch_env_name)) {
-  $config['elasticsearch_connector.cluster.search']['url'] = str_replace('tcp:', 'https:', getenv($elasticsearch_env_name));
+if ($es_username = getenv('ELASTICSEARCH_USER')) {
+  // Unfortunately there apparently aren't sensible ways of fetching this...
+  $regexp = '%([a-z]+\.hel\.fi)%';
+  preg_match($regexp, getenv('DRUPAL_REVERSE_PROXY_ADDRESS'), $hostname_parts);
+  $config['elasticsearch_connector.cluster.search']['url'] = 'https://elasticsearch-hki-kanslia-tyollisyysptv-' . getenv('REDIS_PREFIX') . '.apps.' . $hostname_parts[1] . ':443';
   $config['elasticsearch_connector.cluster.search']['options']['use_authentication'] = TRUE;
-  $config['elasticsearch_connector.cluster.search']['options']['username'] = getenv('ELASTICSEARCH_USER');
-  $config['elasticsearch_connector.cluster.search']['options']['password'] = getenv('ELASTICSEARCH_PASSWORD');
-  $config['elasticsearch_connector.cluster.search']['options']['insecure'] = TRUE;
+  $config['elasticsearch_connector.cluster.search']['options']['username'] = $es_username;
+  if ($password = getenv($es_username)) {
+    $config['elasticsearch_connector.cluster.search']['options']['password'] = $password;
+  }
 }
