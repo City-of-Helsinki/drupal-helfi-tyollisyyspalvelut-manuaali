@@ -11,6 +11,9 @@ RUN chmod +x /entrypoints/20-deploy.sh
 
 COPY docker/openshift/entrypoints/10-es-cert.sh /entrypoints
 RUN chmod +x /entrypoints/10-es-cert.sh
+RUN mkdir /usr/local/share/ca-certificates/extra
+RUN chmod 0777 /usr/local/share/ca-certificates/extra
+RUN chmod -R 0777 /etc/ssl/certs
 # Necessary for the ES cert adding.
 RUN apk add --no-cache su-exec
 
