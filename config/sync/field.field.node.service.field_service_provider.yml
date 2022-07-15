@@ -7,13 +7,18 @@ dependencies:
     - group.type.organisation
     - group.type.service_provider
     - node.type.service
+  module:
+    - require_on_publish
+third_party_settings:
+  require_on_publish:
+    require_on_publish: true
 id: node.service.field_service_provider
 field_name: field_service_provider
 entity_type: node
 bundle: service
 label: Palveluntarjoajat
 description: "Valitse palveluntarjoajat. \r\nPalvelu näkyy palveluntarjoajan listoilla mutta palveluntarjoajalla ei ole oikeutta muokata palvelun tietoja."
-required: true
+required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
