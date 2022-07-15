@@ -6,14 +6,18 @@ dependencies:
     - field.storage.paragraph.field_body
     - paragraphs.paragraphs_type.content
   module:
+    - require_on_publish
     - text
+third_party_settings:
+  require_on_publish:
+    require_on_publish: true
 id: paragraph.content.field_body
 field_name: field_body
 entity_type: paragraph
 bundle: content
 label: Body
 description: ''
-required: true
+required: false
 translatable: true
 default_value: {  }
 default_value_callback: ''
