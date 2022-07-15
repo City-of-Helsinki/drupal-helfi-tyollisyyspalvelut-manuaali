@@ -8,13 +8,17 @@ dependencies:
     - paragraphs.paragraphs_type.content
   module:
     - entity_reference_revisions
+    - require_on_publish
+third_party_settings:
+  require_on_publish:
+    require_on_publish: true
 id: node.service.field_service_guidance_guide
 field_name: field_service_guidance_guide
 entity_type: node
 bundle: service
 label: 'Service guidance guide'
 description: ''
-required: true
+required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
@@ -31,4 +35,19 @@ settings:
       content:
         weight: 4
         enabled: true
+      content_list_lift_header_icon:
+        weight: 10
+        enabled: false
+      service_language:
+        weight: 11
+        enabled: false
+      service_price:
+        weight: 12
+        enabled: false
+      service_time_and_place:
+        weight: 13
+        enabled: false
+      target_group:
+        weight: 14
+        enabled: false
 field_type: entity_reference_revisions

@@ -6,13 +6,18 @@ dependencies:
     - field.storage.node.field_implementation_extra_info
     - node.type.service
     - taxonomy.vocabulary.service_implementation_type
+  module:
+    - require_on_publish
+third_party_settings:
+  require_on_publish:
+    require_on_publish: true
 id: node.service.field_implementation_extra_info
 field_name: field_implementation_extra_info
 entity_type: node
 bundle: service
 label: 'Implementation extra info'
 description: 'Ilmoita, millä menetelmillä tai missä muodossa palvelu on toteutettu. Muistathan päivittää tiedon, jos toteutustapa muuttuu. '
-required: true
+required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
