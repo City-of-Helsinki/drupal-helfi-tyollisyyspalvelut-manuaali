@@ -6,14 +6,18 @@ dependencies:
     - field.storage.node.field_service_implement
     - node.type.service
   module:
+    - require_on_publish
     - text
+third_party_settings:
+  require_on_publish:
+    require_on_publish: true
 id: node.service.field_service_implement
 field_name: field_service_implement
 entity_type: node
 bundle: service
 label: 'Lisätiedot (valinnainen):'
 description: 'Ilmoita, miten palvelu on toteutettu, mitä palvelussa tapahtuu, miten se on ajallisesti saatavilla eri totetutustavoissa (ajankohta, kesto, kellonaika) ja missä se tapahtuu siltä osin kuin on palvelun sisällön suhteen oleellista. '
-required: true
+required: false
 translatable: true
 default_value: {  }
 default_value_callback: ''
