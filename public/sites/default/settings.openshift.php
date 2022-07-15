@@ -32,7 +32,7 @@ if ($es_username = getenv('ELASTICSEARCH_USER')) {
   // Unfortunately there apparently aren't sensible ways of fetching this...
   $regexp = '%([a-z]+\.hel\.fi)%';
   preg_match($regexp, getenv('DRUPAL_REVERSE_PROXY_ADDRESS'), $hostname_parts);
-  $config['elasticsearch_connector.cluster.search']['url'] = 'https://elasticsearch-hki-kanslia-tyollisyysptv-' . getenv('REDIS_PREFIX') . '.apps.' . $hostname_parts[1];
+  $config['elasticsearch_connector.cluster.search']['url'] = 'https://elasticsearch-hki-kanslia-tyollisyysptv-' . getenv('REDIS_PREFIX') . '.apps.' . $hostname_parts[1] . ':443';
   $config['elasticsearch_connector.cluster.search']['options']['use_authentication'] = TRUE;
   $config['elasticsearch_connector.cluster.search']['options']['username'] = $es_username;
   if ($password = getenv($es_username)) {
