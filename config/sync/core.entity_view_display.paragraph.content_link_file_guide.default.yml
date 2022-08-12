@@ -1,0 +1,56 @@
+uuid: 5d3c9dd1-5b20-46dc-b05e-ec0dc17a7fb5
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.content_link_file_guide.field_description_plain
+    - field.field.paragraph.content_link_file_guide.field_file
+    - field.field.paragraph.content_link_file_guide.field_links
+    - field.field.paragraph.content_link_file_guide.field_municipality_guide
+    - paragraphs.paragraphs_type.content_link_file_guide
+  module:
+    - entity_reference_revisions
+    - file
+id: paragraph.content_link_file_guide.default
+targetEntityType: paragraph
+bundle: content_link_file_guide
+mode: default
+content:
+  field_description_plain:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_file:
+    type: file_default
+    label: above
+    settings:
+      use_description_as_link_text: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_links:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_municipality_guide:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 4
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  search_api_excerpt: true

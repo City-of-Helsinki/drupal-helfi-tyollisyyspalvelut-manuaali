@@ -1,21 +1,22 @@
-uuid: 800505b8-648a-4ef9-abe9-19a3cfca1ef4
+uuid: 7678c781-ddad-4fe1-a51e-2b3d31971629
 langcode: fi
 status: true
 dependencies:
   module:
+    - entity_reference_revisions
     - field_permissions
+    - node
     - paragraphs
-    - taxonomy
 third_party_settings:
   field_permissions:
     permission_type: public
-id: paragraph.field_municipality
-field_name: field_municipality
-entity_type: paragraph
-type: entity_reference
+id: node.field_service_other_info
+field_name: field_service_other_info
+entity_type: node
+type: entity_reference_revisions
 settings:
-  target_type: taxonomy_term
-module: core
+  target_type: paragraph
+module: entity_reference_revisions
 locked: false
 cardinality: 1
 translatable: true

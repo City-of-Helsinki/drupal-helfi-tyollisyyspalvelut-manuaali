@@ -1,0 +1,64 @@
+uuid: 2841b4ba-7ed7-44f1-92b4-955c94771d59
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_links
+    - paragraphs.paragraphs_type.content_link_file_guide
+    - paragraphs.paragraphs_type.link
+  module:
+    - entity_reference_revisions
+id: paragraph.content_link_file_guide.field_links
+field_name: field_links
+entity_type: paragraph
+bundle: content_link_file_guide
+label: Linkit(valinnainen)
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      link: link
+    negate: 0
+    target_bundles_drag_drop:
+      contact_information:
+        weight: 12
+        enabled: false
+      content:
+        weight: 13
+        enabled: false
+      content_link_file:
+        weight: 14
+        enabled: false
+      content_link_file_guide:
+        weight: 22
+        enabled: false
+      content_list_lift_header_icon:
+        weight: 15
+        enabled: false
+      link:
+        weight: 16
+        enabled: true
+      municipality_guide:
+        weight: 19
+        enabled: false
+      service_language:
+        weight: 17
+        enabled: false
+      service_price:
+        weight: 18
+        enabled: false
+      service_time_and_place:
+        weight: 19
+        enabled: false
+      target_group:
+        weight: 20
+        enabled: false
+      url_and_file:
+        weight: 21
+        enabled: false
+field_type: entity_reference_revisions

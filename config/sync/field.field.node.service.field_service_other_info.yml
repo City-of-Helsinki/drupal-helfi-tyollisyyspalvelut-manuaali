@@ -1,0 +1,58 @@
+uuid: 61886e93-6dd3-4f0d-8adc-51dad31907d9
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_service_other_info
+    - node.type.service
+    - paragraphs.paragraphs_type.url_and_file
+  module:
+    - entity_reference_revisions
+id: node.service.field_service_other_info
+field_name: field_service_other_info
+entity_type: node
+bundle: service
+label: 'Muut palvelun tiedot'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      url_and_file: url_and_file
+    negate: 0
+    target_bundles_drag_drop:
+      contact_information:
+        weight: 11
+        enabled: false
+      content:
+        weight: 12
+        enabled: false
+      content_link_file:
+        weight: 13
+        enabled: false
+      content_list_lift_header_icon:
+        weight: 14
+        enabled: false
+      link:
+        weight: 15
+        enabled: false
+      service_language:
+        weight: 16
+        enabled: false
+      service_price:
+        weight: 17
+        enabled: false
+      service_time_and_place:
+        weight: 18
+        enabled: false
+      target_group:
+        weight: 19
+        enabled: false
+      url_and_file:
+        weight: 20
+        enabled: true
+field_type: entity_reference_revisions

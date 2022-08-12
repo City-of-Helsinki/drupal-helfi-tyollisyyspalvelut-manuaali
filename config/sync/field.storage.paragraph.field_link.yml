@@ -1,21 +1,20 @@
-uuid: 800505b8-648a-4ef9-abe9-19a3cfca1ef4
+uuid: 95477383-d23b-4f3a-af0f-d1e96261afbd
 langcode: fi
 status: true
 dependencies:
   module:
     - field_permissions
+    - link
     - paragraphs
-    - taxonomy
 third_party_settings:
   field_permissions:
     permission_type: public
-id: paragraph.field_municipality
-field_name: field_municipality
+id: paragraph.field_link
+field_name: field_link
 entity_type: paragraph
-type: entity_reference
-settings:
-  target_type: taxonomy_term
-module: core
+type: link
+settings: {  }
+module: link
 locked: false
 cardinality: 1
 translatable: true

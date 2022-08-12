@@ -4,25 +4,33 @@ status: true
 dependencies:
   config:
     - field.field.node.service.field_accessibility
+    - field.field.node.service.field_archiving_guide
+    - field.field.node.service.field_attendance
+    - field.field.node.service.field_career_marking
     - field.field.node.service.field_client_consent
     - field.field.node.service.field_client_consent_description
     - field.field.node.service.field_contact_info
     - field.field.node.service.field_contact_info_internal
     - field.field.node.service.field_description
+    - field.field.node.service.field_exceptions
+    - field.field.node.service.field_guidance_to_service
     - field.field.node.service.field_implementation_extra_info
     - field.field.node.service.field_life_situations
     - field.field.node.service.field_poma_applicable
     - field.field.node.service.field_poma_applicable_descriptio
     - field.field.node.service.field_requirements
-    - field.field.node.service.field_service_guidance_guide
+    - field.field.node.service.field_service_execution
     - field.field.node.service.field_service_implement
     - field.field.node.service.field_service_links_external
     - field.field.node.service.field_service_links_internal
+    - field.field.node.service.field_service_obligatoryness
+    - field.field.node.service.field_service_other_info
     - field.field.node.service.field_service_price
     - field.field.node.service.field_service_provider
     - field.field.node.service.field_service_radioactivity
     - field.field.node.service.field_service_set
     - field.field.node.service.field_service_time_and_location
+    - field.field.node.service.field_statements_unemployment
     - field.field.node.service.field_target_group
     - node.type.service
     - workflows.workflow.service_moderation
@@ -32,7 +40,6 @@ dependencies:
     - inline_entity_form
     - maxlength
     - paragraphs
-    - redirect
     - select2
     - text
 third_party_settings:
@@ -54,15 +61,16 @@ third_party_settings:
         width_breakpoint: 640
     group_specialist:
       children:
-        - field_service_guidance_guide
-        - field_contact_info_internal
-        - field_service_links_internal
-        - group_consent
-        - group_poma
+        - field_guidance_to_service
+        - field_service_obligatoryness
+        - field_career_marking
+        - field_statements_unemployment
+        - field_exceptions
+        - field_archiving_guide
       label: Specialist
       region: content
       parent_name: group_tabs
-      weight: 6
+      weight: 7
       format_type: tab
       format_settings:
         classes: ''
@@ -73,8 +81,9 @@ third_party_settings:
         required_fields: true
     group_customer:
       children:
-        - field_contact_info
-        - field_service_links_external
+        - field_attendance
+        - field_service_execution
+        - field_service_other_info
       label: Customer
       region: content
       parent_name: group_tabs
@@ -92,8 +101,8 @@ third_party_settings:
         - field_client_consent
         - field_client_consent_description
       label: Consent
-      region: content
-      parent_name: group_specialist
+      region: hidden
+      parent_name: ''
       weight: 14
       format_type: tab
       format_settings:
@@ -108,9 +117,9 @@ third_party_settings:
         - field_poma_applicable
         - field_poma_applicable_descriptio
       label: POMA
-      region: content
-      parent_name: group_specialist
-      weight: 16
+      region: hidden
+      parent_name: ''
+      weight: 13
       format_type: fieldset
       format_settings:
         classes: ''
@@ -163,7 +172,6 @@ third_party_settings:
     group_pla:
       children:
         - field_implementation_extra_info
-        - group_location
         - field_service_time_and_location
         - field_service_implement
       label: 'Place and time'
@@ -183,7 +191,7 @@ third_party_settings:
       label: 'Service description'
       region: content
       parent_name: group_multistep_group
-      weight: 23
+      weight: 22
       format_type: multipage
       format_settings:
         classes: ''
@@ -262,7 +270,7 @@ third_party_settings:
       label: Details
       region: content
       parent_name: ''
-      weight: 1
+      weight: 2
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -293,72 +301,48 @@ content:
       match_operator: CONTAINS
       match_limit: 10
     third_party_settings: {  }
-  field_client_consent:
-    type: options_buttons
-    weight: 9
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  field_client_consent_description:
-    type: paragraphs
-    weight: 11
+  field_archiving_guide:
+    type: inline_entity_form_complex
+    weight: 6
     region: content
     settings:
-      title: Paragraph
-      title_plural: Paragraphs
-      edit_mode: open
-      closed_mode: summary
-      autocollapse: none
-      closed_mode_threshold: 0
-      add_mode: dropdown
-      form_display_mode: default
-      default_paragraph_type: _none
-      features:
-        add_above: '0'
-        collapse_edit_all: collapse_edit_all
-        duplicate: duplicate
-    third_party_settings:
-      conditional_fields:
-        293a8d94-08d7-47f2-b96c-553e947bfb04:
-          entity_type: node
-          bundle: service
-          dependee: field_client_consent
-          settings:
-            state: visible
-            reset: false
-            condition: checked
-            grouping: AND
-            values_set: 1
-            value: ''
-            values: {  }
-            value_form:
-              value: false
-            effect: show
-            effect_options: {  }
-            selector: ''
-  field_contact_info:
-    type: paragraphs
-    weight: 26
+      form_mode: default
+      override_labels: false
+      label_singular: ''
+      label_plural: ''
+      allow_new: true
+      allow_existing: false
+      match_operator: CONTAINS
+      allow_duplicate: false
+      collapsible: false
+      collapsed: false
+      revision: false
+    third_party_settings: {  }
+  field_attendance:
+    type: inline_entity_form_simple
+    weight: 6
     region: content
     settings:
-      title: Paragraph
-      title_plural: Paragraphs
-      edit_mode: open
-      closed_mode: summary
-      autocollapse: none
-      closed_mode_threshold: 0
-      add_mode: dropdown
-      form_display_mode: default
-      default_paragraph_type: ''
-      features:
-        collapse_edit_all: collapse_edit_all
-        duplicate: duplicate
+      form_mode: default
+      override_labels: false
+      label_singular: ''
+      label_plural: ''
+      collapsible: false
+      collapsed: false
+      revision: false
     third_party_settings: {  }
-  field_contact_info_internal:
-    type: options_buttons
-    weight: 12
+  field_career_marking:
+    type: inline_entity_form_simple
+    weight: 3
     region: content
-    settings: {  }
+    settings:
+      form_mode: default
+      override_labels: false
+      label_singular: ''
+      label_plural: ''
+      collapsible: false
+      collapsed: false
+      revision: false
     third_party_settings: {  }
   field_description:
     type: string_textarea
@@ -373,6 +357,32 @@ content:
         maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
         maxlength_js_enforce: true
         maxlength_js_truncate_html: false
+  field_exceptions:
+    type: inline_entity_form_simple
+    weight: 5
+    region: content
+    settings:
+      form_mode: default
+      override_labels: false
+      label_singular: ''
+      label_plural: ''
+      collapsible: false
+      collapsed: false
+      revision: false
+    third_party_settings: {  }
+  field_guidance_to_service:
+    type: inline_entity_form_simple
+    weight: 1
+    region: content
+    settings:
+      form_mode: default
+      override_labels: false
+      label_singular: ''
+      label_plural: ''
+      collapsible: false
+      collapsed: false
+      revision: false
+    third_party_settings: {  }
   field_implementation_extra_info:
     type: select2_entity_reference
     weight: 16
@@ -393,52 +403,9 @@ content:
       match_operator: CONTAINS
       match_limit: 10
     third_party_settings: {  }
-  field_poma_applicable:
-    type: options_buttons
-    weight: 6
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  field_poma_applicable_descriptio:
-    type: paragraphs
-    weight: 7
-    region: content
-    settings:
-      title: Paragraph
-      title_plural: Paragraphs
-      edit_mode: open
-      closed_mode: summary
-      autocollapse: none
-      closed_mode_threshold: 0
-      add_mode: dropdown
-      form_display_mode: default
-      default_paragraph_type: _none
-      features:
-        add_above: '0'
-        collapse_edit_all: collapse_edit_all
-        duplicate: duplicate
-    third_party_settings:
-      conditional_fields:
-        2520739e-d8a7-4391-ae43-6e62bf263395:
-          entity_type: node
-          bundle: service
-          dependee: field_poma_applicable
-          settings:
-            state: visible
-            reset: false
-            condition: checked
-            grouping: AND
-            values_set: 1
-            value: ''
-            values: {  }
-            value_form:
-              value: false
-            effect: show
-            effect_options: {  }
-            selector: ''
   field_requirements:
     type: paragraphs
-    weight: 11
+    weight: 4
     region: content
     settings:
       title: Paragraph
@@ -455,23 +422,18 @@ content:
         collapse_edit_all: collapse_edit_all
         duplicate: duplicate
     third_party_settings: {  }
-  field_service_guidance_guide:
-    type: paragraphs
-    weight: 11
+  field_service_execution:
+    type: inline_entity_form_simple
+    weight: 7
     region: content
     settings:
-      title: Paragraph
-      title_plural: Paragraphs
-      edit_mode: open
-      closed_mode: summary
-      autocollapse: none
-      closed_mode_threshold: 0
-      add_mode: dropdown
-      form_display_mode: default
-      default_paragraph_type: ''
-      features:
-        collapse_edit_all: collapse_edit_all
-        duplicate: duplicate
+      form_mode: default
+      override_labels: false
+      label_singular: ''
+      label_plural: ''
+      collapsible: false
+      collapsed: false
+      revision: false
     third_party_settings: {  }
   field_service_implement:
     type: text_textarea
@@ -481,17 +443,31 @@ content:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
-  field_service_links_external:
-    type: redirect_source
-    weight: 28
+  field_service_obligatoryness:
+    type: inline_entity_form_simple
+    weight: 2
     region: content
-    settings: {  }
+    settings:
+      form_mode: default
+      override_labels: false
+      label_singular: ''
+      label_plural: ''
+      collapsible: false
+      collapsed: false
+      revision: false
     third_party_settings: {  }
-  field_service_links_internal:
-    type: redirect_source
-    weight: 13
+  field_service_other_info:
+    type: inline_entity_form_simple
+    weight: 8
     region: content
-    settings: {  }
+    settings:
+      form_mode: default
+      override_labels: false
+      label_singular: ''
+      label_plural: ''
+      collapsible: false
+      collapsed: false
+      revision: false
     third_party_settings: {  }
   field_service_price:
     type: inline_entity_form_simple
@@ -508,7 +484,7 @@ content:
     third_party_settings: {  }
   field_service_provider:
     type: select2_entity_reference
-    weight: 12
+    weight: 5
     region: content
     settings:
       width: 100%
@@ -538,6 +514,19 @@ content:
       form_display_mode: default
       default_paragraph_type: service_time_and_place
     third_party_settings: {  }
+  field_statements_unemployment:
+    type: inline_entity_form_simple
+    weight: 4
+    region: content
+    settings:
+      form_mode: default
+      override_labels: false
+      label_singular: ''
+      label_plural: ''
+      collapsible: false
+      collapsed: false
+      revision: false
+    third_party_settings: {  }
   field_target_group:
     type: entity_reference_paragraphs
     weight: 10
@@ -552,14 +541,14 @@ content:
     third_party_settings: {  }
   langcode:
     type: language_select
-    weight: 9
+    weight: 2
     region: content
     settings:
       include_locked: true
     third_party_settings: {  }
   moderation_state:
     type: moderation_state_default
-    weight: 10
+    weight: 3
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -583,7 +572,7 @@ content:
         maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
   uid:
     type: select2_entity_reference
-    weight: 6
+    weight: 7
     region: content
     settings:
       width: 100%
@@ -592,6 +581,14 @@ content:
       match_limit: 10
     third_party_settings: {  }
 hidden:
+  field_client_consent: true
+  field_client_consent_description: true
+  field_contact_info: true
+  field_contact_info_internal: true
+  field_poma_applicable: true
+  field_poma_applicable_descriptio: true
+  field_service_links_external: true
+  field_service_links_internal: true
   field_service_radioactivity: true
   path: true
   promote: true

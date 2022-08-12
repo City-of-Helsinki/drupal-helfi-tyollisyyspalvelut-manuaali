@@ -1,0 +1,23 @@
+uuid: 0792de54-e22b-47c8-b9d1-6038dcae71fb
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_link
+    - paragraphs.paragraphs_type.url_and_file
+  module:
+    - link
+id: paragraph.url_and_file.field_link
+field_name: field_link
+entity_type: paragraph
+bundle: url_and_file
+label: Linkki
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 1
+  link_type: 17
+field_type: link
