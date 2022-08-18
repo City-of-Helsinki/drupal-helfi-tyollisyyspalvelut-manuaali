@@ -333,6 +333,51 @@
     @include button-color-blue;
     @include button-round-corners;
   }
+
+  //hide unused enforced dropdown buttons in edit form
+  details {
+    summary {
+      display: none;
+    }
+  }
+
+  .field--name-field-file {
+    > div .details-content-wrapper {
+      display: flex;
+      flex-wrap: grid;
+      >.form-item {
+        order: 1;
+      }
+      >table {
+        order: 2;
+      }
+    }
+
+    tr {
+      display: flex;
+      .tabledrag-handle {
+        display: none;
+      }
+      td {
+        .button{
+          background-color: clr(background-section);
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          padding: 0;
+          background-image: url("/themes/custom/palvelumanuaali/images/icons/minus.svg");
+          color: transparent;
+          background-repeat: no-repeat;
+          background-position: center center;
+        }
+      }
+    }
+    .form-item__description {
+      display: none;
+    }
+
+  }
+
 }
 
 .node-form {
