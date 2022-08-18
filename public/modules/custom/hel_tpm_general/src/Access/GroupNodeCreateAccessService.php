@@ -104,6 +104,8 @@ class GroupNodeCreateAccessService {
   }
 
   /**
+   * @param $account
+   *
    * @return array
    */
   protected function userGroups($account): array {
