@@ -88,7 +88,7 @@ class GroupNodeAddServiceController extends ControllerBase implements ContainerI
     $groups = $this->userGroups();
     return [
       '#theme' => 'item_list',
-      '#title' => 'Select group',
+      '#title' => $this->t('Select group'),
       '#items' => $this->generateLinks($groups)
     ];
   }
