@@ -59,9 +59,7 @@ class GroupNodeCreateAccessService {
    */
   public function hasAccess(AccountInterface $account, $plugin_id) {
     $groups = $this->userGroups($account);
-    if (empty($groups)) {
-      return AccessResult::forbidden();
-    }
+
     foreach ($groups as $group) {
       if ($this->hasCreateServiceAccess($group, $plugin_id, $account)) {
         return AccessResult::allowed();
