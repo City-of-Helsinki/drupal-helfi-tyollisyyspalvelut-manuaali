@@ -5,6 +5,7 @@ dependencies:
   config:
     - views.view.user_group_memberships
   module:
+    - hel_tpm_general
     - user
     - views
 label: 'Sitewide logged-in'
@@ -43,6 +44,21 @@ reactions:
         context_mapping: {  }
         views_label: ''
         items_per_page: none
+        third_party_settings: {  }
+      6bfdbdc7-1d77-4162-84d0-ddf559fbae1c:
+        uuid: 6bfdbdc7-1d77-4162-84d0-ddf559fbae1c
+        id: hel_tpm_general_group_content_create_links
+        label: 'Group Content Create Links'
+        provider: hel_tpm_general
+        label_display: '0'
+        region: sidebar
+        weight: '1'
+        custom_id: hel_tpm_general_group_content_create_links
+        theme: palvelumanuaali
+        css_class: ''
+        unique: 0
+        context_id: sitewide_logged_in
+        context_mapping: {  }
         third_party_settings: {  }
     include_default_blocks: 0
     saved: false
