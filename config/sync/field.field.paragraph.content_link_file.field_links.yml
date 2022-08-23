@@ -1,0 +1,55 @@
+uuid: 993e5db3-c4ca-4cda-ae76-eb85d13bfbf2
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_links
+    - paragraphs.paragraphs_type.content_link_file
+    - paragraphs.paragraphs_type.link
+  module:
+    - entity_reference_revisions
+id: paragraph.content_link_file.field_links
+field_name: field_links
+entity_type: paragraph
+bundle: content_link_file
+label: Linkit(valinnainen)
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      link: link
+    negate: 0
+    target_bundles_drag_drop:
+      contact_information:
+        weight: 10
+        enabled: false
+      content:
+        weight: 11
+        enabled: false
+      content_link_file:
+        weight: 12
+        enabled: false
+      content_list_lift_header_icon:
+        weight: 13
+        enabled: false
+      link:
+        weight: 14
+        enabled: true
+      service_language:
+        weight: 15
+        enabled: false
+      service_price:
+        weight: 16
+        enabled: false
+      service_time_and_place:
+        weight: 17
+        enabled: false
+      target_group:
+        weight: 18
+        enabled: false
+field_type: entity_reference_revisions

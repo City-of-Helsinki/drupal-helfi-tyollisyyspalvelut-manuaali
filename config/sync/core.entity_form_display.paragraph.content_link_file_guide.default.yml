@@ -1,0 +1,66 @@
+uuid: ba821b82-48bd-4e9d-9871-592bdcb07824
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.content_link_file_guide.field_description_plain
+    - field.field.paragraph.content_link_file_guide.field_file
+    - field.field.paragraph.content_link_file_guide.field_links
+    - field.field.paragraph.content_link_file_guide.field_municipality_guide
+    - paragraphs.paragraphs_type.content_link_file_guide
+  module:
+    - file
+    - inline_entity_form
+    - paragraphs
+id: paragraph.content_link_file_guide.default
+targetEntityType: paragraph
+bundle: content_link_file_guide
+mode: default
+content:
+  field_description_plain:
+    type: string_textarea
+    weight: 0
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_file:
+    type: file_generic
+    weight: 2
+    region: content
+    settings:
+      progress_indicator: throbber
+    third_party_settings: {  }
+  field_links:
+    type: entity_reference_paragraphs
+    weight: 3
+    region: content
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
+  field_municipality_guide:
+    type: inline_entity_form_complex
+    weight: 4
+    region: content
+    settings:
+      form_mode: default
+      override_labels: true
+      label_singular: 'Kuntakohtainen ohje'
+      label_plural: ''
+      allow_new: true
+      allow_existing: false
+      match_operator: CONTAINS
+      allow_duplicate: false
+      collapsible: true
+      collapsed: true
+      revision: true
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

@@ -1,0 +1,34 @@
+uuid: d36f358d-1004-40d7-97db-9074c4d917d9
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.url_and_file.field_file
+    - field.field.paragraph.url_and_file.field_link
+    - paragraphs.paragraphs_type.url_and_file
+  module:
+    - file
+    - link
+id: paragraph.url_and_file.default
+targetEntityType: paragraph
+bundle: url_and_file
+mode: default
+content:
+  field_file:
+    type: file_generic
+    weight: 1
+    region: content
+    settings:
+      progress_indicator: throbber
+    third_party_settings: {  }
+  field_link:
+    type: link_default
+    weight: 0
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

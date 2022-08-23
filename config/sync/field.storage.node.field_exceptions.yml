@@ -1,5 +1,5 @@
-uuid: 6553e0c1-841f-4d6b-a4c7-8c971209797a
-langcode: en
+uuid: 42ca7c62-9753-4f9e-ab8a-f7c80b515877
+langcode: fi
 status: true
 dependencies:
   module:
@@ -9,16 +9,16 @@ dependencies:
     - paragraphs
 third_party_settings:
   field_permissions:
-    permission_type: custom
-id: node.field_service_guidance_guide
-field_name: field_service_guidance_guide
+    permission_type: public
+id: node.field_exceptions
+field_name: field_exceptions
 entity_type: node
 type: entity_reference_revisions
 settings:
   target_type: paragraph
 module: entity_reference_revisions
 locked: false
-cardinality: -1
+cardinality: 1
 translatable: true
 indexes: {  }
 persist_with_no_fields: false

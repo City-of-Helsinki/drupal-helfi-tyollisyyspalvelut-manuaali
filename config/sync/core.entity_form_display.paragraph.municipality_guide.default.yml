@@ -1,0 +1,34 @@
+uuid: 161c1cde-c3f1-462f-9257-a64b8d1e1333
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.municipality_guide.field_description_plain
+    - field.field.paragraph.municipality_guide.field_municipality
+    - paragraphs.paragraphs_type.municipality_guide
+id: paragraph.municipality_guide.default
+targetEntityType: paragraph
+bundle: municipality_guide
+mode: default
+content:
+  field_description_plain:
+    type: string_textarea
+    weight: 2
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_municipality:
+    type: entity_reference_autocomplete
+    weight: 0
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

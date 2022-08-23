@@ -1,0 +1,29 @@
+uuid: 8a95701c-56d5-48e6-bd21-a5923d422bda
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_municipality
+    - paragraphs.paragraphs_type.municipality_guide
+    - taxonomy.vocabulary.municipality
+id: paragraph.municipality_guide.field_municipality
+field_name: field_municipality
+entity_type: paragraph
+bundle: municipality_guide
+label: 'Kunta:'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      municipality: municipality
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

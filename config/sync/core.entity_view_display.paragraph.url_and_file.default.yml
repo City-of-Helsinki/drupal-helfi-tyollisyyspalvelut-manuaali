@@ -1,0 +1,41 @@
+uuid: 74c57570-5cb2-40fa-a03d-66fba2bca666
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.url_and_file.field_file
+    - field.field.paragraph.url_and_file.field_link
+    - paragraphs.paragraphs_type.url_and_file
+  module:
+    - file
+    - link
+id: paragraph.url_and_file.default
+targetEntityType: paragraph
+bundle: url_and_file
+mode: default
+content:
+  field_file:
+    type: file_default
+    label: above
+    settings:
+      use_description_as_link_text: true
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_link:
+    type: link
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  search_api_excerpt: true
