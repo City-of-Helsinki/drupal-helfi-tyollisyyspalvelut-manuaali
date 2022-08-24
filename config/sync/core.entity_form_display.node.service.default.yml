@@ -357,6 +357,25 @@ content:
         maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
         maxlength_js_enforce: true
         maxlength_js_truncate_html: false
+      conditional_fields:
+        f4913650-3595-4d98-a95e-b972cdaa65b0:
+          entity_type: node
+          bundle: service
+          dependee: title
+          settings:
+            state: '!visible'
+            reset: false
+            condition: value
+            grouping: AND
+            values_set: 1
+            value: ''
+            values: {  }
+            value_form:
+              -
+                value: test
+            effect: show
+            effect_options: {  }
+            selector: ''
   field_exceptions:
     type: inline_entity_form_simple
     weight: 5

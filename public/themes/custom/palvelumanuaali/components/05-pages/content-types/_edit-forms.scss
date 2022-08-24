@@ -377,7 +377,19 @@
     }
 
   }
+  .field--type-boolean .form-item {
+    width: 100%;
+    display: flex;
 
+    input {
+      margin-right: 8px;
+      width: unset;
+    }
+
+    label {
+      font-weight: 400;
+    }
+  }
 }
 
 .node-form {

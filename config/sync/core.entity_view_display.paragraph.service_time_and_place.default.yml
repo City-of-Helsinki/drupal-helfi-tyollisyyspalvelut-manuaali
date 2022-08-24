@@ -7,6 +7,7 @@ dependencies:
     - core.date_format.time
     - date_recur.interpreter.default_interpreter
     - field.field.paragraph.service_time_and_place.field_dates
+    - field.field.paragraph.service_time_and_place.field_separate_time
     - field.field.paragraph.service_time_and_place.field_service_languages
     - field.field.paragraph.service_time_and_place.field_service_location
     - paragraphs.paragraphs_type.service_time_and_place
@@ -32,6 +33,16 @@ content:
       interpreter: default_interpreter
     third_party_settings: {  }
     weight: 1
+    region: content
+  field_separate_time:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 4
     region: content
   field_service_languages:
     type: entity_reference_revisions_entity_view
