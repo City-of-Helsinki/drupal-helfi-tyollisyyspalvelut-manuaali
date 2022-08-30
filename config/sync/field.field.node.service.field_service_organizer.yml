@@ -1,19 +1,19 @@
-uuid: cc523298-9d73-4927-8c1b-38e384d4bbae
+uuid: 92c4e1f7-787f-45a3-82dc-f7a99c16517d
 langcode: fi
 status: true
 dependencies:
   config:
-    - field.storage.node.field_service_provider
+    - field.storage.node.field_service_organizer
     - group.type.organisation
     - group.type.service_provider
     - node.type.service
-id: node.service.field_service_provider
-field_name: field_service_provider
+id: node.service.field_service_organizer
+field_name: field_service_organizer
 entity_type: node
 bundle: service
-label: 'Palvelun tuottaja'
+label: 'Palvelun järjestäjä'
 description: ''
-required: false
+required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''

@@ -1,23 +1,23 @@
-uuid: f99c7279-57e2-4681-b43b-964b7c8e2ba7
+uuid: 4f35c73b-67e7-4cd0-96c8-4b897a77ae2c
 langcode: fi
 status: true
 dependencies:
   module:
     - field_permissions
-    - hel_tpm_contact_info
     - node
+    - user
 third_party_settings:
   field_permissions:
-    permission_type: custom
-id: node.field_contact_info
-field_name: field_contact_info
+    permission_type: public
+id: node.field_responsible_updatee
+field_name: field_responsible_updatee
 entity_type: node
 type: entity_reference
 settings:
-  target_type: contact_info
+  target_type: user
 module: core
 locked: false
-cardinality: -1
+cardinality: 1
 translatable: true
 indexes: {  }
 persist_with_no_fields: false

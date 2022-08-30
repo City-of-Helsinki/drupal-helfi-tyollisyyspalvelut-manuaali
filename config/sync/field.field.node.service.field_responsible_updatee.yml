@@ -1,26 +1,29 @@
-uuid: dea34781-08d8-41d1-9ae5-f0774f5546ea
+uuid: 6a18267f-93fd-421f-a380-40b788613852
 langcode: fi
 status: true
 dependencies:
   config:
-    - field.storage.node.field_contact_info
+    - field.storage.node.field_responsible_updatee
     - node.type.service
-id: node.service.field_contact_info
-field_name: field_contact_info
+id: node.service.field_responsible_updatee
+field_name: field_responsible_updatee
 entity_type: node
 bundle: service
-label: 'Sisäiset yhteystiedot'
+label: 'Palvelun vastuupäivittäjä'
 description: ''
 required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
-  handler: 'default:contact_info'
+  handler: 'default:user'
   handler_settings:
     target_bundles: null
     sort:
       field: _none
       direction: ASC
-    auto_create: true
+    auto_create: false
+    filter:
+      type: _none
+    include_anonymous: false
 field_type: entity_reference

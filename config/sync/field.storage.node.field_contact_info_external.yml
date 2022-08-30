@@ -1,4 +1,4 @@
-uuid: f99c7279-57e2-4681-b43b-964b7c8e2ba7
+uuid: bb0f917c-4fa4-4153-9c0b-d0bd27dc5e54
 langcode: fi
 status: true
 dependencies:
@@ -8,16 +8,16 @@ dependencies:
     - node
 third_party_settings:
   field_permissions:
-    permission_type: custom
-id: node.field_contact_info
-field_name: field_contact_info
+    permission_type: public
+id: node.field_contact_info_external
+field_name: field_contact_info_external
 entity_type: node
 type: entity_reference
 settings:
   target_type: contact_info
 module: core
 locked: false
-cardinality: -1
+cardinality: 1
 translatable: true
 indexes: {  }
 persist_with_no_fields: false

@@ -10,20 +10,24 @@ dependencies:
     - field.field.node.service.field_client_consent
     - field.field.node.service.field_client_consent_description
     - field.field.node.service.field_contact_info
+    - field.field.node.service.field_contact_info_external
     - field.field.node.service.field_contact_info_internal
     - field.field.node.service.field_description
     - field.field.node.service.field_exceptions
     - field.field.node.service.field_guidance_to_service
     - field.field.node.service.field_implementation_extra_info
     - field.field.node.service.field_life_situations
+    - field.field.node.service.field_other_services
     - field.field.node.service.field_poma_applicable
     - field.field.node.service.field_poma_applicable_descriptio
     - field.field.node.service.field_requirements
+    - field.field.node.service.field_responsible_updatee
     - field.field.node.service.field_service_execution
     - field.field.node.service.field_service_implement
     - field.field.node.service.field_service_links_external
     - field.field.node.service.field_service_links_internal
     - field.field.node.service.field_service_obligatoryness
+    - field.field.node.service.field_service_organizer
     - field.field.node.service.field_service_other_info
     - field.field.node.service.field_service_price
     - field.field.node.service.field_service_provider
@@ -103,7 +107,7 @@ third_party_settings:
       label: Consent
       region: hidden
       parent_name: ''
-      weight: 14
+      weight: 13
       format_type: tab
       format_settings:
         classes: ''
@@ -119,7 +123,7 @@ third_party_settings:
       label: POMA
       region: hidden
       parent_name: ''
-      weight: 13
+      weight: 12
       format_type: fieldset
       format_settings:
         classes: ''
@@ -201,14 +205,16 @@ third_party_settings:
         required_fields: true
     group_add:
       children:
-        - langcode
-        - moderation_state
-        - field_requirements
+        - field_contact_info
+        - field_contact_info_external
+        - field_service_organizer
         - field_service_provider
+        - field_responsible_updatee
+        - field_other_services
       label: 'Additional info'
       region: content
       parent_name: group_multistep_group
-      weight: 24
+      weight: 23
       format_type: multipage
       format_settings:
         classes: ''
@@ -264,13 +270,15 @@ third_party_settings:
         required_fields: true
     group_details_sidebar:
       children:
+        - moderation_state
+        - langcode
         - status
         - created
         - uid
       label: Details
       region: content
       parent_name: ''
-      weight: 2
+      weight: 1
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -287,7 +295,7 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 5
+    weight: 17
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -340,6 +348,40 @@ content:
       override_labels: false
       label_singular: ''
       label_plural: ''
+      collapsible: false
+      collapsed: false
+      revision: false
+    third_party_settings: {  }
+  field_contact_info:
+    type: inline_entity_form_complex
+    weight: 14
+    region: content
+    settings:
+      form_mode: default
+      override_labels: false
+      label_singular: ''
+      label_plural: ''
+      allow_new: true
+      allow_existing: true
+      match_operator: CONTAINS
+      allow_duplicate: false
+      collapsible: false
+      collapsed: false
+      revision: false
+    third_party_settings: {  }
+  field_contact_info_external:
+    type: inline_entity_form_complex
+    weight: 15
+    region: content
+    settings:
+      form_mode: default
+      override_labels: false
+      label_singular: ''
+      label_plural: ''
+      allow_new: true
+      allow_existing: true
+      match_operator: CONTAINS
+      allow_duplicate: false
       collapsible: false
       collapsed: false
       revision: false
@@ -403,24 +445,25 @@ content:
       match_operator: CONTAINS
       match_limit: 10
     third_party_settings: {  }
-  field_requirements:
-    type: paragraphs
-    weight: 4
+  field_other_services:
+    type: select2_entity_reference
+    weight: 19
     region: content
     settings:
-      title: Paragraph
-      title_plural: Paragraphs
-      edit_mode: closed
-      closed_mode: summary
-      autocollapse: none
-      closed_mode_threshold: 0
-      add_mode: dropdown
-      form_display_mode: default
-      default_paragraph_type: _none
-      features:
-        add_above: '0'
-        collapse_edit_all: collapse_edit_all
-        duplicate: duplicate
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
+    third_party_settings: {  }
+  field_responsible_updatee:
+    type: select2_entity_reference
+    weight: 18
+    region: content
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
     third_party_settings: {  }
   field_service_execution:
     type: inline_entity_form_simple
@@ -456,6 +499,16 @@ content:
       collapsed: false
       revision: false
     third_party_settings: {  }
+  field_service_organizer:
+    type: select2_entity_reference
+    weight: 16
+    region: content
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
+    third_party_settings: {  }
   field_service_other_info:
     type: inline_entity_form_simple
     weight: 8
@@ -484,7 +537,7 @@ content:
     third_party_settings: {  }
   field_service_provider:
     type: select2_entity_reference
-    weight: 5
+    weight: 17
     region: content
     settings:
       width: 100%
@@ -541,20 +594,20 @@ content:
     third_party_settings: {  }
   langcode:
     type: language_select
-    weight: 2
+    weight: 15
     region: content
     settings:
       include_locked: true
     third_party_settings: {  }
   moderation_state:
     type: moderation_state_default
-    weight: 3
+    weight: 14
     region: content
     settings: {  }
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 4
+    weight: 16
     region: content
     settings:
       display_label: true
@@ -572,7 +625,7 @@ content:
         maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
   uid:
     type: select2_entity_reference
-    weight: 7
+    weight: 18
     region: content
     settings:
       width: 100%
@@ -583,10 +636,10 @@ content:
 hidden:
   field_client_consent: true
   field_client_consent_description: true
-  field_contact_info: true
   field_contact_info_internal: true
   field_poma_applicable: true
   field_poma_applicable_descriptio: true
+  field_requirements: true
   field_service_links_external: true
   field_service_links_internal: true
   field_service_radioactivity: true

@@ -10,20 +10,24 @@ dependencies:
     - field.field.node.service.field_client_consent
     - field.field.node.service.field_client_consent_description
     - field.field.node.service.field_contact_info
+    - field.field.node.service.field_contact_info_external
     - field.field.node.service.field_contact_info_internal
     - field.field.node.service.field_description
     - field.field.node.service.field_exceptions
     - field.field.node.service.field_guidance_to_service
     - field.field.node.service.field_implementation_extra_info
     - field.field.node.service.field_life_situations
+    - field.field.node.service.field_other_services
     - field.field.node.service.field_poma_applicable
     - field.field.node.service.field_poma_applicable_descriptio
     - field.field.node.service.field_requirements
+    - field.field.node.service.field_responsible_updatee
     - field.field.node.service.field_service_execution
     - field.field.node.service.field_service_implement
     - field.field.node.service.field_service_links_external
     - field.field.node.service.field_service_links_internal
     - field.field.node.service.field_service_obligatoryness
+    - field.field.node.service.field_service_organizer
     - field.field.node.service.field_service_other_info
     - field.field.node.service.field_service_price
     - field.field.node.service.field_service_provider
@@ -79,13 +83,20 @@ content:
     weight: 107
     region: content
   field_contact_info:
-    type: entity_reference_revisions_entity_view
+    type: entity_reference_label
     label: above
     settings:
-      view_mode: default
-      link: ''
+      link: true
     third_party_settings: {  }
-    weight: 101
+    weight: 115
+    region: content
+  field_contact_info_external:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 114
     region: content
   field_description:
     type: basic_string
@@ -112,6 +123,14 @@ content:
     third_party_settings: {  }
     weight: 111
     region: content
+  field_other_services:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 113
+    region: content
   field_requirements:
     type: entity_reference_revisions_entity_view
     label: above
@@ -120,6 +139,14 @@ content:
       link: ''
     third_party_settings: {  }
     weight: 10
+    region: content
+  field_responsible_updatee:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 116
     region: content
   field_service_execution:
     type: entity_reference_revisions_entity_view
@@ -157,6 +184,14 @@ content:
       link: ''
     third_party_settings: {  }
     weight: 106
+    region: content
+  field_service_organizer:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 112
     region: content
   field_service_other_info:
     type: entity_reference_revisions_entity_view
