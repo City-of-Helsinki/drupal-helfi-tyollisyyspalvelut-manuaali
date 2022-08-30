@@ -82,3 +82,14 @@ $outer-container-break: $small;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+@mixin round-icon-button {
+  background-color: clr(background-section);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  padding-left: 0;
+  color: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
