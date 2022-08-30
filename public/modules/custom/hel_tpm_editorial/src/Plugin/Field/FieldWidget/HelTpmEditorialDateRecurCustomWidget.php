@@ -159,14 +159,13 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
     $datetime_config = [
       '#date_date_element' => 'text',
       '#date_time_element' => 'text',
-      '#date_date_format' => 'dd.mm.yy',
+      '#date_date_format' => 'd.m.Y',
       '#date_time_format' => 'H:i',
       '#attached' => [
         'library' => ['hel_tpm_editorial/custom-datetimepicker']
       ],
     ];
 
-    $date_format = \Drupal::service('date.formatter')->format(strtotime('now'), 'short');
     $element['start'] = [
       '#type' => 'datetime',
       '#title' => $this->t('Starts on'),
@@ -213,7 +212,6 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
     $element['ordinals']['#states'] = $this->getVisibilityStates($element, $fieldModes['ordinals'] ?? []);
     $element['ordinals']['#title_display'] = 'invisible';
 
-  $element['time_zone'] = $this->getFieldTimeZone($timeZone);
 
     $endsModeDefault =
       $endsDate ? DateRecurModularWidgetOptions::ENDS_MODE_ON_DATE :
@@ -462,23 +460,6 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
     }
 
     return $returnValues;
-  }
-
-  /**
-   * Ordinals (BYSETPOS).
-   *
-   * Designed for MONTHLY combined with BYDAY.
-   *
-   * @param array $element
-   *   The currently built element.
-   * @param \Drupal\date_recur\DateRecurRuleInterface|null $rule
-   *   Optional rule for which default value is derived.
-   *
-   * @return array
-   *   A render array.
-   */
-  protected function getFieldMonthlyByDayOrdinals(array $element, ?DateRecurRuleInterface $rule): array {
-    parent::getFieldMonthlyByDayOrdinals($element, $rule);
   }
 
 }
