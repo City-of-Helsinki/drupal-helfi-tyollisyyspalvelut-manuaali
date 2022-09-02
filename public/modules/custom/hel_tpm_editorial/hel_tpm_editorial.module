@@ -34,9 +34,23 @@ function hel_tpm_editorial_theme() {
       'variables' => [
         'navigation' => NULL,
       ],
+    ],
+    'hel_tpm_editorial_date_recur_custom_widget' => [
+      'render element' => 'widget',
     ]
   ];
 }
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
+ * HOOK: 'date_recur_modular_widget'.
+ */
+function template_preprocess_hel_tpm_editorial_date_recur_custom_widget(array &$variables): void {
+  $variables['attributes']['class'][] = 'hel-tpm-editorial-date-recur-custom-widget';
+  $variables['#attached']['library'][] = 'date_recur_modular/date_recur_modular_alpha_widget';
+}
+
 
 /**
  * Implements hook_form_FORM_ID_alter().
