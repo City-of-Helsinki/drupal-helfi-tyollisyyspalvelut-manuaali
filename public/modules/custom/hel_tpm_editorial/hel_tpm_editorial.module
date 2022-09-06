@@ -1,24 +1,15 @@
 <?php
 
-use Drupal\Core\Entity\EntityFormInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\hel_tpm_editorial\Utility\ServiceFormHelper;
 
+/**
+ * Implements hook_entity_base_field_info_alter().
+ */
 function hel_tpm_editorial_entity_base_field_info_alter(&$fields, EntityTypeInterface $entity_type) {
   if ($entity_type->id() == 'notification_message') {
     $fields['publish_end_date']->addConstraint('NotificationMessageExpiry');
-  }
-}
-
-function hel_tpm_editorial_form_views_exposed_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
-  $view = $form_state->getStorage()['view'];
-  if (isset($form['moderation_state']) && $view->id() == "service_search") {
-    $form['moderation_state']['#type'] = 'select';
-    $form['moderation_state']['#options'] = [
-      'published' => t('Published'),
-      'on_hold' => t('On hold'),
-    ];
-    unset($form['moderation_state']['#size']);
   }
 }
 
@@ -52,150 +43,48 @@ function template_preprocess_hel_tpm_editorial_date_recur_custom_widget(array &$
 }
 
 /**
- * Validate function for ajaxified form.
- *
- * In AJAX this is only submitted when the final submit button is clicked,
- * but in the non-javascript situation, it is submitted with every
- * button click.
+ * Alter the Views exposed form.
  */
-function _hel_tpm_editorial_multipage_form_validate($form, &$form_state) {
-  $entity_form = $form_state->getFormObject();
-
-  if ($entity_form instanceof EntityFormInterface) {
-    $entity_updated = $entity_form->buildEntity($form, $form_state);
-    $entity_form->setEntity($entity_updated);
+function hel_tpm_editorial_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $view = $form_state->getStorage()['view'];
+  if (isset($form['moderation_state']) && $view->id() == "service_search") {
+    $form['moderation_state']['#type'] = 'select';
+    $form['moderation_state']['#options'] = [
+      'published' => t('Published'),
+      'on_hold' => t('On hold'),
+    ];
+    unset($form['moderation_state']['#size']);
   }
-
-  $parents_reverse = [];
-
-  if (!is_null($form_state->getTriggeringElement())) {
-    $triggeringelement = $form_state->getTriggeringElement();
-    $parents_reverse = array_reverse($triggeringelement['#array_parents']);
-  }
-
-  // Increment or decrement the step as needed. Recover values if they exist.
-  if (!isset($parents_reverse[1])) {
-    $parents_reverse[1] = '';
-  }
-
-  _hel_tpm_editorial_negotiate_step($form_state, $parents_reverse);
-
-  if (!is_null($form_state->getValues())) {
-    $values = $form_state->getValues();
-    $allval = [];
-    if (!is_null($form_state->get('all'))) {
-      $allval = $form_state->get('all');
-    }
-    foreach ($values as $key => $value) {
-      if (!empty($value) && is_string($value) && strpos($key, 'form') === FALSE) {
-        $allval['values'][$key] = $value;
-      }
-    }
-    $form_state->set('all', $allval);
-  }
-  // If they're done, submit.
-  if ($parents_reverse[1] == 'controls' && ($parents_reverse[0] == 'submit')) {
-    $form_state->setRebuild(FALSE);
-    return;
-  }
-
-  // Otherwise, we still have work to do.
-  $form_state->setRebuild(TRUE);
 }
 
 /**
- * Submit function for ajaxified form.
+ * Implements hook_form_FORM_ID_alter().
  *
- * In AJAX this is only submitted when the final submit button is clicked,
- * but in the non-javascript situation, it is submitted with every
- * button click.
- */
-function _hel_tpm_editorial_multipage_form_submit($form, &$form_state) {
-  $parents_reverse = [];
-  if (!is_null($form_state->getTriggeringElement())) {
-    $triggeringelement = $form_state->getTriggeringElement();
-    $parents_reverse = array_reverse($triggeringelement['#array_parents']);
-  }
-
-  _hel_tpm_editorial_negotiate_step($form_state, $parents_reverse);
-
-  // If they're done, submit.
-  if ($parents_reverse[1] == 'controls' && ($parents_reverse[0] == 'submit')) {
-    if (!is_null($form_state->getValues())) {
-      $values = $form_state->getValues();
-      $allval = [];
-      if (!is_null($form_state->get('all'))) {
-        $allval = $form_state->get('all');
-      }
-      foreach ($values as $key => $value) {
-        if (!empty($value) && is_string($value) && strpos($key, 'form') === FALSE) {
-          $allval['values'][$key] = $value;
-        }
-      }
-      $form_state->set('all', $allval);
-    }
-    $form_state->setRebuild(FALSE);
-    return;
-  }
-
-  // Otherwise, we still have work to do.
-  $form_state->setRebuild(TRUE);
-}
-
-/**
- * Helper function to build renderable array for navigation.
+ * Alter the node form.
  *
  * @param $form
  * @param $form_state
- *
- * @return array|false
- */
-function _hel_tpm_editorial_node_pager_navigation($form, $form_state) {
-  $storage = $form_state->getStorage();
-  if (empty($storage['field_group_ajaxified_multipage_enabled']) || $storage['field_group_ajaxified_multipage_enabled'] !== TRUE) {
-    return FALSE;
-  }
-  $navigation = [];
-  $field_groups = $form['#fieldgroups'];
-  $multipage = $storage['field_group_ajaxified_multipage_group'];
-  $current_step = $storage['field_group_ajaxified_multipage_step']-1;
-  $steps = $multipage['children'];
-
-  foreach ($steps as $key => $step) {
-    $navigation[$key] = [
-      'label' => $field_groups[$step]->label,
-      'active' => $key === $current_step,
-      'page_done' => $current_step > $key,
-    ];
-  }
-
-  return $navigation;
-
-}
-
-/**
- * @param \Drupal\Core\Form\FormStateInterface $form_state
- * @param $parents_reverse
+ * @param $form_id
  *
  * @return void
  */
-function _hel_tpm_editorial_negotiate_step(FormStateInterface &$form_state, $parents_reverse) {
-  $step = $form_state->get('field_group_ajaxified_multipage_step');
-
-  // Negotiate proper step.
-  if ($parents_reverse[1] == 'controls') {
-    if ($parents_reverse[0] == 'next' || $parents_reverse[0] == 'skip') {
-      $step++;
-    }
-
-    if ($parents_reverse[0] == 'prev') {
-      $step--;
-    }
-    $form_state->set('field_group_ajaxified_multipage_step', $step);
+function hel_tpm_editorial_form_node_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
+  $bundle = $form_state->getStorage()['form_display']->getTargetBundle();
+  if ($bundle == 'service') {
+    ServiceFormHelper::formNodeFormAlter($form, $form_state, $form_id);
   }
 }
 
 /**
+ * Implements hook_entity_extra_field_info().
+ */
+function hel_tpm_editorial_entity_extra_field_info() {
+  return ServiceFormHelper::entityExtraFieldInfo();
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ *
  * @param $implementations
  * @param $hook
  *
