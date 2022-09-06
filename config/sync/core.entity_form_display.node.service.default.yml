@@ -26,6 +26,7 @@ dependencies:
     - field.field.node.service.field_service_obligatoryness
     - field.field.node.service.field_service_other_info
     - field.field.node.service.field_service_price
+    - field.field.node.service.field_service_producer
     - field.field.node.service.field_service_provider
     - field.field.node.service.field_service_radioactivity
     - field.field.node.service.field_service_set
@@ -36,6 +37,7 @@ dependencies:
     - workflows.workflow.service_moderation
   module:
     - content_moderation
+    - entitygroupfield
     - field_group
     - inline_entity_form
     - maxlength
@@ -219,9 +221,11 @@ third_party_settings:
     group_basic_info_1:
       children:
         - title
+        - entitygroupfield
         - field_description
         - field_service_set
         - field_service_price
+        - field_service_producer
       label: Perustiedot
       region: content
       parent_name: group_basic_information
@@ -291,6 +295,16 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  entitygroupfield:
+    type: entitygroupfield_select_widget
+    weight: 4
+    region: content
+    settings:
+      help_text: ''
+      label: 'Palvelun järjestäjä'
+      multiple: true
+      required: true
+    third_party_settings: {  }
   field_accessibility:
     type: select2_entity_reference
     weight: 10
@@ -346,7 +360,7 @@ content:
     third_party_settings: {  }
   field_description:
     type: string_textarea
-    weight: 4
+    weight: 6
     region: content
     settings:
       rows: 5
@@ -482,6 +496,16 @@ content:
       collapsed: false
       revision: false
     third_party_settings: {  }
+  field_service_producer:
+    type: select2_entity_reference
+    weight: 5
+    region: content
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
+    third_party_settings: {  }
   field_service_provider:
     type: select2_entity_reference
     weight: 5
@@ -494,7 +518,7 @@ content:
     third_party_settings: {  }
   field_service_set:
     type: select2_entity_reference
-    weight: 5
+    weight: 7
     region: content
     settings:
       width: 100%
