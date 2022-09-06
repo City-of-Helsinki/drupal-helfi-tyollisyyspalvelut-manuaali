@@ -88,9 +88,6 @@
       @include button-round-corners;
       border: 2px solid $blue100;
     }
-    > div > div  > .paragraphs-dropbutton-wrapper {
-
-    }
 
     > div > div  > table > tbody > tr > .table__cell > div > div  {
       position: relative;
@@ -207,7 +204,8 @@
     .paragraph-type-title {
       display: none;
     }
-    .field--name-field-service-languages {
+    .field--name-field-service-languages,
+    .field--name-field-links {
       .table__cell {
         > div >.form-wrapper,
         .ajax-new-content > div > div {
@@ -242,7 +240,8 @@
           background-repeat: no-repeat;
           background-position: center center;
         }
-        input[data-drupal-selector*="subform-field-service-languages-add-more-add-more-button-service-language"] {
+        input[data-drupal-selector*="subform-field-service-languages-add-more-add-more-button-service-language"],
+        input[data-drupal-selector*="inline-entity-form-field-links-add-more-add-more-button-link"] {
           background-color: clr(background-section);
           width: 40px;
           height: 40px;
@@ -314,6 +313,71 @@
     grid-column: 1/2;
     grid-row:3;
   }
+
+  .field--name-field-attendance,
+  .field--name-field-service-execution,
+  .field--name-field-guidance-to-service,
+  .field--name-field-service-obligatoryness,
+  .field--name-field-career-marking,
+  .field--name-field-statements-unemployment,
+  .field--name-field-exceptions {
+    margin-bottom: $space-triple;
+    border-bottom: 2px solid clr(background-border);
+  }
+
+  .field--name-field-municipality-guide .button,
+  .field--name-field-archiving-guide .button,
+  .paragraph-type-top .paragraphs-dropbutton-wrapper .button--small,
+  .confirm-remove .form-submit {
+    @include button-medium;
+    @include button-color-blue;
+    @include button-round-corners;
+  }
+
+  //hide unused enforced dropdown buttons in edit form
+  details {
+    summary {
+      display: none;
+    }
+  }
+
+  .field--name-field-file {
+    > div .details-content-wrapper {
+      display: flex;
+      flex-wrap: grid;
+      >.form-item {
+        order: 1;
+      }
+      >table {
+        order: 2;
+      }
+    }
+
+    tr {
+      display: flex;
+      .tabledrag-handle {
+        display: none;
+      }
+      td {
+        .button{
+          background-color: clr(background-section);
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          padding: 0;
+          background-image: url("/themes/custom/palvelumanuaali/images/icons/minus.svg");
+          color: transparent;
+          background-repeat: no-repeat;
+          background-position: center center;
+        }
+      }
+    }
+    .form-item__description {
+      display: none;
+    }
+
+  }
+
 }
 
 .node-form {
@@ -383,3 +447,67 @@
         }
     }
  }
+
+ .field--type-date-recur {
+   legend {
+     width: 100%;
+   }
+   .form-item--radio {
+     >.form-item {
+       display: flex;
+       .form-radio{
+         max-width: 13px;
+       }
+       label {
+         margin-left: $space;
+       }
+     }
+   }
+   .form-item--checkboxes {
+     display: flex;
+     flex-wrap: wrap;
+   }
+ }
+
+.field--name-field-link {
+  legend {
+    display: none;
+  }
+  >.form-fieldset {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 0;
+    .h2 {
+      width: 100%;
+    }
+    .form-item {
+      &:nth-child(2) {
+        width: 60%;
+        margin-bottom: 0;
+        position: relative;
+        &::after {
+          @include icons;
+          content: "\EA06";
+          height: 16px;
+          width: 16px;
+          right: 0;
+          bottom: 16px;
+          position: absolute;
+          margin-right: $space;
+          color: $blue100;
+        }
+        input {
+          background-image: none;
+        }
+      }
+      &:nth-child(3) {
+        width: 35%;
+        margin-left: $space-one-half;
+        margin-bottom: 0;
+      }
+      .form-item__description {
+        display: none;
+      }
+    }
+  }
+}

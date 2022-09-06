@@ -1,0 +1,33 @@
+uuid: 04109d7d-de05-491d-b18c-7be1bcfd852c
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.municipality_guide.field_description_plain
+    - field.field.paragraph.municipality_guide.field_municipality
+    - paragraphs.paragraphs_type.municipality_guide
+id: paragraph.municipality_guide.default
+targetEntityType: paragraph
+bundle: municipality_guide
+mode: default
+content:
+  field_description_plain:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_municipality:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  search_api_excerpt: true

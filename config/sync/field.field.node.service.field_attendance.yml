@@ -1,0 +1,52 @@
+uuid: f79e5ef0-ec48-4f1b-a49c-ef3895cd9e68
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_attendance
+    - node.type.service
+    - paragraphs.paragraphs_type.content_link_file
+  module:
+    - entity_reference_revisions
+id: node.service.field_attendance
+field_name: field_attendance
+entity_type: node
+bundle: service
+label: Osallistuminen
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      content_link_file: content_link_file
+    negate: 0
+    target_bundles_drag_drop:
+      contact_information:
+        weight: 9
+        enabled: false
+      content:
+        weight: 10
+        enabled: false
+      content_link_file:
+        weight: 11
+        enabled: true
+      content_list_lift_header_icon:
+        weight: 12
+        enabled: false
+      service_language:
+        weight: 13
+        enabled: false
+      service_price:
+        weight: 14
+        enabled: false
+      service_time_and_place:
+        weight: 15
+        enabled: false
+      target_group:
+        weight: 16
+        enabled: false
+field_type: entity_reference_revisions

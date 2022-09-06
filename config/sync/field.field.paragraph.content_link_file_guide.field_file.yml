@@ -1,0 +1,27 @@
+uuid: d9767f6e-26ee-47e7-be99-87d3d0d31fab
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_file
+    - paragraphs.paragraphs_type.content_link_file_guide
+  module:
+    - file
+id: paragraph.content_link_file_guide.field_file
+field_name: field_file
+entity_type: paragraph
+bundle: content_link_file_guide
+label: 'Liitetiedostot (valinnainen)'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:file'
+  handler_settings: {  }
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  file_extensions: txt
+  max_filesize: ''
+  description_field: false
+field_type: file

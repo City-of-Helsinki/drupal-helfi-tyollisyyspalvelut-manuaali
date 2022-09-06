@@ -5,3 +5,11 @@ entity.node.canonical.internal:
     _title_callback: '\Drupal\hel_tpm_general\Controller\ServiceInternalViewController::title'
   requirements:
     _permission: 'access internal service fields'
+
+hel_tpm_general.group.node.add.service:
+  path: '/group/content/add/service'
+  defaults:
+    _controller: '\Drupal\hel_tpm_general\Controller\GroupNodeAddServiceController::addServiceList'
+    _title_callback: '\Drupal\hel_tpm_general\Controller\GroupNodeAddServiceController::title'
+  requirements:
+    _custom_access: '\Drupal\hel_tpm_general\Controller\GroupNodeAddServiceController::access'
