@@ -35,15 +35,17 @@ function hel_tpm_user_expiry_cron() {
 
     // A notification has been already sent, so either second notification or
     // deactivation.
-    if (isset($state[$row->uid])) {
-      if (isset($state[$row->uid]['notificationtimes'][2]) && $state[$row->uid]['notificationtimes'][2] < strtotime('-2 days')) {
+    if (isset($state[$row->uid]['notificationtimes'][1])) {
+      if (!isset($state[$row->uid]['notificationtimes'][2])) {
+        if ($state[$row->uid]['notificationtimes'][1] < strtotime('-2 weeks')) {
+          $notification = 2;
+        }
+      }
+      elseif ($state[$row->uid]['notificationtimes'][2] < strtotime('-2 days')) {
         $user = \Drupal\user\Entity\User::load($row->uid);
         $user->set('status', 0);
         $user->save();
         $logger->info('Deactivated user :uid', [':uid' => $row->uid]);
-      }
-      elseif ($state[$row->uid]['notificationtimes'][1] < strtotime('-2 weeks')) {
-        $notification = 2;
       }
     }
     else {
