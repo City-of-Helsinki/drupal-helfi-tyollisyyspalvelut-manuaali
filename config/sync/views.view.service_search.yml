@@ -996,12 +996,12 @@ display:
                     filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: false
-              field_service_price:
+              field_free_service:
                 plugin_id: default
                 advanced:
-                  placeholder_text: ''
+                  sort_options: false
                   rewrite:
-                    filter_rewrite_values: ''
+                    filter_rewrite_values: "- Kaikki -|Maksulliset ja maksuttomat\r\nTosi|Maksullinen\r\nEpätosi|Maksuton"
                   collapsible: false
                   is_secondary: false
               field_level:
@@ -1602,7 +1602,10 @@ display:
           plugin_id: search_api_options
           operator: or
           value:
-            all: all
+            under_18: under_18
+            under_30: under_30
+            over_30: over_30
+            over_57: over_57
           group: 1
           exposed: true
           expose:
@@ -2891,7 +2894,10 @@ display:
           plugin_id: search_api_options
           operator: or
           value:
-            all: all
+            under_18: under_18
+            under_30: under_30
+            over_30: over_30
+            over_57: over_57
           group: 1
           exposed: true
           expose:
@@ -3506,7 +3512,7 @@ display:
                 advanced:
                   sort_options: false
                   rewrite:
-                    filter_rewrite_values: ''
+                    filter_rewrite_values: "- Kaikki -|Maksulliset ja maksuttomat\r\nTosi|Maksullinen\r\nEpätosi|Maksuton"
                   collapsible: false
                   is_secondary: true
               moderation_state:
