@@ -37,7 +37,6 @@ dependencies:
   module:
     - content_moderation
     - field_group
-    - inline_entity_form
     - maxlength
     - paragraphs
     - select2
@@ -470,17 +469,16 @@ content:
       revision: false
     third_party_settings: {  }
   field_service_price:
-    type: inline_entity_form_simple
+    type: entity_reference_paragraphs
     weight: 8
     region: content
     settings:
-      form_mode: default
-      override_labels: false
-      label_singular: ''
-      label_plural: ''
-      collapsible: false
-      collapsed: false
-      revision: false
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
     third_party_settings: {  }
   field_service_provider:
     type: select2_entity_reference
