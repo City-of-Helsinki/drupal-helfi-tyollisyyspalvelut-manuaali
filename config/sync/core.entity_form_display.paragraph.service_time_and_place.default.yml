@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.service_time_and_place.field_dates
+    - field.field.paragraph.service_time_and_place.field_separate_time
     - field.field.paragraph.service_time_and_place.field_service_languages
     - field.field.paragraph.service_time_and_place.field_service_location
     - paragraphs.paragraphs_type.service_time_and_place
@@ -18,6 +19,7 @@ third_party_settings:
       children:
         - field_service_location
         - field_service_languages
+        - field_separate_time
         - field_dates
       label: ''
       region: content
@@ -40,6 +42,13 @@ content:
     weight: 3
     region: content
     settings: {  }
+    third_party_settings: {  }
+  field_separate_time:
+    type: boolean_checkbox
+    weight: 3
+    region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   field_service_languages:
     type: entity_reference_paragraphs

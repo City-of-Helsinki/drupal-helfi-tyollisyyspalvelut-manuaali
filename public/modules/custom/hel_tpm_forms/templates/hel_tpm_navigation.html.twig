@@ -1,0 +1,20 @@
+{#
+/**
+ * @file
+ * Theme override to display a block.
+ *
+ * Available variables:
+ * - content: The content of this block.
+ *
+ * @see template_preprocess_block()
+ */
+#}
+
+{% block content %}
+<div class='nav page-controls'>
+  <div class='button-wrapper'>
+    <button class='button btn-prev' type="button" id="prevBtn">Previous</button>
+    <button class='button btn-next' type="button" id="nextBtn">Next</button>
+  </div>
+</div>
+{% endblock %}
