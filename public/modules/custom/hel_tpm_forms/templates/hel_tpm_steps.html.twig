@@ -1,0 +1,23 @@
+{#
+/**
+ * @file
+ * Theme override to display a block.
+ *
+ * Available variables:
+ * - content: The content of this block.
+ *
+ * @see template_preprocess_block()
+ */
+#}
+
+{% block content %}
+<div class='node-service-edit-form-pager node-form prevent-scroll'>
+  <div class='stepper multistep-nav-wrapper'>
+    <div id='step-1' class="step multistep-nav "><div class='nav-icon'>1</div><hr><div class='label'>{{'Basic information'|t}}</div></div>
+    <div id='step-2' class="step multistep-nav "><div class='nav-icon'>2</div><hr><div class='label'>{{'Place and time'|t}}</div></div>
+    <div id='step-3' class="step multistep-nav "><div class='nav-icon'>3</div><hr><div class='label'>{{'Service description'|t}}</div></div>
+    <div id='step-4' class="step multistep-nav "><div class='nav-icon'>4</div><div class='label'>{{'Additional info'|t}}</div></div>
+  </div>
+</div>
+
+{% endblock %}
