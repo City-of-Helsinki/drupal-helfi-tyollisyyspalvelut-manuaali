@@ -9,8 +9,8 @@ dependencies:
     - field.field.paragraph.service_time_and_place.field_service_location
     - paragraphs.paragraphs_type.service_time_and_place
   module:
-    - date_recur_modular
     - field_group
+    - hel_tpm_editorial
     - paragraphs
     - select2
 third_party_settings:
@@ -38,8 +38,8 @@ bundle: service_time_and_place
 mode: default
 content:
   field_dates:
-    type: date_recur_modular_alpha
-    weight: 4
+    type: hel_tpm_editorial_date_recur_custom
+    weight: 3
     region: content
     settings: {  }
     third_party_settings: {  }

@@ -1,0 +1,16 @@
+custom-datetimepicker:
+  js:
+    js/hel-tpm-datetimepicker.js : {}
+  dependencies:
+    - hel_tpm_editorial/jquery.timepicker
+    - jquery_ui_datepicker/datepicker
+    - core/drupalSettings
+jquery.timepicker:
+  version: 1
+  css:
+    theme:
+      js/jquery.timepicker/jquery.timepicker.css: {}
+  js:
+    js/jquery.timepicker/jquery.timepicker.min.js: {}
+  dependencies:
+    - core/jquery
