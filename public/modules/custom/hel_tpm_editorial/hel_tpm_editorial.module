@@ -34,58 +34,21 @@ function hel_tpm_editorial_theme() {
       'variables' => [
         'navigation' => NULL,
       ],
+    ],
+    'hel_tpm_editorial_date_recur_custom_widget' => [
+      'render element' => 'widget',
     ]
   ];
 }
 
 /**
- * Implements hook_form_FORM_ID_alter().
+ * Implements hook_preprocess_HOOK().
  *
- * @param $form
- * @param $form_state
- * @param $form_id
- *
- * @return void
+ * HOOK: 'date_recur_modular_widget'.
  */
-function hel_tpm_editorial_form_node_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
-  $bundle = $form_state->getStorage()['form_display']->getTargetBundle();
-
-  // Check that we alter only service bundle.
-  if ($bundle != 'service') {
-    return;
-  }
-
-  $form['paging_header'] = [
-    '#theme' => 'multistep_navigation',
-    '#navigation' => _hel_tpm_editorial_node_pager_navigation($form, $form_state)
-  ];
-  $actions = $form['actions'];
-  $weight = 999;
-  $form['actions']['#weight'] = $weight--;
-  $form['controls'] = [
-    '#type' => 'actions',
-    '#weight' => $weight,
-    '#attributes' => ['class' => ['page-controls']]
-  ];
-
-  $controls = ['next', 'prev'];
-
-  $form['#submit'][0] = '_hel_tpm_editorial_multipage_form_submit';
-  foreach ($controls as $ctrl) {
-    if (empty($actions[$ctrl])) {
-      continue;
-    }
-
-    $actions[$ctrl]['#attributes']['class'][] = 'button';
-    $actions[$ctrl]['#attributes']['class'][] = sprintf('btn-%s', $ctrl);
-
-    $actions[$ctrl]['#validate'][0] = "_hel_tpm_editorial_multipage_form_validate";
-    if (!empty($actions[$ctrl]['#submit'])) {
-      $actions[$ctrl]['#submit'][0] = '_hel_tpm_editorial_multipage_form_submit';
-    }
-    $form['controls'][$ctrl] = $actions[$ctrl];
-    unset($form['actions'][$ctrl]);
-  }
+function template_preprocess_hel_tpm_editorial_date_recur_custom_widget(array &$variables): void {
+  $variables['attributes']['class'][] = 'hel-tpm-editorial-date-recur-custom-widget';
+  $variables['#attached']['library'][] = 'date_recur_modular/date_recur_modular_alpha_widget';
 }
 
 /**

@@ -41,7 +41,6 @@ dependencies:
   module:
     - content_moderation
     - field_group
-    - inline_entity_form
     - maxlength
     - paragraphs
     - select2
@@ -131,32 +130,6 @@ third_party_settings:
         id: ''
         description: ''
         required_fields: true
-    group_multistep_group:
-      children:
-        - group_basic_information
-        - group_pla
-        - group_servi
-        - group_add
-      label: 'Multistep group'
-      region: content
-      parent_name: ''
-      weight: 0
-      format_type: multipage_group
-      format_settings:
-        classes: ''
-        show_empty_fields: false
-        id: ''
-        description: ''
-        page_header: 0
-        page_counter: 0
-        move_button: 1
-        ajaxify: 1
-        scroll_top: 0
-        button_label: '0'
-        button_label_next: ''
-        button_label_prev: ''
-        required_fields: true
-        nonjs_multistep: false
     group_basic_information:
       children:
         - group_basic_info_1
@@ -164,14 +137,20 @@ third_party_settings:
         - group_basic_info_3
       label: 'Basic information'
       region: content
-      parent_name: group_multistep_group
+      parent_name: ''
       weight: 20
-      format_type: multipage
+      format_type: html_element
       format_settings:
-        classes: ''
+        classes: 'tab tab-1'
         show_empty_fields: false
         id: ''
-        description: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
         required_fields: true
     group_pla:
       children:
@@ -180,28 +159,40 @@ third_party_settings:
         - field_service_implement
       label: 'Place and time'
       region: content
-      parent_name: group_multistep_group
+      parent_name: ''
       weight: 21
-      format_type: multipage
+      format_type: html_element
       format_settings:
-        classes: ''
+        classes: 'tab tab-2'
         show_empty_fields: false
         id: ''
-        description: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
         required_fields: true
     group_servi:
       children:
         - group_tabs
       label: 'Service description'
       region: content
-      parent_name: group_multistep_group
+      parent_name: ''
       weight: 22
-      format_type: multipage
+      format_type: html_element
       format_settings:
-        classes: ''
+        classes: 'tab tab-3'
         show_empty_fields: false
         id: ''
-        description: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
         required_fields: true
     group_add:
       children:
@@ -213,14 +204,20 @@ third_party_settings:
         - field_other_services
       label: 'Additional info'
       region: content
-      parent_name: group_multistep_group
-      weight: 23
-      format_type: multipage
+      parent_name: ''
+      weight: 24
+      format_type: html_element
       format_settings:
-        classes: ''
+        classes: 'tab tab-4'
         show_empty_fields: false
         id: ''
-        description: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
         required_fields: true
     group_basic_info_1:
       children:
@@ -399,6 +396,25 @@ content:
         maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
         maxlength_js_enforce: true
         maxlength_js_truncate_html: false
+      conditional_fields:
+        f4913650-3595-4d98-a95e-b972cdaa65b0:
+          entity_type: node
+          bundle: service
+          dependee: title
+          settings:
+            state: '!visible'
+            reset: false
+            condition: value
+            grouping: AND
+            values_set: 1
+            value: ''
+            values: {  }
+            value_form:
+              -
+                value: test
+            effect: show
+            effect_options: {  }
+            selector: ''
   field_exceptions:
     type: inline_entity_form_simple
     weight: 5
@@ -523,17 +539,16 @@ content:
       revision: false
     third_party_settings: {  }
   field_service_price:
-    type: inline_entity_form_simple
+    type: entity_reference_paragraphs
     weight: 8
     region: content
     settings:
-      form_mode: default
-      override_labels: false
-      label_singular: ''
-      label_plural: ''
-      collapsible: false
-      collapsed: false
-      revision: false
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
     third_party_settings: {  }
   field_service_provider:
     type: select2_entity_reference

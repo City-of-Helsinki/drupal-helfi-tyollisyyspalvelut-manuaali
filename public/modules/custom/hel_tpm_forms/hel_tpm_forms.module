@@ -1,0 +1,61 @@
+<?php
+
+/**
+ * @file
+ * This module creates various additional contents.
+ */
+
+use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\node\Entity\Node;
+use Drupal\Core\Database\Query;
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_theme().
+ */
+function hel_tpm_forms_theme($existing, $type, $theme, $path) {
+  return [
+    'hel_tpm_navigation' => [
+      'template' => 'hel_tpm_navigation',
+      'variables' => [
+        'content' => NULL,
+      ],
+    ],
+    'hel_tpm_steps' => [
+      'template' => 'hel_tpm_steps',
+      'variables' => [
+        'content' => NULL,
+      ],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * @param $form
+ * @param $form_state
+ * @param $form_id
+ *
+ * @return void
+ */
+function hel_tpm_forms_form_node_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
+  $bundle = $form_state->getStorage()['form_display']->getTargetBundle();
+
+  // Check that we alter only service bundle.
+  if ($bundle != 'service') {
+    return;
+  }
+
+  $form['paging_header'] = [
+    '#theme' => 'hel_tpm_navigation',
+    '#content' => '',
+  ];
+
+  $form['paging_footer'] = [
+    '#theme' => 'hel_tpm_steps',
+
+  ];
+
+  $form['#attached']['library'][] = 'hel_tpm_forms/hel_tpm_forms';
+}

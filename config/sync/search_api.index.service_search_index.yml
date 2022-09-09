@@ -7,6 +7,7 @@ dependencies:
     - field.storage.node.field_implementation_extra_info
     - field.storage.node.field_life_situations
     - field.storage.node.field_service_price
+    - field.storage.paragraph.field_free_service
     - field.storage.node.field_service_set
     - field.storage.node.field_service_time_and_location
     - field.storage.paragraph.field_level
@@ -64,6 +65,17 @@ field_settings:
       config:
         - field.storage.node.field_target_group
         - field.storage.paragraph.field_age_groups
+      module:
+        - paragraphs
+  field_free_service:
+    label: 'Service price » Paragraph » Palvelu on maksullinen'
+    datasource_id: 'entity:node'
+    property_path: 'field_service_price:entity:field_free_service'
+    type: boolean
+    dependencies:
+      config:
+        - field.storage.node.field_service_price
+        - field.storage.paragraph.field_free_service
       module:
         - paragraphs
   field_implementation_extra_info:
@@ -124,14 +136,6 @@ field_settings:
         - field.storage.paragraph.field_municipality
       module:
         - paragraphs
-  field_service_price:
-    label: 'Service price'
-    datasource_id: 'entity:node'
-    property_path: field_service_price
-    type: integer
-    dependencies:
-      config:
-        - field.storage.node.field_service_price
   field_service_set:
     label: 'Service set'
     datasource_id: 'entity:node'
