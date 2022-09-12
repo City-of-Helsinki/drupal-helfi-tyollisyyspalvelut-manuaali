@@ -54,7 +54,6 @@ function hel_tpm_forms_form_node_form_alter(&$form, FormStateInterface &$form_st
 
   $form['paging_footer'] = [
     '#theme' => 'hel_tpm_steps',
-
   ];
 
   $form['#attached']['library'][] = 'hel_tpm_forms/hel_tpm_forms';
