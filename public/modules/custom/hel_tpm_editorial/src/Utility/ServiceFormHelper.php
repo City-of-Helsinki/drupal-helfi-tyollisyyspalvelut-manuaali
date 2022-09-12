@@ -31,6 +31,8 @@ class ServiceFormHelper {
       $form['hel_tpm_service_help'] = [
         '#type' => 'markup',
         '#markup' => 'OHJETEKSTIÄ',
+        '#theme' => 'hel_tpm_service_help',
+        '#theme_wrappers' => ['form_element'],
       ];
     }
 

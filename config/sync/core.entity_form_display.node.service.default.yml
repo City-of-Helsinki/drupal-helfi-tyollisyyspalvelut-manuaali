@@ -270,6 +270,7 @@ third_party_settings:
       children:
         - moderation_state
         - langcode
+        - hel_tpm_service_help
         - status
         - created
         - uid
@@ -608,6 +609,11 @@ content:
       form_display_mode: default
       default_paragraph_type: target_group
     third_party_settings: {  }
+  hel_tpm_service_help:
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   langcode:
     type: language_select
     weight: 15
@@ -659,7 +665,6 @@ hidden:
   field_service_links_external: true
   field_service_links_internal: true
   field_service_radioactivity: true
-  hel_tpm_service_help: true
   path: true
   promote: true
   sticky: true

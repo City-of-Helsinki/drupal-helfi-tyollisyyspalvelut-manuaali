@@ -28,7 +28,7 @@ function hel_tpm_editorial_theme() {
     ],
     'hel_tpm_editorial_date_recur_custom_widget' => [
       'render element' => 'widget',
-    ]
+    ],
   ];
 }
 
@@ -57,21 +57,6 @@ function hel_tpm_editorial_form_views_exposed_form_alter(&$form, FormStateInterf
 function template_preprocess_hel_tpm_editorial_date_recur_custom_widget(array &$variables): void {
   $variables['attributes']['class'][] = 'hel-tpm-editorial-date-recur-custom-widget';
   $variables['#attached']['library'][] = 'date_recur_modular/date_recur_modular_alpha_widget';
-}
-
-/**
- * Alter the Views exposed form.
- */
-function hel_tpm_editorial_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  $view = $form_state->getStorage()['view'];
-  if (isset($form['moderation_state']) && $view->id() == "service_search") {
-    $form['moderation_state']['#type'] = 'select';
-    $form['moderation_state']['#options'] = [
-      'published' => t('Published'),
-      'on_hold' => t('On hold'),
-    ];
-    unset($form['moderation_state']['#size']);
-  }
 }
 
 /**
