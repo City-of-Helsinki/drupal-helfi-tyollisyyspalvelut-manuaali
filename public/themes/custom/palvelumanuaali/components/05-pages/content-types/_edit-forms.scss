@@ -416,7 +416,7 @@
   }
 
   .field--name-field-contact-info-external,
-  .field--name-field-service-provider {
+  .field--name-field-service-producer {
     padding-bottom: $space-three-and-half;
     margin-bottom: $space-triple !important;
     border-bottom: 2px solid clr(background-border);
@@ -442,7 +442,11 @@
   input[data-drupal-selector*="form-actions-ief-remove-confirm"],
   input[data-drupal-selector*="form-actions-ief-remove-cancel"],
   input[data-drupal-selector*="actions-ief-add-save"],
-  input[data-drupal-selector*="actions-ief-add-cancel"] {
+  input[data-drupal-selector*="actions-ief-add-cancel"],
+  input[data-drupal-selector*="top-links-remove-button"],
+  .entitygroupfield-dropbutton-wrapper input,
+  .restore input,
+  #edit-actions .button {
     @include button-color-blue;
     width: unset;
   }
