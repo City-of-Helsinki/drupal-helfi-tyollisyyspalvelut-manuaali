@@ -56,9 +56,15 @@
          }
       });
 
-      $('#edit-field-service-price-0-inline-entity-form-field-free-service-value').click(function () {
-        $('.field--name-field-service-price .field--name-field-price').toggle();
-        $('.field--name-field-service-price .field--name-field-description').toggle();
+      $('.field--name-field-free-service .form-checkbox').click(function () {
+        if ($(this).is(":checked") == false) {
+          $('.field--name-field-service-price .field--name-field-price').hide();
+          $('.field--name-field-service-price .field--name-field-description').hide();
+        }
+        else {
+          $('.field--name-field-service-price .field--name-field-price').show();
+          $('.field--name-field-service-price .field--name-field-description').show();
+        }
       });
 
       function switchTab(n) {
