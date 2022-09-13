@@ -201,8 +201,6 @@ third_party_settings:
         - field_contact_info_external
         - entitygroupfield
         - field_service_producer
-        - field_service_organizer
-        - field_service_provider
         - field_responsible_updatee
         - field_other_services
       label: 'Additional info'
@@ -300,7 +298,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   entitygroupfield:
-    type: entitygroupfield_select_widget
+    type: entitygroupfield_autocomplete_widget
     weight: 16
     region: content
     settings:
