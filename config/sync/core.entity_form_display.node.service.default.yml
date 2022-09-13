@@ -27,11 +27,9 @@ dependencies:
     - field.field.node.service.field_service_links_external
     - field.field.node.service.field_service_links_internal
     - field.field.node.service.field_service_obligatoryness
-    - field.field.node.service.field_service_organizer
     - field.field.node.service.field_service_other_info
     - field.field.node.service.field_service_price
     - field.field.node.service.field_service_producer
-    - field.field.node.service.field_service_provider
     - field.field.node.service.field_service_radioactivity
     - field.field.node.service.field_service_set
     - field.field.node.service.field_service_time_and_location
@@ -43,6 +41,7 @@ dependencies:
     - content_moderation
     - entitygroupfield
     - field_group
+    - inline_entity_form
     - maxlength
     - paragraphs
     - select2
@@ -200,6 +199,8 @@ third_party_settings:
       children:
         - field_contact_info
         - field_contact_info_external
+        - entitygroupfield
+        - field_service_producer
         - field_service_organizer
         - field_service_provider
         - field_responsible_updatee
@@ -224,11 +225,9 @@ third_party_settings:
     group_basic_info_1:
       children:
         - title
-        - entitygroupfield
         - field_description
         - field_service_set
         - field_service_price
-        - field_service_producer
       label: Perustiedot
       region: content
       parent_name: group_basic_information
@@ -302,7 +301,7 @@ content:
     third_party_settings: {  }
   entitygroupfield:
     type: entitygroupfield_select_widget
-    weight: 4
+    weight: 16
     region: content
     settings:
       help_text: ''
@@ -477,7 +476,7 @@ content:
     third_party_settings: {  }
   field_other_services:
     type: select2_entity_reference
-    weight: 19
+    weight: 21
     region: content
     settings:
       width: 100%
@@ -487,7 +486,7 @@ content:
     third_party_settings: {  }
   field_responsible_updatee:
     type: select2_entity_reference
-    weight: 18
+    weight: 20
     region: content
     settings:
       width: 100%
@@ -529,16 +528,6 @@ content:
       collapsed: false
       revision: false
     third_party_settings: {  }
-  field_service_organizer:
-    type: select2_entity_reference
-    weight: 16
-    region: content
-    settings:
-      width: 100%
-      autocomplete: false
-      match_operator: CONTAINS
-      match_limit: 10
-    third_party_settings: {  }
   field_service_other_info:
     type: inline_entity_form_simple
     weight: 8
@@ -566,21 +555,11 @@ content:
     third_party_settings: {  }
   field_service_producer:
     type: select2_entity_reference
-    weight: 5
-    region: content
-    settings:
-      width: 100%
-      autocomplete: false
-      match_operator: CONTAINS
-      match_limit: 10
-    third_party_settings: {  }
-  field_service_provider:
-    type: select2_entity_reference
     weight: 17
     region: content
     settings:
       width: 100%
-      autocomplete: true
+      autocomplete: false
       match_operator: CONTAINS
       match_limit: 10
     third_party_settings: {  }
