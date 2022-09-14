@@ -79,7 +79,6 @@
         });
     },
     buildSuggestions: function(form, data, term) {
-      console.log(form);
       var searchList = $('.service-list .item-list');
       var suggestionList = $('.suggestions .item-list');
       if (term.length <= 0) {
