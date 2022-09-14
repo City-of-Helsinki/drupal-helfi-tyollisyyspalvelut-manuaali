@@ -47,6 +47,26 @@
 
       });
 
+      $('.field--name-field-separate-time .form-checkbox').click(function () {
+         if ($(this).is(":checked") == false) {
+           $(this).parent().parent().siblings('.field--name-field-dates').show();
+         }
+         else  {
+           $(this).parent().parent().siblings('.field--name-field-dates').hide();
+         }
+      });
+
+      $('.field--name-field-free-service .form-checkbox').click(function () {
+        if ($(this).is(":checked") == false) {
+          $('.field--name-field-service-price .field--name-field-price').hide();
+          $('.field--name-field-service-price .field--name-field-description').hide();
+        }
+        else {
+          $('.field--name-field-service-price .field--name-field-price').show();
+          $('.field--name-field-service-price .field--name-field-description').show();
+        }
+      });
+
       function switchTab(n) {
         var x = document.getElementsByClassName("tab");
         x[currentTab].style.display = "none";
@@ -55,15 +75,23 @@
       }
 
       function showTab(n) {
+        hidePrice();
+        hideTime();
         // This function will display the specified tab of the form ...
         var x = document.getElementsByClassName("tab");
         x[n].style.display = "block";
         // ... and fix the Previous/Next buttons:
         if (n == 0) {
           document.getElementById("prevBtn").style.display = "none";
+          hidePrice();
+        } else if (n == 1){
+          document.getElementById("prevBtn").style.display = "inline";
+          hideTime();
         } else {
           document.getElementById("prevBtn").style.display = "inline";
         }
+
+
         if (n == (x.length - 1)) {
           document.getElementById("nextBtn").innerHTML = "Submit";
         } else {
@@ -103,7 +131,28 @@
         x[n].className += " active";
       }
 
+      function hidePrice() {
+       let x = $('#edit-field-service-price-0-inline-entity-form-field-free-service-value').is(":checked");
+        if (x == false) {
+          $('.field--name-field-service-price .field--name-field-price').hide();
+          $('.field--name-field-service-price .field--name-field-description').hide();
+        }
+        else  {
+          $('.field--name-field-service-price .field--name-field-price').show();
+          $('.field--name-field-service-price .field--name-field-description').show();
 
+        }
+      }
+
+      function hideTime() {
+       let x = $('.field--name-field-separate-time .form-item .form-checkbox');
+        if ($(x).is(":checked") == false) {
+          $(this).parent().parent().siblings('.field--name-field-dates').show();
+        }
+        else  {
+          $(this).parent().parent().siblings('.field--name-field-dates').hide();
+        }
+      }
     }
   }
 })(jQuery, Drupal, drupalSettings);

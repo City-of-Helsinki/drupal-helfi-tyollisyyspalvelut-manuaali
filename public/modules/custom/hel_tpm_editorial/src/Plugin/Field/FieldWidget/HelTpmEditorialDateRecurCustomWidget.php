@@ -6,7 +6,9 @@ namespace Drupal\hel_tpm_editorial\Plugin\Field\FieldWidget;
 
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\Form\FormState;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Component\Utility\Html;
 use Drupal\date_recur\DateRecurPartGrid;
 use Drupal\date_recur\DateRecurRuleInterface;
 use Drupal\date_recur\Exception\DateRecurHelperArgumentException;
@@ -123,6 +125,11 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
    * {@inheritdoc}
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state): array {
+    $build_info = $form_state->getBuildInfo();
+    $build_info['args']['partGrid'] = $items->getPartGrid();
+    $build_info['args']['items'] = $items;
+    $form_state->setBuildInfo($build_info);
+
     /** @var \Drupal\date_recur\Plugin\Field\FieldType\DateRecurFieldItemList|\Drupal\date_recur\Plugin\Field\FieldType\DateRecurItem[] $items */
     $elementParents = array_merge($element['#field_parents'], [$this->fieldDefinition->getName(), $delta]);
     $element['#element_validate'][] = [static::class, 'validateModularWidget'];
@@ -271,6 +278,62 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
       ];
     }
 
+    $wrapper = 'date-preview-wrapper-' . implode('-', $elementParents);;
+    $element['preview'] = [
+      '#type' => 'button',
+      '#value' => $this->t('Preview date'),
+      '#ajax' => [
+        'callback' => [$this, 'previewDate'],
+        'wrapper' => $wrapper,
+        'event' => 'click'
+      ],
+      '#limit_validation_errors' => [],
+      '#name' => Html::cleanCssIdentifier(implode('-', array_merge($elementParents, ['preview']))),
+    ];
+    $element['preview_element'] = [
+      '#type' => 'html_tag',
+      '#tag' => 'div',
+      '#attributes' => ['id' => $wrapper]
+    ];
+
+    return $element;
+  }
+
+  /**
+   * Preview date ajax submit.
+   * @param $form
+   * @param $form_state
+   *
+   * @return mixed
+   */
+  public function previewDate($form, FormStateInterface &$form_state) {
+    $triggering_element = $form_state->getTriggeringElement();
+    $parents = $triggering_element['#parents'];
+    $input = $form_state->getUserInput();
+    $items = $form_state->getBuildInfo()['args']['items'];
+    $this->partGrid = $items->getPartGrid();
+
+    foreach ($parents as $key) {
+      if (!empty($input[$key])) {
+        $input = $input[$key];
+      }
+    }
+
+    $input['start'] = $this->createDrupalDateTime($input['start']);
+    $input['end'] = $this->createDrupalDateTime($input['end']);
+    $input['time_zone'] = self::TIME_ZONE;
+    $values = $this->massageFormValues([$input], $form, $form_state);
+
+    $items->setValue($values);
+
+    $element['preview_element'] = [
+      '#type' => 'html_tag',
+      '#tag' => 'div',
+      '#attributes' => ['id' => $triggering_element['#ajax']['wrapper']]
+    ];
+
+    $element['preview_element']['element'] = $items->get(0)->view();
+
     return $element;
   }
 
@@ -363,7 +426,6 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
    * {@inheritdoc}
    */
   public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
-    $values = parent::massageFormValues($values, $form, $form_state);
     $dateStorageFormat = $this->fieldDefinition->getSetting('datetime_type') == DateRecurItem::DATETIME_TYPE_DATE ? DateRecurItem::DATE_STORAGE_FORMAT : DateRecurItem::DATETIME_STORAGE_FORMAT;
     $dateStorageTimeZone = new \DateTimezone(DateRecurItem::STORAGE_TIMEZONE);
     $grid = $this->partGrid;
@@ -378,8 +440,20 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
       $item = [];
 
       $start = $value['start'] ?? NULL;
+      if (empty($start)) {
+        continue;
+      }
+      if (is_array($start)) {
+        $start = $this->createDrupalDateTime($start);
+      }
       assert(!isset($start) || $start instanceof DrupalDateTime);
       $end = $value['end'] ?? NULL;
+      if (empty($end)) {
+        continue;
+      }
+      if (is_array($end)) {
+        $end = $this->createDrupalDateTime($end);
+      }
       assert(!isset($end) || $end instanceof DrupalDateTime);
       $timeZone = self::TIME_ZONE;
       assert(is_string($timeZone));
@@ -461,4 +535,7 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
     return $returnValues;
   }
 
+  protected function createDrupalDateTime(array $date) {
+    return DrupalDateTime::createFromTimestamp(strtotime(implode($date)));
+  }
 }
