@@ -3,7 +3,7 @@
 namespace Drupal\hel_tpm_forms\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
-use \Drupal\file\Entity\File;
+use Drupal\file\Entity\File;
 
 /**
  * Provides a landing content block.

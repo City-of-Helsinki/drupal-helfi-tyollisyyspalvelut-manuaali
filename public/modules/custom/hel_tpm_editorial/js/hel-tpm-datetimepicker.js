@@ -9,8 +9,8 @@
         if (placeholder === null) {
           return;
         }
-        if (placeholder === 'hh:mm:ss') {
-          $(this).attr('placeholder',  'hh.mm');
+        if (placeholder === 'hh:mm:ss' || placeholder === 'hh:mm') {
+          $(this).attr('placeholder',  'hh:mm');
           $(this).timepicker({
             timeFormat: timeFormat,
             minTime: '05:00',
