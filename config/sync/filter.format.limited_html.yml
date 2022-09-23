@@ -1,24 +1,18 @@
-uuid: eaa69710-ad0d-4fa8-b0cf-3e6a89f0c761
-langcode: en
-status: true
+uuid: f5d186eb-347a-45bc-9f7d-7e6895e73ba5
+langcode: fi
+status: false
 dependencies: {  }
-name: 'Filtered Html'
-format: filtered_html
+name: 'Limited html'
+format: limited_html
 weight: 0
 filters:
-  filter_autop:
-    id: filter_autop
-    provider: filter
-    status: true
-    weight: 0
-    settings: {  }
   filter_html:
     id: filter_html
     provider: filter
     status: true
     weight: -10
     settings:
-      allowed_html: '<a href hreflang> <strong> <ul type> <ol type start> <li> <dl> <dt> <dd> <h3 id> <p>'
+      allowed_html: '<a href hreflang> <strong> <ul type> <ol start type=''1 A I''> <li> <dl> <dt> <dd> <h3 id>'
       filter_html_help: true
       filter_html_nofollow: false
   filter_htmlcorrector:
