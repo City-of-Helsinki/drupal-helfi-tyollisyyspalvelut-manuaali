@@ -47,6 +47,8 @@
 
       });
 
+
+      //handle show/hide logic of service time
       $('.field--name-field-separate-time .form-checkbox').click(function () {
          if ($(this).is(":checked") == false) {
            $(this).parent().parent().siblings('.field--name-field-dates').show();
@@ -56,6 +58,7 @@
          }
       });
 
+      //handle show/hide logic of service price
       $('.field--name-field-free-service .form-checkbox').click(function () {
         if ($(this).is(":checked") == false) {
           $('.field--name-field-service-price .field--name-field-price').hide();
@@ -64,6 +67,18 @@
         else {
           $('.field--name-field-service-price .field--name-field-price').show();
           $('.field--name-field-service-price .field--name-field-description').show();
+        }
+      });
+
+      //handle age accordion
+      $('.field--name-field-age-groups .form-item .form-radio').click(function() {
+        if ($(this).val() == "no_age_restriction" && $(this).is(":checked") == true ) {
+          console.log('ei ikää');
+          $('.field--name-field-age').hide();
+        }
+        else if (($(this).val() != "no_age_restriction" && $(this).is(":checked") == true )) {
+          console.log('ikä valittu');
+          $('.field--name-field-age').show();
         }
       });
 
@@ -77,6 +92,7 @@
       function showTab(n) {
         hidePrice();
         hideTime();
+        hideAgeRange();
         // This function will display the specified tab of the form ...
         var x = document.getElementsByClassName("tab");
         x[n].style.display = "block";
@@ -131,6 +147,7 @@
         x[n].className += " active";
       }
 
+      // hide price elements in the first service entity form page if the checkbox is not checked.
       function hidePrice() {
        let x = $('#edit-field-service-price-0-inline-entity-form-field-free-service-value').is(":checked");
         if (x == false) {
@@ -144,6 +161,7 @@
         }
       }
 
+      // hide time element on the second page of service entity form.
       function hideTime() {
        let x = $('.field--name-field-separate-time .form-item .form-checkbox');
         if ($(x).is(":checked") == false) {
@@ -152,6 +170,19 @@
         else  {
           $(this).parent().parent().siblings('.field--name-field-dates').hide();
         }
+      }
+
+
+      // hide age range on the first a page of service entity form.
+      function hideAgeRange() {
+        $('.field--name-field-age-groups .form-item').siblings().each(function () {
+             if ($(this).children('.form-radio').val() == "no_age_restriction" && $(this).children('.form-radio').is(":checked") == true ) {
+               $('.field--name-field-age').hide();
+             }
+             else if (($(this).children('.form-radio').val() != "no_age_restriction" && $(this).children('.form-radio').is(":checked") == true )) {
+               $('.field--name-field-age').show();
+             }
+        });
       }
     }
   }

@@ -16,21 +16,21 @@ type: list_string
 settings:
   allowed_values:
     -
-      value: under_18
-      label: 'Alle 18 vuotiaat'
-    -
       value: under_30
-      label: 'Alle 30 vuotiaat'
+      label: 'Alle 30-vuotiaat'
     -
       value: over_30
-      label: 'Yli 30 vuotiaat'
+      label: '30-vuotiaat tai vanhemmat'
     -
       value: over_57
-      label: 'Yli 57 vuotiaat'
+      label: 'Yli 55-vuotiaat'
+    -
+      value: no_age_restriction
+      label: 'Ei ikään liittyvää rajoitusta'
   allowed_values_function: ''
 module: options
 locked: false
-cardinality: -1
+cardinality: 1
 translatable: true
 indexes: {  }
 persist_with_no_fields: false

@@ -46,15 +46,30 @@
     display: none;
   }
 
+  fieldset > legend {
+    width: 100%;
+  }
 
+  .description {
+    margin-bottom: $space;
+  }
+
+  .table__cell .paragraph-type-top {
+    display: flex;
+  }
+
+  // hide all form tabs by default.
   > .tab {
     display: none;
   }
+
+  // hide all form dragable tables by default.
   .field-multiple-drag {
     display: none;
   }
-  .horizontal-tabs {
 
+  //add basic theming for sidebar horizontal-tabs
+  .horizontal-tabs {
     .horizontal-tabs-list {
         border-bottom: 2px solid clr(form-border);
         padding-left: 16px;
@@ -82,6 +97,7 @@
       }
     }
   }
+
   .form-item-checkbox {
     display: flex;
     align-items: center;
@@ -91,10 +107,15 @@
       height: 16px;
     }
   }
+
   .h2 {
     font-weight: 600;
     font-size: 24px;
     line-height: 32px;
+  }
+
+  .field--name-field-age {
+    display: none;
   }
 
   .field--name-field-service-time-and-location {
@@ -542,17 +563,6 @@
  .field--type-date-recur {
    legend {
      width: 100%;
-   }
-   .form-item--radio {
-     >.form-item {
-       display: flex;
-       .form-radio{
-         max-width: 13px;
-       }
-       label {
-         margin-left: $space;
-       }
-     }
    }
    .form-item--checkboxes {
      display: flex;

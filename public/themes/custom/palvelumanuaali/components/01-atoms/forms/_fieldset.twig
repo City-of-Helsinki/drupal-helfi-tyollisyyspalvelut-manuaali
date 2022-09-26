@@ -39,6 +39,9 @@
   %}
   {#  Always wrap fieldset legends in a SPAN for CSS positioning. #}
   <legend{{ legend.attributes.addClass(legend_classes) }}>{{ legend.title }}</legend>
+  {% if description.content %}
+    <div{{ description.attributes.addClass('description') }}>{{ description.content }}</div>
+  {% endif %}
   {% if errors %}
     <div>
       {{ errors }}
@@ -51,7 +54,5 @@
   {% if suffix %}
     <span class="field-suffix">{{ suffix }}</span>
   {% endif %}
-  {% if description.content %}
-    <div{{ description.attributes.addClass('description') }}>{{ description.content }}</div>
-  {% endif %}
+
 </fieldset>
