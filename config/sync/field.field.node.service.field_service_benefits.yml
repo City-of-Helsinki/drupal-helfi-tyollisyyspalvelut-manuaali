@@ -1,0 +1,21 @@
+uuid: 10bd53c1-6e30-44c0-910b-c37755a070f3
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_service_benefits
+    - node.type.service
+  module:
+    - text
+id: node.service.field_service_benefits
+field_name: field_service_benefits
+entity_type: node
+bundle: service
+label: 'Palveluun osallistumisen hyödyt'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

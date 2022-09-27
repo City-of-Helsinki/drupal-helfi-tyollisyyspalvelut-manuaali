@@ -1,0 +1,21 @@
+uuid: 73193e3d-263f-47aa-85dd-fbaa35018a27
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_field_client_consent_descr
+    - node.type.service
+  module:
+    - text
+id: node.service.field_field_client_consent_descr
+field_name: field_field_client_consent_descr
+entity_type: node
+bundle: service
+label: 'Suostumusvaatimuksen kuvaus'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long
