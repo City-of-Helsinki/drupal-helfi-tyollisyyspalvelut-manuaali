@@ -50,6 +50,19 @@
     width: 100%;
   }
 
+  .form-item-checkbox {
+    display: flex;
+    flex-wrap: wrap;
+    label {
+      order: 1;
+    }
+    .form-item__description {
+      order: 2;
+      width: 100%;
+    }
+
+  }
+
   .description {
     margin-bottom: $space;
   }
@@ -356,7 +369,6 @@
     }
   }
 
-  .field--name-field-attendance,
   .field--name-field-service-execution,
   .field--name-field-guidance-to-service,
   .field--name-field-service-obligatoryness,
@@ -365,6 +377,12 @@
   .field--name-field-exceptions {
     margin-bottom: $space-triple;
     border-bottom: 2px solid clr(background-border);
+  }
+
+  .field--name-field-service-other-info {
+    margin-top: $space-triple;
+    padding-top: $space-triple;
+    border-top: 2px solid clr(background-border);
   }
 
   .field--name-field-municipality-guide .button,

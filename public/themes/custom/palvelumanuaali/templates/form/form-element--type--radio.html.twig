@@ -47,4 +47,6 @@
 {%
   set additional_class = 'form-item--radio-button'
 %}
-{% include "@atoms/forms/_form-element.twig" %}
+{% include "@atoms/forms/_form-element.twig"  with {
+  description_display: ['before'],
+} %}
