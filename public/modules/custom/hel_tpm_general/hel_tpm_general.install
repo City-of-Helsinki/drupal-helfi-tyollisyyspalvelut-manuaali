@@ -6,7 +6,7 @@ use Drupal\field\Entity\FieldConfig;
 /**
  * Remove the taxonomy contents.
  */
-@@ -15,3 +18,18 @@ function hel_tpm_general_update_8101() {
+function hel_tpm_general_update_8101() {
   $entities = $controller->loadMultiple($tids);
   $controller->delete($entities);
 }
