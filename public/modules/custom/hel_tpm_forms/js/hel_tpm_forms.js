@@ -73,12 +73,20 @@
       //handle age accordion
       $('.field--name-field-age-groups .form-item .form-radio').click(function() {
         if ($(this).val() == "no_age_restriction" && $(this).is(":checked") == true ) {
-          console.log('ei ikää');
           $('.field--name-field-age').hide();
         }
         else if (($(this).val() != "no_age_restriction" && $(this).is(":checked") == true )) {
-          console.log('ikä valittu');
           $('.field--name-field-age').show();
+        }
+      });
+
+      //Handle show/hide logic of service consent description
+      $('.field--name-field-client-consent .form-item-checkbox .form-checkbox').click(function () {
+        if ($(this).is(":checked") == false) {
+          $(this).parent().parent().siblings('.field--name-field-field-client-consent-descr').hide();
+        }
+        else  {
+          $(this).parent().parent().siblings('.field--name-field-field-client-consent-descr').show();
         }
       });
 
@@ -93,6 +101,7 @@
         hidePrice();
         hideTime();
         hideAgeRange();
+        hideConsent();
         // This function will display the specified tab of the form ...
         var x = document.getElementsByClassName("tab");
         x[n].style.display = "block";
@@ -183,6 +192,17 @@
                $('.field--name-field-age').show();
              }
         });
+      }
+
+      // hide consent description on the third a page of service entity form.
+      function hideConsent() {
+        let x = $('.field--name-field-client-consent .form-item .form-checkbox');
+         if ($(x).is(":checked") == false) {
+           $(x).parent().parent().siblings('.field--name-field-field-client-consent-descr').hide();
+         }
+         else  {
+           $(x).parent().parent().siblings('.field--name-field-field-client-consent-descr').show();
+         }
       }
     }
   }
