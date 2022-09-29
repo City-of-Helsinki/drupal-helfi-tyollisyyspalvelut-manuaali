@@ -1,25 +1,11 @@
 uuid: eaa69710-ad0d-4fa8-b0cf-3e6a89f0c761
 langcode: en
 status: true
-dependencies:
-  module:
-    - editor
+dependencies: {  }
 name: 'Filtered Html'
 format: filtered_html
 weight: 0
 filters:
-  editor_file_reference:
-    id: editor_file_reference
-    provider: editor
-    status: true
-    weight: 0
-    settings: {  }
-  filter_html_image_secure:
-    id: filter_html_image_secure
-    provider: filter
-    status: true
-    weight: 9
-    settings: {  }
   filter_autop:
     id: filter_autop
     provider: filter
@@ -32,31 +18,12 @@ filters:
     status: true
     weight: -10
     settings:
-      allowed_html: '<a href hreflang> <em> <strong> <cite> <blockquote cite> <code> <ul type> <ol type start> <li> <dl> <dt> <dd> <h2 id> <h3 id> <h4 id> <h5 id> <h6 id> <img src alt data-entity-type data-entity-uuid data-align data-caption>'
+      allowed_html: '<a href hreflang> <strong> <ul type> <ol type start> <li> <dl> <dt> <dd> <h3 id> <p>'
       filter_html_help: true
       filter_html_nofollow: false
-  filter_caption:
-    id: filter_caption
-    provider: filter
-    status: true
-    weight: 0
-    settings: {  }
   filter_htmlcorrector:
     id: filter_htmlcorrector
     provider: filter
     status: true
     weight: 10
-    settings: {  }
-  filter_url:
-    id: filter_url
-    provider: filter
-    status: true
-    weight: 0
-    settings:
-      filter_url_length: 72
-  filter_align:
-    id: filter_align
-    provider: filter
-    status: true
-    weight: 0
     settings: {  }

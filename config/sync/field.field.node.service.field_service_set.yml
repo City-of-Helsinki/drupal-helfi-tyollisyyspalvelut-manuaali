@@ -6,13 +6,19 @@ dependencies:
     - field.storage.node.field_service_set
     - node.type.service
     - taxonomy.vocabulary.service_set
+  module:
+    - require_on_publish
+third_party_settings:
+  require_on_publish:
+    require_on_publish: true
+    warn_on_empty: true
 id: node.service.field_service_set
 field_name: field_service_set
 entity_type: node
 bundle: service
 label: 'Service set'
 description: ''
-required: true
+required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''

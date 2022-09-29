@@ -5,13 +5,19 @@ dependencies:
   config:
     - field.storage.node.field_description
     - node.type.service
+  module:
+    - require_on_publish
+third_party_settings:
+  require_on_publish:
+    require_on_publish: true
+    warn_on_empty: true
 id: node.service.field_description
 field_name: field_description
 entity_type: node
 bundle: service
 label: 'Short description'
 description: ''
-required: true
+required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
