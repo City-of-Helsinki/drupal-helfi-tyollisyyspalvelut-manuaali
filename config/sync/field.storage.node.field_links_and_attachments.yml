@@ -1,20 +1,22 @@
-uuid: 574f664c-a650-4490-8c6a-ddc3e5f0777a
+uuid: 2fe70ee8-f0b5-4d9d-87af-8daa98bf49de
 langcode: fi
 status: true
 dependencies:
   module:
+    - entity_reference_revisions
     - field_permissions
     - node
-    - text
+    - paragraphs
 third_party_settings:
   field_permissions:
     permission_type: public
-id: node.field_statements_unemployment
-field_name: field_statements_unemployment
+id: node.field_links_and_attachments
+field_name: field_links_and_attachments
 entity_type: node
-type: text_long
-settings: {  }
-module: text
+type: entity_reference_revisions
+settings:
+  target_type: paragraph
+module: entity_reference_revisions
 locked: false
 cardinality: 1
 translatable: true

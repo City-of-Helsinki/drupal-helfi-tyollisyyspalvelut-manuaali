@@ -5,14 +5,14 @@ dependencies:
   config:
     - field.storage.node.field_career_marking
     - node.type.service
-    - paragraphs.paragraphs_type.content_link_file
+    - paragraphs.paragraphs_type.long_text_field_with_toolbar
   module:
     - entity_reference_revisions
 id: node.service.field_career_marking
 field_name: field_career_marking
 entity_type: node
 bundle: service
-label: Ura-merkintä
+label: 'Merkinnät asiakastietojärjestelmään'
 description: ''
 required: false
 translatable: false
@@ -22,7 +22,7 @@ settings:
   handler: 'default:paragraph'
   handler_settings:
     target_bundles:
-      content_link_file: content_link_file
+      long_text_field_with_toolbar: long_text_field_with_toolbar
     negate: 0
     target_bundles_drag_drop:
       contact_information:
@@ -33,7 +33,7 @@ settings:
         enabled: false
       content_link_file:
         weight: 15
-        enabled: true
+        enabled: false
       content_link_file_guide:
         weight: 16
         enabled: false
@@ -43,6 +43,9 @@ settings:
       link:
         weight: 18
         enabled: false
+      long_text_field_with_toolbar:
+        weight: 20
+        enabled: true
       municipality_guide:
         weight: 19
         enabled: false

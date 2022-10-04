@@ -1,22 +1,28 @@
-uuid: 8b75483d-09f3-4e26-854f-cb6e7a4956b0
+uuid: e66e39c8-e4c1-4476-b84b-2e2f2ed27ef3
 langcode: fi
 status: true
 dependencies:
   module:
-    - entity_reference_revisions
     - field_permissions
     - node
-    - paragraphs
+    - options
 third_party_settings:
   field_permissions:
     permission_type: public
-id: node.field_archiving_guide
-field_name: field_archiving_guide
+id: node.field_statements
+field_name: field_statements
 entity_type: node
-type: entity_reference_revisions
+type: list_string
 settings:
-  target_type: paragraph
-module: entity_reference_revisions
+  allowed_values:
+    -
+      value: 'yes'
+      label: Kyllä
+    -
+      value: 'no'
+      label: Ei
+  allowed_values_function: ''
+module: options
 locked: false
 cardinality: 1
 translatable: true

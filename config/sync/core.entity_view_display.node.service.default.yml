@@ -4,7 +4,6 @@ status: true
 dependencies:
   config:
     - field.field.node.service.field_accessibility
-    - field.field.node.service.field_archiving_guide
     - field.field.node.service.field_attendance
     - field.field.node.service.field_career_marking
     - field.field.node.service.field_client_consent
@@ -12,35 +11,45 @@ dependencies:
     - field.field.node.service.field_contact_info_external
     - field.field.node.service.field_contact_info_internal
     - field.field.node.service.field_description
-    - field.field.node.service.field_exceptions
     - field.field.node.service.field_field_client_consent_descr
     - field.field.node.service.field_guidance_to_service
     - field.field.node.service.field_implementation_extra_info
     - field.field.node.service.field_life_situations
+    - field.field.node.service.field_links_and_attachments
+    - field.field.node.service.field_measures_during_attendance
+    - field.field.node.service.field_municipality_specific
+    - field.field.node.service.field_obligatoryness
+    - field.field.node.service.field_obligatoryness_freetext
     - field.field.node.service.field_other_services
     - field.field.node.service.field_poma_applicable
     - field.field.node.service.field_poma_applicable_descriptio
+    - field.field.node.service.field_related_archive
     - field.field.node.service.field_requirements
     - field.field.node.service.field_responsible_updatee
     - field.field.node.service.field_service_benefits
+    - field.field.node.service.field_service_exceptions
     - field.field.node.service.field_service_execution
     - field.field.node.service.field_service_implement
     - field.field.node.service.field_service_links_external
     - field.field.node.service.field_service_links_internal
-    - field.field.node.service.field_service_obligatoryness
     - field.field.node.service.field_service_other_info
     - field.field.node.service.field_service_price
     - field.field.node.service.field_service_producer
     - field.field.node.service.field_service_radioactivity
+    - field.field.node.service.field_service_req_speacialist
     - field.field.node.service.field_service_requirements
     - field.field.node.service.field_service_set
+    - field.field.node.service.field_service_suits_info
+    - field.field.node.service.field_service_suits_job_search
     - field.field.node.service.field_service_time_and_location
+    - field.field.node.service.field_statements
     - field.field.node.service.field_statements_unemployment
     - field.field.node.service.field_target_group
     - node.type.service
   module:
     - entity_reference_revisions
     - link
+    - options
     - text
     - user
 id: node.service.default
@@ -55,15 +64,6 @@ content:
       link: false
     third_party_settings: {  }
     weight: 8
-    region: content
-  field_archiving_guide:
-    type: entity_reference_revisions_entity_view
-    label: above
-    settings:
-      view_mode: default
-      link: ''
-    third_party_settings: {  }
-    weight: 110
     region: content
   field_attendance:
     type: entity_reference_revisions_entity_view
@@ -106,15 +106,6 @@ content:
     third_party_settings: {  }
     weight: 5
     region: content
-  field_exceptions:
-    type: entity_reference_revisions_entity_view
-    label: above
-    settings:
-      view_mode: default
-      link: ''
-    third_party_settings: {  }
-    weight: 109
-    region: content
   field_field_client_consent_descr:
     type: text_default
     label: above
@@ -131,6 +122,45 @@ content:
     third_party_settings: {  }
     weight: 111
     region: content
+  field_links_and_attachments:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 131
+    region: content
+  field_measures_during_attendance:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 125
+    region: content
+  field_municipality_specific:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 127
+    region: content
+  field_obligatoryness:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 121
+    region: content
+  field_obligatoryness_freetext:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 122
+    region: content
   field_other_services:
     type: entity_reference_label
     label: above
@@ -138,6 +168,13 @@ content:
       link: true
     third_party_settings: {  }
     weight: 113
+    region: content
+  field_related_archive:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 130
     region: content
   field_requirements:
     type: entity_reference_revisions_entity_view
@@ -162,6 +199,13 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 117
+    region: content
+  field_service_exceptions:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 126
     region: content
   field_service_execution:
     type: entity_reference_revisions_entity_view
@@ -191,15 +235,6 @@ content:
     third_party_settings: {  }
     weight: 13
     region: content
-  field_service_obligatoryness:
-    type: entity_reference_revisions_entity_view
-    label: above
-    settings:
-      view_mode: default
-      link: ''
-    third_party_settings: {  }
-    weight: 106
-    region: content
   field_service_other_info:
     type: entity_reference_revisions_entity_view
     label: above
@@ -218,12 +253,33 @@ content:
     third_party_settings: {  }
     weight: 6
     region: content
+  field_service_req_speacialist:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 120
+    region: content
   field_service_requirements:
     type: text_default
     label: above
     settings: {  }
     third_party_settings: {  }
     weight: 118
+    region: content
+  field_service_suits_info:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 129
+    region: content
+  field_service_suits_job_search:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 128
     region: content
   field_service_time_and_location:
     type: entity_reference_revisions_entity_view
@@ -234,14 +290,19 @@ content:
     third_party_settings: {  }
     weight: 7
     region: content
-  field_statements_unemployment:
-    type: entity_reference_revisions_entity_view
+  field_statements:
+    type: list_default
     label: above
-    settings:
-      view_mode: default
-      link: ''
+    settings: {  }
     third_party_settings: {  }
-    weight: 108
+    weight: 123
+    region: content
+  field_statements_unemployment:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 124
     region: content
   field_target_group:
     type: entity_reference_revisions_entity_view
