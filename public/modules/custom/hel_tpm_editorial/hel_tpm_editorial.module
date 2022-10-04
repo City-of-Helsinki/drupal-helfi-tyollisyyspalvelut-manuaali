@@ -3,7 +3,6 @@
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\hel_tpm_editorial\Utility\ServiceFormHelper;
 
 /**
  * Implements hook_entity_base_field_info_alter().
@@ -83,15 +82,10 @@ function template_preprocess_hel_tpm_editorial_date_recur_custom_widget(array &$
 function hel_tpm_editorial_form_node_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
   $bundle = $form_state->getStorage()['form_display']->getTargetBundle();
   if ($bundle == 'service') {
-    ServiceFormHelper::formNodeFormAlter($form, $form_state, $form_id);
+    $form['revision_log']['#access'] = FALSE;
+    $form['created']['#access'] = FALSE;
+    $form['uid']['#access'] = FALSE;
   }
-}
-
-/**
- * Implements hook_entity_extra_field_info().
- */
-function hel_tpm_editorial_entity_extra_field_info() {
-  return ServiceFormHelper::entityExtraFieldInfo();
 }
 
 /**
