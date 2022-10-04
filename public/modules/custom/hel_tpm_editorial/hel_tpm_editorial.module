@@ -60,23 +60,6 @@ function hel_tpm_editorial_theme() {
 }
 
 /**
- * Implements hook_form_FORMID_alter().
- *
- * Alter the Views exposed form.
- */
-function hel_tpm_editorial_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  $view = $form_state->getStorage()['view'];
-  if (isset($form['moderation_state']) && $view->id() == "service_search") {
-    $form['moderation_state']['#type'] = 'select';
-    $form['moderation_state']['#options'] = [
-      'published' => t('Published'),
-      'on_hold' => t('On hold'),
-    ];
-    unset($form['moderation_state']['#size']);
-  }
-}
-
-/**
  * Implements hook_preprocess_HOOK().
  *
  * HOOK: 'date_recur_modular_widget'.
