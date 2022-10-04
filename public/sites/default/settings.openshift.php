@@ -42,8 +42,9 @@ if ($es_username = getenv('ELASTICSEARCH_USER')) {
 
 if (isset($_ENV['REDIS_HOST'])) {
   $settings['redis.connection']['interface'] = 'PhpRedis'; // Can be "Predis".
-  $settings['redis.connection']['host']      = $_ENV['REDIS_HOST'];
+  $settings['redis.connection']['host']      = [$_ENV['REDIS_HOST']];
   $settings['redis.connection']['instance']  = $_ENV['REDIS_INSTANCE'];
   $settings['redis.connection']['password'] = $_ENV['REDIS_PASSWORD'];
   $settings['cache']['default'] = 'cache.backend.redis';
+  $settings['cache_prefix'] = $_ENV['REDIS_PREFIX'] . '_';
 }
