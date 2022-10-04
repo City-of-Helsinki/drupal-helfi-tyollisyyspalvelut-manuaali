@@ -1,0 +1,21 @@
+uuid: 2f78dfd7-8153-4173-a3f7-7a22a3a07b57
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_service_requirements
+    - node.type.service
+  module:
+    - text
+id: node.service.field_service_requirements
+field_name: field_service_requirements
+entity_type: node
+bundle: service
+label: 'Palveluun osallistumisen edellytykset'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

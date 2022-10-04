@@ -4,12 +4,13 @@ status: true
 dependencies:
   module:
     - hel_tpm_sharer
+    - hel_tpm_url_shortener
     - node
 label: Services
 name: services
 group: 'Front page'
 description: ''
-requireAllConditions: false
+requireAllConditions: true
 disabled: false
 conditions:
   'entity_bundle:node':
@@ -20,6 +21,12 @@ conditions:
       node: '@node.node_route_context:node'
     bundles:
       service: service
+  request_path_exclusion:
+    id: request_path_exclusion
+    negate: true
+    uuid: 72d1b39e-f035-4d67-b7ed-edf6286d2d2e
+    context_mapping: {  }
+    pages: '*/edit*'
 reactions:
   blocks:
     id: blocks
@@ -32,8 +39,23 @@ reactions:
         provider: hel_tpm_sharer
         label_display: '0'
         region: content
-        weight: '1'
+        weight: '0'
         custom_id: hel_sharer_block
+        theme: palvelumanuaali
+        css_class: ''
+        unique: 0
+        context_id: services
+        context_mapping: {  }
+        third_party_settings: {  }
+      5859fa35-fa69-4a80-b9c6-d1047a8a272c:
+        uuid: 5859fa35-fa69-4a80-b9c6-d1047a8a272c
+        id: hel_tpm_url_shortener_form
+        label: 'Url Shortener'
+        provider: hel_tpm_url_shortener
+        label_display: '0'
+        region: content
+        weight: '1'
+        custom_id: hel_tpm_url_shortener_form
         theme: palvelumanuaali
         css_class: ''
         unique: 0

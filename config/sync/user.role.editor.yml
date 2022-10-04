@@ -3,6 +3,7 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - filter.format.filtered_html
     - filter.format.plain_text_format
     - media.type.image
     - node.type.service
@@ -101,6 +102,7 @@ permissions:
   - 'use service_moderation transition ready_to_publish'
   - 'use service_moderation transition ready_to_publish_to_draft'
   - 'use service_moderation transition temporarily_archived'
+  - 'use text format filtered_html'
   - 'use text format plain_text_format'
   - 'view contact info'
   - 'view field_age'

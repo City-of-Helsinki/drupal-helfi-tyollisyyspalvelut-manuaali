@@ -7,10 +7,36 @@ use Drupal\hel_tpm_editorial\Utility\ServiceFormHelper;
 
 /**
  * Implements hook_entity_base_field_info_alter().
+ *
+ * @param $fields
+ * @param \Drupal\Core\Entity\EntityTypeInterface $entity_type
+ *
+ * @return void
  */
 function hel_tpm_editorial_entity_base_field_info_alter(&$fields, EntityTypeInterface $entity_type) {
   if ($entity_type->id() == 'notification_message') {
     $fields['publish_end_date']->addConstraint('NotificationMessageExpiry');
+  }
+}
+
+/**
+ * Implements hook_form_views_exposed_form_alter().
+ *
+ * @param $form
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ * @param $form_id
+ *
+ * @return void
+ */
+function hel_tpm_editorial_form_views_exposed_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  $view = $form_state->getStorage()['view'];
+  if (isset($form['moderation_state']) && $view->id() == "service_search") {
+    $form['moderation_state']['#type'] = 'select';
+    $form['moderation_state']['#options'] = [
+      'published' => t('Published'),
+      'on_hold' => t('On hold'),
+    ];
+    unset($form['moderation_state']['#size']);
   }
 }
 

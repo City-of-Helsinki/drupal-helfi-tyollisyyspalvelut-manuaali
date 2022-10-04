@@ -41,14 +41,48 @@
   grid-template-columns: 7fr 3fr;
   grid-column-gap: 24px;
 
+  .paragraph-type-top,
+  .filter-wrapper[data-drupal-selector*="format"] {
+    display: none;
+  }
+
+  fieldset > legend {
+    width: 100%;
+  }
+
+  .form-item-checkbox {
+    display: flex;
+    flex-wrap: wrap;
+    label {
+      order: 1;
+    }
+    .form-item__description {
+      order: 2;
+      width: 100%;
+    }
+
+  }
+
+  .description {
+    margin-bottom: $space;
+  }
+
+  .table__cell .paragraph-type-top {
+    display: flex;
+  }
+
+  // hide all form tabs by default.
   > .tab {
     display: none;
   }
+
+  // hide all form dragable tables by default.
   .field-multiple-drag {
     display: none;
   }
-  .horizontal-tabs {
 
+  //add basic theming for sidebar horizontal-tabs
+  .horizontal-tabs {
     .horizontal-tabs-list {
         border-bottom: 2px solid clr(form-border);
         padding-left: 16px;
@@ -76,6 +110,7 @@
       }
     }
   }
+
   .form-item-checkbox {
     display: flex;
     align-items: center;
@@ -85,10 +120,15 @@
       height: 16px;
     }
   }
+
   .h2 {
     font-weight: 600;
     font-size: 24px;
     line-height: 32px;
+  }
+
+  .field--name-field-age {
+    display: none;
   }
 
   .field--name-field-service-time-and-location {
@@ -105,6 +145,7 @@
     }
 
     > div > div  > table > tbody > tr > .table__cell > div > div > .paragraph-type-top {
+      display: block;
       position: absolute;
       right: 0;
       top: 0;
@@ -328,7 +369,6 @@
     }
   }
 
-  .field--name-field-attendance,
   .field--name-field-service-execution,
   .field--name-field-guidance-to-service,
   .field--name-field-service-obligatoryness,
@@ -337,6 +377,12 @@
   .field--name-field-exceptions {
     margin-bottom: $space-triple;
     border-bottom: 2px solid clr(background-border);
+  }
+
+  .field--name-field-service-other-info {
+    margin-top: $space-triple;
+    padding-top: $space-triple;
+    border-top: 2px solid clr(background-border);
   }
 
   .field--name-field-municipality-guide .button,
@@ -535,17 +581,6 @@
  .field--type-date-recur {
    legend {
      width: 100%;
-   }
-   .form-item--radio {
-     >.form-item {
-       display: flex;
-       .form-radio{
-         max-width: 13px;
-       }
-       label {
-         margin-left: $space;
-       }
-     }
    }
    .form-item--checkboxes {
      display: flex;

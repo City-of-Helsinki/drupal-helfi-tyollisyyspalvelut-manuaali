@@ -1,17 +1,27 @@
 <?php
 
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\field\Entity\FieldConfig;
+
 /**
  * Remove the taxonomy contents.
  */
 function hel_tpm_general_update_8101() {
-  $q = \Drupal::entityQuery('taxonomy_term');
-  $or = $q->orConditionGroup()
-    ->condition('vid', 'service_location')
-    ->condition('vid', 'service_tags');
-  $q->condition($or);
-  $tids = $q->execute();
-
-  $controller = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
   $entities = $controller->loadMultiple($tids);
   $controller->delete($entities);
+}
+
+/**
+ * Remove the field_age_groups field.
+ */
+function hel_tpm_general_update_8102() {
+  $field_config = FieldConfig::loadByName('paragraph', 'target_group', 'field_age_groups');
+  if ($field_config) {
+    $field_config->delete();
+  }
+
+  $field_storage = FieldStorageConfig::loadByName('paragraph', 'field_age_groups');
+  if ($field_storage) {
+    $field_storage->delete();
+  }
 }

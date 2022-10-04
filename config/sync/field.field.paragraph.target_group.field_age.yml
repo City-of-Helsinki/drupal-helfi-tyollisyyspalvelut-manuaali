@@ -7,13 +7,18 @@ dependencies:
     - paragraphs.paragraphs_type.target_group
   module:
     - range
+    - require_on_publish
+third_party_settings:
+  require_on_publish:
+    require_on_publish: true
+    warn_on_empty: true
 id: paragraph.target_group.field_age
 field_name: field_age
 entity_type: paragraph
 bundle: target_group
-label: 'Kohderyhmän ikä'
+label: 'Tarkenna tarvittaessa kohderyhmän ikää'
 description: 'Kohderyhmän ikä. Näytetään vain asiantuntijoille'
-required: true
+required: false
 translatable: true
 default_value: {  }
 default_value_callback: ''

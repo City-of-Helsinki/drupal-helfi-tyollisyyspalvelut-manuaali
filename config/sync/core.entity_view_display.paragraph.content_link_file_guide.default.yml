@@ -3,6 +3,7 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - field.field.paragraph.content_link_file_guide.field_body
     - field.field.paragraph.content_link_file_guide.field_description_plain
     - field.field.paragraph.content_link_file_guide.field_file
     - field.field.paragraph.content_link_file_guide.field_links
@@ -11,11 +12,19 @@ dependencies:
   module:
     - entity_reference_revisions
     - file
+    - text
 id: paragraph.content_link_file_guide.default
 targetEntityType: paragraph
 bundle: content_link_file_guide
 mode: default
 content:
+  field_body:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 5
+    region: content
   field_description_plain:
     type: basic_string
     label: above
