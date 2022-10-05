@@ -1,17 +1,53 @@
 <?php
 
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\field\Entity\FieldConfig;
+
 /**
  * Remove the taxonomy contents.
  */
 function hel_tpm_general_update_8101() {
-  $q = \Drupal::entityQuery('taxonomy_term');
-  $or = $q->orConditionGroup()
-    ->condition('vid', 'service_location')
-    ->condition('vid', 'service_tags');
-  $q->condition($or);
-  $tids = $q->execute();
-
-  $controller = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
   $entities = $controller->loadMultiple($tids);
   $controller->delete($entities);
+}
+
+/**
+ * Remove the field_age_groups field.
+ */
+function hel_tpm_general_update_8102() {
+  $field_config = FieldConfig::loadByName('paragraph', 'target_group', 'field_age_groups');
+  if ($field_config) {
+    $field_config->delete();
+  }
+
+  $field_storage = FieldStorageConfig::loadByName('paragraph', 'field_age_groups');
+  if ($field_storage) {
+    $field_storage->delete();
+  }
+}
+
+/**
+ * Remove the field attendance and service excecutions fields.
+ */
+function hel_tpm_general_update_8103() {
+  $field_config = FieldConfig::loadByName('node', 'service', 'field_attendance');
+  if ($field_config) {
+    $field_config->delete();
+  }
+
+  $field_config2 = FieldConfig::loadByName('node', 'service', 'field_service_execution');
+  if ($field_config2) {
+    $field_config2->delete();
+  }
+
+  $field_storage = FieldStorageConfig::loadByName('node', 'field_attendance');
+  if ($field_storage) {
+    $field_storage->delete();
+  }
+
+
+  $field_storage2 = FieldStorageConfig::loadByName('node', 'field_service_execution');
+    if ($field_storage2) {
+      $field_storage2->delete();
+  }
 }

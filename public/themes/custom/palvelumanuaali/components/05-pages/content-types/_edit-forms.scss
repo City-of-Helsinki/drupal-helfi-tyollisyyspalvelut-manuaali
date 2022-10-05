@@ -41,14 +41,48 @@
   grid-template-columns: 7fr 3fr;
   grid-column-gap: 24px;
 
+  .paragraph-type-top,
+  .filter-wrapper[data-drupal-selector*="format"] {
+    display: none;
+  }
+
+  fieldset > legend {
+    width: 100%;
+  }
+
+  .form-item-checkbox {
+    display: flex;
+    flex-wrap: wrap;
+    label {
+      order: 1;
+    }
+    .form-item__description {
+      order: 2;
+      width: 100%;
+    }
+
+  }
+
+  .description {
+    margin-bottom: $space;
+  }
+
+  .table__cell .paragraph-type-top {
+    display: flex;
+  }
+
+  // hide all form tabs by default.
   > .tab {
     display: none;
   }
+
+  // hide all form dragable tables by default.
   .field-multiple-drag {
     display: none;
   }
-  .horizontal-tabs {
 
+  //add basic theming for sidebar horizontal-tabs
+  .horizontal-tabs {
     .horizontal-tabs-list {
         border-bottom: 2px solid clr(form-border);
         padding-left: 16px;
@@ -76,6 +110,7 @@
       }
     }
   }
+
   .form-item-checkbox {
     display: flex;
     align-items: center;
@@ -85,10 +120,15 @@
       height: 16px;
     }
   }
+
   .h2 {
     font-weight: 600;
     font-size: 24px;
     line-height: 32px;
+  }
+
+  .field--name-field-age {
+    display: none;
   }
 
   .field--name-field-service-time-and-location {
@@ -105,6 +145,7 @@
     }
 
     > div > div  > table > tbody > tr > .table__cell > div > div > .paragraph-type-top {
+      display: block;
       position: absolute;
       right: 0;
       top: 0;
@@ -328,7 +369,6 @@
     }
   }
 
-  .field--name-field-attendance,
   .field--name-field-service-execution,
   .field--name-field-guidance-to-service,
   .field--name-field-service-obligatoryness,
@@ -339,6 +379,15 @@
     border-bottom: 2px solid clr(background-border);
   }
 
+  .field--name-field-service-other-info {
+    margin-top: $space-triple;
+    padding-top: $space-triple;
+    border-top: 2px solid clr(background-border);
+    .field--name-field-link .table__cell {
+      padding-left: 0;
+    }
+  }
+
   .field--name-field-municipality-guide .button,
   .field--name-field-archiving-guide .button,
   .paragraph-type-top .paragraphs-dropbutton-wrapper .button--small,
@@ -346,6 +395,26 @@
     @include button-medium;
     @include button-color-blue;
     @include button-round-corners;
+  }
+
+  .field--name-field-link {
+    .table__cell,
+    .table__cell .ajax-new-content {
+      display: flex;
+      flex-wrap: wrap;
+      &.field-multiple-drag {
+        display: none;
+      }
+      .form-item {
+        &:nth-child(1) {
+          max-width: 55%;
+        }
+        &:nth-child(2) {
+          max-width: 40%;
+          padding-left: $space-one-half;
+        }
+      }
+    }
   }
 
   //hide unused enforced dropdown buttons in edit form
@@ -369,10 +438,28 @@
 
     tr {
       display: flex;
+
       .tabledrag-handle {
         display: none;
       }
       td {
+        &:nth-child(1) {
+          .form-managed-file {
+            display: flex;
+            align-items: center;
+            display: flex;
+          }
+          .form-item {
+            margin-left: $space;
+            margin-right: $space;
+          }
+        }
+        &:last-child {
+          flex: 1;
+          display: flex;
+          align-items: center;
+        }
+
         .button{
           background-color: clr(background-section);
           width: 40px;
@@ -536,17 +623,6 @@
    legend {
      width: 100%;
    }
-   .form-item--radio {
-     >.form-item {
-       display: flex;
-       .form-radio{
-         max-width: 13px;
-       }
-       label {
-         margin-left: $space;
-       }
-     }
-   }
    .form-item--checkboxes {
      display: flex;
      flex-wrap: wrap;
@@ -557,7 +633,9 @@
   legend {
     display: none;
   }
-  >.form-fieldset {
+  >.form-fieldset,
+  .table__row .table__cell,
+  .table__row .table__cell .ajax-new-content {
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 0;
@@ -565,7 +643,7 @@
       width: 100%;
     }
     .form-item {
-      &:nth-child(2) {
+      &:nth-child(1) {
         width: 60%;
         margin-bottom: 0;
         position: relative;
@@ -584,7 +662,7 @@
           background-image: none;
         }
       }
-      &:nth-child(3) {
+      &:nth-child(2) {
         width: 35%;
         margin-left: $space-one-half;
         margin-bottom: 0;

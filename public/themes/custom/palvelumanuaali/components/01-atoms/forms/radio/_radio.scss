@@ -2,3 +2,13 @@
 .form-item--radio__item {
   @include list-reset;
 }
+
+.form-item--radio-button {
+  display: flex;
+  .form-radio{
+    max-width: 13px;
+  }
+  label {
+      margin-left: $space;
+  }
+}
