@@ -14,6 +14,7 @@ dependencies:
     - field.field.node.service.field_field_client_consent_descr
     - field.field.node.service.field_guidance_to_service
     - field.field.node.service.field_implementation_extra_info
+    - field.field.node.service.field_instructions_markup
     - field.field.node.service.field_life_situations
     - field.field.node.service.field_links_and_attachments
     - field.field.node.service.field_measures_during_attendance
@@ -72,7 +73,7 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 103
+    weight: 14
     region: content
   field_career_marking:
     type: entity_reference_revisions_entity_view
@@ -81,7 +82,7 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 107
+    weight: 18
     region: content
   field_contact_info:
     type: entity_reference_label
@@ -89,7 +90,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 115
+    weight: 25
     region: content
   field_contact_info_external:
     type: entity_reference_label
@@ -97,7 +98,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 114
+    weight: 24
     region: content
   field_description:
     type: basic_string
@@ -167,7 +168,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 113
+    weight: 23
     region: content
   field_related_archive:
     type: list_default
@@ -191,14 +192,14 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 116
+    weight: 26
     region: content
   field_service_benefits:
     type: text_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 117
+    weight: 27
     region: content
   field_service_exceptions:
     type: text_default
@@ -214,7 +215,7 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 104
+    weight: 15
     region: content
   field_service_implement:
     type: text_default
@@ -233,7 +234,7 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
-    weight: 13
+    weight: 11
     region: content
   field_service_other_info:
     type: entity_reference_revisions_entity_view
@@ -242,7 +243,7 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 105
+    weight: 16
     region: content
   field_service_price:
     type: entity_reference_revisions_entity_view
@@ -265,7 +266,7 @@ content:
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 118
+    weight: 28
     region: content
   field_service_suits_info:
     type: text_default
@@ -311,7 +312,7 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 14
+    weight: 12
     region: content
   flag_cart:
     settings: {  }
@@ -346,7 +347,7 @@ content:
   view_mode_switcher:
     settings: {  }
     third_party_settings: {  }
-    weight: 100
+    weight: 13
     region: content
 hidden:
   content_moderation_control: true
@@ -357,6 +358,7 @@ hidden:
   field_client_consent: true
   field_contact_info_internal: true
   field_implementation_extra_info: true
+  field_instructions_markup: true
   field_life_situations: true
   field_poma_applicable: true
   field_poma_applicable_descriptio: true

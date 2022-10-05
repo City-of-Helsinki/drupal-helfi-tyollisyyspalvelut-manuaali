@@ -14,6 +14,7 @@ dependencies:
     - field.field.node.service.field_field_client_consent_descr
     - field.field.node.service.field_guidance_to_service
     - field.field.node.service.field_implementation_extra_info
+    - field.field.node.service.field_instructions_markup
     - field.field.node.service.field_life_situations
     - field.field.node.service.field_links_and_attachments
     - field.field.node.service.field_measures_during_attendance
@@ -52,6 +53,7 @@ dependencies:
     - entitygroupfield
     - field_group
     - inline_entity_form
+    - markup
     - maxlength
     - paragraphs
     - select2
@@ -248,7 +250,7 @@ third_party_settings:
       label: Perustiedot
       region: content
       parent_name: group_basic_information
-      weight: 5
+      weight: 1
       format_type: fieldset
       format_settings:
         classes: 'form-background--white form-background--regular-padding'
@@ -263,7 +265,7 @@ third_party_settings:
       label: Kohderyhmä
       region: content
       parent_name: group_basic_information
-      weight: 6
+      weight: 2
       format_type: fieldset
       format_settings:
         classes: 'form-background--white form-background--regular-padding'
@@ -277,7 +279,7 @@ third_party_settings:
       label: Saavutettavuus
       region: content
       parent_name: group_basic_information
-      weight: 9
+      weight: 3
       format_type: fieldset
       format_settings:
         classes: 'form-background--white form-background--regular-padding'
@@ -456,7 +458,7 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 17
+    weight: 5
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -508,7 +510,7 @@ content:
     third_party_settings: {  }
   field_client_consent:
     type: boolean_checkbox
-    weight: 11
+    weight: 12
     region: content
     settings:
       display_label: true
@@ -549,7 +551,7 @@ content:
     third_party_settings: {  }
   field_description:
     type: string_textarea
-    weight: 6
+    weight: 4
     region: content
     settings:
       rows: 5
@@ -581,7 +583,7 @@ content:
             selector: ''
   field_field_client_consent_descr:
     type: text_textarea
-    weight: 12
+    weight: 13
     region: content
     settings:
       rows: 5
@@ -614,6 +616,12 @@ content:
       autocomplete: false
       match_operator: CONTAINS
       match_limit: 10
+    third_party_settings: {  }
+  field_instructions_markup:
+    type: markup
+    weight: 5
+    region: content
+    settings: {  }
     third_party_settings: {  }
   field_life_situations:
     type: select2_entity_reference
@@ -747,7 +755,7 @@ content:
         maxlength_js_truncate_html: true
   field_service_other_info:
     type: inline_entity_form_simple
-    weight: 13
+    weight: 14
     region: content
     settings:
       form_mode: default
@@ -760,7 +768,7 @@ content:
     third_party_settings: {  }
   field_service_price:
     type: entity_reference_paragraphs
-    weight: 8
+    weight: 7
     region: content
     settings:
       title: Paragraph
@@ -790,7 +798,7 @@ content:
     third_party_settings: {  }
   field_service_requirements:
     type: text_textarea
-    weight: 10
+    weight: 11
     region: content
     settings:
       rows: 5
@@ -803,7 +811,7 @@ content:
         maxlength_js_truncate_html: false
   field_service_set:
     type: select2_entity_reference
-    weight: 7
+    weight: 6
     region: content
     settings:
       width: 100%
@@ -828,7 +836,7 @@ content:
     third_party_settings: {  }
   field_service_time_and_location:
     type: entity_reference_paragraphs
-    weight: 18
+    weight: 17
     region: content
     settings:
       title: Paragraph
@@ -855,7 +863,7 @@ content:
     third_party_settings: {  }
   field_target_group:
     type: entity_reference_paragraphs
-    weight: 10
+    weight: 11
     region: content
     settings:
       title: Paragraph
@@ -872,20 +880,20 @@ content:
     third_party_settings: {  }
   langcode:
     type: language_select
-    weight: 15
+    weight: 3
     region: content
     settings:
       include_locked: true
     third_party_settings: {  }
   moderation_state:
     type: moderation_state_default
-    weight: 14
+    weight: 2
     region: content
     settings: {  }
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 16
+    weight: 4
     region: content
     settings:
       display_label: true
@@ -903,7 +911,7 @@ content:
         maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
   uid:
     type: select2_entity_reference
-    weight: 18
+    weight: 6
     region: content
     settings:
       width: 100%
