@@ -1,21 +1,16 @@
-uuid: b5a2d8da-6789-4738-a1b9-88a560098c55
+uuid: 01b2ac21-4dfe-43a5-aede-8f41e7fcab0a
 langcode: fi
 status: true
 dependencies:
   config:
     - field.storage.paragraph.field_body
-    - paragraphs.paragraphs_type.content
+    - paragraphs.paragraphs_type.content_link_file_guide
   module:
-    - require_on_publish
     - text
-third_party_settings:
-  require_on_publish:
-    require_on_publish: true
-    warn_on_empty: true
-id: paragraph.content.field_body
+id: paragraph.content_link_file_guide.field_body
 field_name: field_body
 entity_type: paragraph
-bundle: content
+bundle: content_link_file_guide
 label: Body
 description: ''
 required: false
