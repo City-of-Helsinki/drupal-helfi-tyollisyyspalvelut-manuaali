@@ -383,6 +383,9 @@
     margin-top: $space-triple;
     padding-top: $space-triple;
     border-top: 2px solid clr(background-border);
+    .field--name-field-link .table__cell {
+      padding-left: 0;
+    }
   }
 
   .field--name-field-municipality-guide .button,
@@ -392,6 +395,26 @@
     @include button-medium;
     @include button-color-blue;
     @include button-round-corners;
+  }
+
+  .field--name-field-link {
+    .table__cell,
+    .table__cell .ajax-new-content {
+      display: flex;
+      flex-wrap: wrap;
+      &.field-multiple-drag {
+        display: none;
+      }
+      .form-item {
+        &:nth-child(1) {
+          max-width: 55%;
+        }
+        &:nth-child(2) {
+          max-width: 40%;
+          padding-left: $space-one-half;
+        }
+      }
+    }
   }
 
   //hide unused enforced dropdown buttons in edit form
@@ -415,10 +438,28 @@
 
     tr {
       display: flex;
+
       .tabledrag-handle {
         display: none;
       }
       td {
+        &:nth-child(1) {
+          .form-managed-file {
+            display: flex;
+            align-items: center;
+            display: flex;
+          }
+          .form-item {
+            margin-left: $space;
+            margin-right: $space;
+          }
+        }
+        &:last-child {
+          flex: 1;
+          display: flex;
+          align-items: center;
+        }
+
         .button{
           background-color: clr(background-section);
           width: 40px;
@@ -592,7 +633,9 @@
   legend {
     display: none;
   }
-  >.form-fieldset {
+  >.form-fieldset,
+  .table__row .table__cell,
+  .table__row .table__cell .ajax-new-content {
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 0;
@@ -600,7 +643,7 @@
       width: 100%;
     }
     .form-item {
-      &:nth-child(2) {
+      &:nth-child(1) {
         width: 60%;
         margin-bottom: 0;
         position: relative;
@@ -619,7 +662,7 @@
           background-image: none;
         }
       }
-      &:nth-child(3) {
+      &:nth-child(2) {
         width: 35%;
         margin-left: $space-one-half;
         margin-bottom: 0;
