@@ -4,6 +4,13 @@ status: true
 dependencies:
   config:
     - group.type.organisation
+  module:
+    - hel_tpm_group
+third_party_settings:
+  hel_tpm_group:
+    site_wide_role:
+      editor: editor
+      specialist_editor: specialist_editor
 id: organisation-editor
 label: Editor
 weight: 8
