@@ -11,16 +11,16 @@ dependencies:
   module:
     - field_group
     - hel_tpm_editorial
+    - hel_tpm_general
     - paragraphs
-    - select2
 third_party_settings:
   field_group:
     group_location:
       children:
         - field_service_location
         - field_service_languages
-        - field_separate_time
         - field_dates
+        - field_separate_time
       label: ''
       region: content
       parent_name: ''
@@ -63,14 +63,21 @@ content:
       default_paragraph_type: service_language
     third_party_settings: {  }
   field_service_location:
-    type: select2_entity_reference
+    type: hel_tpm_general_inline_entity_form_improved
     weight: 1
     region: content
     settings:
-      width: 100%
-      autocomplete: true
+      form_mode: default
+      override_labels: false
+      label_singular: ''
+      label_plural: ''
+      allow_new: true
+      allow_existing: true
       match_operator: CONTAINS
-      match_limit: 10
+      allow_duplicate: false
+      collapsible: false
+      collapsed: false
+      revision: false
     third_party_settings: {  }
 hidden:
   created: true
