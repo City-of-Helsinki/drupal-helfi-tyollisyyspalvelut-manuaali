@@ -34,7 +34,7 @@ class HelTpmGroupSubscriber implements EventSubscriberInterface {
    */
   protected static $defaultRoles = [
     'editor' => 0,
-    'specialist editor' => 0
+    'specialist_editor' => 0
   ];
 
   /**
@@ -107,6 +107,7 @@ class HelTpmGroupSubscriber implements EventSubscriberInterface {
       if ($role === $value && !$user->hasRole($role)) {
         $user->addRole($role);
         $needs_save = TRUE;
+        continue;
       }
       if ($value !== $role && $user->hasRole($role)) {
         $user->removeRole($role);
