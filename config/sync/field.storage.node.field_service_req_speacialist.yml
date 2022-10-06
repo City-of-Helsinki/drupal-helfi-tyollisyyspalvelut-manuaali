@@ -1,22 +1,20 @@
-uuid: 20c6757d-e571-4ceb-a0f2-9e5d7c12f9eb
+uuid: b05e17db-62d1-4eaf-8a03-f531b44973b5
 langcode: fi
 status: true
 dependencies:
   module:
-    - entity_reference_revisions
     - field_permissions
     - node
-    - paragraphs
+    - text
 third_party_settings:
   field_permissions:
     permission_type: public
-id: node.field_service_obligatoryness
-field_name: field_service_obligatoryness
+id: node.field_service_req_speacialist
+field_name: field_service_req_speacialist
 entity_type: node
-type: entity_reference_revisions
-settings:
-  target_type: paragraph
-module: entity_reference_revisions
+type: text_long
+settings: {  }
+module: text
 locked: false
 cardinality: 1
 translatable: true

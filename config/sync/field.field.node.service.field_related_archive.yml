@@ -1,0 +1,26 @@
+uuid: 4644b62c-05da-4187-a925-32ff42ed118e
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_related_archive
+    - node.type.service
+  module:
+    - options
+    - require_on_publish
+third_party_settings:
+  require_on_publish:
+    require_on_publish: true
+    warn_on_empty: true
+id: node.service.field_related_archive
+field_name: field_related_archive
+entity_type: node
+bundle: service
+label: 'Palveluun liittyy arkistointia'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

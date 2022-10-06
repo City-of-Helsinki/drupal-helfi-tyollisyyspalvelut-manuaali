@@ -51,3 +51,29 @@ function hel_tpm_general_update_8103() {
       $field_storage2->delete();
   }
 }
+
+/**
+ * Remove the field statements unemployement and service requirement fields.
+ */
+function hel_tpm_general_update_8104() {
+  $field_config = FieldConfig::loadByName('node', 'service', 'field_service_requirements');
+  if ($field_config) {
+    $field_config->delete();
+  }
+
+  $field_config = FieldConfig::loadByName('node', 'service', 'field_statements_unemployment');
+  if ($field_config) {
+    $field_config->delete();
+  }
+
+
+$field_storage = FieldStorageConfig::loadByName('node', 'field_service_requirements');
+  if ($field_storage) {
+    $field_storage->delete();
+}
+
+  $field_storage = FieldStorageConfig::loadByName('node', 'field_statements_unemployment');
+    if ($field_storage) {
+      $field_storage->delete();
+  }
+}

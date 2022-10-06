@@ -1,18 +1,18 @@
-uuid: aa033e0f-4973-4c95-8905-9c17196a32aa
+uuid: 5d84e953-f9f8-47dd-93ed-92f74b757e56
 langcode: fi
 status: true
 dependencies:
   config:
-    - field.storage.node.field_archiving_guide
+    - field.storage.node.field_links_and_attachments
     - node.type.service
-    - paragraphs.paragraphs_type.municipality_guide
+    - paragraphs.paragraphs_type.url_and_file
   module:
     - entity_reference_revisions
-id: node.service.field_archiving_guide
-field_name: field_archiving_guide
+id: node.service.field_links_and_attachments
+field_name: field_links_and_attachments
 entity_type: node
 bundle: service
-label: Arkistointiohje
+label: 'Linkit ja liitteet'
 description: ''
 required: false
 translatable: false
@@ -22,43 +22,46 @@ settings:
   handler: 'default:paragraph'
   handler_settings:
     target_bundles:
-      municipality_guide: municipality_guide
+      url_and_file: url_and_file
     negate: 0
     target_bundles_drag_drop:
       contact_information:
-        weight: 13
-        enabled: false
-      content:
         weight: 14
         enabled: false
-      content_link_file:
+      content:
         weight: 15
         enabled: false
-      content_link_file_guide:
+      content_link_file:
         weight: 16
         enabled: false
-      content_list_lift_header_icon:
+      content_link_file_guide:
         weight: 17
         enabled: false
-      link:
+      content_list_lift_header_icon:
         weight: 18
         enabled: false
-      municipality_guide:
+      link:
         weight: 19
-        enabled: true
-      service_language:
+        enabled: false
+      long_text_field_with_toolbar:
         weight: 20
         enabled: false
-      service_price:
+      municipality_guide:
         weight: 21
         enabled: false
-      service_time_and_place:
+      service_language:
         weight: 22
         enabled: false
-      target_group:
+      service_price:
         weight: 23
         enabled: false
-      url_and_file:
+      service_time_and_place:
         weight: 24
         enabled: false
+      target_group:
+        weight: 25
+        enabled: false
+      url_and_file:
+        weight: 26
+        enabled: true
 field_type: entity_reference_revisions

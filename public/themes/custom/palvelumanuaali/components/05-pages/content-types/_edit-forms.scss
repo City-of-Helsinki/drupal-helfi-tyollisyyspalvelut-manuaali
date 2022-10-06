@@ -87,6 +87,7 @@
         border-bottom: 2px solid clr(form-border);
         padding-left: 16px;
         background-color: unset;
+        margin-bottom: $space-triple;
     }
 
     .horizontal-tab-button {
@@ -374,7 +375,6 @@
   .field--name-field-guidance-to-service,
   .field--name-field-service-obligatoryness,
   .field--name-field-career-marking,
-  .field--name-field-statements-unemployment,
   .field--name-field-exceptions {
     margin-bottom: $space-triple;
     border-bottom: 2px solid clr(background-border);
@@ -403,6 +403,7 @@
     .table__cell .ajax-new-content {
       display: flex;
       flex-wrap: wrap;
+      padding-left: 0;
       &.field-multiple-drag {
         display: none;
       }
@@ -503,8 +504,9 @@
     }
   }
 
-  .field--name-field-contact-info-external,
-  .field--name-field-service-producer {
+  .field--name-field-contact-info,
+  .field--name-field-service-producer,
+  .group--margin-border-bottom {
     padding-bottom: $space-three-and-half;
     margin-bottom: $space-triple !important;
     border-bottom: 2px solid clr(background-border);
