@@ -11,8 +11,17 @@ $main-content-width: calc(100% - (#{$sidebar-md-width} + #{$main-gutter} *2 ));
 $main-width-xl: calc(100% - (#{$sidebar-width} ));
 $main-content-width-xl: calc(100% - (#{$sidebar-width} + #{$main-gutter} *2 ));
 
+body {
+  height: 100%;
+}
+
+.dialog-off-canvas-main-canvas {
+  height: 100%;
+}
+
 .layout-container {
   @include large {
+    height: 100%;
     display: flex;
     flex-wrap: wrap;
   }
@@ -47,6 +56,7 @@ $main-content-width-xl: calc(100% - (#{$sidebar-width} + #{$main-gutter} *2 ));
 
   @include large {
     display: flex;
+    margin-top: $nav-height;
   }
 }
 
@@ -56,6 +66,9 @@ $main-content-width-xl: calc(100% - (#{$sidebar-width} + #{$main-gutter} *2 ));
   margin-bottom: $space-double;
   background-color: clr(sidebar-color);
   @include large {
+    height: 100vh;
+    top: 0;
+    position: sticky;
     order: 1;
     width: $sidebar-md-width;
     margin-bottom: 0;
