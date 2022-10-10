@@ -1,0 +1,21 @@
+uuid: adc1e6c8-01c8-411a-aff6-3c6d4d84698f
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_service_exceptions
+    - node.type.service
+  module:
+    - text
+id: node.service.field_service_exceptions
+field_name: field_service_exceptions
+entity_type: node
+bundle: service
+label: 'Sisältö:'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

@@ -5,7 +5,7 @@ dependencies:
   config:
     - field.storage.node.field_guidance_to_service
     - node.type.service
-    - paragraphs.paragraphs_type.content_link_file_guide
+    - paragraphs.paragraphs_type.long_text_field_with_toolbar
   module:
     - entity_reference_revisions
 id: node.service.field_guidance_to_service
@@ -22,7 +22,7 @@ settings:
   handler: 'default:paragraph'
   handler_settings:
     target_bundles:
-      content_link_file_guide: content_link_file_guide
+      long_text_field_with_toolbar: long_text_field_with_toolbar
     negate: 0
     target_bundles_drag_drop:
       contact_information:
@@ -36,13 +36,16 @@ settings:
         enabled: false
       content_link_file_guide:
         weight: 16
-        enabled: true
+        enabled: false
       content_list_lift_header_icon:
         weight: 17
         enabled: false
       link:
         weight: 18
         enabled: false
+      long_text_field_with_toolbar:
+        weight: 20
+        enabled: true
       municipality_guide:
         weight: 19
         enabled: false

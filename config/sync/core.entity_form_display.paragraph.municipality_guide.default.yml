@@ -3,17 +3,19 @@ langcode: fi
 status: true
 dependencies:
   config:
-    - field.field.paragraph.municipality_guide.field_description_plain
+    - field.field.paragraph.municipality_guide.field_body
     - field.field.paragraph.municipality_guide.field_municipality
     - paragraphs.paragraphs_type.municipality_guide
+  module:
+    - text
 id: paragraph.municipality_guide.default
 targetEntityType: paragraph
 bundle: municipality_guide
 mode: default
 content:
-  field_description_plain:
-    type: string_textarea
-    weight: 2
+  field_body:
+    type: text_textarea
+    weight: 1
     region: content
     settings:
       rows: 5

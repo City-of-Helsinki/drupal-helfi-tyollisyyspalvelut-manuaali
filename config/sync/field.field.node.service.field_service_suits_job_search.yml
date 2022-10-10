@@ -1,0 +1,21 @@
+uuid: 5c67696d-aa2c-426f-b3c9-73fcade6ecc9
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_service_suits_job_search
+    - node.type.service
+  module:
+    - options
+id: node.service.field_service_suits_job_search
+field_name: field_service_suits_job_search
+entity_type: node
+bundle: service
+label: 'Palvelu soveltuu täydentäväksi työnhakukeskusteluksi'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

@@ -1,0 +1,21 @@
+uuid: fe8410f0-c661-4a79-9d15-9187f12f4bbc
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_obligatoryness_freetext
+    - node.type.service
+  module:
+    - text
+id: node.service.field_obligatoryness_freetext
+field_name: field_obligatoryness_freetext
+entity_type: node
+bundle: service
+label: 'Velvoittavuus vapaateksti'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

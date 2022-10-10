@@ -1,0 +1,116 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for hel_tpm_group module.
+ *
+ * @DCG
+ * This file is no longer required in Drupal 8.
+ * @see https://www.drupal.org/node/2217931
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\group\Entity\GroupContentInterface;
+use Drupal\group\Entity\GroupRole;
+use Drupal\hel_tpm_group\Event\GroupMembershipChanged;
+use Drupal\hel_tpm_group\Event\GroupMembershipDeleted;
+use Drupal\hel_tpm_group\Event\GroupMembershipUpdated;
+use Drupal\hel_tpm_group\Event\GroupSiteWideRoleChanged;
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * @param $form
+ * @param $form_state
+ *
+ * @return void
+ */
+function hel_tpm_group_form_group_role_edit_form_alter(&$form, &$form_state) {
+  $user = \Drupal::currentUser();
+  $roles = _hel_tpm_group_get_valid_roles();
+  $group_role = $form_state->getFormObject()->getEntity();
+  $form['site_wide_role'] = [
+    '#type' => 'checkboxes',
+    '#title' => t('Sitewide Roles'),
+    '#default_value' => $group_role->getThirdPartySetting('hel_tpm_group', 'site_wide_role'),
+    '#options' => $roles,
+    '#access' => $roles && $user->hasPermission('administer permissions'),
+  ];
+
+  $form['#entity_builders'][] = 'hel_tpm_group_form_group_role_edit_form_builder';
+}
+
+/**
+ * Entity builder for the migration config entity.
+ */
+function hel_tpm_group_form_group_role_edit_form_builder($entity_type, GroupRole $group_role, &$form, FormStateInterface $form_state) {
+  $site_wide_role = $group_role->getThirdPartySetting('hel_tpm_group', 'site_wide_role');
+
+  // If values has not been changed do nothing.
+  if ($site_wide_role === $form_state->getValue('site_wide_role')) {
+    return;
+  }
+
+  if ($form_state->getValue('site_wide_role')) {
+    $group_role->setThirdPartySetting('hel_tpm_group', 'site_wide_role', $form_state->getValue('site_wide_role'));
+  }
+  else {
+    $group_role->unsetThirdPartySetting('hel_tpm_group', 'site_wide_role');
+  }
+
+  // Dispatch site wide role changed event.
+  $event = new GroupSiteWideRoleChanged($group_role);
+  \Drupal::service('event_dispatcher')->dispatch($event::EVENT_NAME, $event);
+}
+
+/**
+ * Implements hook_entity_delete().
+ *
+ * @param \Drupal\Core\Entity\EntityInterface $entity
+ *
+ * @return void
+ */
+/**
+ * Implements hook_entity_postdelete().
+ */
+function hel_tpm_group_entity_postdelete(EntityInterface $entity) {
+  if (!$entity instanceof GroupContentInterface) {
+    return;
+  }
+
+  $group_content_type = $entity->getGroupContentType();
+  if ($group_content_type->getContentPluginId() != 'group_membership') {
+    return;
+  }
+
+  $event = new GroupMembershipChanged($entity);
+  \Drupal::service('event_dispatcher')->dispatch($event::EVENT_NAME, $event);
+}
+
+/**
+ * Implements hook_entity_postsave().
+ */
+function hel_tpm_group_entity_postsave(EntityInterface $entity, $op) {
+  if (!$entity instanceof GroupContentInterface) {
+    return;
+  }
+
+  $group_content_type = $entity->getGroupContentType();
+  if ($group_content_type->getContentPluginId() != 'group_membership') {
+    return;
+  }
+
+  $event = new GroupMembershipChanged($entity);
+  \Drupal::service('event_dispatcher')->dispatch($event::EVENT_NAME, $event);
+}
+
+/**
+ * Helper function to get valid site roles for selection.
+ *
+ * @return array
+ */
+function _hel_tpm_group_get_valid_roles() {
+  $roles = array_map(['\Drupal\Component\Utility\Html', 'escape'], user_role_names(TRUE));
+  return ['editor' => $roles['editor'], 'specialist_editor' => $roles['specialist_editor']];
+}

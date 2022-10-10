@@ -1,0 +1,14 @@
+uuid: 1021483c-b470-4faa-bf01-00db97807dee
+langcode: fi
+status: true
+dependencies:
+  config:
+    - user.role.specialist_editor
+  module:
+    - user
+id: user_remove_role_action.specialist_editor
+label: 'Remove the Specialist editor role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: specialist_editor
