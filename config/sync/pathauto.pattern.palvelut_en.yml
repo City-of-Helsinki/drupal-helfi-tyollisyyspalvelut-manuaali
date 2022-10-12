@@ -1,0 +1,41 @@
+uuid: c2206c1b-2d0f-4a7a-bff2-38f6164c7d27
+langcode: fi
+status: true
+dependencies:
+  module:
+    - language
+    - node
+id: palvelut_en
+label: 'Palvelut (EN)'
+type: 'canonical_entities:node'
+pattern: 'service/[node:title]'
+selection_criteria:
+  557e6b49-59c6-4832-8c7e-b6e8ba4589bd:
+    id: node_type
+    negate: false
+    uuid: 557e6b49-59c6-4832-8c7e-b6e8ba4589bd
+    context_mapping:
+      node: node
+    bundles:
+      service: service
+  57e6c7d0-19a5-4b6d-bab0-3312c0caa45f:
+    id: 'entity_bundle:node'
+    negate: false
+    uuid: 57e6c7d0-19a5-4b6d-bab0-3312c0caa45f
+    context_mapping:
+      node: node
+    bundles:
+      service: service
+  53fec5cd-2d03-4638-821a-1861f2d71373:
+    id: language
+    negate: false
+    uuid: 53fec5cd-2d03-4638-821a-1861f2d71373
+    context_mapping:
+      language: 'node:langcode:language'
+    langcodes:
+      en: en
+selection_logic: and
+weight: -10
+relationships:
+  'node:langcode:language':
+    label: Kieli
