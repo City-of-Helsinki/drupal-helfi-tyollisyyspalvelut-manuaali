@@ -44,6 +44,16 @@ body {
     width: $main-width-xl;
   }
 }
+
+.header {
+  @include large {
+    width: $main-width-large;
+  }
+  @include xxl {
+    width: $main-width-xl;
+  }
+}
+
 .main {
   @include wrapper;
 

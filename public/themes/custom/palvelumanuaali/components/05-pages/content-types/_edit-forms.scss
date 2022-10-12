@@ -183,9 +183,10 @@
   }
 
   .node-service-edit-form-pager  {
-    grid-row: 1;
+      grid-row: 1;
     @include xl {
       grid-column: 1/3;
+      grid-row: 1;
     }
 
 
@@ -203,17 +204,18 @@
   > .tab-2,
   > .tab-3,
   > .tab-4 {
-    grid-row:2;
+    grid-row: 2;
+    @include xl {
+      grid-column: 1/2;
+      grid-row:2;
+    }
     background-color: clr(text-inverse);
     max-width: unset;
 
     @include large {
       padding: 48px 56px;
       border-radius: 8px;
-    }
 
-    @include xl {
-      grid-column: 1/2;
     }
 
     .fieldgroup,
@@ -341,6 +343,7 @@
 
   .edit-advanced-content-wrapper {
     margin-top: 80px;
+    grid-row: 4;
     @include xl {
       grid-column: 2/3;
       grid-row:2;
@@ -372,10 +375,10 @@
   .page-controls {
 
     margin-top: $space;
-    grid-row:3;
+    grid-row: 5;
     @include xl {
       grid-column: 1/2;
-
+      grid-row:3;
 
     }
     .button-wrapper {
@@ -506,8 +509,9 @@
     }
   }
   >#edit-actions {
-      grid-row: 4;
+    grid-row: 6;
     @include xl {
+      grid-row: 4;
       grid-column: 1/3;
 
     }
