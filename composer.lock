@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "051987029ba711f2de94031af0ace5df",
+    "content-hash": "e0ed107d95bda75f379afaa992857176",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -4058,6 +4058,96 @@
                 "source": "https://cgit.drupalcode.org/hook_post_action",
                 "issues": "https://drupal.org/project/issues/hook_post_action",
                 "irc": "irc://irc.freenode.org/drupal-contribute"
+            }
+        },
+        {
+            "name": "drupal/ief_popup",
+            "version": "2.0.0-beta1",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/ief_popup.git",
+                "reference": "2.0.0-beta1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/ief_popup-2.0.0-beta1.zip",
+                "reference": "2.0.0-beta1",
+                "shasum": "acfc266fae20ec51eedb27ee0ca58237f047531f"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9",
+                "drupal/inline_entity_form": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "2.0.0-beta1",
+                    "datestamp": "1648298586",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Project has not opted into security advisory coverage!"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "dataweb",
+                    "homepage": "https://www.drupal.org/user/2873593"
+                }
+            ],
+            "description": "Extend IEF Complex Widget with add/edit Dialog",
+            "homepage": "https://www.drupal.org/project/ief_popup",
+            "support": {
+                "source": "https://git.drupalcode.org/project/ief_popup"
+            }
+        },
+        {
+            "name": "drupal/ief_table_view_mode",
+            "version": "2.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/ief_table_view_mode.git",
+                "reference": "8.x-2.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/ief_table_view_mode-8.x-2.2.zip",
+                "reference": "8.x-2.2",
+                "shasum": "729d58b7aea7361123c3d66cab320026769623e5"
+            },
+            "require": {
+                "drupal/core": "^8.7.7 || ^9",
+                "drupal/inline_entity_form": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-2.2",
+                    "datestamp": "1594504177",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "mnico",
+                    "homepage": "https://www.drupal.org/user/1119544"
+                }
+            ],
+            "description": "Defines a view mode to set up the columns of the table for the Inline Entity Form widget.",
+            "homepage": "https://www.drupal.org/project/ief_table_view_mode",
+            "support": {
+                "source": "https://git.drupalcode.org/project/ief_table_view_mode"
             }
         },
         {

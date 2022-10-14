@@ -63,26 +63,26 @@ content:
       default_paragraph_type: service_language
     third_party_settings: {  }
   field_service_location:
-    type: hel_tpm_general_inline_entity_form_improved
+    type: hel_tpm_general_inline_entity_form_complex_improved
     weight: 1
     region: content
     settings:
       form_mode: default
-      override_labels: false
       label_singular: ''
       label_plural: ''
-      allow_new: true
-      allow_existing: true
+      allow_new: '1'
+      allow_existing: '1'
       match_operator: CONTAINS
-      allow_duplicate: false
-      collapsible: false
-      collapsed: false
-      revision: false
-      content_type_limit:
+      bundle_limit:
         service_location: service_location
         basic_page: 0
         landing_page: 0
         service: 0
+      revision: 0
+      override_labels: 0
+      collapsible: 0
+      collapsed: 0
+      allow_duplicate: 0
     third_party_settings: {  }
 hidden:
   created: true
