@@ -44,7 +44,11 @@ class InlineEntityFormComplexImproved extends InlineEntityFormComplex {
         '#title' => $this->t('Limit content types'),
         '#options' => $this->getContentTypeOptions(),
         '#states'=> [
-          'visible' => ['input[name="fields[field_service_location][settings_edit_form][settings][allow_new]"]' => ['checked' => TRUE]]
+          'visible' => [
+            'input[name="fields[field_service_location][settings_edit_form][settings][allow_new]"]' => [
+              'checked' => TRUE
+            ]
+          ]
         ],
       ];
     }
@@ -63,7 +67,9 @@ class InlineEntityFormComplexImproved extends InlineEntityFormComplex {
       }
       else {
 
-        $summary[] = $this->t('Limited to @content_types', ['@content_types' => implode(', ', array_diff($limit, [0]))]);
+        $summary[] = $this->t('Limited to @content_types', [
+          '@content_types' => implode(', ', array_diff($limit, [0]))
+        ]);
       }
     }
     return $summary;
@@ -374,7 +380,7 @@ class InlineEntityFormComplexImproved extends InlineEntityFormComplex {
           '#ief_labels' => $this->getEntityTypeLabels(),
           '#match_operator' => $this->getSetting('match_operator'),
         ];
-        $element['form'] += $this->referenceForm($element['form'], $form_state, $create_bundles);
+        $element['form'] += $this->referenceForm($element['form'], $form_state);
 
         /**
          * Modifications to add existing:
@@ -386,7 +392,9 @@ class InlineEntityFormComplexImproved extends InlineEntityFormComplex {
         unset($element['form']['entity_id']['#title']);
         unset($element['form']['entity_id']['#required']);
         $element['form']['#process'][] = [get_class($this), 'hideCancel'];
-        $key = array_search('inline_entity_form_reference_form_submit', $element['form']['#ief_element_submit']);
+        $key = array_search('inline_entity_form_reference_form_submit',
+          $element['form']['#ief_element_submit']
+        );
         if ($key !== FALSE) {
           $element['form']['#ief_element_submit'][$key] = [get_class($this), 'reference_form_submit'];
         }
@@ -439,7 +447,9 @@ class InlineEntityFormComplexImproved extends InlineEntityFormComplex {
          */
         $element['actions']['#type'] = 'fieldset';
         if ($create_bundles_count == 1) {
-          $element['actions']['ief_add']['#value'] = $this->t('Create new @type_singular', ['@type_singular' => reset($bundles)]);
+          $element['actions']['ief_add']['#value'] = $this->t(
+            'Create new @type_singular', ['@type_singular' => reset($bundles)]
+          );
         }
       }
     }
@@ -477,7 +487,7 @@ class InlineEntityFormComplexImproved extends InlineEntityFormComplex {
    *
    * @return array
    */
-  private function referenceForm($reference_form, &$form_state, $bundles) {
+  private function referenceForm($reference_form, &$form_state) {
     return inline_entity_form_reference_form($reference_form, $form_state);
   }
 
