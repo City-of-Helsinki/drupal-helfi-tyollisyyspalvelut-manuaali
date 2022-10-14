@@ -3,14 +3,14 @@
   {{content.flag_cart}}
   {{content.flag_lists}}
   <div id="view-mode-switcher-link"> {{content.view_mode_switcher}}</div>
-  </div>
+</div>
   {% embed "@templates/with-content-sidebar.twig" with {
     content_base_class: service_base_class,
     main_content_id: main_content_id,
   } %}
 
 
-{% block content %} {{content|without('flag_cart','flag_lists','view_mode_switcher', 'field_contact_info')}}{% endblock %}
+{% block content %} {{content|without('flag_cart','flag_lists','view_mode_switcher', 'field_contact_info','field_other_services','field_contact_info_external','field_service_producer','entitygroupfield')}}{% endblock %}
   {% block page_content %}
     {% if service__updated  %}
       {% include "@atoms/text/text/01-paragraph.twig" with {
@@ -28,6 +28,10 @@
     %}
   {% endblock %}
   {% block page_sidebar %}
-    {{ content.field_contact_info }}
+    {{ content.field_contact_info_external }}
+    {{ content.field_service_producer }}
+    {{ content.entitygroupfield}}
   {% endblock %}
 {% endembed %}
+
+{{ content.field_other_services}}

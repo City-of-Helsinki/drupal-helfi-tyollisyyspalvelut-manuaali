@@ -49,10 +49,15 @@
 %}
 
 {% include "@atoms/text/headings/_heading.twig" with {
+  "heading_level": 5,
+  "heading": 'Service implementation:'|t,
+  "heading_modifiers": 'semibold',
 } %}
 
-{% for item in items %}
-  <div{{ item.attributes.addClass('field__item') }}>
-    {{item.content}}
-  </div>
-{% endfor %}
+<div{{ attributes.addClass(classes, 'field__items') }}>
+  {% for item in items %}
+    <div{{ item.attributes.addClass('field__item') }}>
+      {{item.content}}
+    </div>
+  {% endfor %}
+</div>

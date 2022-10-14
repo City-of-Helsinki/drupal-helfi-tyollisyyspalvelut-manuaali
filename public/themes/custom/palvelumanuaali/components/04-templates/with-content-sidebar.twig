@@ -9,11 +9,11 @@
 
 
 <div id={{main_content_id}} {{ bem(content_base_class, content_modifiers, content_blockname, ['row']) }}>
-  <div {{  bem('content-column', content_colum_modifiers, content_column_base_class, ['col-xxl-9', 'col-12']) }}>
+  <div {{  bem('content-column', content_colum_modifiers, content_column_base_class, ['col-xl-9', 'col-12']) }}>
     {% block page_content %}{% endblock %}
     {% block content %}{% endblock %}
   </div>
-  <aside class="content-sidebar col-12 col-xxl-3" role="complementary">
+  <aside class="content-sidebar col-12 col-xl-3" role="complementary">
     {% block page_sidebar %}{% endblock %}
   </aside>
 </div>

@@ -45,10 +45,15 @@
     'field--type-' ~ field_type|clean_class,
     'field--label-' ~ label_display,
     label_display == 'inline' ? 'clearfix',
+    'field--content--inline',
   ]
 %}
 
+<div{{ attributes.addClass(classes, 'field__items') }}>
 {% include "@atoms/text/headings/_heading.twig" with {
+  "heading_level": 5,
+  "heading": 'Service keywords:'|t,
+  "heading_modifiers": 'semibold',
 } %}
 
 {% for item in items %}
@@ -56,3 +61,4 @@
     {{item.content}}
   </div>
 {% endfor %}
+</div>
