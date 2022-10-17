@@ -21,8 +21,11 @@
   &__branding {
     padding: $space-double;
     max-width: 300px;
-    width: 280px;
+    width: $sidebar-md-width;
     margin-left: auto;
     margin-right: auto;
+    @include xxl {
+      width: $sidebar-width;
+    }
   }
 }

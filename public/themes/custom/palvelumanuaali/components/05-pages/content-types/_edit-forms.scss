@@ -1,5 +1,6 @@
 .form-background--white {
   background-color: clr(text-inverse);
+  padding: $space;
 }
 .group--light-blue {
   border: 2px solid $blue20;
@@ -22,9 +23,9 @@
  }
 
 .form-background--regular-padding {
+  border-radius: 8px;
   @include large {
     padding: 48px 56px;
-    border-radius: 8px;
   }
 }
 
@@ -35,11 +36,13 @@
 
 .node-service-edit-form,
 .node-service-form {
-  @extend .offset-lg-1;
-  @extend .col-lg-10;
-  display: grid;
-  grid-template-columns: 7fr 3fr;
-  grid-column-gap: 24px;
+  @extend .offset-xl-1;
+  @extend .col-xl-10;
+    display: grid;
+  @include xl {
+      grid-template-columns: 7fr 3fr;
+      grid-column-gap: 24px;
+  }
 
   .paragraph-type-top,
   .filter-wrapper[data-drupal-selector*="format"] {
@@ -181,16 +184,25 @@
   }
 
   .node-service-edit-form-pager  {
-    grid-column: 1/3;
-    grid-row: 1;
+      grid-row: 1;
+    @include xl {
+      grid-column: 1/3;
+      grid-row: 1;
+    }
+
 
     .multistep-nav-wrapper {
 
-      width: 65%;
-      margin-left: auto;
-      margin-right: auto;
+      width: 100%;
+      margin-left: $space;
+      margin-right: $space;
       display: flex;
       flex-wrap: wrap;
+      @include large {
+        margin-left: auto;
+        margin-right: auto;
+        width: 65%;
+      }
     }
   }
 
@@ -198,14 +210,18 @@
   > .tab-2,
   > .tab-3,
   > .tab-4 {
-    grid-column: 1/2;
-    grid-row:2;
+    grid-row: 2;
+    padding: $space;
+    border-radius: 8px;
+    @include xl {
+      grid-column: 1/2;
+      grid-row:2;
+    }
     background-color: clr(text-inverse);
     max-width: unset;
 
     @include large {
       padding: 48px 56px;
-      border-radius: 8px;
 
     }
 
@@ -334,15 +350,23 @@
 
   .edit-advanced-content-wrapper {
     margin-top: 80px;
-    grid-column: 2/3;
-    grid-row:2;
+    grid-row: 4;
+    grid-column: 1/3;
+    @include xl {
+      grid-column: 2/3;
+      grid-row:2;
+    }
+
   }
 
   .edit-advanced-form {
     background-color: clr(text-inverse);
     border-radius: 8px;
+    padding: $space;
+    max-width: unset;
     @include large {
       padding: 40px 32px 48px 32px;
+      max-width: inherit;
     }
     .vertical-tabs {
       border: 0;
@@ -361,9 +385,14 @@
   }
 
   .page-controls {
-    grid-column: 1/2;
-    grid-row:3;
+
     margin-top: $space;
+    grid-row: 6;
+    @include xl {
+      grid-column: 1/2;
+      grid-row:3;
+
+    }
     .button-wrapper {
       display: flex;
       justify-content: space-between;
@@ -492,8 +521,12 @@
     }
   }
   >#edit-actions {
-    grid-row: 4;
-    grid-column: 1/3;
+    grid-row: 7;
+    @include xl {
+      grid-row: 4;
+      grid-column: 1/3;
+
+    }
   }
   .field--name-field-contact-info,
   .field--name-field-contact-info-external {
