@@ -44,5 +44,10 @@
 %}
 
 <div{{ attributes.addClass(classes) }}>
-  {{ content }}
+  {% if content.field_free_service[0]['#markup'] == 1 %}
+    {{ content|without('field_free_service') }}
+  {% else %}
+    <span>{{'The service is free'|t}}</span>
+  {% endif %}
+
 </div>

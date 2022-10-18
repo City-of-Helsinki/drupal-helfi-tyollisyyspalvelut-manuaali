@@ -10,7 +10,7 @@
   } %}
 
 
-{% block content %} {{content|without('flag_cart','flag_lists','view_mode_switcher', 'field_contact_info','field_other_services','field_contact_info_external','field_service_producer','entitygroupfield')}}{% endblock %}
+{% block content %} {{content|without('flag_cart','flag_lists','view_mode_switcher', 'field_contact_info','field_other_services','field_contact_info_external','field_service_producer','entitygroupfield','field_municipality_specific')}}{% endblock %}
   {% block page_content %}
     {% if service__updated  %}
       {% include "@atoms/text/text/01-paragraph.twig" with {
@@ -30,12 +30,10 @@
   {% block page_sidebar %}
     {% include "@atoms/text/headings/_heading.twig" with {
       "heading_level": 4,
-      "heading": 'Contacts'|t,
+      "heading": 'Archiving guides'|t,
       "heading_modifiers": 'semibold',
     } %}
-    {{ content.field_contact_info_external }}
-    {{ content.field_service_producer }}
-    {{ content.entitygroupfield}}
+    {{ content.field_municipality_specific }}
   {% endblock %}
 {% endembed %}
 

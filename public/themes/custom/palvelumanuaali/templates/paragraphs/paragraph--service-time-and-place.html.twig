@@ -43,5 +43,10 @@
   ]
 %}
   <div{{ attributes.addClass(classes) }}>
-    {{content}}
+    {% if content.field_separate_time[0]['#markup'] == 1 %}
+      {{content|without('field_separate_time','field_dates')}}
+    {% else %}
+      {{content|without('field_separate_time')}}
+    {% endif %}
+
   </div>

@@ -44,21 +44,38 @@
     'field--name-' ~ field_name|clean_class,
     'field--type-' ~ field_type|clean_class,
     'field--label-' ~ label_display,
-    label_display == 'inline' ? 'clearfix',
     'field--content--inline',
+    'field--content--blue',
+    'field--content--margin-left-triple',
   ]
 %}
 
-<div{{ attributes.addClass(classes, 'field__items') }}>
-{% include "@atoms/text/headings/_heading.twig" with {
-  "heading_level": 5,
-  "heading": 'Service keywords:'|t,
-  "heading_modifiers": 'semibold',
+{%
+  set title_classes = [
+    'field__label',
+    label_display == 'visually_hidden' ? 'visually-hidden',
+  ]
+%}
+<div class='icon-wrapper'>
+{% include "@atoms/images/icons/_icon.twig" with {
+  icon_base_class: 'icon',
+  icon_name: 'arrow-right-short',
+  icon_modifiers: ['smaller'],
 } %}
-
-{% for item in items %}
-  <div{{ item.attributes.addClass('field__item') }}>
-    {{item.content}}
+<div{{ attributes.addClass(classes) }}>
+  <div{{ title_attributes.addClass(title_classes) }}>
+    {% include "@atoms/text/headings/_heading.twig" with {
+      "heading_level": 5,
+      "heading": 'Service keywords:'|t,
+      "heading_modifiers": 'semibold',
+    } %}
   </div>
-{% endfor %}
+    <div class="field__items">
+    {% for item in items %}
+      <div{{ item.attributes.addClass('field__item') }}>
+        {{item.content}}
+      </div>
+    {% endfor %}
+  </div>
+</div>
 </div>
