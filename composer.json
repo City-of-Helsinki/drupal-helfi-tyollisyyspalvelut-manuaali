@@ -76,6 +76,8 @@
         "drupal/ginvite": "^2.0",
         "drupal/group": "^1.4",
         "drupal/hook_post_action": "^1.1",
+        "drupal/ief_popup": "^2",
+        "drupal/ief_table_view_mode": "^2.2",
         "drupal/inline_entity_form": "^1.0@RC",
         "drupal/log_stdout": "^1.3",
         "drupal/mail_login": "^2.6",
@@ -186,6 +188,9 @@
             "drupal/core": "-p2"
         },
         "patches": {
+            "drupal/core": {
+                "https://www.drupal.org/project/drupal/issues/2800875#comment-14070351": "https://www.drupal.org/files/issues/2021-04-23/2800875-70_0.patch"
+            },
             "drupal/message": {
                 "https://www.drupal.org/files/issues/2018-06-24/allow_token_contexts-3.patch": "https://www.drupal.org/files/issues/2018-06-24/allow_token_contexts-3.patch"
             },
