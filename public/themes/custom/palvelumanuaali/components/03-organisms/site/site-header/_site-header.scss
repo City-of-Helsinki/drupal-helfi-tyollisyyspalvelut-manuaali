@@ -1,8 +1,19 @@
+
 .header {
+  transition: transform 0.5s;
   @include large {
-    position: inherit;
-    bottom: unset;
+    position: fixed;
+    z-index: 200;
+    width: 100%;
   }
+
+  &--hidden {
+    @include large {
+      transform: translateY(calc(-1 * #{$nav-height}));
+      box-shadow: none;
+    }
+  }
+
   &__inner {
     @include wrapper;
 

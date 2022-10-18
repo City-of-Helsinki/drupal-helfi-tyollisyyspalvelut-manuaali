@@ -391,13 +391,15 @@ there is possibility to add classes button--blue-bordered,
  but they are added here for now
 **/
 .field--name-field-instructions-markup {
-  grid-column: 2/3;
-  grid-row:2;
+    grid-row: 5;
+  @include xl {
+    grid-column: 2/3;
+    grid-row:2;
+  }
   a {
     @include button-blue-bordered-base;
     @include button-large;
     @include background-white;
-    @include full-width;
     @include arrow-right;
     padding-top: 18px;
     padding-bottom: 18px;
