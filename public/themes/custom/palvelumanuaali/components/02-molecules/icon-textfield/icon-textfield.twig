@@ -44,10 +44,10 @@
     'field--name-' ~ field_name|clean_class,
     'field--type-' ~ field_type|clean_class,
     'field--label-' ~ label_display,
-    'field--content--inline',
-    'field--content--blue'
   ]
 %}
+
+{% set classes = classes|merge(additional_classes)%}
 
 {%
   set title_classes = [
@@ -56,29 +56,26 @@
   ]
 %}
 
-<div{{ attributes.addClass(classes) }}>
-  <div{{ title_attributes.addClass(title_classes) }}>
-  {% include "@atoms/text/headings/_heading.twig" with {
-    "heading_level": 5,
-    "heading": 'Downloadable attachments:'|t,
-    "heading_modifiers": ['semibold','margin-bottom-extra'],
+<div class='icon-wrapper'>
+  {% include "@atoms/images/icons/_icon.twig" with {
+    icon_base_class: 'icon',
+    icon_name: icon_name,
+    icon_modifiers: ['small'],
   } %}
-  </div>
-  <div class="field__items">
-    {% for item in items %}
-      <div{{ item.attributes.addClass('field__item') }}>
-      {% include "@atoms/images/icons/_icon.twig" with {
-        icon_base_class: 'icon',
-        icon_name: 'file_1',
-        icon_modifiers: ['small','absolute-left-regular'],
-      } %}
-        {{item.content}}
-        {% include "@atoms/images/icons/_icon.twig" with {
-          icon_base_class: 'icon',
-          icon_name: 'download_1',
-          icon_modifiers: ['small','absolute-right-regular'],
-        } %}
-      </div>
-    {% endfor %}
+  <div{{ attributes.addClass(classes) }}>
+    <div{{ title_attributes.addClass(title_classes) }}>
+    {% include "@atoms/text/headings/_heading.twig" with {
+      "heading_level": 5,
+      "heading": field_header,
+      "heading_modifiers": 'semibold',
+    } %}
+    </div>
+    <div class="field__items">
+      {% for item in items %}
+        <div{{ item.attributes.addClass('field__item') }}>
+          {{item.content}}
+        </div>
+      {% endfor %}
+    </div>
   </div>
 </div>
