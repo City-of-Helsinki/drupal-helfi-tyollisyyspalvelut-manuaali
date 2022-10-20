@@ -1,0 +1,21 @@
+uuid: e0da73c5-2e94-4f53-9cb9-78a737c7eb00
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.contact_info.field_municipality
+  module:
+    - hel_tpm_contact_info
+    - text
+id: contact_info.contact_info.field_municipality
+field_name: field_municipality
+entity_type: contact_info
+bundle: contact_info
+label: 'Kunta '
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

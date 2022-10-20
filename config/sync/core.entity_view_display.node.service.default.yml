@@ -165,10 +165,11 @@ content:
     weight: 15
     region: content
   field_contact_info_external:
-    type: entity_reference_label
+    type: entity_reference_entity_view
     label: hidden
     settings:
-      link: true
+      view_mode: default
+      link: false
     third_party_settings: {  }
     weight: 18
     region: content
