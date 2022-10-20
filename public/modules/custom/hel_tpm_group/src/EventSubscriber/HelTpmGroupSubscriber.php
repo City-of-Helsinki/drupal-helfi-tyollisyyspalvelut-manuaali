@@ -139,6 +139,17 @@ class HelTpmGroupSubscriber implements EventSubscriberInterface {
       if (empty($swroles)) {
         continue;
       }
+
+      // Go through roles and check if prior group role has already given site wide role to user
+      // so we don't accidentally remove users site wide role if user to another group with lesser configured roles.
+      foreach ($swroles as $key => $value) {
+        if ($value !== 0) {
+          continue;
+        }
+        if (isset($roles[$key]) && $roles[$key] === $key) {
+          unset($swroles[$key]);
+        }
+      }
       $roles = array_merge($roles, $swroles);
     }
 
