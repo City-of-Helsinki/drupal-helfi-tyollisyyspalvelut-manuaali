@@ -92,4 +92,21 @@ $outer-container-break: $small;
   color: transparent;
   background-repeat: no-repeat;
   background-position: center center;
+  &:hover {
+    background: unset;
+    color: transparent;
+  }
+}
+
+
+@mixin close-button {
+  color: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-color: transparent;
+  border: 0;
+  border-radius: 0;
+  background-image: url("/themes/custom/palvelumanuaali/images/icons/close.svg");
+  padding: 0;
+  background-size: contain;
 }
