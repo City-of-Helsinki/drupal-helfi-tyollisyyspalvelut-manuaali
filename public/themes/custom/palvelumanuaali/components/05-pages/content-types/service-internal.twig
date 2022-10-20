@@ -30,10 +30,12 @@
   {% block page_sidebar %}
     {% include "@atoms/text/headings/_heading.twig" with {
       "heading_level": 4,
-      "heading": 'Archiving guides'|t,
+      "heading": 'Contacts'|t,
       "heading_modifiers": 'semibold',
     } %}
     {{ content.field_municipality_specific }}
+    {{ content.field_contact_info }}
+    {{ content.field_responsible_updatee }}
   {% endblock %}
 {% endembed %}
 
