@@ -24,6 +24,7 @@
     .service{
       margin-top: $space;
       max-width: 100%;
+      width: 100%;
       @include large {
         margin-top: $space-double;
       }
@@ -33,6 +34,8 @@
 
 #service-page-full {
   margin-bottom: $space-triple;
+  display: flex;
+  flex-wrap: wrap;
   @include large {
     margin-bottom: 102px;
   }
