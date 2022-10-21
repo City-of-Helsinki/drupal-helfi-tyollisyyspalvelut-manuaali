@@ -23,10 +23,21 @@
     }
     .service{
       margin-top: $space;
-      @include large { 
+      max-width: 100%;
+      width: 100%;
+      @include large {
         margin-top: $space-double;
       }
     }
+  }
+}
+
+#service-page-full {
+  margin-bottom: $space-triple;
+  display: flex;
+  flex-wrap: wrap;
+  @include large {
+    margin-bottom: 102px;
   }
 }
 
@@ -42,18 +53,35 @@
    padding-bottom: 37px;
   }
   .field {
+    // margin-bottom: $space-double;
     .field__label {
-      margin-bottom: $space;
       font-weight: 600;
       font-size: 16px;
     }
   }
-
+  .field__item {
+    margin-bottom: $space-one-half;
+  }
   .content-column {
     padding-right: $space-quadruple;
     >.field {
-      margin-bottom: $space-double;
+      margin-bottom: $space-two-and-half;
     }
+    //override for field life-situations
+    > .field--name-field-life-situations {
+      margin-bottom: 0;
+    }
+  }
+  .content-sidebar {
+    >.h4 {
+      margin-bottom: $space-double;
+      @include large {
+        margin-bottom: $space-two-and-half;
+      }
+    }
+  }
+  .field--name-field-file  {
+    margin-bottom: $space-one-and-half;
   }
 
   .field--name-field-description {
@@ -61,26 +89,28 @@
     line-height: 32px;
   }
 
+  .field--name-field-implementation-extra-info,
+  .field--name-field-service-price {
+    margin-bottom: $space-double;
+    @include large {
+      margin-bottom: $space-two-and-half;
+    }
+  }
+
   .service-price {
     display: flex;
+    flex-wrap: wrap;
     font-size: 16px;
-    p {
+    .field__item {
       color: clr(alt-header-color);
       letter-spacing: 0.01em;
+      span {
+        font-weight: 400;
+      }
+      font-weight: 700;
     }
-    .field--name-field-price {
-      display: flex;
-      .field__label {
-        &:after {
-          content: ":";
-          margin-right: $space-one-and-half;
-        }
-      }
-
-      .field__item {
-        color: clr(alt-header-color);
-        letter-spacing: 0.01em;
-      }
+    p {
+      letter-spacing: 0.01em;
     }
   }
 
@@ -127,7 +157,8 @@
   }
 }
 
-.field--name-field-service-links-external {
+.field--name-field-service-links-external,
+.field--name-field-link {
   .field__items {
     display: flex;
     flex-wrap: wrap;
@@ -141,4 +172,115 @@
       font-weight: 600;
     }
   }
+}
+
+.field--name-field-service-execution {
+  margin-bottom: $space-double;
+}
+
+.field--name-field-service-implement {
+  .field__label {
+    display: inline-flex;
+  }
+  h5 {
+    margin-left: $space;
+  }
+}
+
+.field--name-field-service-producer {
+  a {
+    word-wrap: anywhere;
+  }
+}
+
+//Inline field theming
+.field--content--inline {
+  .field__items {
+    @include large {
+      display: inline;
+    }
+  }
+  .field__item {
+    @include large {
+      display: inline;
+    }
+  }
+}
+
+.field--content--blue {
+  .field__item {
+    color: clr(alt-header-color);
+  }
+}
+
+.service-group {
+  margin-bottom: $space-two-and-half;
+  @include large {
+    margin-bottom: $space-triple;
+  }
+  @include xl {
+    margin-bottom: $space-three-and-half;
+  }
+}
+
+.field--content--margin-left-triple,
+.field--name-field-service-set {
+  margin-left: $space-triple;
+  .h5 {
+    margin-left: 0;
+    margin-bottom: $space-one-half;
+  }
+}
+
+
+.field--name-field-file {
+  .field__item {
+    display: block;
+    position: relative;
+  }
+  .file,
+  a {
+    display: block;
+    width: 100%;
+  }
+  .file a {
+    background-color: clr(background);
+    border-radius: 8px;
+    color: clr(text);
+    text-decoration: none;
+    font-size: 14px;
+    padding: $space 0 $space $space-three-and-half;
+    margin-bottom: $space-one-half;
+  }
+}
+
+.icon-wrapper {
+  position: relative;
+  >.icon {
+    position: absolute;
+    margin-top: $space;
+  }
+}
+
+.field__label--margin-bottom {
+  margin-bottom: $space-double;
+  @include large {
+    margin-bottom: $space-three-and-half;
+  }
+}
+
+.field--name-field-other-services {
+  width: 100%;
+}
+
+
+.service .field--name-field-contact-info-external {
+  margin-bottom: $space-two-and-half;
+  .field {
+    margin-bottom: 0;
+  }
+}
+
+.field--name-field-contact-name {
+  font-weight: 600;
 }
