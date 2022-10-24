@@ -3,6 +3,7 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - views.view.cart
     - views.view.services
   module:
     - system
@@ -13,7 +14,7 @@ name: front_page_users
 group: 'Front page'
 description: ''
 requireAllConditions: true
-disabled: true
+disabled: false
 conditions:
   request_path:
     id: request_path
@@ -28,26 +29,62 @@ conditions:
     context_mapping:
       user: '@user.current_user_context:current_user'
     roles:
-      anonymous: anonymous
+      authenticated: authenticated
       root: root
       admin: admin
+      editor: editor
       specialist: specialist
+      specialist_editor: specialist_editor
 reactions:
   blocks:
     id: blocks
     uuid: 1d6e98dc-d15a-4254-8f61-edc73642519b
     blocks:
-      e878ea9b-b7a4-400b-9caa-584ab7b35ab1:
-        uuid: e878ea9b-b7a4-400b-9caa-584ab7b35ab1
-        id: 'views_block:services-block_1'
+      2786fcbf-e1fd-4807-a1bc-d82674b681ef:
+        uuid: 2786fcbf-e1fd-4807-a1bc-d82674b681ef
+        id: 'views_block:cart-favorites_block'
+        label: ''
+        provider: views
+        label_display: visible
+        region: content
+        weight: '-1'
+        custom_id: views_block_cart_favorites_block
+        theme: palvelumanuaali
+        css_class: block-favorites-table
+        unique: 0
+        context_id: front_page_users
+        context_mapping: {  }
+        views_label: ''
+        items_per_page: none
+        third_party_settings: {  }
+      f30965ad-ee96-4caa-ba03-30a1d8d83b80:
+        uuid: f30965ad-ee96-4caa-ba03-30a1d8d83b80
+        id: 'views_block:services-last_updated_table_block'
+        label: ''
+        provider: views
+        label_display: visible
+        region: content
+        weight: '1'
+        custom_id: views_block_services_last_updated_table_block
+        theme: palvelumanuaali
+        css_class: 'col-12 col-xl-6 block-last-updated-services-table'
+        unique: 0
+        context_id: front_page_users
+        context_mapping: {  }
+        views_label: ''
+        items_per_page: none
+        third_party_settings: {  }
+      be71c8db-4217-4e5b-acf6-140a2dbbc5c7:
+        uuid: be71c8db-4217-4e5b-acf6-140a2dbbc5c7
+        id: 'views_block:services-most_viewed_services_table_block'
         label: ''
         provider: views
         label_display: visible
         region: content
         weight: '0'
-        custom_id: views_block_services_block_1
+        custom_id: views_block_services_most_viewed_services_table_block
         theme: palvelumanuaali
-        css_class: col-lg-5
+        css_class: 'col-12 col-xl-6 block-most-viewed-services-table'
         unique: 0
         context_id: front_page_users
         context_mapping: {  }

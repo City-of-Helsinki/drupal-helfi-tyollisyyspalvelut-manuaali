@@ -1,0 +1,35 @@
+uuid: d1fc5d78-2498-45a5-896d-1d4afeead698
+langcode: fi
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.limited_fields
+    - field.field.paragraph.service_time_and_place.field_dates
+    - field.field.paragraph.service_time_and_place.field_separate_time
+    - field.field.paragraph.service_time_and_place.field_service_languages
+    - field.field.paragraph.service_time_and_place.field_service_location
+    - paragraphs.paragraphs_type.service_time_and_place
+  module:
+    - entity_reference_revisions
+id: paragraph.service_time_and_place.limited_fields
+targetEntityType: paragraph
+bundle: service_time_and_place
+mode: limited_fields
+content:
+  field_service_languages:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: limited_fields
+      link: ''
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  field_dates: true
+  field_separate_time: true
+  field_service_location: true
+  search_api_excerpt: true
