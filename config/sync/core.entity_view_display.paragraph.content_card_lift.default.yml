@@ -1,0 +1,26 @@
+uuid: ac332bee-1d09-4680-8c9c-fc5235dc92a6
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.content_card_lift.field_teaser_reference
+    - paragraphs.paragraphs_type.content_card_lift
+id: paragraph.content_card_lift.default
+targetEntityType: paragraph
+bundle: content_card_lift
+mode: default
+content:
+  field_teaser_reference:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: paragraph_card_lift
+      link: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  search_api_excerpt: true
