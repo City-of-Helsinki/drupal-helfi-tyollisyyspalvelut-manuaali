@@ -44,14 +44,18 @@
 {% set hero_text__base_class = 'hero-text' %}
 
 <div {{ bem(hero_text__base_class, hero_text__modifiers, hero_text__blockname, hero_text__extra_classes) }}>
-  {% if hero_text__media %}
+  {% if icon_name %}
   {# Image #}
-    <div {{ bem('image', hero_text__image__modifiers, hero_text__base_class) }}>
-        {{ hero_text__media }}
+    <div {{ bem('image', hero_text__image__modifiers, hero_text__base_class, ['col-xl-3', 'offset-xl-1']) }}>
+        {% include "@atoms/images/icons/_icon.twig" with {
+        icon_base_class: 'icon',
+        icon_name: 'animation',
+        icon_modifiers: ['large'],
+        } %}
     </div>
   {% endif %}
   {# Content #}
-  <div {{ bem('content', hero_text__content__modifiers, hero_text__base_class) }}>
+  <div {{ bem('content', hero_text__content__modifiers, hero_text__base_class, ['col-xl-5']) }}>
     {# Heading #}
     {% if hero_text__heading %}
       {{ title_prefix }}

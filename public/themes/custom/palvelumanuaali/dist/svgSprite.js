@@ -95,6 +95,7 @@
 
 var map = {
 	"./icons/LOGO-white.svg": "./images/icons/LOGO-white.svg",
+	"./icons/animation.svg": "./images/icons/animation.svg",
 	"./icons/arrow-left.svg": "./images/icons/arrow-left.svg",
 	"./icons/arrow-right-short.svg": "./images/icons/arrow-right-short.svg",
 	"./icons/arrow-right.svg": "./images/icons/arrow-right.svg",
@@ -196,6 +197,26 @@ __webpack_require__.r(__webpack_exports__);
       id: "LOGO-white-usage",
       viewBox: "0 0 207 48",
       url: __webpack_require__.p + "../dist/icons.svg#LOGO-white",
+      toString: function () {
+        return this.url;
+      }
+    });
+
+/***/ }),
+
+/***/ "./images/icons/animation.svg":
+/*!************************************!*\
+  !*** ./images/icons/animation.svg ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+      id: "animation-usage",
+      viewBox: "0 0 337 339",
+      url: __webpack_require__.p + "../dist/icons.svg#animation",
       toString: function () {
         return this.url;
       }

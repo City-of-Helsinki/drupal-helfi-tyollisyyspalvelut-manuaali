@@ -72,14 +72,13 @@
 #}
 
 
-{% embed "@molecules/card/card.twig" with {
+{% include "@molecules/card/card.twig" with {
   card__extra_classes: ["grid__item padded"],
-  card__heading: label,
-  card__body: content.field_description,
-  card__button__url: url,
+  card__heading: content.field_title,
+  card__body: content.field_description_plain,
+  card__button__url: content.field_link[0]["#url"],
   card__button__content:card__button_icon_src,
   card__button_icon_src: 'yes',
   card__button__modifiers: ["arrow"],
   card__link_wrapped: 'yes',
 } %}
-{% endembed %}

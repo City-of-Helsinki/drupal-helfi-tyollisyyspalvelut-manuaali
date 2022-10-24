@@ -12,27 +12,10 @@
         hero_text__media: hero_text__media,
         hero_text__image__modifiers: hero_text__image__modifiers,
         hero_text__content__modifiers: hero_text__content__modifiers,
-
+        icon_base_class: icon_base_class,
+        icon_name: icon_name,
+        icon_modifiers: icon_modifiers,
     } %}
     {% block paragraph %}
-      {% include "@organisms/grid/grid.twig" with {
-        grid_label: content.field_paragraph[0]['#paragraph'].values.field_title,
-        grid_type: 'card',
-        item_type: 'card',
-        items: {
-          1: {
-            card__heading: "Super Awesome Card",
-            card__body: "Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Donec rutrum congue leo eget malesuada. Proin eget tortor risus. Sed porttitor lectus nibh. Nulla quis lorem ut libero malesuada feugiat. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Pellentesque in ipsum id orci porta dapibus. Nulla quis lorem ut libero malesuada feugiat. Nulla quis lorem ut libero malesuada feugiat."
-          },
-          2: {
-            card__heading: "Card Number Two",
-            card__body: "Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Donec rutrum congue leo eget malesuada. Proin eget tortor risus. Sed porttitor lectus nibh. Nulla quis lorem ut libero malesuada feugiat. Vivamus magna justo."
-          },
-          3: {
-            card__heading: "The Last Card Heading",
-            card__body: "Tempus convallis quis ac lectus. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Donec rutrum congue leo eget malesuada. Proin eget tortor risus. Sed porttitor lectus nibh. Nulla quis lorem ut libero malesuada feugiat.. Nulla quis lorem ut libero malesuada feugiat."
-          }
-        }
-      }%}
     {% endblock %}
   {% endblock %}

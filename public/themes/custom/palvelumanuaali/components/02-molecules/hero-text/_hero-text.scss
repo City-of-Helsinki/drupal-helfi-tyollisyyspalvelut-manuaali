@@ -8,6 +8,11 @@
   &--half {
     @extend .col-lg-6;
   }
+  &--padding-top {
+    @include xl {
+      padding-top: 56px;
+    }
+  }
 }
 
 .hero-text__image {

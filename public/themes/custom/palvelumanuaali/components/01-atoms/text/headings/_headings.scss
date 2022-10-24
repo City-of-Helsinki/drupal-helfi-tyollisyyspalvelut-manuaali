@@ -187,6 +187,13 @@ $color-heading: clr(accent);
 
 .h4 {
   @include heading-small;
+  &--margin-bottom-triple-half {
+      margin-bottom: $space-two-and-half;
+    @include xl {
+      margin-bottom: $space-three-and-half;
+    }
+  }
+
 }
 
 .h5 {
@@ -196,6 +203,12 @@ $color-heading: clr(accent);
   }
   &--margin-bottom-extra {
       margin-bottom: $space-one-and-half;
+  }
+  &--margin-bottom-triple-half {
+      margin-bottom: $space-two-and-half;
+    @include xl {
+      margin-bottom: $space-three-and-half;
+    }
   }
 }
 

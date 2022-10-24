@@ -83,7 +83,7 @@ body {
   margin-bottom: $space-one-and-half;
  >li {
    margin-bottom: $space-one-and-half;
-   padding-left: $space-one-and-half; 
+   padding-left: $space-one-and-half;
    position: relative;
    &::before {
      color: blue;
@@ -100,4 +100,10 @@ body {
      text-align: center;
    }
  }
+}
+
+
+.field__label--flex {
+  display: flex;
+  flex-wrap: wrap;
 }
