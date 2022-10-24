@@ -1,4 +1,6 @@
   {% block page_content %}
+    {% block greeting %}
+    {% endblock %}
     {% include "@molecules/hero-text/hero-text.twig" with {
         hero_text__heading_level: 1,
         hero_text__heading: hero_text__heading,
@@ -16,6 +18,7 @@
         icon_name: icon_name,
         icon_modifiers: icon_modifiers,
     } %}
+
     {% block paragraph %}
     {% endblock %}
   {% endblock %}

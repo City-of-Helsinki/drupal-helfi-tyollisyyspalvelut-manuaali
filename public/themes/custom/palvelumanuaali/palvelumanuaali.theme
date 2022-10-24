@@ -117,3 +117,23 @@ function palvelumanuaali_theme_suggestions_input_alter(&$suggestions, array $var
       $suggestions[] = 'input__' . $variables['element']['#type'] . '__' . $variables['element']['#form_id'];
     }
 }
+
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function palvelumanuaali_theme_suggestions_field_alter(array &$suggestions, array $variables) {
+
+  $element = $variables['element'];
+
+  if ($element['#field_type'] == 'entity_reference_revisions') {
+
+    foreach ($element as $key => $value) {
+      if (is_numeric($key) && isset($value['#paragraph'])) {
+
+        $paragraph = $value;
+        $suggestions[] = 'field__' . $element['#field_name'] . '__paragraph__' . $paragraph['#view_mode'];
+      }
+    };
+  }
+}

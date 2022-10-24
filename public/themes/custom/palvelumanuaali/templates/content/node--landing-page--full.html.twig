@@ -73,8 +73,20 @@
 {% if logged_in %}
   {% embed "@pages/content-types/landing-page.twig" with {
   } %}
-    {% block paragraph %}
+
+    {% block greeting %}
+    {% set greeting_text = 'Welcome '|t  %}
+    <div class='welcome-text'>
+      {% include "@atoms/text/headings/heading-styled.twig" with {
+        heading_level: 1,
+        heading: greeting_text ~ ', '  ,
+        heading_styled: user.account.name,
+        heading_modifiers: ['semibold','margin-bottom-ninety'],
+        heading_extraclass: ['text'],
+      } %}
+    </div>
     {% endblock %}
+
   {% endembed %}
 {% else %}
   {% embed "@pages/content-types/landing-page.twig" with {
