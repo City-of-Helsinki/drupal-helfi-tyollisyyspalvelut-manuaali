@@ -4,29 +4,17 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
-    - field.field.node.landing_page.body
     - field.field.node.landing_page.field_hero_label
-    - field.field.node.landing_page.field_hero_link
-    - field.field.node.landing_page.field_hero_media
     - field.field.node.landing_page.field_hero_text
     - field.field.node.landing_page.field_paragraph
     - node.type.landing_page
   module:
-    - text
     - user
 id: node.landing_page.teaser
 targetEntityType: node
 bundle: landing_page
 mode: teaser
 content:
-  body:
-    type: text_summary_or_trimmed
-    label: hidden
-    settings:
-      trim_length: 600
-    third_party_settings: {  }
-    weight: 101
-    region: content
   flag_cart:
     settings: {  }
     third_party_settings: {  }
@@ -51,9 +39,8 @@ hidden:
   entity_print_view_epub: true
   entity_print_view_pdf: true
   entity_print_view_word_docx: true
+  entitygroupfield: true
   field_hero_label: true
-  field_hero_link: true
-  field_hero_media: true
   field_hero_text: true
   field_paragraph: true
   langcode: true

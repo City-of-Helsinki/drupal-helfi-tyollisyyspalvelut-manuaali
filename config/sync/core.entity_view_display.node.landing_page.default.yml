@@ -3,16 +3,12 @@ langcode: fi
 status: true
 dependencies:
   config:
-    - field.field.node.landing_page.body
     - field.field.node.landing_page.field_hero_label
-    - field.field.node.landing_page.field_hero_link
-    - field.field.node.landing_page.field_hero_media
     - field.field.node.landing_page.field_hero_text
     - field.field.node.landing_page.field_paragraph
     - node.type.landing_page
   module:
     - entity_reference_revisions
-    - link
     - text
     - user
 id: node.landing_page.default
@@ -20,13 +16,6 @@ targetEntityType: node
 bundle: landing_page
 mode: default
 content:
-  body:
-    type: text_default
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    weight: 1
-    region: content
   field_hero_label:
     type: string
     label: hidden
@@ -34,27 +23,6 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     weight: 2
-    region: content
-  field_hero_link:
-    type: link
-    label: hidden
-    settings:
-      trim_length: 80
-      url_only: false
-      url_plain: false
-      rel: ''
-      target: ''
-    third_party_settings: {  }
-    weight: 4
-    region: content
-  field_hero_media:
-    type: entity_reference_entity_view
-    label: hidden
-    settings:
-      view_mode: default
-      link: false
-    third_party_settings: {  }
-    weight: 5
     region: content
   field_hero_text:
     type: text_default
@@ -96,5 +64,6 @@ hidden:
   entity_print_view_epub: true
   entity_print_view_pdf: true
   entity_print_view_word_docx: true
+  entitygroupfield: true
   langcode: true
   search_api_excerpt: true
