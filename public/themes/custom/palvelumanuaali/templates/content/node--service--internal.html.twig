@@ -87,5 +87,6 @@
     service_blockname:service_blockname,
     service__updated: greeting_text ~ node.changed.value|date("d.m.Y"),
     node__label: label,
+    service__internal: 'yes',
   } %}
   {% endembed %}

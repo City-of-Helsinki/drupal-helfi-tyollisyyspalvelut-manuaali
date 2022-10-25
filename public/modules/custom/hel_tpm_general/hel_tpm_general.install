@@ -77,3 +77,18 @@ $field_storage = FieldStorageConfig::loadByName('node', 'field_service_requireme
       $field_storage->delete();
   }
 }
+
+/**
+ * Remove the field service_implement .
+ */
+function hel_tpm_general_update_8105() {
+  $field_config = FieldConfig::loadByName('node', 'service', 'field_service_implement');
+  if ($field_config) {
+    $field_config->delete();
+  }
+
+$field_storage = FieldStorageConfig::loadByName('node', 'field_service_implement ');
+  if ($field_storage) {
+    $field_storage->delete();
+  }
+}

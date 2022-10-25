@@ -42,11 +42,12 @@
     paragraph.bundle|clean_class
   ]
 %}
-  <div{{ attributes.addClass(classes) }}>
-    {% if content.field_separate_time[0]['#markup'] == 1 %}
-      {{content|without('field_separate_time','field_dates')}}
-    {% else %}
-      {{content|without('field_separate_time')}}
-    {% endif %}
 
-  </div>
+<div{{ attributes.addClass(classes) }}>
+  {% if content.field_free_service[0]['#markup'] == 1 %}
+    {{ content|without('field_free_service') }}
+  {% else %}
+    <span>{{'The service is free'|t}}</span>
+  {% endif %}
+
+</div>

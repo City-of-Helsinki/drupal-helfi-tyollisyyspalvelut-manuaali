@@ -7,9 +7,11 @@ dependencies:
     - field.field.contact_info.contact_info.field_contact_phone
     - field.field.contact_info.contact_info.field_contact_type
     - field.field.contact_info.contact_info.field_email
+    - field.field.contact_info.contact_info.field_municipality
   module:
     - hel_tpm_contact_info
     - telephone
+    - text
 id: contact_info.contact_info.default
 targetEntityType: contact_info
 bundle: contact_info
@@ -21,7 +23,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 0
+    weight: 1
     region: content
   field_contact_phone:
     type: telephone_link
@@ -36,7 +38,14 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 1
+    weight: 3
+    region: content
+  field_municipality:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
     region: content
 hidden:
   created: true

@@ -44,35 +44,11 @@
     'field--name-' ~ field_name|clean_class,
     'field--type-' ~ field_type|clean_class,
     'field--label-' ~ label_display,
-    label_display == 'inline' ? 'clearfix',
   ]
 %}
 
-{%
-  set title_classes = [
-    'field__label',
-    label_display == 'visually_hidden' ? 'visually-hidden',
-  ]
-%}
-
-<div{{ attributes.addClass(classes) }}>
-  <div{{ title_attributes.addClass(title_classes) }}>
-    {% include "@atoms/images/icons/_icon.twig" with {
-      icon_base_class: 'icon',
-      icon_name: 'c-question',
-      icon_modifiers: ['small'],
-    } %}
-    {% include "@atoms/text/headings/_heading.twig" with {
-      "heading_level": 5,
-      "heading": 'Additional info:'|t,
-      "heading_modifiers": ['semibold','margin-bottom'],
-    } %}
-  </div>
-    <div class="field__items">
-    {% for item in items %}
+  {% for item in items %}
       <div{{ item.attributes.addClass('field__item') }}>
-        {{item.content}}
+       <span>{{"service's cost "|t}}</span> {{item.content}}
       </div>
-    {% endfor %}
-  </div>
-</div>
+  {% endfor %}
