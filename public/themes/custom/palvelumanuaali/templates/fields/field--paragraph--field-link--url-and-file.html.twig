@@ -1,24 +1,5 @@
 {#
 /**
- * @file
- * Theme override for a field.
- *
- * To override output, copy the "field.html.twig" from the templates directory
- * to your theme's directory and customize it, just like customizing other
- * Drupal templates such as page.html.twig or node.html.twig.
- *
- * Instead of overriding the theming for all fields, you can also just override
- * theming for a subset of fields using
- * @link themeable Theme hook suggestions. @endlink For example,
- * here are some theme hook suggestions that can be used for a field_foo field
- * on an article node type:
- * - field--node--field-foo--article.html.twig
- * - field--node--field-foo.html.twig
- * - field--node--article.html.twig
- * - field--field-foo.html.twig
- * - field--text-with-summary.html.twig
- * - field.html.twig
- *
  * Available variables:
  * - attributes: HTML attributes for the containing element.
  * - label_hidden: Whether to show the field label or not.
@@ -53,6 +34,33 @@
   ]
 %}
 
+{% if label_hidden %}
+  {% if multiple %}
+    <div{{ attributes.addClass(classes, 'field__items') }}>
+      {% for item in items %}
+        <div{{ item.attributes.addClass('field__item', 'col-lg-6', 'col-12') }}>
+          {% include "@atoms/images/icons/_icon.twig" with {
+            icon_base_class: 'icon',
+            icon_name: 'arrow-right-short',
+            icon_modifiers: ['smaller', 'margin-right-twelve'],
+          } %}
+          {{ item.content }}
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    {% for item in items %}
+      <div{{ attributes.addClass(classes, 'field__item', 'col-lg-6', 'col-12') }}>
+        {% include "@atoms/images/icons/_icon.twig" with {
+          icon_base_class: 'icon',
+          icon_name: 'arrow-right-short',
+          icon_modifiers: ['smaller', 'margin-right-twelve'],
+        } %}
+        {{ item.content }}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% else %}
   <div{{ attributes.addClass(classes) }}>
     <div{{ title_attributes.addClass(title_classes) }}>
     {% include "@atoms/text/headings/_heading.twig" with {
@@ -78,3 +86,4 @@
       </div>
     {% endif %}
   </div>
+{% endif %}
