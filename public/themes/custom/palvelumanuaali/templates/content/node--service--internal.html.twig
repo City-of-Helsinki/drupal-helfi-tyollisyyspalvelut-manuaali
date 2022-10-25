@@ -73,7 +73,7 @@
 
   {% set greeting_text = 'Updated '|t  %}
 
-  {% embed "@pages/content-types/service-internal.twig" with {
+  {% embed "@pages/content-types/service.twig" with {
     main_content_id: 'service-page-full',
     hero_text__heading: content.field_hero_label,
     hero_text__body: content.field_hero_text,
@@ -87,5 +87,6 @@
     service_blockname:service_blockname,
     service__updated: greeting_text ~ node.changed.value|date("d.m.Y"),
     node__label: label,
+    service__internal: 'yes',
   } %}
   {% endembed %}

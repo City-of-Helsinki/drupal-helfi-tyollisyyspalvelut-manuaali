@@ -4,38 +4,74 @@
   {{content.flag_lists}}
   <div id="view-mode-switcher-link"> {{content.view_mode_switcher}}</div>
 </div>
+ {% if service__internal %}
+   {% embed "@templates/with-content-sidebar.twig" with {
+     content_base_class: service_base_class,
+     main_content_id: main_content_id,
+   } %}
+
+    {% block content %} {{content|without('flag_cart','flag_lists','view_mode_switcher', 'field_contact_info','field_other_services','field_contact_info_external','entitygroupfield','field_municipality_specific')}}{% endblock %}
+      {% block page_content %}
+        {% if service__updated  %}
+          {% include "@atoms/text/text/01-paragraph.twig" with {
+            paragraph_base_class: card__date__base_class|default('date'),
+            paragraph_modifiers: card__date__modifiers,
+            paragraph_blockname: card__base_class,
+            paragraph_content: service__updated,
+          } %}
+        {% endif %}
+        {% include "@atoms/text/headings/_heading.twig" with {
+         heading_level: '1',
+         heading: node__label,
+         heading_base_class: 'page-heading',
+         }
+        %}
+      {% endblock %}
+      {% block page_sidebar %}
+       {% include "@atoms/text/headings/_heading.twig" with {
+         "heading_level": 4,
+         "heading": 'Contacts'|t,
+         "heading_modifiers": 'semibold',
+       } %}
+       {{ content.field_municipality_specific }}
+       {{ content.field_contact_info }}
+       {{ content.field_responsible_updatee }}
+     {% endblock %}
+  {% endembed %}
+{% else %}
   {% embed "@templates/with-content-sidebar.twig" with {
-    content_base_class: service_base_class,
-    main_content_id: main_content_id,
+      content_base_class: service_base_class,
+      main_content_id: main_content_id,
   } %}
 
-{% block content %} {{content|without('flag_cart','flag_lists','view_mode_switcher','field_other_services','field_contact_info_external','field_service_producer','entitygroupfield')}}{% endblock %}
-  {% block page_content %}
-    {% if service__updated  %}
-      {% include "@atoms/text/text/01-paragraph.twig" with {
-        paragraph_base_class: card__date__base_class|default('date'),
-        paragraph_modifiers: card__date__modifiers,
-        paragraph_blockname: card__base_class,
-        paragraph_content: service__updated,
-      } %}
-    {% endif %}
+  {% block content %} {{content|without('flag_cart','flag_lists','view_mode_switcher','field_other_services','field_contact_info_external','field_service_producer','entitygroupfield')}}{% endblock %}
+    {% block page_content %}
+      {% if service__updated  %}
+        {% include "@atoms/text/text/01-paragraph.twig" with {
+          paragraph_base_class: card__date__base_class|default('date'),
+          paragraph_modifiers: card__date__modifiers,
+          paragraph_blockname: card__base_class,
+          paragraph_content: service__updated,
+        } %}
+      {% endif %}
+        {% include "@atoms/text/headings/_heading.twig" with {
+          heading_level: '1',
+          heading: node__label,
+          heading_base_class: 'page-heading',
+        }
+      %}
+    {% endblock %}
+    {% block page_sidebar %}
       {% include "@atoms/text/headings/_heading.twig" with {
-        heading_level: '1',
-        heading: node__label,
-        heading_base_class: 'page-heading',
-      }
-    %}
-  {% endblock %}
-  {% block page_sidebar %}
-    {% include "@atoms/text/headings/_heading.twig" with {
-      "heading_level": 4,
-      "heading": 'Contacts'|t,
-      "heading_modifiers": 'semibold',
-    } %}
-    {{ content.field_contact_info_external }}
-    {{ content.field_service_producer }}
-    {{ content.entitygroupfield}}
-  {% endblock %}
-{% endembed %}
+        "heading_level": 4,
+        "heading": 'Contacts'|t,
+        "heading_modifiers": 'semibold',
+      } %}
+      {{ content.field_contact_info_external }}
+      {{ content.field_service_producer }}
+      {{ content.entitygroupfield}}
+    {% endblock %}
+  {% endembed %}
+{% endif %}
 
 {{ content.field_other_services}}
