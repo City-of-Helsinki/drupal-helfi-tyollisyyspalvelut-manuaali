@@ -45,16 +45,17 @@
  */
 #}
 
-{%
-  set additional_class = additional_class
-%}
+{% set additional_class = additional_class %}
+{% set classes = classes %}
+
+{% if classes is empty %}
 {%
   set classes = [
     'js-form-item',
-    'form-item',
-    additional_class,
+    'form-item'
   ]
 %}
+{% endif %}
 {%
   set description_classes = [
     'form-item__description',

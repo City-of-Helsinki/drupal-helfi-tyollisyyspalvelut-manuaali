@@ -1,0 +1,41 @@
+{#
+/**
+ * @file
+ * Theme override for a views exposed form.
+ *
+ * Available variables:
+ * - form: A render element representing the form.
+ *
+ * @see template_preprocess_views_exposed_form()
+ */
+#}
+{% if q is not empty %}
+  {#
+    This ensures that, if clean URLs are off, the 'q' is added first,
+    as a hidden form element, so that it shows up first in the POST URL.
+  #}
+{{ q }}
+{% endif %}
+{% set fieldsMain = ['field_municipality', 'field_service_set', 'field_life_situations', 'field_language_1', 'field_free_service'] %}
+{% set fieldsSecondary = ['field_age_groups', 'field_implementation_extra_info_1', 'field_accessibility']%}
+<div class="form--inline clearfix">
+  {{ form['search_wrapper'] }}
+  <div class="exposed-filters">
+    <div class="main-filters filters">
+      {% for field in fieldsMain %}
+        {% if field in form|keys %}
+          {{ form[ field ] }}
+        {% endif %}
+      {% endfor %}
+    </div>
+    <span class="show-additional-filters">{{ "Additional filters"|t }}</span>
+    <div class="secondary-filters filters">
+      {% for field in fieldsSecondary %}
+        {% if field in form|keys %}
+          {{ form[ field ] }}
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+  {{ form|without(fieldsMain, fieldsSecondary, 'search_wrapper', 'sort_by') }}
+</div>

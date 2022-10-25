@@ -1,5 +1,10 @@
 .form-item__dropdown {
-
+  border-color: transparent;
+  &:hover, &:active {
+    border-color: transparent!important;
+  }
+  .multi-select-button {
+  }
   .multi-select-container {
     /* dropdown */
 
@@ -20,17 +25,35 @@
     background: #FFFFFF;
 
     /* Primary/Blue 40 */
-    border: 2px solid $blue40;
-    border-radius: 8px;
 
     /* Inside auto layout */
     flex: none;
     order: 2;
     flex-grow: 0;
+    border: 2px solid $blue40;
+    border-radius: 8px;
+    &:hover {
+      border-color: $blue100;
+    }
+
+    &.active {
+      background-color: $blue100;
+      .multi-select-button {
+        color: #fff;
+      }
+      &:hover, &:active {
+        background-color: $blue130;
+      }
+    }
+  }
+  .multi-select-container--open {
+    background-color: $blue130;
+    .multi-select-button {
+      color: #fff;
+    }
   }
   .multi-select-button {
     width: 100%;
-
     font-family: 'Manrope';
     font-style: normal;
     font-weight: 400;

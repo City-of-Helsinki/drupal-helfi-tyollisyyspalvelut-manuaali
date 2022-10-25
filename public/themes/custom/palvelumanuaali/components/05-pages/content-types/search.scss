@@ -191,15 +191,25 @@
   }
 }
 
+#views-exposed-form-service-search-page-1,
 #views-exposed-form-service-search-special-search-filters,
 #views-exposed-form-service-search-search-page-filters {
   position: relative;
 
+  .dropdownMultiselect {
+    display: none;
+  }
   .search-autocomplete-wrapper {
     @extend .offset-md-3;
     @extend .col-md-4;
   }
 
+  .exposed-filters {
+    max-width: $max-width;
+    .filters {
+      display: flex;
+    }
+  }
   .bef--secondary {
     summary {
       height: 48px;

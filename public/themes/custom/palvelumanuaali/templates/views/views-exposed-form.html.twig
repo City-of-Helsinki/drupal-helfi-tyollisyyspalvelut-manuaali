@@ -17,5 +17,6 @@
 {{ q }}
 {% endif %}
 <div class="form--inline clearfix">
-  {{ form }}
+  {{ form|without(secondary) }}
+  {{ form.secondary }}
 </div>
