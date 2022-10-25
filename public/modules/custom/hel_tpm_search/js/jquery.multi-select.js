@@ -147,6 +147,12 @@
       } else {
         this.$button.text( selected.join(', ') );
       }
+      if (selected.length === 0) {
+        this.$button.parent().removeClass('active');
+      }
+      else {
+        this.$button.parent().addClass('active');
+      }
     },
 
     constructMenu: function() {
