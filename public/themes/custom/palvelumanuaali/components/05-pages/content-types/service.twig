@@ -9,7 +9,6 @@
     main_content_id: main_content_id,
   } %}
 
-
 {% block content %} {{content|without('flag_cart','flag_lists','view_mode_switcher', 'field_contact_info','field_other_services','field_contact_info_external','field_service_producer','entitygroupfield')}}{% endblock %}
   {% block page_content %}
     {% if service__updated  %}

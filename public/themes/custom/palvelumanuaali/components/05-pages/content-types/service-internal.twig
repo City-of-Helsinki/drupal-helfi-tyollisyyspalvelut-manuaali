@@ -1,4 +1,3 @@
-
 <div class='link-wrapper'>
   {{content.flag_cart}}
   {{content.flag_lists}}
@@ -8,7 +7,6 @@
     content_base_class: service_base_class,
     main_content_id: main_content_id,
   } %}
-
 
 {% block content %} {{content|without('flag_cart','flag_lists','view_mode_switcher', 'field_contact_info','field_other_services','field_contact_info_external','field_service_producer','entitygroupfield','field_municipality_specific')}}{% endblock %}
   {% block page_content %}
@@ -38,5 +36,4 @@
     {{ content.field_responsible_updatee }}
   {% endblock %}
 {% endembed %}
-
 {{ content.field_other_services}}
