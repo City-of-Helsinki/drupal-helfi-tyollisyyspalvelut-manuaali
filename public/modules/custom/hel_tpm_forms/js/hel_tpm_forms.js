@@ -10,7 +10,6 @@
       } else {
         currentTab = 0;
       }
-
       showTab(currentTab); // Display the current tab
 
       $('#prevBtn').click(function () {
@@ -158,7 +157,7 @@
 
       // hide price elements in the first service entity form page if the checkbox is not checked.
       function hidePrice() {
-       let x = $('#edit-field-service-price-0-inline-entity-form-field-free-service-value').is(":checked");
+       let x = $('.field--name-field-free-service .form-checkbox').is(":checked");
         if (x == false) {
           $('.field--name-field-service-price .field--name-field-price').hide();
           $('.field--name-field-service-price .field--name-field-description').hide();
@@ -172,13 +171,14 @@
 
       // hide time element on the second page of service entity form.
       function hideTime() {
-       let x = $('.field--name-field-separate-time .form-item .form-checkbox');
-        if ($(x).is(":checked") == false) {
-          $(this).parent().parent().siblings('.field--name-field-dates').show();
-        }
-        else  {
-          $(this).parent().parent().siblings('.field--name-field-dates').hide();
-        }
+       let x = $('.field--name-field-separate-time .form-checkbox');
+        $('.field--name-field-separate-time .form-checkbox').each(function() {
+          if ($(this).is(":checked")) {
+            $(this).parent().parent().siblings('.field--name-field-dates').hide();
+          } else {
+            $(this).parent().parent().siblings('.field--name-field-dates').show();
+          }
+        });
       }
 
 
