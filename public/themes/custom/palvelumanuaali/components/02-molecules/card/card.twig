@@ -120,7 +120,7 @@
                                 } %}
                               {% endif %}
                               {# Button #}
-                              {% if card__button__url %}
+                              {% if card__with_button %}
                                 {% include "@atoms/buttons/twig/button.twig" with {
                                   button_base_class: card__button__base_class|default('button'),
                                   button_modifiers: card__button__modifiers,
@@ -210,7 +210,7 @@
                     } %}
                   {% endif %}
                   {# Button #}
-                  {% if card__button__url %}
+                  {% if card__with_button %}
                     {% include "@atoms/buttons/twig/button.twig" with {
                       button_base_class: card__button__base_class|default('button'),
                       button_modifiers: card__button__modifiers,
