@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - views.view.cart
+    - views.view.recently_read_content
     - views.view.services
   module:
     - system
@@ -74,17 +75,16 @@ reactions:
         views_label: ''
         items_per_page: none
         third_party_settings: {  }
-      be71c8db-4217-4e5b-acf6-140a2dbbc5c7:
-        uuid: be71c8db-4217-4e5b-acf6-140a2dbbc5c7
-        id: 'views_block:services-most_viewed_services_table_block'
+      5bbb0988-afab-44ed-9569-493a2c5a330e:
+        uuid: 5bbb0988-afab-44ed-9569-493a2c5a330e
+        id: 'views_block:recently_read_content-recently_viewed_service_table_block'
         label: ''
         provider: views
         label_display: visible
         region: content
-        weight: '0'
-        custom_id: views_block_services_most_viewed_services_table_block
+        custom_id: views_block_recently_viewed_service_table_block
         theme: palvelumanuaali
-        css_class: 'col-12 col-xl-6 block-most-viewed-services-table'
+        css_class: 'col-12 col-xl-6 block-recently-viewed-services-table'
         unique: 0
         context_id: front_page_users
         context_mapping: {  }
