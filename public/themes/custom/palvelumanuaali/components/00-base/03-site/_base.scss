@@ -53,3 +53,59 @@ body {
   display: flex;
   flex-wrap: wrap;
 }
+
+
+
+
+.content-column ol {
+  counter-reset: my-awesome-counter;
+  list-style: none;
+  margin-bottom: $space-one-and-half;
+}
+
+.content-column ol >li {
+  counter-increment: my-awesome-counter;
+  position: relative;
+  padding-left: $space-two-and-half;
+  margin-bottom: $space-one-and-half;
+}
+
+.content-column ol li::before {
+  content: counter(my-awesome-counter);
+  color: clr(text-inverse);
+  font-size: 1rem;
+  position: absolute;
+  --size: 32px;
+  left: -18px;
+  line-height: var(--size);
+  width: var(--size);
+  height: var(--size);
+  top: 0;
+  background: clr(background-section);
+  border-radius: 50%;
+  text-align: center;
+}
+
+
+.content-column ul {
+  margin-bottom: $space-one-and-half;
+ >li {
+   margin-bottom: $space-one-and-half;
+   padding-left: $space-one-and-half; 
+   position: relative;
+   &::before {
+     color: blue;
+     content: "";
+     width: 8px;
+     height: 8px;
+     display: block;
+     background: blue;
+     border-radius: 54%;
+     position: absolute;
+     z-index: 200;
+     left: -15px;
+     top: 10px;
+     text-align: center;
+   }
+ }
+}

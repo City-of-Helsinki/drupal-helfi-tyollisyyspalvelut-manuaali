@@ -151,8 +151,14 @@
     > div > div  > table > tbody > tr > .table__cell > div > div > .paragraph-type-top {
       display: block;
       position: absolute;
-      right: 0;
-      top: 0;
+      right: 24px;
+      top: 24px;
+      input {
+        @include close-button;
+        width: 20px;
+        height: 20px;
+        padding: 4px;
+      }
     }
   }
 
@@ -185,11 +191,7 @@
 
   .node-service-edit-form-pager  {
       grid-row: 1;
-    @include xl {
       grid-column: 1/3;
-      grid-row: 1;
-    }
-
 
     .multistep-nav-wrapper {
 
@@ -310,10 +312,20 @@
       .paragraphs-dropbutton-wrapper {
 
         input[data-drupal-selector*="top-links-remove-button"] {
-          @include round-icon-button;
-          background-image: url("/themes/custom/palvelumanuaali/images/icons/minus.svg");
+          @include close-button;
+          width: 16px;
+          height: 16px;
+          padding: 0;
+          line-height: 30px;
         }
-        input[data-drupal-selector*="subform-field-service-languages-add-more-add-more-button-service-language"],
+
+        input[data-drupal-selector*="subform-field-service-languages-add-more-add-more-button-service-language"] {
+          width: 259px;
+          height: 48px;
+          @include button-color-blue;
+          font-size: $small-caption;
+        }
+
         input[data-drupal-selector*="inline-entity-form-field-links-add-more-add-more-button-link"] {
           @include round-icon-button;
           background-image: url("/themes/custom/palvelumanuaali/images/icons/plus.svg");

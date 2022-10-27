@@ -16,16 +16,16 @@ mode: default
 content:
   field_description:
     type: text_default
-    label: above
+    label: hidden
     settings: {  }
     third_party_settings: {  }
     weight: 1
     region: content
   field_free_service:
     type: boolean
-    label: above
+    label: hidden
     settings:
-      format: default
+      format: boolean
       format_custom_false: ''
       format_custom_true: ''
     third_party_settings: {  }
@@ -33,7 +33,7 @@ content:
     region: content
   field_price:
     type: number_decimal
-    label: above
+    label: hidden
     settings:
       thousand_separator: ''
       decimal_separator: .

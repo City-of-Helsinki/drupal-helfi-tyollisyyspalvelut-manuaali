@@ -1,0 +1,23 @@
+uuid: e2941693-f98d-46fd-895b-bd2bbc5283d7
+langcode: fi
+status: true
+dependencies:
+  module:
+    - field_permissions
+    - hel_tpm_contact_info
+    - text
+third_party_settings:
+  field_permissions:
+    permission_type: public
+id: contact_info.field_municipality
+field_name: field_municipality
+entity_type: contact_info
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

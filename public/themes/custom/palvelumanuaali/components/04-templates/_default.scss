@@ -65,7 +65,8 @@ body {
 
 .main {
   @include wrapper;
-
+  display: block;
+  position: relative;
   padding: 0;
   margin-bottom: 4em;
 
@@ -74,7 +75,6 @@ body {
   }
 
   @include large {
-    display: flex;
     margin-top: $nav-height;
   }
 }
@@ -99,15 +99,12 @@ body {
 }
 
 .main-content {
-  width: 100%;
-
-
+  max-width: 1464px;
   @include large {
     order: 2;
     &--with-sidebar {
       margin-right: $space-quadruple;
       margin-left: $space-quadruple;
-      width: 100%;
     }
   }
 

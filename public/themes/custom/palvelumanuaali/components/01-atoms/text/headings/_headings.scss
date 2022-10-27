@@ -12,7 +12,7 @@ $color-heading: clr(accent);
   $color: $color-heading,
   $color-link: inherit,
   $color-link-hover: inherit,
-  $font-weight: 700,
+  $font-weight: 600,
   $margin: 0 0 0.5em
 ) {
   color: $color;
@@ -40,7 +40,7 @@ $color-heading: clr(accent);
   $color: $color-heading,
   $color-link: inherit,
   $color-link-hover: inherit,
-  $font-weight: 700,
+  $font-weight: 600,
   $margin: 0 0 0.5em
 ) {
   color: $color;
@@ -68,7 +68,7 @@ $color-heading: clr(accent);
   $color: $color-heading,
   $color-link: inherit,
   $color-link-hover: inherit,
-  $font-weight: 700,
+  $font-weight: 600,
   $margin: 0 0 0.5em
 ) {
   color: $color;
@@ -124,7 +124,7 @@ $color-heading: clr(accent);
   $color: $color-heading,
   $color-link: inherit,
   $color-link-hover: inherit,
-  $font-weight: 700,
+  $font-weight: 600,
   $margin: 0 0 0.5em
 ) {
   color: $color;
@@ -152,7 +152,7 @@ $color-heading: clr(accent);
   $color: $color-heading,
   $color-link: inherit,
   $color-link-hover: inherit,
-  $font-weight: 700,
+  $font-weight: 600,
   $margin: 0 0 0.5em
 ) {
   color: $color;
@@ -191,6 +191,12 @@ $color-heading: clr(accent);
 
 .h5 {
   @include heading-xs;
+  &--margin-bottom {
+    margin-bottom: $space;
+  }
+  &--margin-bottom-extra {
+      margin-bottom: $space-one-and-half;
+  }
 }
 
 .h6 {
@@ -238,7 +244,12 @@ $color-heading: clr(accent);
     font-weight: 600px;
     margin-bottom: $space-double;
   }
+}
 
 
-
+.group-label  {
+  margin-bottom: $space-one-and-half;
+  @include large {
+    margin-bottom: $space-double;
+  }
 }

@@ -1,0 +1,13 @@
+{%
+  set additional_classes = [
+  'field--content--margin-left-triple',
+  ]
+%}
+
+{% include "@molecules/icon-textfield/icon-textfield.twig" with  {
+    items: items,
+    field_header: 'Chargeable:'|t,
+    additional_classes: additional_classes,
+    icon_name: 'round-euro-1',
+  }
+%}
