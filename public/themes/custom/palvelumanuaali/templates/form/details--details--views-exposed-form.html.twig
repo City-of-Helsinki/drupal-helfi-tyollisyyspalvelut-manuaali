@@ -23,17 +23,11 @@
         required ? 'form-required',
       ]
     %}
-    <summary{{ summary_attributes.addClass(summary_classes) }}><span class='visually-hidden'>{{ title }}</span>
-      {% include "@atoms/images/icons/_icon.twig" with {
-        icon_base_class: 'icon',
-        icon_name: 'preferences',
-        icon_modifiers: ['small','inactive'],
-      } %}
-      {% include "@atoms/images/icons/_icon.twig" with {
-        icon_base_class: 'icon',
-        icon_name: 'preferences-white',
-        icon_modifiers: ['small', 'active'],
-      } %}
+    <summary{{ summary_attributes.addClass(summary_classes) }}>
+    <span class="reset-wrapper">
+      <input class="button--reset js-form-submit form-submit" data-drupal-selector="edit-reset" type="submit" name="op" value="{{"Empty filters"|t}}">
+    </span>
+      <span class="additional-filters">{{ title }}</span>
     </summary>
   {%- endif -%}
   <div class="details-wrapper">
@@ -51,13 +45,5 @@
     {%- if value -%}
       {{ value }}
     {%- endif -%}
-    <span class="reset-wrapper">
-      <input class="button--reset js-form-submit form-submit" data-drupal-selector="edit-reset" type="submit" name="op" value="{{"Empty filters"|t}}">
-      {% include "@atoms/images/icons/_icon.twig" with {
-        icon_base_class: "icon",
-        icon_name: "close",
-        icon_modifiers: ['tiny'],
-      } %}
-    </span>
   </div>
 </details>
