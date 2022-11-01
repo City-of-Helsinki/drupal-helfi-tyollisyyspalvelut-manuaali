@@ -11,7 +11,14 @@ dependencies:
     - taxonomy.vocabulary.service_languages
     - taxonomy.vocabulary.service_set
   content:
+    - 'taxonomy_term:municipality:1315f155-2880-405f-8d24-3b61950a4d9c'
+    - 'taxonomy_term:municipality:4b92c72e-6acc-4ec9-a822-46ac7fa38186'
+    - 'taxonomy_term:municipality:74379661-26d5-45bc-9f3a-fb5ea3168827'
+    - 'taxonomy_term:municipality:8903e8f4-8fc5-40b0-bb35-df7a5618220a'
     - 'taxonomy_term:municipality:8ab185fa-ecc4-41d3-97fe-f971e5175689'
+    - 'taxonomy_term:municipality:aad5d08a-76a5-49a7-848c-14bb1fd306e3'
+    - 'taxonomy_term:municipality:b5d15121-db50-40a4-9303-49af45ada070'
+    - 'taxonomy_term:municipality:be7273a7-1a38-4b8e-bf52-d215e3f2b3ea'
   module:
     - better_exposed_filters
     - entity_print_views
@@ -721,7 +728,14 @@ display:
           admin_label: ''
           plugin_id: search_api_term
           operator: or
-          value: {  }
+          value:
+            3: 3
+            63: 63
+            1: 1
+            61: 61
+            64: 64
+            62: 62
+            2: 2
           group: 2
           exposed: true
           expose:
@@ -744,7 +758,7 @@ display:
               editor: '0'
               specialist: '0'
               specialist_editor: '0'
-            reduce: false
+            reduce: true
           is_grouped: false
           group_info:
             label: ''
@@ -1062,7 +1076,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: search_api
-          order: DESC
+          order: ASC
           expose:
             label: Otsikko
             field_identifier: title
