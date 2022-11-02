@@ -13,48 +13,48 @@
       showTab(currentTab); // Display the current tab
 
       $('#prevBtn').click(function () {
-          nextPrev(-1);
-            });
+        nextPrev(-1);
+      });
 
       $('#nextBtn').click(function () {
-          nextPrev(1);
+        nextPrev(1);
       });
 
       $('#step-1').click(function () {
-          switchTab(0);
-          urlParams.set('step', '1');
-          history.replaceState(null, null, "?"+urlParams.toString());
+        switchTab(0);
+        urlParams.set('step', '1');
+        history.replaceState(null, null, "?"+urlParams.toString());
       });
 
       $('#step-2').click(function () {
-          switchTab(1);
-          urlParams.set('step', '2');
-          history.replaceState(null, null, "?"+urlParams.toString());
+        switchTab(1);
+        urlParams.set('step', '2');
+        history.replaceState(null, null, "?"+urlParams.toString());
       });
 
       $('#step-3').click(function () {
-          switchTab(2);
-          urlParams.set('step', '3');
-          history.replaceState(null, null, "?"+urlParams.toString());
+        switchTab(2);
+        urlParams.set('step', '3');
+        history.replaceState(null, null, "?"+urlParams.toString());
 
       });
 
       $('#step-4').click(function () {
-          switchTab(3);
-          urlParams.set('step', '4');
-          history.replaceState(null, null, "?"+urlParams.toString());
+        switchTab(3);
+        urlParams.set('step', '4');
+        history.replaceState(null, null, "?"+urlParams.toString());
 
       });
 
 
       //handle show/hide logic of service time
       $('.field--name-field-separate-time .form-checkbox').click(function () {
-         if ($(this).is(":checked") == false) {
-           $(this).parent().parent().siblings('.field--name-field-dates').show();
-         }
-         else  {
-           $(this).parent().parent().siblings('.field--name-field-dates').hide();
-         }
+        if ($(this).is(":checked") == false) {
+          $(this).parent().parent().siblings('.field--name-field-dates').show();
+        }
+        else  {
+          $(this).parent().parent().siblings('.field--name-field-dates').hide();
+        }
       });
 
       //handle show/hide logic of service price
@@ -157,7 +157,7 @@
 
       // hide price elements in the first service entity form page if the checkbox is not checked.
       function hidePrice() {
-       let x = $('.field--name-field-free-service .form-checkbox').is(":checked");
+        let x = $('.field--name-field-free-service .form-checkbox').is(":checked");
         if (x == false) {
           $('.field--name-field-service-price .field--name-field-price').hide();
           $('.field--name-field-service-price .field--name-field-description').hide();
@@ -184,24 +184,24 @@
       // hide age range on the first a page of service entity form.
       function hideAgeRange() {
         $('.field--name-field-age-groups .form-item').siblings().each(function () {
-             if ($(this).children('.form-radio').val() == "no_age_restriction" && $(this).children('.form-radio').is(":checked") == true ) {
-               $('.field--name-field-age').hide();
-             }
-             else if (($(this).children('.form-radio').val() != "no_age_restriction" && $(this).children('.form-radio').is(":checked") == true )) {
-               $('.field--name-field-age').show();
-             }
+          if ($(this).children('.form-radio').val() == "no_age_restriction" && $(this).children('.form-radio').is(":checked") == true ) {
+            $('.field--name-field-age').hide();
+          }
+          else if (($(this).children('.form-radio').val() != "no_age_restriction" && $(this).children('.form-radio').is(":checked") == true )) {
+            $('.field--name-field-age').show();
+          }
         });
       }
 
       // hide consent description on the third a page of service entity form.
       function hideConsent() {
         let x = $('.field--name-field-client-consent .form-item .form-checkbox');
-         if ($(x).is(":checked") == false) {
-           $(x).parent().parent().siblings('.field--name-field-field-client-consent-descr').hide();
-         }
-         else  {
-           $(x).parent().parent().siblings('.field--name-field-field-client-consent-descr').show();
-         }
+        if ($(x).is(":checked") == false) {
+          $(x).parent().parent().siblings('.field--name-field-field-client-consent-descr').hide();
+        }
+        else  {
+          $(x).parent().parent().siblings('.field--name-field-field-client-consent-descr').show();
+        }
       }
     }
   }
