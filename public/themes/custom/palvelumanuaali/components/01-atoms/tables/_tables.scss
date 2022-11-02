@@ -152,16 +152,21 @@
   }
 }
 
-.view-display-id-most_viewed_services_table_block,
+.block-recently-viewed-services-table,
 .view-display-id-last_updated_table_block {
   margin-bottom: $space-triple;
   @include xl {
     margin-bottom: $space-quintuple;
   }
-  table {
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  >div:not(.contextual) {
     background-color: clr(text-inverse);
     border-radius: 8px;
+    height: 100%;
+  }
+  table {
+    width: 100%;
   }
   thead {
     border-bottom: 2px solid clr(background-border);
