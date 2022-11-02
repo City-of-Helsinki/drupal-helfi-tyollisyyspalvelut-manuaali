@@ -71,16 +71,22 @@
  */
 #}
 {% if logged_in %}
-  {% set greeting_text = 'Welcome '|t  %}
   {% embed "@pages/content-types/landing-page.twig" with {
-    hero_text__heading: greeting_text ~ user.account.name,
-    hero_text__body: content.field_hero_text,
-    hero_text__content__modifiers: ['half'],
-
   } %}
-    {% block paragraph %}
-      {{ content.field_paragraph }}
+
+    {% block greeting %}
+    {% set greeting_text = 'Welcome '|t  %}
+    <div class='welcome-text'>
+      {% include "@atoms/text/headings/heading-styled.twig" with {
+        heading_level: 1,
+        heading: greeting_text ~ ', '  ,
+        heading_styled: user.account.name,
+        heading_modifiers: ['semibold','margin-bottom-ninety'],
+        heading_extraclass: ['text'],
+      } %}
+    </div>
     {% endblock %}
+
   {% endembed %}
 {% else %}
   {% embed "@pages/content-types/landing-page.twig" with {
@@ -88,9 +94,10 @@
     hero_text__body: content.field_hero_text,
     hero_text__button__url: content.field_hero_link[0]['#url'],
     hero_text__button__text: content.field_hero_link[0]['#title'],
-    hero_text__media: content.field_hero_media,
-    hero_text__image__modifiers: ['one-third'],
-    hero_text__content__modifiers: ['half'],
+    hero_text__content__modifiers: ['half', 'padding-top'],
+    icon_base_class: 'icon',
+    icon_name: 'animation',
+    icon_modifiers: ['large'],
 
   } %}
     {% block paragraph %}

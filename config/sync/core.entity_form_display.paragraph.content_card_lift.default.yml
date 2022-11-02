@@ -1,0 +1,25 @@
+uuid: 23009aeb-cf5c-43dc-ab31-fe9448c8e54e
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.content_card_lift.field_teaser_reference
+    - paragraphs.paragraphs_type.content_card_lift
+id: paragraph.content_card_lift.default
+targetEntityType: paragraph
+bundle: content_card_lift
+mode: default
+content:
+  field_teaser_reference:
+    type: entity_reference_autocomplete
+    weight: 0
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

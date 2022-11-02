@@ -1,3 +1,18 @@
+.landing-page {
+  .main {
+    @include xl {
+      margin-top: 182px;
+    }
+  }
+
+  .hero-text {
+    margin-bottom: 130px;
+    &__image .icon {
+      max-width: 100%;
+    }
+  }
+}
+
 .icon-header-wrapper {
   display: flex;
   align-items: center;
@@ -36,6 +51,18 @@
           padding-left: 4.166%;
         }
       }
+    }
+  }
+}
+
+.block-favorites-table,
+.block-most-viewed-services-table,
+.block-last-updated-services-table {
+  h2 {
+    margin-bottom: $space;
+    font-size: 18px;
+    @include xl {
+      margin-bottom: $space-one-and-half;
     }
   }
 }
