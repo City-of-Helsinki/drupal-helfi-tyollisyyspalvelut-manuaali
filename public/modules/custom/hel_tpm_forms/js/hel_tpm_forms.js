@@ -171,7 +171,6 @@
 
       // hide time element on the second page of service entity form.
       function hideTime() {
-       let x = $('.field--name-field-separate-time .form-checkbox');
         $('.field--name-field-separate-time .form-checkbox').each(function() {
           if ($(this).is(":checked")) {
             $(this).parent().parent().siblings('.field--name-field-dates').hide();

@@ -92,3 +92,14 @@ $field_storage = FieldStorageConfig::loadByName('node', 'field_service_implement
     $field_storage->delete();
   }
 }
+
+/**
+ * Remove content list with header icon paragraph entities.
+ */
+function hel_tpm_general_update_8107() {
+  $storage = \Drupal::entityTypeManager()->getStorage('paragraph');
+  $paragraphs = $storage->loadByProperties(['type' => 'content_list_lift_header_icon']);
+  foreach ($paragraphs as $paragraph) {
+    $paragraph->delete();
+  }
+}
