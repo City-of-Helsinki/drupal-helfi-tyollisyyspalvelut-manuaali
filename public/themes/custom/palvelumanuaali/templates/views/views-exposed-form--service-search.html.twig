@@ -20,21 +20,24 @@
 {% set fieldsSecondary = ['field_age_groups', 'field_implementation_extra_info_1', 'field_accessibility']%}
 <div class="form--inline clearfix">
   {{ form['search_wrapper'] }}
-  <div class="exposed-filters">
-    <div class="main-filters filters">
-      {% for field in fieldsMain %}
-        {% if field in form|keys %}
-          {{ form[ field ] }}
-        {% endif %}
-      {% endfor %}
+  <div class="filters-wrapper">
+    <div class="exposed-filters">
+      <div class="main-filters filters">
+        {% for field in fieldsMain %}
+          {% if field in form|keys %}
+            {{ form[ field ] }}
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="secondary-filters filters">
+        {% for field in fieldsSecondary %}
+          {% if field in form|keys %}
+            {{ form[ field ] }}
+          {% endif %}
+        {% endfor %}
+      </div>
     </div>
-    <div class="secondary-filters filters">
-      {% for field in fieldsSecondary %}
-        {% if field in form|keys %}
-          {{ form[ field ] }}
-        {% endif %}
-      {% endfor %}
+
+      {{ form|without(fieldsMain, fieldsSecondary, 'search_wrapper', 'sort_by') }}
     </div>
-  </div>
-  {{ form|without(fieldsMain, fieldsSecondary, 'search_wrapper', 'sort_by') }}
 </div>

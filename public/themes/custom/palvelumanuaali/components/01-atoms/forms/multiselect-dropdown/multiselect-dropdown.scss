@@ -1,10 +1,21 @@
+.header__primary {
+  .form-item__dropdown {
+    background-color: clr(text-inverse);
+    border-radius: 8px;
+    @include large {
+      margin-right: $space-one-half;
+    }
+    &:hover, &:active {
+      border: unset;
+    }
+    &:has(.active) {
+      background-color: $blue100;
+    }
+  }
+}
+
 .form-item__dropdown {
   border-color: transparent;
-  &:hover, &:active {
-    border-color: transparent!important;
-  }
-  .multi-select-button {
-  }
   .multi-select-container {
     /* dropdown */
 
@@ -17,14 +28,13 @@
     align-items: flex-start;
     padding: 4px 16px 4px 24px;
     gap: 10px;
+    z-index: 200;
 
-    width: 182px;
+    // width: 182px;
     height: 32px;
 
     /* Primary / White */
-    background: #FFFFFF;
-
-    /* Primary/Blue 40 */
+    background: transparent;
 
     /* Inside auto layout */
     flex: none;
@@ -32,6 +42,22 @@
     flex-grow: 0;
     border: 2px solid $blue40;
     border-radius: 8px;
+    ~.icon {
+        padding: 0;
+        position: absolute;
+        right:0;
+        top: -5px;
+        margin-right: 15px;
+        margin-top: 10px;
+      &--hide-while-selected {
+        display: block !important;
+      }
+      &--hide-while-unselected {
+        display: none !important;
+      }
+    }
+
+
     &:hover {
       border-color: $blue100;
     }
@@ -40,16 +66,45 @@
       background-color: $blue100;
       .multi-select-button {
         color: #fff;
+
       }
       &:hover, &:active {
         background-color: $blue130;
+        ~.icon {
+          &--hide-while-selected {
+            display: none !important;
+          }
+          &--hide-while-unselected {
+            display: block !important;
+            z-index: 200;
+          }
+        }
+      }
+      ~.icon {
+        &--hide-while-selected {
+          display: none !important;
+        }
+        &--hide-while-unselected {
+          display: block !important;
+          z-index: 200;
+        }
       }
     }
   }
+
   .multi-select-container--open {
-    background-color: $blue130;
+    //background-color: $blue130;
     .multi-select-button {
-      color: #fff;
+    //  color: #fff;
+    }
+    ~.icon {
+      transform: rotateX(180deg);
+      &--hide-while-selected {
+        display: none;
+      }
+      &--hide-while-unselected {
+        display: block;
+      }
     }
   }
   .multi-select-button {
@@ -59,7 +114,7 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 24px;
-
+    padding-right: 40px;
     /* identical to box height, or 171% */
 
     /* Primary / Black */
@@ -69,6 +124,29 @@
     flex: none;
     order: 0;
     flex-grow: 0;
+  }
+  .multi-select-menu {
+    @include  xl {
+      margin-top: $space-double;
+    }
+  }
+
+  .multi-select-menuitems {
+    box-shadow: 0px 8px 16px rgba(30, 64, 182, 0.2);
+    border-radius: 8px;
+  }
+
+  .multi-select-menuitem {
+    padding: $space-one-half $space-double $space-one-half $space-triple;
+    &:first-child {
+      padding-top: $space;
+    }
+    &:last-child {
+      padding-bottom: $space;
+    }
+  }
+  .multi-select-menuitems input {
+    display: none;
   }
 
 }

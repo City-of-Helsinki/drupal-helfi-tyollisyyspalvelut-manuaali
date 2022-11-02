@@ -1,7 +1,6 @@
 (function($, Drupal, drupalSettings, window) {
   Drupal.behaviors.breadcrumbs = {
     attach(context, settings) {
-      //tsekit näil
 
         let serviceView = document.getElementById("views-exposed-form-service-search-page-1");
         let serviceNode = document.getElementById("service-page-full");

@@ -1,6 +1,11 @@
 
 .header {
   transition: transform 0.5s;
+
+  @media only screen and (max-width: $large) {
+    transform: unset !important;
+  }
+
   @include large {
     position: fixed;
     z-index: 200;
@@ -9,7 +14,7 @@
 
   &--hidden {
     @include large {
-      transform: translateY(calc(-1 * #{$nav-height}));
+
       box-shadow: none;
     }
   }
@@ -43,7 +48,13 @@
       bottom: unset;
       padding: $space-double $space-double $space-one-and-half $space-double;
       margin-left: unset;
+      &.filters-open {
+        @include xl {
+          padding-bottom: $space-four-and-half;
+        }
+      }
     }
+
   }
 
   &__branding {
@@ -105,9 +116,6 @@
 }
 
 #block-suosikit {
-  @include large {
-    //top: 50px;
-  }
   .content {
     @include large {
       display: flex;
@@ -283,9 +291,6 @@
   .search-history-wrapper,
   .hel-search-autocomplete {
     max-width: unset;
-    @include large {
-      max-width: unset;
-    }
   }
 }
 
@@ -368,11 +373,8 @@
     padding-top: 12px;
     padding-bottom: 12px;
     padding-left: 24px;
+    max-width: 300px;
     @include large {
-      max-width: 374px;
-    }
-
-    @include  xl {
-      max-width: 576px;
+      max-width:300px;
     }
 }
