@@ -1,0 +1,61 @@
+.views-field-field-quick-links ul {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin: 0;
+  column-gap: 24px;
+  list-style: none;
+  padding: 0;
+  @include medium {
+    grid-template-columns: 1fr 1fr;
+  }
+  @include xl {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  li {
+    position: relative;
+    margin-bottom: 2em;
+    height: 100%;
+    &:last-child {
+      margin-bottom: 0;
+    }
+    @include medium {
+      margin-bottom: 0;
+    }
+  }
+}
+.quick-link {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 2em 2.5em;
+  width: 100%;
+
+  @include medium {
+    height: 100%;
+  }
+
+  .field--name-field-icon {
+    span {
+      display: block;
+      width: 45px;
+      height: 45px;
+      background-color: red;
+    }
+  }
+  .field--name-field-title {
+    font-weight: 600;
+    color: $blue100;
+  }
+  .field--name-field-link {
+    a {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      color: transparent;
+    }
+  }
+}

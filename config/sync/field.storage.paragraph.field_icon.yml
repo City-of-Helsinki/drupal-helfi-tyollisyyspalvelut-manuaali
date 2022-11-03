@@ -1,0 +1,30 @@
+uuid: 0615e516-10e4-4d03-ac66-3f24ec5e4f51
+langcode: fi
+status: true
+dependencies:
+  module:
+    - options
+    - paragraphs
+id: paragraph.field_icon
+field_name: field_icon
+entity_type: paragraph
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: book
+      label: Book
+    -
+      value: check
+      label: 'Check mark'
+    -
+      value: favorites
+      label: Favorites
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
