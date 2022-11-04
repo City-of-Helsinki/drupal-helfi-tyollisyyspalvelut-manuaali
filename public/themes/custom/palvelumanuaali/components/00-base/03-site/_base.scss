@@ -49,20 +49,23 @@ body {
 
 
 
-.content-column ol {
+.content-column ol,
+article ol, {
   counter-reset: my-awesome-counter;
   list-style: none;
   margin-bottom: $space-one-and-half;
 }
 
-.content-column ol >li {
+.content-column ol >li,
+article ol >li {
   counter-increment: my-awesome-counter;
   position: relative;
   padding-left: $space-two-and-half;
   margin-bottom: $space-one-and-half;
 }
 
-.content-column ol li::before {
+.content-column ol li::before,
+article ol li::before {
   content: counter(my-awesome-counter);
   color: clr(text-inverse);
   font-size: 1rem;
@@ -79,19 +82,20 @@ body {
 }
 
 
-.content-column ul {
+.content-column ul,
+article ul {
   margin-bottom: $space-one-and-half;
  >li {
    margin-bottom: $space-one-and-half;
    padding-left: $space-one-and-half;
    position: relative;
    &::before {
-     color: blue;
+     color: $blue130;
      content: "";
      width: 8px;
      height: 8px;
      display: block;
-     background: blue;
+     background: $blue130;
      border-radius: 54%;
      position: absolute;
      z-index: 200;

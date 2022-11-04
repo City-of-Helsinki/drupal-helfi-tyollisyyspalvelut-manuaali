@@ -99,19 +99,29 @@ body {
 }
 
 .main-content {
-  max-width: 1464px;
+
   @include large {
     order: 2;
     &--with-sidebar {
-      margin-right: $space-quadruple;
-      margin-left: $space-quadruple;
+      .region-content {
+        margin-right: $space-quadruple;
+        margin-left: $space-quadruple;
+        #block-system-main-block {
+          max-width: 1464px;
+        }
+      }
     }
   }
 
   @include xxl {
     &--with-sidebar {
-      margin-right: $main-gutter;
-      margin-left: $main-gutter;
+      .region-content {
+         margin-right: $main-gutter;
+         margin-left: $main-gutter;
+         #block-system-main-block {
+           margin: auto;
+         }
+      }
     }
   }
 }
