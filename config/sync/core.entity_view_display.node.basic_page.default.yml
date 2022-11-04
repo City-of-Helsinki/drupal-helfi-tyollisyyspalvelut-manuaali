@@ -4,8 +4,13 @@ status: true
 dependencies:
   config:
     - field.field.node.basic_page.body
+    - field.field.node.basic_page.field_description
+    - field.field.node.basic_page.field_media_image
+    - field.field.node.basic_page.field_other_services
+    - field.field.node.basic_page.field_paragraph
     - node.type.basic_page
   module:
+    - entity_reference_revisions
     - text
     - user
 id: node.basic_page.default
@@ -18,31 +23,54 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 101
+    weight: 2
     region: content
-  flag_cart:
+  field_description:
+    type: basic_string
+    label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 10
+    weight: 1
     region: content
-  flag_flag_list_template_1:
-    settings: {  }
+  field_media_image:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: false
     third_party_settings: {  }
-    weight: 10
+    weight: 3
     region: content
-  flag_lists:
-    settings: {  }
+  field_other_services:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: card_lift
+      link: false
     third_party_settings: {  }
-    weight: 10
+    weight: 5
+    region: content
+  field_paragraph:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 4
     region: content
   links:
     settings: {  }
     third_party_settings: {  }
-    weight: 100
+    weight: 0
     region: content
 hidden:
   entity_print_view_epub: true
   entity_print_view_pdf: true
   entity_print_view_word_docx: true
+  entitygroupfield: true
+  flag_cart: true
+  flag_flag_list_template_1: true
+  flag_lists: true
   langcode: true
   search_api_excerpt: true
