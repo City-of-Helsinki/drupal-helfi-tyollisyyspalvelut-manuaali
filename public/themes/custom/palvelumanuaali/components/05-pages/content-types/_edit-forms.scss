@@ -600,12 +600,11 @@
 }
 
 .node-form {
-  .form-item {
-    label {
-      font-size: 12px;
-      &:after {
+  label {
+    font-size: 12px;
+    font-weight: 600;
+    &:after {
 
-      }
     }
   }
 }
@@ -667,15 +666,60 @@
     }
  }
 
- .field--type-date-recur {
-   legend {
-     width: 100%;
+ .field--widget-hel-tpm-editorial-date-recur-custom {
+   .dates {
+     display: grid;
+     grid-template-columns: 5fr 0.5fr 5fr;
+     margin-top: 1.5em;
+     margin-bottom: 1.5em;
+     .date {
+       .form-item {
+         float: left;
+         width: 45%;
+         margin-right: 2%;
+         margin-left: 2%;
+       }
+       input {
+         background-color: #fff;
+       }
+     }
    }
-   .form-item--checkboxes {
-     display: flex;
-     flex-wrap: wrap;
+   .hel-tpm-editorial-date-recur-custom-widget {
+     .date-preview {
+       float: left;
+     }
+     .weekdays {
+       .form-item--checkboxes {
+         display: grid;
+         grid-template-columns: repeat(7, 1fr);
+       }
+       .form-item {
+         width: auto;
+       }
+     }
+   }
+
+   .hyphen-wrapper {
+     position: relative;
+     .hyphen {
+       font-weight: 600;
+       display: block;
+       position: absolute;
+       top: 40%;
+       left: 10px;
+     }
+   }
+   .field--type-date-recur {
+     legend {
+       width: 100%;
+     }
+     .form-item--checkboxes {
+       display: flex;
+       flex-wrap: wrap;
+     }
    }
  }
+
 
 .field--name-field-link {
   legend {
