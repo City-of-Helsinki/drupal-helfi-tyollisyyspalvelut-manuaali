@@ -8,7 +8,6 @@
         let lastScrollY = 0;
         let headeri =  document.getElementById("page-header");
         let height = headeri.offsetHeight;
-        let primaryHeader = document.getElementsByClassName("header__primary");
         $(window).scroll(function () {
           let currentScrollY = $(this).scrollTop();
           if ($(window).width() > 920 ) {
@@ -29,7 +28,6 @@
   Drupal.behaviors.searchCollapse = {
     attach: function (context, settings) {
         let filterButton = $(".additional-filters");
-        let primaryHeader = document.getElementsByClassName("header__primary");
         filterButton[0].addEventListener('click', (e) => {
           $(".header__primary").toggleClass("filters-open");
         });
