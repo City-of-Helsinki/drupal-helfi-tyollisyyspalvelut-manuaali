@@ -1,7 +1,239 @@
+.node-form {
+  @extend .offset-xl-1;
+  @extend .col-xl-10;
+    display: grid;
+  @include xl {
+      grid-template-columns: 7fr 3fr;
+      grid-column-gap: 24px;
+  }
+  #edit-group-left-column {
+    max-width: unset;
+    @include xl {
+      grid-column: 1/2;
+      grid-row:2;
+    }
+  }
+
+  .page-controls {
+    margin-top: $space;
+    grid-row: 6;
+    @include xl {
+      grid-column: 1/2;
+      grid-row:3;
+    }
+    .button-wrapper {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+  }
+
+  .edit-advanced-content-wrapper {
+    grid-row: 4;
+    grid-column: 1/3;
+    @include xl {
+      grid-column: 2/3;
+      grid-row:2;
+    }
+  }
+
+  >#edit-actions {
+    grid-row: 7;
+    @include xl {
+      grid-row: 4;
+      grid-column: 1/2;
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  .page-controls {
+    margin-top: $space;
+    grid-row: 6;
+    @include xl {
+      grid-column: 1/2;
+      grid-row:3;
+
+    }
+    .button-wrapper {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+  }
+
+    .form-item {
+      label {
+        font-size: 12px;
+        &:after {
+
+        }
+      }
+    }
+    .field--type-boolean .form-item {
+      width: 100%;
+      display: flex;
+      input {
+        margin-right: 8px;
+        width: unset;
+      }
+      label {
+        font-weight: 400;
+      }
+    }
+
+    .edit-advanced-form {
+      background-color: clr(text-inverse);
+      border-radius: 8px;
+      padding: $space;
+      max-width: unset;
+      @include large {
+        padding: 40px 32px 48px 32px;
+        max-width: inherit;
+      }
+      .vertical-tabs {
+        border: 0;
+        margin: 0;
+        li {
+          background-color: unset;
+          border: 0;
+        }
+        .vertical-tabs__menu {
+          float: unset;
+          width: 100%;
+          margin: 0;
+          border: 0;
+        }
+      }
+    }
+    .paragraph-type-top,
+    .filter-wrapper[data-drupal-selector*="format"] {
+      display: none;
+    }
+
+    fieldset > legend {
+      width: 100%;
+    }
+
+    .form-item-checkbox {
+      display: flex;
+      flex-wrap: wrap;
+      label {
+        order: 1;
+      }
+      .form-item__description {
+        order: 2;
+        width: 100%;
+      }
+
+    }
+
+    .description {
+      margin-bottom: $space;
+    }
+
+    .table__cell .paragraph-type-top {
+      display: flex;
+    }
+
+    //add basic theming for sidebar horizontal-tabs
+    .horizontal-tabs {
+      .horizontal-tabs-list {
+          border-bottom: 2px solid clr(form-border);
+          padding-left: 16px;
+          background-color: unset;
+          margin-bottom: $space-triple;
+      }
+
+      .horizontal-tab-button {
+        border-radius: 8px 8px 0px 0px;
+        background-color: clr(background);
+        color: clr(background-section);
+        border: unset;
+
+        &.selected {
+          border-bottom: unset;
+          background-color: clr(background-section);
+
+          a {
+            color: clr(text-inverse);
+            padding: 12px 48px;
+          }
+        }
+
+        a {
+          padding: 12px 48px;
+        }
+      }
+    }
+
+    .form-item-checkbox {
+      display: flex;
+      align-items: center;
+      .form-checkbox{
+        margin-right: $space-one-half;
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    .h2 {
+      font-weight: 600;
+      font-size: 24px;
+      line-height: 32px;
+    }
+
+    .field-add-more-submit,
+    .paragraphs-icon-button {
+      @include button-medium;
+      @include button-no-color;
+      @include button-round-corners;
+      border: 2px solid $blue100;
+    }
+
+
+        table,
+        tbody,
+        thead,
+        tr,
+        td {
+          display: block;
+          width: 100%;
+          border: 0;
+        }
+
+        em {
+          background: unset;
+          margin: 0px 4px;
+          opacity: unset;
+          cursor: default;
+        }
+
+        .page-controls {
+          margin-top: $space;
+          grid-row: 6;
+          @include xl {
+            grid-column: 1/2;
+            grid-row:3;
+          }
+          .button-wrapper {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+          }
+        }
+  .button {
+    @include button-medium;
+    @include button-color-blue;
+    @include button-round-corners;
+  }
+}
+
 .form-background--white {
   background-color: clr(text-inverse);
   padding: $space;
 }
+
 .group--light-blue {
   border: 2px solid $blue20;
   background-color: $blue05;
@@ -36,42 +268,9 @@
 
 .node-service-edit-form,
 .node-service-form {
-  @extend .offset-xl-1;
-  @extend .col-xl-10;
-    display: grid;
-  @include xl {
-      grid-template-columns: 7fr 3fr;
-      grid-column-gap: 24px;
-  }
 
-  .paragraph-type-top,
-  .filter-wrapper[data-drupal-selector*="format"] {
-    display: none;
-  }
-
-  fieldset > legend {
-    width: 100%;
-  }
-
-  .form-item-checkbox {
-    display: flex;
-    flex-wrap: wrap;
-    label {
-      order: 1;
-    }
-    .form-item__description {
-      order: 2;
-      width: 100%;
-    }
-
-  }
-
-  .description {
-    margin-bottom: $space;
-  }
-
-  .table__cell .paragraph-type-top {
-    display: flex;
+  .edit-advanced-content-wrapper {
+    margin-top: 80px;
   }
 
   // hide all form tabs by default.
@@ -82,53 +281,6 @@
   // hide all form dragable tables by default.
   .field-multiple-drag {
     display: none;
-  }
-
-  //add basic theming for sidebar horizontal-tabs
-  .horizontal-tabs {
-    .horizontal-tabs-list {
-        border-bottom: 2px solid clr(form-border);
-        padding-left: 16px;
-        background-color: unset;
-        margin-bottom: $space-triple;
-    }
-
-    .horizontal-tab-button {
-      border-radius: 8px 8px 0px 0px;
-      background-color: clr(background);
-      color: clr(background-section);
-      border: unset;
-
-      &.selected {
-        border-bottom: unset;
-        background-color: clr(background-section);
-
-        a {
-          color: clr(text-inverse);
-          padding: 12px 48px;
-        }
-      }
-
-      a {
-        padding: 12px 48px;
-      }
-    }
-  }
-
-  .form-item-checkbox {
-    display: flex;
-    align-items: center;
-    .form-checkbox{
-      margin-right: $space-one-half;
-      width: 16px;
-      height: 16px;
-    }
-  }
-
-  .h2 {
-    font-weight: 600;
-    font-size: 24px;
-    line-height: 32px;
   }
 
   .field--name-field-age {
@@ -162,13 +314,7 @@
     }
   }
 
-  .field-add-more-submit,
-  .paragraphs-icon-button {
-    @include button-medium;
-    @include button-no-color;
-    @include button-round-corners;
-    border: 2px solid $blue100;
-  }
+
 
 
   .date-recur-modular-alpha-widget {
@@ -256,23 +402,6 @@
       }
     }
 
-    table,
-    tbody,
-    thead,
-    tr,
-    td {
-      display: block;
-      width: 100%;
-      border: 0;
-    }
-
-    em {
-      background: unset;
-      margin: 0px 4px;
-      opacity: unset;
-      cursor: default;
-    }
-
     .table__heading-cell,
     .field-multiple-drag,
     .tabledrag-toggle-weight-wrapper  {
@@ -286,6 +415,7 @@
     .paragraph-type-title {
       display: none;
     }
+
     .field--name-field-service-languages,
     .field--name-field-links {
       .table__cell {
@@ -360,57 +490,8 @@
     }
   }
 
-  .edit-advanced-content-wrapper {
-    margin-top: 80px;
-    grid-row: 4;
-    grid-column: 1/3;
-    @include xl {
-      grid-column: 2/3;
-      grid-row:2;
-    }
 
-  }
 
-  .edit-advanced-form {
-    background-color: clr(text-inverse);
-    border-radius: 8px;
-    padding: $space;
-    max-width: unset;
-    @include large {
-      padding: 40px 32px 48px 32px;
-      max-width: inherit;
-    }
-    .vertical-tabs {
-      border: 0;
-      margin: 0;
-      li {
-        background-color: unset;
-        border: 0;
-      }
-      .vertical-tabs__menu {
-        float: unset;
-        width: 100%;
-        margin: 0;
-        border: 0;
-      }
-    }
-  }
-
-  .page-controls {
-
-    margin-top: $space;
-    grid-row: 6;
-    @include xl {
-      grid-column: 1/2;
-      grid-row:3;
-
-    }
-    .button-wrapper {
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-    }
-  }
 
   .field--name-field-service-execution,
   .field--name-field-guidance-to-service,
@@ -521,25 +602,7 @@
     }
 
   }
-  .field--type-boolean .form-item {
-    width: 100%;
-    display: flex;
-    input {
-      margin-right: 8px;
-      width: unset;
-    }
-    label {
-      font-weight: 400;
-    }
-  }
-  >#edit-actions {
-    grid-row: 7;
-    @include xl {
-      grid-row: 4;
-      grid-column: 1/3;
 
-    }
-  }
   .field--name-field-contact-info,
   .field--name-field-contact-info-external {
     fieldset {
@@ -599,16 +662,6 @@
 
 }
 
-.node-form {
-  .form-item {
-    label {
-      font-size: 12px;
-      &:after {
-
-      }
-    }
-  }
-}
 
 #edit-field-service-price-wrapper {
   padding-top: 8px;

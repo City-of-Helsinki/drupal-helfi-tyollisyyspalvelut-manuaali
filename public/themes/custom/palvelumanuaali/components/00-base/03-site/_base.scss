@@ -111,3 +111,16 @@ article ul {
   display: flex;
   flex-wrap: wrap;
 }
+
+.right-column {
+  @include large {
+    position: relative;
+  }
+}
+
+footer.footer{
+  @include large {
+    position:  absolute;
+    bottom: 0;
+  }
+}
