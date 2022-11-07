@@ -373,8 +373,11 @@
     padding-top: 12px;
     padding-bottom: 12px;
     padding-left: 24px;
+    width: 100%;
     max-width: 300px;
     @include large {
-      max-width:300px;
+    }
+    @include xl {
+      max-width: none;
     }
 }
