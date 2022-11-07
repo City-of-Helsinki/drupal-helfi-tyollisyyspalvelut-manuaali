@@ -28,9 +28,9 @@ class SearchAutosuggestBlock extends BlockBase {
    * @param $plugin_definition
    * @param \Drupal\Core\Form\FormBuilderInterface $formBuilder
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, FormBuilderInterface $form_builder) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->formBuilder = \Drupal::service('form_builder');
+    $this->formBuilder = $form_builder;
   }
 
   /**

@@ -14,5 +14,5 @@
 {% if extra_input_classes %}
   <input{{ attributes.addClass(extra_input_classes) }} />{{ children }}
 {% else %}
-  <input{{ attributes.addClass('form-item__textfield') }} />{{ children }}
+  <input{{ attributes }} />{{ children }}
 {% endif %}

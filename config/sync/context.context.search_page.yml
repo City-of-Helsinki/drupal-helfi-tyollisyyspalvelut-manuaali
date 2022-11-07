@@ -2,12 +2,9 @@ uuid: e90bb7e5-5dfa-4a7c-b6d7-3f4a454130ce
 langcode: fi
 status: true
 dependencies:
-  config:
-    - views.view.service_search
   module:
     - hel_tpm_print_pdf
     - system
-    - views
 label: 'Search page only'
 name: search_page
 group: null
@@ -26,22 +23,6 @@ reactions:
     id: blocks
     uuid: 46f828bf-102f-4be8-a776-763fe65b40f6
     blocks:
-      dc8269d8-b7b9-4c9e-995a-cd0790e1ce1b:
-        uuid: dc8269d8-b7b9-4c9e-995a-cd0790e1ce1b
-        id: 'views_exposed_filter_block:service_search-search_mobile_filters'
-        label: ''
-        provider: views
-        label_display: '0'
-        region: sidebar
-        weight: '0'
-        custom_id: views_exposed_filter_block_service_search_search_mobile_filters
-        theme: palvelumanuaali
-        css_class: hide-lg
-        unique: 0
-        context_id: search_page
-        context_mapping: {  }
-        views_label: ''
-        third_party_settings: {  }
       d11fb52a-215a-473a-97d4-f055be7e21f6:
         uuid: d11fb52a-215a-473a-97d4-f055be7e21f6
         id: hel_print_pdf_block
