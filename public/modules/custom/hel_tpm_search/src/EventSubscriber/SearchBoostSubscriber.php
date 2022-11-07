@@ -35,20 +35,18 @@ class SearchBoostSubscriber implements EventSubscriberInterface {
 
     $query = $q['body'];
 
-    $q['body'] = [
-      'query' => [
-        'function_score' => [
-          'query' => $query['query'],
-          'boost_mode' => 'sum',
-          'functions' => [
-            [
-              'field_value_factor' => [
-                'field' => 'hel_tpm_priority_boost',
-                'factor' => 1.5,
-                'missing' => 1,
-                'modifier' => "none"
-              ],
-            ]
+    $q['body']['query'] = [
+      'function_score' => [
+        'query' => $query['query'],
+        'boost_mode' => 'sum',
+        'functions' => [
+          [
+            'field_value_factor' => [
+              'field' => 'hel_tpm_priority_boost',
+              'factor' => 1.5,
+              'missing' => 1,
+              'modifier' => "none"
+            ],
           ]
         ]
       ]

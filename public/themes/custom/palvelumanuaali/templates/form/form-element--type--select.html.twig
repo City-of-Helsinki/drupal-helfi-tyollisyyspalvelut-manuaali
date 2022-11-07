@@ -44,59 +44,17 @@
  * @see template_preprocess_form_element()
  */
 #}
-
-{% set additional_class = additional_class %}
-{% set classes = classes %}
-
-{% if classes is empty %}
 {%
   set classes = [
+    'form-item-select',
     'js-form-item',
-    'form-item'
+    'form-item',
+    'js-form-type-' ~ type|clean_class,
+    'form-item-' ~ name|clean_class,
+    'js-form-item-' ~ name|clean_class,
+    title_display not in ['after', 'before'] ? 'form-no-label',
+    disabled == 'disabled' ? 'form-disabled',
+    errors ? 'form-item--error',
   ]
 %}
-{% endif %}
-{%
-  set description_classes = [
-    'form-item__description',
-    description_display == 'invisible' ? 'visually-hidden',
-  ]
-%}
-{% set form_element__base_class = 'form-item' %}
-{% if additional_class == "edit-advanced-form" %}
-<div class="edit-advanced-content-wrapper">
-{% endif %}
-<div{{ bem(form_element__base_class,form_element__modifiers,form_element__block_name,classes) }}>
-  {% if label_display in ['before', 'invisible'] %}
-    {{ label }}
-  {% endif %}
-  {% if prefix is not empty %}
-    <span class="field-prefix">{{ prefix }}</span>
-  {% endif %}
-  {% if description_display == 'before' and description.content %}
-    <div{{ description.attributes }}>
-      {{ description.content }}
-    </div>
-  {% endif %}
-  {{ children }}
-  {% if suffix is not empty %}
-    <span class="field-suffix">{{ suffix }}</span>
-  {% endif %}
-  {% if label_display == 'after' %}
-    {{ label }}
-  {% endif %}
-  {% if errors %}
-    <div class="form-item--error-message">
-      {{ errors }}
-    </div>
-  {% endif %}
-  {% if description_display in ['after', 'invisible'] and description.content %}
-    <div{{ description.attributes.addClass(description_classes) }}>
-      {{ description.content }}
-    </div>
-  {% endif %}
-</div>
-
-{% if additional_class == "edit-advanced-form" %}
-</div>
-{% endif %}
+{% include "@atoms/forms/_form-element.twig" %}

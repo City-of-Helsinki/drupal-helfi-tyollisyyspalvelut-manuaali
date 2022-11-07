@@ -9,6 +9,14 @@ body {
   @include body-copy;
 }
 
+.main {
+  max-width: $content-max-width;
+  .main-content {
+    @include make-col();
+  }
+}
+/* Add 12 grid for main content for easier element size handling */
+
 *,
 *::after,
 *::before {

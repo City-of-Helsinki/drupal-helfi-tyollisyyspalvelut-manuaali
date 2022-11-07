@@ -126,8 +126,6 @@
     attach: function (context, settings) {
       var form = $('.search-autocomplete-wrapper');
       var searchField = 'input[name="search_api_fulltext"]'
-      var searchWrapper = '.search-history-wrapper';
-      var autocompleteWrapper = '.hel-search-autocomplete';
       let history = Drupal.behaviors.hel_tpm_search_autocomplete.buildSearchHistory(form);
 
       $(document).ready(function() {

@@ -100,6 +100,7 @@ var map = {
 	"./icons/arrow-left.svg": "./images/icons/arrow-left.svg",
 	"./icons/arrow-right-short.svg": "./images/icons/arrow-right-short.svg",
 	"./icons/arrow-right.svg": "./images/icons/arrow-right.svg",
+	"./icons/arrow-sm-down-white.svg": "./images/icons/arrow-sm-down-white.svg",
 	"./icons/arrow-sm-down.svg": "./images/icons/arrow-sm-down.svg",
 	"./icons/c-question.svg": "./images/icons/c-question.svg",
 	"./icons/calendar.svg": "./images/icons/calendar.svg",
@@ -298,6 +299,26 @@ __webpack_require__.r(__webpack_exports__);
       id: "arrow-right-usage",
       viewBox: "0 0 24 24",
       url: __webpack_require__.p + "../dist/icons.svg#arrow-right",
+      toString: function () {
+        return this.url;
+      }
+    });
+
+/***/ }),
+
+/***/ "./images/icons/arrow-sm-down-white.svg":
+/*!**********************************************!*\
+  !*** ./images/icons/arrow-sm-down-white.svg ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+      id: "arrow-sm-down-white-usage",
+      viewBox: "0 0 24 24",
+      url: __webpack_require__.p + "../dist/icons.svg#arrow-sm-down-white",
       toString: function () {
         return this.url;
       }

@@ -30,7 +30,7 @@ class TPMContentParagraph extends ParagraphBase {
     else {
       foreach ($value as $key => $body_val) {
         if (!empty($body_val)) {
-          $paragraphs[] = $this->createContentParagraph($row, $destinationProperty, $this->configuration['titles'][$key], $body_val);
+          $paragraphs[] = $this->createContentParagraph($row, $destinationProperty, $this->getConfigValues($row, 'titles')[$key], $body_val);
         }
       }
     }
