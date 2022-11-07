@@ -14,22 +14,23 @@ use Drupal\Component\Utility\UrlHelper;
  * @see \Drupal\migrate\Plugin\MigrateProcessInterface
  *
  * @MigrateProcessPlugin(
- *   id = "tpm_handle_url"
+ *   id = "tpm_handle_obligatoryness"
  * )
  */
-class TPMHandleURL extends ProcessPluginBase {
+class TPMHandleObligatoryness extends ProcessPluginBase {
 
   /**
    * {@inheritdoc}
    */
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
-    // Rudimentary fix to fix some easy cases missing the http prefix.
-    if (stripos($value, 'http') !== 0) {
-      $value = 'http://' . $value;
+    if (stripos($value, 'Palveluun osallistuminen on velvoittavaa') !== FALSE) {
+      $value = 'option1';
     }
-
-    if (!UrlHelper::isValid($value, TRUE)) {
-      $value = '';
+    elseif (stripos($value, 'Suunnitelman noudattamatta jättäminen voi vaikuttaa') !== FALSE) {
+      $value = 'option2';
+    }
+    elseif (stripos($value, 'Palveluun osallistuminen ei ole velvoittavaa') !== FALSE) {
+      $value = 'option3';
     }
     return $value;
   }

@@ -33,4 +33,17 @@ class ParagraphBase extends ProcessPluginBase {
     return $paragraph;
   }
 
+  protected function getConfigValues(Row $row, $settingName) {
+    $field_name = $this->configuration[$settingName];
+    if (!is_array($field_name)) {
+      return $row->getSource()[$field_name];
+    }
+    else {
+      foreach ($field_name as $key => $field) {
+        $field_name[$key] = $row->getSource()[$field];
+      }
+      return $field_name;
+    }
+  }
+
 }
