@@ -64,11 +64,14 @@ body {
 }
 
 .main {
-  @include wrapper;
   display: block;
   position: relative;
   padding: 0;
   margin-bottom: 4em;
+
+  @media only screen and (max-width: $large) {
+    margin-top: 0 !important;
+  }
 
   @include xs {
     padding: 0;
@@ -76,6 +79,12 @@ body {
 
   @include large {
     margin-top: $nav-height;
+    margin-right: $space-quadruple;
+    margin-left: $space-quadruple;
+  }
+  @include xxl {
+    margin-right: $main-gutter;
+    margin-left: $main-gutter;
   }
 }
 
@@ -103,15 +112,13 @@ body {
   @include large {
     order: 2;
     &--with-sidebar {
-      margin-right: $space-quadruple;
-      margin-left: $space-quadruple;
+
     }
   }
 
   @include xxl {
     &--with-sidebar {
-      margin-right: $main-gutter;
-      margin-left: $main-gutter;
+      margin: auto;
     }
   }
 }
