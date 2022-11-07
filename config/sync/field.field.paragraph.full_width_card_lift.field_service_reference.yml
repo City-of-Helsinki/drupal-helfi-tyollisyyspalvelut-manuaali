@@ -1,0 +1,29 @@
+uuid: eaabe4a2-f77f-4193-a8b1-e39891ee9252
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_service_reference
+    - node.type.service
+    - paragraphs.paragraphs_type.full_width_card_lift
+id: paragraph.full_width_card_lift.field_service_reference
+field_name: field_service_reference
+entity_type: paragraph
+bundle: full_width_card_lift
+label: 'Palvelut jotka sopivat sinulle:'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      service: service
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

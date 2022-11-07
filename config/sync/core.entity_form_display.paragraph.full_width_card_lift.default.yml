@@ -1,0 +1,25 @@
+uuid: 69e75385-77d9-4554-8512-532558758b58
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.full_width_card_lift.field_service_reference
+    - paragraphs.paragraphs_type.full_width_card_lift
+id: paragraph.full_width_card_lift.default
+targetEntityType: paragraph
+bundle: full_width_card_lift
+mode: default
+content:
+  field_service_reference:
+    type: entity_reference_autocomplete
+    weight: 0
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true
