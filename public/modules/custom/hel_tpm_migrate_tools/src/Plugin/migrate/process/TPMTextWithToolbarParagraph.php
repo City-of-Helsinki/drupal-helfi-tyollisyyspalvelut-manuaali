@@ -13,28 +13,23 @@ use Drupal\Component\Utility\Html;
  * Generate a paragraph.
  *
  * @MigrateProcessPlugin(
- *   id = "tpm_target_group_paragraph"
+ *   id = "tpm_text_with_toolbar_paragraph"
  * )
  */
-class TPMTargetGroupParagraph extends ParagraphBase {
+class TPMTextWithToolbarParagraph extends ParagraphBase {
 
   /**
    * {@inheritdoc}
    */
   public function transform($value, MigrateExecutableInterface $migrateExecutable, Row $row, $destinationProperty) {
-    $paragraphs = [];
-
-    $paragraph = $this->createParagraph($row, $destinationProperty, 'target_group', 0);
+    $paragraph = $this->createParagraph($row, $destinationProperty, 'long_text_field_with_toolbar', 0);
     $paragraph->field_description = $value;
-    // TODO: Probably needs lookup
-    $paragraph->field_municipality = $this->getConfigValues($row, 'municipality');
-    $paragraph->field_age_groups = $this->getConfigValues($row, 'age');
     $paragraph->save();
-    $paragraphs[] = [
+
+    return [
       'target_id' => $paragraph->id(),
       'target_revision_id' => $paragraph->getRevisionId(),
     ];
-    return $paragraphs;
   }
 
 }

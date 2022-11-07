@@ -23,9 +23,10 @@ class TPMServicePriceParagraph extends ParagraphBase {
    */
   public function transform($value, MigrateExecutableInterface $migrateExecutable, Row $row, $destinationProperty) {
     $paragraphs = [];
-
-    $paragraph = $this->createParagraph($row, $destinationProperty, 'target_group', 0);
-    $paragraph->field_description = $value;
+    $paragraph = $this->createParagraph($row, $destinationProperty, 'service_price', 0);
+    $paragraph->field_free_service = (($this->getConfigValues($row, 'has_price') == 'Kyllä') ? TRUE : FALSE);
+    $paragraph->field_price = $this->getConfigValues($row, 'price');
+    $paragraph->field_description = $this->getConfigValues($row, 'description');
     $paragraph->save();
     $paragraphs[] = [
       'target_id' => $paragraph->id(),

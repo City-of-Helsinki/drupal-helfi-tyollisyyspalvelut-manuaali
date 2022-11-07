@@ -108,17 +108,29 @@ body {
 }
 
 .main-content {
-  max-width: 1464px;
+
   @include large {
     order: 2;
     &--with-sidebar {
-
-    }
+      .region-content {
+        margin-right: $space-quadruple;
+        margin-left: $space-quadruple;
+        #block-system-main-block {
+          max-width: 1464px;
+        }
+      }
   }
+}
 
-  @include xxl {
-    &--with-sidebar {
-      margin: auto;
+@include xxl {
+  &--with-sidebar {
+      .region-content {
+         margin-right: $main-gutter;
+         margin-left: $main-gutter;
+         #block-system-main-block {
+           margin: auto;
+         }
+      }
     }
   }
 }
