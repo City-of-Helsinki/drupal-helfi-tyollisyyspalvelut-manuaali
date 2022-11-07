@@ -1,0 +1,73 @@
+uuid: daa1b0db-a745-430b-9df5-63faf53bc153
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_municipality_instructions
+    - node.type.service
+    - paragraphs.paragraphs_type.municipality_guide
+  module:
+    - entity_reference_revisions
+id: node.service.field_municipality_instructions
+field_name: field_municipality_instructions
+entity_type: node
+bundle: service
+label: 'Kuntakohtaiset ohjeet (valinnainen)'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      municipality_guide: municipality_guide
+    negate: 0
+    target_bundles_drag_drop:
+      contact_information:
+        weight: 16
+        enabled: false
+      content:
+        weight: 17
+        enabled: false
+      content_card_lift:
+        weight: 18
+        enabled: false
+      content_link_file:
+        weight: 19
+        enabled: false
+      content_link_file_guide:
+        weight: 20
+        enabled: false
+      full_width_card_lift:
+        weight: 21
+        enabled: false
+      header_description_link:
+        weight: 22
+        enabled: false
+      link:
+        weight: 23
+        enabled: false
+      long_text_field_with_toolbar:
+        weight: 24
+        enabled: false
+      municipality_guide:
+        weight: 25
+        enabled: true
+      service_language:
+        weight: 26
+        enabled: false
+      service_price:
+        weight: 27
+        enabled: false
+      service_time_and_place:
+        weight: 28
+        enabled: false
+      target_group:
+        weight: 29
+        enabled: false
+      url_and_file:
+        weight: 30
+        enabled: false
+field_type: entity_reference_revisions
