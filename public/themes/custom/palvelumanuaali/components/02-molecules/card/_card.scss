@@ -5,6 +5,9 @@
     border-radius: 8px 8px 4px 4px;
     border-bottom: 4px $blue100 solid;
   }
+  &.padded {
+    padding-bottom: 40px;
+  }
 }
 
 .card__content {
@@ -12,6 +15,12 @@
   margin-right: $space-double;
   margin-top: $space-two-and-half;
   position: relative;
+  height: 100%;
+  .button--arrow {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
 }
 
 .card__heading {
@@ -36,6 +45,13 @@
 
 .card__link {
   @include link;
+  height: 100%;
+  &:hover {
+    text-decoration: none;
+    button {
+      background-color: clr(highlight-high);
+    }
+  }
 }
 
 .card__button {

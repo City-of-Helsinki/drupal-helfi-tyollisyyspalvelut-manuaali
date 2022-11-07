@@ -1,20 +1,22 @@
-uuid: 1d091948-8a1d-411e-80c5-6918f89b3fe6
+uuid: 25a14954-54f9-45bc-ba5a-2c697f34d13d
 langcode: fi
 status: true
 dependencies:
   module:
     - field_permissions
-    - link
-    - node
+    - user
 third_party_settings:
   field_permissions:
     permission_type: public
-id: node.field_hero_link
-field_name: field_hero_link
-entity_type: node
-type: link
-settings: {  }
-module: link
+id: user.field_employer
+field_name: field_employer
+entity_type: user
+type: string
+settings:
+  max_length: 255
+  case_sensitive: false
+  is_ascii: false
+module: core
 locked: false
 cardinality: 1
 translatable: true

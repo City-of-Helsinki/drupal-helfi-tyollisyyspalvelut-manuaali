@@ -183,10 +183,23 @@ $color-heading: clr(accent);
 
 .h3 {
   @include heading-medium;
+  &--margin-bottom-ninety {
+      margin-bottom: $space-quintuple;
+    @include xl {
+      margin-bottom: $space-sextuple;
+    }
+  }
 }
 
 .h4 {
   @include heading-small;
+  &--margin-bottom-triple-half {
+      margin-bottom: $space-two-and-half;
+    @include xl {
+      margin-bottom: $space-three-and-half;
+    }
+  }
+
 }
 
 .h5 {
@@ -196,6 +209,12 @@ $color-heading: clr(accent);
   }
   &--margin-bottom-extra {
       margin-bottom: $space-one-and-half;
+  }
+  &--margin-bottom-triple-half {
+      margin-bottom: $space-two-and-half;
+    @include xl {
+      margin-bottom: $space-three-and-half;
+    }
   }
 }
 
@@ -233,7 +252,6 @@ $color-heading: clr(accent);
 
 .page-heading {
   @include heading-small;
-
   @include medium {
     font-size: 34px;
   }
@@ -251,5 +269,15 @@ $color-heading: clr(accent);
   margin-bottom: $space-one-and-half;
   @include large {
     margin-bottom: $space-double;
+  }
+}
+
+.welcome-text {
+  .h1 {
+    font-size: 32px;
+    font-weight: 400;
+    span {
+      color: clr(background-section);
+    }
   }
 }

@@ -56,90 +56,180 @@
     {% endif %}
   {% endblock %}
   {# Content #}
-  <div {{ bem('content', card__content__modifiers, card__base_class) }}>
-    {% block card__content %}
-      {# Heading #}
-      {% if card__caption %}
-        {% include "@atoms/text/headings/_heading.twig" with {
-          heading_base_class: card__caption__base_class|default('caption'),
-          heading_modifiers: card__caption__modifiers,
-          heading_blockname: card__base_class,
-          heading_level: 6,
-          heading: card__caption,
-          heading_url: card__caption__link,
-        } %}
-      {% endif %}
-      {% if card__caption__status %}
-        {% include "@atoms/pills/twig/pill.twig" with {
-          pill_base_class: card__caption__status__base_class|default('pill'),
-          pill_modifiers: card__caption__status__modifiers,
-          pill_content: card__caption__status,
-        } %}
-      {% endif %}
-      {% if card__heading %}
-        {{ title_prefix }}
-        {% include "@atoms/text/headings/_heading.twig" with {
-          heading_base_class: card__heading__base_class|default('heading'),
-          heading_modifiers: card__heading__modifiers,
-          heading_blockname: card__base_class,
-          heading_level: 2,
-          heading: card__heading,
-          heading_url: card__heading__link|default(card__link__url),
-          heading_link_base_class: card__heading__link_base_class|default('heading-link'),
-          heading_link_blockname: card__base_class,
-        } %}
-        {{ title_suffix }}
-      {% endif %}
-      {# Subheading #}
-      {% if card__subheading %}
-        {% include "@atoms/text/headings/_heading.twig" with {
-          heading_base_class: card__subheading__base_class|default('subheading'),
-          heading_modifiers: card__subheading__modifiers,
-          heading_blockname: card__base_class,
-          heading_level: 3,
-          heading: card__subheading,
-          heading_url: card__subheading__link,
-        } %}
-      {% endif %}
-      {# Body #}
-      {% if card__body %}
-        {% include "@atoms/text/text/01-paragraph.twig" with {
-          paragraph_base_class: card__body__base_class|default('body'),
-          paragraph_modifiers: card__body__modifiers,
-          paragraph_blockname: card__base_class,
-          paragraph_content: card__body,
-        } %}
-      {% endif %}
-      {# Link #}
-      {% if card__link__url %}
-        {% include "@atoms/links/link/link.twig" with {
-          link_base_class: card__link__base_class|default('link'),
-          link_blockname: card__base_class,
-          link_attributes: card__link__attributes,
-          link_content: card__link__text,
-          link_url: card__link__url,
-        } %}
-      {% endif %}
-      {# Button #}
-      {% if card__button__url %}
-        {% include "@atoms/buttons/twig/button.twig" with {
-          button_base_class: card__button__base_class|default('button'),
-          button_modifiers: card__button__modifiers,
-          button_blockname: card__button__blockname,
-          button_attributes: card__button__attributes,
-          button_content: card__button__content,
-          button_url: card__button__url,
-          button_icon: card__button_icon_src,
-        } %}
-      {% endif %}
-      {% if card__date  %}
-        {% include "@atoms/text/text/01-paragraph.twig" with {
-          paragraph_base_class: card__date__base_class|default('date'),
-          paragraph_modifiers: card__date__modifiers,
-          paragraph_blockname: card__base_class,
-          paragraph_content: card__date,
-        } %}
-      {% endif %}
-    {% endblock %}
-  </div>
+      {% if card__link_wrapped %}
+              {% embed "@atoms/links/link/link.twig" with {
+                link_base_class: card__link__base_class|default('link'),
+                link_blockname: card__base_class,
+                link_attributes: card__link__attributes,
+                link_content: card__link__text,
+                link_url: card__button__url,
+              } %}
+                {% block link_content %}
+                  <div {{ bem('content', card__content__modifiers, card__base_class) }}>
+                        {% block card__content %}
+                              {# Heading #}
+                              {% if card__caption %}
+                                {% include "@atoms/text/headings/_heading.twig" with {
+                                  heading_base_class: card__caption__base_class|default('caption'),
+                                  heading_modifiers: card__caption__modifiers,
+                                  heading_blockname: card__base_class,
+                                  heading_level: 6,
+                                  heading: card__caption,
+                                  heading_url: card__caption__link,
+                                } %}
+                              {% endif %}
+                              {% if card__caption__status %}
+                                {% include "@atoms/pills/twig/pill.twig" with {
+                                  pill_base_class: card__caption__status__base_class|default('pill'),
+                                  pill_modifiers: card__caption__status__modifiers,
+                                  pill_content: card__caption__status,
+                                } %}
+                              {% endif %}
+                              {% if card__heading %}
+                                {{ title_prefix }}
+                                {% include "@atoms/text/headings/_heading.twig" with {
+                                  heading_base_class: card__heading__base_class|default('heading'),
+                                  heading_modifiers: card__heading__modifiers,
+                                  heading_blockname: card__base_class,
+                                  heading_level: 2,
+                                  heading: card__heading,
+                                  heading_url: card__heading__link|default(card__link__url),
+                                  heading_link_base_class: card__heading__link_base_class|default('heading-link'),
+                                  heading_link_blockname: card__base_class,
+                                } %}
+                                {{ title_suffix }}
+                              {% endif %}
+                              {# Subheading #}
+                              {% if card__subheading %}
+                                {% include "@atoms/text/headings/_heading.twig" with {
+                                  heading_base_class: card__subheading__base_class|default('subheading'),
+                                  heading_modifiers: card__subheading__modifiers,
+                                  heading_blockname: card__base_class,
+                                  heading_level: 3,
+                                  heading: card__subheading,
+                                  heading_url: card__subheading__link,
+                                } %}
+                              {% endif %}
+                              {# Body #}
+                              {% if card__body %}
+                                {% include "@atoms/text/text/01-paragraph.twig" with {
+                                  paragraph_base_class: card__body__base_class|default('body'),
+                                  paragraph_modifiers: card__body__modifiers,
+                                  paragraph_blockname: card__base_class,
+                                  paragraph_content: card__body,
+                                } %}
+                              {% endif %}
+                              {# Button #}
+                              {% if card__with_button %}
+                                {% include "@atoms/buttons/twig/button.twig" with {
+                                  button_base_class: card__button__base_class|default('button'),
+                                  button_modifiers: card__button__modifiers,
+                                  button_blockname: card__button__blockname,
+                                  button_attributes: card__button__attributes,
+                                  button_content: card__button__content,
+                                  button_icon: card__button_icon_src,
+                                } %}
+                              {% endif %}
+                              {% if card__date  %}
+                                {% include "@atoms/text/text/01-paragraph.twig" with {
+                                  paragraph_base_class: card__date__base_class|default('date'),
+                                  paragraph_modifiers: card__date__modifiers,
+                                  paragraph_blockname: card__base_class,
+                                  paragraph_content: card__date,
+                                } %}
+                            {% endif %}
+                          {% endblock %}
+                    </div>
+                  {% endblock %}
+                {% endembed %}
+
+        {% else %}
+
+          <div {{ bem('content', card__content__modifiers, card__base_class) }}>
+            {% block card__content %}
+                  {# Heading #}
+                  {% if card__caption %}
+                    {% include "@atoms/text/headings/_heading.twig" with {
+                      heading_base_class: card__caption__base_class|default('caption'),
+                      heading_modifiers: card__caption__modifiers,
+                      heading_blockname: card__base_class,
+                      heading_level: 6,
+                      heading: card__caption,
+                      heading_url: card__caption__link,
+                    } %}
+                  {% endif %}
+                  {% if card__caption__status %}
+                    {% include "@atoms/pills/twig/pill.twig" with {
+                      pill_base_class: card__caption__status__base_class|default('pill'),
+                      pill_modifiers: card__caption__status__modifiers,
+                      pill_content: card__caption__status,
+                    } %}
+                  {% endif %}
+                  {% if card__heading %}
+                    {{ title_prefix }}
+                    {% include "@atoms/text/headings/_heading.twig" with {
+                      heading_base_class: card__heading__base_class|default('heading'),
+                      heading_modifiers: card__heading__modifiers,
+                      heading_blockname: card__base_class,
+                      heading_level: 2,
+                      heading: card__heading,
+                      heading_url: card__heading__link|default(card__link__url),
+                      heading_link_base_class: card__heading__link_base_class|default('heading-link'),
+                      heading_link_blockname: card__base_class,
+                    } %}
+                    {{ title_suffix }}
+                  {% endif %}
+                  {# Subheading #}
+                  {% if card__subheading %}
+                    {% include "@atoms/text/headings/_heading.twig" with {
+                      heading_base_class: card__subheading__base_class|default('subheading'),
+                      heading_modifiers: card__subheading__modifiers,
+                      heading_blockname: card__base_class,
+                      heading_level: 3,
+                      heading: card__subheading,
+                      heading_url: card__subheading__link,
+                    } %}
+                  {% endif %}
+                  {# Body #}
+                  {% if card__body %}
+                    {% include "@atoms/text/text/01-paragraph.twig" with {
+                      paragraph_base_class: card__body__base_class|default('body'),
+                      paragraph_modifiers: card__body__modifiers,
+                      paragraph_blockname: card__base_class,
+                      paragraph_content: card__body,
+                    } %}
+                  {% endif %}
+                  {# Link #}
+                  {% if card__link__url %}
+                    {% include "@atoms/links/link/link.twig" with {
+                      link_base_class: card__link__base_class|default('link'),
+                      link_blockname: card__base_class,
+                      link_attributes: card__link__attributes,
+                      link_content: card__link__text,
+                      link_url: card__link__url,
+                    } %}
+                  {% endif %}
+                  {# Button #}
+                  {% if card__with_button %}
+                    {% include "@atoms/buttons/twig/button.twig" with {
+                      button_base_class: card__button__base_class|default('button'),
+                      button_modifiers: card__button__modifiers,
+                      button_blockname: card__button__blockname,
+                      button_attributes: card__button__attributes,
+                      button_content: card__button__content,
+                      button_url: card__button__url,
+                      button_icon: card__button_icon_src,
+                    } %}
+                  {% endif %}
+                  {% if card__date  %}
+                    {% include "@atoms/text/text/01-paragraph.twig" with {
+                      paragraph_base_class: card__date__base_class|default('date'),
+                      paragraph_modifiers: card__date__modifiers,
+                      paragraph_blockname: card__base_class,
+                      paragraph_content: card__date,
+                    } %}
+                {% endif %}
+            {% endblock %}
+            </div>
+        {% endif %}
 </div>
