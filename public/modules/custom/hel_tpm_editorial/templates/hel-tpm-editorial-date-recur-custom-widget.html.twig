@@ -4,8 +4,9 @@
     {{ widget.daily_count }}
   </div>
   <div class="dates">
-    <div class="date">{{ widget.start }}</div>
-    <div class="date">{{ widget.end }}</div>
+    <div class="date start-date">{{ widget.start }}</div>
+    <span class="hyphen-wrapper"><span class="hyphen">-</span></span>
+    <div class="date end-date">{{ widget.end }}</div>
   </div>
   {{ widget.weekdays }}
   {{ widget.ordinals }}
