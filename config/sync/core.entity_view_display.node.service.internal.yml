@@ -19,7 +19,7 @@ dependencies:
     - field.field.node.service.field_life_situations
     - field.field.node.service.field_links_and_attachments
     - field.field.node.service.field_measures_during_attendance
-    - field.field.node.service.field_municipality_instructions
+    - field.field.node.service.field_municipality_guidance
     - field.field.node.service.field_municipality_specific
     - field.field.node.service.field_obligatoryness
     - field.field.node.service.field_obligatoryness_freetext
@@ -196,7 +196,7 @@ third_party_settings:
         speed: fast
     group_municipal_guidance:
       children:
-        - field_municipality_instructions
+        - field_municipality_guidance
       label: 'Kuntakohtaiset ohjeet'
       parent_name: ''
       region: content
@@ -252,7 +252,7 @@ content:
     third_party_settings: {  }
     weight: 7
     region: content
-  field_municipality_instructions:
+  field_municipality_guidance:
     type: entity_reference_revisions_entity_view
     label: hidden
     settings:

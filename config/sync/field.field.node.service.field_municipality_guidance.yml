@@ -3,13 +3,13 @@ langcode: fi
 status: true
 dependencies:
   config:
-    - field.storage.node.field_municipality_instructions
+    - field.storage.node.field_municipality_guidance
     - node.type.service
     - paragraphs.paragraphs_type.municipality_guide
   module:
     - entity_reference_revisions
-id: node.service.field_municipality_instructions
-field_name: field_municipality_instructions
+id: node.service.field_municipality_guidance
+field_name: field_municipality_guidance
 entity_type: node
 bundle: service
 label: 'Kuntakohtaiset ohjeet (valinnainen)'

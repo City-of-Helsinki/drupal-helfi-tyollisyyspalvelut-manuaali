@@ -18,7 +18,7 @@ dependencies:
     - field.field.node.service.field_life_situations
     - field.field.node.service.field_links_and_attachments
     - field.field.node.service.field_measures_during_attendance
-    - field.field.node.service.field_municipality_instructions
+    - field.field.node.service.field_municipality_guidance
     - field.field.node.service.field_municipality_specific
     - field.field.node.service.field_obligatoryness
     - field.field.node.service.field_obligatoryness_freetext
@@ -79,7 +79,7 @@ third_party_settings:
       children:
         - group_service_requirements
         - field_guidance_to_service
-        - field_municipality_instructions
+        - field_municipality_guidance
         - group_service_obligatoryness
         - field_career_marking
         - group_statements_unemploym
@@ -655,7 +655,7 @@ content:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
-  field_municipality_instructions:
+  field_municipality_guidance:
     type: entity_reference_paragraphs
     weight: 8
     region: content
