@@ -137,3 +137,18 @@ function palvelumanuaali_theme_suggestions_field_alter(array &$suggestions, arra
     };
   }
 }
+
+
+/**
+ * Implements hook_form_alter().
+ */
+function palvelumanuaali_form_alter(&$form, $form_state, $form_id) {
+  // Shift the required field indicator to the end of the webform.
+   if ($form_id == 'node_service_edit_form' || $form_id == 'node_landing_page_edit_form' || $form_id == 'node_basic_page_edit_form' ) {
+
+     // $form['meta']['#access'] = FALSE;
+     // $form['moderation_state']['#access'] = FALSE;
+     // $form['langcode']['#access'] = FALSE;
+     $form['revision_information']['#access'] = FALSE;
+  }
+}
