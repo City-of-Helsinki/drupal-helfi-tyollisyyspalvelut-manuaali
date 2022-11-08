@@ -2,8 +2,11 @@ uuid: e1e9d584-a4af-4ba8-b107-731c3c9283b5
 langcode: fi
 status: true
 dependencies:
+  config:
+    - field.storage.group_content.group_roles
   module:
     - group
+    - hel_tpm_general
     - user
 _core:
   default_config_hash: zIcnLmbW8inPRIQdPSVbKPuG2o5G5wHGJED4Jlgb2SY
@@ -75,9 +78,8 @@ display:
           empty_zero: false
           hide_alter_empty: true
           click_sort_column: value
-          type: user_name
-          settings:
-            link_to_entity: true
+          type: hel_tpm_general_real_username
+          settings: {  }
           group_column: value
           group_columns: {  }
           group_rows: true
