@@ -68,7 +68,7 @@ body {
   position: relative;
   padding: 0;
   margin-bottom: 10em;
-
+  margin-bottom: 10rem;
   @media only screen and (max-width: $large) {
     margin-top: 0 !important;
   }
@@ -124,8 +124,7 @@ body {
 @include xxl {
   &--with-sidebar {
       .region-content {
-         margin-right: $main-gutter;
-         margin-left: $main-gutter;
+        margin:auto;
          #block-system-main-block {
            margin: auto;
          }
