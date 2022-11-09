@@ -1,0 +1,442 @@
+.block--main-block >.node-form,
+.group-form {
+  @extend .offset-xxl-1;
+  @extend .col-xxl-10;
+    display: grid;
+  @include xl {
+      grid-template-columns: 7fr 3fr;
+      grid-column-gap: 24px;
+  }
+  #edit-group-left-column {
+    max-width: unset;
+    @include xl {
+      grid-column: 1/2;
+      grid-row:2;
+    }
+  }
+  .field-group-details {
+    display: none !important;
+  }
+
+  .page-controls {
+    margin-top: $space;
+    grid-row: 6;
+    @include xl {
+      grid-column: 1/2;
+      grid-row:3;
+    }
+    .button-wrapper {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+  }
+
+  .edit-advanced-content-wrapper {
+    grid-row: 4;
+    grid-column: 1/3;
+    @include xl {
+      grid-column: 2/3;
+      grid-row:2;
+    }
+  }
+
+  >#edit-actions {
+    grid-row: 7;
+    @include xl {
+      grid-row: 4;
+      grid-column: 1/2;
+      display: flex;
+      justify-content: space-between;
+    }
+    .button {
+      width: unset;
+      border: unset;
+    }
+  }
+
+  .page-controls {
+    margin-top: $space;
+    grid-row: 6;
+    @include xl {
+      grid-column: 1/2;
+      grid-row:3;
+
+    }
+    .button-wrapper {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+  }
+
+    .form-item {
+      label {
+        font-size: 12px;
+        &:after {
+
+        }
+      }
+    }
+    .field--type-boolean .form-item {
+      width: 100%;
+      display: flex;
+      input {
+        margin-right: 8px;
+        width: unset;
+      }
+      label {
+        font-weight: 400;
+      }
+    }
+
+    .edit-advanced-form {
+      background-color: clr(text-inverse);
+      border-radius: 8px;
+      padding: $space;
+      max-width: unset;
+      @include large {
+        padding: 40px 32px 48px 32px;
+        max-width: inherit;
+      }
+      .vertical-tabs {
+        border: 0;
+        margin: 0;
+        li {
+          background-color: unset;
+          border: 0;
+        }
+        .vertical-tabs__menu {
+          float: unset;
+          width: 100%;
+          margin: 0;
+          border: 0;
+        }
+      }
+    }
+    .paragraph-type-top,
+    .filter-wrapper[data-drupal-selector*="format"] {
+      display: none;
+    }
+
+    fieldset > legend {
+      width: 100%;
+    }
+
+    .form-item-checkbox {
+      display: flex;
+      flex-wrap: wrap;
+      label {
+        order: 1;
+      }
+      .form-item__description {
+        order: 2;
+        width: 100%;
+      }
+
+    }
+
+    .description {
+      margin-bottom: $space;
+    }
+
+    .table__cell .paragraph-type-top {
+      display: flex;
+    }
+
+    //add basic theming for sidebar horizontal-tabs
+    .horizontal-tabs {
+      .horizontal-tabs-list {
+          border-bottom: 2px solid clr(form-border);
+          padding-left: 16px;
+          background-color: unset;
+          margin-bottom: $space-triple;
+      }
+
+      .horizontal-tab-button {
+        border-radius: 8px 8px 0px 0px;
+        background-color: clr(background);
+        color: clr(background-section);
+        border: unset;
+
+        &.selected {
+          border-bottom: unset;
+          background-color: clr(background-section);
+
+          a {
+            color: clr(text-inverse);
+            padding: 12px 48px;
+          }
+        }
+
+        a {
+          padding: 12px 48px;
+        }
+      }
+    }
+
+    .form-item-checkbox {
+      display: flex;
+      align-items: center;
+      .form-checkbox{
+        margin-right: $space-one-half;
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    .h2 {
+      font-weight: 600;
+      font-size: 24px;
+      line-height: 32px;
+    }
+
+    .field-add-more-submit,
+    .paragraphs-icon-button {
+      @include button-medium;
+      @include button-no-color;
+      @include button-round-corners;
+      border: 2px solid $blue100;
+    }
+
+
+        table,
+        tbody,
+        thead,
+        tr,
+        td {
+          display: block;
+          width: 100%;
+          border: 0;
+        }
+
+        em {
+          background: unset;
+          margin: 0px 4px;
+          opacity: unset;
+          cursor: default;
+        }
+
+        .page-controls {
+          margin-top: $space;
+          grid-row: 6;
+          @include xl {
+            grid-column: 1/2;
+            grid-row:3;
+          }
+          .button-wrapper {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+          }
+        }
+  // .button {
+  //   @include button-medium;
+  //   @include button-color-blue;
+  //   @include button-round-corners;
+  // }
+}
+
+.form-background--white {
+  background-color: clr(text-inverse);
+  padding: $space;
+}
+
+.group--light-blue {
+  border: 2px solid $blue20;
+  background-color: $blue05;
+  padding: $space-one-and-half $space-one-and-half $space-double $space-one-and-half;
+}
+
+.group--rounded-corners {
+  border-radius: 8px;
+}
+
+.group--no-margin-bottom {
+  margin-bottom: 0;
+}
+
+.js-form-required::after {
+   content:" *";
+   color: red;
+   font-size: 12px;
+ }
+
+.form-background--regular-padding {
+  border-radius: 8px;
+  @include large {
+    padding: 48px 56px;
+  }
+}
+
+#content-view-tabs,
+.field-group-tabs-wrapper .horizontal-tabs {
+  border: 0;
+}
+
+.node-form {
+  label {
+    font-size: 12px;
+    font-weight: 600;
+    &:after {
+
+    }
+  }
+}
+
+#edit-field-service-price-wrapper {
+  padding-top: 8px;
+  legend {
+    display: none;
+  }
+  .field--type-boolean .form-item {
+    width: 100%;
+    display: flex;
+
+    input {
+      margin-right: 8px;
+      width: unset;
+    }
+
+    label {
+      font-weight: 400;
+    }
+  }
+}
+
+// .field--name-field-target-group {
+//  > fieldset {
+//    > legend {
+//      display: none !important;
+//    }
+//    .h2 {
+//      font-size: 12px !important;
+//      &::after {
+//
+//      }
+//    }
+//
+//    }
+//  }
+
+ .field--name-field-dates {
+   h4 {
+     font-weight: 600;
+     font-size: 12px;
+     line-height: 24px;
+     color: clr(text);
+     text-transform: capitalize;
+     letter-spacing: 0px;
+   }
+ }
+
+ .form-item--checkboxes {
+    .form-item {
+        width: 13ch;
+        label {
+          &::after {
+            content: unset !important;
+          }
+        }
+    }
+ }
+
+ .field--widget-hel-tpm-editorial-date-recur-custom {
+   .dates {
+     display: grid;
+     grid-template-columns: 5fr 0.5fr 5fr;
+     margin-top: 1.5em;
+     margin-bottom: 1.5em;
+     .date {
+       .form-item {
+         float: left;
+         width: 45%;
+         margin-right: 2%;
+         margin-left: 2%;
+       }
+       input {
+         background-color: #fff;
+       }
+     }
+   }
+   .hel-tpm-editorial-date-recur-custom-widget {
+     .date-preview {
+       float: left;
+     }
+     .weekdays {
+       .form-item--checkboxes {
+         display: grid;
+         grid-template-columns: repeat(7, 1fr);
+       }
+       .form-item {
+         width: auto;
+       }
+     }
+   }
+
+   .hyphen-wrapper {
+     position: relative;
+     .hyphen {
+       font-weight: 600;
+       display: block;
+       position: absolute;
+       top: 40%;
+       left: 10px;
+     }
+   }
+   .field--type-date-recur {
+     legend {
+       width: 100%;
+     }
+     .form-item--checkboxes {
+       display: flex;
+       flex-wrap: wrap;
+     }
+   }
+ }
+
+
+.field--name-field-link {
+  legend {
+    display: none;
+  }
+  >.form-fieldset,
+  .table__row .table__cell,
+  .table__row .table__cell .ajax-new-content {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 0;
+    .h2 {
+      width: 100%;
+    }
+    .form-item {
+      &:nth-child(1) {
+        width: 60%;
+        margin-bottom: 0;
+        position: relative;
+        &::after {
+          @include icons;
+          content: "\EA06";
+          height: 16px;
+          width: 16px;
+          right: 0;
+          bottom: 16px;
+          position: absolute;
+          margin-right: $space;
+          color: $blue100;
+        }
+        input {
+          background-image: none;
+        }
+      }
+      &:nth-child(2) {
+        width: 35%;
+        margin-left: $space-one-half;
+        margin-bottom: 0;
+      }
+      .form-item__description {
+        display: none;
+      }
+    }
+  }
+}
