@@ -211,6 +211,7 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
     $element['daily_count']['#states'] = $this->getVisibilityStates($element, $fieldModes['daily_count'] ?? []);
 
     $element['weekdays'] = $this->getFieldByDay($rule);
+    $element['weekdays']['#attributes']['class'][] = 'weekdays';
     $element['weekdays']['#states'] = $this->getVisibilityStates($element, $fieldModes['weekdays'] ?? []);
     $element['weekdays']['#title_display'] = 'invisible';
 

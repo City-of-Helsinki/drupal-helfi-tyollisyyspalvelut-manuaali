@@ -11,19 +11,39 @@ migration_group: null
 label: 'Import services'
 source:
   plugin: csv
-  path: /tmp/services.csv
+  path: /app/services.csv
   delimiter: ','
   enclosure: '"'
   header_row_count: 1
   ids:
-    - 'Tunnuksen numerointi'
+    - 'Palvelun nimi'
+    - 'Vastuukunta (group)'
 process:
   title: 'Palvelun nimi'
+  field_description: 'Lyhyt kuvaus palvelusta (max. 250 merkkiä)'
+  field_implementation_extra_info: 
+    -
+      plugin: skip_on_empty
+      source: Toteutustapavalikko
+      method: process
+    -
+      plugin: explode
+      delimiter: ,
+    -
+      plugin: entity_generate
+      entity_type: taxonomy_term
+      value_key: name
+      bundle_key: vid
+      bundle: service_implementation_type
+      ignore_case: true
   field_service_set:
     -
       plugin: skip_on_empty
-      source: Palvelukokonaisuus
+      source: Palvelukategoriavalikko
       method: process
+    -
+      plugin: explode
+      delimiter: ,
     -
       plugin: entity_generate
       entity_type: taxonomy_term
@@ -32,18 +52,57 @@ process:
       bundle: service_set
       ignore_case: true
   field_service_implement: 'Palvelun toteutustapa'
-  field_service_links_external/0/uri:
+  field_service_other_info:
     -
       plugin: skip_on_empty
-      source: 'Palveluun liittyvät linkit'
+      source: 'Palveluun liittyvät julkiset linkit (linkin nimi: linkki)'
       method: process
     -
-      plugin: tpm_handle_url
+      plugin: tpm_url_file_paragraph
+  field_career_marking:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: URA-merkinnät
+    - 
+      plugin: tpm_text_with_toolbar_paragraph
+  field_statements:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: Asiakassuostumusvalikko
+    -
+      plugin: static_map
+      map:
+        Ei: no
+        Kyllä: yes
+  field_statements_unemployment: 'Lausunnot ja työttömyysetuus vapaa teksti'
+  field_measures_during_attendance: 'Toimenpiteet palveluun osallistumisen ajalta'
+  field_service_exceptions: Poikkeustilanteet
+  field_service_suits_job_search:
+    -
+      plugin: skip_on_empty
+      source: 'Palvelu soveltuu täydentäväksi työnhakukeskusteluksi-valikko (kyllä/ei)'
+      method: process
+    -
+      plugin: static_map
+      map:
+        Ei: no
+        Kyllä: yes
+  field_service_suits_info: 'Palvelu soveltuu täydentäväksi työnhakukeskusteluksi vapaa teksti'
+  field_service_benefits: 'Mitä hyötyä palveluun osallistumisesta on?'
+  field_attendance:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: Osallistumistieto
+    - 
+      plugin: tpm_text_with_toolbar_paragraph
   created:
     -
       plugin: skip_on_empty
-      source: 'Tallennettu ensimmäisen kerran'
       method: process
+      source: Muokkausajankohta
     -
       plugin: tpm_format_date
   changed:
@@ -57,38 +116,82 @@ process:
     plugin: static_map
     source: 'Palvelustatus '
     map:
-      Aktiivinen: published
+      Luonnos: draft
     default_value: draft
-  field_requirements:
+  field_client_consent:
     -
       plugin: skip_on_empty
       method: process
-      source: 'Palvelun edellytykset'
+      source: Asiakassuostumusvalikko
+    -
+      plugin: static_map
+      map:
+        Ei: 0
+        Kyllä: 1
+  field_field_client_consent_descr: Asiakassuostumukset
+  field_service_requirements: 'Palveluun osallistumisen edellytykset asiakkaalle kuvattuna (asiakkaan näkymä)'
+  field_service_req_speacialist: 'Palveluun osallistumisen edellytykset'
+  field_obligatoryness:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: 'Palvelun velvoittavuus-valikko'
+    -
+      plugin: tpm_handle_obligatoryness
+  field_obligatoryness_freetext: 'Palvelun velvoittavuus vapaa teksti'
+  field_guidance_to_service:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: 'Ohjaus palveluun'
     -
       plugin: tpm_content_paragraph
+  field_life_situations:
+    -
+      plugin: skip_on_empty
+      source: Elämäntilannevalikko
+      method: process
+    -
+      plugin: explode
+      delimiter: ,
+    -
+      plugin: entity_generate
+      entity_type: taxonomy_term
+      value_key: name
+      bundle_key: vid
+      bundle: life_situation
+      ignore_case: true
   field_target_group:
     -
-      plugin: skip_on_empty
-      method: process
-      source: Kohderyhmäkuvaus
-    -
       plugin: tpm_target_group_paragraph
-      source: Kohderyhmäkuvaus
-  field_service_guidance_guide:
-    plugin: tpm_content_paragraph
-    titles:
-      - Työohje
-      - 'Palvelun velvoittavuus'
-    source:
-      - 'Palveluun ohjaus työohjeet'
-      - 'Palvelun velvoittavuus'
+      description: 'Lyhyt kohderyhmäkuvaus'
+      age: 'Kohderyhmän ikä'
+      municipality: 'Palvelun kohderyhmän kunta'
+  field_accessibility:
+    -
+      plugin: skip_on_empty
+      source: Saavutettavuusvalikko
+      method: process
+    -
+      plugin: explode
+      delimiter: ,
+    -
+      plugin: entity_generate
+      entity_type: taxonomy_term
+      value_key: name
+      bundle_key: vid
+      bundle: service_accessibility
+      ignore_case: true
   field_service_price:
     -
-      plugin: skip_on_empty
-      method: process
-      source: 'Palvelun maksullisuus'
-    -
       plugin: tpm_service_price_paragraph
+      has_price: 'Palvelu on maksullinen (kyllä/ei)'
+      price: 'Palvelun hinta (€)'
+      description: 'Lisätietoa maksullisuudesta'
+  field_service_time_and_location:
+    -
+      plugin: tpm_service_time_location_paragraph
+      language: 'Palvelun kieli ja kielitaitovaatimus'
 destination:
   plugin: 'entity:node'
   default_bundle: service

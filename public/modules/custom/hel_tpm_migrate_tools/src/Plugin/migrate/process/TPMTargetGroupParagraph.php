@@ -26,6 +26,9 @@ class TPMTargetGroupParagraph extends ParagraphBase {
 
     $paragraph = $this->createParagraph($row, $destinationProperty, 'target_group', 0);
     $paragraph->field_description = $value;
+    // TODO: Probably needs lookup
+    $paragraph->field_municipality = $this->getConfigValues($row, 'municipality');
+    $paragraph->field_age_groups = $this->getConfigValues($row, 'age');
     $paragraph->save();
     $paragraphs[] = [
       'target_id' => $paragraph->id(),

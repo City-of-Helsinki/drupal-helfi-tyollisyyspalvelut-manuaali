@@ -4,24 +4,18 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
-    - field.field.node.basic_page.body
+    - field.field.node.basic_page.field_description
+    - field.field.node.basic_page.field_media_image
+    - field.field.node.basic_page.field_other_services
+    - field.field.node.basic_page.field_paragraph
     - node.type.basic_page
   module:
-    - text
     - user
 id: node.basic_page.teaser
 targetEntityType: node
 bundle: basic_page
 mode: teaser
 content:
-  body:
-    type: text_summary_or_trimmed
-    label: hidden
-    settings:
-      trim_length: 600
-    third_party_settings: {  }
-    weight: 101
-    region: content
   flag_cart:
     settings: {  }
     third_party_settings: {  }
@@ -46,5 +40,10 @@ hidden:
   entity_print_view_epub: true
   entity_print_view_pdf: true
   entity_print_view_word_docx: true
+  entitygroupfield: true
+  field_description: true
+  field_media_image: true
+  field_other_services: true
+  field_paragraph: true
   langcode: true
   search_api_excerpt: true

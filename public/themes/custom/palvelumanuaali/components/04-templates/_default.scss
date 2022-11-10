@@ -34,6 +34,7 @@ body {
 .right-column {
   margin-left: $space;
   margin-right: $space;
+  padding-bottom: 10rem;
   @include large {
     margin-left: 0;
     margin-right: 0;
@@ -64,11 +65,13 @@ body {
 }
 
 .main {
-  @include wrapper;
   display: block;
   position: relative;
   padding: 0;
-  margin-bottom: 4em;
+  margin-bottom: 10em;
+  @media only screen and (max-width: $large) {
+    margin-top: 0 !important;
+  }
 
   @include xs {
     padding: 0;
@@ -76,6 +79,11 @@ body {
 
   @include large {
     margin-top: $nav-height;
+    margin-right: $space-quadruple;
+    margin-left: $space-quadruple;
+  }
+  @include xxl {
+    margin: auto;
   }
 }
 
@@ -99,19 +107,28 @@ body {
 }
 
 .main-content {
-  max-width: 1464px;
+
   @include large {
     order: 2;
     &--with-sidebar {
-      margin-right: $space-quadruple;
-      margin-left: $space-quadruple;
-    }
+      .region-content {
+        margin-right: $space-quadruple;
+        margin-left: $space-quadruple;
+        #block-system-main-block {
+          max-width: 1464px;
+        }
+      }
   }
+}
 
-  @include xxl {
-    &--with-sidebar {
-      margin-right: $main-gutter;
-      margin-left: $main-gutter;
+@include xxl {
+  &--with-sidebar {
+      .region-content {
+        margin:auto;
+         #block-system-main-block {
+           margin: auto;
+         }
+      }
     }
   }
 }
@@ -124,33 +141,3 @@ body {
   color: clr(alt-header-color);
   margin-bottom: $space;
 }
-
-/*
- * Layout Using CSS Grid (NO IE11 support)
- * Remove Flexbox code above and uncomment this section to use CSS Grid.
-*/
-
-/* .main {
-  @include wrapper;
-
-  margin-bottom: 4em;
-
-  &--with-sidebar {
-    @include large {
-      display: grid;
-      grid-gap: $gutter;
-      grid-template-areas: "content sidebar";
-      grid-template-columns: $main-width #{$sidebar-width};
-    }
-  }
-}
-
-.main-sidebar {
-  grid-area: sidebar;
-  margin-bottom: $space-double;
-}
-
-.main-content {
-  grid-area: content;
-  width: 100%;
-} */

@@ -1,0 +1,26 @@
+uuid: 48c7354e-7292-4760-858f-2771ddfb0e97
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.full_width_card_lift.field_service_reference
+    - paragraphs.paragraphs_type.full_width_card_lift
+id: paragraph.full_width_card_lift.default
+targetEntityType: paragraph
+bundle: full_width_card_lift
+mode: default
+content:
+  field_service_reference:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: card_lift
+      link: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  search_api_excerpt: true
