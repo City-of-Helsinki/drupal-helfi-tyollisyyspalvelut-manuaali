@@ -2,10 +2,10 @@
 .group-form {
   @extend .offset-xxl-1;
   @extend .col-xxl-10;
-    display: grid;
+  display: grid;
   @include xl {
-      grid-template-columns: 7fr 3fr;
-      grid-column-gap: 24px;
+    grid-template-columns: 7fr 3fr;
+    grid-column-gap: 24px;
   }
   #edit-group-left-column {
     max-width: unset;
@@ -55,186 +55,145 @@
     }
   }
 
-  .page-controls {
-    margin-top: $space;
-    grid-row: 6;
-    @include xl {
-      grid-column: 1/2;
-      grid-row:3;
-
+  .form-item {
+    label {
+      font-size: 12px;
     }
-    .button-wrapper {
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
+  }
+  .field--type-boolean .form-item {
+    width: 100%;
+    display: flex;
+    input {
+      margin-right: 8px;
+      width: unset;
+    }
+    label {
+      font-weight: 400;
     }
   }
 
-    .form-item {
-      label {
-        font-size: 12px;
-        &:after {
-
-        }
-      }
+  .edit-advanced-form {
+    background-color: clr(text-inverse);
+    border-radius: 8px;
+    padding: $space;
+    max-width: unset;
+    @include large {
+      padding: 40px 32px 48px 32px;
+      max-width: inherit;
     }
-    .field--type-boolean .form-item {
-      width: 100%;
-      display: flex;
-      input {
-        margin-right: 8px;
-        width: unset;
-      }
-      label {
-        font-weight: 400;
-      }
-    }
-
-    .edit-advanced-form {
-      background-color: clr(text-inverse);
-      border-radius: 8px;
-      padding: $space;
-      max-width: unset;
-      @include large {
-        padding: 40px 32px 48px 32px;
-        max-width: inherit;
-      }
-      .vertical-tabs {
+    .vertical-tabs {
+      border: 0;
+      margin: 0;
+      li {
+        background-color: unset;
         border: 0;
+      }
+      .vertical-tabs__menu {
+        float: unset;
+        width: 100%;
         margin: 0;
-        li {
-          background-color: unset;
-          border: 0;
-        }
-        .vertical-tabs__menu {
-          float: unset;
-          width: 100%;
-          margin: 0;
-          border: 0;
-        }
+        border: 0;
       }
     }
-    .paragraph-type-top,
-    .filter-wrapper[data-drupal-selector*="format"] {
-      display: none;
-    }
+  }
+  .paragraph-type-top,
+  .filter-wrapper[data-drupal-selector*="format"] {
+    display: none;
+  }
 
-    fieldset > legend {
+  fieldset > legend {
+    width: 100%;
+  }
+
+  .form-item-checkbox {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    label {
+      order: 1;
+    }
+    .form-item__description {
+      order: 2;
       width: 100%;
     }
+    .form-checkbox{
+      margin-right: $space-one-half;
+      width: 16px;
+      height: 16px;
+    }
+  }
 
-    .form-item-checkbox {
-      display: flex;
-      flex-wrap: wrap;
-      label {
-        order: 1;
-      }
-      .form-item__description {
-        order: 2;
-        width: 100%;
-      }
+  .description {
+    margin-bottom: $space;
+  }
 
+  .table__cell .paragraph-type-top {
+    display: flex;
+  }
+
+  //add basic theming for sidebar horizontal-tabs
+  .horizontal-tabs {
+    .horizontal-tabs-list {
+      border-bottom: 2px solid clr(form-border);
+      padding-left: 16px;
+      background-color: unset;
+      margin-bottom: $space-triple;
     }
 
-    .description {
-      margin-bottom: $space;
-    }
+    .horizontal-tab-button {
+      border-radius: 8px 8px 0px 0px;
+      background-color: clr(background);
+      color: clr(background-section);
+      border: unset;
 
-    .table__cell .paragraph-type-top {
-      display: flex;
-    }
-
-    //add basic theming for sidebar horizontal-tabs
-    .horizontal-tabs {
-      .horizontal-tabs-list {
-          border-bottom: 2px solid clr(form-border);
-          padding-left: 16px;
-          background-color: unset;
-          margin-bottom: $space-triple;
-      }
-
-      .horizontal-tab-button {
-        border-radius: 8px 8px 0px 0px;
-        background-color: clr(background);
-        color: clr(background-section);
-        border: unset;
-
-        &.selected {
-          border-bottom: unset;
-          background-color: clr(background-section);
-
-          a {
-            color: clr(text-inverse);
-            padding: 12px 48px;
-          }
-        }
+      &.selected {
+        border-bottom: unset;
+        background-color: clr(background-section);
 
         a {
+          color: clr(text-inverse);
           padding: 12px 48px;
         }
       }
-    }
 
-    .form-item-checkbox {
-      display: flex;
-      align-items: center;
-      .form-checkbox{
-        margin-right: $space-one-half;
-        width: 16px;
-        height: 16px;
+      a {
+        padding: 12px 48px;
       }
     }
+  }
 
-    .h2 {
-      font-weight: 600;
-      font-size: 24px;
-      line-height: 32px;
-    }
+  .h2 {
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 32px;
+  }
 
-    .field-add-more-submit,
-    .paragraphs-icon-button {
-      @include button-medium;
-      @include button-no-color;
-      @include button-round-corners;
-      border: 2px solid $blue100;
-    }
+  .field-add-more-submit,
+  .paragraphs-icon-button {
+    @include button-medium;
+    @include button-no-color;
+    @include button-round-corners;
+    border: 2px solid $blue100;
+  }
 
 
-        table,
-        tbody,
-        thead,
-        tr,
-        td {
-          display: block;
-          width: 100%;
-          border: 0;
-        }
+  table,
+  tbody,
+  thead,
+  tr,
+  td {
+    display: block;
+    width: 100%;
+    border: 0;
+  }
 
-        em {
-          background: unset;
-          margin: 0px 4px;
-          opacity: unset;
-          cursor: default;
-        }
+  em {
+    background: unset;
+    margin: 0px 4px;
+    opacity: unset;
+    cursor: default;
+  }
 
-        .page-controls {
-          margin-top: $space;
-          grid-row: 6;
-          @include xl {
-            grid-column: 1/2;
-            grid-row:3;
-          }
-          .button-wrapper {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-          }
-        }
-  // .button {
-  //   @include button-medium;
-  //   @include button-color-blue;
-  //   @include button-round-corners;
-  // }
 }
 
 .form-background--white {
@@ -303,21 +262,6 @@
     }
   }
 }
-
-// .field--name-field-target-group {
-//  > fieldset {
-//    > legend {
-//      display: none !important;
-//    }
-//    .h2 {
-//      font-size: 12px !important;
-//      &::after {
-//
-//      }
-//    }
-//
-//    }
-//  }
 
  .field--name-field-dates {
    h4 {
