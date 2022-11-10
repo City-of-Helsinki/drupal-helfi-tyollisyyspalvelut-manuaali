@@ -20,6 +20,7 @@
   .form-item-checkbox {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     label {
       order: 1;
     }
@@ -27,7 +28,11 @@
       order: 2;
       width: 100%;
     }
-
+    .form-checkbox{
+      margin-right: $space-one-half;
+      width: 16px;
+      height: 16px;
+    }
   }
 
   .description {
@@ -76,16 +81,6 @@
       a {
         padding: 12px 48px;
       }
-    }
-  }
-
-  .form-item-checkbox {
-    display: flex;
-    align-items: center;
-    .form-checkbox{
-      margin-right: $space-one-half;
-      width: 16px;
-      height: 16px;
     }
   }
 
