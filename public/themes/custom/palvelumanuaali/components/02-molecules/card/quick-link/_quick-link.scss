@@ -3,6 +3,7 @@
   grid-template-columns: 1fr;
   margin: 0;
   column-gap: 24px;
+  row-gap: 24px;
   list-style: none;
   padding: 0;
   @include medium {
@@ -23,9 +24,10 @@
     }
   }
 }
+
 .quick-link {
   display: grid;
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: 72px 3fr;
 
   background-color: #fff;
   border-radius: 8px;
@@ -36,12 +38,15 @@
     height: 100%;
   }
 
+  >.icon {
+    position: absolute;
+    right: 24px;
+    bottom: 24px;
+  }
+
   .field--name-field-icon {
     span {
       display: block;
-      width: 45px;
-      height: 45px;
-      background-color: red;
     }
   }
   .field--name-field-title {
