@@ -22,6 +22,7 @@ third_party_settings:
         - field_hero_label
         - field_hero_text
         - field_paragraph
+        - field_quick_links
       label: ''
       region: content
       parent_name: ''
@@ -40,7 +41,7 @@ third_party_settings:
       label: details-sidebar
       region: content
       parent_name: ''
-      weight: 1
+      weight: 2
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -91,7 +92,7 @@ content:
     third_party_settings: {  }
   field_quick_links:
     type: paragraphs
-    weight: 51
+    weight: 5
     region: content
     settings:
       title: Paragraph
@@ -162,7 +163,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 2
+    weight: 3
     region: content
     settings:
       match_operator: CONTAINS
@@ -171,7 +172,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
   url_redirects:
-    weight: 11
+    weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }
