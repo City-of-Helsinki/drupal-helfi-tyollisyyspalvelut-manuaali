@@ -50,10 +50,10 @@
       //handle show/hide logic of service time
       $('.field--name-field-separate-time .form-checkbox').click(function () {
         if ($(this).is(":checked") == false) {
-          $(this).parent().parent().siblings('.field--name-field-dates').show();
+          $(this).parent().parent().siblings('.event-times').show();
         }
         else  {
-          $(this).parent().parent().siblings('.field--name-field-dates').hide();
+          $(this).parent().parent().siblings('.event-times').hide();
         }
       });
 
@@ -173,9 +173,9 @@
       function hideTime() {
         $('.field--name-field-separate-time .form-checkbox').each(function() {
           if ($(this).is(":checked")) {
-            $(this).parent().parent().siblings('.field--name-field-dates').hide();
+            $(this).parent().parent().siblings('.event-times').hide();
           } else {
-            $(this).parent().parent().siblings('.field--name-field-dates').show();
+            $(this).parent().parent().siblings('.event-times').show();
           }
         });
       }
