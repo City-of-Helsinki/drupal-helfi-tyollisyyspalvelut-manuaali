@@ -1,0 +1,28 @@
+<?php
+
+use Drupal\views\Plugin\views\query\QueryPluginBase;
+use Drupal\views\ViewExecutable;
+
+/**
+ * Implements hook_views_query_alter().
+ */
+function hel_tpm_search_views_query_alter(ViewExecutable $view, QueryPluginBase $query) {
+
+  // Remove municipality condition when exposed filter isn't selected.
+  if ($view->id() == 'service_search') {
+    $exposed_input = $view->getExposedInput();
+    if (!empty($exposed_input['field_municipality'])) {
+      return;
+    }
+    foreach ($query->getWhere() as $key => &$condition) {
+      if (empty($condition['conditions'])) {
+        continue;
+      }
+      foreach ($condition['conditions'] as $key2 => $cond) {
+        if ($cond[0] == 'field_municipality') {
+          unset($condition['conditions'][$key2]);
+        }
+      }
+    }
+  }
+}
