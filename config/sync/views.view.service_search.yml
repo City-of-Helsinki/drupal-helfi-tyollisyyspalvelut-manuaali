@@ -189,7 +189,7 @@ display:
               autosubmit: true
               autosubmit_exclude_textfield: false
               autosubmit_textfield_delay: 500
-              autosubmit_hide: true
+              autosubmit_hide: false
               input_required: false
               allow_secondary: true
               secondary_label: Lisävalinnat
@@ -217,14 +217,6 @@ display:
                 select_all_none: false
                 select_all_none_nested: false
                 display_inline: false
-              field_municipality:
-                plugin_id: bef_dropdown_multiselet
-                advanced:
-                  sort_options: false
-                  rewrite:
-                    filter_rewrite_values: ''
-                  collapsible: false
-                  is_secondary: false
               field_service_set:
                 plugin_id: bef_dropdown_multiselet
                 advanced:
@@ -281,6 +273,14 @@ display:
                     filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: true
+              field_municipality:
+                plugin_id: bef_dropdown_multiselet
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
       access:
         type: none
         options: {  }
@@ -1113,7 +1113,7 @@ display:
           empty: false
           content: '<strong>Hakutuloksia:</strong> <span class="total-number">@total</span>'
       footer: {  }
-      exposed_block: true
+      exposed_block: false
       display_extenders: {  }
       path: search
     cache_metadata:
