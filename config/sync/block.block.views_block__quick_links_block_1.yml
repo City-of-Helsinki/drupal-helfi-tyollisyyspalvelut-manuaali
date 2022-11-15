@@ -6,6 +6,7 @@ dependencies:
     - views.view.quick_links
   module:
     - context
+    - node
     - views
   theme:
     - palvelumanuaali
@@ -43,3 +44,14 @@ visibility:
     id: context
     negate: null
     values: ''
+  request_path_exclusion:
+    id: request_path_exclusion
+    negate: true
+    pages: "*/edit\r\n*/edit/"
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+    bundles:
+      landing_page: landing_page

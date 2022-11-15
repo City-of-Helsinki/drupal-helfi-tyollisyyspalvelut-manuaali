@@ -94,6 +94,27 @@
         margin: 0;
         border: 0;
       }
+      .vertical-tabs__menu-item a {
+        text-decoration: unset;
+        padding: 0;
+        margin-bottom: $space-double;
+      }
+      details {
+        .field--type-language,
+        .field--type-string,
+        .form-item {
+          display: flex;
+          align-content: center;
+          justify-content: space-between;
+          width: 100%;
+        }
+        .form-wrapper {
+          width: 100%;
+        }
+        .form-item__label {
+          margin-right: auto;
+        }
+      }
     }
   }
   .paragraph-type-top,
