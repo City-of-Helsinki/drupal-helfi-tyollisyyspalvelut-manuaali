@@ -89,7 +89,7 @@ third_party_settings:
       label: Specialist
       region: content
       parent_name: group_tabs
-      weight: 6
+      weight: 7
       format_type: tab
       format_settings:
         classes: ''
@@ -142,7 +142,7 @@ third_party_settings:
       label: POMA
       region: hidden
       parent_name: ''
-      weight: 18
+      weight: 20
       format_type: accordion
       format_settings:
         classes: ''
@@ -289,22 +289,22 @@ third_party_settings:
     group_details_sidebar:
       children:
         - langcode
-        - status
+        - moderation_state
         - created
         - uid
-        - moderation_state
-      label: Details
+        - status
+      label: 'Lisätiedot: '
       region: content
       parent_name: ''
       weight: 0
-      format_type: details
+      format_type: details_sidebar
       format_settings:
         classes: ''
-        show_empty_fields: false
+        show_empty_fields: true
         id: details-sidebar
-        open: false
+        open: true
         description: ''
-        required_fields: true
+        required_fields: false
         weight: 0
     group_service_obligatoryness:
       children:
@@ -313,7 +313,7 @@ third_party_settings:
       label: 'Palvelun velvoittavuus'
       region: content
       parent_name: group_specialist
-      weight: 9
+      weight: 8
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -457,13 +457,13 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 10
+    weight: 12
     region: content
     settings: {  }
     third_party_settings: {  }
   entitygroupfield:
     type: entitygroupfield_autocomplete_widget
-    weight: 7
+    weight: 8
     region: content
     settings:
       help_text: ''
@@ -473,7 +473,7 @@ content:
     third_party_settings: {  }
   field_accessibility:
     type: select2_entity_reference
-    weight: 10
+    weight: 19
     region: content
     settings:
       width: 100%
@@ -483,7 +483,7 @@ content:
     third_party_settings: {  }
   field_attendance:
     type: inline_entity_form_simple
-    weight: 8
+    weight: 9
     region: content
     settings:
       form_mode: default
@@ -516,7 +516,7 @@ content:
     third_party_settings: {  }
   field_contact_info:
     type: inline_entity_form_complex
-    weight: 6
+    weight: 7
     region: content
     settings:
       form_mode: default
@@ -595,7 +595,7 @@ content:
         maxlength_js_truncate_html: false
   field_guidance_to_service:
     type: inline_entity_form_simple
-    weight: 8
+    weight: 7
     region: content
     settings:
       form_mode: default
@@ -681,7 +681,7 @@ content:
     third_party_settings: {  }
   field_other_services:
     type: select2_entity_reference
-    weight: 10
+    weight: 11
     region: content
     settings:
       width: 100%
@@ -697,7 +697,7 @@ content:
     third_party_settings: {  }
   field_responsible_updatee:
     type: select2_entity_reference
-    weight: 9
+    weight: 10
     region: content
     settings:
       width: 100%
@@ -707,7 +707,7 @@ content:
     third_party_settings: {  }
   field_service_benefits:
     type: text_textarea
-    weight: 9
+    weight: 10
     region: content
     settings:
       rows: 5
@@ -741,7 +741,7 @@ content:
     third_party_settings: {  }
   field_service_implement:
     type: string_textarea
-    weight: 26
+    weight: 19
     region: content
     settings:
       rows: 5
@@ -779,7 +779,7 @@ content:
     third_party_settings: {  }
   field_service_producer:
     type: select2_entity_reference
-    weight: 8
+    weight: 9
     region: content
     settings:
       width: 100%
@@ -820,7 +820,7 @@ content:
     third_party_settings: {  }
   field_service_suits_info:
     type: text_textarea
-    weight: 6
+    weight: 7
     region: content
     settings:
       rows: 5
@@ -878,20 +878,20 @@ content:
     third_party_settings: {  }
   langcode:
     type: language_select
-    weight: 8
+    weight: 10
     region: content
     settings:
-      include_locked: true
+      include_locked: false
     third_party_settings: {  }
   moderation_state:
     type: moderation_state_default
-    weight: 12
+    weight: 11
     region: content
     settings: {  }
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 9
+    weight: 14
     region: content
     settings:
       display_label: true
@@ -909,7 +909,7 @@ content:
         maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
   uid:
     type: select2_entity_reference
-    weight: 11
+    weight: 13
     region: content
     settings:
       width: 100%
