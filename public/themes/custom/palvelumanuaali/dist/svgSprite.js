@@ -102,11 +102,13 @@ var map = {
 	"./icons/arrow-right.svg": "./images/icons/arrow-right.svg",
 	"./icons/arrow-sm-down-white.svg": "./images/icons/arrow-sm-down-white.svg",
 	"./icons/arrow-sm-down.svg": "./images/icons/arrow-sm-down.svg",
+	"./icons/bookhouse.svg": "./images/icons/bookhouse.svg",
 	"./icons/c-question.svg": "./images/icons/c-question.svg",
 	"./icons/calendar.svg": "./images/icons/calendar.svg",
 	"./icons/chain.svg": "./images/icons/chain.svg",
 	"./icons/check-white.svg": "./images/icons/check-white.svg",
 	"./icons/check.svg": "./images/icons/check.svg",
+	"./icons/checklist.svg": "./images/icons/checklist.svg",
 	"./icons/close.svg": "./images/icons/close.svg",
 	"./icons/cogwheel.svg": "./images/icons/cogwheel.svg",
 	"./icons/content-icons/uEA01-door.svg": "./images/icons/content-icons/uEA01-door.svg",
@@ -133,6 +135,7 @@ var map = {
 	"./icons/exit.svg": "./images/icons/exit.svg",
 	"./icons/external.svg": "./images/icons/external.svg",
 	"./icons/facebook.svg": "./images/icons/facebook.svg",
+	"./icons/favorites.svg": "./images/icons/favorites.svg",
 	"./icons/file_1.svg": "./images/icons/file_1.svg",
 	"./icons/heart-minus.svg": "./images/icons/heart-minus.svg",
 	"./icons/heart.svg": "./images/icons/heart.svg",
@@ -346,6 +349,26 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./images/icons/bookhouse.svg":
+/*!************************************!*\
+  !*** ./images/icons/bookhouse.svg ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+      id: "bookhouse-usage",
+      viewBox: "0 0 48 48",
+      url: __webpack_require__.p + "../dist/icons.svg#bookhouse",
+      toString: function () {
+        return this.url;
+      }
+    });
+
+/***/ }),
+
 /***/ "./images/icons/c-question.svg":
 /*!*************************************!*\
   !*** ./images/icons/c-question.svg ***!
@@ -439,6 +462,26 @@ __webpack_require__.r(__webpack_exports__);
       id: "check-usage",
       viewBox: "0 0 16 12",
       url: __webpack_require__.p + "../dist/icons.svg#check",
+      toString: function () {
+        return this.url;
+      }
+    });
+
+/***/ }),
+
+/***/ "./images/icons/checklist.svg":
+/*!************************************!*\
+  !*** ./images/icons/checklist.svg ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+      id: "checklist-usage",
+      viewBox: "0 0 48 48",
+      url: __webpack_require__.p + "../dist/icons.svg#checklist",
       toString: function () {
         return this.url;
       }
@@ -959,6 +1002,26 @@ __webpack_require__.r(__webpack_exports__);
       id: "facebook-usage",
       viewBox: "0 0 264 512",
       url: __webpack_require__.p + "../dist/icons.svg#facebook",
+      toString: function () {
+        return this.url;
+      }
+    });
+
+/***/ }),
+
+/***/ "./images/icons/favorites.svg":
+/*!************************************!*\
+  !*** ./images/icons/favorites.svg ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+      id: "favorites-usage",
+      viewBox: "0 0 48 48",
+      url: __webpack_require__.p + "../dist/icons.svg#favorites",
       toString: function () {
         return this.url;
       }
