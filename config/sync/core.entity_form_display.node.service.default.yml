@@ -124,7 +124,7 @@ third_party_settings:
       label: Consent
       region: hidden
       parent_name: group_poma
-      weight: 17
+      weight: 2
       format_type: accordion
       format_settings:
         classes: ''
@@ -142,7 +142,7 @@ third_party_settings:
       label: POMA
       region: hidden
       parent_name: ''
-      weight: 20
+      weight: 16
       format_type: accordion
       format_settings:
         classes: ''
@@ -291,7 +291,6 @@ third_party_settings:
         - langcode
         - moderation_state
         - created
-        - uid
         - status
       label: 'Lisätiedot: '
       region: content
@@ -909,7 +908,7 @@ content:
         maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
   uid:
     type: select2_entity_reference
-    weight: 13
+    weight: 15
     region: content
     settings:
       width: 100%

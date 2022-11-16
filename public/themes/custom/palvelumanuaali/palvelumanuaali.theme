@@ -151,7 +151,6 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id) {
   //
    if ($form_id == 'node_service_edit_form' || $form_id == 'node_landing_page_edit_form' || $form_id == 'node_basic_page_edit_form' ) {
 
-     dvm($form);
      // combinations of these will be used to adjust the details block
      // $form['meta']['#access'] = FALSE;
       $form['revision_information']['#access'] = FALSE;

@@ -71,7 +71,7 @@
       font-weight: 400;
     }
   }
-
+  // generic theming for the details sidebar
   .edit-advanced-form {
     background-color: clr(text-inverse);
     border-radius: 8px;
@@ -80,6 +80,10 @@
     @include large {
       padding: 40px 32px 48px 32px;
       max-width: inherit;
+    }
+    label {
+      font-weight: 400;
+      font-size: $small-caption;
     }
     .vertical-tabs {
       border: 0;
@@ -100,6 +104,7 @@
         margin-bottom: $space-double;
       }
       details {
+        font-size: $small-caption;
         .field--type-language,
         .field--type-string,
         .form-item {
@@ -117,6 +122,7 @@
       }
     }
   }
+
   .paragraph-type-top,
   .filter-wrapper[data-drupal-selector*="format"] {
     display: none;
