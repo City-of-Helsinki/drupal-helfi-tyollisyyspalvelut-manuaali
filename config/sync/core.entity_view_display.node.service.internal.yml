@@ -19,6 +19,7 @@ dependencies:
     - field.field.node.service.field_life_situations
     - field.field.node.service.field_links_and_attachments
     - field.field.node.service.field_measures_during_attendance
+    - field.field.node.service.field_municipality_guidance
     - field.field.node.service.field_municipality_specific
     - field.field.node.service.field_obligatoryness
     - field.field.node.service.field_obligatoryness_freetext
@@ -82,7 +83,7 @@ third_party_settings:
       label: 'Palvelun velvoittavuus'
       parent_name: ''
       region: content
-      weight: 3
+      weight: 4
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--service-requirements'
@@ -102,7 +103,7 @@ third_party_settings:
       label: 'Lausunnot ja työttömyysetuus'
       parent_name: ''
       region: content
-      weight: 5
+      weight: 6
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--statements-and-jobprofits'
@@ -121,7 +122,7 @@ third_party_settings:
       label: 'Merkinnät asiakastietojärjestelmään'
       parent_name: ''
       region: content
-      weight: 4
+      weight: 5
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--markings-to-system'
@@ -140,7 +141,7 @@ third_party_settings:
       label: 'Toimenpiteet osallistumisen ajalta'
       parent_name: ''
       region: content
-      weight: 6
+      weight: 7
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--measures-during'
@@ -160,7 +161,7 @@ third_party_settings:
       label: Poikkeustilanteet
       parent_name: ''
       region: content
-      weight: 7
+      weight: 8
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--exceptions'
@@ -180,7 +181,7 @@ third_party_settings:
       label: ' Täydentävä työnhakukeskustelu'
       parent_name: ''
       region: content
-      weight: 8
+      weight: 9
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--complementary-job-search'
@@ -190,6 +191,25 @@ third_party_settings:
         show_label: true
         label_element: h4
         label_element_classes: 'group-label--h4 h4 group-label'
+        attributes: ''
+        effect: none
+        speed: fast
+    group_municipal_guidance:
+      children:
+        - field_municipality_guidance
+      label: 'Kuntakohtaiset ohjeet'
+      parent_name: ''
+      region: content
+      weight: 3
+      format_type: html_element
+      format_settings:
+        classes: service-group
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: true
+        label_element: h5
+        label_element_classes: 'group-label--h5 h5 group-label'
         attributes: ''
         effect: none
         speed: fast
@@ -223,7 +243,7 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 12
+    weight: 11
     region: content
   field_measures_during_attendance:
     type: text_default
@@ -231,6 +251,15 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 7
+    region: content
+  field_municipality_guidance:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 5
     region: content
   field_municipality_specific:
     type: entity_reference_revisions_entity_view
@@ -260,7 +289,7 @@ content:
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 11
+    weight: 10
     region: content
   field_service_exceptions:
     type: text_default
