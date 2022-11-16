@@ -156,6 +156,7 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id) {
      // $form['meta']['#access'] = FALSE;
       $form['revision_information']['#access'] = FALSE;
       $form['meta']['published']['#access'] = FALSE;
+      $form['menu']['#access'] = FALSE;
       $form['meta']['#type'] = 'container';
       $form['meta']['#group'] = 'group_details_sidebar';
   }
