@@ -192,8 +192,8 @@
 
       // hide consent description on the third a page of service entity form.
       function hideConsent() {
-        let consentCheckbox = '.field--name-field-client-consent .form-item .form-checkbox');
-        let fieldDescription = $(consentCheckbox).parent().parent().siblings('.field--name-field-field-client-consent-descr')
+        let consentCheckbox = '.field--name-field-client-consent .form-item .form-checkbox';
+        let fieldDescription = $(consentCheckbox).parent().parent().siblings('.field--name-field-field-client-consent-descr');
 
         if ($(consentCheckbox).is(":checked") === false) {
           $(fieldDescription).hide();
