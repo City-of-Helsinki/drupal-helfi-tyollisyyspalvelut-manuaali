@@ -1,6 +1,44 @@
 .content-sidebar {
-  border-left: 4px solid clr(background);
+  word-break: break-all;
+  p {
+    font-size: 14px;
+  }
   @include xl {
     padding: $space-one-and-half 0 $space-one-and-half $space-double;
+    border-left: 4px solid clr(background);
+  }
+  .field {
+    font-size: 12px;
+    @include xl {
+      font-size: 14px;
+    }
+  }
+
+  .field--name-field-contact-info-external,
+  .field--name-field-contact-info {
+    display: flex;
+    flex-wrap: wrap;
+    @include xl {
+      display: block;
+    }
+    >.field__item {
+      @extend .col-12;
+      @extend .col-lg-6;
+      @extend .col-xl-12;
+      margin-bottom: $space-double;
+    }
+  }
+  .field--name-field-service-producer,
+  .field--name-entitygroupfield {
+    .field__label {
+      margin-bottom: $space;
+    }
+    >.field__items >.field__item,
+    >.field__item {
+      @extend .col-12;
+      @extend .col-lg-6;
+      @extend .col-xl-12;
+      margin-bottom: $space-double;
+    }
   }
 }

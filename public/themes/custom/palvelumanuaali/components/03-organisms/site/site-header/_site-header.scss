@@ -1,11 +1,27 @@
+
 .header {
-  @include large {
-    position: inherit;
-    bottom: unset;
+  transition: transform 0.5s;
+
+  @media only screen and (max-width: $large) {
+    transform: unset !important;
   }
+
+  @include large {
+    position: fixed;
+    z-index: 200;
+    width: 100%;
+  }
+
+  &--hidden {
+    @include large {
+
+      box-shadow: none;
+    }
+  }
+
   &__inner {
     @include wrapper;
-
+    max-width: 100%;
     display: flex;
     flex-flow: column nowrap;
 
@@ -32,7 +48,13 @@
       bottom: unset;
       padding: $space-double $space-double $space-one-and-half $space-double;
       margin-left: unset;
+      &.filters-open {
+        @include xl {
+          padding-bottom: $space-four-and-half;
+        }
+      }
     }
+
   }
 
   &__branding {
@@ -43,29 +65,38 @@
     border-top-right-radius: 47px;
   }
 
-  #hel-tpm-search-autocomplete {
-    display: none;
-    @include large {
-      width: 374px;
-      display: block;
-    }
-  }
-
 }
 
+.header {
+  #block-suosikit,
+  #block-kielenvaihtaja,
+  #block-kirjautuminen,
+  #block-kayttajavalikko  {
+    @include large {
+      position: absolute;
+    }
+  }
+  #block-suosikit {@include large {left:13px; top: 50px; z-index: 100;}}
+  #block-suosikit {@include xl {left:50px;}}
+  #block-kielenvaihtaja {@include large {left:120px; top:50px; z-index: 100;}}
+  #block-kielenvaihtaja {@include xl {left:180px;}}
+  #block-kirjautuminen {@include large {right:20px; top: 33px; z-index: 100;}}
+  #block-kirjautuminen {@include xl {right:50px;}}
+  #block-kayttajavalikko {@include large {right:20px; top: 25px; z-index: 100;}}
+  #block-kayttajavalikko {@include xl {right:50px;}}
+
+}
 
 .header {
   #block-views-exposed-filter-block-service-search-special-search-filters,
   #block-nakyvakaavakeservice-searchspecial-search-filters,
   #block-nakyvakaavakeservice-searchsearch-page-filters,
   #block-views-exposed-filter-block-service-search-block-1 {
-    display: none;
     > h2 {
       @extend .visually-hidden;
     }
     @include large {
       width: 100%;
-      display: block;
     }
   }
 }
@@ -80,14 +111,11 @@
   justify-content: center;
   @include large {
     flex-direction: row;
-    font-size: 15px;
+    font-size: 16px;
   }
 }
 
 #block-suosikit {
-  @include large {
-    //top: 50px;
-  }
   .content {
     @include large {
       display: flex;
@@ -190,10 +218,6 @@
 }
 
 #block-kirjautuminen {
-  @include large {
-    // position: absolute;
-    // right: 50px;
-  }
   .dropdown-menu {
     margin-top: 70px !important;
     border-radius: 8px;
@@ -267,9 +291,6 @@
   .search-history-wrapper,
   .hel-search-autocomplete {
     max-width: unset;
-    @include large {
-      max-width: unset;
-    }
   }
 }
 
@@ -352,12 +373,11 @@
     padding-top: 12px;
     padding-bottom: 12px;
     padding-left: 24px;
-    display: none;
+    width: 100%;
+    max-width: 300px;
     @include large {
-      max-width: 374px;
     }
-
-    @include  xl {
-      max-width: 576px;
+    @include xl {
+      max-width: none;
     }
 }

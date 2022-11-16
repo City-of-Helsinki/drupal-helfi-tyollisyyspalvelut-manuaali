@@ -76,6 +76,13 @@ $button-colors: (
   }
 }
 
+@mixin button-blue-bordered-base {
+  @include button-base;
+  @include button-medium;
+  @include button-round-corners;
+  border: 2px solid clr(background-section);
+}
+
 // Button color variations
 // Note how we include dark mode options for each
 @mixin button-color-primary {
@@ -110,6 +117,15 @@ $button-colors: (
   }
 }
 
+@mixin background-white {
+  background-color: clr(text-inverse);
+  border-color: clr(light-border);
+  color: clr(alt-header-color);
+  &:hover {
+    border-color: clr(alt-header-color);
+  }
+}
+
 
 // Button size variations
 @mixin button-medium {
@@ -127,6 +143,10 @@ $button-colors: (
   line-height: 1;
 }
 
+@mixin full-width {
+  width: 100%;
+}
+
 
 //button shape variations
 @mixin button-round-corners {
@@ -136,6 +156,26 @@ $button-colors: (
 @mixin button-round-top {
   border-radius: 8px 8px 0 0;
 }
+
+
+//button symbol variations
+@mixin arrow-right {
+  &::after {
+    @include icons();
+    content: "\EA12";
+    margin-left: $space;
+  }
+}
+
+@mixin arrow-left {
+  &::before {
+    @include icons();
+    content: "\EA11";
+    margin-right: $space;
+  }
+}
+
+//theming
 
 .button {
   @include button-base;
@@ -175,6 +215,30 @@ $button-colors: (
     &:disabled {
 
     }
+  }
+
+  &--round-corners {
+    @include button-round-corners;
+  }
+
+  &--blue-bordered {
+    @include button-blue-bordered-base;
+  }
+
+  &--full-width {
+    @include full-width;
+  }
+
+  &--background-white {
+    @include background-white;
+  }
+
+  &--arrow-right {
+    @include arrow-right;
+  }
+
+  &--arrow-left {
+    @include arrow-left;
   }
 }
 
@@ -317,6 +381,38 @@ $button-colors: (
       @include icons;
       content: "\EA10";
       margin-left: 8px;
+    }
+  }
+}
+
+/**
+there is possibility to add classes button--blue-bordered,
+ --full-width and --arrow-right straight to the field configs,
+ but they are added here for now
+**/
+.field--name-field-instructions-markup {
+    grid-row: 5;
+  @include xl {
+    grid-column: 2/3;
+    grid-row:2;
+  }
+  a {
+    @include button-blue-bordered-base;
+    @include button-large;
+    @include background-white;
+    @include arrow-right;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    line-height: 24px;
+  }
+}
+
+.node-form {
+  >.form-actions {
+    >.button {
+        @include button-medium;
+        @include button-color-blue;
+        @include button-round-corners;
     }
   }
 }

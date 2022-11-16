@@ -1,0 +1,21 @@
+uuid: ce783ef1-9dc8-4f5d-84c6-632e754416ae
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_statements
+    - node.type.service
+  module:
+    - options
+id: node.service.field_statements
+field_name: field_statements
+entity_type: node
+bundle: service
+label: 'Palveluun osallistumisesta lausutaan'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

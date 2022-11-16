@@ -4,29 +4,17 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.card_lift
-    - field.field.node.landing_page.body
     - field.field.node.landing_page.field_hero_label
-    - field.field.node.landing_page.field_hero_link
-    - field.field.node.landing_page.field_hero_media
     - field.field.node.landing_page.field_hero_text
     - field.field.node.landing_page.field_paragraph
     - node.type.landing_page
   module:
-    - text
     - user
 id: node.landing_page.card_lift
 targetEntityType: node
 bundle: landing_page
 mode: card_lift
 content:
-  body:
-    type: text_summary_or_trimmed
-    label: hidden
-    settings:
-      trim_length: 100
-    third_party_settings: {  }
-    weight: 1
-    region: content
   field_hero_label:
     type: string
     label: hidden
@@ -59,8 +47,7 @@ hidden:
   entity_print_view_epub: true
   entity_print_view_pdf: true
   entity_print_view_word_docx: true
-  field_hero_link: true
-  field_hero_media: true
+  entitygroupfield: true
   field_hero_text: true
   field_paragraph: true
   langcode: true

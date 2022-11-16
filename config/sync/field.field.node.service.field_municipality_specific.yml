@@ -1,0 +1,67 @@
+uuid: 90fd7f5b-3340-43f5-a3f8-20ec862a9a9d
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_municipality_specific
+    - node.type.service
+    - paragraphs.paragraphs_type.municipality_guide
+  module:
+    - entity_reference_revisions
+id: node.service.field_municipality_specific
+field_name: field_municipality_specific
+entity_type: node
+bundle: service
+label: 'Kuntakohtaiset poikkeustilanteet'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      municipality_guide: municipality_guide
+    negate: 0
+    target_bundles_drag_drop:
+      contact_information:
+        weight: 14
+        enabled: false
+      content:
+        weight: 15
+        enabled: false
+      content_link_file:
+        weight: 16
+        enabled: false
+      content_link_file_guide:
+        weight: 17
+        enabled: false
+      content_list_lift_header_icon:
+        weight: 18
+        enabled: false
+      link:
+        weight: 19
+        enabled: false
+      long_text_field_with_toolbar:
+        weight: 20
+        enabled: false
+      municipality_guide:
+        weight: 21
+        enabled: true
+      service_language:
+        weight: 22
+        enabled: false
+      service_price:
+        weight: 23
+        enabled: false
+      service_time_and_place:
+        weight: 24
+        enabled: false
+      target_group:
+        weight: 25
+        enabled: false
+      url_and_file:
+        weight: 26
+        enabled: false
+field_type: entity_reference_revisions

@@ -133,7 +133,6 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
     /** @var \Drupal\date_recur\Plugin\Field\FieldType\DateRecurFieldItemList|\Drupal\date_recur\Plugin\Field\FieldType\DateRecurItem[] $items */
     $elementParents = array_merge($element['#field_parents'], [$this->fieldDefinition->getName(), $delta]);
     $element['#element_validate'][] = [static::class, 'validateModularWidget'];
-   // $element['#after_build'][] = [static::class, 'afterBuildModularWidget'];
     $element['#theme'] = 'hel_tpm_editorial_date_recur_custom_widget';
     $element['#theme_wrappers'][] = 'form_element';
 
@@ -212,6 +211,7 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
     $element['daily_count']['#states'] = $this->getVisibilityStates($element, $fieldModes['daily_count'] ?? []);
 
     $element['weekdays'] = $this->getFieldByDay($rule);
+    $element['weekdays']['#attributes']['class'][] = 'weekdays';
     $element['weekdays']['#states'] = $this->getVisibilityStates($element, $fieldModes['weekdays'] ?? []);
     $element['weekdays']['#title_display'] = 'invisible';
 

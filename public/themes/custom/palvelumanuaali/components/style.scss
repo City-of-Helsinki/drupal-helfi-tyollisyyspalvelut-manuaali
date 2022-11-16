@@ -1,18 +1,6 @@
 // Libraries
 @import '~normalize.css/normalize';
 @import '~breakpoint-sass/stylesheets/breakpoint';
-@import '../../../../libraries/bootstrap-dist/css/bootstrap.min.css';
-@import '../../../../../vendor/twbs/bootstrap/scss/bootstrap-grid.scss';
-
-
-
-// Components
-@import '00-base/**/*.scss';
-@import '01-atoms/**/*.scss';
-@import '02-molecules/**/*.scss';
-@import '03-organisms/**/*.scss';
-@import '04-templates/**/*.scss';
-@import '05-pages/content-types/**/*.scss';
 
 $grid-breakpoints: (
         xs: 0,
@@ -30,6 +18,21 @@ $container-max-widths: (
         xl: 1220px,
         xxl: 1610px
 );
+
+@import '../../../../../vendor/twbs/bootstrap/scss/bootstrap-grid.scss';
+@import '../../../../libraries/bootstrap-dist/css/bootstrap.min.css';
+
+
+
+
+// Components
+@import '00-base/**/*.scss';
+@import '01-atoms/**/*.scss';
+@import '02-molecules/**/*.scss';
+@import '03-organisms/**/*.scss';
+@import '04-templates/**/*.scss';
+@import '05-pages/content-types/**/*.scss';
+
 
 @font-face {
   font-family: "icons";

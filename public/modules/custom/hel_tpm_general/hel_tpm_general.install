@@ -25,3 +25,81 @@ function hel_tpm_general_update_8102() {
     $field_storage->delete();
   }
 }
+
+/**
+ * Remove the field attendance and service excecutions fields.
+ */
+function hel_tpm_general_update_8103() {
+  $field_config = FieldConfig::loadByName('node', 'service', 'field_attendance');
+  if ($field_config) {
+    $field_config->delete();
+  }
+
+  $field_config2 = FieldConfig::loadByName('node', 'service', 'field_service_execution');
+  if ($field_config2) {
+    $field_config2->delete();
+  }
+
+  $field_storage = FieldStorageConfig::loadByName('node', 'field_attendance');
+  if ($field_storage) {
+    $field_storage->delete();
+  }
+
+
+  $field_storage2 = FieldStorageConfig::loadByName('node', 'field_service_execution');
+    if ($field_storage2) {
+      $field_storage2->delete();
+  }
+}
+
+/**
+ * Remove the field statements unemployement and service requirement fields.
+ */
+function hel_tpm_general_update_8104() {
+  $field_config = FieldConfig::loadByName('node', 'service', 'field_service_requirements');
+  if ($field_config) {
+    $field_config->delete();
+  }
+
+  $field_config = FieldConfig::loadByName('node', 'service', 'field_statements_unemployment');
+  if ($field_config) {
+    $field_config->delete();
+  }
+
+
+$field_storage = FieldStorageConfig::loadByName('node', 'field_service_requirements');
+  if ($field_storage) {
+    $field_storage->delete();
+}
+
+  $field_storage = FieldStorageConfig::loadByName('node', 'field_statements_unemployment');
+    if ($field_storage) {
+      $field_storage->delete();
+  }
+}
+
+/**
+ * Remove the field service_implement .
+ */
+function hel_tpm_general_update_8105() {
+  $field_config = FieldConfig::loadByName('node', 'service', 'field_service_implement');
+  if ($field_config) {
+    $field_config->delete();
+  }
+
+$field_storage = FieldStorageConfig::loadByName('node', 'field_service_implement ');
+  if ($field_storage) {
+    $field_storage->delete();
+  }
+}
+
+/**
+ * Remove content list with header icon paragraph entities.
+ */
+function hel_tpm_general_update_8107() {
+  $storage = \Drupal::entityTypeManager()->getStorage('paragraph');
+  $paragraphs = $storage->loadByProperties(['type' => 'content_list_lift_header_icon']);
+  foreach ($paragraphs as $paragraph) {
+    $paragraph->delete();
+  }
+}

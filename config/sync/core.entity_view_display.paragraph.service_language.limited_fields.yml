@@ -1,0 +1,28 @@
+uuid: 1db18ee5-fd3f-46b3-b18d-b2a210c7b80e
+langcode: fi
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.limited_fields
+    - field.field.paragraph.service_language.field_language
+    - field.field.paragraph.service_language.field_level
+    - paragraphs.paragraphs_type.service_language
+id: paragraph.service_language.limited_fields
+targetEntityType: paragraph
+bundle: service_language
+mode: limited_fields
+content:
+  field_language:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  field_level: true
+  search_api_excerpt: true

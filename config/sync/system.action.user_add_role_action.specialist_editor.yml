@@ -1,0 +1,14 @@
+uuid: 2d50bc64-e7cf-4b3e-8af8-207860300afe
+langcode: fi
+status: true
+dependencies:
+  config:
+    - user.role.specialist_editor
+  module:
+    - user
+id: user_add_role_action.specialist_editor
+label: 'Add the Specialist editor role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: specialist_editor

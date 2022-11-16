@@ -87,9 +87,10 @@
   card__caption__status: published_state|default('Published'|t),
   card__caption__status__modifiers: status_modifiers,
   card__heading: label,
-  card__heading__link: url,
   card__body: content.field_description,
   card__date: greeting_text ~ node.changed.value|date("d.m.Y"),
+  card__link_wrapped: 'yes',
+  card__button__url: url,
 } %}
 {% block card__img %}
   {{ content.moderation_state }}

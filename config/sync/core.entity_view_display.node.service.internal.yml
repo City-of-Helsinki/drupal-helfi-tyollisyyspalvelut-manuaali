@@ -5,7 +5,6 @@ dependencies:
   config:
     - core.entity_view_mode.node.internal
     - field.field.node.service.field_accessibility
-    - field.field.node.service.field_archiving_guide
     - field.field.node.service.field_attendance
     - field.field.node.service.field_career_marking
     - field.field.node.service.field_client_consent
@@ -13,45 +12,326 @@ dependencies:
     - field.field.node.service.field_contact_info_external
     - field.field.node.service.field_contact_info_internal
     - field.field.node.service.field_description
-    - field.field.node.service.field_exceptions
     - field.field.node.service.field_field_client_consent_descr
     - field.field.node.service.field_guidance_to_service
     - field.field.node.service.field_implementation_extra_info
+    - field.field.node.service.field_instructions_markup
     - field.field.node.service.field_life_situations
+    - field.field.node.service.field_links_and_attachments
+    - field.field.node.service.field_measures_during_attendance
+    - field.field.node.service.field_municipality_guidance
+    - field.field.node.service.field_municipality_specific
+    - field.field.node.service.field_obligatoryness
+    - field.field.node.service.field_obligatoryness_freetext
     - field.field.node.service.field_other_services
     - field.field.node.service.field_poma_applicable
     - field.field.node.service.field_poma_applicable_descriptio
-    - field.field.node.service.field_requirements
+    - field.field.node.service.field_related_archive
     - field.field.node.service.field_responsible_updatee
     - field.field.node.service.field_service_benefits
+    - field.field.node.service.field_service_exceptions
     - field.field.node.service.field_service_execution
     - field.field.node.service.field_service_implement
     - field.field.node.service.field_service_links_external
     - field.field.node.service.field_service_links_internal
-    - field.field.node.service.field_service_obligatoryness
     - field.field.node.service.field_service_other_info
     - field.field.node.service.field_service_price
     - field.field.node.service.field_service_producer
     - field.field.node.service.field_service_radioactivity
+    - field.field.node.service.field_service_req_speacialist
     - field.field.node.service.field_service_requirements
     - field.field.node.service.field_service_set
+    - field.field.node.service.field_service_suits_info
+    - field.field.node.service.field_service_suits_job_search
     - field.field.node.service.field_service_time_and_location
+    - field.field.node.service.field_statements
     - field.field.node.service.field_statements_unemployment
     - field.field.node.service.field_target_group
     - node.type.service
   module:
+    - entity_reference_revisions
+    - field_group
+    - options
+    - text
     - user
+third_party_settings:
+  field_group:
+    group_guidance_to_server:
+      children:
+        - field_service_req_speacialist
+        - field_guidance_to_service
+      label: 'Ohjaus palveluun'
+      parent_name: ''
+      region: content
+      weight: 2
+      format_type: html_element
+      format_settings:
+        classes: 'service-group service-group--guidance-to-service'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: true
+        label_element: h4
+        label_element_classes: 'group-label--h4 h4 group-label'
+        attributes: ''
+        effect: none
+        speed: fast
+    group_service_obligatoryness:
+      children:
+        - field_obligatoryness
+        - field_obligatoryness_freetext
+      label: 'Palvelun velvoittavuus'
+      parent_name: ''
+      region: content
+      weight: 4
+      format_type: html_element
+      format_settings:
+        classes: 'service-group service-group--service-requirements'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: true
+        label_element: h4
+        label_element_classes: 'group-label--h4 h4 group-label'
+        attributes: ''
+        effect: none
+        speed: fast
+    group_statements_unemploym:
+      children:
+        - field_statements
+        - field_statements_unemployment
+      label: 'Lausunnot ja työttömyysetuus'
+      parent_name: ''
+      region: content
+      weight: 6
+      format_type: html_element
+      format_settings:
+        classes: 'service-group service-group--statements-and-jobprofits'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: true
+        label_element: h4
+        label_element_classes: 'group-label--h4 h4 group-label'
+        attributes: ''
+        effect: none
+        speed: fast
+    group_career_marking:
+      children:
+        - field_career_marking
+      label: 'Merkinnät asiakastietojärjestelmään'
+      parent_name: ''
+      region: content
+      weight: 5
+      format_type: html_element
+      format_settings:
+        classes: 'service-group service-group--markings-to-system'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: true
+        label_element: h4
+        label_element_classes: 'group-label--h4 h4 group-label'
+        attributes: ''
+        effect: none
+        speed: fast
+    group_measures_during:
+      children:
+        - field_measures_during_attendance
+      label: 'Toimenpiteet osallistumisen ajalta'
+      parent_name: ''
+      region: content
+      weight: 7
+      format_type: html_element
+      format_settings:
+        classes: 'service-group service-group--measures-during'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: true
+        label_element: h4
+        label_element_classes: 'group-label--h4 h4 group-label'
+        attributes: ''
+        effect: none
+        speed: fast
+    group_exceptions:
+      children:
+        - field_service_exceptions
+        - field_municipality_specific
+      label: Poikkeustilanteet
+      parent_name: ''
+      region: content
+      weight: 8
+      format_type: html_element
+      format_settings:
+        classes: 'service-group service-group--exceptions'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: true
+        label_element: h4
+        label_element_classes: 'group-label--h4 h4 group-label'
+        attributes: ''
+        effect: none
+        speed: fast
+    group_complementary_job_search:
+      children:
+        - field_service_suits_job_search
+        - field_service_suits_info
+      label: ' Täydentävä työnhakukeskustelu'
+      parent_name: ''
+      region: content
+      weight: 9
+      format_type: html_element
+      format_settings:
+        classes: 'service-group service-group--complementary-job-search'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: true
+        label_element: h4
+        label_element_classes: 'group-label--h4 h4 group-label'
+        attributes: ''
+        effect: none
+        speed: fast
+    group_municipal_guidance:
+      children:
+        - field_municipality_guidance
+      label: 'Kuntakohtaiset ohjeet'
+      parent_name: ''
+      region: content
+      weight: 3
+      format_type: html_element
+      format_settings:
+        classes: service-group
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: true
+        label_element: h5
+        label_element_classes: 'group-label--h5 h5 group-label'
+        attributes: ''
+        effect: none
+        speed: fast
 id: node.service.internal
 targetEntityType: node
 bundle: service
 mode: internal
 content:
-  field_description:
-    type: basic_string
+  field_career_marking:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_guidance_to_service:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_links_and_attachments:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 11
+    region: content
+  field_measures_during_attendance:
+    type: text_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 1
+    weight: 7
+    region: content
+  field_municipality_guidance:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_municipality_specific:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 9
+    region: content
+  field_obligatoryness:
+    type: list_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_obligatoryness_freetext:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_related_archive:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  field_service_exceptions:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 8
+    region: content
+  field_service_req_speacialist:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_service_suits_info:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  field_service_suits_job_search:
+    type: list_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 9
+    region: content
+  field_statements:
+    type: list_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_statements_unemployment:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 7
     region: content
   flag_lista:
     settings: {  }
@@ -66,7 +346,7 @@ content:
   view_mode_switcher:
     settings: {  }
     third_party_settings: {  }
-    weight: 100
+    weight: 1
     region: content
 hidden:
   content_moderation_control: true
@@ -75,22 +355,19 @@ hidden:
   entity_print_view_word_docx: true
   entitygroupfield: true
   field_accessibility: true
-  field_archiving_guide: true
   field_attendance: true
-  field_career_marking: true
   field_client_consent: true
   field_contact_info: true
   field_contact_info_external: true
   field_contact_info_internal: true
-  field_exceptions: true
+  field_description: true
   field_field_client_consent_descr: true
-  field_guidance_to_service: true
   field_implementation_extra_info: true
+  field_instructions_markup: true
   field_life_situations: true
   field_other_services: true
   field_poma_applicable: true
   field_poma_applicable_descriptio: true
-  field_requirements: true
   field_responsible_updatee: true
   field_service_benefits: true
   field_service_execution: true
@@ -99,7 +376,6 @@ hidden:
   field_service_links_internal: true
   field_service_location: true
   field_service_obligations: true
-  field_service_obligatoryness: true
   field_service_other_info: true
   field_service_price: true
   field_service_producer: true
@@ -107,7 +383,6 @@ hidden:
   field_service_requirements: true
   field_service_set: true
   field_service_time_and_location: true
-  field_statements_unemployment: true
   field_tags: true
   field_target_group: true
   flag_cart: true

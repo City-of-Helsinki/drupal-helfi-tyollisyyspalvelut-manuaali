@@ -11,7 +11,7 @@
 
 <div {{ bem('layout-container', layout_modifiers) }}>
   {% block page_sidebar %}{% endblock %}
-  <div {{  bem('right-column') }}>
+  <div {{  bem('right-column', layout_modifiers,'',layout_extra_classes) }}>
     {% block page_header %}
       {% include "@organisms/site/site-header/site-header.twig" %}
     {% endblock %}
@@ -23,8 +23,8 @@
         {% block page_content %}{% endblock %}
       </main>
     </div>
-  </div>
     {% block page_footer %}
       {% include "@organisms/site/site-footer/site-footer.twig" %}
     {% endblock %}
+  </div>
 </div>

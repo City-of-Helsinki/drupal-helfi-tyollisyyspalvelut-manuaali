@@ -48,13 +48,31 @@
   ]
 %}
 
-{% include "@atoms/text/headings/_heading.twig" with {
-  "heading_level": 3,
-  "heading": 'Excecution'|t,
-} %}
+{%
+  set title_classes = [
+    'field__label',
+    label_display == 'visually_hidden' ? 'visually-hidden',
+  ]
+%}
 
-{% for item in items %}
-  <div{{ item.attributes.addClass('field__item') }}>
-    {{item.content}}
+<div{{ attributes.addClass(classes) }}>
+  <div{{ title_attributes.addClass(title_classes) }}>
+    {% include "@atoms/images/icons/_icon.twig" with {
+      icon_base_class: 'icon',
+      icon_name: 'c-question',
+      icon_modifiers: ['small'],
+    } %}
+    {% include "@atoms/text/headings/_heading.twig" with {
+      "heading_level": 5,
+      "heading": 'Additional info:'|t,
+      "heading_modifiers": ['semibold','margin-bottom'],
+    } %}
   </div>
-{% endfor %}
+    <div class="field__items">
+    {% for item in items %}
+      <div{{ item.attributes.addClass('field__item') }}>
+        {{item.content}}
+      </div>
+    {% endfor %}
+  </div>
+</div>

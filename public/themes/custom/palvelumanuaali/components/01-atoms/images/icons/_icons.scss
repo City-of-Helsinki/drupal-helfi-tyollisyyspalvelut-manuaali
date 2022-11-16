@@ -26,9 +26,19 @@
   margin: $space-one-fourth;
 }
 
+.icon--large {
+  width: 337px;
+  height: 339px;
+}
+
 .icon--medium {
   height: 32px;
   width: 32px;
+}
+
+.icon--normal {
+  height: 28px;
+  width: 28px;
 }
 
 .icon--small {
@@ -91,12 +101,30 @@
   margin-right: $space;
 }
 
+.icon--absolute-right-regular {
+  position: absolute;
+  top: $space;
+  right: $space;
+  z-index: 20;
+}
+
+.icon--absolute-left-regular {
+  position: absolute;
+  top: $space;
+  left: $space;
+  z-index: 20;
+}
+
 .icon--margin-right-double {
   margin-right: $space-double;
 }
 
 .icon--margin-right-twelve {
   margin-right: 12px;
+}
+
+.icon--margin-right-twenty-six {
+  margin-right: 26px;
 }
 
 

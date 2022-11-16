@@ -1,0 +1,26 @@
+uuid: 4fa29062-1a81-497e-9044-2494e0a46182
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_obligatoryness
+    - node.type.service
+  module:
+    - options
+    - require_on_publish
+third_party_settings:
+  require_on_publish:
+    require_on_publish: true
+    warn_on_empty: false
+id: node.service.field_obligatoryness
+field_name: field_obligatoryness
+entity_type: node
+bundle: service
+label: 'Palvelun velvoittavuus'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

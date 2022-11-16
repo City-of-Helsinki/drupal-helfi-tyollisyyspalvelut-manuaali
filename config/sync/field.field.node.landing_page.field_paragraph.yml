@@ -5,7 +5,8 @@ dependencies:
   config:
     - field.storage.node.field_paragraph
     - node.type.landing_page
-    - paragraphs.paragraphs_type.content_list_lift_header_icon
+    - paragraphs.paragraphs_type.content_card_lift
+    - paragraphs.paragraphs_type.header_description_link
   module:
     - entity_reference_revisions
 id: node.landing_page.field_paragraph
@@ -22,7 +23,8 @@ settings:
   handler: 'default:paragraph'
   handler_settings:
     target_bundles:
-      content_list_lift_header_icon: content_list_lift_header_icon
+      content_card_lift: content_card_lift
+      header_description_link: header_description_link
     negate: 0
     target_bundles_drag_drop:
       contact_information:
@@ -31,16 +33,43 @@ settings:
       content:
         weight: 8
         enabled: false
+      content_card_lift:
+        weight: 18
+        enabled: true
+      content_link_file:
+        weight: 19
+        enabled: false
+      content_link_file_guide:
+        weight: 20
+        enabled: false
       content_list_lift_header_icon:
         weight: 9
+        enabled: false
+      header_description_link:
+        weight: 22
         enabled: true
-      content_teaser_reference:
-        weight: 10
+      link:
+        weight: 23
+        enabled: false
+      long_text_field_with_toolbar:
+        weight: 24
+        enabled: false
+      municipality_guide:
+        weight: 25
+        enabled: false
+      service_language:
+        weight: 26
         enabled: false
       service_price:
         weight: 11
         enabled: false
+      service_time_and_place:
+        weight: 28
+        enabled: false
       target_group:
         weight: 12
+        enabled: false
+      url_and_file:
+        weight: 30
         enabled: false
 field_type: entity_reference_revisions

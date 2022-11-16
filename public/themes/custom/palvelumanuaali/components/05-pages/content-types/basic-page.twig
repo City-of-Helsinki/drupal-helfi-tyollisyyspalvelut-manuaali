@@ -1,0 +1,19 @@
+{% embed "@templates/without-content-sidebar.twig" with {
+    content_base_class: page_base_class,
+    main_content_id: main_content_id,
+} %}
+
+{% block content %}
+  {{content|without('field_other_services')}}
+{% endblock %}
+{% block page_content %}
+  {% include "@atoms/text/headings/_heading.twig" with {
+        heading_level: '1',
+        heading: node__label,
+        heading_base_class: 'page-heading',
+      }
+    %}
+  {% endblock %}
+{% endembed %}
+
+{{ content.field_other_services}}

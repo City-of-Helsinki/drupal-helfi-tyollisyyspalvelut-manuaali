@@ -1,0 +1,41 @@
+uuid: fc4fae18-64c0-402e-801f-0440131246ab
+langcode: fi
+status: true
+dependencies:
+  module:
+    - language
+    - node
+id: palvelut
+label: Palvelut
+type: 'canonical_entities:node'
+pattern: 'palvelu/[node:title]'
+selection_criteria:
+  557e6b49-59c6-4832-8c7e-b6e8ba4589bd:
+    id: node_type
+    negate: false
+    uuid: 557e6b49-59c6-4832-8c7e-b6e8ba4589bd
+    context_mapping:
+      node: node
+    bundles:
+      service: service
+  00ca7544-56ac-4b28-9bb0-c99e56a515bb:
+    id: 'entity_bundle:node'
+    negate: false
+    uuid: 00ca7544-56ac-4b28-9bb0-c99e56a515bb
+    context_mapping:
+      node: node
+    bundles:
+      service: service
+  c3064fa2-a3fc-4a57-adc9-004a1025d1c3:
+    id: language
+    negate: false
+    uuid: c3064fa2-a3fc-4a57-adc9-004a1025d1c3
+    context_mapping:
+      language: 'node:langcode:language'
+    langcodes:
+      fi: fi
+selection_logic: and
+weight: -5
+relationships:
+  'node:langcode:language':
+    label: Kieli

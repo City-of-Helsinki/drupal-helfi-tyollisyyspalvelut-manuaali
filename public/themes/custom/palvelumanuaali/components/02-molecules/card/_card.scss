@@ -5,6 +5,9 @@
     border-radius: 8px 8px 4px 4px;
     border-bottom: 4px $blue100 solid;
   }
+  &.padded {
+    padding-bottom: 40px;
+  }
 }
 
 .card__content {
@@ -12,6 +15,12 @@
   margin-right: $space-double;
   margin-top: $space-two-and-half;
   position: relative;
+  height: 100%;
+  .button--arrow {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
 }
 
 .card__heading {
@@ -36,6 +45,13 @@
 
 .card__link {
   @include link;
+  height: 100%;
+  &:hover {
+    text-decoration: none;
+    button {
+      background-color: clr(highlight-high);
+    }
+  }
 }
 
 .card__button {
@@ -57,6 +73,10 @@
   background-color: clr(background-dropdown);
 }
 
+.card--bg-blue {
+  background-color: clr(background);
+}
+
 .card--square-left {
   border-radius: 0px 16px 16px 0px;
 }
@@ -71,6 +91,13 @@
 
 .card--bottom-gutter {
   margin-bottom: $space;
+}
+
+.card--bottom-gutter-large {
+  margin-bottom: $space-double;
+  @include large {
+    margin-bottom: $space-three-and-half;
+  }
 }
 
 .card--padded {
@@ -125,9 +152,13 @@
     flex-wrap: wrap;
     > article {
       width: 100%;
-    }
-    .field {
-      margin-bottom: 0;
+      margin-bottom: $space-one-and-half;
+      @include large {
+        margin-bottom: $space;
+      }
+      @include xl {
+        margin-bottom: $space-two-and-half;
+      }
     }
   }
   .address {
@@ -142,28 +173,40 @@
     }
   }
 
-  .field--name-field-service-location {
+  .field--name-field-address {
     width: 100%;
     order: 1;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0 !important;
   }
 
   .field--name-field-dates {
-    width: 50%;
-    order: 2;
+    width: 100%;
+    order: 3;
     display: flex;
+    margin-bottom: $space-double;
+    @include large {
+      margin-bottom: $space-one-and-half;
+    }
+    @include xl {
+      margin-bottom: $space-triple;
+    }
     &.icon {
       width: 24px;
       order: unset;
       margin-right: 16px;
     }
+
   }
 
   .field--name-field-service-languages {
-    width: 50%;
-    order: 3;
+    width: 100%;
+    order: 2;
     display: flex;
     flex-wrap: wrap;
+    margin-bottom: $space;
+    @include large {
+      margin-bottom: $space-one-and-half;
+    }
     p {
       margin-bottom: 0;
       margin-left: 1px;
@@ -173,11 +216,16 @@
       margin-right: $space;
       order: unset;
       display: block;
+      margin-bottom: 0 !important;
     }
     >.languages-wrapper {
+      display: flex;
+      flex-wrap: wrap;
       >.field__item {
         display: flex;
         flex-wrap: wrap;
+        width: fit-content;
+        margin-bottom: 0;
       }
     }
     .service-language {
@@ -186,11 +234,15 @@
     }
     .field--name-field-language {
       margin-right: 5px;
+      margin-bottom: 0;
     }
   }
 
   .term {
     display: flex;
+    .field {
+      margin-bottom: 0;
+    }
   }
 
   .field--name-field-accessibility {

@@ -1,0 +1,33 @@
+uuid: bef18ae4-83b3-4cd0-971c-d0eb10ea4b5a
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_teaser_reference
+    - node.type.basic_page
+    - node.type.landing_page
+    - node.type.service
+    - paragraphs.paragraphs_type.content_card_lift
+id: paragraph.content_card_lift.field_teaser_reference
+field_name: field_teaser_reference
+entity_type: paragraph
+bundle: content_card_lift
+label: 'Viittaus sisältöön'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      basic_page: basic_page
+      landing_page: landing_page
+      service: service
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: landing_page
+field_type: entity_reference

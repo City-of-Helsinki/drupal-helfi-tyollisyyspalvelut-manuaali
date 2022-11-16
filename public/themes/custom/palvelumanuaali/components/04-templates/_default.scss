@@ -11,8 +11,17 @@ $main-content-width: calc(100% - (#{$sidebar-md-width} + #{$main-gutter} *2 ));
 $main-width-xl: calc(100% - (#{$sidebar-width} ));
 $main-content-width-xl: calc(100% - (#{$sidebar-width} + #{$main-gutter} *2 ));
 
+body {
+  height: 100%;
+}
+
+.dialog-off-canvas-main-canvas {
+  height: 100%;
+}
+
 .layout-container {
   @include large {
+    height: 100%;
     display: flex;
     flex-wrap: wrap;
   }
@@ -25,28 +34,56 @@ $main-content-width-xl: calc(100% - (#{$sidebar-width} + #{$main-gutter} *2 ));
 .right-column {
   margin-left: $space;
   margin-right: $space;
+  padding-bottom: 10rem;
   @include large {
     margin-left: 0;
     margin-right: 0;
     order: 2;
     width: $main-width-large;
   }
-  @include xl {
+  @include xxl {
     width: $main-width-xl;
   }
 }
-.main {
-  @include wrapper;
 
+.node-service-edit-form .right-column {
+  margin-left: 0;
+  margin-right: 0;
+  @include large {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+.header {
+  @include large {
+    width: $main-width-large;
+  }
+  @include xxl {
+    width: $main-width-xl;
+  }
+}
+
+.main {
+  display: block;
+  position: relative;
   padding: 0;
-  margin-bottom: 4em;
+  margin-bottom: 10em;
+  @media only screen and (max-width: $large) {
+    margin-top: 0 !important;
+  }
 
   @include xs {
     padding: 0;
   }
 
   @include large {
-    display: flex;
+    margin-top: $nav-height;
+    margin-right: $space-quadruple;
+    margin-left: $space-quadruple;
+  }
+  @include xxl {
+    margin: auto;
   }
 }
 
@@ -56,33 +93,42 @@ $main-content-width-xl: calc(100% - (#{$sidebar-width} + #{$main-gutter} *2 ));
   margin-bottom: $space-double;
   background-color: clr(sidebar-color);
   @include large {
+    height: 100vh;
+    top: 0;
+    position: sticky;
     order: 1;
     width: $sidebar-md-width;
     margin-bottom: 0;
     border-top-right-radius: 47px;
   }
-  @include xl {
+  @include xxl {
     width: $sidebar-width;
   }
 }
 
 .main-content {
-  width: 100%;
-
 
   @include large {
     order: 2;
     &--with-sidebar {
-      margin-right: $space-quadruple;
-      margin-left: $space-quadruple;
-      width: 100%;
-    }
+      .region-content {
+        margin-right: $space-quadruple;
+        margin-left: $space-quadruple;
+        #block-system-main-block {
+          max-width: 1464px;
+        }
+      }
   }
+}
 
-  @include grid-xl {
-    &--with-sidebar {
-      margin-right: $main-gutter;
-      margin-left: $main-gutter;
+@include xxl {
+  &--with-sidebar {
+      .region-content {
+        margin:auto;
+         #block-system-main-block {
+           margin: auto;
+         }
+      }
     }
   }
 }
@@ -95,33 +141,3 @@ $main-content-width-xl: calc(100% - (#{$sidebar-width} + #{$main-gutter} *2 ));
   color: clr(alt-header-color);
   margin-bottom: $space;
 }
-
-/*
- * Layout Using CSS Grid (NO IE11 support)
- * Remove Flexbox code above and uncomment this section to use CSS Grid.
-*/
-
-/* .main {
-  @include wrapper;
-
-  margin-bottom: 4em;
-
-  &--with-sidebar {
-    @include large {
-      display: grid;
-      grid-gap: $gutter;
-      grid-template-areas: "content sidebar";
-      grid-template-columns: $main-width #{$sidebar-width};
-    }
-  }
-}
-
-.main-sidebar {
-  grid-area: sidebar;
-  margin-bottom: $space-double;
-}
-
-.main-content {
-  grid-area: content;
-  width: 100%;
-} */

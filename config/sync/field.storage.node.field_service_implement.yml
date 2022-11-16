@@ -1,20 +1,20 @@
-uuid: a4bba1ee-6865-4ac3-8b9b-22077c8b6333
+uuid: 476f59d8-66ed-43b4-9a6b-6bb49961c2d0
 langcode: fi
 status: true
 dependencies:
   module:
     - field_permissions
     - node
-    - text
 third_party_settings:
   field_permissions:
     permission_type: public
 id: node.field_service_implement
 field_name: field_service_implement
 entity_type: node
-type: text_long
-settings: {  }
-module: text
+type: string_long
+settings:
+  case_sensitive: false
+module: core
 locked: false
 cardinality: 1
 translatable: true
