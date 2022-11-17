@@ -81,10 +81,7 @@
       padding: 40px 32px 48px 32px;
       max-width: inherit;
     }
-    label {
-      font-weight: 400;
-      font-size: $small-caption;
-    }
+
     .vertical-tabs {
       border: 0;
       margin: 0;
@@ -98,28 +95,43 @@
         margin: 0;
         border: 0;
       }
-      .vertical-tabs__menu-item a {
-        text-decoration: unset;
-        padding: 0;
-        margin-bottom: $space-double;
-      }
-      details {
+    }
+
+    //theming for the details sidebar link
+    .vertical-tabs__menu-item a {
+      text-decoration: unset;
+      padding: 0;
+      margin-bottom: $space-double;
+    }
+
+    details {
+      font-size: $small-font;
+      @include xxl {
         font-size: $small-caption;
-        .field--type-language,
-        .field--type-string,
-        .form-item {
-          display: flex;
-          align-content: center;
-          justify-content: space-between;
-          width: 100%;
-        }
-        .form-wrapper {
-          width: 100%;
-        }
-        .form-item__label {
-          margin-right: auto;
-        }
       }
+    }
+
+    label {
+      font-weight: 400;
+      font-size: $small-font;
+      margin-right: auto;
+      padding: 0;
+      @include xxl {
+        font-size: $small-caption;
+      }
+    }
+
+    .form-wrapper {
+      width: 100%;
+    }
+
+    .field--type-language,
+    .field--type-string,
+    .form-item {
+      display: flex;
+      align-content: center;
+      justify-content: space-between;
+      width: 100%;
     }
   }
 

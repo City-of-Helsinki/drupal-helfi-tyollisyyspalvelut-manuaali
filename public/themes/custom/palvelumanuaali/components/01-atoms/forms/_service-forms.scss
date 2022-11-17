@@ -321,38 +321,6 @@
 
   .edit-advanced-content-wrapper {
     margin-top: 80px;
-    grid-row: 4;
-    grid-column: 1/3;
-    @include xl {
-      grid-column: 2/3;
-      grid-row:2;
-    }
-
-  }
-
-  .edit-advanced-form {
-    background-color: clr(text-inverse);
-    border-radius: 8px;
-    padding: $space;
-    max-width: unset;
-    @include large {
-      padding: 40px 32px 48px 32px;
-      max-width: inherit;
-    }
-    .vertical-tabs {
-      border: 0;
-      margin: 0;
-      li {
-        background-color: unset;
-        border: 0;
-      }
-      .vertical-tabs__menu {
-        float: unset;
-        width: 100%;
-        margin: 0;
-        border: 0;
-      }
-    }
   }
 
   .page-controls {
