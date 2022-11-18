@@ -57,3 +57,11 @@ function hel_tpm_forms_form_node_form_alter(&$form, FormStateInterface &$form_st
 
   $form['#attached']['library'][] = 'hel_tpm_forms/hel_tpm_forms';
 }
+
+
+function hel_tpm_forms_field_widget_form_alter(&$elements, FormStateInterface $form_state, array $context) {
+
+  if (($elements['#type'] === 'select2') || ($elements['#type'] === 'select')){
+    $elements['#placeholder'] = t('Choose from following options');
+  }
+}
