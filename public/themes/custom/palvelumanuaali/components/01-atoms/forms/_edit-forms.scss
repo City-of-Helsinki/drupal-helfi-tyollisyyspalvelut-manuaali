@@ -184,20 +184,18 @@
       background-color: clr(background);
       color: clr(background-section);
       border: unset;
-
+      a {
+        padding: 12px 48px;
+      }
       &.selected {
         border-bottom: unset;
         background-color: clr(background-section);
-
         a {
           color: clr(text-inverse);
           padding: 12px 48px;
         }
       }
 
-      a {
-        padding: 12px 48px;
-      }
     }
   }
 
