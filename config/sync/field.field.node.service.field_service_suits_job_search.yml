@@ -7,13 +7,17 @@ dependencies:
     - node.type.service
   module:
     - options
+    - require_on_publish
+third_party_settings:
+  require_on_publish:
+    require_on_publish: true
 id: node.service.field_service_suits_job_search
 field_name: field_service_suits_job_search
 entity_type: node
 bundle: service
 label: 'Palvelu soveltuu täydentäväksi työnhakukeskusteluksi'
 description: ''
-required: true
+required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
