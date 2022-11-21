@@ -7,6 +7,7 @@ dependencies:
     - system.menu.footer
     - system.menu.main
     - views.view.notifications
+    - views.view.quick_links
   module:
     - system
     - views
@@ -29,7 +30,7 @@ reactions:
         provider: system
         label_display: '0'
         region: content
-        weight: '-2'
+        weight: '-8'
         custom_id: system_main_block
         theme: palvelumanuaali
         css_class: ''
@@ -115,13 +116,30 @@ reactions:
         provider: core
         label_display: '0'
         region: content
-        weight: '-4'
+        weight: '-9'
         custom_id: local_actions_block
         theme: palvelumanuaali
         css_class: ''
         unique: 0
         context_id: sitewide
         context_mapping: {  }
+        third_party_settings: {  }
+      d4cb9a09-7327-4986-a6e8-acf0325ead6e:
+        uuid: d4cb9a09-7327-4986-a6e8-acf0325ead6e
+        id: 'views_block:quick_links-block_1'
+        label: ''
+        provider: views
+        label_display: '0'
+        region: subcontent
+        weight: '-3'
+        custom_id: views_block_quick_links_block_1
+        theme: palvelumanuaali
+        css_class: ''
+        unique: 0
+        context_id: sitewide
+        context_mapping: {  }
+        views_label: ''
+        items_per_page: '3'
         third_party_settings: {  }
     include_default_blocks: 1
     saved: false

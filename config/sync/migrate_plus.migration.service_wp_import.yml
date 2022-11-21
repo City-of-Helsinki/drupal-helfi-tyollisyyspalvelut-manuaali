@@ -11,7 +11,7 @@ migration_group: null
 label: 'Import services'
 source:
   plugin: csv
-  path: /app/services.csv
+  path: /tmp/services.csv
   delimiter: ','
   enclosure: '"'
   header_row_count: 1
@@ -21,14 +21,14 @@ source:
 process:
   title: 'Palvelun nimi'
   field_description: 'Lyhyt kuvaus palvelusta (max. 250 merkkiä)'
-  field_implementation_extra_info: 
+  field_implementation_extra_info:
     -
       plugin: skip_on_empty
       source: Toteutustapavalikko
       method: process
     -
       plugin: explode
-      delimiter: ,
+      delimiter: ','
     -
       plugin: entity_generate
       entity_type: taxonomy_term
@@ -43,7 +43,7 @@ process:
       method: process
     -
       plugin: explode
-      delimiter: ,
+      delimiter: ','
     -
       plugin: entity_generate
       entity_type: taxonomy_term
@@ -64,7 +64,7 @@ process:
       plugin: skip_on_empty
       method: process
       source: URA-merkinnät
-    - 
+    -
       plugin: tpm_text_with_toolbar_paragraph
   field_statements:
     -
@@ -74,8 +74,8 @@ process:
     -
       plugin: static_map
       map:
-        Ei: no
-        Kyllä: yes
+        Ei: 'no'
+        Kyllä: 'yes'
   field_statements_unemployment: 'Lausunnot ja työttömyysetuus vapaa teksti'
   field_measures_during_attendance: 'Toimenpiteet palveluun osallistumisen ajalta'
   field_service_exceptions: Poikkeustilanteet
@@ -87,8 +87,8 @@ process:
     -
       plugin: static_map
       map:
-        Ei: no
-        Kyllä: yes
+        Ei: 'no'
+        Kyllä: 'yes'
   field_service_suits_info: 'Palvelu soveltuu täydentäväksi työnhakukeskusteluksi vapaa teksti'
   field_service_benefits: 'Mitä hyötyä palveluun osallistumisesta on?'
   field_attendance:
@@ -96,7 +96,7 @@ process:
       plugin: skip_on_empty
       method: process
       source: Osallistumistieto
-    - 
+    -
       plugin: tpm_text_with_toolbar_paragraph
   created:
     -
@@ -153,7 +153,7 @@ process:
       method: process
     -
       plugin: explode
-      delimiter: ,
+      delimiter: ','
     -
       plugin: entity_generate
       entity_type: taxonomy_term
@@ -174,7 +174,7 @@ process:
       method: process
     -
       plugin: explode
-      delimiter: ,
+      delimiter: ','
     -
       plugin: entity_generate
       entity_type: taxonomy_term

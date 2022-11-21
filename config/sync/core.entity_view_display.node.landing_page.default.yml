@@ -6,6 +6,7 @@ dependencies:
     - field.field.node.landing_page.field_hero_label
     - field.field.node.landing_page.field_hero_text
     - field.field.node.landing_page.field_paragraph
+    - field.field.node.landing_page.field_quick_links
     - node.type.landing_page
   module:
     - entity_reference_revisions
@@ -22,14 +23,14 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 2
+    weight: 1
     region: content
   field_hero_text:
     type: text_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 3
+    weight: 2
     region: content
   field_paragraph:
     type: entity_reference_revisions_entity_view
@@ -38,22 +39,31 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 6
+    weight: 3
+    region: content
+  field_quick_links:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 4
     region: content
   flag_cart:
     settings: {  }
     third_party_settings: {  }
-    weight: 10
+    weight: 5
     region: content
   flag_flag_list_template_1:
     settings: {  }
     third_party_settings: {  }
-    weight: 10
+    weight: 6
     region: content
   flag_lists:
     settings: {  }
     third_party_settings: {  }
-    weight: 10
+    weight: 7
     region: content
   links:
     settings: {  }
