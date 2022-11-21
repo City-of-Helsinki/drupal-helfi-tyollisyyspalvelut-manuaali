@@ -34,6 +34,9 @@ process:
         organisation_import:
           - 'Palvelun järjestäjä'
       no_stub: true
+    -
+      plugin: skip_on_empty
+      method: row
   entity_id:
     -
       plugin: migration_lookup
@@ -43,6 +46,9 @@ process:
           - 'Palvelun nimi'
           - 'Vastuukunta (group)'
       no_stub: true
+    -
+      plugin: skip_on_empty
+      method: row
   label:
     -
       plugin: skip_on_empty
