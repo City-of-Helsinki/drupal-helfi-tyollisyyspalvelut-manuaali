@@ -17,24 +17,6 @@
     width: 100%;
   }
 
-  .form-item-checkbox {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    label {
-      order: 1;
-    }
-    .form-item__description {
-      order: 2;
-      width: 100%;
-    }
-    .form-checkbox{
-      margin-right: $space-one-half;
-      width: 16px;
-      height: 16px;
-    }
-  }
-
   .description {
     margin-bottom: $space;
   }
@@ -118,6 +100,13 @@
         height: 20px;
         padding: 4px;
       }
+    }
+  }
+
+  .field--name-field-client-consent .form-item-checkbox{
+    flex-wrap: wrap;
+    label {
+      max-width: 40ch;
     }
   }
 
@@ -366,14 +355,7 @@
     }
   }
 
-  .field--name-field-municipality {
-    .form-item-checkbox {
-      width: 100%;
-      @include large {
-        width: 50%;
-      }
-    }
-  }
+
 
 
   .field--name-field-municipality-guide .button,
@@ -459,17 +441,7 @@
     }
 
   }
-  .field--type-boolean .form-item {
-    width: 100%;
-    display: flex;
-    input {
-      margin-right: 8px;
-      width: unset;
-    }
-    label {
-      font-weight: 400;
-    }
-  }
+
   >#edit-actions {
     grid-row: 7;
     @include xl {
