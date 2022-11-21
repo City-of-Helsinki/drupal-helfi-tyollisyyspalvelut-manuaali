@@ -166,6 +166,12 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id) {
       $form['meta']['published']['#access'] = FALSE;
       $form['menu']['#access'] = FALSE;
       $form['meta']['#type'] = 'container';
+      $form['meta']['changed']['#title'] = t('Updated:');
+      $form['meta']['author']['#title'] = t('Author:');
+      $form['langcode']['widget'][0]['value']['#title'] = t('Language:');
+      $form['moderation_state']['widget'][0]['current']['#title'] = t('Current state:');
+      $form['moderation_state']['widget'][0]['state']['#title'] = t('Change to:');
       $form['meta']['#group'] = 'group_details_sidebar';
+      $form['actions']['delete']['#access'] = FALSE;
   }
 }

@@ -21,9 +21,11 @@
   .page-controls {
     margin-top: $space;
     grid-row: 6;
+    margin-left: 172px;
+    grid-column: 1/2;
     @include xl {
-      grid-column: 1/2;
       grid-row:3;
+
     }
     .button-wrapper {
       display: flex;
@@ -42,15 +44,17 @@
   }
 
   >#edit-actions {
-    grid-row: 7;
+    grid-row: 6;
+    margin-top: $space;
+    margin-bottom: $space;
+    display: flex;
+    grid-column: 1/2;
     @include xl {
-      grid-row: 4;
-      grid-column: 1/2;
-      display: flex;
-      justify-content: space-between;
+      grid-row: 3;
+
     }
     .button {
-      width: unset;
+      width: 160px;
       border: unset;
     }
   }

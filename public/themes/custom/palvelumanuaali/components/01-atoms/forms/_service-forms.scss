@@ -142,7 +142,6 @@
       grid-column: 1/3;
 
     .multistep-nav-wrapper {
-
       width: 100%;
       margin-left: $space;
       margin-right: $space;
@@ -234,6 +233,7 @@
     .paragraph-type-title {
       display: none;
     }
+
     .field--name-field-service-languages,
     .field--name-field-links {
       .table__cell {
@@ -257,8 +257,9 @@
           margin-bottom: 0;
         }
       }
-      .paragraphs-dropbutton-wrapper {
 
+
+      .paragraphs-dropbutton-wrapper {
         input[data-drupal-selector*="top-links-remove-button"] {
           @include close-button;
           width: 16px;
@@ -281,8 +282,6 @@
       }
     }
   }
-
-
 
   #edit-group-basic-information {
     background-color: unset;
@@ -312,21 +311,7 @@
     margin-top: 80px;
   }
 
-  .page-controls {
 
-    margin-top: $space;
-    grid-row: 6;
-    @include xl {
-      grid-column: 1/2;
-      grid-row:3;
-
-    }
-    .button-wrapper {
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-    }
-  }
 
   .field--name-field-service-execution,
   .field--name-field-guidance-to-service,
@@ -442,14 +427,6 @@
 
   }
 
-  >#edit-actions {
-    grid-row: 7;
-    @include xl {
-      grid-row: 4;
-      grid-column: 1/3;
-
-    }
-  }
   .field--name-field-contact-info,
   .field--name-field-contact-info-external {
     fieldset {
