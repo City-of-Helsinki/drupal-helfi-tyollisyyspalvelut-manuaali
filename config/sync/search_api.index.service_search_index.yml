@@ -277,12 +277,10 @@ processor_settings:
     alt: true
     tags:
       b: 2
-      em: 1
       h1: 5
       h2: 3
       h3: 2
       strong: 2
-      u: 1
   ignore_character:
     weights:
       preprocess_index: -10
@@ -317,6 +315,15 @@ processor_settings:
   language_with_fallback: {  }
   rendered_item: {  }
   service_processor: {  }
+  stemmer:
+    weights:
+      preprocess_index: 0
+      preprocess_query: 0
+    all_fields: false
+    fields:
+      - rendered_item
+      - title
+    exceptions: {  }
   tokenizer:
     weights:
       preprocess_index: -6

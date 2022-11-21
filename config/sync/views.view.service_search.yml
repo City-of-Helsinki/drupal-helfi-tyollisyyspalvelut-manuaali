@@ -348,6 +348,7 @@ display:
               admin: '0'
               editor: '0'
               specialist: '0'
+              specialist_editor: '0'
             expose_fields: false
             placeholder: ''
             searched_fields_id: search_api_fulltext_searched_fields
@@ -364,8 +365,9 @@ display:
             default_group_multiple: {  }
             group_items: {  }
           parse_mode: terms
-          min_length: 2
-          fields: {  }
+          min_length: 3
+          fields:
+            - rendered_item
         field_service_set:
           id: field_service_set
           table: search_api_index_service_search_index
