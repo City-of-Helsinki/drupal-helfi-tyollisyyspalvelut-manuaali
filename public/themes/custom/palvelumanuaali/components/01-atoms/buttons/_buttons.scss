@@ -406,3 +406,13 @@ there is possibility to add classes button--blue-bordered,
     line-height: 24px;
   }
 }
+
+.node-form {
+  >.form-actions {
+    >.button {
+        @include button-medium;
+        @include button-color-blue;
+        @include button-round-corners;
+    }
+  }
+}

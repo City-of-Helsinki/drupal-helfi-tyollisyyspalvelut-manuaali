@@ -34,6 +34,7 @@ body {
 .right-column {
   margin-left: $space;
   margin-right: $space;
+  padding-bottom: 10rem;
   @include large {
     margin-left: 0;
     margin-right: 0;
@@ -67,8 +68,7 @@ body {
   display: block;
   position: relative;
   padding: 0;
-  margin-bottom: 4em;
-
+  margin-bottom: 10em;
   @media only screen and (max-width: $large) {
     margin-top: 0 !important;
   }
@@ -83,8 +83,7 @@ body {
     margin-left: $space-quadruple;
   }
   @include xxl {
-    margin-right: $main-gutter;
-    margin-left: $main-gutter;
+    margin: auto;
   }
 }
 
@@ -125,8 +124,7 @@ body {
 @include xxl {
   &--with-sidebar {
       .region-content {
-         margin-right: $main-gutter;
-         margin-left: $main-gutter;
+        margin:auto;
          #block-system-main-block {
            margin: auto;
          }
@@ -143,33 +141,3 @@ body {
   color: clr(alt-header-color);
   margin-bottom: $space;
 }
-
-/*
- * Layout Using CSS Grid (NO IE11 support)
- * Remove Flexbox code above and uncomment this section to use CSS Grid.
-*/
-
-/* .main {
-  @include wrapper;
-
-  margin-bottom: 4em;
-
-  &--with-sidebar {
-    @include large {
-      display: grid;
-      grid-gap: $gutter;
-      grid-template-areas: "content sidebar";
-      grid-template-columns: $main-width #{$sidebar-width};
-    }
-  }
-}
-
-.main-sidebar {
-  grid-area: sidebar;
-  margin-bottom: $space-double;
-}
-
-.main-content {
-  grid-area: content;
-  width: 100%;
-} */

@@ -3,7 +3,6 @@ langcode: fi
 status: true
 dependencies:
   config:
-    - field.field.node.basic_page.body
     - field.field.node.basic_page.field_description
     - field.field.node.basic_page.field_media_image
     - field.field.node.basic_page.field_other_services
@@ -11,20 +10,12 @@ dependencies:
     - node.type.basic_page
   module:
     - entity_reference_revisions
-    - text
     - user
 id: node.basic_page.default
 targetEntityType: node
 bundle: basic_page
 mode: default
 content:
-  body:
-    type: text_default
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    weight: 2
-    region: content
   field_description:
     type: basic_string
     label: hidden

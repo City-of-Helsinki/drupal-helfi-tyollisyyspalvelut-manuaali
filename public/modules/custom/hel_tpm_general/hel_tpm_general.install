@@ -103,3 +103,14 @@ function hel_tpm_general_update_8107() {
     $paragraph->delete();
   }
 }
+
+/**
+ * Remove content list with header icon paragraph entities.
+ */
+function hel_tpm_general_update_8108() {
+  $storage = \Drupal::entityTypeManager()->getStorage('paragraph');
+  $paragraphs = $storage->loadByProperties(['type' => 'quick_link']);
+  foreach ($paragraphs as $paragraph) {
+    $paragraph->delete();
+  }
+}

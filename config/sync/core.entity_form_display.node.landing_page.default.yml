@@ -6,6 +6,7 @@ dependencies:
     - field.field.node.landing_page.field_hero_label
     - field.field.node.landing_page.field_hero_text
     - field.field.node.landing_page.field_paragraph
+    - field.field.node.landing_page.field_quick_links
     - node.type.landing_page
   module:
     - content_moderation
@@ -21,17 +22,35 @@ third_party_settings:
         - field_hero_label
         - field_hero_text
         - field_paragraph
-      label: 'Left column'
+        - field_quick_links
+      label: ''
       region: content
       parent_name: ''
       weight: 0
       format_type: fieldset
       format_settings:
-        classes: group--rounded-corners
+        classes: 'group--rounded-corners form-background--white form-background--regular-padding'
         show_empty_fields: false
         id: ''
         description: ''
         required_fields: true
+    group_details_sidebar:
+      children:
+        - langcode
+        - status
+      label: details-sidebar
+      region: content
+      parent_name: ''
+      weight: 2
+      format_type: details_sidebar
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        open: false
+        description: ''
+        required_fields: false
+        weight: 0
 id: node.landing_page.default
 targetEntityType: node
 bundle: landing_page
@@ -39,7 +58,7 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 3
+    weight: 4
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -71,42 +90,60 @@ content:
       form_display_mode: default
       default_paragraph_type: ''
     third_party_settings: {  }
+  field_quick_links:
+    type: paragraphs
+    weight: 5
+    region: content
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      closed_mode: summary
+      autocollapse: none
+      closed_mode_threshold: 0
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+      features:
+        collapse_edit_all: collapse_edit_all
+        duplicate: duplicate
+    third_party_settings: {  }
   langcode:
     type: language_select
-    weight: 2
+    weight: 3
     region: content
     settings:
       include_locked: true
     third_party_settings: {  }
   moderation_state:
     type: moderation_state_default
-    weight: 8
+    weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
   path:
     type: path
-    weight: 6
+    weight: 7
     region: content
     settings: {  }
     third_party_settings: {  }
   promote:
     type: boolean_checkbox
-    weight: 4
+    weight: 5
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 9
+    weight: 4
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
-    weight: 5
+    weight: 6
     region: content
     settings:
       display_label: true
@@ -120,13 +157,13 @@ content:
       placeholder: ''
     third_party_settings: {  }
   translation:
-    weight: 7
+    weight: 8
     region: content
     settings: {  }
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 1
+    weight: 3
     region: content
     settings:
       match_operator: CONTAINS
