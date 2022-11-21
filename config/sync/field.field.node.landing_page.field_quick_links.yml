@@ -1,0 +1,73 @@
+uuid: 801da207-ca15-41e1-9e3d-35efc75e9edd
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_quick_links
+    - node.type.landing_page
+    - paragraphs.paragraphs_type.quick_link
+  module:
+    - entity_reference_revisions
+id: node.landing_page.field_quick_links
+field_name: field_quick_links
+entity_type: node
+bundle: landing_page
+label: Pikalinkit
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      quick_link: quick_link
+    negate: 0
+    target_bundles_drag_drop:
+      contact_information:
+        weight: 16
+        enabled: false
+      content:
+        weight: 17
+        enabled: false
+      content_card_lift:
+        weight: 18
+        enabled: false
+      content_link_file:
+        weight: 19
+        enabled: false
+      content_link_file_guide:
+        weight: 20
+        enabled: false
+      header_description_link:
+        weight: 21
+        enabled: false
+      link:
+        weight: 22
+        enabled: false
+      long_text_field_with_toolbar:
+        weight: 23
+        enabled: false
+      municipality_guide:
+        weight: 24
+        enabled: false
+      quick_link:
+        weight: 25
+        enabled: true
+      service_language:
+        weight: 26
+        enabled: false
+      service_price:
+        weight: 27
+        enabled: false
+      service_time_and_place:
+        weight: 28
+        enabled: false
+      target_group:
+        weight: 29
+        enabled: false
+      url_and_file:
+        weight: 30
+        enabled: false
+field_type: entity_reference_revisions

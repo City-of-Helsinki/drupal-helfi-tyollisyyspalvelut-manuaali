@@ -9,7 +9,7 @@ label: 'Non-landing page'
 name: non_landing_page
 group: 'Front page'
 description: ''
-requireAllConditions: false
+requireAllConditions: true
 disabled: false
 conditions:
   'entity_bundle:node':
@@ -20,6 +20,12 @@ conditions:
       node: '@node.node_route_context:node'
     bundles:
       landing_page: landing_page
+  request_path:
+    id: request_path
+    negate: true
+    uuid: a90f3ff4-5527-45c2-8928-4569c3fe4723
+    context_mapping: {  }
+    pages: "*/edit*\r\n*/edit"
 reactions:
   blocks:
     id: blocks

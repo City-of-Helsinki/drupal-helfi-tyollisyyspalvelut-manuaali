@@ -11,13 +11,12 @@ migration_group: null
 label: 'Import organisations'
 source:
   plugin: csv
-  path: /app/organisations.csv
+  path: /tmp/organisations.csv
   delimiter: ','
   enclosure: '"'
   header_row_count: 1
   ids:
     - Organisaatiot
-    - Vastuukunta
 process:
   label: Organisaatiot
 destination:
