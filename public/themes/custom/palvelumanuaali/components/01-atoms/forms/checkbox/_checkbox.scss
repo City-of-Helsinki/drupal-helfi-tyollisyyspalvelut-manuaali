@@ -3,26 +3,33 @@
   @include list-reset;
 }
 
+.form-item-checkbox {
+  display: flex;
+  align-items: center;
+  input {
+    margin-right: $space-one-half;
+    width: 16px;
+    height: 16px;
+  }
+  label {
+    max-width: 30ch;
+    width: 100%;
+    font-size: 14px;
+    line-height: 24px;
+    font-weight: 400;
+  }
+}
+
+
 .form-item--checkboxes {
   display: flex;
   flex-wrap: wrap;
-
-  >.form-item {
-    display: flex;
-    align-items: center;
-    width: 30ch;
-    input {
-      margin-right: $space-one-half;
-      width: 16px;
-      height: 16px;
+  .form-item-checkbox {
+    @include large {
+      margin-right: $space;
     }
-    label {
-      max-width: 30ch;
-      word-break: break-word;
-      width: 100%;
-      font-size: 14px;
-      line-height: 24px;
-      font-weight: 400;
+    @include xl {
+      margin-right: $space-one-and-half;
     }
   }
 }

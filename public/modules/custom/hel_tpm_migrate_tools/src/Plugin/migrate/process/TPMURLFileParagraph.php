@@ -28,7 +28,14 @@ class TPMURLFileParagraph extends ParagraphBase {
     if (!empty($matches)) {
       $links = [];
       foreach ($matches as $match) {
-        $links[]['uri'] = $match[0];
+        if (empty($match)) {
+          continue;
+        }
+        $url = $match[0];
+        if (strpos($match[0], '://') === FALSE) {
+          $url = 'https://' . $url;
+        }
+        $links[]['uri'] = $url;
       }
       if (!empty($links)) {
         $paragraph = $this->createParagraph($row, $destinationProperty, 'url_and_file', 0);
