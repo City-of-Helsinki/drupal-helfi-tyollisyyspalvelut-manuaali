@@ -46,52 +46,6 @@
 
       });
 
-
-
-
-
-      //handle show/hide logic of service time
-      $('.field--name-field-separate-time .form-checkbox').click(function () {
-        if ($(this).is(":checked") == false) {
-          $(this).parent().parent().siblings('.event-times').show();
-        }
-        else  {
-          $(this).parent().parent().siblings('.event-times').hide();
-        }
-      });
-
-      //handle show/hide logic of service price
-      $('.field--name-field-free-service .form-checkbox').click(function () {
-        if ($(this).is(":checked") == false) {
-          $('.field--name-field-service-price .field--name-field-price').hide();
-          $('.field--name-field-service-price .field--name-field-description').hide();
-        }
-        else {
-          $('.field--name-field-service-price .field--name-field-price').show();
-          $('.field--name-field-service-price .field--name-field-description').show();
-        }
-      });
-
-      //handle age accordion
-      $('.field--name-field-age-groups .form-item .form-radio').click(function() {
-        if ($(this).val() == "no_age_restriction" && $(this).is(":checked") == true ) {
-          $('.field--name-field-age').hide();
-        }
-        else if (($(this).val() != "no_age_restriction" && $(this).is(":checked") == true )) {
-          $('.field--name-field-age').show();
-        }
-      });
-
-      //Handle show/hide logic of service consent description
-      $('.field--name-field-client-consent .form-item-checkbox .form-checkbox').click(function () {
-        if ($(this).is(":checked") == false) {
-          $(this).parent().parent().siblings('.field--name-field-field-client-consent-descr').hide();
-        }
-        else  {
-          $(this).parent().parent().siblings('.field--name-field-field-client-consent-descr').show();
-        }
-      });
-
       function switchTab(n) {
         var x = document.getElementsByClassName("tab");
         x[currentTab].style.display = "none";
@@ -160,25 +114,52 @@
 
       // hide price elements in the first service entity form page if the checkbox is not checked.
       function hidePrice() {
-        let x = $('.field--name-field-free-service .form-checkbox').is(":checked");
-        if (x == false) {
-          $('.field--name-field-service-price .field--name-field-price').hide();
-          $('.field--name-field-service-price .field--name-field-description').hide();
+        let freeServiceCheckbox = '.field--name-field-free-service .form-checkbox';
+        let servicePrice = '.field--name-field-service-price .field--name-field-price';
+        let servicePriceDescription = '.field--name-field-service-price .field--name-field-description';
+
+        if ($(freeServiceCheckbox).is(":checked") === false) {
+          $(servicePrice).hide();
+          $(servicePriceDescription).hide();
         }
         else  {
-          $('.field--name-field-service-price .field--name-field-price').show();
-          $('.field--name-field-service-price .field--name-field-description').show();
+          $(servicePrice).show();
+          $(servicePriceDescription).show();
 
         }
+
+        //handle show/hide logic of service price
+        $(freeServiceCheckbox).click(function () {
+          if ($(this).is(":checked") === false) {
+            $(servicePrice).hide();
+            $(servicePriceDescription).hide();
+          }
+          else {
+            $(servicePrice).show();
+            $(servicePriceDescription).show();
+          }
+        });
       }
 
       // hide time element on the second page of service entity form.
       function hideTime() {
-        $('.field--name-field-separate-time .form-checkbox').each(function() {
+        let separateTimeCheckbox = '.field--name-field-separate-time .form-checkbox';
+        let hideableTimes = '.event-times';
+        $(separateTimeCheckbox).each(function() {
           if ($(this).is(":checked")) {
-            $(this).parent().parent().siblings('.event-times').hide();
+            $(this).parent().parent().siblings(hideableTimes).hide();
           } else {
-            $(this).parent().parent().siblings('.event-times').show();
+            $(this).parent().parent().siblings(hideableTimes).show();
+          }
+        });
+        //handle show/hide logic of service time
+        $(separateTimeCheckbox).click(function () {
+          let thisTimeCheckbox = $(this).parent().parent().siblings('.event-times');
+          if ($(this).is(":checked") === true) {
+            $(thisTimeCheckbox).hide();
+          }
+          else  {
+            $(thisTimeCheckbox).show();
           }
         });
       }
@@ -186,25 +167,50 @@
 
       // hide age range on the first a page of service entity form.
       function hideAgeRange() {
-        $('.field--name-field-age-groups .form-item').siblings().each(function () {
-          if ($(this).children('.form-radio').val() == "no_age_restriction" && $(this).children('.form-radio').is(":checked") == true ) {
-            $('.field--name-field-age').hide();
+        let ageGroups = '.field--name-field-age-groups .form-item';
+        let ageField = '.field--name-field-age';
+        $(ageGroups).siblings().each(function () {
+          if ($(this).children('.form-radio').val() === "no_age_restriction" && $(this).children('.form-radio').is(":checked") == true ) {
+            $(ageField).hide();
           }
           else if (($(this).children('.form-radio').val() != "no_age_restriction" && $(this).children('.form-radio').is(":checked") == true )) {
-            $('.field--name-field-age').show();
+            $(ageField).show();
+          }
+        });
+        //handle age accordion
+        let ageGroupRadio = '.field--name-field-age-groups .form-item .form-radio';
+          $(ageGroupRadio).click(function() {
+          if ($(this).val() === "no_age_restriction" && $(this).is(":checked") === true ) {
+            $(ageField).hide();
+          }
+          else if (($(this).val() != "no_age_restriction" && $(this).is(":checked") === true )) {
+            $(ageField).show();
           }
         });
       }
 
       // hide consent description on the third a page of service entity form.
       function hideConsent() {
-        let x = $('.field--name-field-client-consent .form-item .form-checkbox');
-        if ($(x).is(":checked") == false) {
-          $(x).parent().parent().siblings('.field--name-field-field-client-consent-descr').hide();
+        let consentCheckbox = '.field--name-field-client-consent .form-item .form-checkbox';
+        let fieldDescription = $(consentCheckbox).parent().parent().siblings('.field--name-field-field-client-consent-descr');
+
+        if ($(consentCheckbox).is(":checked") === false) {
+          $(fieldDescription).hide();
         }
         else  {
-          $(x).parent().parent().siblings('.field--name-field-field-client-consent-descr').show();
+          $(fieldDescription).show();
         }
+        //Handle show/hide logic of service consent description
+        let consentDescription = '.field--name-field-field-client-consent-descr';
+
+        $(consentCheckbox).click(function () {
+          if ($(this).is(":checked") === false) {
+            $(this).parent().parent().siblings(consentDescription).hide();
+          }
+          else  {
+            $(this).parent().parent().siblings(consentDescription).show();
+          }
+        });
       }
     }
 
