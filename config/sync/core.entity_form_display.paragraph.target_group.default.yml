@@ -11,7 +11,6 @@ dependencies:
   module:
     - maxlength
     - range
-    - select2
     - text
 id: paragraph.target_group.default
 targetEntityType: paragraph
@@ -50,14 +49,10 @@ content:
         maxlength_js_enforce: false
         maxlength_js_truncate_html: true
   field_municipality:
-    type: select2_entity_reference
+    type: options_buttons
     weight: 2
     region: content
-    settings:
-      width: 100%
-      autocomplete: false
-      match_operator: CONTAINS
-      match_limit: 10
+    settings: {  }
     third_party_settings: {  }
   translation:
     weight: 4

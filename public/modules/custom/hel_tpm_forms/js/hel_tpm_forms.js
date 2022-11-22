@@ -46,7 +46,6 @@
 
       });
 
-
       function switchTab(n) {
         var x = document.getElementsByClassName("tab");
         x[currentTab].style.display = "none";
@@ -75,9 +74,9 @@
 
 
         if (n == (x.length - 1)) {
-          document.getElementById("nextBtn").innerHTML = "Submit";
+          document.getElementById("nextBtnText").innerHTML = "Submit";
         } else {
-          document.getElementById("nextBtn").innerHTML = "Next";
+          document.getElementById("nextBtnText").innerHTML = "Next";
         }
         // ... and run a function that displays the correct step indicator:
         fixStepIndicator(n)
@@ -214,5 +213,7 @@
         });
       }
     }
+
+
   }
 })(jQuery, Drupal, drupalSettings);

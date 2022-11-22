@@ -59,6 +59,7 @@
 
 .page-controls {
   margin-bottom: 1rem;
+  z-index: 200;
   .button {
     @include button-base;
     @include button-medium;
@@ -72,20 +73,15 @@
     font-weight: 700;
   }
   .btn-prev {
-    &::before {
-      @include icons;
-      content: "\EA11";
-      margin-right: $space;
+    svg {
+      margin-right: $space-one-half;
     }
   }
   .btn-next {
     float: right;
     @include button-color-blue;
-    &::after {
-      @include icons;
-      content: "\EA12";
-      color: clr(text-inverse);
-      margin-left: $space;
+    svg {
+      margin-left: $space-one-half;
     }
   }
 }

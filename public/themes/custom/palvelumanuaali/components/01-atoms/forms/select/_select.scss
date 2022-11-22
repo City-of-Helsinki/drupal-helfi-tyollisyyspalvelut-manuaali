@@ -68,6 +68,27 @@
   }
 }
 
+.form-item .select--details-select,
+.select--details-select {
+  display: flex;
+  select {
+    font-weight: 400;
+    font-size: $small-font;
+    margin-right: auto;
+    padding: 0;
+    height: 20px;
+    text-align: end;
+    @include xxl {
+      font-size: $small-caption;
+    }
+  }
+  svg {
+    padding: 0;
+    height: 22px;
+    width: 22px;
+  }
+}
+
 .select--white-rounded {
     position: relative;
 
