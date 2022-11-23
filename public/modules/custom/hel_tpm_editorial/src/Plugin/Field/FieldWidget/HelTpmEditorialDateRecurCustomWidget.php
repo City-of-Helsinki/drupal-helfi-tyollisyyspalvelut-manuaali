@@ -125,14 +125,10 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
    * {@inheritdoc}
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state): array {
-    $build_info = $form_state->getBuildInfo();
-    $build_info['args']['partGrid'] = $items->getPartGrid();
-    $build_info['args']['items'] = $items;
-    $form_state->setBuildInfo($build_info);
-
     /** @var \Drupal\date_recur\Plugin\Field\FieldType\DateRecurFieldItemList|\Drupal\date_recur\Plugin\Field\FieldType\DateRecurItem[] $items */
     $elementParents = array_merge($element['#field_parents'], [$this->fieldDefinition->getName(), $delta]);
     $element['#element_validate'][] = [static::class, 'validateModularWidget'];
+    $element['#after_build'][] = [static::class, 'afterBuildModularWidget'];
     $element['#theme'] = 'hel_tpm_editorial_date_recur_custom_widget';
     $element['#theme_wrappers'][] = 'form_element';
 
