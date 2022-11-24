@@ -9,6 +9,8 @@ config:
 proxy:
   mailhog:
     - mail.helfimanuska.lndo.site
+  search:
+    - admin.solr.lndo.site:8983
 services:
   mailhog:
     type: mailhog
@@ -39,6 +41,12 @@ services:
     type: elasticsearch:7
     portforward: true
     mem: 1025m
+  solr:
+    type: solr:8
+    core: solr
+    portforward: true
+    config:
+      dir: ./.solr/core
 tooling:
   # Create additional commands for lando
   install-drupal:

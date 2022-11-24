@@ -1,23 +1,22 @@
-uuid: ebb778ab-00f5-4eef-a788-128e91c86ea3
+uuid: ae6a9723-08ac-4dfa-88f7-0d889029db10
 langcode: fi
 status: true
 dependencies:
   config:
-    - views.view.service_search
+    - views.view.solr_service_search
   module:
     - context
-    - system
     - views
   theme:
     - palvelumanuaali
-id: nakyvakaavakeservice_searchpage_1
+id: nakyvakaavakesolr_service_searchblock_1
 theme: palvelumanuaali
 region: header
 weight: 0
 provider: null
-plugin: 'views_exposed_filter_block:service_search-page_1'
+plugin: 'views_exposed_filter_block:solr_service_search-block_1'
 settings:
-  id: 'views_exposed_filter_block:service_search-page_1'
+  id: 'views_exposed_filter_block:solr_service_search-block_1'
   label: ''
   label_display: '0'
   provider: views
@@ -42,7 +41,3 @@ visibility:
     id: context
     negate: null
     values: ''
-  request_path:
-    id: request_path
-    negate: false
-    pages: "/search\r\n/haku\r\n/search/*\r\n/haku/*"

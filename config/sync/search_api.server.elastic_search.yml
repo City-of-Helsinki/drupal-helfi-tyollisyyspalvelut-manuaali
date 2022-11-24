@@ -9,6 +9,7 @@ name: 'Elastic search'
 description: ''
 backend: elasticsearch
 backend_config:
+  server_description: ''
   cluster_settings:
     cluster: search
-  fuzziness: auto
+  fuzziness: '5'
