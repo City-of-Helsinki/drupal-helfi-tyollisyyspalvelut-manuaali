@@ -1,0 +1,44 @@
+uuid: 2bf0d0b7-2fdc-43b8-b5cb-f53dc2432453
+langcode: fi
+status: true
+dependencies:
+  config:
+    - search_api.index.service_search_solr_index
+    - views.view.solr_service_search
+  module:
+    - views
+    - search_api_autocomplete
+id: solr_service_search
+label: 'Solr service search'
+index_id: service_search_solr_index
+suggester_settings:
+  live_results:
+    fields:
+      - title
+    highlight:
+      enabled: false
+      field: ''
+    view_modes:
+      'entity:node':
+        service: ''
+  server:
+    fields:
+      - title
+suggester_weights:
+  live_results: -50
+  server: -49
+suggester_limits:
+  live_results: 5
+  server: 5
+search_settings:
+  'views:solr_service_search':
+    displays:
+      default: true
+      selected: {  }
+options:
+  limit: 10
+  min_length: 1
+  show_count: false
+  delay: null
+  submit_button_selector: ':submit'
+  autosubmit: true
