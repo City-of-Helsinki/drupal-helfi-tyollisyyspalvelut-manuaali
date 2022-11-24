@@ -9,7 +9,7 @@ name: sitewide_exclude_search
 group: null
 description: ''
 requireAllConditions: false
-disabled: false
+disabled: true
 conditions:
   request_path:
     id: request_path
@@ -21,22 +21,7 @@ reactions:
   blocks:
     id: blocks
     uuid: cf101163-f768-4ce0-84cf-4f5b3c45b303
-    blocks:
-      c1640593-aba2-42ca-9c15-54e054391cce:
-        uuid: c1640593-aba2-42ca-9c15-54e054391cce
-        id: system_breadcrumb_block
-        label: Murupolku
-        provider: system
-        label_display: '0'
-        region: content
-        weight: '-6'
-        custom_id: system_breadcrumb_block
-        theme: palvelumanuaali
-        css_class: ''
-        unique: 0
-        context_id: sitewide_exclude_search
-        context_mapping: {  }
-        third_party_settings: {  }
+    blocks: {  }
     include_default_blocks: 0
     saved: false
 weight: 0
