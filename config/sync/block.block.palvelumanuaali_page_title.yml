@@ -1,7 +1,11 @@
 uuid: b969df47-1c93-4903-bdb8-3d37381d8253
 langcode: fi
-status: false
+status: true
 dependencies:
+  module:
+    - context
+    - node
+    - system
   theme:
     - palvelumanuaali
 _core:
@@ -9,7 +13,7 @@ _core:
 id: palvelumanuaali_page_title
 theme: palvelumanuaali
 region: content
-weight: -3
+weight: -2
 provider: null
 plugin: page_title_block
 settings:
@@ -17,4 +21,36 @@ settings:
   label: 'Sivun otsikko'
   label_display: '0'
   provider: core
-visibility: {  }
+visibility:
+  context_all:
+    id: context_all
+    negate: null
+    values: ''
+  context:
+    id: context
+    negate: null
+    values: ''
+  user_status:
+    id: user_status
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    user_status:
+      viewing_profile: '0'
+      logged_viewing_profile: '0'
+      own_page_true: '0'
+      field_value: '0'
+    user_fields: uid
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+    bundles:
+      basic_page: basic_page
+      landing_page: landing_page
+      service: service
+  request_path:
+    id: request_path
+    negate: false
+    pages: "*/edit*\r\n*/add*\r\n*/edit\r\n*/add"

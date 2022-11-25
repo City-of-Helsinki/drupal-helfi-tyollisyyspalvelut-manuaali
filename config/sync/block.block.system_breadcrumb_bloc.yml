@@ -4,13 +4,14 @@ status: true
 dependencies:
   module:
     - context
+    - node
     - system
   theme:
     - palvelumanuaali
 id: system_breadcrumb_bloc
 theme: palvelumanuaali
 region: content
-weight: -1
+weight: -5
 provider: null
 plugin: system_breadcrumb_block
 settings:
@@ -30,7 +31,7 @@ visibility:
   request_path_exclusion:
     id: request_path_exclusion
     negate: true
-    pages: "/haku*\r\n/search*\r\n/edit*\r\n/add*"
+    pages: "*/haku*\r\n*/search*\r\n*/edit*\r\n*/add*"
   user_status:
     id: user_status
     negate: false
@@ -42,3 +43,12 @@ visibility:
       own_page_true: '0'
       field_value: '0'
     user_fields: uid
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+    bundles:
+      basic_page: basic_page
+      service: service
+      service_location: service_location

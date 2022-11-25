@@ -1,22 +1,24 @@
-uuid: 865d79b8-1071-4075-84bd-8d732efd2ea3
+uuid: ff6a8f88-1ee4-4c08-88eb-186e6a8ecc3a
 langcode: fi
 status: true
 dependencies:
   module:
     - context
+    - hel_tpm_print_pdf
+    - system
   theme:
     - palvelumanuaali
-id: local_actions_block
+id: hel_print_pdf_block
 theme: palvelumanuaali
 region: content
-weight: -3
+weight: -1
 provider: null
-plugin: local_actions_block
+plugin: hel_print_pdf_block
 settings:
-  id: local_actions_block
-  label: 'Ensisijaiset ylläpidon toimenpiteet'
+  id: hel_print_pdf_block
+  label: 'Print pdf block'
   label_display: '0'
-  provider: core
+  provider: hel_tpm_print_pdf
 visibility:
   context_all:
     id: context_all
@@ -37,3 +39,7 @@ visibility:
       own_page_true: '0'
       field_value: '0'
     user_fields: uid
+  request_path:
+    id: request_path
+    negate: false
+    pages: "*/search*\r\n*/haku*"
