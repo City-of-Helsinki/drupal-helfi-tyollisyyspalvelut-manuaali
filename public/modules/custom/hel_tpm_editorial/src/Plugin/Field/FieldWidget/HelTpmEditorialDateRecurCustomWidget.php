@@ -321,6 +321,7 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
 
     $elements = [];
 
+    $max = $max == 0 ? 1 : $max;
     for ($delta = 0; $delta < $max; $delta++) {
       // Add a new empty item if it doesn't exist yet at this delta.
       if (!isset($items[$delta])) {
