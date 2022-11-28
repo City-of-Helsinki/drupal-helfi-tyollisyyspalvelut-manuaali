@@ -19,6 +19,10 @@ conditions:
     context_mapping: {  }
     pages: "/haku*\r\n/search*"
 reactions:
+  body_class:
+    id: body_class
+    body_class: search-page
+    saved: false
   blocks:
     id: blocks
     uuid: 46f828bf-102f-4be8-a776-763fe65b40f6
@@ -39,9 +43,5 @@ reactions:
         context_mapping: {  }
         third_party_settings: {  }
     include_default_blocks: 0
-    saved: false
-  body_class:
-    id: body_class
-    body_class: search-page
     saved: false
 weight: 0

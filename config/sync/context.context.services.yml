@@ -28,6 +28,10 @@ conditions:
     context_mapping: {  }
     pages: '*/edit*'
 reactions:
+  body_class:
+    id: body_class
+    body_class: service-page
+    saved: false
   blocks:
     id: blocks
     uuid: 51dbe24b-1af2-4f88-963e-e07563bcbf10
@@ -63,9 +67,5 @@ reactions:
         context_mapping: {  }
         third_party_settings: {  }
     include_default_blocks: 0
-    saved: false
-  body_class:
-    id: body_class
-    body_class: service-page
     saved: false
 weight: -5
