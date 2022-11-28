@@ -150,7 +150,7 @@
 
         jQuery.ajax({
           dataType: "json",
-          url: drupalSettings.path.baseUrl + "search_api_autocomplete/service_search",
+          url: drupalSettings.path.baseUrl + "search_api_autocomplete/solr_service_search",
           data: { q: term },
           success: function (data) {
             Drupal.behaviors.hel_tpm_search_autocomplete.buildSuggestions(context, data, term);

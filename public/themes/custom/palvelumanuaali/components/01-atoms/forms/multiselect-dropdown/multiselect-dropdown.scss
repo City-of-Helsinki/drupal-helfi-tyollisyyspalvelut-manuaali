@@ -18,30 +18,22 @@
   border-color: transparent;
   .multi-select-container {
     /* dropdown */
-
     box-sizing: border-box;
-
     /* Auto layout */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    padding: 4px 16px 4px 24px;
     gap: 10px;
-    z-index: 200;
-
-    // width: 182px;
-    height: 32px;
-
     /* Primary / White */
     background: transparent;
-
     /* Inside auto layout */
     flex: none;
     order: 2;
     flex-grow: 0;
     border: 2px solid $blue40;
     border-radius: 8px;
+    z-index: 200;
     ~.icon {
         padding: 0;
         position: absolute;
@@ -114,7 +106,7 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 24px;
-    padding-right: 40px;
+    padding: 4px 44px 4px 24px;
     /* identical to box height, or 171% */
 
     /* Primary / Black */
@@ -127,7 +119,6 @@
   }
   .multi-select-menu {
     @include  xl {
-      margin-top: $space-double;
     }
   }
 

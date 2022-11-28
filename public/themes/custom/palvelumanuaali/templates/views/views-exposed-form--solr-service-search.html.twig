@@ -20,6 +20,7 @@
 {% set fieldsSecondary = ['field_age_groups', 'field_implementation_extra_info_1', 'field_accessibility']%}
 <div class="form--inline clearfix">
   {{ form['search_wrapper'] }}
+  {{ form['actions'] }}
   <div class="filters-wrapper">
     <div class="exposed-filters">
       <div class="main-filters filters">
@@ -37,6 +38,6 @@
         {% endfor %}
       </div>
     </div>
-    {{ form|without(fieldsMain, fieldsSecondary, 'search_wrapper') }}
+    {{ form|without(fieldsMain, fieldsSecondary, 'search_wrapper', 'actions') }}
     </div>
 </div>
