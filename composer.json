@@ -92,6 +92,7 @@
         "drupal/migrate_plus": "^6.0",
         "drupal/migrate_source_csv": "^3.5",
         "drupal/migrate_tools": "^6.0",
+        "drupal/node_edit_protection": "^1.0",
         "drupal/notification_message": "^1.0@RC",
         "drupal/paragraphs": "^1.12",
         "drupal/pathauto": "^1.8",
@@ -103,6 +104,8 @@
         "drupal/require_on_publish": "^1.6",
         "drupal/search_api": "^1.23",
         "drupal/search_api_autocomplete": "^1.6",
+        "drupal/search_api_solr": "4.x-dev",
+        "drupal/search_api_solr_multilingual": "^3.1",
         "drupal/search_api_sorts": "^1.1",
         "drupal/search_api_sorts_widget": "^1.0@beta",
         "drupal/select2": "^1.13",
@@ -205,7 +208,8 @@
             },
             "drupal/elasticsearch_connector": {
                 "https://www.drupal.org/project/elasticsearch_connector/issues/2912308#comment-14000645": "https://www.drupal.org/files/issues/2021-02-16/partial-search-issue-2912308-14.patch",
-                "patches/elasticsearch_snakeoil_cert.patch": "patches/elasticsearch_snakeoil_cert.patch"
+                "patches/elasticsearch_snakeoil_cert.patch": "patches/elasticsearch_snakeoil_cert.patch",
+                "https://www.drupal.org/project/elasticsearch_connector/issues/3092486": "https://www.drupal.org/files/issues/2019-11-05/3092486.patch"
             },
             "drupal/ggroup": {
                 "https://www.drupal.org/project/ggroup/issues/3084153": "./patches/3084153-role-mapper.patch",
