@@ -1,33 +1,33 @@
-uuid: 102b8dc7-ad5d-4a9e-8476-10817f600ee6
+uuid: 00a66d27-aa8e-4c04-9d76-05b88b0add50
 langcode: fi
 status: true
 dependencies:
   config:
-    - views.view.quick_links
+    - views.view.cart
   module:
     - block_class
     - context
-    - node
+    - system
+    - user
     - views
   theme:
     - palvelumanuaali
 third_party_settings:
   block_class:
-    classes: col-12
-id: views_block__quick_links_block_1
+    classes: block-favorites-table
+id: views_block__cart_favorites_block
 theme: palvelumanuaali
-region: postcontent
-weight: -8
+region: content
+weight: -1
 provider: null
-plugin: 'views_block:quick_links-block_1'
+plugin: 'views_block:cart-favorites_block'
 settings:
-  id: 'views_block:quick_links-block_1'
+  id: 'views_block:cart-favorites_block'
   label: ''
   label_display: visible
   provider: views
-  context_mapping: {  }
   views_label: ''
-  items_per_page: '3'
+  items_per_page: none
 visibility:
   context_all:
     id: context_all
@@ -48,14 +48,14 @@ visibility:
     id: context
     negate: null
     values: ''
-  request_path_exclusion:
-    id: request_path_exclusion
-    negate: true
-    pages: "*/edit\r\n*/edit/"
-  'entity_bundle:node':
-    id: 'entity_bundle:node'
+  request_path:
+    id: request_path
+    negate: false
+    pages: '<front>'
+  user_role:
+    id: user_role
     negate: false
     context_mapping:
-      node: '@node.node_route_context:node'
-    bundles:
-      landing_page: landing_page
+      user: '@user.current_user_context:current_user'
+    roles:
+      authenticated: authenticated
