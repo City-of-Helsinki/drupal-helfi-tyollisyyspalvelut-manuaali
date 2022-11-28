@@ -89,10 +89,28 @@
   }
 }
 
+.select--search-background {
+  background-color: clr(text-inverse);
+  border-radius: 8px;
+  &:has(.active) {
+    background-color: clr(background-section);
+  }
+  .multi-select-container {
+    &::after {
+      @include icons();
+      content: "\EA09";
+    }
+    &.active {
+      &::after {
+        @include icons();
+        content: "\EA09";
+      }
+    }
+  }
+}
+
 .select--white-rounded {
     position: relative;
-
-
   select,
   .select2 {
     background: clr(text-inverse);
@@ -105,7 +123,6 @@
     line-height: 24px;
     padding: 12px 12px 12px 16px;
     z-index: 20;
-    // height: 48px;
     border-radius: 8px;
     border: 2px solid $blue40;
 
