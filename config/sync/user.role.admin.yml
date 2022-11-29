@@ -21,6 +21,7 @@ dependencies:
     - workflows.workflow.service_moderation
   module:
     - admin_toolbar_search
+    - content_access
     - content_moderation
     - content_translation
     - field_permissions
@@ -97,8 +98,10 @@ permissions:
   - 'create terms in service_languages'
   - 'create terms in service_set'
   - 'delete all revisions'
+  - 'delete any basic_page content'
   - 'delete contact info'
   - 'delete content translations'
+  - 'delete own basic_page content'
   - 'delete own service content'
   - 'delete own service_location content'
   - 'delete terms in employment_status'
@@ -110,6 +113,7 @@ permissions:
   - 'delete terms in service_implementation_type'
   - 'delete terms in service_languages'
   - 'delete terms in service_set'
+  - 'edit any basic_page content'
   - 'edit contact info'
   - 'edit field_archiving_guide'
   - 'edit field_career_marking'
@@ -124,6 +128,7 @@ permissions:
   - 'edit field_service_obligatoryness'
   - 'edit field_statements_unemployment'
   - 'edit field_tags'
+  - 'edit own basic_page content'
   - 'edit own field_archiving_guide'
   - 'edit own field_career_marking'
   - 'edit own field_contact_info'
@@ -147,6 +152,8 @@ permissions:
   - 'edit terms in service_languages'
   - 'edit terms in service_set'
   - 'flag lists'
+  - 'grant content access'
+  - 'grant own content access'
   - 'revert all revisions'
   - 'translate editable entities'
   - 'translate interface'
