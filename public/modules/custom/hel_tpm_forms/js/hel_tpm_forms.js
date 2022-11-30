@@ -148,13 +148,11 @@
         $(separateTimeCheckbox).each(function() {
           if ($(this).is(":checked")) {
             $(this).parent().parent().siblings(hideableTimes).hide();
-          } else {
-            $(this).parent().parent().siblings(hideableTimes).show();
           }
         });
         //handle show/hide logic of service time
         $(separateTimeCheckbox).click(function () {
-          let thisTimeCheckbox = $(this).parent().parent().siblings('.event-times');
+          let thisTimeCheckbox = $(this).parent().parent().siblings(hideableTimes);
           if ($(this).is(":checked") === true) {
             $(thisTimeCheckbox).hide();
           }

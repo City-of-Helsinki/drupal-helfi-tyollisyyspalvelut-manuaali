@@ -2823,22 +2823,22 @@
         },
         {
             "name": "drupal/date_recur",
-            "version": "3.1.0",
+            "version": "3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/date_recur.git",
-                "reference": "3.1.0"
+                "reference": "3.2.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/date_recur-3.1.0.zip",
-                "reference": "3.1.0",
-                "shasum": "bc2c1fa7825b8b88bf5624fcaef30aa0b9aca5f2"
+                "url": "https://ftp.drupal.org/files/projects/date_recur-3.2.0.zip",
+                "reference": "3.2.0",
+                "shasum": "33b6a5e6b10f4cb88c5d0e85ba4657a14ab22628"
             },
             "require": {
-                "drupal/core": "^9",
-                "php": ">=7.4 <8.1",
-                "rlanvin/php-rrule": "1.*"
+                "drupal/core": "^9 || ^10",
+                "php": ">=8.0",
+                "rlanvin/php-rrule": "^1 || ^2"
             },
             "require-dev": {
                 "dealerdirect/phpcodesniffer-composer-installer": "dev-master",
@@ -2854,8 +2854,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "3.1.0",
-                    "datestamp": "1643545755",
+                    "version": "3.2.0",
+                    "datestamp": "1649146514",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -8388,6 +8388,10 @@
                 "source": "https://github.com/maennchen/ZipStream-PHP/tree/2.2.1"
             },
             "funding": [
+                {
+                    "url": "https://github.com/maennchen",
+                    "type": "github"
+                },
                 {
                     "url": "https://opencollective.com/zipstream",
                     "type": "open_collective"
