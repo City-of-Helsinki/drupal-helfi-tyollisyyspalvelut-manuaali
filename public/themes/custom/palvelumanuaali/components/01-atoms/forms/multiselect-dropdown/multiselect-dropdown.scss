@@ -129,6 +129,8 @@
 
   .multi-select-menuitem {
     padding: $space-one-half $space-double $space-one-half $space-triple;
+
+
     &:first-child {
       padding-top: $space;
     }
@@ -136,8 +138,29 @@
       padding-bottom: $space;
     }
   }
+
+
   .multi-select-menuitems input {
-    display: none;
+    display: block;
+    opacity: 0;
+    +.checkbox {
+      position: absolute;
+      display: none;
+
+      background-image: url('/themes/custom/palvelumanuaali/images/icons/check.svg');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+
+      width: 12px;
+      height: 12px;
+
+      margin-left: -20px;
+      margin-top: 6px;
+    }
+    &:checked +.checkbox {
+      display: block;
+    }
   }
 
 }
