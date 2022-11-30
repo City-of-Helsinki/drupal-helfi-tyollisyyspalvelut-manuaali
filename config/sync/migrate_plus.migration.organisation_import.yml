@@ -19,7 +19,13 @@ source:
     - Organisaatiot
 process:
   label: Organisaatiot
+  type:
+    -
+      source: Ryhmä
+      plugin: static_map
+      map:
+        Group: organisation
+        Subgroup: service_provider
 destination:
   plugin: 'entity:group'
-  default_bundle: service_provider
 migration_dependencies: null
