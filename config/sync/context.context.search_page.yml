@@ -3,7 +3,6 @@ langcode: fi
 status: true
 dependencies:
   module:
-    - hel_tpm_print_pdf
     - system
 label: 'Search page only'
 name: search_page
@@ -19,27 +18,6 @@ conditions:
     context_mapping: {  }
     pages: "/haku*\r\n/search*"
 reactions:
-  blocks:
-    id: blocks
-    uuid: 46f828bf-102f-4be8-a776-763fe65b40f6
-    blocks:
-      d11fb52a-215a-473a-97d4-f055be7e21f6:
-        uuid: d11fb52a-215a-473a-97d4-f055be7e21f6
-        id: hel_print_pdf_block
-        label: 'Print pdf block'
-        provider: hel_tpm_print_pdf
-        label_display: '0'
-        region: content
-        weight: '-1'
-        custom_id: hel_print_pdf_block
-        theme: palvelumanuaali
-        css_class: ''
-        unique: 0
-        context_id: search_page
-        context_mapping: {  }
-        third_party_settings: {  }
-    include_default_blocks: 0
-    saved: false
   body_class:
     id: body_class
     body_class: search-page
