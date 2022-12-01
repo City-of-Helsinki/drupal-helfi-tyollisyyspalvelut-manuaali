@@ -24,7 +24,7 @@ function hel_tpm_user_expiry_cron() {
   $q = 'SELECT ufd.uid, ufd.access
     FROM {users_field_data} ufd
     WHERE ufd.access < :limit AND ufd.status = 1';
-  $res = $database->query($q, [':limit' => strtotime('-2 months')]);
+  $res = $database->query($q, [':limit' => strtotime('-3 months -2 weeks')]);
   foreach ($res as $row) {
     unset($notification);
     // Check if the first notification has been sent.

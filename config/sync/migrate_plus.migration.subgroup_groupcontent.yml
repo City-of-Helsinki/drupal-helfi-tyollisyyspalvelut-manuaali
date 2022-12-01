@@ -1,0 +1,58 @@
+uuid: 24d4f14c-68d0-4057-89b9-08cd5d9f6e6b
+langcode: en
+status: true
+dependencies: {  }
+id: subgroup_groupcontent
+class: null
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags: null
+migration_group: null
+label: 'Migrate subgroup content to Group'
+source:
+  plugin: csv
+  path: /tmp/groupconns.csv
+  delimiter: ','
+  enclosure: '"'
+  header_row_count: 1
+  ids:
+    - Organisaatiot
+    - Vastuukunta
+process:
+  type:
+    plugin: default_value
+    default_value: group_content_type_3652c4b169b23
+  langcode:
+    plugin: default_value
+    source: language
+    default_value: und
+  gid:
+    -
+      plugin: migration_lookup
+      migration: organisation_import
+      source_ids:
+        organisation_import:
+          - Vastuukunta
+      no_stub: true
+    -
+      plugin: skip_on_empty
+      method: row
+  entity_id:
+    -
+      plugin: migration_lookup
+      migration: organisation_import
+      source_ids:
+        organisation_import:
+          - Organisaatiot
+      no_stub: true
+    -
+      plugin: skip_on_empty
+      method: row
+  label:
+    -
+      plugin: skip_on_empty
+      source: Organisaatiot
+      method: row
+destination:
+  plugin: 'entity:group_content'
+migration_dependencies: null

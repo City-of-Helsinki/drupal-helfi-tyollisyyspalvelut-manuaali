@@ -20,11 +20,9 @@ function hel_tpm_search_autosuggest_theme() {
 
 function hel_tpm_search_autosuggest_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state) {
   $storage = $form_state->getStorage();
-  if (
-    empty($storage['view']) ||
-    $storage['view']->id() != 'service_search' ||
-    $form['#form_id'] !== 'views_exposed_form'
-  ) {
+  if (empty($storage['view']) ||
+    $storage['view']->id() != 'solr_service_search' ||
+    $form['#form_id'] !== 'views_exposed_form') {
     return;
   }
 

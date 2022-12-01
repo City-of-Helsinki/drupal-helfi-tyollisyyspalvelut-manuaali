@@ -21,9 +21,11 @@
   .page-controls {
     margin-top: $space;
     grid-row: 6;
+    margin-left: 172px;
+    grid-column: 1/2;
     @include xl {
-      grid-column: 1/2;
       grid-row:3;
+
     }
     .button-wrapper {
       display: flex;
@@ -42,36 +44,31 @@
   }
 
   >#edit-actions {
-    grid-row: 7;
+    grid-row: 6;
+    margin-top: $space;
+    margin-bottom: $space;
+    display: flex;
+    grid-column: 1/2;
     @include xl {
-      grid-row: 4;
-      grid-column: 1/2;
-      display: flex;
-      justify-content: space-between;
+      grid-row: 3;
+
     }
     .button {
-      width: unset;
+      width: 160px;
       border: unset;
     }
   }
 
   .form-item {
     label {
-      font-size: 12px;
-    }
-  }
-  .field--type-boolean .form-item {
-    width: 100%;
-    display: flex;
-    input {
-      margin-right: 8px;
-      width: unset;
-    }
-    label {
-      font-weight: 400;
+      font-size: $small-font;
+      @include large {
+        font-size: $small-caption
+      }
     }
   }
 
+  // generic theming for the details sidebar
   .edit-advanced-form {
     background-color: clr(text-inverse);
     border-radius: 8px;
@@ -81,6 +78,7 @@
       padding: 40px 32px 48px 32px;
       max-width: inherit;
     }
+
     .vertical-tabs {
       border: 0;
       margin: 0;
@@ -95,7 +93,45 @@
         border: 0;
       }
     }
+
+    //theming for the details sidebar link
+    .vertical-tabs__menu-item a {
+      text-decoration: unset;
+      padding: 0;
+      margin-bottom: $space-double;
+    }
+
+    details {
+      font-size: $small-font;
+      @include xxl {
+        font-size: $small-caption;
+      }
+    }
+
+    label {
+      font-weight: 400;
+      font-size: $small-font;
+      margin-right: auto;
+      padding: 0;
+      @include xxl {
+        font-size: $small-caption;
+      }
+    }
+
+    .form-wrapper {
+      width: 100%;
+    }
+
+    .field--type-language,
+    .field--type-string,
+    .form-item {
+      display: flex;
+      align-content: center;
+      justify-content: space-between;
+      width: 100%;
+    }
   }
+
   .paragraph-type-top,
   .filter-wrapper[data-drupal-selector*="format"] {
     display: none;
@@ -103,24 +139,6 @@
 
   fieldset > legend {
     width: 100%;
-  }
-
-  .form-item-checkbox {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    label {
-      order: 1;
-    }
-    .form-item__description {
-      order: 2;
-      width: 100%;
-    }
-    .form-checkbox{
-      margin-right: $space-one-half;
-      width: 16px;
-      height: 16px;
-    }
   }
 
   .description {
@@ -145,20 +163,18 @@
       background-color: clr(background);
       color: clr(background-section);
       border: unset;
-
+      a {
+        padding: 12px 48px;
+      }
       &.selected {
         border-bottom: unset;
         background-color: clr(background-section);
-
         a {
           color: clr(text-inverse);
           padding: 12px 48px;
         }
       }
 
-      a {
-        padding: 12px 48px;
-      }
     }
   }
 
@@ -248,19 +264,19 @@
   legend {
     display: none;
   }
-  .field--type-boolean .form-item {
-    width: 100%;
-    display: flex;
-
-    input {
-      margin-right: 8px;
-      width: unset;
-    }
-
-    label {
-      font-weight: 400;
-    }
-  }
+  // .field--type-boolean .form-item {
+  //   width: 100%;
+  //   display: flex;
+  //
+  //   input {
+  //     margin-right: 8px;
+  //     width: unset;
+  //   }
+  //
+  //   label {
+  //     font-weight: 400;
+  //   }
+  // }
 }
 
  .field--name-field-dates {
@@ -274,16 +290,6 @@
    }
  }
 
- .form-item--checkboxes {
-    .form-item {
-        width: 13ch;
-        label {
-          &::after {
-            content: unset !important;
-          }
-        }
-    }
- }
 
  .field--widget-hel-tpm-editorial-date-recur-custom {
    .dates {
@@ -310,7 +316,13 @@
      .weekdays {
        .form-item--checkboxes {
          display: grid;
-         grid-template-columns: repeat(7, 1fr);
+         grid-template-columns: repeat(3, 1fr);
+         @include large {
+            grid-template-columns: repeat(4, 1fr);
+         }
+         @include xxl {
+           grid-template-columns: repeat(5, 1fr);
+         }
        }
        .form-item {
          width: auto;

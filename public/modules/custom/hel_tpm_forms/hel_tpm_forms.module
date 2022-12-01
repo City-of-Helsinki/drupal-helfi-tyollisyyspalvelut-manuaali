@@ -57,3 +57,45 @@ function hel_tpm_forms_form_node_form_alter(&$form, FormStateInterface &$form_st
 
   $form['#attached']['library'][] = 'hel_tpm_forms/hel_tpm_forms';
 }
+
+/**
+ * Implments hook_form_alter().
+ *
+ * @param $elements
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ * @param array $context
+ *
+ * @return void
+ */
+function hel_tpm_forms_field_widget_form_alter(&$elements, FormStateInterface $form_state, array $context) {
+  if (empty($elements['#type'])) {
+    return;
+  }
+  if (($elements['#type'] === 'select2') || ($elements['#type'] === 'select')){
+    $elements['#placeholder'] = t('Choose from following options');
+  }
+}
+
+/**
+ * Implements hook_element_info_alter().
+ *
+ * @param $type
+ *
+ * @return void
+ */
+function hel_tpm_forms_element_info_alter(&$type) {
+  $type['radios']['#process'][] = '_hel_tpm_forms_remove_radio_na';
+}
+
+/**
+ * Helper function to unset _none from radios.
+ *
+ * @param $element
+ *
+ * @return mixed
+ */
+function _hel_tpm_forms_remove_radio_na($element) {
+  unset($element['#options']['_none']);
+  unset($element['_none']);
+  return $element;
+}

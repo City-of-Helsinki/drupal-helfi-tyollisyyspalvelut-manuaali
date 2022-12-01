@@ -6,6 +6,20 @@ use Drupal\Core\Url;
 use Drupal\Core\Link;
 
 /**
+ * Implements hook_theme().
+ */
+function hel_tpm_general_theme($existing, $type, $theme, $path) {
+  return [
+    'hel_tpm_general_icon_field' => [
+      'template' => 'icon-field',
+      'variables' => [
+        'icon' => ''
+      ],
+    ],
+  ];
+}
+
+/**
  * Implements hook_entity_extra_field_info().
  */
 function hel_tpm_general_entity_extra_field_info() {

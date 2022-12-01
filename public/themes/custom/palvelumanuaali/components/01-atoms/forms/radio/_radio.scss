@@ -3,12 +3,27 @@
   @include list-reset;
 }
 
+.form-item--radio {
+  @include large {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
 .form-item--radio-button {
   display: flex;
+  @include large {
+    margin-right: $space
+  }
+  @include xl {
+    margin-right: $space-one-and-half;
+  }
   .form-radio{
     max-width: 13px;
   }
   label {
-      margin-left: $space;
+      margin-left: $space-one-half;
+      font-weight: 400;
+      font-size: $small-caption;
   }
 }

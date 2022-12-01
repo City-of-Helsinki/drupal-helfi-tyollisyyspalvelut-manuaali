@@ -48,7 +48,7 @@ class TPMServiceTimeLocationParagraph extends ParagraphBase {
       $paragraph = $this->createParagraph($row, $destinationProperty, 'service_time_and_place', 0);
  
       foreach ($languages as $language) {
-        $language_paragraph = $this->createParagraph($row, $destionationProperty, 'service_language', 0);
+        $language_paragraph = $this->createParagraph($row, $destinationProperty, 'service_language', 0);
         $language_paragraph->field_language = $this->getTidByName($language['language'], 'service_languages');
         if (!empty($language['level'])) {
           $language_paragraph->field_level = $this->getTidByName($language['level'], 'language_level');

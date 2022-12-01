@@ -1,27 +1,29 @@
-uuid: 4870bcd6-9fdd-4bd2-868f-af8f8ebe3f8f
+uuid: 102b8dc7-ad5d-4a9e-8476-10817f600ee6
 langcode: fi
 status: true
 dependencies:
   config:
-    - views.view.service_search
+    - views.view.quick_links
   module:
     - context
-    - system
+    - node
     - views
   theme:
     - palvelumanuaali
-id: nakyvakaavakeservice_searchblock_1
+id: views_block__quick_links_block_1
 theme: palvelumanuaali
-region: header
-weight: -2
+region: postcontent
+weight: 0
 provider: null
-plugin: 'views_exposed_filter_block:service_search-block_1'
+plugin: 'views_block:quick_links-block_1'
 settings:
-  id: 'views_exposed_filter_block:service_search-block_1'
+  id: 'views_block:quick_links-block_1'
   label: ''
-  label_display: '0'
+  label_display: visible
   provider: views
+  context_mapping: {  }
   views_label: ''
+  items_per_page: '3'
 visibility:
   context_all:
     id: context_all
@@ -42,7 +44,14 @@ visibility:
     id: context
     negate: null
     values: ''
-  request_path:
-    id: request_path
+  request_path_exclusion:
+    id: request_path_exclusion
     negate: true
-    pages: "/search\r\n/search/*\r\n/haku\r\n/haku/*"
+    pages: "*/edit\r\n*/edit/"
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+    bundles:
+      landing_page: landing_page

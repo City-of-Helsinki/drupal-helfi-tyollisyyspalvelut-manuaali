@@ -26,7 +26,7 @@
         {% endif %}
       {% endfor %}
     </select>
-    {% if dropdown_icons == 'yes'%}
+    {% if dropdown_icons == 'yes' %}
       {% include "@atoms/images/icons/_icon.twig" with {
         icon_base_class: "icon",
         icon_name: "arrow-sm-down",
@@ -38,5 +38,12 @@
         icon_modifiers: ['small','hide-while-unselected'],
       } %}
     {% endif %}
+    {% if dropdown_icons == 'blue' %}
+      {% include "@atoms/images/icons/_icon.twig" with {
+        icon_base_class: "icon",
+        icon_name: "arrow-sm-down",
+        icon_modifiers: ['small'],
+      } %}
+    {% endif %}  
   </div>
 {% endspaceless %}
