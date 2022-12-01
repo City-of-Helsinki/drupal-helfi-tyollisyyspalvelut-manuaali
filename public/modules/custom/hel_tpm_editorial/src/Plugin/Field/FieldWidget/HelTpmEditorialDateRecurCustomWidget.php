@@ -309,6 +309,15 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
         $field_state = static::getWidgetState($parents, $field_name, $form_state);
         $max = $field_state['items_count'];
         $is_multiple = TRUE;
+        // If max is 0 and there is no items.
+        // Append new item to items object and update field state items count.
+        // This fixes empty row instance appearing when editing and entity.
+        if ($max <= 0 && $items->count() == 0) {
+          $items->appendItem();
+          $max = $items->count();
+          $field_state['items_count'] = $max;
+          static::setWidgetState($parents, $field_name, $form_state, $field_state);
+        }
         break;
 
       default:
@@ -321,10 +330,6 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
     $description = $this->getFilteredDescription();
 
     $elements = [];
-
-    if ($max <= 0 && $items->count() == 0) {
-      $max++;
-    }
 
     for ($delta = 0; $delta < $max; $delta++) {
       // Add a new empty item if it doesn't exist yet at this delta.
