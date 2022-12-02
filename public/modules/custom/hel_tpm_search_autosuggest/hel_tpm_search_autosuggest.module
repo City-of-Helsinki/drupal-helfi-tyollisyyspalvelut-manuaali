@@ -34,7 +34,7 @@ function hel_tpm_search_autosuggest_form_alter(&$form, \Drupal\Core\Form\FormSta
   $form['search_api_fulltext'] = [
     '#type' => 'textfield',
     '#id' => 'hel-tpm-search-autocomplete',
-    '#attributes' => ['placeholder'=> t('Search'), 'autocomplete' => 'off'],
+    '#attributes' => ['placeholder'=> t('Search from all services'), 'autocomplete' => 'off'],
     '#attached' => ['library' => ['hel_tpm_search_autosuggest/hel_tpm_search_autosuggest']],
     '#default_value' => \Drupal::request()->query->get('search_api_fulltext'),
   ];
@@ -42,6 +42,8 @@ function hel_tpm_search_autosuggest_form_alter(&$form, \Drupal\Core\Form\FormSta
   $form['search_wrapper']['list_items'] = [
     '#theme' => 'hel_tpm_search_autocomplete'
   ];
+  $form['actions']['submit']['#attributes']['title'] = t('Search from all services');
+
 
   // Generate weights for fields.
   _hel_tpm_search_autosuggest_reweight_fields($form, $storage['view']);
