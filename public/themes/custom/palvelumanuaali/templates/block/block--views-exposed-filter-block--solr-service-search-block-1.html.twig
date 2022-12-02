@@ -25,7 +25,12 @@
  * @see template_preprocess_block()
  */
 #}
-<div {{ bem('block') }}>
+{%
+  set classes = [
+    'header-search-block',
+  ]
+%}
+<div {{ bem('block',classes)}}>
   {{ title_prefix }}
   {% if label %}
     <h2{{ title_attributes.addClass('h2') }}>{{ label }}</h2>

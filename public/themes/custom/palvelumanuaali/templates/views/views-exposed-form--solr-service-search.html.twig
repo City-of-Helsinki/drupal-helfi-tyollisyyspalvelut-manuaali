@@ -40,10 +40,9 @@
           {% endif %}
         {% endfor %}
       </div>
-      {% if  form['#display_id'] is defined and form['#display_id'] =='block_1'  %}
+      {% if  form['#display_id'] is defined and form['#display_id'] == 'block_1'  %}
       {% else %}
         <div class='control-wrapper'>
-
         <span class="link-wrapper">  <a class="collapse-toggler" data-bs-toggle="collapse" href="#collapseItem" role="button" aria-expanded="false" aria-controls="collapseItem">{{ 'Show additional choices'|t }}</a></span>
          {{ form['actions']['reset'] }}
         </div>
