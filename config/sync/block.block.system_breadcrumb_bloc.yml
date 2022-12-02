@@ -1,38 +1,40 @@
-uuid: 102b8dc7-ad5d-4a9e-8476-10817f600ee6
+uuid: fcc3b2d9-913b-4bd0-992b-f6e86b757dff
 langcode: fi
 status: true
 dependencies:
-  config:
-    - views.view.quick_links
   module:
-    - block_class
     - context
     - node
-    - views
+    - system
   theme:
     - palvelumanuaali
 third_party_settings:
   block_class:
-    classes: col-12
-id: views_block__quick_links_block_1
+    classes: null
+id: system_breadcrumb_bloc
 theme: palvelumanuaali
-region: postcontent
-weight: -8
+region: content
+weight: -7
 provider: null
-plugin: 'views_block:quick_links-block_1'
+plugin: system_breadcrumb_block
 settings:
-  id: 'views_block:quick_links-block_1'
-  label: ''
-  label_display: visible
-  provider: views
-  context_mapping: {  }
-  views_label: ''
-  items_per_page: '3'
+  id: system_breadcrumb_block
+  label: Murupolku
+  label_display: '0'
+  provider: system
 visibility:
   context_all:
     id: context_all
     negate: null
     values: ''
+  context:
+    id: context
+    negate: null
+    values: ''
+  request_path_exclusion:
+    id: request_path_exclusion
+    negate: true
+    pages: "*/haku*\r\n*/search*\r\n*/edit*\r\n*/add*"
   user_status:
     id: user_status
     negate: false
@@ -44,18 +46,12 @@ visibility:
       own_page_true: '0'
       field_value: '0'
     user_fields: uid
-  context:
-    id: context
-    negate: null
-    values: ''
-  request_path_exclusion:
-    id: request_path_exclusion
-    negate: true
-    pages: "*/edit\r\n*/edit/"
   'entity_bundle:node':
     id: 'entity_bundle:node'
     negate: false
     context_mapping:
       node: '@node.node_route_context:node'
     bundles:
-      landing_page: landing_page
+      basic_page: basic_page
+      service: service
+      service_location: service_location

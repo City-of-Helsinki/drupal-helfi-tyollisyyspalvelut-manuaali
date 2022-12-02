@@ -1,29 +1,33 @@
-uuid: ae6a9723-08ac-4dfa-88f7-0d889029db10
+uuid: 756b786f-af7b-4c12-9e56-fe370f838141
 langcode: fi
 status: true
 dependencies:
   config:
-    - views.view.solr_service_search
+    - views.view.services
   module:
+    - block_class
     - context
+    - system
+    - user
     - views
   theme:
     - palvelumanuaali
 third_party_settings:
   block_class:
-    classes: null
-id: nakyvakaavakesolr_service_searchblock_1
+    classes: 'col-12 col-xl-6 block-last-updated-services-table'
+id: views_block__services_last_updated_table_block
 theme: palvelumanuaali
-region: header
-weight: 0
+region: content
+weight: 1
 provider: null
-plugin: 'views_exposed_filter_block:solr_service_search-block_1'
+plugin: 'views_block:services-last_updated_table_block'
 settings:
-  id: 'views_exposed_filter_block:solr_service_search-block_1'
+  id: 'views_block:services-last_updated_table_block'
   label: ''
-  label_display: '0'
+  label_display: visible
   provider: views
   views_label: ''
+  items_per_page: none
 visibility:
   context_all:
     id: context_all
@@ -44,7 +48,14 @@ visibility:
     id: context
     negate: null
     values: ''
-  request_path_exclusion:
-    id: request_path_exclusion
-    negate: true
-    pages: "*/search*\r\n*/haku*"
+  request_path:
+    id: request_path
+    negate: false
+    pages: '<front>'
+  user_role:
+    id: user_role
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      authenticated: authenticated

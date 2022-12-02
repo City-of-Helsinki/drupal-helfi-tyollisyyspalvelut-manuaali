@@ -16,10 +16,10 @@ source:
   enclosure: '"'
   header_row_count: 1
   ids:
-    - 'Palvelun nimi'
-    - 'Vastuukunta (group)'
+    - Palvelunnimi
+    - Vastuukunta
 process:
-  title: 'Palvelun nimi'
+  title: Palvelunnimi
   field_description: 'Lyhyt kuvaus palvelusta (max. 250 merkkiä)'
   field_implementation_extra_info:
     -
@@ -51,7 +51,13 @@ process:
       bundle_key: vid
       bundle: service_set
       ignore_case: true
-  field_service_implement: 'Palvelun toteutustapa'
+  field_service_execution:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: 'Palvelun toteutustapa'
+    -
+      plugin: tpm_text_with_toolbar_paragraph
   field_service_other_info:
     -
       plugin: skip_on_empty

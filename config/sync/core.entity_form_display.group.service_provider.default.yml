@@ -7,7 +7,42 @@ dependencies:
     - field.field.group.service_provider.field_responsible_authority
     - group.type.service_provider
   module:
-    - path
+    - field_group
+third_party_settings:
+  field_group:
+    group_lef:
+      children:
+        - label
+        - field_responsible_authority
+        - field_group_prioritise_in_search
+      label: ''
+      region: content
+      parent_name: ''
+      weight: 0
+      format_type: fieldset
+      format_settings:
+        classes: 'group--rounded-corners form-background--white form-background--regular-padding'
+        show_empty_fields: false
+        id: edit-group-left-column
+        description: ''
+        required_fields: false
+    group_lisatiedot:
+      children:
+        - langcode
+        - status
+      label: Lisätiedot
+      region: content
+      parent_name: ''
+      weight: 1
+      format_type: details_sidebar
+      format_settings:
+        classes: details-sidebar
+        show_empty_fields: false
+        id: details-sidebar
+        open: false
+        description: ''
+        required_fields: true
+        weight: 0
 id: group.service_provider.default
 targetEntityType: group
 bundle: service_provider
@@ -15,14 +50,14 @@ mode: default
 content:
   field_group_prioritise_in_search:
     type: boolean_checkbox
-    weight: 122
+    weight: 3
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   field_responsible_authority:
     type: entity_reference_autocomplete
-    weight: 121
+    weight: 2
     region: content
     settings:
       match_operator: CONTAINS
@@ -32,7 +67,7 @@ content:
     third_party_settings: {  }
   label:
     type: string_textfield
-    weight: -5
+    weight: 1
     region: content
     settings:
       size: 60
@@ -40,24 +75,19 @@ content:
     third_party_settings: {  }
   langcode:
     type: language_select
-    weight: 2
+    weight: 0
     region: content
     settings:
       include_locked: true
     third_party_settings: {  }
-  path:
-    type: path
-    weight: 30
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 120
+    weight: 1
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
 hidden:
   entitygroupfield: true
+  path: true
   uid: true

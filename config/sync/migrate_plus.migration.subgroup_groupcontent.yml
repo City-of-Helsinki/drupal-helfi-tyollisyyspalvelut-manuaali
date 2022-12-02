@@ -1,27 +1,27 @@
-uuid: 9fdce8e0-93e2-44b0-8a4f-fd56c51aa458
+uuid: 24d4f14c-68d0-4057-89b9-08cd5d9f6e6b
 langcode: en
 status: true
 dependencies: {  }
-id: service_groupcontent
+id: subgroup_groupcontent
 class: null
 field_plugin_method: null
 cck_plugin_method: null
 migration_tags: null
 migration_group: null
-label: 'Migrate services group content to Group'
+label: 'Migrate subgroup content to Group'
 source:
   plugin: csv
-  path: /tmp/services.csv
+  path: /tmp/groupconns.csv
   delimiter: ','
   enclosure: '"'
   header_row_count: 1
   ids:
-    - 'Palvelunnimi'
-    - 'Vastuukunta'
+    - Organisaatiot
+    - Vastuukunta
 process:
   type:
     plugin: default_value
-    default_value: group_content_type_c7845b3bab623
+    default_value: group_content_type_3652c4b169b23
   langcode:
     plugin: default_value
     source: language
@@ -32,7 +32,7 @@ process:
       migration: organisation_import
       source_ids:
         organisation_import:
-          - 'Palvelun järjestäjä'
+          - Vastuukunta
       no_stub: true
     -
       plugin: skip_on_empty
@@ -40,11 +40,10 @@ process:
   entity_id:
     -
       plugin: migration_lookup
-      migration: service_wp_import
+      migration: organisation_import
       source_ids:
-        service_wp_import:
-          - 'Palvelunnimi'
-          - 'Vastuukunta'
+        organisation_import:
+          - Organisaatiot
       no_stub: true
     -
       plugin: skip_on_empty
@@ -52,7 +51,7 @@ process:
   label:
     -
       plugin: skip_on_empty
-      source: 'Palvelunnimi'
+      source: Organisaatiot
       method: row
 destination:
   plugin: 'entity:group_content'

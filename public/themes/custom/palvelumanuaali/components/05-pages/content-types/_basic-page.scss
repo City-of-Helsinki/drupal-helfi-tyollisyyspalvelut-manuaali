@@ -8,6 +8,9 @@
 }
 
 .basic-page {
+  @include xl {
+    margin-top: $space-one-half;
+  }
   .content-column >.field {
     margin-bottom: $space-quadruple;
   }

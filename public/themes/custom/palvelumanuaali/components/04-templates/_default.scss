@@ -78,7 +78,7 @@ body {
   }
 
   @include large {
-    margin-top: $nav-height;
+    padding-top: $space-triple;
     margin-right: $space-quadruple;
     margin-left: $space-quadruple;
   }
@@ -107,7 +107,9 @@ body {
 }
 
 .main-content {
-
+  .block--main-block {
+    margin-top: $space-double;
+  }
   @include large {
     order: 2;
     &--with-sidebar {
