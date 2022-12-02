@@ -1,0 +1,190 @@
+_core:
+  default_config_hash: Zno4MMkbreZeJZgnY0DXCPksXkuYye3MyIFlVuh-xLc
+grants:
+  view: 1
+  edit: 0
+  delete: 0
+priority: 0
+preserve: 1
+basic_page:
+  anonymous:
+    grant_view: '1'
+    grant_update: 0
+    grant_delete: 0
+  authenticated:
+    grant_view: '1'
+    grant_update: 0
+    grant_delete: 0
+  root:
+    grant_view: '1'
+    grant_update: 0
+    grant_delete: 0
+  admin:
+    grant_view: '1'
+    grant_update: 0
+    grant_delete: 0
+  editor:
+    grant_view: '1'
+    grant_update: 0
+    grant_delete: 0
+  specialist:
+    grant_view: '1'
+    grant_update: 0
+    grant_delete: 0
+  specialist_editor:
+    grant_view: '1'
+    grant_update: 0
+    grant_delete: 0
+  author:
+    grant_view: '1'
+    grant_update: 0
+    grant_delete: 0
+landing_page:
+  anonymous:
+    grant_view: '1'
+    grant_update: 0
+    grant_delete: 0
+  authenticated:
+    grant_view: '1'
+    grant_update: 0
+    grant_delete: 0
+  root:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  admin:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  editor:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  specialist:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  specialist_editor:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  author:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+service:
+  anonymous:
+    grant_view: '1'
+    grant_update: 0
+    grant_delete: 0
+  authenticated:
+    grant_view: '1'
+    grant_update: 0
+    grant_delete: 0
+  root:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  admin:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  editor:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  specialist:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  specialist_editor:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  author:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+service_location:
+  anonymous:
+    grant_view: '1'
+    grant_update: 0
+    grant_delete: 0
+  authenticated:
+    grant_view: '1'
+    grant_update: 0
+    grant_delete: 0
+  root:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  admin:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  editor:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  specialist:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  specialist_editor:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  author:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+role_alias:
+  anonymous:
+    allow: '1'
+    alias: 'Anonymous user'
+    weight: '0'
+    name: 'Anonymous user'
+  authenticated:
+    allow: '1'
+    alias: 'Authenticated user'
+    weight: '0'
+    name: 'Authenticated user'
+  root:
+    alias: Root
+    weight: '0'
+    name: Root
+    allow: 0
+  admin:
+    alias: Admin
+    weight: '0'
+    name: Admin
+    allow: 0
+  editor:
+    allow: '1'
+    alias: Sisällöntuottaja
+    weight: '0'
+    name: Sisällöntuottaja
+  specialist:
+    allow: '1'
+    alias: Specialist
+    weight: '0'
+    name: Specialist
+  specialist_editor:
+    allow: '1'
+    alias: 'Specialist editor'
+    weight: '0'
+    name: 'Specialist editor'
+role_map:
+  anonymous: 1
+  authenticated: 2
+  root: 3
+  admin: 4
+  editor: 5
+  specialist: 6
+  specialist_editor: 7
+langcode: fi
+allowed_types:
+  basic_page: 1
+  landing_page: 0
+  service: 0
+  service_location: 0
