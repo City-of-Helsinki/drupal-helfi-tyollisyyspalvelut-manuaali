@@ -129,6 +129,7 @@ var map = {
 	"./icons/content-icons/uEA10-viewmode.svg": "./images/icons/content-icons/uEA10-viewmode.svg",
 	"./icons/content-icons/uEA11-arrow-left.svg": "./images/icons/content-icons/uEA11-arrow-left.svg",
 	"./icons/content-icons/uEA12-arrow-right.svg": "./images/icons/content-icons/uEA12-arrow-right.svg",
+	"./icons/d-check.svg": "./images/icons/d-check.svg",
 	"./icons/document.svg": "./images/icons/document.svg",
 	"./icons/door.svg": "./images/icons/door.svg",
 	"./icons/download_1.svg": "./images/icons/download_1.svg",
@@ -882,6 +883,26 @@ __webpack_require__.r(__webpack_exports__);
       id: "uEA12-arrow-right-usage",
       viewBox: "0 0 24 24",
       url: __webpack_require__.p + "../dist/icons.svg#uEA12-arrow-right",
+      toString: function () {
+        return this.url;
+      }
+    });
+
+/***/ }),
+
+/***/ "./images/icons/d-check.svg":
+/*!**********************************!*\
+  !*** ./images/icons/d-check.svg ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+      id: "d-check-usage",
+      viewBox: "0 0 24 25",
+      url: __webpack_require__.p + "../dist/icons.svg#d-check",
       toString: function () {
         return this.url;
       }

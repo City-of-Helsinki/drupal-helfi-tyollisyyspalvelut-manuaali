@@ -10,3 +10,40 @@
 .link {
   @include link;
 }
+
+
+.language-link {
+  line-height: 24px;
+  font-size: 12px;
+
+  padding-top: 0;
+  padding-right: 0;
+  padding-bottom: 0;
+  padding-left: 32px;
+
+  position: relative;
+  margin-bottom: $space;
+  width: unset;
+  text-align: left;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &.is-active {
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: unset;
+    }
+
+    &::before {
+      content: "";
+      width: 24px;
+      height: 24px;
+      position: absolute;
+      left: 0;
+      background-image: url('/themes/custom/palvelumanuaali/images/icons/d-check.svg');
+    }
+  }
+}
