@@ -16,21 +16,7 @@
  */
 #}
 <details{{ attributes }}>
-  {%- if title -%}
-    {%
-      set summary_classes = [
-        required ? 'js-form-required',
-        required ? 'form-required',
-      ]
-    %}
-    <summary{{ summary_attributes.addClass(summary_classes) }}>
-    <span class="reset-wrapper">
-      <a href="/search" class="button--reset"> {{"Empty filters"|t}} </a>
-    </span>
-      <span class="additional-filters">{{ title }}</span>
-    </summary>
-  {%- endif -%}
-  <div class="details-wrapper">
+
     {% if errors %}
       <div class="form-item--error-message">
         <strong>{{ errors }}</strong>
@@ -45,5 +31,19 @@
     {%- if value -%}
       {{ value }}
     {%- endif -%}
-  </div>
+
+  {%- if title -%}
+    {%
+      set summary_classes = [
+        required ? 'js-form-required',
+        required ? 'form-required',
+      ]
+    %}
+    <summary{{ summary_attributes.addClass(summary_classes) }}>
+    <span class="reset-wrapper">
+      <a href="/search" class="button--reset"> {{"Empty filters"|t}} </a>
+    </span>
+      <span class="additional-filters">{{ title }}</span>
+    </summary>
+  {%- endif -%}
 </details>

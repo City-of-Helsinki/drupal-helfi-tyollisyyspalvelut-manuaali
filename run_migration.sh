@@ -8,12 +8,18 @@ run_drush () {
 }
 
 run_drush cim -y
+run_drush migrate-reset-status language_import
 run_drush migrate-reset-status organisation_import
+run_drush migrate-reset-status subgroup_groupcontent
 run_drush migrate-reset-status service_wp_import
 run_drush migrate-reset-status service_groupcontent
-run_drush migrate-rollback organisation_import
-run_drush migrate-rollback service_wp_import
+run_drush migrate-rollback language_import
 run_drush migrate-rollback service_groupcontent
+run_drush migrate-rollback service_wp_import
+run_drush migrate-rollback subgroup_groupcontent
+run_drush migrate-rollback organisation_import
+run_drush migrate-import language_import
 run_drush migrate-import organisation_import
+run_drush migrate-import subgroup_groupcontent
 run_drush migrate-import service_wp_import
 run_drush migrate-import service_groupcontent

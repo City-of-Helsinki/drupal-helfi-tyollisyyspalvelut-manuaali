@@ -252,6 +252,12 @@
           .on('keydown.multiselect', _this.upDown.bind(_this, 'preset'))
           .appendTo(_this.$presets);
 
+        var $checkbox = $('<div></div')
+          .attr({
+            'class': 'checkbox'
+          })
+          .prependTo($item);
+
         var $input = $('<input>')
           .attr({
             'type': 'radio',
@@ -292,6 +298,7 @@
           $input.prop('checked', true);
         } else {
           $input.prop('checked', false);
+
         }
       });
     },
@@ -320,6 +327,13 @@
         .on('keydown.multiselect', this.upDown.bind(this, 'menuitem'))
         .text(' ' + $option.text());
 
+        var $checkbox = $('<div></div')
+        .attr({
+          'class': 'checkbox'
+        })
+        .prependTo($item);
+
+
       var $input = $('<input>')
         .attr({
           'type': 'checkbox',
@@ -338,8 +352,12 @@
       $input.on('change.multiselect', function() {
         if ($(this).prop('checked')) {
           $option.prop('selected', true);
+          $(this).attr('checked',true);
+          $(this).parent().addClass('checked');
         } else {
           $option.prop('selected', false);
+          $(this).parent().removeClass('checked');
+          $(this).removeAttr('checked');
         }
 
         // .prop() on its own doesn't generate a change event.
