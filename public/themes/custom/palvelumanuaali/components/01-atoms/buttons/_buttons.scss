@@ -290,20 +290,34 @@ $button-colors: (
 }
 
 #loginDropdownButton {
-  @include button-medium;
   @include button-color-blue;
   @include button-round-corners;
   border: 2px solid $blue20;
+  padding: 12px 32px 12px 32px;
+  font-size: 14px;
+  line-height: 24px;
+  font-weight: 700;
+  display: flex;
+  .login-text {
+    line-height: 24px;
+    margin-right: $space;
+  }
+  .icon {
+    overflow: visible;
+    margin-top: -1px;
+  }
 }
 
 #languageSwitcherButton {
   padding: 0;
   font-size: 9px;
   margin-left: 10px;
+  text-transform: uppercase;
   @include large {
     margin-left: unset;
     padding: 0 .75rem .375rem .75rem;
     font-size: 15px;
+    font-weight: 600;
   }
 }
 
@@ -416,5 +430,16 @@ there is possibility to add classes button--blue-bordered,
         @include button-color-blue;
         @include button-round-corners;
     }
+  }
+}
+
+
+#block-kirjautuminen {
+  .button {
+    @include button-color-blue;
+    @include button-round-corners;
+    font-size: 12px;
+    line-height: 24px;
+    padding: $space-one-half $space-one-and-half $space-one-half $space-one-and-half;
   }
 }

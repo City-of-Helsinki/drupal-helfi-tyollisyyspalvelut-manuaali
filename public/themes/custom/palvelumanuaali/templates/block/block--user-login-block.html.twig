@@ -27,7 +27,6 @@
 #}
 {%
   set classes = [
-    'dropstart',
     'block',
     'block-' ~ configuration.provider|clean_class,
     'block-' ~ plugin_id|clean_class,
@@ -45,14 +44,14 @@
       </a>
     </button>
     <button id="loginDropdownButton" class="btn btn-menu hide-mobile" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      {{'Log in'|t}}
+      <span class="login-text">{{'Log in'|t}}</span>
       {% include "@atoms/images/icons/_icon.twig" with {
         icon_base_class: 'icon',
         icon_name: 'padlock',
         icon_modifiers: ['small', 'white'],
       } %}
     </button>
-    <div class='dropdown-menu dropdown-menu-start'>
+    <div class='dropdown-menu dropdown-menu-end'>
       {% block content %}
         {{ content }}
       {% endblock %}
