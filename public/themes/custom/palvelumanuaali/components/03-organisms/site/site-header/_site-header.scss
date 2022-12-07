@@ -168,30 +168,51 @@
     }
   }
   .dropdown-menu {
-    width: 180px;
+    // width: 180px;
+    padding: 18px 16px 18px 16px;
   }
   .dropdown-menu__item {
     text-align: left;
+    margin-bottom: $space;
     &:first-child {
       .dropdown-menu__link {
         &::before {
-          @include icons;
-          content: "\EA02";
-          color: clr(background-section);
+          background-image: url("/themes/custom/palvelumanuaali/images/icons/cogwheel.svg");
+          content: "";
+          width: 24px;
+          height: 24px;
+          background-repeat: no-repeat;
+          display: block;
           margin-right: $space;
+          background-size: cover;
         }
       }
     }
     &:nth-child(2) {
       .dropdown-menu__link {
         &::before {
-          @include icons;
-          content: "\EA01";
-          color: clr(background-section);
+          background-image: url("/themes/custom/palvelumanuaali/images/icons/door.svg");
+          content: "";
+          width: 24px;
+          height: 24px;
+          background-repeat: no-repeat;
+          display: block;
           margin-right: $space;
+          background-size: cover;
         }
       }
     }
+    &:last-child() {
+      margin-bottom: 0;
+    }
+  }
+  .dropdown-menu__link {
+    font-size: 12px;
+    line-height: 24px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    width: max-content;
   }
 }
 
@@ -219,18 +240,26 @@
 
 #block-kirjautuminen {
   .dropdown-menu {
-    margin-top: 70px !important;
     border-radius: 8px;
+    box-shadow: 0px 8px 16px rgba(30, 64, 182, 0.2);
+    background-color: clr(background-dropdown);
+    padding-bottom: 32px;
     @include large {
-      width: 310px;
+      width: 336px;
     }
     .form-item {
       position: relative;
+
       label {
         text-align: left;
-        font-weight: bold;
+        font-weight: 700;
+        font-size: 12px;
+        line-height: 24px;
         letter-spacing: 1px;
         color: clr(alt-header-color);
+        text-transform: uppercase;
+        padding-top: 0;
+        padding-bottom: 4px;
       }
       input {
         border-radius: 4px 4px 0px 0px;
@@ -239,6 +268,7 @@
         border-right: 0;
         border-bottom: 2px solid #AFCEFD;
         padding-left: 35px;
+        background: clr(sidebar-color);
       }
       &:first-child {
         &::before {
@@ -247,6 +277,7 @@
           position: absolute;
           left: 10px;
           bottom: 15px;
+          color: clr(gray);
         }
       }
       &:nth-child(2) {
@@ -256,24 +287,26 @@
           position: absolute;
           left: 10px;
           bottom: 15px;
+          color: clr(gray);
         }
       }
     }
     .form-actions{
       display: flex;
       justify-content: flex-end;
-      .button {
-        @include button-color-blue;
-        @include button-round-corners;
-      }
     }
     ul {
       list-style: none;
       margin-bottom: 0;
+      padding: 0;
+      width: fit-content;
+      margin-top: -32px;
     }
     a {
       font-size: 12px;
       color: clr(background-section);
+      font-weight: 600;
+      line-height: 24px;
     }
   }
 }
