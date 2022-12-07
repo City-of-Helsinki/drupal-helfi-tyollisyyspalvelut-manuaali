@@ -25,7 +25,12 @@
  * @see template_preprocess_block()
  */
 #}
-<div {{ bem('block') }}>
+{%
+  set classes = [
+    'header-search-block',
+  ]
+%}
+<div {{ bem('block',classes)}}>
   {{ title_prefix }}
   {% if label %}
     <h2{{ title_attributes.addClass('h2') }}>{{ label }}</h2>
@@ -33,10 +38,5 @@
   {{ title_suffix }}
   {% block content %}
     {{ content }}
-    {% include "@atoms/images/icons/_icon.twig" with {
-      icon_base_class: 'icon',
-      icon_name: 'magnifier',
-      icon_modifiers: ['small','absolute-right'],
-    } %}
   {% endblock %}
 </div>

@@ -5,7 +5,9 @@
     }
 
   }
+  .region-postcontent,
   .region-content {
+    grid-template-columns: 12fr;
     @include xl {
       margin: auto;
       max-width: 1464px;
@@ -13,7 +15,7 @@
   }
 
   .hero-text {
-    margin-bottom: 130px;
+    margin-bottom: 80px;
     &__image .icon {
       max-width: 100%;
     }
@@ -62,9 +64,7 @@
   }
 }
 
-.block-favorites-table,
-.block-recently-viewed-services-table,
-.block-last-updated-services-table {
+.landing-page .block {
   h2 {
     margin-bottom: $space;
     font-size: 18px;

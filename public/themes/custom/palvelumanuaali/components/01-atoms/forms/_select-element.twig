@@ -12,7 +12,7 @@
 #}
 
 {% spaceless %}
-  <div class='form-item__dropdown {{select_modifier}}'>
+  <div class='form-item__dropdown {{select_modifier}} {{select_additional_class}}'>
     <select{{ attributes.addClass('form-item__select') }}>
       {% for option in options %}
         {% if option.type == 'optgroup' %}
@@ -44,6 +44,6 @@
         icon_name: "arrow-sm-down",
         icon_modifiers: ['small'],
       } %}
-    {% endif %}  
+    {% endif %}
   </div>
 {% endspaceless %}

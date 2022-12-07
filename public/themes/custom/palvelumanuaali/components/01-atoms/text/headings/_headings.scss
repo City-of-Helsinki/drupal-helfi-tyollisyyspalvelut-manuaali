@@ -175,6 +175,13 @@ $color-heading: clr(accent);
 
 .h1 {
   @include heading-xl;
+
+  &--page-title {
+    @include heading-medium;
+    text-align: center;
+    margin-top: $space-triple;
+    margin-bottom: $space-double;
+  }
 }
 
 .h2 {

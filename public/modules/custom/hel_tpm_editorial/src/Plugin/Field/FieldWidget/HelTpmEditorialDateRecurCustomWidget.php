@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Drupal\hel_tpm_editorial\Plugin\Field\FieldWidget;
 
+use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
@@ -308,6 +309,15 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
         $field_state = static::getWidgetState($parents, $field_name, $form_state);
         $max = $field_state['items_count'];
         $is_multiple = TRUE;
+        // If max is 0 and there is no items.
+        // Append new item to items object and update field state items count.
+        // This fixes empty row instance appearing when editing and entity.
+        if ($max <= 0 && $items->count() == 0) {
+          $items->appendItem();
+          $max = $items->count();
+          $field_state['items_count'] = $max;
+          static::setWidgetState($parents, $field_name, $form_state, $field_state);
+        }
         break;
 
       default:
@@ -321,7 +331,6 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
 
     $elements = [];
 
-    $max = $max == 0 ? 1 : $max;
     for ($delta = 0; $delta < $max; $delta++) {
       // Add a new empty item if it doesn't exist yet at this delta.
       if (!isset($items[$delta])) {
@@ -403,6 +412,25 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
     }
 
     return $elements;
+  }
+
+  /**
+   * Submission handler for the "Add another item" button.
+   */
+  public static function addMoreSubmit(array $form, FormStateInterface $form_state) {
+    $button = $form_state->getTriggeringElement();
+
+    // Go one level up in the form, to the widgets container.
+    $element = NestedArray::getValue($form, array_slice($button['#array_parents'], 0, -1));
+    $field_name = $element['#field_name'];
+    $parents = $element['#field_parents'];
+
+    // Increment the items count.
+    $field_state = static::getWidgetState($parents, $field_name, $form_state);
+    $field_state['items_count']++;
+    static::setWidgetState($parents, $field_name, $form_state, $field_state);
+
+    $form_state->setRebuild();
   }
 
   /**
