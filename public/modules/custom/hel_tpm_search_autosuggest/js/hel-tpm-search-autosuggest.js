@@ -1,6 +1,9 @@
 (function ($, Drupal, drupalSettings) {
 
+  const resultCount = 5;
+
   Drupal.behaviors.hel_tpm_search_autocomplete = {
+
     arrowNavigation: function(form) {
       $('input', form).keyup(function(e) {
         if (e.keyCode == 38) {
@@ -41,7 +44,7 @@
         if ($.inArray(value, searchHistory) > -1) {
           return;
         }
-        if (searchHistory.length >= 10) {
+        if (searchHistory.length >= resultCount) {
           searchHistory.pop();
         }
         searchHistory.unshift(value);
@@ -63,7 +66,7 @@
     handleSelectionEvents: function() {
       $('.suggestion-item')
         .keypress(function (ev) {
-          var keycode = (ev.keyCode ? ev.keyCode : ev.which);
+          let keycode = (ev.keyCode ? ev.keyCode : ev.which);
           if (keycode === '13') {
             fnc.call(this, ev);
           }
@@ -79,16 +82,16 @@
         });
     },
     buildSuggestions: function(form, data, term) {
-      var searchList = $('.service-list .item-list');
-      var suggestionList = $('.suggestions .item-list');
+      let searchList = $('.service-list .item-list');
+      let suggestionList = $('.suggestions .item-list');
       if (term.length <= 0) {
         jQuery(searchList, form).html('');
         jQuery(suggestionList, form).html('');
         return;
       }
-      var services = '';
-      var suggestions = '';
-      var i = 0;
+      let services = '';
+      let suggestions = '';
+      let i = 0;
       for(;data[i];) {
         if (data[i]['url']) {
           services += '<span class="suggestion-item"><a href="' + data[i]['url'] + '">' + data[i]['value'] + "</a></span>";
@@ -116,49 +119,57 @@
 
       // Handle click events outside of search element.
       $(document).click(function(event) {
-        var $target = $(event.target);
-        if(!$target.closest('.search-autocomplete-wrapper').length &&
+        let target = $(event.target);
+        if(!target.closest('.search-autocomplete-wrapper').length &&
           $('.search-autocomplete-wrapper').is(":visible")) {
           $('.search-wrapper').hide();
         }
       });
     },
+
+    submitAjax: function(term, context) {
+      jQuery.ajax({
+        dataType: "json",
+        url: drupalSettings.path.baseUrl + "search_api_autocomplete/solr_service_search",
+        data: { q: term },
+        success: function (data) {
+          Drupal.behaviors.hel_tpm_search_autocomplete.buildSuggestions(context, data, term);
+          Drupal.behaviors.hel_tpm_search_autocomplete.addTabIndex(context);
+          Drupal.behaviors.hel_tpm_search_autocomplete.handleSelectionEvents();
+        }
+      });
+    },
+
+    createAutocomplete(element, form) {
+      let context = $(element).closest(form);
+      let term = $(element).val();
+      Drupal.behaviors.hel_tpm_search_autocomplete.showHideAutocomplete(element, context);
+      if (term.length > 0) {
+        Drupal.behaviors.hel_tpm_search_autocomplete.submitAjax(term, context);
+      }
+    },
+
     attach: function (context, settings) {
-      var form = $('.search-autocomplete-wrapper');
-      var searchField = 'input[name="search_api_fulltext"]'
+      let form = $('.search-autocomplete-wrapper');
+      let searchField = 'input[name="search_api_fulltext"]'
       let history = Drupal.behaviors.hel_tpm_search_autocomplete.buildSearchHistory(form);
 
       $(document).ready(function() {
         $('#search-history .item-list', form).html(history);
         Drupal.behaviors.hel_tpm_search_autocomplete.handleSelectionEvents();
-        $(searchField)
-          .focus(function () {
-            let context = $(this).closest(form);
-            Drupal.behaviors.hel_tpm_search_autocomplete.showHideAutocomplete(this, context);
-          });
-
         $(form).closest('form').on('submit', function(e) {
           Drupal.behaviors.hel_tpm_search_autocomplete.appendSearchHistory(form);
         });
       });
 
-      jQuery(searchField, form).keyup(function() {
-        var term = jQuery(this).val();
-        var context = $(this).closest(form);
-
-        Drupal.behaviors.hel_tpm_search_autocomplete.showHideAutocomplete(this, context);
-
-        jQuery.ajax({
-          dataType: "json",
-          url: drupalSettings.path.baseUrl + "search_api_autocomplete/solr_service_search",
-          data: { q: term },
-          success: function (data) {
-            Drupal.behaviors.hel_tpm_search_autocomplete.buildSuggestions(context, data, term);
-            Drupal.behaviors.hel_tpm_search_autocomplete.addTabIndex(context);
-            Drupal.behaviors.hel_tpm_search_autocomplete.handleSelectionEvents();
-          }
+      $(searchField, form)
+        .focus(function () {
+          Drupal.behaviors.hel_tpm_search_autocomplete.createAutocomplete(this, form);
+        })
+        .keyup(function() {
+          Drupal.behaviors.hel_tpm_search_autocomplete.createAutocomplete(this, form);
         });
-      });
     }
   };
+
 })(jQuery, Drupal, drupalSettings);
