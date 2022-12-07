@@ -111,9 +111,16 @@
   background-color: clr(sidebar-color);
   border-radius: 8px;
   margin-bottom: $space-one-half;
+  @include xl {
+    margin-bottom: $space;
+  }
   .card__content {
     padding: $space-one-and-half $space-two-and-half $space-double $space-two-and-half;
     margin: 0;
+
+  }
+  .card__body {
+      min-height: 50px;
   }
   .card__caption {
     color: clr(alt-header-color);
@@ -131,6 +138,10 @@
   }
   .card__heading {
     @include heading-xxs();
+    margin-right: 122px;
+    @include large {
+      margin-right: 130px;
+    }
   }
   // this should be changed to separate 'pill' atom to handle different colors
   .pill {
@@ -142,6 +153,7 @@
   }
   .card__date {
     font-size: $small-caption;
+    font-weight: 600;
     margin: 0;
   }
 }

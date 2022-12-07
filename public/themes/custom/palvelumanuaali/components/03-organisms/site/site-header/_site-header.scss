@@ -296,7 +296,6 @@
 
 .search-history-wrapper,
 .hel-search-autocomplete {
-
     z-index: 210;
     margin-top: -5px;
     position: absolute;
@@ -312,13 +311,13 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 24px;
-    max-width: 512px;
+    // max-width: 512px;
 
     @include large {
-      max-width: 374px;
+      // max-width: 374px;
     }
     @include xl {
-      max-width: 512px;
+      // max-width: 512px;
     }
 
     .title {
@@ -366,16 +365,19 @@
 }
 
 #hel-tpm-search-autocomplete {
-    border: 2px solid #AFCEFD;
+    box-shadow: inset 0px 0px 0px 2px clr(form-border);
     box-sizing: border-box;
+    border-width: 0;
     border-radius: 8px;
     background-image: unset !important;
     padding-top: 12px;
     padding-bottom: 12px;
     padding-left: 24px;
     width: 100%;
-    max-width: 300px;
+    line-height: 24px;
+
     @include large {
+      max-width: 300px;
     }
     @include xl {
       max-width: none;

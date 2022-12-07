@@ -771,12 +771,33 @@ display:
     display_plugin: page
     position: 1
     display_options:
+      pager:
+        type: full
+        options:
+          offset: 0
+          items_per_page: 8
+          total_pages: null
+          id: 0
+          tags:
+            next: ''
+            previous: ''
+            first: ''
+            last: ''
+          expose:
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+          quantity: 6
       exposed_form:
         type: bef
         options:
           submit_button: Apply
-          reset_button: false
-          reset_button_label: Reset
+          reset_button: true
+          reset_button_label: 'Tyhjennä valinnat'
           exposed_sorts_label: 'Sort by'
           expose_sort_order: true
           sort_asc_label: Asc
@@ -793,7 +814,7 @@ display:
               allow_secondary: false
               secondary_label: Lisävaihtoehdot
               secondary_open: false
-              reset_button_always_show: false
+              reset_button_always_show: true
             filter:
               search_api_fulltext:
                 plugin_id: default
@@ -842,7 +863,7 @@ display:
                   rewrite:
                     filter_rewrite_values: ''
                   collapsible: false
-                  is_secondary: false
+                  is_secondary: true
               field_accessibility:
                 plugin_id: bef_dropdown_multiselet
                 advanced:
@@ -850,7 +871,7 @@ display:
                   rewrite:
                     filter_rewrite_values: ''
                   collapsible: false
-                  is_secondary: false
+                  is_secondary: true
               field_implementation_extra_info:
                 plugin_id: bef_dropdown_multiselet
                 advanced:
@@ -858,7 +879,7 @@ display:
                   rewrite:
                     filter_rewrite_values: ''
                   collapsible: false
-                  is_secondary: false
+                  is_secondary: true
               field_municipality:
                 plugin_id: bef_dropdown_multiselet
                 advanced:
@@ -868,7 +889,22 @@ display:
                   collapsible: false
                   is_secondary: false
       defaults:
+        pager: false
         exposed_form: false
+        header: false
+        footer: false
+      header:
+        result:
+          id: result
+          table: views
+          field: result
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: result
+          empty: true
+          content: '<strong>Hakutuloksia:</strong> <span class="total-number">@total</span>'
+      footer: {  }
       display_extenders: {  }
       path: search
     cache_metadata:

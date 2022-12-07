@@ -1,13 +1,114 @@
-.view-display-id-page_1 {
+.block--header-search-block {
+  .text-search-wrapper {
+    position: relative;
+    #edit-actions {
+      position: absolute;
+      right: 0;
+      input.form-submit {
+        color: transparent;
+        background-color: transparent;
+        background-image: url('/themes/custom/palvelumanuaali/images/icons/magnifier.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 24px;
+        padding-left: 0;
+        padding-right: 0;
+        margin-right: $space-one-and-half;
+      }
+    }
+
+  }
+}
+
+.view-solr-service-search {
+  .text-search-wrapper {
+    // only for mobile
+    @media only screen and (max-width: $large) {
+      position: relative;
+      width: 100%;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+      .search-autocomplete-wrapper {
+
+      }
+      .form-actions {
+        position: absolute;
+        top: 0;
+        right: 0;
+        input.form-submit {
+          color: transparent;
+          background-color: transparent;
+          background-image: url('/themes/custom/palvelumanuaali/images/icons/magnifier.svg');
+          background-repeat: no-repeat;
+          background-position: center;
+          width: 24px;
+          padding-left: 0;
+          padding-right: 0;
+          margin-right: $space-one-and-half;
+        }
+      }
+    }
+  }
+}
+
+.search-form {
+  .text-search-wrapper {
+    display: flex;
+    margin-bottom: $space;
+    @include xl {
+      margin-bottom: 0;
+      margin-left: 60px;
+    }
+
+    //this should be themed at the same time as header search
+    .form-item-search-api-fulltext{
+      .form-text {
+        margin: 0;
+      }
+    }
+    input.form-submit {
+      margin-left: $space;
+      font-size: 14px;
+      padding: 12px 32px;
+      border-radius: 8px;
+
+    }
+  }
+}
+
+
+
+.search-page {
+  #block-palvelumanuaali-page-title {
+    grid-row: 1;
+    text-align: center;
+    @include xl {
+        grid-column: 2;
+    }
+  }
+}
+
+
+
+.view-id-solr_service_search {
   display: flex;
   flex-wrap: wrap;
 
+  .control-wrapper {
+    padding: $space-double 0 $space-one-and-half 0;
+    border-bottom: 1px solid $blue40;
+  }
   .view-header {
     @extend .col-6;
     @extend .col-xl-6;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    order: 2;
+    margin-top: $space-two-and-half;
+    margin-bottom: $space;
+
     @include large {
       display: flex;
       flex-direction: row;
@@ -32,10 +133,19 @@
   }
 
   .view-filters {
-    @extend .col-6;
-    @extend .col-xl-6;
+    order: 1;
+    width: 100%;
     display: flex;
-    justify-content: flex-end;
+  }
+
+  .view-content {
+    order: 3;
+    width: 100%;
+  }
+
+  .pager {
+    order: 4;
+    width: 100%;
   }
 
   .form--inline {
@@ -70,34 +180,24 @@
 
 .search-page {
   .main-content {
-    >div {
-      @include small {
+    .region-content {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-      }
-      @include large {
-
-        grid-template-columns: 9fr 3fr;
-      }
       @include xl {
-        grid-template-columns: 1fr 7fr 4fr;
+        grid-template-columns: 1fr 10fr 1fr;
+      }
+      @include xxl {
+        grid-template-columns: 2fr 8fr 2fr;
       }
     }
   }
   #block-system-breadcrumb-block {
-    grid-column-start: 1;
-    grid-column-end: 3;
+    @include xl {
+      grid-column-start: 2;
+    }
   }
 
   #block-system-main-block {
-    grid-column-start: 2 span;
     padding: $space-one-and-half;
-    @include large {
-      grid-row-start: 2;
-      grid-row-end: 5;
-      grid-column-start: 1;
-      border-right: 2px solid $blue80;
-    }
     @include xl {
       grid-column-start: 2;
     }
@@ -109,36 +209,11 @@
   #block-hel-tpm-url-shortener-form {
     margin-top: $space-double;
     margin-left: $space-two-and-half;
-    @include large {
-      grid-row-start: 3;
-      grid-row-end: 4;
-      grid-column-start: 2;
-    }
-    @include xl {
-      grid-column-start: 3;
-    }
   }
 
   #block-hel-print-pdf-block {
-    width: max-content;
     display: block;
-
-    margin-top: $space-double;
-    margin-left: $space-two-and-half;
-    @include large {
-      grid-row-start: 2;
-      grid-row-end: 3;
-      grid-column-start: 2;
-    }
-    @include xl {
-      grid-column-start: 3;
-    }
   }
-
-  #block-views-block-services-block-3 {
-    grid-column-start: 1;
-  }
-
 }
 #block-views-exposed-filter-block-service-search-special-search-filters,
 #block-views-exposed-filter-block-service-search-search-page-filters,
@@ -215,20 +290,71 @@
       flex-wrap: wrap;
       justify-content: center;
     }
+
   }
 
   .exposed-filters {
     max-width: $max-width;
-    .filters {
+    .main-filters {
       display: flex;
       flex-wrap: wrap;
+      @include xl {
+        margin-left: 60px;
+      }
       .form-item {
         @include xl {
           margin-bottom: 0;
         }
       }
+
+    }
+    .secondary-filters {
+      &.collapsing,
+      &.show {
+        display: flex;
+        flex-wrap: wrap;
+        @include xl {
+          margin-left: 60px;
+        }
+      }
     }
   }
+  .control-wrapper {
+    display: flex;
+    justify-content: space-between;
+    .collapse-toggler,
+    .form-submit  {
+      font-size: $small-caption;
+      font-weight: 700;
+      text-decoration: none;
+      background: unset;
+      padding: 0;
+      margin: 0;
+      color: clr(background-section);
+    }
+
+    .collapse-toggler  {
+      position: relative;
+      padding-right: 24px;
+      display: block;
+      &:before {
+        background-image: url("/themes/custom/palvelumanuaali/images/icons/arrow-sm-down.svg");
+        background-repeat: no-repeat;
+        background-position-x: right;
+        background-position-y: 1px;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        content:"";
+      }
+    }
+      .collapse-toggler[aria-expanded="true"]  {
+        &:before {
+          transform: rotateX(180deg);
+        }
+      }
+  }
+
   .bef--secondary {
     @include xl {
       display: block;
@@ -243,8 +369,6 @@
       &::marker {
         content: '';
       }
-    }
-    summary[aria-expanded="true"] {
     }
     .additional-filters {
       @include large {
@@ -266,11 +390,6 @@
       padding-top: 28px;
       padding-bottom: 28px;
       @extend .col-md-12;
-      @include xl {
-        left: 0;
-        position: absolute;
-        justify-content: center;
-      }
       .form-item {
         margin-bottom: 0;
       }
@@ -278,10 +397,6 @@
       .form-item__label {
         @extend .visually-hidden;
       }
-
     }
   }
 }
-
-
-// header override for search page

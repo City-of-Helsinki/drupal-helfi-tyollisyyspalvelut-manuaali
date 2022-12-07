@@ -16,11 +16,14 @@
   #}
 {{ q }}
 {% endif %}
-{% set fieldsMain = ['field_municipality', 'field_service_set', 'field_life_situations', 'field_language_1', 'field_free_service'] %}
-{% set fieldsSecondary = ['field_age_groups', 'field_implementation_extra_info_1', 'field_accessibility']%}
-<div class="form--inline clearfix">
-  {{ form['search_wrapper'] }}
-  {{ form['actions'] }}
+{% set fieldsMain = ['field_municipality', 'field_service_set', 'field_life_situations', 'field_language', 'field_free_service'] %}
+{% set fieldsSecondary = ['field_age_groups', 'field_implementation_extra_info', 'field_accessibility']%}
+
+<div class="form--inline clearfix search-form">
+  <div class="text-search-wrapper">
+    {{ form['search_wrapper'] }}
+    {{ form['actions']|without(['reset']) }}
+  </div>
   <div class="filters-wrapper">
     <div class="exposed-filters">
       <div class="main-filters filters">
@@ -30,13 +33,20 @@
           {% endif %}
         {% endfor %}
       </div>
-      <div class="secondary-filters filters">
+      <div class="secondary-filters filters collapse" id="collapseItem" >
         {% for field in fieldsSecondary %}
           {% if field in form|keys %}
             {{ form[ field ] }}
           {% endif %}
         {% endfor %}
       </div>
+      {% if  form['#display_id'] is defined and form['#display_id'] == 'block_1'  %}
+      {% else %}
+        <div class='control-wrapper'>
+        <span class="link-wrapper">  <a class="collapse-toggler" data-bs-toggle="collapse" href="#collapseItem" role="button" aria-expanded="false" aria-controls="collapseItem">{{ 'Show additional choices'|t }}</a></span>
+         {{ form['actions']['reset'] }}
+        </div>
+      {% endif %}
     </div>
     {{ form|without(fieldsMain, fieldsSecondary, 'search_wrapper', 'actions') }}
     </div>
