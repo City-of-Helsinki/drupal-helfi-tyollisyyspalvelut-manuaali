@@ -81,6 +81,7 @@
           console.log(this);
           console.log(form);
           Drupal.behaviors.hel_tpm_search_autocomplete.submitSelection($(this).attr('value'), context);
+          $('.form-actions input[type="submit"]', context).click();
         });
     },
 
