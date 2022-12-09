@@ -23,7 +23,6 @@
     },
     submitSelection: function(searchVal, form) {
       $('input[name="search_api_fulltext"]', form).val(searchVal);
-      $(form).submit();
     },
     getSearchHistory: function() {
       return JSON.parse(localStorage.getItem('hel_search_history'));
@@ -51,7 +50,8 @@
       }
       Drupal.behaviors.hel_tpm_search_autocomplete.setSearchHistory(searchHistory);
     },
-    buildSearchHistory: function() {
+
+    buildSearchHistory: function(form) {
       let history = this.getSearchHistory();
       let content = '';
       let i = 0;
@@ -61,26 +61,29 @@
           i++;
         });
       }
-      return content;
+      $('.search-history .item-list', form).html(content);
     },
-    handleSelectionEvents: function() {
-      $('.suggestion-item')
+
+    handleSelectionEvents: function(form) {
+      let context = $(form).closest('form');
+      $('.suggestion-item', form)
         .keypress(function (ev) {
           let keycode = (ev.keyCode ? ev.keyCode : ev.which);
           if (keycode === '13') {
             fnc.call(this, ev);
           }
-          let form = $(this).closest('form');
-          Drupal.behaviors.hel_tpm_search_autocomplete.submitSelection($(this).attr('value'), form);
+          Drupal.behaviors.hel_tpm_search_autocomplete.submitSelection($(this).attr('value'), context);
         })
         .on("mousedown", function (ev) {
           ev.stopPropagation();
         })
         .click(function (ev) {
-          let form = $(this).closest('form');
-          Drupal.behaviors.hel_tpm_search_autocomplete.submitSelection($(this).attr('value'), form);
+          console.log(this);
+          console.log(form);
+          Drupal.behaviors.hel_tpm_search_autocomplete.submitSelection($(this).attr('value'), context);
         });
     },
+
     buildSuggestions: function(form, data, term) {
       let searchList = $('.service-list .item-list');
       let suggestionList = $('.suggestions .item-list');
@@ -105,6 +108,7 @@
       jQuery(searchList, form).html(services);
       jQuery(suggestionList, form).html(suggestions);
     },
+
     showHideAutocomplete: function(input, context) {
       let searchWrapper = '.search-history-wrapper';
       let autocompleteWrapper = '.hel-search-autocomplete';
@@ -135,7 +139,7 @@
         success: function (data) {
           Drupal.behaviors.hel_tpm_search_autocomplete.buildSuggestions(context, data, term);
           Drupal.behaviors.hel_tpm_search_autocomplete.addTabIndex(context);
-          Drupal.behaviors.hel_tpm_search_autocomplete.handleSelectionEvents();
+          Drupal.behaviors.hel_tpm_search_autocomplete.handleSelectionEvents(context);
         }
       });
     },
@@ -143,22 +147,30 @@
     createAutocomplete(element, form) {
       let context = $(element).closest(form);
       let term = $(element).val();
+      Drupal.behaviors.hel_tpm_search_autocomplete.buildSearchHistory(form);
       Drupal.behaviors.hel_tpm_search_autocomplete.showHideAutocomplete(element, context);
       if (term.length > 0) {
         Drupal.behaviors.hel_tpm_search_autocomplete.submitAjax(term, context);
       }
+      Drupal.behaviors.hel_tpm_search_autocomplete.handleSelectionEvents(context);
     },
 
     attach: function (context, settings) {
       let form = $('.search-autocomplete-wrapper');
       let searchField = 'input[name="search_api_fulltext"]'
-      let history = Drupal.behaviors.hel_tpm_search_autocomplete.buildSearchHistory(form);
+      let searchForm = $(form).closest('form');
 
       $(document).ready(function() {
-        $('#search-history .item-list', form).html(history);
-        Drupal.behaviors.hel_tpm_search_autocomplete.handleSelectionEvents();
-        $(form).closest('form').on('submit', function(e) {
+        searchForm.on('submit', function(e) {
           Drupal.behaviors.hel_tpm_search_autocomplete.appendSearchHistory(form);
+        });
+        if ($.isFunction($.fn.ajaxSubmit)) {
+          searchForm.ajaxSubmit(function (e) {
+            Drupal.behaviors.hel_tpm_search_autocomplete.appendSearchHistory(form);
+          })
+        }
+        $('.suggestion-item').click(function () {
+          console.log('wtf is going on');
         });
       });
 
