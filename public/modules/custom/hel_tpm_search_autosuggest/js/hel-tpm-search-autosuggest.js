@@ -78,8 +78,6 @@
           ev.stopPropagation();
         })
         .click(function (ev) {
-          console.log(this);
-          console.log(form);
           Drupal.behaviors.hel_tpm_search_autocomplete.submitSelection($(this).attr('value'), context);
           $('.form-actions input[type="submit"]', context).click();
         });
@@ -170,9 +168,6 @@
             Drupal.behaviors.hel_tpm_search_autocomplete.appendSearchHistory(form);
           })
         }
-        $('.suggestion-item').click(function () {
-          console.log('wtf is going on');
-        });
       });
 
       $(searchField, form)
