@@ -40,6 +40,11 @@ if ($es_username = getenv('ELASTICSEARCH_USER')) {
   }
 }
 
+if ($solr_host = getenv('SOLR_SERVICE_HOST')) {
+  $config['search_api.server.solr_search']['backend_config']['connector_config']['core'] = 'dev';
+  $config['search_api.server.solr_search']['backend_config']['connector_config']['host'] = $solr_host;
+}
+
 if (isset($_ENV['REDIS_HOST'])) {
   $settings['redis.connection']['interface'] = 'PhpRedis'; // Can be "Predis".
   $settings['redis.connection']['host']      = [$_ENV['REDIS_HOST']];
