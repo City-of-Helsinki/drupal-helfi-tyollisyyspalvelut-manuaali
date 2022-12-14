@@ -11,12 +11,10 @@
 
 .form-item__label {
   display: block;
+  font-size: 12px;
+  line-height: 24px;
   font-weight: 600;
-
-  @include xs {
-    display: block;
-    padding: 0.6em 0;
-  }
+  margin-bottom: $space-one-half;
 }
 
 .form-item__textfield,
@@ -45,10 +43,13 @@
 
 .form-fieldset {
   border: none;
-  margin-bottom: 2em;
-
+  // margin-bottom: 2em;
+  padding: 0;
+  &--no-margin {
+    margin-bottom: 0;
+  }
   .form-item {
-    margin-left: 1em;
+    // margin-left: 1em;
   }
 }
 

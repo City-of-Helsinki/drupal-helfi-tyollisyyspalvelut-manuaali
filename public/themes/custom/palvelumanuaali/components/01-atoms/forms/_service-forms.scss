@@ -1,7 +1,7 @@
 .node-service-edit-form,
 .node-service-form {
-  @extend .offset-xxl-1;
-  @extend .col-xxl-10;
+  // @extend .offset-xxl-1;
+  // @extend .col-xxl-10;
     display: grid;
   @include xl {
       grid-template-columns: 7fr 3fr;
@@ -103,6 +103,10 @@
     }
   }
 
+  .field--name-field-client-consent {
+    padding-bottom: 0;
+  }
+
   .field--name-field-client-consent .form-item-checkbox{
     flex-wrap: wrap;
     label {
@@ -171,7 +175,6 @@
 
     @include large {
       padding: 48px 56px;
-
     }
 
     .fieldgroup,
@@ -181,8 +184,10 @@
     }
 
     >.form-wrapper {
-      margin-bottom: $space;
-
+      margin-bottom: $space-one-and-half;
+      &:last-child {
+        margin-bottom: 0;
+      }
       legend {
         @extend .form-item__label;
         font-size: 1rem;
@@ -311,6 +316,9 @@
     margin-top: 80px;
   }
 
+  .field--name-field-service-exceptions {
+    margin-bottom: $space-triple;
+  }
 
 
   .field--name-field-service-execution,

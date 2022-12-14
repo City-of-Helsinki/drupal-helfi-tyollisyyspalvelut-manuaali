@@ -155,6 +155,23 @@ function palvelumanuaali_theme_suggestions_field_alter(array &$suggestions, arra
   }
 }
 
+/**
+ * @param array $suggestions
+ * @param array $variables
+ * @param $hook
+ */
+function palvelumanuaali_theme_suggestions_fieldset_alter(array &$suggestions, array $variables, $hook)
+{
+    if (isset($variables['element']['#group'])) {
+        $id = str_replace("-", "_", $variables['element']['#group']);
+        $suggestions[] = $hook . '__' . $id;
+    }
+    else {
+      $id = str_replace("-", "_", $variables['element']['#parents'][0]);
+      $suggestions[] = $hook . '__' . $id;
+    }
+}
+
 
 /**
  * Implements hook_form_alter().
