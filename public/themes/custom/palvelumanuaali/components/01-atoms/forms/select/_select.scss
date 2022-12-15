@@ -132,18 +132,18 @@
   select,
   .select2 {
     background: clr(text-inverse);
-    border: 2px solid $blue40;
     box-sizing: border-box;
-    border-radius: 8px;
     margin-top: auto;
     margin-bottom: auto;
     font-size: 14px;
     line-height: 24px;
     padding: 12px 12px 12px 16px;
     z-index: 20;
+    background: clr(background-dropdown);
+    box-shadow: inset 0px 0px 0px 2px clr(form-border);
+    box-sizing: border-box;
+    border: 0;
     border-radius: 8px;
-    border: 2px solid $blue40;
-
     .select2-selection {
         line-height: 0;
         min-height: 0;
