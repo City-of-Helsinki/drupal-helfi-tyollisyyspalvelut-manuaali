@@ -31,7 +31,8 @@ function palvelumanuaali_preprocess_block__language_block(&$variables) {
   * Implements hook_preprocess_links__language_block().
   */
  function palvelumanuaali_preprocess_links__language_block(&$variables) {
-   $current_langcode = \Drupal::languageManager()->getCurrentLanguage()->getId();
+   $language_manager = \Drupal::languageManager();
+   $current_langcode = $language_manager->getCurrentLanguage('language_url')->getId();
 
    // Add a new class to each link item and change the language link order:
    // move current language to first position.
