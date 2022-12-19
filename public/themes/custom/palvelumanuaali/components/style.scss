@@ -26,10 +26,7 @@ $container-max-widths: (
 
 
 // Components
-@import '00-base/00-defaults/*.scss';
-@import '00-base/01-colors/*.scss';
-@import '00-base/02-motion/*.scss';
-@import '00-base/03-site/_base.scss';
+@import '00-base/*/*.scss';
 @import '01-atoms/**/*.scss';
 @import '02-molecules/**/*.scss';
 @import '03-organisms/**/*.scss';
@@ -45,4 +42,37 @@ $container-max-widths: (
     url('../fonts/icons.woff') format('woff'),
     url('../fonts/icons.ttf') format('truetype'),
     url('../fonts/icons.svg#icons') format('svg');
+}
+
+.node-form {
+  .cke_chrome {
+    box-shadow: inset 0px 0px 0px 2px clr(form-border);
+    box-sizing: border-box;
+    border: 0;
+    border-radius: 8px;;
+    height: unset;
+    width: unset;
+    padding: 2px;
+  }
+}
+
+.cke_inner {
+  border-radius: 8px;
+  .cke_top {
+    background-color: #EDF1FA;
+    border-bottom: 0;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  .cke_wysiwyg_frame {
+    background-color: #F7F9FD;
+  }
+
+  .cke_bottom {
+    background-color: #F7F9FD;
+    border-top: 0;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
 }

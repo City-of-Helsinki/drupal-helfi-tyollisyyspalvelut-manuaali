@@ -1,43 +1,14 @@
-// Libraries
-@import '~normalize.css/normalize';
-@import '~breakpoint-sass/stylesheets/breakpoint';
+.cke_editable {
+  background: transparent;
+  margin: 0;
+  padding: 16px 16px 32px 16px;
+  font-size: 14px;
+  line-height: 24px;
+  p {
+    margin: 0;
+  }
+}
 
-$grid-breakpoints: (
-        xs: 0,
-        sm: 576px,
-        md: 768px,
-        lg: 992px,
-        xl: 1280px,
-        xxl: 1900px
-);
+.cke_chrome {
 
-$container-max-widths: (
-        sm: 540px,
-        md: 720px,
-        lg: 960px,
-        xl: 1220px,
-        xxl: 1610px
-);
-
-@import '../../../../../vendor/twbs/bootstrap/scss/bootstrap-grid.scss';
-@import '../../../../libraries/bootstrap-dist/css/bootstrap.min.css';
-
-
-
-
-// Components
-@import '00-base/00-defaults/*.scss';
-@import '00-base/01-colors/*.scss';
-@import '00-base/02-motion/*.scss';
-@import '00-base/03-site/_editor.scss';
-
-
-@font-face {
-  font-family: "icons";
-  src: url('../fonts/icons.eot');
-  src: url('../fonts/icons.eot?#iefix') format('eot'),
-    url('../fonts/icons.woff2') format('woff2'),
-    url('../fonts/icons.woff') format('woff'),
-    url('../fonts/icons.ttf') format('truetype'),
-    url('../fonts/icons.svg#icons') format('svg');
 }
