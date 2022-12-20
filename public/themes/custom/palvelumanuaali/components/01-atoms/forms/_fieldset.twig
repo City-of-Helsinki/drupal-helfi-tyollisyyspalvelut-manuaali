@@ -34,7 +34,7 @@
 <fieldset{{ attributes.addClass(classes) }}>
   {%
     set legend_classes = [
-      'h2',
+      no_h2 ?  '' : 'h2',
       extra_selector ? extra_selector,
       required ? 'js-form-required',
       required ? 'form-required',
@@ -47,6 +47,7 @@
   {% if description.content %}
     <div{{ description.attributes.addClass('description') }}>{{ description.content }}</div>
   {% endif %}
+
   {% if errors %}
     <div>
       {{ errors }}
