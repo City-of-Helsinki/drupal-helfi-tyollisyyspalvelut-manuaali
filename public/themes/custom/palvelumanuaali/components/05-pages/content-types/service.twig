@@ -31,7 +31,7 @@
        {{ content.field_municipality_specific }}
        {{ content.field_contact_info }}
        {{ content.field_responsible_updatee }}
-       {% if content.field_related_archive['0']['#markup'] == '1' %}
+       {% if content.field_related_archive['0']['#markup'] == 'yes' %}
          {% include "@atoms/text/headings/_heading.twig" with {
            "heading_level": 4,
            "heading": 'Archiving guides:'|t,
@@ -43,6 +43,7 @@
      {% endblock %}
   {% endembed %}
 {% else %}
+
   {% embed "@templates/with-content-sidebar.twig" with {
       content_base_class: service_base_class,
       main_content_id: main_content_id,

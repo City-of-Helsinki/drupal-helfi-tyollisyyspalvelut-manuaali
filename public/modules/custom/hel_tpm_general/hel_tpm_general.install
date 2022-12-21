@@ -114,3 +114,18 @@ function hel_tpm_general_update_8108() {
     $paragraph->delete();
   }
 }
+
+/**
+ * Remove the field related_archive .
+ */
+function hel_tpm_general_update_8109() {
+  $field_config = FieldConfig::loadByName('node', 'service', 'field_related_archive');
+  if ($field_config) {
+    $field_config->delete();
+  }
+
+$field_storage = FieldStorageConfig::loadByName('node', 'field_related_archive');
+  if ($field_storage) {
+    $field_storage->delete();
+  }
+}
