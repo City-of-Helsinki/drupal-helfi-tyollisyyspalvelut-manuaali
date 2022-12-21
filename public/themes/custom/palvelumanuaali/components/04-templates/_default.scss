@@ -114,25 +114,31 @@ body {
     order: 2;
     &--with-sidebar {
       .region-content {
-        margin-right: $space-quadruple;
-        margin-left: $space-quadruple;
         #block-system-main-block {
           max-width: 1464px;
         }
       }
+    }
   }
-}
-
-@include xxl {
-  &--with-sidebar {
+  @include xl {
+    &--with-sidebar {
       .region-content {
-        margin:auto;
-         #block-system-main-block {
-           margin: auto;
-         }
+        margin-right: $space-quadruple;
+        margin-left: $space-quadruple;
       }
     }
   }
+
+  @include xxl {
+    &--with-sidebar {
+        .region-content {
+          margin:auto;
+           #block-system-main-block {
+             margin: auto;
+           }
+        }
+      }
+    }
 }
 
 .date {

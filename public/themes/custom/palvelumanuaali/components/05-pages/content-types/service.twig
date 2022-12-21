@@ -1,8 +1,7 @@
 
 <div class='link-wrapper'>
-  {{content.flag_cart}}
-  {{content.flag_lists}}
   <div id="view-mode-switcher-link"> {{content.view_mode_switcher}}</div>
+  {{content.flag_cart}}
 </div>
  {% if service__internal %}
    {% embed "@templates/with-content-sidebar.twig" with {
@@ -10,7 +9,7 @@
      main_content_id: main_content_id,
    } %}
 
-    {% block content %} {{content|without('flag_cart','flag_lists','view_mode_switcher', 'field_contact_info','field_other_services','field_contact_info_external','entitygroupfield','field_municipality_specific')}}{% endblock %}
+ {% block content %} {{content|without('flag_cart','flag_lists','view_mode_switcher', 'field_contact_info','field_other_services','field_contact_info_external','entitygroupfield','field_municipality_specific','field_related_archive')}}{% endblock %}
       {% block page_content %}
         {% if service__updated  %}
           {% include "@atoms/text/text/01-paragraph.twig" with {
@@ -28,14 +27,19 @@
         %}
       {% endblock %}
       {% block page_sidebar %}
-       {% include "@atoms/text/headings/_heading.twig" with {
-         "heading_level": 4,
-         "heading": 'Contacts'|t,
-         "heading_modifiers": 'semibold',
-       } %}
+
        {{ content.field_municipality_specific }}
        {{ content.field_contact_info }}
        {{ content.field_responsible_updatee }}
+       {% if content.field_related_archive['0']['#markup'] == '1' %}
+         {% include "@atoms/text/headings/_heading.twig" with {
+           "heading_level": 4,
+           "heading": 'Archiving guides:'|t,
+           "heading_modifiers": 'semibold',
+         } %}
+          <a class="small-font" href="/"">{{'Archiving guide'|t}}</a>
+       {% endif %}
+
      {% endblock %}
   {% endembed %}
 {% else %}
