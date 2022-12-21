@@ -398,7 +398,7 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
         $elements['add_more'] = [
           '#type' => 'submit',
           '#name' => strtr($id_prefix, '-', '_') . '_add_more',
-          '#value' => t('Add another item'),
+          '#value' => t('Add another date'),
           '#attributes' => ['class' => ['field-add-more-submit']],
           '#limit_validation_errors' => [array_merge($parents, [$field_name])],
           '#submit' => [[static::class, 'addMoreSubmit']],
@@ -408,10 +408,99 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
             'effect' => 'fade',
           ],
         ];
+        self::addRemoveRowButton($elements, $parents, $field_name, $id_prefix, $wrapper_id, $max);
       }
     }
 
     return $elements;
+  }
+
+  /**
+   * Helper method to add remove row button.
+   *
+   * @param $elements
+   * @param $parents
+   * @param $field_name
+   * @param $id_prefix
+   * @param $max_delta
+   *
+   * @return void
+   */
+  public static function addRemoveRowButton(&$elements, $parents, $field_name, $id_prefix, $wrapper_id, $max_delta) {
+    for ($delta = 0; $delta < $max_delta; $delta++) {
+      if (empty($elements[$delta])) {
+        return;
+      }
+      $id_prefix = sprintf('%s-row-%s', $id_prefix, $delta);
+      $element = &$elements[$delta];
+      $element['remove_row'] = [
+        '#type' => 'submit',
+        '#name' => strtr($id_prefix, '-', '_') . '_remove_row',
+        '#value' => t('Remove date'),
+        '#attributes' => ['class' => ['field-remove-row-submit']],
+        '#limit_validation_errors' => [array_merge($parents, [$field_name])],
+        '#submit' => [[static::class, 'removeRowSubmit']],
+        '#ajax' => [
+          'callback' => [static::class, 'removeRowAjax'],
+          'wrapper' => $wrapper_id,
+          'effect' => 'fade',
+        ],
+      ];
+    }
+  }
+
+  /**
+   * @param array $form
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *
+   * @return void
+   */
+  public static function removeRowSubmit(array &$form, FormStateInterface $form_state) {
+    $button = $form_state->getTriggeringElement();
+
+    // Go one level up in the form, to the widgets container.
+    $element = NestedArray::getValue($form, array_slice($button['#array_parents'], 0, -2));
+    $field_name = $element['#field_name'];
+    $parents = $element['#field_parents'];
+
+    // Increment the items count.
+    $field_state = static::getWidgetState($parents, $field_name, $form_state);
+
+    if (empty($field_state['items_count']) || $field_state['items_count'] <= 0) {
+      return;
+    }
+
+    $values = $form_state->getValues();
+    NestedArray::unsetValue($values, array_slice($button['#parents'], 0, -1));
+
+    $form_state->setValues($values);
+
+    $field_state['items_count']--;
+    static::setWidgetState($parents, $field_name, $form_state, $field_state);
+
+    $form_state->setRebuild();
+  }
+
+  /**
+   * Ajax callback for the "Add another item" button.
+   *
+   * This returns the new page content to replace the page content made obsolete
+   * by the form submission.
+   */
+  public static function removeRowAjax(array $form, FormStateInterface $form_state) {
+    $button = $form_state->getTriggeringElement();
+
+    // Go one level up in the form, to the widgets container.
+    $element = NestedArray::getValue($form, array_slice($button['#array_parents'], 0, -2));
+
+    $parents = $button['#array_parents'];
+    end($parents);
+    $delta = prev($parents);
+    // Add a DIV around the delta receiving the Ajax effect.
+    $element[$delta]['#prefix'] = '<div class="ajax-new-content">' . ($element[$delta]['#prefix'] ?? '');
+    $element[$delta]['#suffix'] = ($element[$delta]['#suffix'] ?? '') . '</div>';
+
+    return $element;
   }
 
   /**
