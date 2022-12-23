@@ -16,8 +16,8 @@ source:
   enclosure: '"'
   header_row_count: 1
   ids:
-    - 'Palvelunnimi'
-    - 'Vastuukunta'
+    - Palvelunnimi
+    - Vastuukunta
 process:
   type:
     plugin: default_value
@@ -43,8 +43,8 @@ process:
       migration: service_wp_import
       source_ids:
         service_wp_import:
-          - 'Palvelunnimi'
-          - 'Vastuukunta'
+          - Palvelunnimi
+          - Vastuukunta
       no_stub: true
     -
       plugin: skip_on_empty
@@ -52,7 +52,7 @@ process:
   label:
     -
       plugin: skip_on_empty
-      source: 'Palvelunnimi'
+      source: Palvelunnimi
       method: row
 destination:
   plugin: 'entity:group_content'
