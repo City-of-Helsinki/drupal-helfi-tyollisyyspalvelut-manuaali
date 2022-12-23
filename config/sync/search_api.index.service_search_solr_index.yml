@@ -230,6 +230,14 @@ field_settings:
     dependencies:
       module:
         - node
+  title_1:
+    label: Title
+    datasource_id: 'entity:node'
+    property_path: title
+    type: solr_text_wstoken
+    dependencies:
+      module:
+        - node
   uid:
     label: uid
     datasource_id: 'entity:node'
@@ -275,6 +283,7 @@ processor_settings:
       - locality
       - rendered_item
       - title
+      - title_1
     title: true
     alt: true
     tags:
