@@ -15,7 +15,7 @@ bundle: service
 label: 'Kuntakohtaiset ohjeet (valinnainen)'
 description: ''
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:
@@ -55,6 +55,9 @@ settings:
       municipality_guide:
         weight: 25
         enabled: true
+      quick_link:
+        weight: 27
+        enabled: false
       service_language:
         weight: 26
         enabled: false

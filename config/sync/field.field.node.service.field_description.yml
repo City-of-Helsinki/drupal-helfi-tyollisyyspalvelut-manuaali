@@ -10,7 +10,6 @@ dependencies:
 third_party_settings:
   require_on_publish:
     require_on_publish: true
-    warn_on_empty: false
 id: node.service.field_description
 field_name: field_description
 entity_type: node
@@ -18,7 +17,7 @@ bundle: service
 label: 'Short description'
 description: ''
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings: {  }
