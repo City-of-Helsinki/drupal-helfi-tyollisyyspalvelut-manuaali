@@ -277,6 +277,8 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
       ];
     }
 
+    // Preview is currently not needed so code is commented out for later use.
+    /*
     $wrapper = 'date-preview-wrapper-' . implode('-', $elementParents);;
     $element['preview'] = [
       '#type' => 'button',
@@ -293,7 +295,7 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
       '#type' => 'html_tag',
       '#tag' => 'div',
       '#attributes' => ['id' => $wrapper]
-    ];
+    ];*/
 
     return $element;
   }
