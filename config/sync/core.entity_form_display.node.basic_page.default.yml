@@ -12,6 +12,7 @@ dependencies:
     - field_group
     - media_library
     - paragraphs
+    - path
 third_party_settings:
   field_group:
     group_left_column:
@@ -34,6 +35,7 @@ third_party_settings:
         required_fields: false
     group_details_sidebar:
       children:
+        - path
         - langcode
         - status
       label: 'Lisätiedot:'
@@ -104,6 +106,12 @@ content:
     settings:
       include_locked: true
     third_party_settings: {  }
+  path:
+    type: path
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   status:
     type: boolean_checkbox
     weight: 2
@@ -123,7 +131,6 @@ hidden:
   created: true
   entitygroupfield: true
   moderation_state: true
-  path: true
   promote: true
   sticky: true
   translation: true
