@@ -22,7 +22,7 @@ class BulkGroupInvitationRoles extends BulkGroupInvitation {
     $group = \Drupal::service('current_route_match')->getParameter('group');
 
     $form['roles'] = [
-      '#type' => 'select',
+      '#type' => 'checkboxes',
       '#title' => t('Roles'),
       '#options' => self::getGroupRoleOptions($group),
       '#weight' => 0
@@ -43,7 +43,7 @@ class BulkGroupInvitationRoles extends BulkGroupInvitation {
   protected function getGroupRoleOptions(GroupInterface $group) {
     $roles = [];
     $group_roles = $this->entityTypeManager->getStorage('group_role')->loadByProperties([
-      'group_type' => $group->getGroupType(),
+      'group_type' => $group->getGroupType()->id(),
       'internal' => FALSE,
     ]);
     if (empty($group_roles)) {

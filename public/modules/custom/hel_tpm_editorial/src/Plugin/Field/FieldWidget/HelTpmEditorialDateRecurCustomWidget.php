@@ -277,6 +277,8 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
       ];
     }
 
+    // Preview is currently not needed so code is commented out for later use.
+    /*
     $wrapper = 'date-preview-wrapper-' . implode('-', $elementParents);;
     $element['preview'] = [
       '#type' => 'button',
@@ -293,7 +295,7 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
       '#type' => 'html_tag',
       '#tag' => 'div',
       '#attributes' => ['id' => $wrapper]
-    ];
+    ];*/
 
     return $element;
   }
@@ -398,7 +400,7 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
         $elements['add_more'] = [
           '#type' => 'submit',
           '#name' => strtr($id_prefix, '-', '_') . '_add_more',
-          '#value' => t('Add another item'),
+          '#value' => t('Add another date'),
           '#attributes' => ['class' => ['field-add-more-submit']],
           '#limit_validation_errors' => [array_merge($parents, [$field_name])],
           '#submit' => [[static::class, 'addMoreSubmit']],
@@ -408,10 +410,54 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
             'effect' => 'fade',
           ],
         ];
+        self::addRemoveRowButton($elements, $id_prefix, $wrapper_id, $max);
       }
     }
 
     return $elements;
+  }
+
+  /**
+   * Helper method to add remove row button.
+   *
+   * @param $elements
+   * @param $parents
+   * @param $field_name
+   * @param $id_prefix
+   * @param $max_delta
+   *
+   * @return void
+   */
+  public function addRemoveRowButton(&$elements, $id_prefix, $wrapper_id, $max_delta) {
+    for ($delta = 0; $delta < $max_delta; $delta++) {
+      if (empty($elements[$delta])) {
+        return;
+      }
+      $id_prefix = sprintf('%s-row-%s', $id_prefix, $delta);
+      $element = &$elements[$delta];
+      $remove_button = [
+        '#delta' => $delta,
+        '#name' => str_replace('-', '_', $id_prefix) . "_{$delta}_add_more_remove_button",
+        '#type' => 'submit',
+        '#value' => $this->t('Remove'),
+        '#validate' => [],
+        '#submit' => [[static::class, 'submitRemove']],
+        '#limit_validation_errors' => [],
+        '#attributes' => [
+          'class' => ['remove-field-delta--' . $delta],
+        ],
+        '#ajax' => [
+          'callback' => [static::class, 'removeAjaxContentRefresh'],
+          'wrapper' => $wrapper_id,
+          'effect' => 'fade',
+        ],
+      ];
+
+      $element['_actions'] = [
+        'remove_button' => $remove_button,
+        '#weight' => 101,
+      ];
+    }
   }
 
   /**

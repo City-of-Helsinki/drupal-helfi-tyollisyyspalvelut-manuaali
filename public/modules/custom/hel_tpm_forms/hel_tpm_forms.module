@@ -67,12 +67,12 @@ function hel_tpm_forms_form_node_form_alter(&$form, FormStateInterface &$form_st
  *
  * @return void
  */
-function hel_tpm_forms_field_widget_form_alter(&$elements, FormStateInterface $form_state, array $context) {
-  if (empty($elements['#type'])) {
+function hel_tpm_forms_field_widget_form_alter(&$element, FormStateInterface $form_state, array $context) {
+  if (empty($element['#type'])) {
     return;
   }
-  if (($elements['#type'] === 'select2') || ($elements['#type'] === 'select')){
-    $elements['#placeholder'] = t('Choose from following options');
+  if (($element['#type'] === 'select2') || ($element['#type'] === 'select')){
+    $element['#placeholder'] = t('Choose from following options');
   }
 }
 

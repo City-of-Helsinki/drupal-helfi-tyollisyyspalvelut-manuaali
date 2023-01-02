@@ -74,8 +74,9 @@
 
 
         if (n == (x.length - 1)) {
-          document.getElementById("nextBtnText").innerHTML = "Submit";
+          document.getElementById('nextBtn').hidden = true;
         } else {
+          document.getElementById('nextBtn').hidden = false;
           document.getElementById("nextBtnText").innerHTML = "Next";
         }
         // ... and run a function that displays the correct step indicator:
