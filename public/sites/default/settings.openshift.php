@@ -53,3 +53,7 @@ if (isset($_ENV['REDIS_HOST'])) {
   $settings['cache']['default'] = 'cache.backend.redis';
   $settings['cache_prefix'] = $_ENV['REDIS_PREFIX'] . '_';
 }
+
+if (!empty($_ENV['SMTP_HOST'])) {
+  $config['smtp.settings']['smtp_host'] = $_ENV['SMTP_HOST'];
+}
