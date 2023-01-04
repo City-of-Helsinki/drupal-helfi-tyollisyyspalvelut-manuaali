@@ -5,6 +5,7 @@ dependencies:
   config:
     - system.menu.account
   module:
+    - block_class
     - context
     - system
     - user
@@ -16,7 +17,7 @@ third_party_settings:
 id: kayttajavalikko
 theme: palvelumanuaali
 region: header
-weight: 2
+weight: -4
 provider: null
 plugin: 'system_menu_block:account'
 settings:

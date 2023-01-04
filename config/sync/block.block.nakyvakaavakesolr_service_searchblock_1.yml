@@ -5,6 +5,7 @@ dependencies:
   config:
     - views.view.solr_service_search
   module:
+    - block_class
     - context
     - views
   theme:
@@ -15,7 +16,7 @@ third_party_settings:
 id: nakyvakaavakesolr_service_searchblock_1
 theme: palvelumanuaali
 region: header
-weight: 0
+weight: -6
 provider: null
 plugin: 'views_exposed_filter_block:solr_service_search-block_1'
 settings:

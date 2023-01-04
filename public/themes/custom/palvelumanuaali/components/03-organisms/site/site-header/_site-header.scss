@@ -67,23 +67,31 @@
 
 }
 
-.header {
-  #block-suosikit,
-  #block-kielenvaihtaja,
-  #block-kirjautuminen,
-  #block-kayttajavalikko  {
+.header .header__primary {
+  nav.block{
     @include large {
       position: absolute;
+      z-index: 100;
     }
   }
-  #block-suosikit {@include large {left:13px; top: 50px; z-index: 100;}}
-  #block-suosikit {@include xl {left:50px;}}
-  #block-kielenvaihtaja {@include large {left:120px; top:50px; z-index: 100;}}
-  #block-kielenvaihtaja {@include xl {left:180px;}}
-  #block-kirjautuminen {@include large {right:20px; top: 33px; z-index: 100;}}
-  #block-kirjautuminen {@include xl {right:50px;}}
-  #block-kayttajavalikko {@include large {right:20px; top: 25px; z-index: 100;}}
-  #block-kayttajavalikko {@include xl {right:50px;}}
+
+  #block-kielenvaihtaja {
+    @include large {left:13px; top:50px;}
+    @include xl {left:50px;}
+  }
+  #block-suosikit {
+    @include large {left:96px; top: 50px;}
+    @include xl {left:180px;}
+  }
+  #block-kirjautuminen {
+    @include large {right:20px; top: 33px;}
+    @include xl {right:50px;}
+  }
+
+  #block-kayttajavalikko {
+    @include large {right:20px; top: 25px;}
+    @include xl {right:50px;}
+  }
 
 }
 

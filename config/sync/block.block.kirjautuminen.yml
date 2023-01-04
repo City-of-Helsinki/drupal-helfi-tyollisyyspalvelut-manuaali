@@ -3,6 +3,7 @@ langcode: fi
 status: true
 dependencies:
   module:
+    - block_class
     - context
     - user
   theme:
@@ -13,7 +14,7 @@ third_party_settings:
 id: kirjautuminen
 theme: palvelumanuaali
 region: header
-weight: 1
+weight: -5
 provider: null
 plugin: user_login_block
 settings:
