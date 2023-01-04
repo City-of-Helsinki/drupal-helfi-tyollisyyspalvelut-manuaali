@@ -39,6 +39,10 @@
 .tabs__nav--local-tasks {
   margin-bottom: $space-one-and-half;
   padding: 0;
+  @include large {
+    display: flex;
+    flex-wrap: wrap;
+  }
 }
 
 .tabs__link--local-tasks {
