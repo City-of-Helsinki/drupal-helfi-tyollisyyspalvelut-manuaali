@@ -12,12 +12,12 @@ bundle: service
 label: 'Client consent needed'
 description: 'Ilmoita, tarvitaanko asiakkaalta suostumus palveluun osallistumiseen. Mikäli suostumus tarvitaan, lisää ohjeet suostumuksen antamiseen (esim. linkki lomakkeelle, muut ohjeet).'
 required: false
-translatable: false
+translatable: true
 default_value:
   -
     value: 0
 default_value_callback: ''
 settings:
-  on_label: 'Yes'
-  off_label: 'No'
+  on_label: Kyllä
+  off_label: Ei
 field_type: boolean

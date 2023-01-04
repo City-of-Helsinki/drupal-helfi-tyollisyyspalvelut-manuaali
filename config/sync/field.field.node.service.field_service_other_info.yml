@@ -15,7 +15,7 @@ bundle: service
 label: 'Muut palvelun tiedot'
 description: ''
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:
@@ -31,14 +31,32 @@ settings:
       content:
         weight: 12
         enabled: false
+      content_card_lift:
+        weight: 19
+        enabled: false
       content_link_file:
         weight: 13
         enabled: false
-      content_list_lift_header_icon:
-        weight: 14
+      content_link_file_guide:
+        weight: 21
+        enabled: false
+      full_width_card_lift:
+        weight: 22
+        enabled: false
+      header_description_link:
+        weight: 23
         enabled: false
       link:
         weight: 15
+        enabled: false
+      long_text_field_with_toolbar:
+        weight: 25
+        enabled: false
+      municipality_guide:
+        weight: 26
+        enabled: false
+      quick_link:
+        weight: 27
         enabled: false
       service_language:
         weight: 16
