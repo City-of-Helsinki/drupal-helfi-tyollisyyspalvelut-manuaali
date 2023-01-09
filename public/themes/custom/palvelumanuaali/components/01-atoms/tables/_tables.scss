@@ -204,6 +204,9 @@
   }
 }
 
+.js td .dropbutton-multiple.dropbutton-wrapper {
+  min-height: 24px;
+}
 
 .dropbutton-multiple .dropbutton-widget {
   background: white;
@@ -233,11 +236,24 @@
 //override bootstrap
 .table > :not(caption) > * > *,
 table > :not(caption) > * > * {
-  padding: $space 18px $space $space-double;
+  padding: 20px 18px 20px $space-double;
 
 }
 
+.field--widget-entity-reference-paragraphs,
+.field--widget-hel-tpm-general-inline-entity-form-complex-improved {
+  table tbody td,
+  table thead th {
+    height: unset;
+  }
+  table {
+    background-color: transparent;
+  }
+}
+
 table {
+  margin-top: $space;
+  margin-bottom: $space;
   width: 100%;
   background-color: clr(text-inverse);
   border-radius: 8px;
@@ -259,7 +275,7 @@ table {
          position: absolute;
          right: 0;
          top: 8px;
-         height: 75%;
+         height: calc(100% - 16px);
          width: 2px;
          border-right: 2px solid clr(background-border);
       }
@@ -295,12 +311,15 @@ table {
 
   }
   tbody {
+    ol, ul {
+      margin: 0;
+    }
     tr {
       position: relative;
       &::after {
         content: "";
-        height: 2px;
-        width: 99%;
+        // height: 2px;
+        width: calc(100% - 16px);
         left: 8px;
         bottom: 0;
         position: absolute;
