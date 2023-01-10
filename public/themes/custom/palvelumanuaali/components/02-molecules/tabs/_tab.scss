@@ -1,44 +1,31 @@
 .tabs__link,
 .tabs__link--local-tasks {
-  background-color: clr(muted);
-  border: 1px solid clr(highlight-high);
-  border-bottom: none;
-  color: clr(text);
+  background-color: transparent;
+  border: 0;
+  color: clr(alt-header-color);
   display: block;
-  font-size: 1.1rem;
+
+  font-size: 14px;
+  line-height: 24px;
+
   font-weight: 600;
-  padding: 1em 2.4em;
+  padding: 4px 24px;
   text-align: center;
   text-decoration: none;
   transition: color 0.3s;
 
-  @include large {
-    border-bottom: 1px solid clr(highlight-high);
-    border-left: none;
-    display: inline-block;
-    font-size: 1rem;
-    padding: 0.6em 1.7em;
-    position: relative;
-    top: 1px;
-    width: auto;
-  }
-
   &:hover {
-    background-color: clr(highlight-high);
-    color: clr(accent);
+    color: clr(background-section);
+    box-shadow: 0 2px 0 0 clr(background-section);    
+    box-sizing: border-box;
   }
 
   &.is-active {
-    background-color: clr(text);
-    border: 1px solid clr(text);
+    background-color: clr(background-section);
     color: clr(text-inverse);
 
     @include large {
-      background-color: clr(background);
-      border: 1px solid clr(highlight-high);
-      border-bottom: 1px solid clr(highlight-high);
-      border-left: none;
-      color: clr(text);
+      border-radius: 4px 4px 0px 0px;
     }
   }
 }

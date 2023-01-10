@@ -7,11 +7,6 @@ dependencies:
     - node.type.service
   module:
     - options
-    - require_on_publish
-third_party_settings:
-  require_on_publish:
-    require_on_publish: true
-    warn_on_empty: false
 id: node.service.field_related_archive
 field_name: field_related_archive
 entity_type: node
@@ -20,7 +15,9 @@ label: 'Palveluun liittyy arkistointia'
 description: ''
 required: false
 translatable: false
-default_value: {  }
+default_value:
+  -
+    value: 'yes'
 default_value_callback: ''
 settings: {  }
 field_type: list_string

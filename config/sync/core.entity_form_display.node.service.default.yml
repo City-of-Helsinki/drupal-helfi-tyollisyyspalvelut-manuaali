@@ -190,9 +190,9 @@ third_party_settings:
         show_empty_fields: false
         id: ''
         element: div
-        show_label: false
+        show_label: true
         label_element: h3
-        label_element_classes: ''
+        label_element_classes: tab--title
         attributes: ''
         effect: none
         speed: fast
@@ -210,9 +210,9 @@ third_party_settings:
         show_empty_fields: false
         id: ''
         element: div
-        show_label: false
+        show_label: true
         label_element: h3
-        label_element_classes: ''
+        label_element_classes: tab--title
         attributes: ''
         effect: none
         speed: fast
@@ -229,17 +229,17 @@ third_party_settings:
       region: content
       parent_name: ''
       weight: 4
-      format_type: accordion
+      format_type: html_element
       format_settings:
         classes: 'tab tab-4'
         show_empty_fields: false
         id: ''
-        effect: none
         element: div
-        show_label: false
+        show_label: true
         label_element: h3
-        label_element_classes: ''
+        label_element_classes: tab--title
         attributes: ''
+        effect: none
         speed: fast
         required_fields: true
     group_basic_info_1:
@@ -323,7 +323,7 @@ third_party_settings:
         element: div
         show_label: false
         label_element: legend
-        label_element_classes: h2
+        label_element_classes: 'h2 field-group--title '
         attributes: ''
         effect: none
         speed: fast
@@ -342,9 +342,9 @@ third_party_settings:
         show_empty_fields: false
         id: ''
         element: div
-        show_label: true
+        show_label: false
         label_element: legend
-        label_element_classes: h2
+        label_element_classes: 'h2 field-group--title '
         attributes: ''
         effect: none
         speed: fast
@@ -363,7 +363,7 @@ third_party_settings:
         show_empty_fields: false
         id: ''
         element: div
-        show_label: true
+        show_label: false
         label_element: legend
         label_element_classes: h2
         attributes: ''
@@ -386,7 +386,7 @@ third_party_settings:
         element: div
         show_label: true
         label_element: legend
-        label_element_classes: h2
+        label_element_classes: 'h2 field-group--title '
         attributes: ''
         effect: none
         speed: fast
@@ -406,7 +406,7 @@ third_party_settings:
         element: div
         show_label: true
         label_element: legend
-        label_element_classes: h2
+        label_element_classes: 'h2 field-group--title'
         attributes: ''
         effect: none
         speed: fast
@@ -426,7 +426,7 @@ third_party_settings:
         element: div
         show_label: true
         label_element: legend
-        label_element_classes: h2
+        label_element_classes: 'h2 field-group--title '
         attributes: ''
         effect: none
         speed: fast
@@ -446,7 +446,7 @@ third_party_settings:
         element: div
         show_label: true
         label_element: legend
-        label_element_classes: h2
+        label_element_classes: 'h2 field-group--title'
         attributes: ''
         effect: none
         speed: fast
@@ -703,7 +703,7 @@ content:
       match_limit: 10
     third_party_settings: {  }
   field_related_archive:
-    type: options_select
+    type: options_buttons
     weight: 12
     region: content
     settings: {  }
