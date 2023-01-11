@@ -257,6 +257,9 @@ table {
   width: 100%;
   background-color: clr(text-inverse);
   border-radius: 8px;
+  ul {
+    list-style: none;
+  }
   thead {
     border-bottom: 2px solid clr(background-border);
     tr {
@@ -271,7 +274,7 @@ table {
       font-weight: 700;
       position: relative;
       &::after {
-        content : "";
+         content : "";
          position: absolute;
          right: 0;
          top: 8px;
@@ -285,6 +288,23 @@ table {
         position: relative;
         width: 100%;
         display: inline-block;
+        &::after {
+          position: absolute;
+          content: "";
+          right: 0;
+          height: 24px;
+          width: 24px;
+          background-repeat: no-repeat;
+          background-position: center;
+          background-image: url('/themes/custom/palvelumanuaali/images/icons/arrow-sm-down-light-blue.svg');
+
+        }
+
+      }
+      a[href*="desc"] {
+        &::after {
+          transform: rotate(180deg);
+        }
       }
       &:last-child {
         border-right: unset;
@@ -292,20 +312,24 @@ table {
            border-right: unset;
         }
       }
+      &.is-active {
+        &::before {
+           content : "";
+           position: absolute;
+           right: 0;
+           bottom: -1px;
+           height: 100%;
+           width: 100%;
+           border-bottom: 4px solid clr(background-section);
+        }
+        a {
+          &::after {
+            background-image: url('/themes/custom/palvelumanuaali/images/icons/arrow-sm-down.svg');
+          }
+        }
+      }
       .tablesort {
-        position: absolute;
-        right: 0;
-        height: 24px;
-        width: 24px;
-        background-repeat: no-repeat;
-        background-position: center;
-      }
-      .tablesort--asc {
-        background-image: url('/themes/custom/palvelumanuaali/images/icons/arrow-sm-down-light-blue.svg');
-      }
-      .tablesort--desc {
-        background-image: url('/themes/custom/palvelumanuaali/images/icons/arrow-sm-down-light-blue.svg');
-        transform: rotate(180deg);
+        background-image: unset;
       }
     }
 
