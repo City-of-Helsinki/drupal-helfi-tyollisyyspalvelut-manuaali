@@ -5,7 +5,6 @@
       var urlParams = new URLSearchParams(window.location.search);
       if (urlParams.has('step')) {
         var stepValue = urlParams.get('step');
-        stepValue = stepValue-1;
         currentTab = stepValue;
       } else {
         currentTab = 0;
@@ -20,31 +19,28 @@
         nextPrev(1);
       });
 
-      $('#step-1').click(function () {
-        switchTab(0);
-        urlParams.set('step', '1');
+      $('.step').click(function () {
+        let step = $(this).attr('data-step');
+        switchTab(step);
+        urlParams.set('step', step);
         history.replaceState(null, null, "?"+urlParams.toString());
       });
 
-      $('#step-2').click(function () {
-        switchTab(1);
-        urlParams.set('step', '2');
-        history.replaceState(null, null, "?"+urlParams.toString());
-      });
 
-      $('#step-3').click(function () {
-        switchTab(2);
-        urlParams.set('step', '3');
-        history.replaceState(null, null, "?"+urlParams.toString());
-
-      });
-
-      $('#step-4').click(function () {
-        switchTab(3);
-        urlParams.set('step', '4');
-        history.replaceState(null, null, "?"+urlParams.toString());
-
-      });
+      function stepRequiredFields(n) {
+        let tab = '.tab-' + n;
+        let requiredFields = $('input.required');
+        let emptyRequired = [];
+        console.log(requiredFields);
+        requiredFields.each(function () {
+          console.log(this);
+          if ($(this).length > 0) {
+            return;
+          }
+          emptyRequired.push($(this).getLabel());
+        });
+        console.log(emptyRequired);
+      }
 
       function switchTab(n) {
         var x = document.getElementsByClassName("tab");
@@ -58,6 +54,7 @@
         hideTime();
         hideAgeRange();
         hideConsent();
+        stepRequiredFields(n);
         // This function will display the specified tab of the form ...
         var x = document.getElementsByClassName("tab");
         x[n].style.display = "block";
@@ -73,7 +70,7 @@
         }
 
 
-        if (n == (x.length - 1)) {
+        if (n == (x.length)) {
           document.getElementById('nextBtn').hidden = true;
         } else {
           document.getElementById('nextBtn').hidden = false;
