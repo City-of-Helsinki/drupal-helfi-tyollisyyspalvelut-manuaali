@@ -7,13 +7,17 @@ dependencies:
     - paragraphs.paragraphs_type.quick_link
   module:
     - link
+    - require_on_publish
+third_party_settings:
+  require_on_publish:
+    require_on_publish: true
 id: paragraph.quick_link.field_link
 field_name: field_link
 entity_type: paragraph
 bundle: quick_link
 label: Linkki
 description: ''
-required: true
+required: false
 translatable: true
 default_value: {  }
 default_value_callback: ''
