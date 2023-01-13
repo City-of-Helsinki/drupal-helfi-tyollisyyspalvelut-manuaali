@@ -134,8 +134,8 @@ $field_storage = FieldStorageConfig::loadByName('node', 'field_related_archive')
 /**
  * Remove the field field_description .
  */
- 
-function hel_tpm_general_update_8109() {
+
+function hel_tpm_general_update_8110() {
   $field_config = FieldConfig::loadByName('node', 'service', 'field_description');
   if ($field_config) {
     $field_config->delete();
