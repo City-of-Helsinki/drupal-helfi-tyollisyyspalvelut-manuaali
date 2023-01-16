@@ -69,25 +69,4 @@ class TPMServiceTimeLocationParagraph extends ParagraphBase {
     }
   }
 
-  /**
-   * Utility: find term by name and vid.
-   *
-   * @param string $name
-   *   Term name.
-   * @param string $vid
-   *   Term vid.
-   *
-   * @return int
-   *   Term id, or 0 if none.
-   */
-  private function getTidByName($name, $vid) {
-    $properties = [
-      'name' => $name,
-      'vid' => $vid,
-    ];
-    $terms = \Drupal::service('entity_type.manager')->getStorage('taxonomy_term')->loadByProperties($properties);
-    $term = reset($terms);
-    return !empty($term) ? $term->id() : 0;
-  }
-
 }

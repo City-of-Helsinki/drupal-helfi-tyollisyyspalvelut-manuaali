@@ -25,10 +25,25 @@ class TPMTargetGroupParagraph extends ParagraphBase {
     $paragraphs = [];
 
     $paragraph = $this->createParagraph($row, $destinationProperty, 'target_group', 0);
-    $paragraph->field_description = $value;
-    // TODO: Probably needs lookup
-    $paragraph->field_municipality = $this->getConfigValues($row, 'municipality');
-    $paragraph->field_age_groups = $this->getConfigValues($row, 'age');
+    $paragraph->field_description = $this->getConfigValues($row, 'description');
+    $paragraph->field_municipality = $this->getTidByName($this->getConfigValues($row, 'municipality'), 'municipality');
+
+    switch ($this->getConfigValues($row, 'age')) {
+      case 'Ei ikään liittyviä rajoituksia':
+      case 'Ei ikään liittyvää rajoitusta':
+        $paragraph->field_age_groups = 'no_age_restriction';
+        break;
+      case 'Alle 30-vuotiaat':
+        $paragraph->field_age_groups = 'under_30';
+        break;
+      case '30-vuotiaat tai vanhemmat':
+        $paragraph->field_age_groups = 'over_30';
+        break;
+      case 'Yli 55-vuotiaat':
+        $paragraph->field_age_groups = 'over_57';
+        break;
+    }
+
     $paragraph->save();
     $paragraphs[] = [
       'target_id' => $paragraph->id(),
