@@ -66,11 +66,10 @@ function hel_tpm_general_update_8104() {
     $field_config->delete();
   }
 
-
-$field_storage = FieldStorageConfig::loadByName('node', 'field_service_requirements');
-  if ($field_storage) {
-    $field_storage->delete();
-}
+  $field_storage = FieldStorageConfig::loadByName('node', 'field_service_requirements');
+    if ($field_storage) {
+      $field_storage->delete();
+  }
 
   $field_storage = FieldStorageConfig::loadByName('node', 'field_statements_unemployment');
     if ($field_storage) {
@@ -79,7 +78,7 @@ $field_storage = FieldStorageConfig::loadByName('node', 'field_service_requireme
 }
 
 /**
- * Remove the field service_implement .
+ * Remove the field service_implement.
  */
 function hel_tpm_general_update_8105() {
   $field_config = FieldConfig::loadByName('node', 'service', 'field_service_implement');
@@ -116,7 +115,7 @@ function hel_tpm_general_update_8108() {
 }
 
 /**
- * Remove the field related_archive .
+ * Remove the field related_archive.
  */
 function hel_tpm_general_update_8109() {
   $field_config = FieldConfig::loadByName('node', 'service', 'field_related_archive');
@@ -130,11 +129,9 @@ $field_storage = FieldStorageConfig::loadByName('node', 'field_related_archive')
   }
 }
 
-
 /**
- * Remove the field field_description .
+ * Remove the field field_description.
  */
-
 function hel_tpm_general_update_8110() {
   $field_config = FieldConfig::loadByName('node', 'service', 'field_description');
   if ($field_config) {
