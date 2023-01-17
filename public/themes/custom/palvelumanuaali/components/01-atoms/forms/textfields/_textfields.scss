@@ -30,13 +30,14 @@
 
 .form-fieldset {
   border: none;
-  // margin-bottom: 2em;
   padding: 0;
   &--no-margin {
     margin-bottom: 0;
   }
-  .form-item {
-    // margin-left: 1em;
+  &.form-background--regular-padding {
+    @include large {
+      padding: 48px 56px;
+    }
   }
 }
 

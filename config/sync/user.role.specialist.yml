@@ -7,12 +7,14 @@ dependencies:
   module:
     - field_permissions
     - filter
+    - hel_tpm_general
     - paragraphs_type_permissions
 id: specialist
 label: Specialist
 weight: 5
 is_admin: null
 permissions:
+  - 'access internal service fields'
   - 'use text format plain_text_format'
   - 'view field_age'
   - 'view field_archiving_guide'
