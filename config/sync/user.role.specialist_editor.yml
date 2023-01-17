@@ -4,11 +4,13 @@ status: true
 dependencies:
   module:
     - field_permissions
+    - hel_tpm_general
 id: specialist_editor
 label: 'Specialist editor'
 weight: 6
 is_admin: null
 permissions:
+  - 'access internal service fields'
   - 'create field_archiving_guide'
   - 'create field_career_marking'
   - 'create field_exceptions'
