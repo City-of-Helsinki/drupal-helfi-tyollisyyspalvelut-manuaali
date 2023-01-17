@@ -4,8 +4,7 @@
       var currentTab = 0;
       var urlParams = new URLSearchParams(window.location.search);
       if (urlParams.has('step')) {
-        var stepValue = urlParams.get('step');
-        currentTab = stepValue;
+        currentTab = urlParams.get('step');
       } else {
         currentTab = 0;
       }
@@ -26,20 +25,29 @@
         history.replaceState(null, null, "?"+urlParams.toString());
       });
 
-
+      /**
+       * Fetch required fields for current step.
+       *
+       * @param n
+       */
       function stepRequiredFields(n) {
         let tab = '.tab-' + n;
-        let requiredFields = $('input.required');
+        let requiredFields = $('input, textarea, select, fieldset', tab).filter('[required]');
         let emptyRequired = [];
-        console.log(requiredFields);
+        console.log(emptyRequired);
         requiredFields.each(function () {
-          console.log(this);
-          if ($(this).length > 0) {
+          console.log($(this).val());
+          if ($(this).val().length > 0) {
+            console.log('asfd');
             return;
           }
-          emptyRequired.push($(this).getLabel());
+          emptyRequired.push($(this).attr('name'));
         });
-        console.log(emptyRequired);
+        if (emptyRequired.length > 0) {
+          $(emptyRequired).each(function() {
+            alert(this);
+          });
+        }
       }
 
       function switchTab(n) {
@@ -59,10 +67,10 @@
         var x = document.getElementsByClassName("tab");
         x[n].style.display = "block";
         // ... and fix the Previous/Next buttons:
-        if (n == 0) {
+        if (n === 0) {
           document.getElementById("prevBtn").style.display = "none";
           hidePrice();
-        } else if (n == 1){
+        } else if (n === 1){
           document.getElementById("prevBtn").style.display = "inline";
           hideTime();
         } else {
@@ -70,7 +78,7 @@
         }
 
 
-        if (n == (x.length)) {
+        if (n === (x.length)) {
           document.getElementById('nextBtn').hidden = true;
         } else {
           document.getElementById('nextBtn').hidden = false;
@@ -166,10 +174,10 @@
         let ageGroups = '.field--name-field-age-groups .form-item';
         let ageField = '.field--name-field-age';
         $(ageGroups).siblings().each(function () {
-          if ($(this).children('.form-radio').val() === "no_age_restriction" && $(this).children('.form-radio').is(":checked") == true ) {
+          if ($(this).children('.form-radio').val() === "no_age_restriction" && $(this).children('.form-radio').is(":checked") === true ) {
             $(ageField).hide();
           }
-          else if (($(this).children('.form-radio').val() != "no_age_restriction" && $(this).children('.form-radio').is(":checked") == true )) {
+          else if (($(this).children('.form-radio').val() !== "no_age_restriction" && $(this).children('.form-radio').is(":checked") === true )) {
             $(ageField).show();
           }
         });
