@@ -5,13 +5,18 @@ dependencies:
   config:
     - field.storage.paragraph.field_title
     - paragraphs.paragraphs_type.header_description_link
+  module:
+    - require_on_publish
+third_party_settings:
+  require_on_publish:
+    require_on_publish: true
 id: paragraph.header_description_link.field_title
 field_name: field_title
 entity_type: paragraph
 bundle: header_description_link
 label: Otsikko
 description: ''
-required: true
+required: false
 translatable: true
 default_value: {  }
 default_value_callback: ''
