@@ -182,6 +182,7 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id) {
     'node_service_form',
     'node_service_edit_form',
     'node_landing_page_edit_form',
+    'node_basic_page_form',
     'node_basic_page_edit_form'
   ];
   if (in_array($form_id, $forms)) {
@@ -190,12 +191,12 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id) {
     $form['meta']['published']['#access'] = FALSE;
     $form['menu']['#access'] = FALSE;
     $form['meta']['#type'] = 'container';
+    $form['meta']['#group'] = 'group_details_sidebar';
     $form['meta']['changed']['#title'] = t('Updated:');
     $form['meta']['author']['#title'] = t('Author:');
     $form['langcode']['widget'][0]['value']['#title'] = t('Language:');
     $form['moderation_state']['widget'][0]['current']['#title'] = t('Current state:');
     $form['moderation_state']['widget'][0]['state']['#title'] = t('Change to:');
-    $form['meta']['#group'] = 'group_details_sidebar';
     $form['actions']['delete']['#access'] = FALSE;
     $form['actions']['cancel']['#access'] = FALSE;
   }
