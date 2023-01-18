@@ -28,17 +28,16 @@
       /**
        * Fetch required fields for current step.
        *
+       * @todo Currently unused but left for later use.
+       *
        * @param n
        */
       function stepRequiredFields(n) {
         let tab = '.tab-' + n;
         let requiredFields = $('input, textarea, select, fieldset', tab).filter('[required]');
         let emptyRequired = [];
-        console.log(emptyRequired);
         requiredFields.each(function () {
-          console.log($(this).val());
           if ($(this).val().length > 0) {
-            console.log('asfd');
             return;
           }
           emptyRequired.push($(this).attr('name'));
@@ -62,7 +61,6 @@
         hideTime();
         hideAgeRange();
         hideConsent();
-        stepRequiredFields(n);
         // This function will display the specified tab of the form ...
         var x = document.getElementsByClassName("tab");
         x[n].style.display = "block";
