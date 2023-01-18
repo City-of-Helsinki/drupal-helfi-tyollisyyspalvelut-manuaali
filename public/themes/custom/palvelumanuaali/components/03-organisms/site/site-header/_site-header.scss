@@ -76,18 +76,23 @@
       position: absolute;
     }
   }
-  #block-kielenvaihtaja {@include large {left:38px; top: 50px; z-index: 100;}}
-  #block-kielenvaihtaja {@include xl {left:65px;}}
-  #block-suosikit {@include large {left:160px; top:50px; z-index: 100;}}
-  #block-suosikit {@include xl {left:213px;}}
-  #block-kirjautuminen {@include large {right:20px; top: 33px; z-index: 100;}}
-  #block-kirjautuminen {@include xl {right:50px;}}
-  #block-kayttajavalikko {@include large {right:20px; top: 25px; z-index: 100;}}
-  #block-kayttajavalikko {@include xl {right:50px;}}
+  #block-kielenvaihtaja {
+    @include large {left:38px; top: 50px; z-index: 100;}
+    @include xl {left:65px;}
+  }
+  #block-suosikit {
+    @include large {left:160px; top:50px; z-index: 100;}
+    @include xl {left:213px;}
+  }
+  #block-kirjautuminen {
+    @include large {right:20px; top: 33px; z-index: 100;}
+    @include xl {right:50px;}
+  }
+  #block-kayttajavalikko {
+    @include large {right:20px; top: 25px; z-index: 100;}
+    @include xl {right:50px;}
+  }
 
-}
-
-.header {
   #block-views-exposed-filter-block-service-search-special-search-filters,
   #block-nakyvakaavakeservice-searchspecial-search-filters,
   #block-nakyvakaavakeservice-searchsearch-page-filters,
