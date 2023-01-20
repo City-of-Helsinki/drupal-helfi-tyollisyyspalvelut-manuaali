@@ -9,6 +9,7 @@
         currentTab = 0;
       }
       showTab(currentTab); // Display the current tab
+      addError();
 
       $('#prevBtn').click(function () {
         nextPrev(-1);
@@ -25,6 +26,21 @@
         history.replaceState(null, null, "?"+urlParams.toString());
       });
 
+
+      function addError() {
+        let x = $(".tab.field-group-html-element");
+        x.each(function(index) {
+          if ($(this).find('.error').length !== 0) {
+            // highlight tabs
+            // let errorTab = '.tab-'+ (index + 1);
+            // $(errorTab).addClass('highlight-error');
+            // highlight steps
+            let errorStep ='#step-' + (index + 1);
+            $(errorStep).addClass('highlight-error');
+          }
+        });
+      }
+
       /**
        * Fetch required fields for current step.
        *
@@ -34,7 +50,7 @@
        */
       function stepRequiredFields(n) {
         let tab = '.tab-' + n;
-        let requiredFields = $('input, textarea, select, fieldset', tab).filter('[required]');
+        let requiredFields = $('input, textarea, select, fieldset', tab).filter('.error');
         let emptyRequired = [];
         requiredFields.each(function () {
           if ($(this).val().length > 0) {
@@ -215,7 +231,5 @@
         });
       }
     }
-
-
   }
 })(jQuery, Drupal, drupalSettings);
