@@ -71,3 +71,17 @@
     color: clr(alt-header-color);
   }
 }
+
+
+.local-actions-block {
+  list-style: none;
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  li {
+    &:first-child {
+      padding-left: 0;
+    }
+  }
+}

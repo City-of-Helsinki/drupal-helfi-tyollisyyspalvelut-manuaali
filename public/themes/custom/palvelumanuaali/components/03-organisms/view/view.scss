@@ -1,0 +1,22 @@
+
+
+.view-filters {
+  .form--inline {
+    margin-top: $space;
+    margin-bottom: $space;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: $space;
+  }
+  .form-item,
+  .form-actions {
+    flex: 1;
+    margin-bottom: 0;
+
+  }
+  .form-actions input {
+    @include button-round-corners;
+    @include button-color-blue;
+  }
+}
