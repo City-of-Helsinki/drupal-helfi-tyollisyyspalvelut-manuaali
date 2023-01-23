@@ -316,8 +316,11 @@ $button-colors: (
   @include large {
     margin-left: unset;
     padding: 0 .75rem .375rem .75rem;
-    font-size: 15px;
+    font-size: 12px;
     font-weight: 600;
+  }
+  @include xxl {
+    font-size: 15px;
   }
 }
 
@@ -441,5 +444,13 @@ there is possibility to add classes button--blue-bordered,
     font-size: 12px;
     line-height: 24px;
     padding: $space-one-half $space-one-and-half $space-one-half $space-one-and-half;
+  }
+}
+
+
+.local-actions-block {
+  .button {
+      @include button-round-corners;
+      @include button-color-blue;
   }
 }

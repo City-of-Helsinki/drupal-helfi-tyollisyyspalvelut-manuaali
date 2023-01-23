@@ -6,12 +6,6 @@
   }
 }
 
-table {
-  tr {
-    border-bottom: 2px solid $blue10;
-  }
-}
-
 .table__heading-cell,
 .table__cell {
   padding: 1em;
@@ -207,5 +201,187 @@ table {
   .views-empty {
     height: 300px;
     text-align: center;
+  }
+}
+
+.js td .dropbutton-multiple.dropbutton-wrapper {
+  min-height: 24px;
+}
+
+.dropbutton-multiple .dropbutton-widget {
+  background: white;
+  border: 2px solid clr(form-border);
+  border-radius: 8px;
+  padding-left: 8px;
+}
+.dropbutton-multiple .dropbutton-toggle {
+  bottom: unset;
+}
+
+.dropbutton-multiple .dropbutton-arrow {
+  border: unset;
+  width: 24px;
+  height: 24px;
+  background-image: url('/themes/custom/palvelumanuaali/images/icons/arrow-sm-down-light-blue.svg');
+  top: 0;
+  right: unset;
+  margin-top: 0;
+}
+.dropbutton-multiple.open .dropbutton-arrow {
+  transform: rotate(180deg);
+  border: unset;
+  top: 0;
+}
+
+//override bootstrap
+.table > :not(caption) > * > *,
+table > :not(caption) > * > * {
+  padding: 20px 18px 20px $space-double;
+
+}
+
+.field--widget-entity-reference-paragraphs,
+.field--widget-hel-tpm-general-inline-entity-form-complex-improved {
+  table tbody td,
+  table thead th {
+    height: unset;
+  }
+  table {
+    background-color: transparent;
+  }
+}
+
+table {
+  margin-top: $space;
+  margin-bottom: $space;
+  width: 100%;
+  background-color: clr(text-inverse);
+  border-radius: 8px;
+  ul {
+    list-style: none;
+  }
+  thead {
+    border-bottom: 2px solid clr(background-border);
+    tr {
+      position: relative;
+    }
+    th {
+      padding: $space $space $space $space-one-and-half;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-size: 12px;
+      line-height: 24px;
+      font-weight: 700;
+      position: relative;
+      &::after {
+         content : "";
+         position: absolute;
+         right: 0;
+         top: 8px;
+         height: calc(100% - 16px);
+         width: 2px;
+         border-right: 2px solid clr(background-border);
+      }
+      a {
+        color: clr(text);
+        text-decoration: none;
+        position: relative;
+        width: 100%;
+        display: inline-block;
+        &::after {
+          position: absolute;
+          content: "";
+          right: 0;
+          height: 24px;
+          width: 24px;
+          background-repeat: no-repeat;
+          background-position: center;
+          background-image: url('/themes/custom/palvelumanuaali/images/icons/arrow-sm-down-light-blue.svg');
+
+        }
+
+      }
+      a[href*="desc"] {
+        &::after {
+          transform: rotate(180deg);
+        }
+      }
+      &:last-child {
+        border-right: unset;
+        &::after {
+           border-right: unset;
+        }
+      }
+      &.is-active {
+        &::before {
+           content : "";
+           position: absolute;
+           right: 0;
+           bottom: -1px;
+           height: 100%;
+           width: 100%;
+           border-bottom: 4px solid clr(background-section);
+        }
+        a {
+          &::after {
+            background-image: url('/themes/custom/palvelumanuaali/images/icons/arrow-sm-down.svg');
+          }
+        }
+      }
+      .tablesort {
+        background-image: unset;
+      }
+    }
+
+  }
+  tbody {
+    ol, ul {
+      margin: 0;
+    }
+    tr {
+      position: relative;
+      &::after {
+        content: "";
+        // height: 2px;
+        width: calc(100% - 16px);
+        left: 8px;
+        bottom: 0;
+        position: absolute;
+        display: block;
+        border-bottom: 2px solid $blue10;
+      }
+      &:last-child {
+        &::after {
+          border-bottom: unset;
+        }
+      }
+    }
+    td {
+        padding: $space $space $space $space-one-and-half;
+        line-height: 24px;
+        font-size: 14px;
+        a {
+          font-size: 14px;
+          color: clr(alt-header-color);
+          font-weight: 600;
+          text-decoration: none;
+          &:hover {
+            text-decoration: none;
+          }
+        }
+        div {
+          line-height: 24px;
+        }
+        .languages-wrapper {
+          display: flex;
+          flex-wrap: wrap;
+          .field__item {
+            display: flex;
+            p {
+              margin: 0;
+            }
+          }
+        }
+    }
   }
 }
