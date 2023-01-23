@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7b8d7c2a66c66431242aea9634f08752",
+    "content-hash": "6378c8c88d3ddf5311017608c1b9e14c",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -4062,6 +4062,109 @@
             }
         },
         {
+            "name": "drupal/geoblock",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/geoblock.git",
+                "reference": "1.0.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/geoblock-1.0.0.zip",
+                "reference": "1.0.0",
+                "shasum": "0c24677a8c1d5e16be416419ab8f702e1b262ee1"
+            },
+            "require": {
+                "drupal/core": "^9.3 || ^10",
+                "league/iso3166": "^4.0",
+                "php": ">=7.4"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "1.0.0",
+                    "datestamp": "1656691632",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Clay Freeman",
+                    "homepage": "https://www.drupal.org/user/860806",
+                    "email": "clay@librarymarket.com"
+                },
+                {
+                    "name": "jeremyvii",
+                    "homepage": "https://www.drupal.org/user/3626035"
+                }
+            ],
+            "description": "A module to facilitate blocking resource access by IP address origin country.",
+            "homepage": "https://www.drupal.org/project/geoblock",
+            "support": {
+                "source": "https://git.drupalcode.org/project/geoblock"
+            }
+        },
+        {
+            "name": "drupal/geoblock_maxmind",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/geoblock_maxmind.git",
+                "reference": "1.0.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/geoblock_maxmind-1.0.0.zip",
+                "reference": "1.0.0",
+                "shasum": "83fecb39953205087b54cc77969b5b45a24058ad"
+            },
+            "require": {
+                "drupal/core": "^9.3 || ^10",
+                "drupal/geoblock": "^1.0",
+                "librarymarket/maxmind-db-reader": "^1.0",
+                "php": ">=7.4"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "1.0.0",
+                    "datestamp": "1656692290",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Clay Freeman",
+                    "homepage": "https://www.drupal.org/user/860806",
+                    "email": "clay@librarymarket.com"
+                },
+                {
+                    "name": "jeremyvii",
+                    "homepage": "https://www.drupal.org/user/3626035"
+                }
+            ],
+            "description": "Provides a MaxMind data source for the Geoblock module.",
+            "homepage": "https://www.drupal.org/project/geoblock_maxmind",
+            "support": {
+                "source": "https://git.drupalcode.org/project/geoblock_maxmind"
+            }
+        },
+        {
             "name": "drupal/ggroup",
             "version": "1.0.0-alpha3",
             "source": {
@@ -4806,6 +4909,79 @@
                 "source": "https://git.drupalcode.org/project/log_stdout",
                 "issues": "https://www.drupal.org/project/issues/log_stdout",
                 "irc": "irc://irc.freenode.org/drupal-support"
+            }
+        },
+        {
+            "name": "drupal/login_security",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/login_security.git",
+                "reference": "2.0.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/login_security-2.0.1.zip",
+                "reference": "2.0.1",
+                "shasum": "47527303abd8126d599629e1548f3bc3fb6807af"
+            },
+            "require": {
+                "drupal/core": "^8.9 || ^9 || ^10"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "2.0.1",
+                    "datestamp": "1672756360",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Anybody",
+                    "homepage": "https://www.drupal.org/user/291091"
+                },
+                {
+                    "name": "cYu",
+                    "homepage": "https://www.drupal.org/user/202205"
+                },
+                {
+                    "name": "deekayen",
+                    "homepage": "https://www.drupal.org/user/972"
+                },
+                {
+                    "name": "deetergp",
+                    "homepage": "https://www.drupal.org/user/1134002"
+                },
+                {
+                    "name": "Grevil",
+                    "homepage": "https://www.drupal.org/user/3668491"
+                },
+                {
+                    "name": "ilo",
+                    "homepage": "https://www.drupal.org/user/118449"
+                },
+                {
+                    "name": "jribeiro",
+                    "homepage": "https://www.drupal.org/user/1975716"
+                },
+                {
+                    "name": "shrop",
+                    "homepage": "https://www.drupal.org/user/14767"
+                }
+            ],
+            "description": "Enable security options in the login flow of the site.",
+            "homepage": "https://drupal.org/project/login_security",
+            "support": {
+                "source": "https://git.drupalcode.org/project/login_security",
+                "issues": "https://drupal.org/project/issues/login_security"
             }
         },
         {
@@ -5670,6 +5846,71 @@
             "homepage": "https://www.drupal.org/project/paragraphs",
             "support": {
                 "source": "https://git.drupalcode.org/project/paragraphs"
+            }
+        },
+        {
+            "name": "drupal/password_policy",
+            "version": "4.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/password_policy.git",
+                "reference": "4.0.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/password_policy-4.0.0.zip",
+                "reference": "4.0.0",
+                "shasum": "ed55a1441bc7fad0dcb0aea7d2bfecc88a156c83"
+            },
+            "require": {
+                "drupal/core": "^9.1 || ^10"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "4.0.0",
+                    "datestamp": "1668191689",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "AohRveTPV",
+                    "homepage": "https://www.drupal.org/user/2760115"
+                },
+                {
+                    "name": "deekayen",
+                    "homepage": "https://www.drupal.org/user/972"
+                },
+                {
+                    "name": "miglius",
+                    "homepage": "https://www.drupal.org/user/18741"
+                },
+                {
+                    "name": "nerdstein",
+                    "homepage": "https://www.drupal.org/user/1557710"
+                },
+                {
+                    "name": "paulocs",
+                    "homepage": "https://www.drupal.org/user/3640109"
+                },
+                {
+                    "name": "shrop",
+                    "homepage": "https://www.drupal.org/user/14767"
+                }
+            ],
+            "description": "Sets up constraints and expiration of passwords.",
+            "homepage": "https://www.drupal.org/project/password_policy",
+            "support": {
+                "source": "https://git.drupalcode.org/project/password_policy",
+                "issues": "https://www.drupal.org/project/issues/password_policy"
             }
         },
         {
@@ -6840,6 +7081,62 @@
             "support": {
                 "source": "https://git.drupalcode.org/project/variationcache",
                 "issues": "https://drupal.org/project/issues/variationcache"
+            }
+        },
+        {
+            "name": "drupal/view_password",
+            "version": "6.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/view_password.git",
+                "reference": "6.0.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/view_password-6.0.0.zip",
+                "reference": "6.0.0",
+                "shasum": "7d6ea3e9cde76f98029754277d001a5717ad0de2"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "6.0.0",
+                    "datestamp": "1624638291",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "ahana92",
+                    "homepage": "https://www.drupal.org/user/3494063"
+                },
+                {
+                    "name": "anacolautti",
+                    "homepage": "https://www.drupal.org/user/2925043"
+                },
+                {
+                    "name": "cesarmiquel",
+                    "homepage": "https://www.drupal.org/user/115500"
+                },
+                {
+                    "name": "lmingarro",
+                    "homepage": "https://www.drupal.org/user/262938"
+                }
+            ],
+            "description": "Allows the users to see the contents of the password fields on selected forms before submission.",
+            "homepage": "https://www.drupal.org/project/view_password",
+            "support": {
+                "source": "https://git.drupalcode.org/project/view_password"
             }
         },
         {
@@ -8387,6 +8684,115 @@
                 }
             ],
             "time": "2022-01-04T00:13:07+00:00"
+        },
+        {
+            "name": "league/iso3166",
+            "version": "4.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/iso3166.git",
+                "reference": "a0dd2a1d956f85811f9c667a1744d822fb2c63d8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/iso3166/zipball/a0dd2a1d956f85811f9c667a1744d822fb2c63d8",
+                "reference": "a0dd2a1d956f85811f9c667a1744d822fb2c63d8",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3|^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\ISO3166\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rob Bast",
+                    "email": "rob.bast@gmail.com"
+                }
+            ],
+            "description": "ISO 3166-1 PHP Library",
+            "homepage": "https://github.com/thephpleague/iso3166",
+            "keywords": [
+                "3166",
+                "3166-1",
+                "ISO 3166",
+                "countries",
+                "iso",
+                "library"
+            ],
+            "support": {
+                "issues": "https://github.com/thephpleague/iso3166/issues",
+                "source": "https://github.com/thephpleague/iso3166"
+            },
+            "time": "2022-09-07T09:14:19+00:00"
+        },
+        {
+            "name": "librarymarket/maxmind-db-reader",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/librarymarket/maxmind-db-reader.git",
+                "reference": "a7f88d944a5c91ea8cd2660969b93b0ab7abe093"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/librarymarket/maxmind-db-reader/zipball/a7f88d944a5c91ea8cd2660969b93b0ab7abe093",
+                "reference": "a7f88d944a5c91ea8cd2660969b93b0ab7abe093",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3"
+            },
+            "suggest": {
+                "ext-bcmath": "To support the decoding of unsigned integers of more than 31 bits in length",
+                "ext-gmp": "To support the decoding of unsigned integers of more than 31 bits in length"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "LibraryMarket\\MaxMind\\Database\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Clay Freeman",
+                    "email": "clay@librarymarket.com",
+                    "homepage": "https://www.librarymarket.com"
+                }
+            ],
+            "description": "An unofficial library to facilitate reading the MaxMind database file format.",
+            "homepage": "https://github.com/librarymarket/maxmind-db-reader",
+            "keywords": [
+                "database",
+                "db",
+                "maxmind",
+                "reader"
+            ],
+            "support": {
+                "issues": "https://github.com/librarymarket/maxmind-db-reader/issues",
+                "source": "https://github.com/librarymarket/maxmind-db-reader/tree/1.0.1"
+            },
+            "time": "2022-07-01T15:48:40+00:00"
         },
         {
             "name": "maennchen/zipstream-php",
