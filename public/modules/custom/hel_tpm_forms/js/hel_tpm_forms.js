@@ -9,6 +9,7 @@
         currentTab = 0;
       }
       showTab(currentTab); // Display the current tab
+      addError();
 
       $('#prevBtn').click(function () {
         nextPrev(-1);
@@ -24,6 +25,17 @@
         urlParams.set('step', step);
         history.replaceState(null, null, "?"+urlParams.toString());
       });
+
+
+      function addError() {
+        let x = $(".tab.field-group-html-element");
+        x.each(function(index) {
+          if ($(this).find('.error').length !== 0) {
+            let errorStep ='.nav-step-' + index;
+            $(errorStep).addClass('highlight-error');
+          }
+        });
+      }
 
       /**
        * Fetch required fields for current step.
@@ -215,7 +227,5 @@
         });
       }
     }
-
-
   }
 })(jQuery, Drupal, drupalSettings);
