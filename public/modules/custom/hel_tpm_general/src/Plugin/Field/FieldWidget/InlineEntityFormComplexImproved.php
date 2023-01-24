@@ -475,6 +475,11 @@ class InlineEntityFormComplexImproved extends InlineEntityFormComplex {
       }
     }
 
+    unset($element['form']['#title']);
+    $element['form']['entity_id']['#placeholder'] = $this->t('Find location');
+    $element['form']['actions']['ief_reference_save']['#attributes']['class'][] = 'visually-hidden';
+    $element['actions']['ief_add']['#value'] = $this->t('Add missing location');
+
     return $element;
   }
 

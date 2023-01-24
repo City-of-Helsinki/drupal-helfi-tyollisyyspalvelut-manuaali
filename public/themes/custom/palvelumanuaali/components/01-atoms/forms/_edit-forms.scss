@@ -1,7 +1,15 @@
+.node-basic-page-form {
+  >.form-background--regular-padding {
+      @include large {
+        padding: 48px 56px;
+      }
+    }
+}
+
 .block--main-block >.node-form,
 .group-form {
-  @extend .offset-xxl-1;
-  @extend .col-xxl-10;
+  // @extend .offset-xxl-1;
+  // @extend .col-xxl-10;
   display: grid;
   @include xl {
     grid-template-columns: 7fr 3fr;
@@ -56,15 +64,6 @@
     .button {
       width: 160px;
       border: unset;
-    }
-  }
-
-  .form-item {
-    label {
-      font-size: $small-font;
-      @include large {
-        font-size: $small-caption
-      }
     }
   }
 
@@ -126,6 +125,7 @@
     .field--type-string,
     .form-item {
       display: flex;
+      flex-wrap: wrap;
       align-content: center;
       justify-content: space-between;
       width: 100%;
@@ -212,6 +212,18 @@
 
 }
 
+details>.form-wrapper {
+  padding-bottom: $space-triple;
+}
+
+.vertical-tabs__pane > .form-wrapper {
+  padding-bottom: 0;
+}
+
+details>.form-wrapper:last-child {
+  padding-bottom: 0;
+}
+
 .form-background--white {
   background-color: clr(text-inverse);
   padding: $space;
@@ -253,9 +265,6 @@
   label {
     font-size: 12px;
     font-weight: 600;
-    &:after {
-
-    }
   }
 }
 
@@ -395,4 +404,8 @@
       }
     }
   }
+}
+
+.horizontal-tabs-panes .horizontal-tabs-pane {
+  padding: 0;
 }

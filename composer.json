@@ -62,6 +62,7 @@
         "drupal/core-recommended": "~9.3",
         "drupal/date_recur": "^3.2",
         "drupal/date_recur_modular": "^3.0",
+        "drupal/disable_html5_validation": "^1.1",
         "drupal/elasticsearch_connector": "^7.0@alpha",
         "drupal/emulsify_drupal": "^4.1",
         "drupal/emulsify_twig": "^2.0",
@@ -113,6 +114,7 @@
         "drupal/search_api_sorts_widget": "^1.0@beta",
         "drupal/select2": "^1.13",
         "drupal/smart_date": "^3.5",
+        "drupal/smtp": "^1.2",
         "drupal/svg_image": "^1.15",
         "drupal/themable_forms": "^1.0@beta",
         "drupal/token": "^1.10",
@@ -201,7 +203,8 @@
         },
         "patches": {
             "drupal/core": {
-                "https://www.drupal.org/project/drupal/issues/2800875#comment-14070351": "https://www.drupal.org/files/issues/2021-04-23/2800875-70_0.patch"
+                "https://www.drupal.org/project/drupal/issues/2800875#comment-14070351": "https://www.drupal.org/files/issues/2021-04-23/2800875-70_0.patch",
+                "https://www.drupal.org/project/drupal/issues/1038316#comment-14308196": "https://www.drupal.org/files/issues/2021-12-01/1038316-242.patch"
             },
             "drupal/message": {
                 "https://www.drupal.org/files/issues/2018-06-24/allow_token_contexts-3.patch": "https://www.drupal.org/files/issues/2018-06-24/allow_token_contexts-3.patch"
@@ -215,8 +218,7 @@
                 "https://www.drupal.org/project/elasticsearch_connector/issues/3092486": "https://www.drupal.org/files/issues/2019-11-05/3092486.patch"
             },
             "drupal/ggroup": {
-                "https://www.drupal.org/project/ggroup/issues/3084153": "./patches/3084153-role-mapper.patch",
-                "https://www.drupal.org/project/ggroup/issues/3238956#comment-14272637": "https://www.drupal.org/files/issues/2021-10-28/no_parent_id-3238956-4.patch"
+                "https://www.drupal.org/project/ggroup/issues/3084153": "./patches/3084153-role-mapper.patch"
             },
             "drupal/field_group_ajaxified_multipage": {
                 "https://www.drupal.org/project/field_group_ajaxified_multipage/issues/3280612#comment-14515962" : "https://www.drupal.org/files/issues/2022-05-16/3280612-duplicate-core-version-requirement-1.patch"

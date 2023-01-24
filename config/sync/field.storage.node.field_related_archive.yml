@@ -8,7 +8,7 @@ dependencies:
     - options
 third_party_settings:
   field_permissions:
-    permission_type: public
+    permission_type: custom
 id: node.field_related_archive
 field_name: field_related_archive
 entity_type: node
@@ -17,14 +17,11 @@ settings:
   allowed_values:
     -
       value: 'yes'
-      label: Kyllä
-    -
-      value: 'no'
-      label: Ei
+      label: 'Palveluun liittyy arkistointia'
   allowed_values_function: ''
 module: options
 locked: false
-cardinality: 1
+cardinality: -1
 translatable: true
 indexes: {  }
 persist_with_no_fields: false

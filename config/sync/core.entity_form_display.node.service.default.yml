@@ -164,7 +164,7 @@ third_party_settings:
       weight: 1
       format_type: html_element
       format_settings:
-        classes: 'tab tab-1'
+        classes: 'tab tab-0'
         show_empty_fields: false
         id: ''
         element: div
@@ -186,13 +186,13 @@ third_party_settings:
       weight: 2
       format_type: html_element
       format_settings:
-        classes: 'tab tab-2'
+        classes: 'tab tab-1'
         show_empty_fields: false
         id: ''
         element: div
-        show_label: false
+        show_label: true
         label_element: h3
-        label_element_classes: ''
+        label_element_classes: tab--title
         attributes: ''
         effect: none
         speed: fast
@@ -206,13 +206,13 @@ third_party_settings:
       weight: 3
       format_type: html_element
       format_settings:
-        classes: 'tab tab-3'
+        classes: 'tab tab-2'
         show_empty_fields: false
         id: ''
         element: div
-        show_label: false
+        show_label: true
         label_element: h3
-        label_element_classes: ''
+        label_element_classes: tab--title
         attributes: ''
         effect: none
         speed: fast
@@ -229,17 +229,17 @@ third_party_settings:
       region: content
       parent_name: ''
       weight: 4
-      format_type: accordion
+      format_type: html_element
       format_settings:
-        classes: 'tab tab-4'
+        classes: 'tab tab-3'
         show_empty_fields: false
         id: ''
-        effect: none
         element: div
-        show_label: false
+        show_label: true
         label_element: h3
-        label_element_classes: ''
+        label_element_classes: tab--title
         attributes: ''
+        effect: none
         speed: fast
         required_fields: true
     group_basic_info_1:
@@ -323,7 +323,7 @@ third_party_settings:
         element: div
         show_label: false
         label_element: legend
-        label_element_classes: h2
+        label_element_classes: 'h2 field-group--title '
         attributes: ''
         effect: none
         speed: fast
@@ -342,9 +342,9 @@ third_party_settings:
         show_empty_fields: false
         id: ''
         element: div
-        show_label: true
+        show_label: false
         label_element: legend
-        label_element_classes: h2
+        label_element_classes: 'h2 field-group--title '
         attributes: ''
         effect: none
         speed: fast
@@ -363,7 +363,7 @@ third_party_settings:
         show_empty_fields: false
         id: ''
         element: div
-        show_label: true
+        show_label: false
         label_element: legend
         label_element_classes: h2
         attributes: ''
@@ -386,7 +386,7 @@ third_party_settings:
         element: div
         show_label: true
         label_element: legend
-        label_element_classes: h2
+        label_element_classes: 'h2 field-group--title '
         attributes: ''
         effect: none
         speed: fast
@@ -406,7 +406,7 @@ third_party_settings:
         element: div
         show_label: true
         label_element: legend
-        label_element_classes: h2
+        label_element_classes: 'h2 field-group--title'
         attributes: ''
         effect: none
         speed: fast
@@ -426,7 +426,7 @@ third_party_settings:
         element: div
         show_label: true
         label_element: legend
-        label_element_classes: h2
+        label_element_classes: 'h2 field-group--title '
         attributes: ''
         effect: none
         speed: fast
@@ -446,7 +446,7 @@ third_party_settings:
         element: div
         show_label: true
         label_element: legend
-        label_element_classes: h2
+        label_element_classes: 'h2 field-group--title'
         attributes: ''
         effect: none
         speed: fast
@@ -671,8 +671,8 @@ content:
     weight: 11
     region: content
     settings:
-      title: Paragraph
-      title_plural: Paragraphs
+      title: ' Kuntakohtaiset poikkeustilanteet'
+      title_plural: ' Kuntakohtaiset poikkeustilanteet'
       edit_mode: closed
       add_mode: dropdown
       form_display_mode: default
@@ -703,7 +703,7 @@ content:
       match_limit: 10
     third_party_settings: {  }
   field_related_archive:
-    type: options_select
+    type: options_buttons
     weight: 12
     region: content
     settings: {  }
@@ -846,16 +846,17 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_service_time_and_location:
-    type: entity_reference_paragraphs
+    type: inline_entity_form_simple
     weight: 17
     region: content
     settings:
-      title: Paragraph
-      title_plural: Paragraphs
-      edit_mode: open
-      add_mode: button
-      form_display_mode: default
-      default_paragraph_type: service_time_and_place
+      form_mode: default
+      override_labels: false
+      label_singular: ''
+      label_plural: ''
+      collapsible: false
+      collapsed: false
+      revision: false
     third_party_settings: {  }
   field_statements:
     type: options_buttons
@@ -872,16 +873,17 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_target_group:
-    type: entity_reference_paragraphs
+    type: inline_entity_form_simple
     weight: 11
     region: content
     settings:
-      title: Paragraph
-      title_plural: Paragraphs
-      edit_mode: open
-      add_mode: dropdown
-      form_display_mode: default
-      default_paragraph_type: target_group
+      form_mode: default
+      override_labels: false
+      label_singular: ''
+      label_plural: ''
+      collapsible: false
+      collapsed: false
+      revision: false
     third_party_settings: {  }
   hel_tpm_service_help:
     weight: 0

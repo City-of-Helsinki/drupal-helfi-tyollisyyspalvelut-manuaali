@@ -1,5 +1,43 @@
 .form-item {
   margin-left: 0;
+  color: clr(text);
+  margin-bottom: 1em;
+
+  @include clearfix;
+
+  &--no-margin {
+    margin-bottom: 0;
+  }
+
+  &--margin-one-and-half {
+    margin-bottom: $space-one-and-half;
+  }
+  &--margin-half {
+    margin-bottom: 8px;
+  }
+  .error {
+    @include field-error;
+  }
+}
+
+fieldset {
+  &.error {
+    @include field-error;
+  }
+}
+
+select.error ~ .select2-container {
+  @include field-error;
+  padding: 12px 12px 12px 16px;
+
+}
+
+.form-item__label {
+  display: block;
+  font-size: 12px;
+  line-height: 24px;
+  font-weight: 600;
+  margin-bottom: $space-one-half;
 }
 
 .form-required-on-publish::after {
@@ -10,6 +48,26 @@
   height: unset;
   border: 0;
   background: transparent;
-  vertical-align: super;
+  vertical-align: unset;
   display: inline-block;
+}
+
+.form-number {
+  background: clr(background-dropdown);
+  box-shadow: inset 0px 0px 0px 2px clr(form-border);
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 24px;
+  padding: 12px 16px 12px 16px;
+
+  color: clr(text);
+  &:focus {
+    border-color: clr(accent-high);
+  }
+
+  &::placeholder {
+    color: clr(gray);
+  }
 }

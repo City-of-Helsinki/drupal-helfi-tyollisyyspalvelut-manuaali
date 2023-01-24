@@ -76,18 +76,23 @@
       position: absolute;
     }
   }
-  #block-suosikit {@include large {left:13px; top: 50px; z-index: 100;}}
-  #block-suosikit {@include xl {left:50px;}}
-  #block-kielenvaihtaja {@include large {left:120px; top:50px; z-index: 100;}}
-  #block-kielenvaihtaja {@include xl {left:180px;}}
-  #block-kirjautuminen {@include large {right:20px; top: 33px; z-index: 100;}}
-  #block-kirjautuminen {@include xl {right:50px;}}
-  #block-kayttajavalikko {@include large {right:20px; top: 25px; z-index: 100;}}
-  #block-kayttajavalikko {@include xl {right:50px;}}
+  #block-kielenvaihtaja {
+    @include large {left:38px; top: 50px; z-index: 100;}
+    @include xl {left:65px;}
+  }
+  #block-suosikit {
+    @include large {left:160px; top:50px; z-index: 100;}
+    @include xl {left:213px;}
+  }
+  #block-kirjautuminen {
+    @include large {right:20px; top: 33px; z-index: 100;}
+    @include xl {right:50px;}
+  }
+  #block-kayttajavalikko {
+    @include large {right:20px; top: 25px; z-index: 100;}
+    @include xl {right:50px;}
+  }
 
-}
-
-.header {
   #block-views-exposed-filter-block-service-search-special-search-filters,
   #block-nakyvakaavakeservice-searchspecial-search-filters,
   #block-nakyvakaavakeservice-searchsearch-page-filters,
@@ -111,7 +116,10 @@
   justify-content: center;
   @include large {
     flex-direction: row;
-    font-size: 16px;
+    font-size: 12px;
+  }
+  @include xxl {
+    font-size: 15px;
   }
 }
 
@@ -119,7 +127,11 @@
   .content {
     @include large {
       display: flex;
+      align-items: center;
     }
+  }
+  a {
+    font-weight: 600;
   }
   .icon--margin-right {
     margin-right: auto;
@@ -152,7 +164,10 @@
           color: clr(text);
           text-decoration: none;
           @include large {
-            font-size: 14px;
+            font-size: 12px;
+          }
+          @include xxl {
+            font-size: 15px;
           }
         }
       }
@@ -168,7 +183,6 @@
     }
   }
   .dropdown-menu {
-    // width: 180px;
     padding: 18px 16px 18px 16px;
   }
   .dropdown-menu__item {
@@ -344,14 +358,6 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 24px;
-    // max-width: 512px;
-
-    @include large {
-      // max-width: 374px;
-    }
-    @include xl {
-      // max-width: 512px;
-    }
 
     .title {
       letter-spacing: 1px;

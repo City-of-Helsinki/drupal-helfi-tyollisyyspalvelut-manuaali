@@ -23,16 +23,17 @@ class TPMHandleObligatoryness extends ProcessPluginBase {
    * {@inheritdoc}
    */
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
+    $out_value = NULL;
     if (stripos($value, 'Palveluun osallistuminen on velvoittavaa') !== FALSE) {
-      $value = 'option1';
+      $out_value = 'option1';
     }
     elseif (stripos($value, 'Suunnitelman noudattamatta jättäminen voi vaikuttaa') !== FALSE) {
-      $value = 'option2';
+      $out_value = 'option2';
     }
     elseif (stripos($value, 'Palveluun osallistuminen ei ole velvoittavaa') !== FALSE) {
-      $value = 'option3';
+      $out_value = 'option3';
     }
-    return $value;
+    return $out_value;
   }
 
 }

@@ -1,31 +1,16 @@
-.form-item {
-  color: clr(text);
-  margin-bottom: 1em;
-
-  @include clearfix;
-
-  &--no-margin {
-    margin-bottom: 0;
-  }
-}
-
-.form-item__label {
-  display: block;
-  font-weight: 600;
-
-  @include xs {
-    display: block;
-    padding: 0.6em 0;
-  }
-}
-
 .form-item__textfield,
 .form-text {
   background: clr(background-dropdown);
-  border: 3px solid clr(form-border);
+  box-shadow: inset 0px 0px 0px 2px clr(form-border);
+  box-sizing: border-box;
+  border: 0;
   border-radius: 8px;
+  font-size: 14px;
+  line-height: 24px;
   padding: 12px 16px 12px 16px;
+
   width: 100%;
+  color: clr(text);
   &:focus {
     border-color: clr(accent-high);
   }
@@ -45,10 +30,9 @@
 
 .form-fieldset {
   border: none;
-  margin-bottom: 2em;
-
-  .form-item {
-    margin-left: 1em;
+  padding: 0;
+  &--no-margin {
+    margin-bottom: 0;
   }
 }
 

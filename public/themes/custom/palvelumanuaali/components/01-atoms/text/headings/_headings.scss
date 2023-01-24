@@ -181,6 +181,10 @@ $color-heading: clr(accent);
     text-align: center;
     margin-top: $space-triple;
     margin-bottom: $space-double;
+    .placeholder {
+      @include heading-medium;
+      vertical-align: unset;
+    }
   }
 }
 
@@ -287,4 +291,31 @@ $color-heading: clr(accent);
       color: clr(background-section);
     }
   }
+}
+
+
+
+
+
+
+.tab--title,
+.group--title {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 600;
+  margin-bottom: $space-two-and-half;
+}
+
+.field-group--title {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 600;
+  margin-bottom: $space-one-and-half;
+}
+
+.field--title {
+  font-size: 12px;
+  line-height: 24px;
+  font-weight: 600;
+  margin-bottom: $space-one-half;
 }

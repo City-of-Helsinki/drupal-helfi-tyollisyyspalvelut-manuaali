@@ -11,7 +11,6 @@ dependencies:
   module:
     - field_group
     - hel_tpm_editorial
-    - hel_tpm_general
     - paragraphs
 third_party_settings:
   field_group:
@@ -78,31 +77,19 @@ content:
       title: Paragraph
       title_plural: Paragraphs
       edit_mode: open
-      add_mode: button
+      add_mode: dropdown
       form_display_mode: default
       default_paragraph_type: service_language
     third_party_settings: {  }
   field_service_location:
-    type: hel_tpm_general_inline_entity_form_complex_improved
+    type: entity_reference_autocomplete
     weight: 1
     region: content
     settings:
-      form_mode: default
-      label_singular: ''
-      label_plural: ''
-      allow_new: '1'
-      allow_existing: '1'
       match_operator: CONTAINS
-      bundle_limit:
-        service_location: service_location
-        basic_page: 0
-        landing_page: 0
-        service: 0
-      revision: 0
-      override_labels: 0
-      collapsible: 0
-      collapsed: 0
-      allow_duplicate: 0
+      match_limit: 10
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
 hidden:
   created: true
