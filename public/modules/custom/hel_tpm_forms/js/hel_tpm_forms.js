@@ -37,30 +37,6 @@
         });
       }
 
-      /**
-       * Fetch required fields for current step.
-       *
-       * @todo Currently unused but left for later use.
-       *
-       * @param n
-       */
-      function stepRequiredFields(n) {
-        let tab = '.tab-' + n;
-        let requiredFields = $('input, textarea, select, fieldset', tab).filter('[required]');
-        let emptyRequired = [];
-        requiredFields.each(function () {
-          if ($(this).val().length > 0) {
-            return;
-          }
-          emptyRequired.push($(this).attr('name'));
-        });
-        if (emptyRequired.length > 0) {
-          $(emptyRequired).each(function() {
-            alert(this);
-          });
-        }
-      }
-
       function switchTab(n) {
         var x = document.getElementsByClassName("tab");
         x[currentTab].style.display = "none";
