@@ -31,11 +31,7 @@
         let x = $(".tab.field-group-html-element");
         x.each(function(index) {
           if ($(this).find('.error').length !== 0) {
-            // highlight tabs
-            // let errorTab = '.tab-'+ (index + 1);
-            // $(errorTab).addClass('highlight-error');
-            // highlight steps
-            let errorStep ='#step-' + (index + 1);
+            let errorStep ='.nav-step-' + index;
             $(errorStep).addClass('highlight-error');
           }
         });
