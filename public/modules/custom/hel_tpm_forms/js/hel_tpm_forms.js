@@ -31,10 +31,6 @@
         let x = $(".tab.field-group-html-element");
         x.each(function(index) {
           if ($(this).find('.error').length !== 0) {
-            // highlight tabs
-            // let errorTab = '.tab-'+ (index + 1);
-            // $(errorTab).addClass('highlight-error');
-            // highlight steps
             let errorStep ='.nav-step-' + index;
             $(errorStep).addClass('highlight-error');
           }
@@ -50,7 +46,7 @@
        */
       function stepRequiredFields(n) {
         let tab = '.tab-' + n;
-        let requiredFields = $('input, textarea, select, fieldset', tab).filter('.error');
+        let requiredFields = $('input, textarea, select, fieldset', tab).filter('[required]');
         let emptyRequired = [];
         requiredFields.each(function () {
           if ($(this).val().length > 0) {
