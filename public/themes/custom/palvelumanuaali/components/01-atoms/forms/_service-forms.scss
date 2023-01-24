@@ -1,8 +1,6 @@
 .node-service-edit-form,
 .node-service-form {
-  // @extend .offset-xxl-1;
-  // @extend .col-xxl-10;
-    display: grid;
+  display: grid;
   @include xl {
       grid-template-columns: 7fr 3fr;
       grid-column-gap: 24px;
@@ -153,12 +151,21 @@
       margin-left: $space;
       margin-right: $space;
       display: flex;
+      justify-content: center;
       flex-wrap: wrap;
       @include large {
         margin-left: auto;
         margin-right: auto;
         width: 65%;
       }
+    }
+  }
+
+  > .tab-1 {
+    grid-row: 2;
+    @include xl {
+      grid-column: 1/2;
+      grid-row:2;
     }
   }
 

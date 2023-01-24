@@ -1,3 +1,11 @@
+.node-basic-page-form {
+  >.form-background--regular-padding {
+      @include large {
+        padding: 48px 56px;
+      }
+    }
+}
+
 .block--main-block >.node-form,
 .group-form {
   // @extend .offset-xxl-1;
@@ -117,6 +125,7 @@
     .field--type-string,
     .form-item {
       display: flex;
+      flex-wrap: wrap;
       align-content: center;
       justify-content: space-between;
       width: 100%;
