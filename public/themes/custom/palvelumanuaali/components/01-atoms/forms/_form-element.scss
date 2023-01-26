@@ -15,6 +15,21 @@
   &--margin-half {
     margin-bottom: 8px;
   }
+  .error {
+    @include field-error;
+  }
+}
+
+fieldset {
+  &.error {
+    @include field-error;
+  }
+}
+
+select.error ~ .select2-container {
+  @include field-error;
+  padding: 12px 12px 12px 16px;
+
 }
 
 .form-item__label {

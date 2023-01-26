@@ -58,6 +58,12 @@ $outer-container-break: $small;
   }
 }
 
+@mixin field-error {
+  box-shadow: inset 0px 0px 2px 2px clr(error);
+  padding: 0.5em;
+  border-radius: 7px;
+}
+
 // Mixin - Standard Margin
 @mixin margin {
   margin-bottom: 1em;

@@ -4,13 +4,12 @@
       var currentTab = 0;
       var urlParams = new URLSearchParams(window.location.search);
       if (urlParams.has('step')) {
-        var stepValue = urlParams.get('step');
-        stepValue = stepValue-1;
-        currentTab = stepValue;
+        currentTab = urlParams.get('step');
       } else {
         currentTab = 0;
       }
       showTab(currentTab); // Display the current tab
+      addError();
 
       $('#prevBtn').click(function () {
         nextPrev(-1);
@@ -20,31 +19,23 @@
         nextPrev(1);
       });
 
-      $('#step-1').click(function () {
-        switchTab(0);
-        urlParams.set('step', '1');
+      $('.step').click(function () {
+        let step = $(this).attr('data-step');
+        switchTab(step);
+        urlParams.set('step', step);
         history.replaceState(null, null, "?"+urlParams.toString());
       });
 
-      $('#step-2').click(function () {
-        switchTab(1);
-        urlParams.set('step', '2');
-        history.replaceState(null, null, "?"+urlParams.toString());
-      });
 
-      $('#step-3').click(function () {
-        switchTab(2);
-        urlParams.set('step', '3');
-        history.replaceState(null, null, "?"+urlParams.toString());
-
-      });
-
-      $('#step-4').click(function () {
-        switchTab(3);
-        urlParams.set('step', '4');
-        history.replaceState(null, null, "?"+urlParams.toString());
-
-      });
+      function addError() {
+        let x = $(".tab.field-group-html-element");
+        x.each(function(index) {
+          if ($(this).find('.error').length !== 0) {
+            let errorStep ='.nav-step-' + index;
+            $(errorStep).addClass('highlight-error');
+          }
+        });
+      }
 
       function switchTab(n) {
         var x = document.getElementsByClassName("tab");
@@ -62,10 +53,10 @@
         var x = document.getElementsByClassName("tab");
         x[n].style.display = "block";
         // ... and fix the Previous/Next buttons:
-        if (n == 0) {
+        if (n === 0) {
           document.getElementById("prevBtn").style.display = "none";
           hidePrice();
-        } else if (n == 1){
+        } else if (n === 1){
           document.getElementById("prevBtn").style.display = "inline";
           hideTime();
         } else {
@@ -73,7 +64,7 @@
         }
 
 
-        if (n == (x.length - 1)) {
+        if (n === (x.length)) {
           document.getElementById('nextBtn').hidden = true;
         } else {
           document.getElementById('nextBtn').hidden = false;
@@ -169,10 +160,10 @@
         let ageGroups = '.field--name-field-age-groups .form-item';
         let ageField = '.field--name-field-age';
         $(ageGroups).siblings().each(function () {
-          if ($(this).children('.form-radio').val() === "no_age_restriction" && $(this).children('.form-radio').is(":checked") == true ) {
+          if ($(this).children('.form-radio').val() === "no_age_restriction" && $(this).children('.form-radio').is(":checked") === true ) {
             $(ageField).hide();
           }
-          else if (($(this).children('.form-radio').val() != "no_age_restriction" && $(this).children('.form-radio').is(":checked") == true )) {
+          else if (($(this).children('.form-radio').val() !== "no_age_restriction" && $(this).children('.form-radio').is(":checked") === true )) {
             $(ageField).show();
           }
         });
@@ -212,7 +203,5 @@
         });
       }
     }
-
-
   }
 })(jQuery, Drupal, drupalSettings);
