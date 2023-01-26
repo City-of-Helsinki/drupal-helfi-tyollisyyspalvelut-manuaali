@@ -3,7 +3,7 @@ recipe: drupal8
 config:
   via: nginx
   webroot: public
-  php: "8.0"
+  php: "8.1"
   database: mariadb:10.3
   composer_version: 2
 proxy:
@@ -32,6 +32,7 @@ services:
         SIMPLETEST_DB: "mysql://database:database@database/database"
         SYSTEM_SITE_FRONT: "/node/4"
         MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless"]}}, "http://chrome:9515"]'
+        TFA_KEY: ''
   chrome:
     type: compose
     services:
