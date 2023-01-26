@@ -5,6 +5,7 @@ dependencies:
   config:
     - filter.format.plain_text_format
   module:
+    - eu_cookie_compliance
     - field_permissions
     - filter
     - hel_tpm_general
@@ -15,6 +16,7 @@ weight: 5
 is_admin: null
 permissions:
   - 'access internal service fields'
+  - 'display eu cookie compliance popup'
   - 'use text format plain_text_format'
   - 'view field_age'
   - 'view field_archiving_guide'
