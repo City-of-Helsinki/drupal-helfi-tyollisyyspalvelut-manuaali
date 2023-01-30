@@ -19,6 +19,19 @@
     margin-bottom: $space;
   }
 
+  table {
+    background-color: unset;
+    margin: 0;
+  }
+
+  table tbody tr::after {
+    border-bottom: 0;
+  }
+
+  select {
+    height: 48px;
+  }
+
   .table__cell .paragraph-type-top {
     display: flex;
   }
@@ -87,20 +100,41 @@
       position: relative;
     }
 
-    > div > div  > table > tbody > tr > .table__cell > div > div > .paragraph-type-top {
-      display: block;
-      position: absolute;
-      right: 24px;
-      top: 24px;
-      input {
+    > div > div  > table > tbody > tr > .table__cell > fieldset,
+    > div > div  > table > tbody > tr > .table__cell > fieldset > .ajax-new-content {
+      position: relative;
+      > input {
+        display: block;
+        position: absolute;
+        right: 24px;
+        top: 48px;
         @include close-button;
         width: 20px;
         height: 20px;
         padding: 4px;
       }
     }
-    .form-text {
-      background: #fff;
+
+    > div > div  > table > tbody > tr > .table__cell > fieldset > div > fieldset > div,
+    > div > div  > table > tbody > tr > .table__cell > fieldset > .ajax-new-content > div > fieldset > div {
+      margin-bottom: $space-double;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    .form-text,
+    select {
+      background-color: clr(text-inverse);
+    }
+
+    > div > div > .form-submit {
+      width: 100%;
+      &::after {
+        content: "";
+        width: 100px;
+        height: 20px;
+      }
     }
   }
 
@@ -168,6 +202,72 @@
       grid-row:2;
     }
   }
+
+  .field--name-field-service-languages {
+    legend {
+      display: none !important;
+    }
+    table {
+      margin: 0;
+      .table__row {
+        margin-bottom: $space;
+      }
+    }
+    .table__cell > fieldset,
+    .table__cell > .ajax-new-content > fieldset{
+      display: flex;
+      flex-wrap: wrap;
+      align-items: end;
+      > .form-submit {
+        @include close-button;
+        width: 16px;
+        height: 16px;
+        margin-bottom: 12px;
+      }
+       > .form-wrapper {
+        display: flex;
+       }
+    }
+  }
+
+  .field--widget-hel-tpm-editorial-date-recur-custom {
+    .hel-tpm-editorial-date-recur-custom-widget {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: end;
+      > .form-submit {
+        order: 2;
+        @include close-button;
+        width: 16px;
+        height: 16px;
+        margin-bottom: 38px;
+      }
+      .dates {
+        order: 1;
+        .date {
+          margin-bottom: 0;
+        }
+        .form-item {
+          margin-left: 0;
+        }
+      }
+      .container-inline {
+        order: 3;
+        display: flex;
+        gap: $space;
+        width: 100%;
+        select,
+        input {
+          width: 224px;
+        }
+        input {
+          height: 48px;
+          background-color: clr(text-inverse);
+        }
+      }
+    }
+  }
+
 
   > .tab > .form-fieldset,
   > .tab-1,
@@ -268,6 +368,7 @@
       .field--name-field-language,
       .field--name-field-level {
         margin-right: 8px;
+        width: 224px;
         .js-form-item {
           margin-bottom: 0;
         }
@@ -296,6 +397,7 @@
         }
       }
     }
+
   }
 
   #edit-group-basic-information {
@@ -450,6 +552,12 @@
       display: none;
     }
 
+  }
+
+  .field--name-field-service-location input {
+    background-image: url("/themes/custom/palvelumanuaali/images/icons/magnifier.svg");
+    background-position: top 12px right 16px;
+    max-width: 560px;
   }
 
   .field--name-field-contact-info,
