@@ -1,0 +1,13 @@
+uuid: 862d1aa9-6842-43b8-b58c-26195a38ef7c
+langcode: en
+status: true
+dependencies:
+  config:
+    - key.key.2fa_encryption_key
+  module:
+    - real_aes
+id: tpm
+label: TPM
+encryption_method: real_aes
+encryption_method_configuration: {  }
+encryption_key: 2fa_encryption_key
