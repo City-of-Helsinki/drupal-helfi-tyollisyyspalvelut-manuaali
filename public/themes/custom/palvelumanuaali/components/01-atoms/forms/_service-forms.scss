@@ -28,6 +28,13 @@
     border-bottom: 0;
   }
 
+  .form-item__dropdown > .select2 {
+    max-width: 100%;
+    input {
+      width: 100% !important;
+    }
+  }
+
   select {
     height: 48px;
   }
@@ -95,13 +102,15 @@
       @include button-round-corners;
       border: 2px solid $blue100;
     }
-
+    > div > div  > table > tbody > tr > .table__cell {
+      margin-bottom: $space;
+    }
     > div > div  > table > tbody > tr > .table__cell > div > div  {
       position: relative;
     }
 
     > div > div  > table > tbody > tr > .table__cell > fieldset,
-    > div > div  > table > tbody > tr > .table__cell > fieldset > .ajax-new-content {
+    > div > div  > table > tbody > tr > .table__cell > .ajax-new-content > fieldset {
       position: relative;
       > input {
         display: block;
@@ -244,6 +253,10 @@
       }
       .dates {
         order: 1;
+        max-width: 95%;
+        .hyphen-wrapper {
+          margin-top: 24px;
+        }
         .date {
           margin-bottom: 0;
         }
@@ -281,7 +294,7 @@
       grid-row:2;
     }
     background-color: clr(text-inverse);
-    max-width: unset;
+    // max-width: unset;
 
     @include large {
       padding: 48px 56px;
@@ -369,6 +382,12 @@
       .field--name-field-level {
         margin-right: 8px;
         width: 224px;
+        @include xl {
+          width: 160px;
+        }
+        @include xxl {
+          width: 224px;
+        }
         .js-form-item {
           margin-bottom: 0;
         }
