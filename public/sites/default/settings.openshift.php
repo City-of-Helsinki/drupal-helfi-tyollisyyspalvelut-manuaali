@@ -45,15 +45,15 @@ if ($solr_host = getenv('SOLR_SERVICE_HOST')) {
   $config['search_api.server.solr_search']['backend_config']['connector_config']['host'] = $solr_host;
 }
 
-if (isset($_ENV['REDIS_HOST'])) {
+if (getenv('REDIS_HOST')) {
   $settings['redis.connection']['interface'] = 'PhpRedis'; // Can be "Predis".
-  $settings['redis.connection']['host']      = [$_ENV['REDIS_HOST']];
-  $settings['redis.connection']['instance']  = $_ENV['REDIS_INSTANCE'];
-  $settings['redis.connection']['password'] = $_ENV['REDIS_PASSWORD'];
+  $settings['redis.connection']['host']      = [getenv('REDIS_HOST')];
+  $settings['redis.connection']['instance']  = getenv('REDIS_INSTANCE');
+  $settings['redis.connection']['password'] = getenv('REDIS_PASSWORD');
   $settings['cache']['default'] = 'cache.backend.redis';
-  $settings['cache_prefix'] = $_ENV['REDIS_PREFIX'] . '_';
+  $settings['cache_prefix'] = getenv('REDIS_PREFIX') . '_';
 }
 
-if (!empty($_ENV['SMTP_HOST'])) {
-  $config['smtp.settings']['smtp_host'] = $_ENV['SMTP_HOST'];
+if (getenv('SMTP_HOST')) {
+  $config['smtp.settings']['smtp_host'] = getenv('SMTP_HOST');
 }
