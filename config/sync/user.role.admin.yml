@@ -23,6 +23,7 @@ dependencies:
     - admin_toolbar_search
     - content_moderation
     - content_translation
+    - eu_cookie_compliance
     - field_permissions
     - filter
     - flag
@@ -41,6 +42,7 @@ dependencies:
     - shortcut
     - system
     - taxonomy
+    - tfa
     - toolbar
 id: admin
 label: Admin
@@ -127,6 +129,8 @@ permissions:
   - 'delete terms in service_implementation_type'
   - 'delete terms in service_languages'
   - 'delete terms in service_set'
+  - 'disable own tfa'
+  - 'display eu cookie compliance popup'
   - 'edit any basic_page content'
   - 'edit contact info'
   - 'edit field_archiving_guide'
@@ -192,6 +196,7 @@ permissions:
   - 'flag lists'
   - 'grant node permissions'
   - 'revert all revisions'
+  - 'setup own tfa'
   - 'translate editable entities'
   - 'translate interface'
   - 'unflag lists'
