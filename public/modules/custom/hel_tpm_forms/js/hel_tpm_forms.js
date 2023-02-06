@@ -5,17 +5,18 @@
       var urlParams = new URLSearchParams(window.location.search);
       if (urlParams.has('step')) {
         currentTab = urlParams.get('step');
+        currentTab = Number(currentTab);
       } else {
         currentTab = 0;
       }
       showTab(currentTab); // Display the current tab
       addError();
 
-      $('#prevBtn').click(function () {
+      $('.btn-prev').click(function () {
         nextPrev(-1);
       });
 
-      $('#nextBtn').click(function () {
+      $('.btn-next').click(function () {
         nextPrev(1);
       });
 
@@ -40,11 +41,15 @@
       function switchTab(n) {
         var x = document.getElementsByClassName("tab");
         x[currentTab].style.display = "none";
-        currentTab = n;
+
+        currentTab = Number(n);
+
         showTab(currentTab);
       }
 
       function showTab(n) {
+        n = Number(n);
+        console.log(n);
         hidePrice();
         hideTime();
         hideAgeRange();
@@ -53,7 +58,10 @@
         var x = document.getElementsByClassName("tab");
         x[n].style.display = "block";
         // ... and fix the Previous/Next buttons:
+        console.log(n);
+        console.log(n === 0);
         if (n === 0) {
+          console.log("sisäl");
           document.getElementById("prevBtn").style.display = "none";
           hidePrice();
         } else if (n === 1){
@@ -83,6 +91,8 @@
         // Hide the current tab:
         x[currentTab].style.display = "none";
         // Increase or decrease the current tab by 1:
+        currentTab = Number(currentTab);
+        n = Number(n);
         currentTab = currentTab + n;
         // if you have reached the end of the form... :
         if (currentTab >= x.length) {
