@@ -1,0 +1,21 @@
+uuid: 913cb364-b703-4bf3-9393-9efd92d52028
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_other_preferences
+    - node.type.service
+  module:
+    - options
+id: node.service.field_other_preferences
+field_name: field_other_preferences
+entity_type: node
+bundle: service
+label: 'Muut etuudet'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

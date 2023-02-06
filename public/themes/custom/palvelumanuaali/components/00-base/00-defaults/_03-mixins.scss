@@ -116,3 +116,43 @@ $outer-container-break: $small;
   padding: 0;
   background-size: contain;
 }
+
+@mixin radiobutton-box {
+  .form-item--radio-button{
+    margin-right: 0;
+    &:last-child() {
+      margin-bottom:0;
+    }
+    @include large {
+      width: 100%;
+    }
+    @include xl {
+      width: 405px;
+    }
+    @include xxl {
+      width: 468px;
+    }
+    padding: $space $space-double $space-one-and-half $space;
+    /* Primary/Blue 5 */
+    background: #F7F9FD;
+
+    /* Primary/Blue 100 */
+    border: 2px solid clr(form-border);
+    border-radius: 8px;
+    &.selected {
+      border: 2px solid clr(background-section);
+    }
+    input {
+      width: 20px;
+      height: 24px;
+    }
+    b {
+        font-size: 16px;
+        line-height: 24px;
+        margin-bottom: $space-one-half;
+        letter-spacing: 0.01em;
+        color: clr(background-section);
+    }
+  }
+
+}

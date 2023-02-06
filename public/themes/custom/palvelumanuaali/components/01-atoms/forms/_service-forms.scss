@@ -115,6 +115,36 @@
     }
   }
 
+  .field--name-field-statements-unemployment  {
+      margin-bottom: $space-two-and-half;
+  }
+
+  .field--name-field-obligatoryness-freetext {
+    margin-bottom: $space-two-and-half;
+  }
+
+  .field--name-field-obligatoryness {
+    .form-item--radio {
+      @include radiobutton-box;
+    }
+  }
+
+  .field--name-field-statements {
+    margin-bottom: $space-two-and-half;
+    .form-item--radio {
+      @include radiobutton-box;
+    }
+  }
+
+  .field--name-field-other-preferences {
+    .form-item {
+      label {
+        margin-left: $space;
+        max-width: 50ch;
+      }
+    }
+  }
+
   .field-add-more-submit,
   .paragraphs-icon-button {
     @include button-medium;

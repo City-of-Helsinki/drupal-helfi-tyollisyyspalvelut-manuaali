@@ -23,6 +23,7 @@ dependencies:
     - field.field.node.service.field_municipality_specific
     - field.field.node.service.field_obligatoryness
     - field.field.node.service.field_obligatoryness_freetext
+    - field.field.node.service.field_other_preferences
     - field.field.node.service.field_other_services
     - field.field.node.service.field_poma_applicable
     - field.field.node.service.field_poma_applicable_descriptio
@@ -99,6 +100,7 @@ third_party_settings:
     group_statements_unemploym:
       children:
         - field_statements
+        - field_other_preferences
         - field_statements_unemployment
       label: 'Lausunnot ja työttömyysetuus'
       parent_name: ''
@@ -284,6 +286,13 @@ content:
     third_party_settings: {  }
     weight: 5
     region: content
+  field_other_preferences:
+    type: list_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 7
+    region: content
   field_related_archive:
     type: list_key
     label: hidden
@@ -310,14 +319,14 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 10
+    weight: 14
     region: content
   field_service_suits_job_search:
     type: list_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 9
+    weight: 13
     region: content
   field_statements:
     type: list_default
@@ -331,7 +340,7 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 7
+    weight: 8
     region: content
   flag_lista:
     settings: {  }

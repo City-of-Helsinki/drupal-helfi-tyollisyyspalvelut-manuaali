@@ -10,6 +10,8 @@
       }
       showTab(currentTab); // Display the current tab
       addError();
+      handleSelectedStatement();
+      handleSelectedObligatoryness();
 
       $('#prevBtn').click(function () {
         nextPrev(-1);
@@ -202,6 +204,45 @@
           }
         });
       }
+
+      // handle checkbox select color changed
+      // input selected -> parent gets "selected" class
+      // when unselected -> "selected" class removed
+      function handleSelectedStatement() {
+        let statementRadio = '.field--name-field-statements .form-item--radio-button .form-radio';
+        let statementItem = $(statementRadio).parent();
+
+        if ($(statementRadio).is(":checked") === true) {
+          $(statementItem).addClass('selected');
+        }
+
+        $(statementRadio).parent().click(function () {
+          if ($(this).children('.form-radio').is(":checked") === true) {
+            $(this).addClass('selected');
+            $(this).siblings('.form-item--radio-button').removeClass('selected');
+          }
+        });
+      }
+
+      // handle checkbox select color changed
+      // input selected -> parent gets "selected" class
+      // when unselected -> "selected" class removed
+      function handleSelectedObligatoryness() {
+        let obligatorynessRadio = '.field--name-field-obligatoryness .form-item--radio-button .form-radio';
+        let obligatorynessItem = $(obligatorynessRadio).parent();
+
+        if ($(obligatorynessRadio).is(":checked") === true) {
+          $(obligatorynessItem).addClass('selected');
+        }
+
+        $(obligatorynessRadio).parent().click(function () {
+          if ($(this).children('.form-radio').is(":checked") === true) {
+            $(this).addClass('selected');
+            $(this).siblings('.form-item--radio-button').removeClass('selected');
+          }
+        });
+      }
+
     }
   }
 })(jQuery, Drupal, drupalSettings);
