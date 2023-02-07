@@ -1,0 +1,27 @@
+uuid: f9041f29-1fa9-447b-8b07-f577df7a7874
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_other_preferences
+field_name: field_other_preferences
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: option1
+      label: 'Asiakas, jolla on työssäolovelvoite voi saada työttömyysetuutta palveluun osallistumisen ajalta.'
+    -
+      value: option2
+      label: 'Palveluun osallistumisen ajalta on mahdollista saada matka- tai kulukorvausta.'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

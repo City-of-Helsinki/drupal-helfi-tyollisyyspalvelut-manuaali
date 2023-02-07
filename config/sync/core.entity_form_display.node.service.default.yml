@@ -22,6 +22,7 @@ dependencies:
     - field.field.node.service.field_municipality_specific
     - field.field.node.service.field_obligatoryness
     - field.field.node.service.field_obligatoryness_freetext
+    - field.field.node.service.field_other_preferences
     - field.field.node.service.field_other_services
     - field.field.node.service.field_poma_applicable
     - field.field.node.service.field_poma_applicable_descriptio
@@ -309,8 +310,8 @@ third_party_settings:
         weight: 0
     group_service_obligatoryness:
       children:
-        - field_obligatoryness
         - field_obligatoryness_freetext
+        - field_obligatoryness
       label: 'Palvelun velvoittavuus'
       region: content
       parent_name: group_specialist
@@ -318,20 +319,21 @@ third_party_settings:
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
-        show_empty_fields: true
+        show_empty_fields: false
         id: ''
         element: div
-        show_label: false
+        show_label: true
         label_element: legend
-        label_element_classes: 'h2 field-group--title '
+        label_element_classes: 'field-group--title '
         attributes: ''
         effect: none
         speed: fast
         required_fields: true
     group_statements_unemploym:
       children:
-        - field_statements
         - field_statements_unemployment
+        - field_statements
+        - field_other_preferences
       label: 'Lausunnot ja työttömyysetuus'
       region: content
       parent_name: group_specialist
@@ -342,9 +344,9 @@ third_party_settings:
         show_empty_fields: false
         id: ''
         element: div
-        show_label: false
+        show_label: true
         label_element: legend
-        label_element_classes: 'h2 field-group--title '
+        label_element_classes: 'h5 field-group--title '
         attributes: ''
         effect: none
         speed: fast
@@ -668,7 +670,7 @@ content:
     third_party_settings: {  }
   field_municipality_specific:
     type: entity_reference_paragraphs
-    weight: 11
+    weight: 14
     region: content
     settings:
       title: ' Kuntakohtaiset poikkeustilanteet'
@@ -680,7 +682,7 @@ content:
     third_party_settings: {  }
   field_obligatoryness:
     type: options_buttons
-    weight: 6
+    weight: 8
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -691,6 +693,16 @@ content:
     settings:
       rows: 5
       placeholder: ''
+    third_party_settings:
+      maxlength:
+        maxlength_js: null
+        maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
+        maxlength_js_enforce: false
+  field_other_preferences:
+    type: options_buttons
+    weight: 14
+    region: content
+    settings: {  }
     third_party_settings: {  }
   field_other_services:
     type: select2_entity_reference
@@ -733,7 +745,7 @@ content:
         maxlength_js_truncate_html: false
   field_service_exceptions:
     type: text_textarea
-    weight: 10
+    weight: 13
     region: content
     settings:
       rows: 5
@@ -860,13 +872,13 @@ content:
     third_party_settings: {  }
   field_statements:
     type: options_buttons
-    weight: 10
+    weight: 13
     region: content
     settings: {  }
     third_party_settings: {  }
   field_statements_unemployment:
     type: text_textarea
-    weight: 11
+    weight: 12
     region: content
     settings:
       rows: 5

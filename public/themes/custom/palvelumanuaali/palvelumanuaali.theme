@@ -52,6 +52,30 @@ function palvelumanuaali_preprocess_block__language_block(&$variables) {
  }
 
  /**
+  * Implements hook__preprocess_fieldset().
+  */
+ function palvelumanuaali_preprocess_fieldset(&$variables) {
+   $element = $variables['element'];
+    if ($variables['element']['#field_name'] == 'field_statements' ||
+        $variables['element']['#field_name'] == 'field_other_preferences') {
+
+        $variables['legend']['attributes']['class'] = array();
+        $variables['legend']['attributes']['class'][] = 'field-group--title';
+        $variables['legend']['attributes']['class'][] = 'field-group--title-small';
+
+    }
+  }
+
+
+
+   /**
+    * Implements hook__preprocess__form_element().
+    */
+  function palvelumanuaali_preprocess_form_element(&$variables) {
+    if ($variables['element']['#title'] == 'Lausunnot ja työttömyysetuus') {  kint($variables['element']);}
+  }
+
+ /**
   * @param array $suggestions
   * @param array $variables
   * @param $hook
