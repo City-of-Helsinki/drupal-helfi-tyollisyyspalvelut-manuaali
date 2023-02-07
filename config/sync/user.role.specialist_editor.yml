@@ -3,6 +3,7 @@ langcode: fi
 status: true
 dependencies:
   module:
+    - eu_cookie_compliance
     - field_permissions
     - hel_tpm_general
 id: specialist_editor
@@ -29,6 +30,7 @@ permissions:
   - 'create field_service_suits_job_search'
   - 'create field_statements'
   - 'create field_statements_unemployment'
+  - 'display eu cookie compliance popup'
   - 'edit field_archiving_guide'
   - 'edit field_career_marking'
   - 'edit field_exceptions'

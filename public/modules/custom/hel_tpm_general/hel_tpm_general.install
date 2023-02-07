@@ -149,8 +149,7 @@ $field_storage = FieldStorageConfig::loadByName('node', 'field_description');
  * Adjust the field_obligatoryness.
  */
 function hel_tpm_general_update_8111() {
-
-$field_storage = FieldStorageConfig::loadByName('node', 'field_obligatoryness');
+  $field_storage = FieldStorageConfig::loadByName('node', 'field_obligatoryness');
   if ($field_storage) {
     $field_storage->delete();
   }
