@@ -49,7 +49,6 @@
 
       function showTab(n) {
         n = Number(n);
-        console.log(n);
         hidePrice();
         hideTime();
         hideAgeRange();
@@ -58,10 +57,7 @@
         var x = document.getElementsByClassName("tab");
         x[n].style.display = "block";
         // ... and fix the Previous/Next buttons:
-        console.log(n);
-        console.log(n === 0);
         if (n === 0) {
-          console.log("sisäl");
           document.getElementById("prevBtn").style.display = "none";
           hidePrice();
         } else if (n === 1){
