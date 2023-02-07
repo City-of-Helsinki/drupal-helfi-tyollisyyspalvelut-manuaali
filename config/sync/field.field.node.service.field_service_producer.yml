@@ -7,6 +7,11 @@ dependencies:
     - group.type.organisation
     - group.type.service_provider
     - node.type.service
+  module:
+    - require_on_publish
+third_party_settings:
+  require_on_publish:
+    require_on_publish: true
 id: node.service.field_service_producer
 field_name: field_service_producer
 entity_type: node

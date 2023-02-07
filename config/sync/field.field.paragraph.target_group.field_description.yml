@@ -6,7 +6,12 @@ dependencies:
     - field.storage.paragraph.field_description
     - paragraphs.paragraphs_type.target_group
   module:
+    - require_on_publish
     - text
+third_party_settings:
+  require_on_publish:
+    require_on_publish: true
+    warn_on_empty: true
 id: paragraph.target_group.field_description
 field_name: field_description
 entity_type: paragraph

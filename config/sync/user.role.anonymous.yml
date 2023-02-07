@@ -6,6 +6,7 @@ dependencies:
     - filter.format.plain_text_format
   module:
     - entity_print_views
+    - eu_cookie_compliance
     - field_permissions
     - filter
     - flag
@@ -22,6 +23,7 @@ weight: 0
 is_admin: false
 permissions:
   - 'access content'
+  - 'display eu cookie compliance popup'
   - 'entity print views access'
   - 'flag cart'
   - 'unflag cart'

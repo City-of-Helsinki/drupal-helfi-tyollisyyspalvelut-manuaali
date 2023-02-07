@@ -5,8 +5,12 @@ dependencies:
   config:
     - field.field.user.user.field_employer
     - field.field.user.user.field_job_title
+    - field.field.user.user.field_last_password_reset
     - field.field.user.user.field_name
+    - field.field.user.user.field_password_expiration
+    - field.field.user.user.field_pending_expire_sent
   module:
+    - datetime
     - field_group
     - user
 third_party_settings:
@@ -59,6 +63,12 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  field_last_password_reset:
+    type: datetime_default
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   field_name:
     type: string_textfield
     weight: 2
@@ -67,6 +77,13 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  field_password_expiration:
+    type: boolean_checkbox
+    weight: 3
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
   language:
     weight: 2
     region: content
@@ -74,5 +91,6 @@ content:
     third_party_settings: {  }
 hidden:
   entitygroupfield: true
+  field_pending_expire_sent: true
   langcode: true
   timezone: true

@@ -8,6 +8,10 @@ dependencies:
     - paragraphs.paragraphs_type.long_text_field_with_toolbar
   module:
     - entity_reference_revisions
+    - require_on_publish
+third_party_settings:
+  require_on_publish:
+    require_on_publish: true
 id: node.service.field_attendance
 field_name: field_attendance
 entity_type: node
