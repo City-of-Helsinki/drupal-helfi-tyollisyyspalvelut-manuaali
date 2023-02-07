@@ -11,7 +11,7 @@ dependencies:
   module:
     - field_group
     - hel_tpm_editorial
-    - paragraphs
+    - inline_entity_form
 third_party_settings:
   field_group:
     group_location:
@@ -70,16 +70,17 @@ content:
       display_label: true
     third_party_settings: {  }
   field_service_languages:
-    type: entity_reference_paragraphs
+    type: inline_entity_form_simple
     weight: 2
     region: content
     settings:
-      title: Paragraph
-      title_plural: Paragraphs
-      edit_mode: open
-      add_mode: dropdown
-      form_display_mode: default
-      default_paragraph_type: service_language
+      form_mode: default
+      override_labels: false
+      label_singular: ''
+      label_plural: ''
+      collapsible: false
+      collapsed: false
+      revision: false
     third_party_settings: {  }
   field_service_location:
     type: entity_reference_autocomplete
