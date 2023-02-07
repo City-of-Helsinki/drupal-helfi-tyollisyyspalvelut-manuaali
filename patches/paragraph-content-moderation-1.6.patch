@@ -1,0 +1,44 @@
+diff --git a/src/Plugin/Validation/Constraint/RequireOnPublishValidator.php b/src/Plugin/Validation/Constraint/RequireOnPublishValidator.php
+index c7b028e..cae4efd 100644
+--- a/src/Plugin/Validation/Constraint/RequireOnPublishValidator.php
++++ b/src/Plugin/Validation/Constraint/RequireOnPublishValidator.php
+@@ -3,6 +3,7 @@
+ namespace Drupal\require_on_publish\Plugin\Validation\Constraint;
+ 
+ use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
++use Drupal\Core\Entity\EntityTypeManager;
+ use Drupal\Core\Extension\ModuleHandlerInterface;
+ use Drupal\field\FieldConfigInterface;
+ use Symfony\Component\DependencyInjection\ContainerInterface;
+@@ -80,7 +81,10 @@ class RequireOnPublishValidator extends ConstraintValidator implements Container
+     // If the entity is a paragraph, we need to determine the publish status of
+     // its parent entity.
+     if ($this->moduleHandler->moduleExists('paragraphs') && $entity->getEntityTypeId() == 'paragraph') {
+-      if ($this->request) {
++      if ($this->moduleHandler->moduleExists('content_moderation')) {
++        $is_published = $this->contentModerationState();
++      }
++      else if ($this->request) {
+         $status = $this->request->request->get('status', ['value' => 0]);
+         $is_published = $status['value'];
+       }
+@@ -120,4 +124,19 @@ class RequireOnPublishValidator extends ConstraintValidator implements Container
+     }
+   }
+ 
++  /**
++   * Publishing status from content moderation state.
++   *
++   * @return bool
++   */
++  protected function contentModerationState() {
++    if (empty($this->request)) {
++      return FALSE;
++    }
++    $state = $this->request->request->get('moderation_state');
++    if (empty($state)) {
++      return FALSE;
++    }
++    return $state[0]['state'] == 'published' ? TRUE : FALSE;
++  }
+ }

@@ -5,17 +5,20 @@
       var urlParams = new URLSearchParams(window.location.search);
       if (urlParams.has('step')) {
         currentTab = urlParams.get('step');
+        currentTab = Number(currentTab);
       } else {
         currentTab = 0;
       }
       showTab(currentTab); // Display the current tab
       addError();
+      handleSelectedStatement();
+      handleSelectedObligatoryness();
 
-      $('#prevBtn').click(function () {
+      $('.btn-prev').click(function () {
         nextPrev(-1);
       });
 
-      $('#nextBtn').click(function () {
+      $('.btn-next').click(function () {
         nextPrev(1);
       });
 
@@ -40,11 +43,14 @@
       function switchTab(n) {
         var x = document.getElementsByClassName("tab");
         x[currentTab].style.display = "none";
-        currentTab = n;
+
+        currentTab = Number(n);
+
         showTab(currentTab);
       }
 
       function showTab(n) {
+        n = Number(n);
         hidePrice();
         hideTime();
         hideAgeRange();
@@ -83,6 +89,8 @@
         // Hide the current tab:
         x[currentTab].style.display = "none";
         // Increase or decrease the current tab by 1:
+        currentTab = Number(currentTab);
+        n = Number(n);
         currentTab = currentTab + n;
         // if you have reached the end of the form... :
         if (currentTab >= x.length) {
@@ -202,6 +210,45 @@
           }
         });
       }
+
+      // handle checkbox select color changed
+      // input selected -> parent gets "selected" class
+      // when unselected -> "selected" class removed
+      function handleSelectedStatement() {
+        let statementRadio = '.field--name-field-statements .form-item--radio-button .form-radio';
+        let statementItem = $(statementRadio).parent();
+
+        if ($(statementRadio).is(":checked") === true) {
+          $(statementItem).addClass('selected');
+        }
+
+        $(statementRadio).parent().click(function () {
+          if ($(this).children('.form-radio').is(":checked") === true) {
+            $(this).addClass('selected');
+            $(this).siblings('.form-item--radio-button').removeClass('selected');
+          }
+        });
+      }
+
+      // handle checkbox select color changed
+      // input selected -> parent gets "selected" class
+      // when unselected -> "selected" class removed
+      function handleSelectedObligatoryness() {
+        let obligatorynessRadio = '.field--name-field-obligatoryness .form-item--radio-button .form-radio';
+        let obligatorynessItem = $(obligatorynessRadio).parent();
+
+        if ($(obligatorynessRadio).is(":checked") === true) {
+          $(obligatorynessItem).addClass('selected');
+        }
+
+        $(obligatorynessRadio).parent().click(function () {
+          if ($(this).children('.form-radio').is(":checked") === true) {
+            $(this).addClass('selected');
+            $(this).siblings('.form-item--radio-button').removeClass('selected');
+          }
+        });
+      }
+
     }
   }
 })(jQuery, Drupal, drupalSettings);
