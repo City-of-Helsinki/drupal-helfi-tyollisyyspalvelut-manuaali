@@ -11,7 +11,8 @@
     display: none;
   }
 
-  fieldset > legend {
+  fieldset > legend,
+  fieldset > legend > span {
     width: 100%;
   }
 
@@ -92,6 +93,12 @@
 
   .field--name-field-age {
     display: none;
+  }
+
+  .field--name-field-target-group  {
+    > fieldset > legend {
+      display: none !important;
+    }
   }
 
   .field--name-field-service-time-and-location {
@@ -311,12 +318,14 @@
       &:last-child {
         margin-bottom: 0;
       }
-      legend {
+      legend,
+      legend > span {
         @extend .form-item__label;
-        font-size: 1rem;
+        // font-size: 1rem;
       }
 
-      > .h2 {
+      > .h2,
+      > legend >.h2 {
         font-weight: 600;
         font-size: 24px;
         line-height: 32px;
@@ -582,7 +591,8 @@
   .field--name-field-contact-info,
   .field--name-field-contact-info-external {
     fieldset {
-      legend {
+      legend,
+      legend > span {
         font-size: $small-font;
       }
     }

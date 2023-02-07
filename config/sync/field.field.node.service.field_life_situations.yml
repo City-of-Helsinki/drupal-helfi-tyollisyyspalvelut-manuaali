@@ -6,6 +6,11 @@ dependencies:
     - field.storage.node.field_life_situations
     - node.type.service
     - taxonomy.vocabulary.life_situation
+  module:
+    - require_on_publish
+third_party_settings:
+  require_on_publish:
+    require_on_publish: true
 id: node.service.field_life_situations
 field_name: field_life_situations
 entity_type: node
