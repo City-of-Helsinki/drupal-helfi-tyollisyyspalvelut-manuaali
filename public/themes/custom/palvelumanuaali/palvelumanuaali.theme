@@ -56,14 +56,16 @@ function palvelumanuaali_preprocess_block__language_block(&$variables) {
   */
  function palvelumanuaali_preprocess_fieldset(&$variables) {
    $element = $variables['element'];
-    if ($variables['element']['#field_name'] == 'field_statements' ||
-        $variables['element']['#field_name'] == 'field_other_preferences') {
-
+    if ($variables['element']['#field_name'] == 'field_statements') {
         $variables['legend']['attributes']['class'] = array();
         $variables['legend']['attributes']['class'][] = 'field-group--title';
         $variables['legend']['attributes']['class'][] = 'field-group--title-small';
-
+        $variables['legend_span']['attributes']['class'] = 'field-group--title-small';
     }
+    if ($variables['element']['#field_name'] == 'field_other_preferences') {
+          $variables['legend_span']['attributes']['class'] = 'field-group--title-small';
+    }
+
   }
 
 
