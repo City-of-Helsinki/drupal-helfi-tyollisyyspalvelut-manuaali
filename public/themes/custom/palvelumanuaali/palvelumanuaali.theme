@@ -84,13 +84,6 @@ function palvelumanuaali_preprocess_textarea(&$variables) {
 }
 
 /**
- * Implements hook__preprocess__form_element().
- */
-function palvelumanuaali_preprocess_form_element(&$variables) {
-  if ($variables['element']['#title'] == 'Lausunnot ja työttömyysetuus') {  kint($variables['element']);}
-}
-
-/**
  * @param array $suggestions
  * @param array $variables
  * @param $hook
