@@ -56,14 +56,16 @@ function palvelumanuaali_preprocess_links__language_block(&$variables) {
  */
 function palvelumanuaali_preprocess_fieldset(&$variables) {
   $element = $variables['element'];
-  if ($variables['element']['#field_name'] == 'field_statements' ||
-    $variables['element']['#field_name'] == 'field_other_preferences') {
-
+  if ($variables['element']['#field_name'] == 'field_statements') {
     $variables['legend']['attributes']['class'] = array();
     $variables['legend']['attributes']['class'][] = 'field-group--title';
     $variables['legend']['attributes']['class'][] = 'field-group--title-small';
-
+    $variables['legend_span']['attributes']['class'] = 'field-group--title-small';
   }
+  if ($variables['element']['#field_name'] == 'field_other_preferences') {
+    $variables['legend_span']['attributes']['class'] = 'field-group--title-small';
+  }
+
 }
 
 /**
@@ -200,8 +202,7 @@ function palvelumanuaali_theme_suggestions_field_alter(array &$suggestions, arra
  * @param array $variables
  * @param $hook
  */
-function palvelumanuaali_theme_suggestions_fieldset_alter(array &$suggestions, array $variables, $hook)
-{
+function palvelumanuaali_theme_suggestions_fieldset_alter(array &$suggestions, array $variables, $hook) {
   if (isset($variables['element']['#group'])) {
     $id = str_replace("-", "_", $variables['element']['#group']);
     $suggestions[] = $hook . '__' . $id;
