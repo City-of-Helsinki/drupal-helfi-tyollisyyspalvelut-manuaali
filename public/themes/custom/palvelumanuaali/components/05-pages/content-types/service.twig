@@ -9,8 +9,9 @@
      main_content_id: main_content_id,
    } %}
 
- {% block content %} {{content|without('flag_cart','flag_lists','view_mode_switcher', 'field_contact_info','field_other_services','field_contact_info_external','entitygroupfield','field_municipality_specific','field_related_archive')}}{% endblock %}
-      {% block page_content %}
+ {% block content %}
+  {{content|without('flag_cart','flag_lists','view_mode_switcher', 'field_contact_info','field_other_services','field_contact_info_external','entitygroupfield','field_municipality_specific','field_related_archive')}}{% endblock %}
+    {% block page_content %}
         {% if service__updated  %}
           {% include "@atoms/text/text/01-paragraph.twig" with {
             paragraph_base_class: card__date__base_class|default('date'),
