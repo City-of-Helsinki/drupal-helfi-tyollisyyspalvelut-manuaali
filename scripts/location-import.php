@@ -3,7 +3,7 @@
 use Drupal\node\NodeInterface;
 use Drupal\node\NodeStorageInterface;
 
-$outputFile = '../scripts/organizations.json';
+$outputFile = '/tmp/organizations.json';
 
 $json = file_get_contents($outputFile);
 $json_decoded = json_decode($json);
