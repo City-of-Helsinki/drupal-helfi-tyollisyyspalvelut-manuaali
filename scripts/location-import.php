@@ -5,6 +5,7 @@ use Drupal\node\NodeStorageInterface;
 
 $outputFile = '/tmp/organizations.json';
 
+convertCsvToJson($outputFile);
 $json = file_get_contents($outputFile);
 $json_decoded = json_decode($json);
 
@@ -150,4 +151,31 @@ function createName($location) {
   }
   $address = sprintf("%s %s %s", $location[4], $location[5], $location[6]);
   return !empty($location[3]) ? sprintf("%s (%s)",$location[3], $address) : $address;
+}
+
+/**
+ * Convert csv to json.
+ *
+ * @param $outputFile
+ *
+ * @return void
+ */
+function convertCsvToJson($outputFile) {
+  $fileHandle = fopen("../scripts/organisaatiot-toimipisteineen.csv","r");
+// Initialize an array to hold the CSV data
+  $data = array();
+
+// Loop through each row in the CSV file and add it to the data array
+  while (!feof($fileHandle)) {
+    $data[] = fgetcsv($fileHandle, NULL, ';', "'");
+  }
+
+// Close the CSV file
+  fclose($fileHandle);
+
+// Convert the data array to a JSON object
+  $json = json_encode($data);
+
+// Write the JSON output to a file
+  file_put_contents($outputFile, $json);
 }
