@@ -139,6 +139,7 @@ var map = {
 	"./icons/facebook.svg": "./images/icons/facebook.svg",
 	"./icons/favorites.svg": "./images/icons/favorites.svg",
 	"./icons/file_1.svg": "./images/icons/file_1.svg",
+	"./icons/flag.svg": "./images/icons/flag.svg",
 	"./icons/heart-minus.svg": "./images/icons/heart-minus.svg",
 	"./icons/heart.svg": "./images/icons/heart.svg",
 	"./icons/info.svg": "./images/icons/info.svg",
@@ -1084,6 +1085,26 @@ __webpack_require__.r(__webpack_exports__);
       id: "file_1-usage",
       viewBox: "0 0 24 24",
       url: __webpack_require__.p + "../dist/icons.svg#file_1",
+      toString: function () {
+        return this.url;
+      }
+    });
+
+/***/ }),
+
+/***/ "./images/icons/flag.svg":
+/*!*******************************!*\
+  !*** ./images/icons/flag.svg ***!
+  \*******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+      id: "flag-usage",
+      viewBox: "0 0 24 24",
+      url: __webpack_require__.p + "../dist/icons.svg#flag",
       toString: function () {
         return this.url;
       }
