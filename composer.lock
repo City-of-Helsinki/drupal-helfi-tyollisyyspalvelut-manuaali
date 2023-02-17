@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4c5e31b37a1a7c63400787eced2a8b2e",
+    "content-hash": "e25bb6055af2d15774e5b3c65d006a30",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -5541,6 +5541,56 @@
             }
         },
         {
+            "name": "drupal/health_check",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/health_check.git",
+                "reference": "3.0.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/health_check-3.0.0.zip",
+                "reference": "3.0.0",
+                "shasum": "7a08e19c97d788f46d6ff4448df96561908e92d5"
+            },
+            "require": {
+                "drupal/core": "^9.4 || ^10",
+                "php": "^8.0"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "3.0.0",
+                    "datestamp": "1671533283",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "back-2-95",
+                    "homepage": "https://www.drupal.org/user/327328"
+                },
+                {
+                    "name": "bfr",
+                    "homepage": "https://www.drupal.org/user/369262"
+                }
+            ],
+            "description": "Health check for load balancers",
+            "homepage": "https://www.drupal.org/project/health_check",
+            "support": {
+                "source": "https://git.drupalcode.org/project/health_check",
+                "issues": "https://www.drupal.org/project/issues/health_check"
+            }
+        },
+        {
             "name": "drupal/hook_post_action",
             "version": "1.1.0",
             "source": {
@@ -6336,10 +6386,6 @@
                     "homepage": "https://www.drupal.org/user/291091"
                 },
                 {
-                    "name": "Deciphered",
-                    "homepage": "https://www.drupal.org/user/103796"
-                },
-                {
                     "name": "bcostlow",
                     "homepage": "https://www.drupal.org/user/1340686"
                 },
@@ -6348,8 +6394,16 @@
                     "homepage": "https://www.drupal.org/user/202205"
                 },
                 {
+                    "name": "Deciphered",
+                    "homepage": "https://www.drupal.org/user/103796"
+                },
+                {
                     "name": "ebeyrent",
                     "homepage": "https://www.drupal.org/user/23897"
+                },
+                {
+                    "name": "Grevil",
+                    "homepage": "https://www.drupal.org/user/3668491"
                 },
                 {
                     "name": "mqanneh",
@@ -7865,8 +7919,8 @@
                     "dev-4.x": "4.x-dev"
                 },
                 "drupal": {
-                    "version": "4.2.10+7-dev",
-                    "datestamp": "1675433946",
+                    "version": "4.2.10+11-dev",
+                    "datestamp": "1675930148",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Dev releases are not covered by Drupal security advisories."
