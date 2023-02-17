@@ -2,6 +2,12 @@ uuid: 9778de0c-a714-4e26-88f9-3651e6aae382
 langcode: fi
 status: true
 dependencies:
+  config:
+    - user.role.admin
+    - user.role.editor
+    - user.role.root
+    - user.role.specialist
+    - user.role.specialist_editor
   module:
     - group
     - user
@@ -182,8 +188,14 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       access:
-        type: none
-        options: {  }
+        type: role
+        options:
+          role:
+            root: root
+            admin: admin
+            editor: editor
+            specialist: specialist
+            specialist_editor: specialist_editor
       cache:
         type: tag
         options: {  }
@@ -410,6 +422,7 @@ display:
         - url
         - url.query_args
         - user
+        - user.roles
       tags: {  }
   page_1:
     id: page_1
@@ -427,4 +440,5 @@ display:
         - url
         - url.query_args
         - user
+        - user.roles
       tags: {  }
