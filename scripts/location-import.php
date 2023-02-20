@@ -4,7 +4,6 @@ use Drupal\node\NodeInterface;
 use Drupal\node\NodeStorageInterface;
 
 $outputFile = '/tmp/organizations.json';
-
 $json = file_get_contents($outputFile);
 $json_decoded = json_decode($json);
 
@@ -36,13 +35,14 @@ function migrateLocations($json_decoded) {
         'type' => 'service_location'
       ]);
     }
-    $location_node->field_address = [
+    $address = [
       'country_code' => 'FI',
       'organization' => !empty($location[3]) ? $location[3] : '',
       'address_line1' => !empty($location[4]) ? $location[4] : '',
-      'postal_code' => !empty($location[5]) ? substr($location[5], 0, 5) : '',
+      'postal_code' => !empty($location[5]) ? formatPostalCode($location[5]) : '',
       'locality' => !empty($location[6]) ? $location[6] : ''
     ];
+    $location_node->field_address = $address;
 
     $location_node->field_accessibility = createAccessibilityData($location);
     $location_node->field_accessibility_details = !empty($location[8]) ? $location[8] : '';
@@ -51,6 +51,17 @@ function migrateLocations($json_decoded) {
   }
 }
 
+function formatPostalCode($postal_code) {
+  $len = strlen($postal_code);
+  if ($len > 5) {
+    $postal_code = substr($postal_code, 0, 5);
+  }
+  // Probably because of excel stripping prefixing zeroes ego 00580 -> 580
+  if ($len < 5) {
+    $postal_code = str_pad($postal_code, 5, '0', STR_PAD_LEFT);
+  }
+  return $postal_code;
+}
 /**
  * @param $group_name
  * @param \Drupal\node\NodeStorageInterface $location_node
@@ -148,6 +159,33 @@ function createName($location) {
   if (empty($location[4]) || empty($location[5] || $location[6])) {
     return NULL;
   }
-  $address = sprintf("%s %s %s", $location[4], $location[5], $location[6]);
+  $address = sprintf("%s %s %s", $location[4], formatPostalCode($location[5]), $location[6]);
   return !empty($location[3]) ? sprintf("%s (%s)",$location[3], $address) : $address;
+}
+
+/**
+ * Convert csv to json.
+ *
+ * @param $outputFile
+ *
+ * @return void
+ */
+function convertCsvToJson($outputFile) {
+  $fileHandle = fopen("../scripts/organisaatiot-toimipisteineen.csv","r");
+// Initialize an array to hold the CSV data
+  $data = array();
+
+// Loop through each row in the CSV file and add it to the data array
+  while (!feof($fileHandle)) {
+    $data[] = fgetcsv($fileHandle, NULL, ';', "'");
+  }
+
+// Close the CSV file
+  fclose($fileHandle);
+
+// Convert the data array to a JSON object
+  $json = json_encode($data);
+
+// Write the JSON output to a file
+  file_put_contents($outputFile, $json);
 }
