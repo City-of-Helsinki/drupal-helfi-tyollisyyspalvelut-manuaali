@@ -4,8 +4,6 @@ use Drupal\node\NodeInterface;
 use Drupal\node\NodeStorageInterface;
 
 $outputFile = '/tmp/organizations.json';
-
-convertCsvToJson($outputFile);
 $json = file_get_contents($outputFile);
 $json_decoded = json_decode($json);
 
