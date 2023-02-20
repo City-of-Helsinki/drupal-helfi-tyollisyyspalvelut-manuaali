@@ -51,8 +51,8 @@ dependencies:
     - workflows.workflow.service_moderation
   module:
     - content_moderation
-    - entitygroupfield
     - field_group
+    - hel_tpm_group
     - inline_entity_form
     - markup
     - maxlength
@@ -465,7 +465,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   entitygroupfield:
-    type: entitygroupfield_autocomplete_widget
+    type: hel_tpm_group_autocomplete_widget
     weight: 8
     region: content
     settings:
