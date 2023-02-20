@@ -3,7 +3,6 @@ langcode: fi
 status: true
 dependencies:
   config:
-    - system.menu.additional-links-menu
     - system.menu.footer
     - system.menu.main
     - views.view.quick_links
@@ -49,24 +48,6 @@ reactions:
         region: footer
         weight: '-1'
         custom_id: system_menu_block_footer
-        theme: palvelumanuaali
-        css_class: ''
-        unique: 0
-        context_id: sitewide
-        context_mapping: {  }
-        level: '1'
-        depth: '0'
-        expand_all_items: 0
-        third_party_settings: {  }
-      ca686684-6e2c-4cd1-9443-6b36be89947e:
-        uuid: ca686684-6e2c-4cd1-9443-6b36be89947e
-        id: 'system_menu_block:additional-links-menu'
-        label: Lisälinkkivalikko
-        provider: system
-        label_display: '0'
-        region: sidebar
-        weight: '-3'
-        custom_id: system_menu_block_additional_links_menu
         theme: palvelumanuaali
         css_class: ''
         unique: 0
