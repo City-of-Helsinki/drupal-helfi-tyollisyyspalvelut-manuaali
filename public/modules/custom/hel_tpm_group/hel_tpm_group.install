@@ -36,3 +36,27 @@ function hel_tpm_group_requirements($phase) {
 
   return $requirements;
 }
+
+/**
+ * Delete orphaned group_content entities.
+ */
+function hel_tpm_group_update_9001(&$sandbox) {
+  $storage = \Drupal::service('entity_type.manager')->getStorage('group_content');
+  $database = \Drupal::database();
+  $orphans = $database
+    ->select('group_content_field_data', 'g')
+    ->fields('g', ['id'])
+    ->isNull('g.gid')
+    ->execute()
+    ->fetchAllAssoc('id');
+  if (empty($orphans)) {
+    return;
+  }
+  $orphans = array_keys($orphans);
+  $database->delete('group_content')
+    ->condition('id', $orphans, 'IN')
+    ->execute();
+  $database->delete('group_content_field_data')
+    ->condition('id', $orphans, 'IN')
+    ->execute();
+}
