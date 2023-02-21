@@ -8,8 +8,25 @@
 
 .block--main-block >.node-form,
 .group-form {
-  // @extend .offset-xxl-1;
-  // @extend .col-xxl-10;
+  .entitygroupfield-dropbutton-wrapper {
+    .form-submit {
+      @include button-round-corners;
+    }
+  }
+  .dropbutton-widget {
+    input {
+      background-color: transparent;
+      color: clr(background-section);
+      max-width: 130px;
+      &:hover {
+        background-color: transparent;
+        color: clr(alt-header-color);
+      }
+    }
+    .dropbutton-arrow {
+      top: 9px;
+    }
+  }
   display: grid;
   @include xl {
     grid-template-columns: 7fr 3fr;

@@ -23,6 +23,7 @@ dependencies:
     - field.field.node.service.field_municipality_specific
     - field.field.node.service.field_obligatoryness
     - field.field.node.service.field_obligatoryness_freetext
+    - field.field.node.service.field_other_preferences
     - field.field.node.service.field_other_services
     - field.field.node.service.field_poma_applicable
     - field.field.node.service.field_poma_applicable_descriptio
@@ -78,8 +79,8 @@ third_party_settings:
         speed: fast
     group_service_obligatoryness:
       children:
-        - field_obligatoryness
         - field_obligatoryness_freetext
+        - field_obligatoryness
       label: 'Palvelun velvoittavuus'
       parent_name: ''
       region: content
@@ -98,8 +99,9 @@ third_party_settings:
         speed: fast
     group_statements_unemploym:
       children:
-        - field_statements
         - field_statements_unemployment
+        - field_statements
+        - field_other_preferences
       label: 'Lausunnot ja työttömyysetuus'
       parent_name: ''
       region: content
@@ -271,11 +273,11 @@ content:
     weight: 9
     region: content
   field_obligatoryness:
-    type: list_default
+    type: list_key
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 4
+    weight: 6
     region: content
   field_obligatoryness_freetext:
     type: text_default
@@ -283,6 +285,13 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 5
+    region: content
+  field_other_preferences:
+    type: list_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 10
     region: content
   field_related_archive:
     type: list_key
@@ -310,28 +319,28 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 10
+    weight: 14
     region: content
   field_service_suits_job_search:
     type: list_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 9
+    weight: 13
     region: content
   field_statements:
-    type: list_default
+    type: list_key
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 6
+    weight: 9
     region: content
   field_statements_unemployment:
     type: text_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 7
+    weight: 8
     region: content
   flag_lista:
     settings: {  }

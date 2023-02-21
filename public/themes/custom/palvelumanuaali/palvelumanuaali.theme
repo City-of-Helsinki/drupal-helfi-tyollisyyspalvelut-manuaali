@@ -6,109 +6,166 @@
  */
 
 
- /**
-  * Implements hook_preprocess_breadcrumb().
-  */
- function palvelumanuaali_preprocess_breadcrumb(&$variables){
-   $request = \Drupal::request();
-   $route = \Drupal::routeMatch()->getRouteObject();
-   if ($variables['breadcrumb']) {
-     $variables['title'] = \Drupal::service('title_resolver')->getTitle($request, $route);
-   }
-   $variables['#cache']['contexts'][] = 'url';
- }
+/**
+ * Implements hook_preprocess_breadcrumb().
+ */
+function palvelumanuaali_preprocess_breadcrumb(&$variables){
+  $request = \Drupal::request();
+  $route = \Drupal::routeMatch()->getRouteObject();
+  if ($variables['breadcrumb']) {
+    $variables['title'] = \Drupal::service('title_resolver')->getTitle($request, $route);
+  }
+  $variables['#cache']['contexts'][] = 'url';
+}
 
 
- /**
-  * Implements hook_preprocess_block__language_switcher().
-  */
+/**
+ * Implements hook_preprocess_block__language_switcher().
+ */
 function palvelumanuaali_preprocess_block__language_block(&$variables) {
   // Set force lang count.
   $variables['lang_count'] = 3;
- }
+}
 
- /**
-  * Implements hook_preprocess_links__language_block().
-  */
- function palvelumanuaali_preprocess_links__language_block(&$variables) {
-   $language_manager = \Drupal::languageManager();
-   $current_langcode = $language_manager->getCurrentLanguage('language_url')->getId();
 
-   // Add a new class to each link item and change the language link order:
-   // move current language to first position.
-   foreach ($variables['links'] as $langcode => $link) {
-     $link['link']['#options']['attributes']['class'][] = 'dropdown-item';
-     $link['link']['#options']['attributes']['lang'] = $langcode;
-     // Replace the text label with language code.
-      if ($langcode == $current_langcode) {
-       $link['link']['#langcode'] = $langcode;
-       $variables['links'][$langcode] = $link;
-      }
-      if ($langcode == $current_langcode) {
-       unset($variables['links'][$langcode]);
-       array_unshift($variables['links'], $link);
-     }
-   }
- }
 
- /**
-  * @param array $suggestions
-  * @param array $variables
-  * @param $hook
-  */
- function palvelumanuaali_theme_suggestions_form_element_alter(array &$suggestions, array $variables, $hook) {
-   if (isset($variables['element']['#id'])) {
-     $id = str_replace("-", "_", $variables['element']['#id']);
-     $suggestions[] = $hook . '__' . $id;
-   }
+/**
+ * Implements hook_preprocess_links__language_block().
+ */
+function palvelumanuaali_preprocess_links__language_block(&$variables) {
+  $language_manager = \Drupal::languageManager();
+  $current_langcode = $language_manager->getCurrentLanguage('language_url')->getId();
 
- }
+  // Add a new class to each link item and change the language link order:
+  // move current language to first position.
+  foreach ($variables['links'] as $langcode => $link) {
+    $link['link']['#options']['attributes']['class'][] = 'dropdown-item';
+    $link['link']['#options']['attributes']['lang'] = $langcode;
+    // Replace the text label with language code.
+    if ($langcode == $current_langcode) {
+      $link['link']['#langcode'] = $langcode;
+      $variables['links'][$langcode] = $link;
+    }
+    if ($langcode == $current_langcode) {
+      unset($variables['links'][$langcode]);
+      array_unshift($variables['links'], $link);
+    }
+  }
+}
 
- function palvelumanuaali_theme_suggestions_select_alter(array &$suggestions, array $variables, $hook) {
+/**
+ * Implements hook__preprocess_node().
+ */
+function palvelumanuaali_preprocess_node(&$variables) {
+  if (!isset($variables['is_front'])) {
+    $variables['is_front'] =  \Drupal::service('path.matcher')->isFrontPage();
+  }
+}
 
-   if (isset($variables['element']['#name'])) {
-     $id = str_replace("-", "_", $variables['element']['#name']);
-     $suggestions[] = $hook . '__' . $id;
-   }
-   if (isset($variables['element']['#context']['#view_id'])) {
-      $view_id = str_replace("-", "_", $variables['element']['#context']['#view_id']);
-      $suggestions[] = $hook . '__' . $view_id;
-   }
+/**
+ * Implements hook__preprocess_fieldset().
+ */
+function palvelumanuaali_preprocess_fieldset(&$variables) {
+  $element = $variables['element'];
+  if ($variables['element']['#field_name'] == 'field_statements') {
+    $variables['legend']['attributes']['class'] = array();
+    $variables['legend']['attributes']['class'][] = 'field-group--title';
+    $variables['legend']['attributes']['class'][] = 'field-group--title-small';
+    $variables['legend_span']['attributes']['class'] = 'field-group--title-small';
+  }
+  if ($variables['element']['#field_name'] == 'field_other_preferences') {
+    $variables['legend_span']['attributes']['class'] = 'field-group--title-small';
+  }
 
-   if (isset($variables['element']['#parents'][0])) {
-       $parents = str_replace("-", "_", $variables['element']['#parents'][0]);
-       $suggestions[] = $hook . '__' . $parents;
-   }
+}
 
-   if (isset($variables['element']['#type']) && isset($variables['element']['#form_id'])) {
-     $type = str_replace("-", "_", $variables['element']['#type']);
-     $formId = str_replace("-", "_", $variables['element']['#form_id']);
-     $suggestions[] = $hook . '__' . $type;
-   }
- }
+/**
+ * Implements theme_preprocess_textarea();
+ *
+ * @param $variables
+ *
+ * @return void
+ */
+function palvelumanuaali_preprocess_textarea(&$variables) {
+  if (empty($variables['element'])) {
+    return;
+  }
+  $element = $variables['element'];
+  if (!empty($element['#errors'])) {
+    $variables['wrapper_attributes']->addClass('error');
+  }
+}
 
- function palvelumanuaali_theme_suggestions_details_alter(array &$suggestions, array $variables, $hook) {
-   if (isset($variables['element']['#type']) && isset($variables['element']['#form_id'])) {
-     $type = str_replace("-", "_", $variables['element']['#type']);
-     $formId = str_replace("-", "_", $variables['element']['#form_id']);
-     $suggestions[] = $hook . '__' . $type . '__' . $formId;
-   }
- }
+/**
+ * @param array $suggestions
+ * @param array $variables
+ * @param $hook
+ */
+function palvelumanuaali_theme_suggestions_form_element_alter(array &$suggestions, array $variables, $hook) {
+  if (isset($variables['element']['#id'])) {
+    $id = str_replace("-", "_", $variables['element']['#id']);
+    $suggestions[] = $hook . '__' . $id;
+  }
 
- /**
-  * Implements hook_theme_suggestions_taxonomy_term_alter().
-  */
- function palvelumanuaali_theme_suggestions_taxonomy_term_alter(array &$suggestions, array $variables) {
-   /** @var \Drupal\taxonomy\TermInterface $term */
-   $term = $variables['elements']['#taxonomy_term'];
-   $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
-   // Add view mode theme suggestions.
-   $suggestions[] = 'taxonomy_term__' . $sanitized_view_mode;
-   $suggestions[] = 'taxonomy_term__' . $term->bundle() . '__' . $sanitized_view_mode;
-   $suggestions[] = 'taxonomy_term__' . $term->id() . '__' . $sanitized_view_mode;
- }
+}
 
- /**
+function palvelumanuaali_theme_suggestions_select_alter(array &$suggestions, array $variables, $hook) {
+
+  if (isset($variables['element']['#name'])) {
+    $id = str_replace("-", "_", $variables['element']['#name']);
+    $suggestions[] = $hook . '__' . $id;
+  }
+  if (isset($variables['element']['#context']['#view_id'])) {
+    $view_id = str_replace("-", "_", $variables['element']['#context']['#view_id']);
+    $suggestions[] = $hook . '__' . $view_id;
+  }
+
+  if (isset($variables['element']['#parents'][0])) {
+    $parents = str_replace("-", "_", $variables['element']['#parents'][0]);
+    $suggestions[] = $hook . '__' . $parents;
+  }
+
+  if (isset($variables['element']['#type']) && isset($variables['element']['#form_id'])) {
+    $type = str_replace("-", "_", $variables['element']['#type']);
+    $formId = str_replace("-", "_", $variables['element']['#form_id']);
+    $suggestions[] = $hook . '__' . $type;
+  }
+}
+
+function palvelumanuaali_theme_suggestions_details_alter(array &$suggestions, array $variables, $hook) {
+  if (isset($variables['element']['#type']) && isset($variables['element']['#form_id'])) {
+    $type = str_replace("-", "_", $variables['element']['#type']);
+    $formId = str_replace("-", "_", $variables['element']['#form_id']);
+    $suggestions[] = $hook . '__' . $type . '__' . $formId;
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_taxonomy_term_alter().
+ */
+function palvelumanuaali_theme_suggestions_taxonomy_term_alter(array &$suggestions, array $variables) {
+  /** @var \Drupal\taxonomy\TermInterface $term */
+  $term = $variables['elements']['#taxonomy_term'];
+  $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
+  // Add view mode theme suggestions.
+  $suggestions[] = 'taxonomy_term__' . $sanitized_view_mode;
+  $suggestions[] = 'taxonomy_term__' . $term->bundle() . '__' . $sanitized_view_mode;
+  $suggestions[] = 'taxonomy_term__' . $term->id() . '__' . $sanitized_view_mode;
+}
+
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ *
+ * Add views unformatted template suggestions.
+ *
+ * @inheritdoc
+ */
+function palvelumanuaali_theme_suggestions_views_view_alter(array &$suggestions, array $variables) {
+  $suggestions[] =  'views_view__' . $variables['view']->id();
+}
+
+/**
  * Implements hook_theme_suggestions_HOOK_alter().
  *
  * Add views unformatted template suggestions.
@@ -127,13 +184,13 @@ function palvelumanuaali_theme_suggestions_views_view_unformatted_alter(array &$
  * @inheritdoc
  */
 function palvelumanuaali_theme_suggestions_views_view_field(array $variables) {
-    $suggestions[] = 'views_view_field__' . $variables['field']->field;
+  $suggestions[] = 'views_view_field__' . $variables['field']->field;
 }
 
 function palvelumanuaali_theme_suggestions_input_alter(&$suggestions, array $variables) {
-    if (!empty($variables['element']['#form_id']) && $variables['theme_hook_original'] === "input__submit") {
-      $suggestions[] = 'input__' . $variables['element']['#type'] . '__' . $variables['element']['#form_id'];
-    }
+  if (!empty($variables['element']['#form_id']) && $variables['theme_hook_original'] === "input__submit") {
+    $suggestions[] = 'input__' . $variables['element']['#type'] . '__' . $variables['element']['#form_id'];
+  }
 }
 
 
@@ -161,16 +218,15 @@ function palvelumanuaali_theme_suggestions_field_alter(array &$suggestions, arra
  * @param array $variables
  * @param $hook
  */
-function palvelumanuaali_theme_suggestions_fieldset_alter(array &$suggestions, array $variables, $hook)
-{
-    if (isset($variables['element']['#group'])) {
-        $id = str_replace("-", "_", $variables['element']['#group']);
-        $suggestions[] = $hook . '__' . $id;
-    }
-    else {
-      $id = str_replace("-", "_", $variables['element']['#parents'][0]);
-      $suggestions[] = $hook . '__' . $id;
-    }
+function palvelumanuaali_theme_suggestions_fieldset_alter(array &$suggestions, array $variables, $hook) {
+  if (isset($variables['element']['#group'])) {
+    $id = str_replace("-", "_", $variables['element']['#group']);
+    $suggestions[] = $hook . '__' . $id;
+  }
+  else {
+    $id = str_replace("-", "_", $variables['element']['#parents'][0]);
+    $suggestions[] = $hook . '__' . $id;
+  }
 }
 
 

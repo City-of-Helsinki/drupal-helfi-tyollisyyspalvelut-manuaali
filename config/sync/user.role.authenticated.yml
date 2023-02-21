@@ -9,12 +9,14 @@ dependencies:
     - content_moderation
     - content_translation
     - entity_print_views
+    - eu_cookie_compliance
     - filter
     - flag
     - flag_lists
     - hel_tpm_contact_info
     - media
     - node
+    - paragraphs_type_permissions
     - search_api_autocomplete
     - system
 _core:
@@ -25,6 +27,7 @@ weight: 1
 is_admin: false
 permissions:
   - 'access content'
+  - 'display eu cookie compliance popup'
   - 'edit own flag lists'
   - 'entity print views access'
   - 'flag cart'
@@ -44,3 +47,19 @@ permissions:
   - 'view flag lists'
   - 'view media'
   - 'view own unpublished content'
+  - 'view paragraph content contact_information'
+  - 'view paragraph content content'
+  - 'view paragraph content content_card_lift'
+  - 'view paragraph content content_link_file'
+  - 'view paragraph content content_link_file_guide'
+  - 'view paragraph content full_width_card_lift'
+  - 'view paragraph content header_description_link'
+  - 'view paragraph content link'
+  - 'view paragraph content long_text_field_with_toolbar'
+  - 'view paragraph content municipality_guide'
+  - 'view paragraph content quick_link'
+  - 'view paragraph content service_language'
+  - 'view paragraph content service_price'
+  - 'view paragraph content service_time_and_place'
+  - 'view paragraph content target_group'
+  - 'view paragraph content url_and_file'

@@ -23,9 +23,6 @@
 }
 
 .table__row {
-  &:nth-child(odd) {
-  }
-
   /* Top Row - Non-BEM but always contained */
   &:first-child {
     th:first-child,
@@ -237,7 +234,13 @@
 .table > :not(caption) > * > *,
 table > :not(caption) > * > * {
   padding: 20px 18px 20px $space-double;
+}
 
+.field--name-field-service-time-and-location  {
+  .table > :not(caption) > * > *,
+  table > :not(caption) > * > * {
+    padding: 0;
+  }
 }
 
 .field--widget-entity-reference-paragraphs,

@@ -6,7 +6,11 @@ dependencies:
     - field.storage.node.field_service_req_speacialist
     - node.type.service
   module:
+    - require_on_publish
     - text
+third_party_settings:
+  require_on_publish:
+    require_on_publish: true
 id: node.service.field_service_req_speacialist
 field_name: field_service_req_speacialist
 entity_type: node

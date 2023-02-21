@@ -32,9 +32,13 @@
   ]
 %}
 <fieldset{{ attributes.addClass(classes) }}>
+{%
+  set legend_classes = [
+    extra_selector ? extra_selector,
+  ]
+%}
   {%
-    set legend_classes = [
-      no_h2 ?  '' : 'h2',
+    set legend_span_classes = [
       extra_selector ? extra_selector,
       required ? 'js-form-required',
       required ? 'form-required',
@@ -42,7 +46,7 @@
   %}
   {#  Always wrap fieldset legends in a SPAN for CSS positioning. #}
   {% if legend.title %}
-    <legend{{ legend.attributes.addClass(legend_classes) }}>{{ legend.title }}</legend>
+    <legend {{ legend.attributes.addClass(legend_classes) }}><span {{ legend_span.attributes.addClass(legend_span_classes) }}>{{ legend.title }}</span></legend>
   {% endif %}
   {% if description.content %}
     <div{{ description.attributes.addClass('description') }}>{{ description.content }}</div>
