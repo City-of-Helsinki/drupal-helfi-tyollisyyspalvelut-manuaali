@@ -69,8 +69,7 @@
           document.getElementById("prevBtn").style.display = "inline";
         }
 
-
-        if (n === (x.length)) {
+        if (n === (x.length-1)) {
           document.getElementById('nextBtn').hidden = true;
         } else {
           document.getElementById('nextBtn').hidden = false;
