@@ -3,6 +3,7 @@
 namespace Drupal\hel_tpm_general\Access;
 
 use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Access\AccessResultAllowed;
 use Drupal\Core\Path\PathValidatorInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
@@ -61,7 +62,8 @@ class GroupNodeCreateAccessService {
     $groups = $this->userGroups($account);
 
     foreach ($groups as $group) {
-      if ($this->hasCreateServiceAccess($group, $plugin_id, $account)) {
+      $access = $this->hasCreateServiceAccess($group, $plugin_id, $account);
+      if ($access instanceof AccessResultAllowed) {
         return AccessResult::allowed();
       }
     }

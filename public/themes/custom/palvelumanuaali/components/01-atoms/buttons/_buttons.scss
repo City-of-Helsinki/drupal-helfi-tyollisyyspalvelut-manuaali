@@ -130,7 +130,11 @@ $button-colors: (
 // Button size variations
 @mixin button-medium {
   line-height: 1.4;
-  padding: $space-three-fourths $space-double;
+  font-size: 12px;
+  padding: 10px 13px;
+  @include xxl {
+    padding: $space-three-fourths $space-double;
+  }
 }
 
 @mixin button-large {
