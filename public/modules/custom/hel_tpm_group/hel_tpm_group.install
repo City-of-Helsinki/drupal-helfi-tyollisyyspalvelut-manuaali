@@ -37,10 +37,27 @@ function hel_tpm_group_requirements($phase) {
   return $requirements;
 }
 
+/*
+ * Remove anonymous users from groups.
+ */
+function hel_tpm_group_update_9001() {
+  $account = \Drupal::entityTypeManager()->getStorage('user')->load(0);
+  $membership_loader = \Drupal::service('group.membership_loader');
+  $memberships  = $membership_loader->loadByUser($account);
+  if (empty($memberships)) {
+    return;
+  }
+
+  foreach ($memberships as $membership) {
+    $group = $membership->getGroup();
+    $group->removeMember($account);
+  }
+}
+
 /**
  * Delete orphaned group_content entities.
  */
-function hel_tpm_group_update_9001(&$sandbox) {
+function hel_tpm_group_update_9002(&$sandbox) {
   $storage = \Drupal::service('entity_type.manager')->getStorage('group_content');
   $database = \Drupal::database();
   $orphans = $database
@@ -61,19 +78,3 @@ function hel_tpm_group_update_9001(&$sandbox) {
     ->execute();
 }
 
-/*
- * Remove anonymous users from groups.
- */
-function hel_tpm_group_update_9002() {
-  $account = \Drupal::entityTypeManager()->getStorage('user')->load(0);
-  $membership_loader = \Drupal::service('group.membership_loader');
-  $memberships  = $membership_loader->loadByUser($account);
-  if (empty($memberships)) {
-    return;
-  }
-
-  foreach ($memberships as $membership) {
-    $group = $membership->getGroup();
-    $group->removeMember($account);
-  }
-}
