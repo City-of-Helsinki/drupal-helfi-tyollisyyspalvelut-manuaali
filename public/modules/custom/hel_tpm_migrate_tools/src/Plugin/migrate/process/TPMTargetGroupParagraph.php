@@ -26,7 +26,6 @@ class TPMTargetGroupParagraph extends ParagraphBase {
 
     $paragraph = $this->createParagraph($row, $destinationProperty, 'target_group', 0);
     $paragraph->field_description = $this->getConfigValues($row, 'description');
-    $paragraph->field_municipality = $this->getTidByName($this->getConfigValues($row, 'municipality'), 'municipality');
 
     switch ($this->getConfigValues($row, 'age')) {
       case 'Ei ikään liittyviä rajoituksia':
