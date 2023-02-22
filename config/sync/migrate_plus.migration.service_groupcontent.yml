@@ -28,12 +28,17 @@ process:
     default_value: und
   gid:
     -
-      plugin: migration_lookup
-      migration: organisation_import
-      source_ids:
-        organisation_import:
-          - 'Palvelun järjestäjä'
-      no_stub: true
+      plugin: callback
+      callable: trim
+      source: 'Palvelun järjestäjä'
+    -
+      plugin: entity_lookup
+      entity_type: group
+      bundle:
+       - organisation
+       - service_provider
+      access_check: false
+      ignore_case: true
     -
       plugin: skip_on_empty
       method: row
