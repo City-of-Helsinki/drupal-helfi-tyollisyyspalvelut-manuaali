@@ -21,36 +21,6 @@ source:
 process:
   title: Palvelunnimi
   field_description: 'Lyhyt kuvaus palvelusta (max. 250 merkkiä)'
-  field_implementation_extra_info:
-    -
-      plugin: skip_on_empty
-      source: Toteutustapavalikko
-      method: process
-    -
-      plugin: explode
-      delimiter: ','
-    -
-      plugin: entity_generate
-      entity_type: taxonomy_term
-      value_key: name
-      bundle_key: vid
-      bundle: service_implementation_type
-      ignore_case: true
-  field_service_set:
-    -
-      plugin: skip_on_empty
-      source: Palvelukategoriavalikko
-      method: process
-    -
-      plugin: explode
-      delimiter: ','
-    -
-      plugin: entity_generate
-      entity_type: taxonomy_term
-      value_key: name
-      bundle_key: vid
-      bundle: service_set
-      ignore_case: true
   field_service_execution:
     -
       plugin: skip_on_empty
@@ -72,30 +42,9 @@ process:
       source: URA-merkinnät
     -
       plugin: tpm_text_with_toolbar_paragraph
-  field_statements:
-    -
-      plugin: skip_on_empty
-      method: process
-      source: Asiakassuostumusvalikko
-    -
-      plugin: static_map
-      map:
-        Ei: 'no'
-        Kyllä: 'yes'
-      default_value: 'no'
   field_statements_unemployment: 'Lausunnot ja työttömyysetuus vapaa teksti'
   field_measures_during_attendance: 'Toimenpiteet palveluun osallistumisen ajalta'
   field_service_exceptions: Poikkeustilanteet
-  field_service_suits_job_search:
-    -
-      plugin: skip_on_empty
-      source: 'Palvelu soveltuu täydentäväksi työnhakukeskusteluksi-valikko (kyllä/ei)'
-      method: process
-    -
-      plugin: static_map
-      map:
-        Ei: 'no'
-        Kyllä: 'yes'
   field_service_suits_info: 'Palvelu soveltuu täydentäväksi työnhakukeskusteluksi vapaa teksti'
   field_service_benefits: 'Mitä hyötyä palveluun osallistumisesta on?'
   field_attendance:
@@ -125,27 +74,9 @@ process:
     map:
       Luonnos: draft
     default_value: draft
-  field_client_consent:
-    -
-      plugin: skip_on_empty
-      method: process
-      source: Asiakassuostumusvalikko
-    -
-      plugin: static_map
-      map:
-        Ei: 0
-        Kyllä: 1
-      default_value: 0
   field_field_client_consent_descr: Asiakassuostumukset
   field_service_requirements: 'Palveluun osallistumisen edellytykset asiakkaalle kuvattuna (asiakkaan näkymä)'
   field_service_req_speacialist: 'Palveluun osallistumisen edellytykset'
-  field_obligatoryness:
-    -
-      plugin: skip_on_empty
-      method: process
-      source: 'Palvelun velvoittavuus-valikko'
-    -
-      plugin: tpm_handle_obligatoryness
   field_obligatoryness_freetext: 'Palvelun velvoittavuus vapaa teksti'
   field_guidance_to_service:
     -
@@ -153,47 +84,15 @@ process:
       method: process
       source: 'Ohjaus palveluun'
     -
-      plugin: tpm_content_paragraph
-  field_life_situations:
-    -
-      plugin: skip_on_empty
-      source: Elämäntilannevalikko
-      method: process
-    -
-      plugin: explode
-      delimiter: ','
-    -
-      plugin: entity_generate
-      entity_type: taxonomy_term
-      value_key: name
-      bundle_key: vid
-      bundle: life_situation
-      ignore_case: true
+      plugin: tpm_text_with_toolbar_paragraph
   field_target_group:
     -
       plugin: tpm_target_group_paragraph
       description: 'Lyhyt kohderyhmäkuvaus'
       age: 'Kohderyhmän ikä'
-      municipality: 'Palvelun kohderyhmän kunta'
-  field_accessibility:
-    -
-      plugin: skip_on_empty
-      source: Saavutettavuusvalikko
-      method: process
-    -
-      plugin: explode
-      delimiter: ','
-    -
-      plugin: entity_generate
-      entity_type: taxonomy_term
-      value_key: name
-      bundle_key: vid
-      bundle: service_accessibility
-      ignore_case: true
   field_service_price:
     -
       plugin: tpm_service_price_paragraph
-      has_price: 'Palvelu on maksullinen (kyllä/ei)'
       price: 'Palvelun hinta (€)'
       description: 'Lisätietoa maksullisuudesta'
   field_service_time_and_location:
