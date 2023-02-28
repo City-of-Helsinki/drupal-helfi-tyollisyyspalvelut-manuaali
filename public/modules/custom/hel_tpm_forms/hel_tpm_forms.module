@@ -51,6 +51,13 @@ function hel_tpm_forms_form_node_form_alter(&$form, FormStateInterface &$form_st
     '#theme' => 'hel_tpm_navigation',
   ];
 
+  // Hide consent description on the third page of service entity form.
+  $form['field_field_client_consent_descr']['#states'] = [
+    'visible' => [
+      ':input[name="field_client_consent[value]"]' => ['checked' => TRUE],
+    ],
+  ];
+
   $form['paging_footer'] = [
     '#theme' => 'hel_tpm_steps',
   ];
