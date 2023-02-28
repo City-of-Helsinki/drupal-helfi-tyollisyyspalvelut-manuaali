@@ -57,3 +57,4 @@ if (getenv('REDIS_HOST')) {
 if (getenv('SMTP_HOST')) {
   $config['smtp.settings']['smtp_host'] = getenv('SMTP_HOST');
 }
+$config['user.settings']['password_reset_timeout'] = 604800;
