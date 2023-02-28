@@ -20,6 +20,7 @@ group_type: organisation
 permissions_ui: true
 permissions:
   - 'access content overview'
+  - 'access group_node overview'
   - 'access subgroup overview'
   - 'administer group'
   - 'administer members'
@@ -56,6 +57,7 @@ permissions:
   - 'use service_moderation transition create_new_draft'
   - 'use service_moderation transition outdated'
   - 'use service_moderation transition publish'
+  - 'use service_moderation transition put_on_hold'
   - 'use service_moderation transition ready_to_publish'
   - 'use service_moderation transition ready_to_publish_to_draft'
   - 'use service_moderation transition temporarily_archived'
@@ -71,6 +73,8 @@ permissions:
   - 'view latest group version'
   - 'view latest version'
   - 'view own unpublished group'
+  - 'view own unpublished group_node:service entity'
   - 'view subgroup:service_provider content'
+  - 'view unpublished group_node:basic_page entity'
   - 'view unpublished group_node:service entity'
   - 'view unpublished group_node:service_location entity'
