@@ -5,6 +5,8 @@ dependencies:
   config:
     - field.field.group_content.group_content_type_c7845b3bab623.field_service_owner
     - group.content_type.group_content_type_c7845b3bab623
+  module:
+    - select2
 id: group_content.group_content_type_c7845b3bab623.default
 targetEntityType: group_content
 bundle: group_content_type_c7845b3bab623
@@ -21,14 +23,14 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_service_owner:
-    type: entity_reference_autocomplete
+    type: select2_entity_reference
     weight: 1
     region: content
     settings:
+      width: 100%
+      autocomplete: false
       match_operator: CONTAINS
       match_limit: 10
-      size: 60
-      placeholder: ''
     third_party_settings: {  }
 hidden:
   langcode: true
