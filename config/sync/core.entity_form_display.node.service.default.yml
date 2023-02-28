@@ -759,14 +759,14 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_responsible_updatee:
-    type: select2_entity_reference
+    type: hel_tpm_group_user_select_widget
     weight: 13
     region: content
     settings:
       width: 100%
-      autocomplete: false
       match_operator: CONTAINS
-      match_limit: 10
+      match_limit: '10'
+      autocomplete: 0
     third_party_settings: {  }
   field_service_benefits:
     type: text_textarea
