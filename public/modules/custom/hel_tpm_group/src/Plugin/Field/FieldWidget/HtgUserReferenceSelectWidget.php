@@ -59,7 +59,6 @@ class HtgUserReferenceSelectWidget extends Select2EntityReferenceWidget {
       return $element;
     }
 
-
     // Set current user as default if available.
     if (!empty($element['#options'][$this->currentUser->id()])) {
       $element['#default_value'][] = $this->currentUser->id();
