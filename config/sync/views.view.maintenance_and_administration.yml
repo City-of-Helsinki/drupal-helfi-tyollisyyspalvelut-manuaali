@@ -367,9 +367,9 @@ display:
           plugin_id: group_to_group_content
           required: false
           group_content_plugins:
-            'subgroup:organisation': 'subgroup:organisation'
-            'subgroup:service_provider': 'subgroup:service_provider'
             group_membership: group_membership
+            'subgroup:organisation': '0'
+            'subgroup:service_provider': '0'
             group_invitation: '0'
             'group_node:basic_page': '0'
             'group_node:landing_page': '0'
@@ -388,18 +388,7 @@ display:
           group_content_plugins:
             group_membership: group_membership
             group_invitation: '0'
-        uid:
-          id: uid
-          table: group_content_field_data
-          field: uid
-          relationship: group_content_id
-          group_type: group
-          admin_label: User
-          entity_type: group_content
-          entity_field: uid
-          plugin_id: standard
-          required: false
-      group_by: false
+      group_by: true
       header:
         area_text_custom:
           id: area_text_custom
