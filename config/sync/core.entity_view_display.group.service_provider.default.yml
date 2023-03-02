@@ -11,31 +11,13 @@ targetEntityType: group
 bundle: service_provider
 mode: default
 content:
-  field_group_prioritise_in_search:
-    type: boolean
-    label: above
-    settings:
-      format: default
-      format_custom_false: ''
-      format_custom_true: ''
-    third_party_settings: {  }
-    weight: -3
-    region: content
-  field_responsible_authority:
-    type: entity_reference_label
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: -4
-    region: content
   label:
     type: string
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: -5
+    weight: 0
     region: content
 hidden:
   changed: true
@@ -44,6 +26,8 @@ hidden:
   entity_print_view_pdf: true
   entity_print_view_word_docx: true
   entitygroupfield: true
+  field_group_prioritise_in_search: true
+  field_responsible_authority: true
   langcode: true
   search_api_excerpt: true
   uid: true
