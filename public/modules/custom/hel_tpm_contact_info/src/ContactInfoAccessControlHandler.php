@@ -17,26 +17,24 @@ class ContactInfoAccessControlHandler extends EntityAccessControlHandler {
    */
   protected function checkAccess(EntityInterface $entity, $operation, AccountInterface $account) {
 
-    $uid = $entity->getOwnerId();
     switch ($operation) {
       case 'view':
         return AccessResult::allowedIfHasPermission($account, 'view contact info');
 
       case 'update':
-        if ($account->id() != $uid) {
+        if ($account->id() != $entity->getOwnerId()) {
            return AccessResult::allowedIfHasPermissions($account, [
              'edit contact info',
              'administer contact info'
            ], 'OR');
          }
-        elseif ($account->id() == $uid) {
+        else {
           return AccessResult::allowedIfHasPermissions($account, [
             'edit own contact info',
             'administer contact info',
             'edit contact info'
           ], 'OR');
          }
-         break;
 
       case 'delete':
         return AccessResult::allowedIfHasPermissions($account, ['delete contact info', 'administer contact info'], 'OR');
