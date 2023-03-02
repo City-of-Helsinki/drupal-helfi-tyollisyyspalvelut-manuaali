@@ -24,10 +24,17 @@ class ContactInfoAccessControlHandler extends EntityAccessControlHandler {
 
       case 'update':
         if ($account->id() != $uid) {
-           return AccessResult::allowedIfHasPermissions($account, ['edit contact info', 'administer contact info'], 'OR');
+           return AccessResult::allowedIfHasPermissions($account, [
+             'edit contact info',
+             'administer contact info'
+           ], 'OR');
          }
-         elseif ($account->id() == $uid) {
-           return AccessResult::allowedIfHasPermissions($account, ['edit own contact info', 'administer contact info', 'edit contact info'], 'OR');
+        elseif ($account->id() == $uid) {
+          return AccessResult::allowedIfHasPermissions($account, [
+            'edit own contact info',
+            'administer contact info',
+            'edit contact info'
+          ], 'OR');
          }
          break;
 
