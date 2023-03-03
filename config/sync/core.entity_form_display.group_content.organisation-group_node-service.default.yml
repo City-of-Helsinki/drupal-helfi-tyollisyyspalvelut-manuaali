@@ -5,6 +5,8 @@ dependencies:
   config:
     - field.field.group_content.organisation-group_node-service.field_service_owner
     - group.content_type.organisation-group_node-service
+  module:
+    - select2
 id: group_content.organisation-group_node-service.default
 targetEntityType: group_content
 bundle: organisation-group_node-service
@@ -21,14 +23,14 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_service_owner:
-    type: entity_reference_autocomplete
+    type: select2_entity_reference
     weight: 1
     region: content
     settings:
+      width: 100%
+      autocomplete: false
       match_operator: CONTAINS
       match_limit: 10
-      size: 60
-      placeholder: ''
     third_party_settings: {  }
 hidden:
   langcode: true
