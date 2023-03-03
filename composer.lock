@@ -5091,6 +5091,58 @@
             }
         },
         {
+            "name": "drupal/flexible_permissions",
+            "version": "1.0.0-beta1",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/flexible_permissions.git",
+                "reference": "1.0.0-beta1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/flexible_permissions-1.0.0-beta1.zip",
+                "reference": "1.0.0-beta1",
+                "shasum": "8ecc978ad8d3ab9c9127054ce7cefb00e07800ea"
+            },
+            "require": {
+                "drupal/core": "^9 || ^10",
+                "drupal/variationcache": "^1.0"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "1.0.0-beta1",
+                    "datestamp": "1652866323",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Project has not opted into security advisory coverage!"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Kristiaan Van den Eynde",
+                    "homepage": "https://www.drupal.org/u/kristiaanvandeneynde",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Mathias Wächter",
+                    "homepage": "https://www.drupal.org/u/mef",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "This module allows you to gather, calculate and cache permissions from a myriad of sources",
+            "homepage": "http://drupal.org/project/flexible_permissions",
+            "support": {
+                "source": "https://git.drupalcode.org/project/flexible_permissions",
+                "issues": "https://drupal.org/project/issues/flexible_permissions"
+            }
+        },
+        {
             "name": "drupal/gcontent_moderation",
             "version": "1.0.0-beta2",
             "source": {
@@ -20920,6 +20972,7 @@
         "drupal/entitygroupfield": 15,
         "drupal/flag": 10,
         "drupal/flag_lists": 5,
+        "drupal/flexible_permissions": 10,
         "drupal/gcontent_moderation": 10,
         "drupal/gdpr": 10,
         "drupal/htmlmail": 15,
