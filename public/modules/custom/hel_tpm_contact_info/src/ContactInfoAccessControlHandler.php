@@ -28,13 +28,11 @@ class ContactInfoAccessControlHandler extends EntityAccessControlHandler {
              'administer contact info'
            ], 'OR');
          }
-        else {
-          return AccessResult::allowedIfHasPermissions($account, [
-            'edit own contact info',
-            'administer contact info',
-            'edit contact info'
-          ], 'OR');
-         }
+        return AccessResult::allowedIfHasPermissions($account, [
+          'edit own contact info',
+          'administer contact info',
+          'edit contact info'
+        ], 'OR');
 
       case 'delete':
         return AccessResult::allowedIfHasPermissions($account, ['delete contact info', 'administer contact info'], 'OR');

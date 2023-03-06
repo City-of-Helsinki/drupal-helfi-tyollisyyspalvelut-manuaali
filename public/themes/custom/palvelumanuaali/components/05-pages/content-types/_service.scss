@@ -38,7 +38,8 @@
   }
 
   .field--name-field-obligatoryness,
-  .field--name-field-statements {
+  .field--name-field-statements,
+  .field--name-field-service-suits-job-search {
     display: flex;
     align-items: center;
 
@@ -96,7 +97,13 @@
     }
   }
   .field__item {
-    margin-bottom: $space-one-half;
+    margin-bottom: $space;
+  }
+  .field--name-field-statements  {
+    margin-bottom: $space-double;
+  }
+  .field--name-field-service-suits-job-search {
+    margin-bottom: $space-double;
   }
   .content-column {
     padding-right: $space-quadruple;
@@ -150,6 +157,12 @@
     }
   }
 
+  .field--name-field-responsible-updatee .field__item {
+    margin-bottom: 40px;
+    a {
+      margin-bottom: 0;
+    }
+  }
   .field--name-field-contact-info {
     >.field__label {
       font-weight: 600;
