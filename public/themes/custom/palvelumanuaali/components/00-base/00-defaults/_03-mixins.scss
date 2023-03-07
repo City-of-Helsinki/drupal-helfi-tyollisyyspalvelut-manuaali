@@ -121,7 +121,8 @@ $outer-container-break: $small;
 }
 
 @mixin radiobutton-box {
-  .form-item--radio-button{
+  .form-item--radio-button,
+  .form-item-checkbox{
     margin-right: 0;
     &:last-child() {
       margin-bottom:0;

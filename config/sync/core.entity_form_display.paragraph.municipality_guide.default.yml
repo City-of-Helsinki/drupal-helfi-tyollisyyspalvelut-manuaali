@@ -7,6 +7,7 @@ dependencies:
     - field.field.paragraph.municipality_guide.field_municipality
     - paragraphs.paragraphs_type.municipality_guide
   module:
+    - maxlength
     - text
 id: paragraph.municipality_guide.default
 targetEntityType: paragraph
@@ -20,7 +21,11 @@ content:
     settings:
       rows: 5
       placeholder: ''
-    third_party_settings: {  }
+    third_party_settings:
+      maxlength:
+        maxlength_js: 2000
+        maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
+        maxlength_js_enforce: false
   field_municipality:
     type: entity_reference_autocomplete
     weight: 0
