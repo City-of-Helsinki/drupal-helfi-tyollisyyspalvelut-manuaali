@@ -54,7 +54,6 @@
         hidePrice();
         hideTime();
         hideAgeRange();
-        hideConsent();
         // This function will display the specified tab of the form ...
         var x = document.getElementsByClassName("tab");
         x[n].style.display = "block";
@@ -161,7 +160,6 @@
         });
       }
 
-
       // hide age range on the first a page of service entity form.
       function hideAgeRange() {
         let ageGroups = '.field--name-field-age-groups .form-item';
@@ -182,30 +180,6 @@
           }
           else if (($(this).val() != "no_age_restriction" && $(this).is(":checked") === true )) {
             $(ageField).show();
-          }
-        });
-      }
-
-      // hide consent description on the third a page of service entity form.
-      function hideConsent() {
-        let consentCheckbox = '.field--name-field-client-consent .form-item .form-checkbox';
-        let fieldDescription = $(consentCheckbox).parent().parent().siblings('.field--name-field-field-client-consent-descr');
-
-        if ($(consentCheckbox).is(":checked") === false) {
-          $(fieldDescription).hide();
-        }
-        else  {
-          $(fieldDescription).show();
-        }
-        //Handle show/hide logic of service consent description
-        let consentDescription = '.field--name-field-field-client-consent-descr';
-
-        $(consentCheckbox).click(function () {
-          if ($(this).is(":checked") === false) {
-            $(this).parent().parent().siblings(consentDescription).hide();
-          }
-          else  {
-            $(this).parent().parent().siblings(consentDescription).show();
           }
         });
       }

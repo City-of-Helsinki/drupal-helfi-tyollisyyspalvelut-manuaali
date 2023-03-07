@@ -193,6 +193,9 @@
         max-width: 50ch;
       }
     }
+    .form-item--checkboxes {
+      @include radiobutton-box;
+    }
   }
 
   .field-add-more-submit,
@@ -500,7 +503,6 @@
   .field--name-field-service-execution,
   .field--name-field-municipality-guidance,
   .field--name-field-service-obligatoryness,
-  .field--name-field-career-marking,
   .field--name-field-exceptions {
     margin-bottom: $space-triple;
     border-bottom: 2px solid clr(background-border);

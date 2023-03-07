@@ -67,13 +67,16 @@ function palvelumanuaali_preprocess_node(&$variables) {
  */
 function palvelumanuaali_preprocess_fieldset(&$variables) {
   $element = $variables['element'];
-  if ($variables['element']['#field_name'] == 'field_statements') {
-    $variables['legend']['attributes']['class'] = array();
+  if (empty($element['#field_name'])) {
+    return;
+  }
+  if ($element['#field_name'] == 'field_statements') {
+    $variables['legend']['attributes']['class'] = [];
     $variables['legend']['attributes']['class'][] = 'field-group--title';
     $variables['legend']['attributes']['class'][] = 'field-group--title-small';
     $variables['legend_span']['attributes']['class'] = 'field-group--title-small';
   }
-  if ($variables['element']['#field_name'] == 'field_other_preferences') {
+  if ($element['#field_name'] == 'field_other_preferences') {
     $variables['legend_span']['attributes']['class'] = 'field-group--title-small';
   }
 
