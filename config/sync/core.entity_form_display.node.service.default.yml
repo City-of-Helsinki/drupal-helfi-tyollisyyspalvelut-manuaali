@@ -220,9 +220,9 @@ third_party_settings:
         required_fields: true
     group_add:
       children:
-        - entitygroupfield
         - field_contact_info_external
         - field_contact_info
+        - entitygroupfield
         - field_service_producer
         - field_responsible_updatee
         - field_other_services
@@ -871,10 +871,9 @@ content:
       placeholder: ''
     third_party_settings:
       maxlength:
-        maxlength_js: 120
+        maxlength_js: 1000
         maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
         maxlength_js_enforce: false
-        maxlength_js_truncate_html: true
   field_service_other_info:
     type: inline_entity_form_simple
     weight: 14
