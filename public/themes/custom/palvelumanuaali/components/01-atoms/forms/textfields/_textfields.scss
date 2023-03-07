@@ -13,7 +13,7 @@
 
   padding: 12px 16px 12px 16px;
   margin-top: 0;
-  
+
   width: 100%;
   color: clr(text);
   &:focus {
@@ -39,7 +39,7 @@
   &--no-margin {
     margin-bottom: 0;
   }
-  & .group--light-blue {  
+  & .group--light-blue {
     border: 2px solid $blue20;
     background-color: $blue05;
     padding: $space-one-and-half $space-one-and-half $space-double $space-one-and-half;
@@ -48,4 +48,12 @@
 
 .views-exposed-form {
   position: relative;
+}
+
+.form-text--with-inline-header {
+  margin-bottom: $space;
+  > strong,
+  > p {
+    display: inline;
+  }
 }
