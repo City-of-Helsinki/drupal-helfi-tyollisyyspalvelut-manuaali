@@ -20,6 +20,9 @@
  */
 #}
 {% if multiple %}
+  {% if element["#field_label"] %}
+    <label>{{ element["#field_label"]|t }}</label>
+  {% endif %}
   <div class="js-form-item form-item">
     {{ table }}
     {% if description.content %}
