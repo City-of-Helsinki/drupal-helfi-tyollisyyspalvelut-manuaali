@@ -25,6 +25,12 @@ class ParagraphsCustomWidget extends ParagraphsWidget {
     return parent::defaultSettings();
   }
 
+  public function form(FieldItemListInterface $items, array &$form, FormStateInterface $form_state, $get_delta = NULL) {
+    $elements = parent::form($items, $form, $form_state, $get_delta);
+    $elements['widget']['#field_label'] = $this->getLabel();
+    return $elements;
+  }
+
   /**
    * {@inheritdoc}
    */
@@ -40,4 +46,14 @@ class ParagraphsCustomWidget extends ParagraphsWidget {
     return $widget_element;
   }
 
+  /**
+   * @return mixed
+   */
+  private function getLabel() {
+    $settings = $this->getSettings();
+    if ($this->getPluginDefinition()['multiple_values'] === TRUE) {
+      return $settings['title_plural'];
+    }
+    return $settings['title'];
+  }
 }
