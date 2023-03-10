@@ -337,7 +337,7 @@ third_party_settings:
       label: 'Lausunnot ja työttömyysetuus'
       region: content
       parent_name: group_specialist
-      weight: 12
+      weight: 11
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -358,7 +358,7 @@ third_party_settings:
       label: 'Täydentävä työnhakukeskustelu'
       region: content
       parent_name: group_specialist
-      weight: 15
+      weight: 14
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -379,7 +379,7 @@ third_party_settings:
       label: Poikkeustilanteet
       region: content
       parent_name: group_specialist
-      weight: 14
+      weight: 13
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -399,7 +399,7 @@ third_party_settings:
       label: 'Toimenpiteet osallistumisen ajalta'
       region: content
       parent_name: group_specialist
-      weight: 13
+      weight: 12
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -419,7 +419,7 @@ third_party_settings:
       label: Arkistointiohje
       region: content
       parent_name: group_specialist
-      weight: 16
+      weight: 15
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -459,7 +459,7 @@ third_party_settings:
       label: 'Merkinnät asiakastietojärjestelmään'
       region: content
       parent_name: group_specialist
-      weight: 11
+      weight: 10
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -734,17 +734,23 @@ content:
       match_limit: 10
     third_party_settings: {  }
   field_links_and_attachments:
-    type: inline_entity_form_simple
-    weight: 17
+    type: paragraphs
+    weight: 16
     region: content
     settings:
-      form_mode: default
-      override_labels: false
-      label_singular: ''
-      label_plural: ''
-      collapsible: false
-      collapsed: false
-      revision: false
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      closed_mode: summary
+      autocollapse: none
+      closed_mode_threshold: 0
+      add_mode: button
+      form_display_mode: default
+      default_paragraph_type: url_and_file
+      features:
+        add_above: '0'
+        collapse_edit_all: '0'
+        duplicate: '0'
     third_party_settings: {  }
   field_measures_during_attendance:
     type: text_textarea
