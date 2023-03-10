@@ -14,6 +14,16 @@
       handleSelectedStatement();
       handleSelectedObligatoryness();
 
+      var backgroundPos = $('.field--widget-hel-tpm-editorial-paragraphs-custom .field-add-more-submit').val().length;
+      backgroundPos = backgroundPos/2;
+      backgroundPos = backgroundPos.toString();
+      backgroundPos = backgroundPos + "ch";
+      backgroundPos = "calc(50% + " + backgroundPos + " - 1rem)";
+
+
+
+      $('.field--widget-hel-tpm-editorial-paragraphs-custom .field-add-more-submit').css('background-position-x',backgroundPos);
+
       $('.btn-prev').click(function () {
         nextPrev(-1);
       });

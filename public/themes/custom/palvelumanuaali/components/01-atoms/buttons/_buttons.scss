@@ -457,3 +457,25 @@ there is possibility to add classes button--blue-bordered,
       @include button-color-blue;
   }
 }
+
+.node-form,
+.node-edit-form {
+  .field-add-more-submit,
+    .paragraphs-icon-button {
+      @include button-medium;
+      @include button-no-color;
+      @include button-round-corners;
+      border: 2px solid $blue100;
+    }
+}
+
+.field--widget-hel-tpm-editorial-paragraphs-custom .field-add-more-submit {
+    margin-top: $space-one-half;
+    @include button-color-blue;
+    width: 100%;
+    box-sizing: border-box;
+    background-image: url("/themes/custom/palvelumanuaali/images/icons/plus.svg");
+    background-repeat: no-repeat;
+    background-position-y: center;
+    line-height: 24px;
+}

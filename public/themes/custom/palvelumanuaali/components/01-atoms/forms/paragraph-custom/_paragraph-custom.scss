@@ -4,7 +4,8 @@
     td {
       margin-bottom: 0.5em;
       padding: 10px;
-      border: 2px solid $blue40 !important;
+      box-shadow: inset 0px 0px 0px 2px clr(form-border);
+      box-sizing: border-box;
       background-color: $blue05;
       border-radius: 8px;
     }
@@ -30,6 +31,11 @@
       height: 24px;
       width: 24px;
       margin-left: 24px;
+    }
+  }
+  .paragraphs-collapsed-description {
+    &::after {
+      background: unset;
     }
   }
 }
