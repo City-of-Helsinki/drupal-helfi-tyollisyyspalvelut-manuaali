@@ -53,6 +53,8 @@ class ServiceReadyToPublishSubscriber implements EventSubscriberInterface {
    */
   protected $routeMatch;
 
+  protected $currentUser;
+
   const MESSAGE_TEMPLATE = 'group_ready_to_publish_notificat';
 
   /**
@@ -71,12 +73,13 @@ class ServiceReadyToPublishSubscriber implements EventSubscriberInterface {
    *  Group content state transition validator.
    *
    */
-  public function __construct(MessengerInterface $messenger, EntityTypeManager $entityTypeManager, ContentGroupService $contentGroupService, GroupStateTransitionValidation $stateTransitionValidation, RouteMatchInterface $routeMatch) {
+  public function __construct(MessengerInterface $messenger, EntityTypeManager $entityTypeManager, ContentGroupService $contentGroupService, GroupStateTransitionValidation $stateTransitionValidation, RouteMatchInterface $routeMatch, AccountProxyInterface $currentUser) {
     $this->messenger = $messenger;
     $this->entityTypeManager = $entityTypeManager;
     $this->contentGroupService = $contentGroupService;
     $this->stateTransitionValidation = $stateTransitionValidation;
     $this->routeMatch = $routeMatch;
+    $this->currentUser = $currentUser;
   }
 
   /**
@@ -103,6 +106,10 @@ class ServiceReadyToPublishSubscriber implements EventSubscriberInterface {
     }
 
     $accounts = $this->getEntityGroupAdministration($entity, $group);
+
+    if (empty($accounts)) {
+      $this->messenger->addStatus($this->t('Users with publish permissions not found. Please contact site administration.', ['@group' => $group->label()]));
+    }
 
     // Dispatch messages to group administration.
     foreach ($accounts as $user) {
@@ -166,7 +173,7 @@ class ServiceReadyToPublishSubscriber implements EventSubscriberInterface {
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
   protected function dispatchMessage(EntityInterface $node, UserInterface $account) {
-    $message = Message::create(['template' => self::MESSAGE_TEMPLATE, 'uid' => $account->id()]);
+    $message = Message::create(['template' => self::MESSAGE_TEMPLATE, 'uid' => $this->currentUser->id()]);
     $message->set('field_node', $node);
     $message->set('field_user', $account);
     $message->save();
