@@ -53,6 +53,11 @@
           letter-spacing: 1px;
           text-transform: uppercase;
           padding-left: 8px;
+          &:hover {
+            background-color: $blue100;
+            color: $white;
+            cursor: pointer;
+          }
         }
       }
     }
@@ -109,7 +114,7 @@
       width: 100%;
       .js-form-type-number {
         display: block;
-        margin-top: $space-one-half;
+        margin-top: $space;
       }
     }
 
@@ -124,7 +129,7 @@
 
 .field--name-field-dates {
   .field-add-more-submit {
-    margin-top: $space-one-half;
+    margin-top: $space;
   }
 }
 
@@ -147,7 +152,7 @@
       display: block;
       position: absolute;
       right: 24px;
-      top: 48px;
+      top: 24px;
       @include close-button;
       width: 20px;
       height: 20px;
@@ -175,6 +180,41 @@
       content: "";
       width: 100px;
       height: 20px;
+    }
+  }
+}
+
+.field--name-field-service-languages,
+.field--name-field-links {
+  .paragraphs-subform {
+    display: flex;
+    order: 1;
+    margin: 0;
+  }
+  .paragraph-type-top {
+    order: 2;
+    align-items: end;
+  }
+  .paragraphs-dropbutton-wrapper {
+    line-height: 32px;
+    input[data-drupal-selector*="top-links-remove-button"] {
+      @include close-button;
+      width: 16px;
+      height: 16px;
+      padding: 0;
+      line-height: 30px;
+    }
+
+    input[data-drupal-selector*="subform-field-service-languages-add-more-add-more-button-service-language"] {
+      width: 259px;
+      height: 48px;
+      @include button-color-blue;
+      font-size: $small-caption;
+    }
+
+    input[data-drupal-selector*="inline-entity-form-field-links-add-more-add-more-button-link"] {
+      @include round-icon-button;
+      background-image: url("/themes/custom/palvelumanuaali/images/icons/plus.svg");
     }
   }
 }
