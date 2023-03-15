@@ -11,6 +11,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\gcontent_moderation\GroupStateTransitionValidation;
 use Drupal\group\Entity\Group;
 use Drupal\group\Entity\GroupInterface;
+use Drupal\node\NodeInterface;
 use Drupal\service_manual_workflow\ContentGroupService;
 use Drupal\service_manual_workflow\Event\ServiceModerationEvent;
 use Drupal\user\UserInterface;
@@ -100,12 +101,12 @@ class ServiceReadyToPublishSubscriber implements EventSubscriberInterface {
     }
 
     // Get content group.
-    $group = $this->getGroups($entity);
+    $group = $this->getGroup($entity);
     if (empty($group)) {
       return;
     }
 
-    $accounts = $this->getEntityGroupAdministration($entity, $group);
+    $accounts = $this->getUsersToNotify($entity);
 
     if (empty($accounts)) {
       $this->messenger->addStatus($this->t('Users with publish permissions not found. Please contact site administration.', ['@group' => $group->label()]));
@@ -120,11 +121,74 @@ class ServiceReadyToPublishSubscriber implements EventSubscriberInterface {
   }
 
   /**
+   * Fetch available users for sending notification.
+   *
+   * @param \Drupal\node\NodeInterface $entity
+   *
+   * @return array
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   */
+  protected function getUsersToNotify(NodeInterface $entity) : array {
+    // Return owner(s) if service has one.
+    $users = $this->getServiceOwner($entity);
+    if (!empty($users)) {
+      return $users;
+    }
+
+    // Send message to organization admins in group.
+    $users = $this->getPublishersFromEntityGroup($entity);
+    if (!empty($users)) {
+      return $users;
+    }
+
+    return [];
+  }
+
+  /**
+   * @param \Drupal\node\NodeInterface $entity
+   *
+   * @return array
+   */
+  protected function getPublishersFromEntityGroup(NodeInterface $entity) : array {
+    $group = $this->getGroup($entity);
+    if (empty($group)) {
+      return [];
+    }
+    return $this->getEntityGroupAdministration($entity, $group);
+  }
+
+  /**
+   * @param \Drupal\node\NodeInterface $entity
+   *
+   * @return array
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   */
+  protected function getServiceOwner(NodeInterface $entity) : array {
+    $user = [];
+    $group_contents = $this->entityTypeManager->getStorage('group_content')->loadByProperties(['entity_id' => $entity->id()]);
+
+    // Service is not part of any group.
+    if (empty($group_contents)) {
+      return $user;
+    }
+
+    // Get all service owners in to an array.
+    foreach ($group_contents as $group_content) {
+      $owner = $group_content->get('field_service_owner')->referencedEntities();
+      $user[] = reset($owner);
+    }
+
+    return $user;
+  }
+
+  /**
    * @param \Drupal\Core\Entity\ContentEntityInterface $entity
    *
    * @return array|false|mixed
    */
-  protected function getGroups(ContentEntityInterface $entity) {
+  protected function getGroup(ContentEntityInterface $entity) {
     $groups = $this->contentGroupService->getGroupsWithEntity($entity);
 
     if (!empty($groups)) {
