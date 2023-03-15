@@ -43,7 +43,7 @@ use Drupal\date_recur_modular\Plugin\Field\FieldWidget\DateRecurModularAlphaWidg
  *
  * @FieldWidget(
  *   id = "hel_tpm_editorial_date_recur_custom",
- *   label = @Translation("Custom: TPM"),
+ *   label = @Translation("Custom: Date recur formatter"),
  *   field_types = {
  *     "date_recur"
  *   }
@@ -203,8 +203,8 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
     $element['weekdays']['#attributes']['class'][] = 'weekdays';
 
     // TODO: replace string with translateable string
-    foreach ($element['weekdays']['#options'] as $key => $value) {
-      $value = t($key);
+    foreach ($element['weekdays']['#options'] as $key => &$value) {
+      $value = $this->t($key);
     }
     $element['weekdays']['#states'] = $this->getVisibilityStates($element, $fieldModes['weekdays'] ?? []);
     $element['ordinals'] = $this->getFieldMonthlyByDayOrdinals($element, $rule);
@@ -262,6 +262,8 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
       // here so the value doesn't change.
       '#date_timezone' => $this::TIME_ZONE,
     ];
+    $element['ends_date']['ends_date']['#attributes']['class'][] = 'ends-date-item';
+    $element['ends_date']['ends_date'] = array_merge($element['ends_date']['ends_date'], $datetime_config);
     $element['ends_date']['#states']['visible'] = [];
     foreach ($fieldModes['ends_date'] ?? [] as $mode) {
       $element['ends_date']['#states']['visible'][] = [

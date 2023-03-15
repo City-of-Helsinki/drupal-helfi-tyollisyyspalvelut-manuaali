@@ -52,7 +52,7 @@
           font-size: 12px;
           letter-spacing: 1px;
           text-transform: uppercase;
-          padding-left: 8px;
+          padding-left: 20%;
         }
       }
     }
@@ -117,6 +117,11 @@
       order: 4;
       .form-item--radio {
         flex-direction: column;
+      }
+      .ends-date-item {
+        .form-item {
+          display: inline-block;
+        }
       }
     }
   }
