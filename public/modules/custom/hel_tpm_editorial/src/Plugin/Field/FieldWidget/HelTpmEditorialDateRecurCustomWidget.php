@@ -43,7 +43,7 @@ use Drupal\date_recur_modular\Plugin\Field\FieldWidget\DateRecurModularAlphaWidg
  *
  * @FieldWidget(
  *   id = "hel_tpm_editorial_date_recur_custom",
- *   label = @Translation("Custom: TPM"),
+ *   label = @Translation("Custom: Date recur formatter"),
  *   field_types = {
  *     "date_recur"
  *   }
@@ -202,10 +202,10 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
     $element['weekdays'] = $this->getFieldByDay($rule);
     $element['weekdays']['#attributes']['class'][] = 'weekdays';
 
-    // TODO: replace string with translateable string
-    foreach ($element['weekdays']['#options'] as $key => $value) {
-      $value = t($key);
+    foreach ($element['weekdays']['#options'] as $key => &$value) {
+      $value = $this->t($key);
     }
+
     $element['weekdays']['#states'] = $this->getVisibilityStates($element, $fieldModes['weekdays'] ?? []);
     $element['ordinals'] = $this->getFieldMonthlyByDayOrdinals($element, $rule);
     $element['ordinals']['#states'] = $this->getVisibilityStates($element, $fieldModes['ordinals'] ?? []);
@@ -252,7 +252,6 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
     $element['ends_date']['ends_date'] = [
       '#type' => 'datetime',
       '#title' => $this->t('End before this date'),
-      '#title_display' => 'invisible',
       '#description' => $this->t('No occurrences can begin after this date.'),
       '#default_value' => $endsDate ? DrupalDateTime::createFromDateTime($endsDate) : NULL,
       // Fix values tree thanks to state+container hack.
@@ -262,6 +261,8 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
       // here so the value doesn't change.
       '#date_timezone' => $this::TIME_ZONE,
     ];
+    $element['ends_date']['ends_date']['#attributes']['class'][] = 'ends-date-item';
+    $element['ends_date']['ends_date'] = array_merge($element['ends_date']['ends_date'], $datetime_config);
     $element['ends_date']['#states']['visible'] = [];
     foreach ($fieldModes['ends_date'] ?? [] as $mode) {
       $element['ends_date']['#states']['visible'][] = [
@@ -293,6 +294,18 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
     return $element;
   }
 
+  /**
+   * { @inheritdoc }
+   */
+  protected function getFieldByDay(?DateRecurRuleInterface $rule, string $weekDayLabels = 'full'): array {
+    $element = parent::getFieldByDay($rule, $weekDayLabels);
+    $element['#title_display'] = 'visible';
+    return $element;
+  }
+
+  /**
+   * { @inheritdoc }
+   */
   protected function formMultipleElements(FieldItemListInterface $items, array &$form, FormStateInterface $form_state) {
     $field_name = $this->fieldDefinition->getName();
     $cardinality = $this->fieldDefinition->getFieldStorageDefinition()->getCardinality();
