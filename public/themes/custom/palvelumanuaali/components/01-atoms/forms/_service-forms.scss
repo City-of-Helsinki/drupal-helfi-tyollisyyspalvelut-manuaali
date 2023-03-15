@@ -101,59 +101,6 @@
     }
   }
 
-  .field--name-field-service-time-and-location {
-    margin-bottom: $space-triple !important;
-    .button {
-      @include button-medium;
-      @include button-color-blue;
-      @include button-round-corners;
-      border: 2px solid $blue100;
-    }
-    > div > div  > table > tbody > tr > .table__cell {
-      margin-bottom: $space;
-    }
-    > div > div  > table > tbody > tr > .table__cell > div > div  {
-      position: relative;
-    }
-
-    > div > div  > table > tbody > tr > .table__cell > fieldset,
-    > div > div  > table > tbody > tr > .table__cell > .ajax-new-content > fieldset {
-      position: relative;
-      > input {
-        display: block;
-        position: absolute;
-        right: 24px;
-        top: 48px;
-        @include close-button;
-        width: 20px;
-        height: 20px;
-        padding: 4px;
-      }
-    }
-
-    > div > div  > table > tbody > tr > .table__cell > fieldset > div > fieldset > div,
-    > div > div  > table > tbody > tr > .table__cell > fieldset > .ajax-new-content > div > fieldset > div {
-      margin-bottom: $space-double;
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
-
-    .form-text,
-    select {
-      background-color: clr(text-inverse);
-    }
-
-    > div > div > .form-submit {
-      width: 100%;
-      &::after {
-        content: "";
-        width: 100px;
-        height: 20px;
-      }
-    }
-  }
-
   .field--name-field-client-consent {
     padding-bottom: 0;
   }
@@ -269,49 +216,6 @@
        }
     }
   }
-
-  .field--widget-hel-tpm-editorial-date-recur-custom {
-    .hel-tpm-editorial-date-recur-custom-widget {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: end;
-      > .form-submit {
-        order: 2;
-        @include close-button;
-        width: 16px;
-        height: 16px;
-        margin-bottom: 38px;
-      }
-      .dates {
-        order: 1;
-        max-width: 95%;
-        .hyphen-wrapper {
-          margin-top: 24px;
-        }
-        .date {
-          margin-bottom: 0;
-        }
-        .form-item {
-          margin-left: 0;
-        }
-      }
-      .container-inline {
-        order: 3;
-        display: flex;
-        gap: $space;
-        width: 100%;
-        select,
-        input {
-          width: 224px;
-        }
-        input {
-          height: 48px;
-          background-color: clr(text-inverse);
-        }
-      }
-    }
-  }
-
 
   > .tab > .form-fieldset,
   > .tab-1,

@@ -1,0 +1,60 @@
+@mixin datepicker-font{
+  text-align: center;
+  font-size: $small-font;
+  line-height: 2;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+@mixin datepicker-header-color{
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: clr(alt-header-color);
+}
+
+.ui-widget.ui-datepicker {
+  border: 2px solid #AFCEFD;
+  border-radius: 8px;
+  padding: $space-three-fourths $space-one-and-half $space $space-one-and-half;
+  .ui-datepicker-header{
+    background-color: transparent;
+    border: unset;
+  }
+  .ui-datepicker-title .ui-datepicker-month,
+  .ui-datepicker-title .ui-datepicker-year {
+    @include datepicker-font();
+    @include datepicker-header-color;
+  }
+  table {
+    border: 0;
+    margin: 0;
+  }
+  th {
+    border: 0;
+    @include datepicker-font;
+    @include datepicker-header-color;
+    &::after {
+      display: none;
+    }
+  }
+  thead {
+    border: 0;
+
+  }
+  tr {
+    &::after {
+      display: none;
+    }
+  }
+  td {
+    padding: 0;
+  }
+  tbody {
+    a {
+      border: 0;
+      background: unset;
+      @include datepicker-font;
+    }
+  }
+
+}
