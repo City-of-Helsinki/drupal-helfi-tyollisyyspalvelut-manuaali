@@ -25,7 +25,7 @@
       backgroundPosTime = backgroundPosTime/2;
       backgroundPosTime = backgroundPosTime.toString();
       backgroundPosTime = backgroundPosTime + "ch";
-      backgroundPosTime = "calc(50% + " + backgroundPosTime + " - 1rem)";
+      backgroundPosTime = "calc(50% + " + backgroundPosTime + " + 1rem)";
       $('.field--name-field-service-time-and-location > div > .form-item >.field-add-more-submit').css('background-position-x',backgroundPosTime);
 
       $('.btn-prev').click(function () {
