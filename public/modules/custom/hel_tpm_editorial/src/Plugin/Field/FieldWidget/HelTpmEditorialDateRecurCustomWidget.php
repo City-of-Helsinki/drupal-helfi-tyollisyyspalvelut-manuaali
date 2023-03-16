@@ -43,7 +43,7 @@ use Drupal\date_recur_modular\Plugin\Field\FieldWidget\DateRecurModularAlphaWidg
  *
  * @FieldWidget(
  *   id = "hel_tpm_editorial_date_recur_custom",
- *   label = @Translation("Custom: TPM"),
+ *   label = @Translation("Custom: Date recur formatter"),
  *   field_types = {
  *     "date_recur"
  *   }
@@ -58,10 +58,6 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
   protected const MODE_MULTIDAY = 'multiday';
 
   protected const MODE_WEEKLY = 'weekly';
-
-  protected const MODE_FORTNIGHTLY = 'fortnightly';
-
-  protected const MODE_MONTHLY = 'monthly';
 
   protected const TIME_ZONE = 'Europe/Helsinki';
 
@@ -80,8 +76,6 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
       static::MODE_ONCE => $this->t('Once'),
       static::MODE_MULTIDAY => $this->t('Multiple days'),
       static::MODE_WEEKLY => $this->t('Weekly'),
-      static::MODE_FORTNIGHTLY => $this->t('Fortnightly'),
-      static::MODE_MONTHLY => $this->t('Monthly'),
     ];
   }
 
@@ -115,9 +109,6 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
       /** @var int|null $interval */
       $interval = $parts['INTERVAL'] ?? NULL;
       return [1 => static::MODE_WEEKLY, 2 => static::MODE_FORTNIGHTLY][$interval] ?? NULL;
-    }
-    elseif ('MONTHLY' === $frequency) {
-      return static::MODE_MONTHLY;
     }
 
     return NULL;
@@ -210,12 +201,15 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
 
     $element['weekdays'] = $this->getFieldByDay($rule);
     $element['weekdays']['#attributes']['class'][] = 'weekdays';
-    $element['weekdays']['#states'] = $this->getVisibilityStates($element, $fieldModes['weekdays'] ?? []);
-    $element['weekdays']['#title_display'] = 'invisible';
 
+    foreach ($element['weekdays']['#options'] as $key => &$value) {
+      $value = $this->t($key);
+    }
+
+    $element['weekdays']['#states'] = $this->getVisibilityStates($element, $fieldModes['weekdays'] ?? []);
     $element['ordinals'] = $this->getFieldMonthlyByDayOrdinals($element, $rule);
     $element['ordinals']['#states'] = $this->getVisibilityStates($element, $fieldModes['ordinals'] ?? []);
-    $element['ordinals']['#title_display'] = 'invisible';
+    //$element['ordinals']['#title_display'] = 'invisible';
 
 
     $endsModeDefault =
@@ -258,7 +252,6 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
     $element['ends_date']['ends_date'] = [
       '#type' => 'datetime',
       '#title' => $this->t('End before this date'),
-      '#title_display' => 'invisible',
       '#description' => $this->t('No occurrences can begin after this date.'),
       '#default_value' => $endsDate ? DrupalDateTime::createFromDateTime($endsDate) : NULL,
       // Fix values tree thanks to state+container hack.
@@ -268,7 +261,8 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
       // here so the value doesn't change.
       '#date_timezone' => $this::TIME_ZONE,
     ];
-
+    $element['ends_date']['ends_date']['#attributes']['class'][] = 'ends-date-item';
+    $element['ends_date']['ends_date'] = array_merge($element['ends_date']['ends_date'], $datetime_config);
     $element['ends_date']['#states']['visible'] = [];
     foreach ($fieldModes['ends_date'] ?? [] as $mode) {
       $element['ends_date']['#states']['visible'][] = [
@@ -300,6 +294,18 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
     return $element;
   }
 
+  /**
+   * { @inheritdoc }
+   */
+  protected function getFieldByDay(?DateRecurRuleInterface $rule, string $weekDayLabels = 'full'): array {
+    $element = parent::getFieldByDay($rule, $weekDayLabels);
+    $element['#title_display'] = 'visible';
+    return $element;
+  }
+
+  /**
+   * { @inheritdoc }
+   */
   protected function formMultipleElements(FieldItemListInterface $items, array &$form, FormStateInterface $form_state) {
     $field_name = $this->fieldDefinition->getName();
     $cardinality = $this->fieldDefinition->getFieldStorageDefinition()->getCardinality();
@@ -584,7 +590,6 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
     // states are not replicated to children.
     $weekdaysId = $element['weekdays']['#id'];
     $element['ordinals']['#states']['visible'][0]['#' . $weekdaysId . ' input[type="checkbox"]'] = ['checked' => TRUE];
-
     // Add container classes to compact checkboxes.
     $element['weekdays']['#attributes']['class'][] = 'container-inline';
     $element['ordinals']['#attributes']['class'][] = 'container-inline';
@@ -663,37 +668,6 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
         $rule['INTERVAL'] = 1;
         $rule['BYDAY'] = $byDayStr;
       }
-      elseif ($mode === static::MODE_FORTNIGHTLY) {
-        $rule['FREQ'] = 'WEEKLY';
-        $rule['INTERVAL'] = 2;
-        $rule['BYDAY'] = $byDayStr;
-      }
-      elseif ($mode === static::MODE_MONTHLY) {
-        $rule['FREQ'] = 'MONTHLY';
-        $rule['INTERVAL'] = 1;
-        $rule['BYDAY'] = $byDayStr;
-
-        // Funge ordinals appropriately.
-        $ordinalCheckboxes = array_filter($value['ordinals']);
-        $ordinals = [];
-        if (count($ordinalCheckboxes) && count($weekDays)) {
-          $weekdayCount = count($weekDays);
-
-          // Expand simplified ordinals into spec compliant BYSETPOS ordinals.
-          foreach ($ordinalCheckboxes as $ordinal) {
-            $end = $ordinal * $weekdayCount;
-            $diff = ($weekdayCount - 1);
-            $start = ($end > 0) ? $end - $diff : $end + $diff;
-            $range = range($start, $end);
-            array_push($ordinals, ...$range);
-          }
-
-          // Order doesn't matter but simplifies testing.
-          sort($ordinals);
-          $rule['BYSETPOS'] = implode(',', $ordinals);
-        }
-      }
-
       // Ends mode.
       if ($endsMode === DateRecurModularWidgetOptions::ENDS_MODE_OCCURRENCES && $mode !== static::MODE_MULTIDAY) {
         $rule['COUNT'] = (int) $value['ends_count'];

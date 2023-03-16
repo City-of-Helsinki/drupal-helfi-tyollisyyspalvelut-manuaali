@@ -52,6 +52,7 @@ dependencies:
   module:
     - content_moderation
     - field_group
+    - hel_tpm_editorial
     - hel_tpm_group
     - inline_entity_form
     - markup
@@ -755,28 +756,44 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_municipality_guidance:
-    type: entity_reference_paragraphs
+    type: hel_tpm_editorial_paragraphs_custom
     weight: 9
     region: content
     settings:
-      title: 'kuntakohtainen ohje'
-      title_plural: 'kuntakohtaiset ohjeet'
+      title: 'Kuntakohtaiset ohjeet (valinnainen)'
+      title_plural: 'Kuntakohtaiset ohjeet (valinnainen)'
       edit_mode: closed
+      closed_mode: summary
+      autocollapse: all
+      closed_mode_threshold: '0'
       add_mode: button
       form_display_mode: default
-      default_paragraph_type: _none
+      default_paragraph_type: municipality_guide
+      add_label: 'Add a municipality specific guide'
+      features:
+        duplicate: 0
+        collapse_edit_all: 0
+        add_above: 0
     third_party_settings: {  }
   field_municipality_specific:
-    type: entity_reference_paragraphs
+    type: hel_tpm_editorial_paragraphs_custom
     weight: 14
     region: content
     settings:
       title: ' Kuntakohtaiset poikkeustilanteet'
       title_plural: ' Kuntakohtaiset poikkeustilanteet'
       edit_mode: closed
-      add_mode: dropdown
+      closed_mode: summary
+      autocollapse: all
+      closed_mode_threshold: '0'
+      add_mode: button
       form_display_mode: default
       default_paragraph_type: municipality_guide
+      add_label: 'Add a municipality specific guide +'
+      features:
+        duplicate: 0
+        collapse_edit_all: 0
+        add_above: 0
     third_party_settings: {  }
   field_obligatoryness:
     type: options_buttons
@@ -960,7 +977,7 @@ content:
     region: content
     settings:
       form_mode: default
-      override_labels: false
+      override_labels: true
       label_singular: ''
       label_plural: ''
       collapsible: false
