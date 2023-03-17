@@ -1,0 +1,230 @@
+.field--widget-hel-tpm-editorial-date-recur-custom {
+  .dates {
+    display: grid;
+    grid-template-columns: 5fr 0.5fr 5fr;
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+    .date {
+      .form-item {
+        float: left;
+        width: 45%;
+        margin-right: 2%;
+        margin-left: 2%;
+      }
+      input {
+        background-color: #fff;
+      }
+    }
+  }
+  .hel-tpm-editorial-date-recur-custom-widget {
+    .date-preview {
+      float: left;
+    }
+    .weekdays.container-inline {
+
+      .form-item--checkboxes {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+      }
+      .form-item {
+        width: auto;
+      }
+      .form-item-checkbox {
+        margin-right: $space-one-half;
+        margin-bottom: 0;
+        height: 32px;
+        input {
+          opacity: 0;
+          position: absolute;
+          &:checked +label {
+            background-color: $blue100;
+            color: $white;
+          }
+        }
+        label {
+          width: 32px;
+          height: 32px;
+          background-color: $blue10;
+          color: $blue100;
+          border-radius: 50%;
+          overflow: hidden;
+          display: flex;
+          align-items: center;
+          justify-content: start;
+          font-weight: 700;
+          font-size: 12px;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          padding-left: 8px;
+          &:hover {
+            background-color: $blue100;
+            color: $white;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+
+  .hyphen-wrapper {
+    position: relative;
+    .hyphen {
+      font-weight: 600;
+      display: block;
+      position: absolute;
+      top: 40%;
+      left: 10px;
+    }
+  }
+  .field--type-date-recur {
+    legend {
+      width: 100%;
+    }
+    .form-item--checkboxes {
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+}
+
+.field--widget-hel-tpm-editorial-date-recur-custom {
+  .hel-tpm-editorial-date-recur-custom-widget {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    > .form-submit {
+      order: 2;
+      @include close-button;
+      width: 16px;
+      height: 16px;
+      margin-bottom: 38px;
+    }
+    .dates {
+      order: 1;
+      max-width: 95%;
+      .hyphen-wrapper {
+        margin-top: 24px;
+      }
+      .date {
+        margin-bottom: 0;
+      }
+      .form-item {
+        margin-left: 0;
+      }
+    }
+    >.container-inline {
+      order: 3;
+      width: 100%;
+      margin-bottom: $space-double;
+      .js-form-type-number {
+        display: block;
+        margin-top: $space;
+      }
+    }
+
+    .ends {
+      order: 4;
+      .form-item--radio {
+        flex-direction: column;
+      }
+      .ends-date-item {
+        .form-item {
+          display: inline-block;
+        }
+      }
+    }
+  }
+}
+
+.field--name-field-dates {
+  .field-add-more-submit {
+    margin-top: $space-double;
+  }
+}
+
+.field--name-field-service-time-and-location {
+  margin-bottom: $space-triple !important;
+  .button {
+    @include button-medium;
+    @include button-color-blue;
+    @include button-round-corners;
+    border: 2px solid $blue100;
+  }
+  > div > div  > table > tbody > tr > .table__cell {
+    margin-bottom: $space;
+  }
+
+  > div > div  > table > tbody > tr > .table__cell > fieldset,
+  > div > div  > table > tbody > tr > .table__cell > .ajax-new-content > fieldset {
+    position: relative;
+    > input {
+      display: block;
+      position: absolute;
+      right: 24px;
+      top: 24px;
+      @include close-button;
+      width: 20px;
+      height: 20px;
+      padding: 4px;
+    }
+  }
+
+  > div > div  > table > tbody > tr > .table__cell > fieldset > div > fieldset > div,
+  > div > div  > table > tbody > tr > .table__cell > fieldset > .ajax-new-content > div > fieldset > div {
+    margin-bottom: $space-double;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .form-text,
+  .select--white-rounded select,
+  .form-number {
+    background-color: clr(text-inverse);
+  }
+
+  > div > div > .form-submit {
+    width: 100%;
+    &::after {
+      content: "";
+      width: 100px;
+      height: 20px;
+    }
+  }
+}
+
+.field--name-field-service-languages,
+.field--name-field-links {
+  .paragraphs-subform {
+    display: flex;
+    order: 1;
+    margin: 0;
+  }
+  .paragraph-type-top {
+    order: 2;
+    align-items: end;
+  }
+  .paragraphs-dropbutton-wrapper {
+    line-height: 32px;
+    input[data-drupal-selector*="top-links-remove-button"] {
+      @include close-button;
+      width: 16px;
+      height: 16px;
+      padding: 0;
+      line-height: 30px;
+    }
+
+    input[data-drupal-selector*="subform-field-service-languages-add-more-add-more-button-service-language"] {
+      width: 259px;
+      height: 48px;
+      @include button-color-blue;
+      font-size: $small-caption;
+    }
+
+    input[data-drupal-selector*="inline-entity-form-field-links-add-more-add-more-button-link"] {
+      @include round-icon-button;
+      background-image: url("/themes/custom/palvelumanuaali/images/icons/plus.svg");
+    }
+  }
+}
