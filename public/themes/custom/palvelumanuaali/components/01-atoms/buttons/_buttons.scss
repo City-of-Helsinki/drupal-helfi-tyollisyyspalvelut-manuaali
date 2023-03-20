@@ -4,14 +4,14 @@ $button-colors: (
   primary: (
     text: clr(text-inverse),
     bg: clr(primary),
-    text-hover: clr(primary),
-    bg-hover: clr(highlight),
+    text-hover: clr(text-inverse),
+    bg-hover: clr(alt-header-color),
   ),
   primary-dark: (
     text: clr(text-inverse),
     bg: clr(primary),
-    text-hover: clr(text),
-    bg-hover: clr(highlight-high),
+    text-hover: clr(text-inverse),
+    bg-hover: clr(alt-header-color),
   ),
   secondary: (
     text: clr(text-inverse),
@@ -185,7 +185,7 @@ $button-colors: (
 
 .button {
   @include button-base;
-  @include button-color-primary;
+  @include button-color-blue;
   @include button-medium;
 
   &--alt {
@@ -480,7 +480,7 @@ there is possibility to add classes button--blue-bordered,
 .field--name-field-service-time-and-location > div > div > .field-add-more-submit{
     margin-top: $space-one-half;
     @include button-color-blue;
-    
+
     width: 100%;
     box-sizing: border-box;
     background-image: url("/themes/custom/palvelumanuaali/images/icons/plus.svg");
@@ -489,6 +489,7 @@ there is possibility to add classes button--blue-bordered,
     line-height: 24px;
 }
 
+.field--type-link > div > .form-item > .form-submit,
 .field--type-file > .form-wrapper > .form-wrapper .form-submit {
   @include button-round-corners;
   @include button-color-blue;
