@@ -1,0 +1,37 @@
+uuid: 7b601265-46d1-4900-b4b2-9ac1306a1b3a
+langcode: en
+status: true
+dependencies:
+  module:
+    - dropzonejs_eb_widget
+name: entity_browser
+label: 'Entity browser'
+display: modal
+display_configuration:
+  width: '650'
+  height: '650'
+  link_text: 'Select files'
+  auto_open: false
+selection_display: no_display
+selection_display_configuration: {  }
+widget_selector: single
+widget_selector_configuration: {  }
+widgets:
+  022ffe23-880c-4f5d-890e-67a8ccc923c4:
+    id: dropzonejs
+    uuid: 022ffe23-880c-4f5d-890e-67a8ccc923c4
+    label: dropzonejs
+    weight: 1
+    settings:
+      submit_text: 'Select entities'
+      auto_select: false
+      upload_location: 'public://[date:custom:Y]-[date:custom:m]'
+      dropzone_description: 'Drop files here to upload them'
+      max_filesize: 100M
+      extensions: 'docx doc pdf ppt pptx jpg png'
+      clientside_resize: false
+      resize_width: null
+      resize_height: null
+      resize_quality: !!float 1
+      resize_method: contain
+      thumbnail_method: contain

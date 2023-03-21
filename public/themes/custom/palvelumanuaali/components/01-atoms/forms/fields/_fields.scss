@@ -149,6 +149,7 @@
     @include button-medium;
     @include button-color-blue;
     @include button-round-corners;
+
     border: 2px solid $blue100;
   }
   > div > div  > table > tbody > tr > .table__cell {
@@ -159,11 +160,12 @@
   > div > div  > table > tbody > tr > .table__cell > .ajax-new-content > fieldset {
     position: relative;
     > input {
+      @include close-button;
+
       display: block;
       position: absolute;
       right: 24px;
       top: 24px;
-      @include close-button;
       width: 20px;
       height: 20px;
       padding: 4px;
@@ -226,5 +228,39 @@
       @include round-icon-button;
       background-image: url("/themes/custom/palvelumanuaali/images/icons/plus.svg");
     }
+  }
+}
+
+
+.field--name-field-service-other-info,
+.field--name-field-links-and-attachments {
+  .field--name-field-link {
+    margin-bottom: $space-double;
+    .table__cell > input,
+    .table__cell >.ajax-new-content > input {
+      @include close-button;
+
+      display: block;
+      position: absolute;
+      bottom: 36px;
+      right: 10px;
+      width: 8px;
+      height: 8px;
+      padding: 4px;
+    }
+  }
+  .field--type-file {
+    > .form-wrapper > .form-wrapper {
+      padding: 0;
+    }
+
+  }
+}
+
+.field--type-file {
+  table td {
+    padding-left: $space-one-half;
+    padding-right: $space-one-half;
+    flex: 1;
   }
 }
