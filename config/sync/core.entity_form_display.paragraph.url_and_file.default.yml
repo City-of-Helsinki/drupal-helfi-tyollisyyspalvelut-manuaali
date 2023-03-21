@@ -3,27 +3,60 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - entity_browser.browser.entity_browser
     - field.field.paragraph.url_and_file.field_file
     - field.field.paragraph.url_and_file.field_link
     - paragraphs.paragraphs_type.url_and_file
   module:
-    - file
+    - entity_browser
+    - field_group
     - link
+third_party_settings:
+  field_group:
+    group_url_file:
+      children:
+        - field_link
+        - field_file
+      label: 'url file'
+      region: content
+      parent_name: ''
+      weight: 0
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        description: ''
+        required_fields: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
 id: paragraph.url_and_file.default
 targetEntityType: paragraph
 bundle: url_and_file
 mode: default
 content:
   field_file:
-    type: file_generic
-    weight: 1
+    type: entity_browser_file
+    weight: 3
     region: content
     settings:
-      progress_indicator: throbber
+      entity_browser: entity_browser
+      field_widget_edit: true
+      field_widget_remove: true
+      field_widget_replace: false
+      open: false
+      selection_mode: selection_append
+      view_mode: default
+      preview_image_style: thumbnail
     third_party_settings: {  }
   field_link:
     type: link_default
-    weight: 0
+    weight: 2
     region: content
     settings:
       placeholder_url: ''
