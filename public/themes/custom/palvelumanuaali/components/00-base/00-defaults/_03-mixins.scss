@@ -59,7 +59,7 @@ $outer-container-break: $small;
 }
 
 @mixin field-error {
-  box-shadow: inset 0px 0px 2px 2px clr(error);
+  box-shadow: inset 0 0 2px 2px clr(error);
   padding: 0.5em;
   border-radius: 7px;
 }
@@ -81,7 +81,7 @@ $outer-container-break: $small;
 
 @mixin icons() {
   display: inline-block;
-  font-family: "icons", Serif;
+  font-family: "icons", serif;
   font-style: normal;
   font-weight: normal;
   line-height: 1;
@@ -136,8 +136,11 @@ $outer-container-break: $small;
     @include xxl {
       width: 468px;
     }
+
     padding: $space $space-double $space-one-and-half $space;
+
     /* Primary/Blue 5 */
+
     background: #F7F9FD;
 
     /* Primary/Blue 100 */

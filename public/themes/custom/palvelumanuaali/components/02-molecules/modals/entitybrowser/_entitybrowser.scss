@@ -1,0 +1,19 @@
+.entity-browser-modal {
+  z-index: 200;
+  background: #FFFFFF;
+  border-radius: 8px;
+  border: 0;
+  .ui-dialog-titlebar {
+    background: transparent;
+    border: 0;
+  }
+  .ui-dialog-titlebar-close {
+    @include close-button;
+  }
+  .entity-browser-modal-iframe {
+    padding: $space !important;
+    border: 2px solid #D0DCFB;
+    border-radius: 8px;
+    background-color: clr(background);
+  }
+}
