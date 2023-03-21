@@ -34,7 +34,7 @@ $button-colors: (
   no-color: (
     text: clr(background-section),
     bg: unset,
-    text-hover: clr(background-section),
+    text-hover: clr(alt-header-color),
     bg-hover: unset,
   ),
 );
@@ -81,6 +81,25 @@ $button-colors: (
   @include button-round-corners;
   border: 2px solid clr(background-section);
 }
+@mixin button-no-color-with-round-border {
+  @include button-no-color;
+  @include button-round-corners;
+  border: 2px solid clr(background-section);
+  color: clr(background-section);
+  &:hover {
+    border: 2px solid clr(alt-header-color);
+    color: clr(alt-header-color);
+  }
+  &:active {
+    border: 2px solid clr(footer-color);
+    color: clr(footer-color);
+  }
+  &:disabled {
+    border: 2px solid clr(gray);
+    color: clr(gray);
+  }
+}
+
 
 // Button color variations
 // Note how we include dark mode options for each
@@ -160,7 +179,6 @@ $button-colors: (
   border-radius: 8px 8px 0 0;
 }
 
-
 //button symbol variations
 @mixin arrow-right {
   &::after {
@@ -210,13 +228,16 @@ $button-colors: (
     border: 2px solid clr(background-section);
     color: clr(background-section);
     &:hover {
-
+      border: 2px solid clr(alt-header-color);
+      color: clr(alt-header-color);
     }
     &:active {
-
+      border: 2px solid clr(footer-color);
+      color: clr(footer-color);
     }
     &:disabled {
-
+      border: 2px solid clr(gray);
+      color: clr(gray);
     }
   }
 
@@ -422,6 +443,7 @@ there is possibility to add classes button--blue-bordered,
     @include button-large;
     @include background-white;
     @include arrow-right;
+    font-weight: 600;
     padding-top: 18px;
     padding-bottom: 18px;
     line-height: 24px;
@@ -479,4 +501,10 @@ there is possibility to add classes button--blue-bordered,
     background-repeat: no-repeat;
     background-position-y: center;
     line-height: 24px;
+}
+
+input[data-drupal-selector="edit-field-contact-info-actions-ief-add"],
+input[data-drupal-selector="edit-field-contact-info-external-actions-ief-add"]{
+  @include button-no-color-with-round-border;
+
 }
