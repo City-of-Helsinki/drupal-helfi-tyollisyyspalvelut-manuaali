@@ -82,7 +82,6 @@ third_party_settings:
         - group_service_requirements
         - group_guidance_to_service
         - group_service_obligatoryness
-        - field_municipality_guidance
         - group_markings_for_service
         - group_statements_unemploym
         - group_measures_during
@@ -477,6 +476,7 @@ third_party_settings:
     group_guidance_to_service:
       children:
         - field_guidance_to_service
+        - field_municipality_guidance
       label: 'Ohjaus palveluun'
       region: content
       parent_name: group_specialist
