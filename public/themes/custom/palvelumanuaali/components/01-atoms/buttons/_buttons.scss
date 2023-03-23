@@ -4,14 +4,14 @@ $button-colors: (
   primary: (
     text: clr(text-inverse),
     bg: clr(primary),
-    text-hover: clr(primary),
-    bg-hover: clr(highlight),
+    text-hover: clr(text-inverse),
+    bg-hover: clr(alt-header-color),
   ),
   primary-dark: (
     text: clr(text-inverse),
     bg: clr(primary),
-    text-hover: clr(text),
-    bg-hover: clr(highlight-high),
+    text-hover: clr(text-inverse),
+    bg-hover: clr(alt-header-color),
   ),
   secondary: (
     text: clr(text-inverse),
@@ -34,7 +34,7 @@ $button-colors: (
   no-color: (
     text: clr(background-section),
     bg: unset,
-    text-hover: clr(background-section),
+    text-hover: clr(alt-header-color),
     bg-hover: unset,
   ),
 );
@@ -79,8 +79,28 @@ $button-colors: (
   @include button-base;
   @include button-medium;
   @include button-round-corners;
+
   border: 2px solid clr(background-section);
 }
+@mixin button-no-color-with-round-border {
+  @include button-no-color;
+  @include button-round-corners;
+  border: 2px solid clr(background-section);
+  color: clr(background-section);
+  &:hover {
+    border: 2px solid clr(alt-header-color);
+    color: clr(alt-header-color);
+  }
+  &:active {
+    border: 2px solid clr(footer-color);
+    color: clr(footer-color);
+  }
+  &:disabled {
+    border: 2px solid clr(gray);
+    color: clr(gray);
+  }
+}
+
 
 // Button color variations
 // Note how we include dark mode options for each
@@ -160,11 +180,11 @@ $button-colors: (
   border-radius: 8px 8px 0 0;
 }
 
-
 //button symbol variations
 @mixin arrow-right {
   &::after {
     @include icons();
+
     content: "\EA12";
     margin-left: $space;
   }
@@ -173,6 +193,7 @@ $button-colors: (
 @mixin arrow-left {
   &::before {
     @include icons();
+
     content: "\EA11";
     margin-right: $space;
   }
@@ -182,7 +203,7 @@ $button-colors: (
 
 .button {
   @include button-base;
-  @include button-color-primary;
+  @include button-color-blue;
   @include button-medium;
 
   &--alt {
@@ -207,16 +228,20 @@ $button-colors: (
 
   &--no-color {
     @include button-no-color;
+
     border: 2px solid clr(background-section);
     color: clr(background-section);
     &:hover {
-
+      border: 2px solid clr(alt-header-color);
+      color: clr(alt-header-color);
     }
     &:active {
-
+      border: 2px solid clr(footer-color);
+      color: clr(footer-color);
     }
     &:disabled {
-
+      border: 2px solid clr(gray);
+      color: clr(gray);
     }
   }
 
@@ -250,6 +275,7 @@ $button-colors: (
   @include button-medium;
   @include button-round-corners;
   @include button-no-color;
+
   border: 2px solid clr(background-section);
   padding-right: $space-double;
   .button {
@@ -261,6 +287,7 @@ $button-colors: (
   }
   &::after {
     @include icons;
+
     content: "\EA0B";
     color: clr(background-section);
     margin-left: $space;
@@ -273,6 +300,7 @@ $button-colors: (
     @include button-medium;
     @include button-round-corners;
     @include button-no-color;
+
     border: 2px solid clr(background-section);
     padding-right: $space-double;
     display: none !important;
@@ -285,6 +313,7 @@ $button-colors: (
   }
   &::after {
       @include icons;
+
       content: "\EA0C";
       color: clr(background-section);
       margin-left: $space;
@@ -295,6 +324,7 @@ $button-colors: (
 #loginDropdownButton {
   @include button-color-blue;
   @include button-round-corners;
+
   border: 2px solid $blue20;
   padding: 12px 32px 12px 32px;
   font-size: 14px;
@@ -336,6 +366,7 @@ $button-colors: (
 #searchDropdownButton {
   @include button-medium;
   @include button-round-corners;
+
   position: absolute;
   top: 20px;
   right: 0;
@@ -346,6 +377,7 @@ $button-colors: (
   @include button-medium;
   @include button-round-corners;
   @include button-no-color;
+
   border: 2px solid clr(background-section);
   display: flex;
   align-items: center;
@@ -370,6 +402,7 @@ $button-colors: (
   @include button-medium;
   @include button-round-corners;
   @include button-no-color;
+
   border: 2px solid clr(background-section);
   display: flex;
   align-items: center;
@@ -395,6 +428,7 @@ $button-colors: (
     @include button-medium;
     @include button-round-corners;
     @include button-color-blue;
+
     border: 2px solid clr(background-section);
     display: flex;
     align-items: center;
@@ -422,6 +456,7 @@ there is possibility to add classes button--blue-bordered,
     @include button-large;
     @include background-white;
     @include arrow-right;
+    font-weight: 600;
     padding-top: 18px;
     padding-bottom: 18px;
     line-height: 24px;
@@ -432,9 +467,9 @@ there is possibility to add classes button--blue-bordered,
 .node-form {
   >.form-actions {
     >.button {
-        @include button-medium;
-        @include button-color-blue;
-        @include button-round-corners;
+      @include button-medium;
+      @include button-color-blue;
+      @include button-round-corners;
     }
   }
 }
@@ -444,6 +479,7 @@ there is possibility to add classes button--blue-bordered,
   .button {
     @include button-color-blue;
     @include button-round-corners;
+
     font-size: 12px;
     line-height: 24px;
     padding: $space-one-half $space-one-and-half $space-one-half $space-one-and-half;
@@ -453,7 +489,44 @@ there is possibility to add classes button--blue-bordered,
 
 .local-actions-block {
   .button {
-      @include button-round-corners;
-      @include button-color-blue;
+    @include button-round-corners;
+    @include button-color-blue;
   }
+}
+
+.node-form,
+.node-edit-form {
+  .field-add-more-submit,
+    .paragraphs-icon-button {
+      @include button-medium;
+      @include button-no-color;
+      @include button-round-corners;
+
+      border: 2px solid $blue100;
+    }
+}
+
+.field--widget-hel-tpm-editorial-paragraphs-custom .field-add-more-submit,
+.field--name-field-service-time-and-location > div > div > .field-add-more-submit{
+    margin-top: $space-one-half;
+    @include button-color-blue;
+
+    width: 100%;
+    box-sizing: border-box;
+    background-image: url("/themes/custom/palvelumanuaali/images/icons/plus.svg");
+    background-repeat: no-repeat;
+    background-position-y: center;
+    line-height: 24px;
+}
+
+input[data-drupal-selector="edit-field-contact-info-actions-ief-add"],
+input[data-drupal-selector="edit-field-contact-info-external-actions-ief-add"]{
+  @include button-no-color-with-round-border;
+
+}
+
+.field--type-link > div > .form-item > .form-submit,
+.field--type-file > .form-wrapper > .form-wrapper .form-submit {
+  @include button-round-corners;
+  @include button-color-blue;
 }
