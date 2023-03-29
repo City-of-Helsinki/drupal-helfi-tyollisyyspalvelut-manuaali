@@ -27,6 +27,7 @@ dependencies:
     - field.field.node.service.field_poma_applicable
     - field.field.node.service.field_poma_applicable_descriptio
     - field.field.node.service.field_related_archive
+    - field.field.node.service.field_responsible_municipality
     - field.field.node.service.field_responsible_updatee
     - field.field.node.service.field_service_benefits
     - field.field.node.service.field_service_exceptions
@@ -37,6 +38,7 @@ dependencies:
     - field.field.node.service.field_service_other_info
     - field.field.node.service.field_service_price
     - field.field.node.service.field_service_producer
+    - field.field.node.service.field_service_provider_updatee
     - field.field.node.service.field_service_radioactivity
     - field.field.node.service.field_service_req_speacialist
     - field.field.node.service.field_service_requirements
@@ -225,6 +227,8 @@ third_party_settings:
         - field_contact_info
         - entitygroupfield
         - field_service_producer
+        - field_service_provider_updatee
+        - field_responsible_municipality
         - field_responsible_updatee
         - field_other_services
       label: 'Additional info'
@@ -821,7 +825,7 @@ content:
     third_party_settings: {  }
   field_other_services:
     type: select2_entity_reference
-    weight: 13
+    weight: 15
     region: content
     settings:
       width: 100%
@@ -835,15 +839,21 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_responsible_updatee:
-    type: hel_tpm_group_user_select_widget
-    weight: 12
+  field_responsible_municipality:
+    type: select2_entity_reference
+    weight: 13
     region: content
     settings:
       width: 100%
+      autocomplete: false
       match_operator: CONTAINS
-      match_limit: '10'
-      autocomplete: 0
+      match_limit: 10
+    third_party_settings: {  }
+  field_responsible_updatee:
+    type: options_select
+    weight: 14
+    region: content
+    settings: {  }
     third_party_settings: {  }
   field_service_benefits:
     type: text_textarea
@@ -925,6 +935,12 @@ content:
       autocomplete: false
       match_operator: CONTAINS
       match_limit: 10
+    third_party_settings: {  }
+  field_service_provider_updatee:
+    type: options_select
+    weight: 12
+    region: content
+    settings: {  }
     third_party_settings: {  }
   field_service_req_speacialist:
     type: text_textarea
