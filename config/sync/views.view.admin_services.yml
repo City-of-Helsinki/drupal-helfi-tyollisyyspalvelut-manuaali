@@ -913,6 +913,71 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
+        field_responsible_updatee_target_id:
+          id: field_responsible_updatee_target_id
+          table: node__field_responsible_updatee
+          field: field_responsible_updatee_target_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: numeric
+          operator: '='
+          value:
+            min: ''
+            max: ''
+            value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_responsible_updatee_target_id_op
+            label: 'Kunnan vastuupäivittäjä (field_responsible_updatee)'
+            description: null
+            use_operator: false
+            operator: field_responsible_updatee_target_id_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_responsible_updatee_target_id
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            min_placeholder: null
+            max_placeholder: null
+            placeholder: null
+          is_grouped: true
+          group_info:
+            label: 'Kunnan vastuupäivittäjä'
+            description: ''
+            identifier: field_responsible_updatee_target_id
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items:
+              1:
+                title: 'Has updatee'
+                operator: 'not empty'
+                value:
+                  min: ''
+                  max: ''
+                  value: ''
+              2:
+                title: 'Doesn''t have updatee'
+                operator: empty
+                value:
+                  min: ''
+                  max: ''
+                  value: ''
+              3:
+                title: ''
+                operator: '='
+                value:
+                  min: ''
+                  max: ''
+                  value: ''
       filter_groups:
         operator: AND
         groups:
