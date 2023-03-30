@@ -14,6 +14,24 @@
       handleSelectedStatement();
       handleSelectedObligatoryness();
 
+      if($('.field--widget-hel-tpm-editorial-paragraphs-custom .field-add-more-submit').length){
+        var backgroundPos = $('.field--widget-hel-tpm-editorial-paragraphs-custom .field-add-more-submit').val().length;
+        backgroundPos = backgroundPos/2;
+        backgroundPos = backgroundPos.toString();
+        backgroundPos = backgroundPos + "ch";
+        backgroundPos = "calc(50% + " + backgroundPos + " - 1rem)";
+        $('.field--widget-hel-tpm-editorial-paragraphs-custom .field-add-more-submit').css('background-position-x',backgroundPos);
+      }
+
+      if($('.field--widget-hel-tpm-service-dates-service-time-and-place-widget .field-add-more-submit').length){
+        var backgroundPosTime = $('.field--widget-hel-tpm-service-dates-service-time-and-place-widget .field-add-more-submit').val().length;
+        backgroundPosTime = backgroundPosTime/2;
+        backgroundPosTime = backgroundPosTime.toString();
+        backgroundPosTime = backgroundPosTime + "ch";
+        backgroundPosTime = "calc(50% + " + backgroundPosTime + " + 1rem)";
+        $('.field--widget-hel-tpm-service-dates-service-time-and-place-widget .field-add-more-submit').css('background-position-x',backgroundPosTime);
+      }
+
       $('.btn-prev').click(function () {
         nextPrev(-1);
       });

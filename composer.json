@@ -39,6 +39,18 @@
             }
         },
         {
+            "type": "package",
+            "package": {
+                "name": "enyo/dropzone",
+                "version": "5.7.1",
+                "type": "drupal-library",
+                "dist": {
+                    "url": "https://github.com/enyo/dropzone/archive/v5.7.1.zip",
+                    "type": "zip"
+                }
+            }
+        },
+        {
           "type": "composer",
           "url": "https://asset-packagist.org"
         }
@@ -65,9 +77,11 @@
         "drupal/date_recur": "^3.2",
         "drupal/date_recur_modular": "^3.0",
         "drupal/disable_html5_validation": "^1.1",
+        "drupal/dropzonejs": "^2.8",
         "drupal/elasticsearch_connector": "^7.0@alpha",
         "drupal/emulsify_drupal": "^4.1",
         "drupal/emulsify_twig": "^2.0",
+        "drupal/entity_browser": "^2.9",
         "drupal/entity_diff_ui": "^1.0",
         "drupal/entity_print": "^2.4",
         "drupal/entitygroupfield": "^1.0@alpha",
@@ -139,6 +153,7 @@
         "drupal/view_password": "^6.0",
         "drupal/views_ef_fieldset": "1.x-dev",
         "drush/drush": "^10.3",
+        "enyo/dropzone": "^5.7",
         "npm-asset/jquery-ui-touch-punch": "^0.2.3",
         "npm-asset/select2": "^4.0",
         "oomphinc/composer-installers-extender": "^2.0",
