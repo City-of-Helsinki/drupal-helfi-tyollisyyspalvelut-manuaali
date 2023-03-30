@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "27055c897051830a824a0ea1c984bd67",
+    "content-hash": "3d39076ef08574fb176b369f9516bbf2",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -4744,6 +4744,58 @@
             }
         },
         {
+            "name": "drupal/epp",
+            "version": "1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/epp.git",
+                "reference": "8.x-1.3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/epp-8.x-1.3.zip",
+                "reference": "8.x-1.3",
+                "shasum": "f76397710f3ed2d88d72fa164456cc44afdcf16e"
+            },
+            "require": {
+                "drupal/core": "^8.7.7 || ^9 || ^10"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.3",
+                    "datestamp": "1670961451",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "anruether",
+                    "homepage": "https://www.drupal.org/user/894458"
+                },
+                {
+                    "name": "geek-merlin",
+                    "homepage": "https://www.drupal.org/user/229048"
+                },
+                {
+                    "name": "heliogabal",
+                    "homepage": "https://www.drupal.org/user/998658"
+                }
+            ],
+            "description": "Prepopulate entity values via tokens. Install the Token module for more tokens and Token browser access.",
+            "homepage": "https://www.drupal.org/project/epp",
+            "support": {
+                "source": "https://git.drupalcode.org/project/epp"
+            }
+        },
+        {
             "name": "drupal/eu_cookie_compliance",
             "version": "1.24.0",
             "source": {
@@ -5299,7 +5351,7 @@
                     "datestamp": "1652866323",
                     "security-coverage": {
                         "status": "not-covered",
-                        "message": "Project has not opted into security advisory coverage!"
+                        "message": "Beta releases are not covered by Drupal security advisories."
                     }
                 }
             },
@@ -5779,6 +5831,10 @@
                     "name": "Kristiaan Van den Eynde",
                     "homepage": "https://www.drupal.org/u/kristiaanvandeneynde",
                     "role": "Maintainer"
+                },
+                {
+                    "name": "kristiaanvandeneynde",
+                    "homepage": "https://www.drupal.org/user/1345130"
                 }
             ],
             "description": "This module allows you to group users, content and other entities",
@@ -5880,6 +5936,14 @@
                     "name": "Serge Skripchuk (id.tarzanych)",
                     "homepage": "https://www.drupal.org/u/idtarzanych",
                     "role": "Co-maintainer"
+                },
+                {
+                    "name": "perfectcu.be",
+                    "homepage": "https://www.drupal.org/user/2442008"
+                },
+                {
+                    "name": "sinasalek",
+                    "homepage": "https://www.drupal.org/user/52244"
                 }
             ],
             "description": "Currently Drupal core does not offer any hook to do actions after a node/entity is insered/updated/deleted in Database. So this module introduces several new Drupal hooks to overcome this limitation",
@@ -6861,6 +6925,10 @@
                     "name": "Steven DuBois (srdtwc)",
                     "homepage": "https://www.drupal.org/u/srdtwc",
                     "role": "Maintainer"
+                },
+                {
+                    "name": "srdtwc",
+                    "homepage": "https://www.drupal.org/user/3422763"
                 }
             ],
             "description": "Maxlength allows a soft or hard character limit to be set on titles, text fields and link fields.",
@@ -8917,12 +8985,12 @@
             ],
             "authors": [
                 {
-                    "name": "Ruuds",
-                    "homepage": "https://www.drupal.org/user/3074673"
-                },
-                {
                     "name": "lauriii",
                     "homepage": "https://www.drupal.org/user/1078742"
+                },
+                {
+                    "name": "Ruuds",
+                    "homepage": "https://www.drupal.org/user/3074673"
                 }
             ],
             "description": "This module adds some helpful theme suggestions for form elements.",
