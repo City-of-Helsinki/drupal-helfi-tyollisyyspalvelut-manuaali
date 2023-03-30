@@ -5,6 +5,7 @@
  * Functions to support theming.
  */
 
+use Drupal\content_moderation\Entity\ContentModerationState;
 
 /**
  * Implements hook_preprocess_breadcrumb().
@@ -60,6 +61,33 @@ function palvelumanuaali_preprocess_node(&$variables) {
   if (!isset($variables['is_front'])) {
     $variables['is_front'] =  \Drupal::service('path.matcher')->isFrontPage();
   }
+  _palvelumanuaali_preprocess_view_card_liftup($variables);
+}
+
+function _palvelumanuaali_preprocess_view_card_liftup(&$variables) {
+  if (empty($variables['view_mode']) || $variables['view_mode'] !== 'view_card_lift') {
+    return;
+  }
+  $status_colors = [
+    'archived' => 'grey',
+    'draft' => 'warning',
+    'on_hold' => 'warning',
+    'outdated' => 'warning',
+    'published' => 'default',
+    'ready_to_publish' => 'warning',
+    'temporarily_archived' => 'grey'
+  ];
+  $node = $variables['node'];
+  $content_moderation_state = ContentModerationState::loadFromModeratedEntity($node);
+  if ($content_moderation_state) {
+    $state_name = $content_moderation_state->get('moderation_state')->value;
+    $workflow = $content_moderation_state->get('workflow')->entity;
+    $state_label = $workflow->get('type_settings')['states'][$state_name]['label'];
+    $variables['state_label'] = $state_label;
+    $variables['status_modifier'] = !empty($status_colors[$state_name]) ? $status_colors[$state_name] : '';
+
+  }
+
 }
 
 /**
