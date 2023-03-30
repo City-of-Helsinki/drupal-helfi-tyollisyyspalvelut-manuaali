@@ -116,7 +116,6 @@
     >.container-inline {
       order: 3;
       width: 100%;
-      margin-bottom: $space-double;
       .js-form-type-number {
         display: block;
         margin-top: $space;
@@ -139,26 +138,31 @@
 
 .field--name-field-dates {
   .field-add-more-submit {
-    margin-top: $space-double;
+    margin-top: $space;
   }
 }
 
-.field--name-field-service-time-and-location {
+.field--name-field-service-time-and-location,
+.field--name-field-service-time-and-location .ajax-new-content {
   margin-bottom: $space-triple !important;
-  .button {
-    @include button-medium;
-    @include button-color-blue;
-    @include button-round-corners;
-
-    border: 2px solid $blue100;
+  input[data-drupal-selector*="edit-field-service-time-and-location-add-more-add-more-button-service-time-and-place"] {
+    width: 100%;
+  }
+  .field--name-field-service-location {
+    margin-bottom: $space-double;
+  }
+  .field--name-field-service-languages {
+    margin-bottom: $space-two-and-half;
+  }
+  .field--name-field-separate-time {
+    margin-bottom: $space-double;
   }
   > div > div  > table > tbody > tr > .table__cell {
     margin-bottom: $space;
   }
 
-  > div > div  > table > tbody > tr > .table__cell > fieldset,
-  > div > div  > table > tbody > tr > .table__cell > .ajax-new-content > fieldset {
-    position: relative;
+  > div > div  > table > tbody > tr > .table__cell > div > div > div > .paragraphs-dropbutton-wrapper,
+  > div > div  > table > tbody > tr > .table__cell > .ajax-new-content > div > div > div > .paragraphs-dropbutton-wrapper {
     > input {
       @include close-button;
 
@@ -172,27 +176,10 @@
     }
   }
 
-  > div > div  > table > tbody > tr > .table__cell > fieldset > div > fieldset > div,
-  > div > div  > table > tbody > tr > .table__cell > fieldset > .ajax-new-content > div > fieldset > div {
-    margin-bottom: $space-double;
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-
   .form-text,
   .select--white-rounded select,
   .form-number {
     background-color: clr(text-inverse);
-  }
-
-  > div > div > .form-submit {
-    width: 100%;
-    &::after {
-      content: "";
-      width: 100px;
-      height: 20px;
-    }
   }
 }
 
@@ -220,7 +207,6 @@
     input[data-drupal-selector*="subform-field-service-languages-add-more-add-more-button-service-language"] {
       width: 259px;
       height: 48px;
-      @include button-color-blue;
       font-size: $small-caption;
     }
 

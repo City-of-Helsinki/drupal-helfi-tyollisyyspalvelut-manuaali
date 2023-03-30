@@ -56,6 +56,7 @@ dependencies:
     - field_group
     - hel_tpm_editorial
     - hel_tpm_group
+    - hel_tpm_service_dates
     - inline_entity_form
     - markup
     - maxlength
@@ -84,7 +85,6 @@ third_party_settings:
         - group_service_requirements
         - group_guidance_to_service
         - group_service_obligatoryness
-        - field_municipality_guidance
         - group_markings_for_service
         - group_statements_unemploym
         - group_measures_during
@@ -481,6 +481,7 @@ third_party_settings:
     group_guidance_to_service:
       children:
         - field_guidance_to_service
+        - field_municipality_guidance
       label: 'Ohjaus palveluun'
       region: content
       parent_name: group_specialist
@@ -772,7 +773,7 @@ content:
       closed_mode_threshold: '0'
       add_mode: button
       form_display_mode: default
-      default_paragraph_type: municipality_guide
+      default_paragraph_type: _none
       add_label: 'Add a municipality specific guide'
       features:
         duplicate: 0
@@ -792,8 +793,8 @@ content:
       closed_mode_threshold: '0'
       add_mode: button
       form_display_mode: default
-      default_paragraph_type: municipality_guide
-      add_label: 'Add a municipality specific guide +'
+      default_paragraph_type: _none
+      add_label: 'Add a municipality specific guide'
       features:
         duplicate: 0
         collapse_edit_all: 0
@@ -988,17 +989,16 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_service_time_and_location:
-    type: inline_entity_form_simple
+    type: hel_tpm_service_dates_service_time_and_place_widget
     weight: 17
     region: content
     settings:
-      form_mode: default
-      override_labels: true
-      label_singular: ''
-      label_plural: ''
-      collapsible: false
-      collapsed: false
-      revision: false
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: button
+      form_display_mode: default
+      default_paragraph_type: _none
     third_party_settings: {  }
   field_statements:
     type: options_buttons
