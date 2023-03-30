@@ -4,12 +4,12 @@ status: true
 dependencies:
   config:
     - field.storage.group_content.field_service_owner
-    - field.storage.node.field_responsible_updatee
   module:
     - content_moderation
     - ggroup
     - group
     - node
+    - user
 _core:
   default_config_hash: N3ns6qbzpWOxDydJhE1SlVVNRgHAEgBinAJm5E8Dmxo
 id: group_subgroup_services
@@ -483,15 +483,17 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-        field_responsible_updatee:
-          id: field_responsible_updatee
-          table: node__field_responsible_updatee
-          field: field_responsible_updatee
-          relationship: gc__node
+        mail:
+          id: mail
+          table: users_field_data
+          field: mail
+          relationship: field_responsible_updatee
           group_type: group
           admin_label: ''
+          entity_type: user
+          entity_field: mail
           plugin_id: field
-          label: 'Palvelun vastuupäivittäjä'
+          label: User
           exclude: false
           alter:
             alter_text: false
@@ -532,11 +534,10 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          click_sort_column: target_id
-          type: entity_reference_label
-          settings:
-            link: true
-          group_column: target_id
+          click_sort_column: value
+          type: basic_string
+          settings: {  }
+          group_column: value
           group_columns: {  }
           group_rows: true
           delta_limit: 0
@@ -679,7 +680,7 @@ display:
           plugin_id: language
           operator: in
           value:
-            '***LANGUAGE_language_interface***': '***LANGUAGE_language_interface***'
+            '***LANGUAGE_language_content***': '***LANGUAGE_language_content***'
           group: 1
           exposed: true
           expose:
@@ -701,6 +702,7 @@ display:
               admin: '0'
               editor: '0'
               specialist: '0'
+              specialist_editor: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -818,6 +820,15 @@ display:
             'group_node:basic_page': '0'
             'group_node:landing_page': '0'
             'group_node:service_location': '0'
+        field_responsible_updatee:
+          id: field_responsible_updatee
+          table: node__field_responsible_updatee
+          field: field_responsible_updatee
+          relationship: gc__node
+          group_type: group
+          admin_label: 'field_responsible_updatee: User'
+          plugin_id: standard
+          required: false
       header: {  }
       footer: {  }
       display_extenders: {  }
@@ -832,7 +843,6 @@ display:
         - user.group_permissions
       tags:
         - 'config:field.storage.group_content.field_service_owner'
-        - 'config:field.storage.node.field_responsible_updatee'
         - 'config:workflow_list'
   page_1:
     id: page_1
@@ -862,5 +872,4 @@ display:
         - user.group_permissions
       tags:
         - 'config:field.storage.group_content.field_service_owner'
-        - 'config:field.storage.node.field_responsible_updatee'
         - 'config:workflow_list'
