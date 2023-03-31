@@ -1,26 +1,16 @@
-uuid: b1cd9a9b-bfc5-4381-81e3-68c84ac60770
-langcode: fi
+uuid: dc3d0315-216a-47ee-b3bc-17fb383226a7
+langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_service_producer
+    - field.storage.node.field_responsible_municipality
     - group.type.organisation
-    - group.type.service_provider
     - node.type.service
-  module:
-    - epp
-    - require_on_publish
-third_party_settings:
-  epp:
-    value: '[current-page:url:args:value:1]'
-    on_update: 0
-  require_on_publish:
-    require_on_publish: true
-id: node.service.field_service_producer
-field_name: field_service_producer
+id: node.service.field_responsible_municipality
+field_name: field_responsible_municipality
 entity_type: node
 bundle: service
-label: Palveluntuottaja
+label: Vastuukunta
 description: ''
 required: false
 translatable: false
@@ -31,7 +21,6 @@ settings:
   handler_settings:
     target_bundles:
       organisation: organisation
-      service_provider: service_provider
     sort:
       field: _none
       direction: ASC
