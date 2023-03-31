@@ -14,23 +14,7 @@
       handleSelectedStatement();
       handleSelectedObligatoryness();
 
-      if($('.field--widget-hel-tpm-editorial-paragraphs-custom .field-add-more-submit').length){
-        var backgroundPos = $('.field--widget-hel-tpm-editorial-paragraphs-custom .field-add-more-submit').val().length;
-        backgroundPos = backgroundPos/2;
-        backgroundPos = backgroundPos.toString();
-        backgroundPos = backgroundPos + "ch";
-        backgroundPos = "calc(50% + " + backgroundPos + " - 1rem)";
-        $('.field--widget-hel-tpm-editorial-paragraphs-custom .field-add-more-submit').css('background-position-x',backgroundPos);
-      }
-
-      if($('.field--widget-hel-tpm-service-dates-service-time-and-place-widget .field-add-more-submit').length){
-        var backgroundPosTime = $('.field--widget-hel-tpm-service-dates-service-time-and-place-widget .field-add-more-submit').val().length;
-        backgroundPosTime = backgroundPosTime/2;
-        backgroundPosTime = backgroundPosTime.toString();
-        backgroundPosTime = backgroundPosTime + "ch";
-        backgroundPosTime = "calc(50% + " + backgroundPosTime + " + 1rem)";
-        $('.field--widget-hel-tpm-service-dates-service-time-and-place-widget .field-add-more-submit').css('background-position-x',backgroundPosTime);
-      }
+      addMoreSubmitBackgroud();
 
       $('.btn-prev').click(function () {
         nextPrev(-1);
@@ -47,6 +31,25 @@
         history.replaceState(null, null, "?"+urlParams.toString());
       });
 
+      /**
+       * Add custom background position css for add more buttons.
+       */
+      function addMoreSubmitBackgroud() {
+        let widgets = [
+          '.field--widget-hel-tpm-editorial-paragraphs-custom',
+          '.field--widget-hel-tpm-service-dates-service-time-and-place-widget'
+        ];
+        $(widgets).each(function() {
+          if($(this + ' .field-add-more-submit').length){
+            let backgroundPos = $(this + ' .field-add-more-submit').val().length;
+            backgroundPos = backgroundPos/2;
+            backgroundPos = backgroundPos.toString();
+            backgroundPos = backgroundPos + "ch";
+            backgroundPos = "calc(50% + " + backgroundPos + " - 0.5rem)";
+            $(this + ' .field-add-more-submit').css('background-position-x',backgroundPos);
+          }
+        })
+      }
 
       function addError() {
         let x = $(".tab.field-group-html-element");

@@ -1,15 +1,15 @@
-uuid: 6a18267f-93fd-421f-a380-40b788613852
-langcode: fi
+uuid: 697df67e-a9a6-4e41-90f0-b668637f906f
+langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_responsible_updatee
+    - field.storage.node.field_service_provider_updatee
     - node.type.service
-id: node.service.field_responsible_updatee
-field_name: field_responsible_updatee
+id: node.service.field_service_provider_updatee
+field_name: field_service_provider_updatee
 entity_type: node
 bundle: service
-label: 'Kunnan vastuupäivittäjä'
+label: 'Palveluntuottajan vastuupäivättäjä'
 description: ''
 required: false
 translatable: false
@@ -20,8 +20,8 @@ settings:
   handler_settings:
     dependent_fields_view:
       view_name: users_by_group_entity_reference
-      display_name: entity_reference_1
-      parent_field: field_responsible_municipality
+      display_name: entity_reference_2
+      parent_field: field_service_producer
       reference_parent_by_uuid: false
       arguments: {  }
 field_type: entity_reference
