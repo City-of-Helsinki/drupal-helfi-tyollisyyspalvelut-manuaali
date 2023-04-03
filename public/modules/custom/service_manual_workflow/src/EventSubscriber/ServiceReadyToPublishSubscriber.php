@@ -167,18 +167,12 @@ class ServiceReadyToPublishSubscriber implements EventSubscriberInterface {
    */
   protected function getServiceOwner(NodeInterface $entity) : array {
     $user = [];
-    $group_contents = $this->entityTypeManager->getStorage('group_content')->loadByProperties(['entity_id' => $entity->id()]);
 
-    // Service is not part of any group.
-    if (empty($group_contents)) {
+    if ($entity->field_responsible_updatee->isEmpty()) {
       return $user;
     }
 
-    // Get all service owners in to an array.
-    foreach ($group_contents as $group_content) {
-      $owner = $group_content->get('field_service_owner')->referencedEntities();
-      $user[] = reset($owner);
-    }
+    $user[] = $entity->field_responsible_updatee->entity;
 
     return $user;
   }
