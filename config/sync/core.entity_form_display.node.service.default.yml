@@ -27,6 +27,7 @@ dependencies:
     - field.field.node.service.field_poma_applicable
     - field.field.node.service.field_poma_applicable_descriptio
     - field.field.node.service.field_related_archive
+    - field.field.node.service.field_responsible_municipality
     - field.field.node.service.field_responsible_updatee
     - field.field.node.service.field_service_benefits
     - field.field.node.service.field_service_exceptions
@@ -37,6 +38,7 @@ dependencies:
     - field.field.node.service.field_service_other_info
     - field.field.node.service.field_service_price
     - field.field.node.service.field_service_producer
+    - field.field.node.service.field_service_provider_updatee
     - field.field.node.service.field_service_radioactivity
     - field.field.node.service.field_service_req_speacialist
     - field.field.node.service.field_service_requirements
@@ -52,7 +54,9 @@ dependencies:
   module:
     - content_moderation
     - field_group
+    - hel_tpm_editorial
     - hel_tpm_group
+    - hel_tpm_service_dates
     - inline_entity_form
     - markup
     - maxlength
@@ -81,7 +85,6 @@ third_party_settings:
         - group_service_requirements
         - group_guidance_to_service
         - group_service_obligatoryness
-        - field_municipality_guidance
         - group_markings_for_service
         - group_statements_unemploym
         - group_measures_during
@@ -224,6 +227,8 @@ third_party_settings:
         - field_contact_info
         - entitygroupfield
         - field_service_producer
+        - field_service_provider_updatee
+        - field_responsible_municipality
         - field_responsible_updatee
         - field_other_services
       label: 'Additional info'
@@ -337,7 +342,7 @@ third_party_settings:
       label: 'Lausunnot ja työttömyysetuus'
       region: content
       parent_name: group_specialist
-      weight: 12
+      weight: 11
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -358,7 +363,7 @@ third_party_settings:
       label: 'Täydentävä työnhakukeskustelu'
       region: content
       parent_name: group_specialist
-      weight: 15
+      weight: 14
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -379,7 +384,7 @@ third_party_settings:
       label: Poikkeustilanteet
       region: content
       parent_name: group_specialist
-      weight: 14
+      weight: 13
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -399,7 +404,7 @@ third_party_settings:
       label: 'Toimenpiteet osallistumisen ajalta'
       region: content
       parent_name: group_specialist
-      weight: 13
+      weight: 12
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -419,7 +424,7 @@ third_party_settings:
       label: Arkistointiohje
       region: content
       parent_name: group_specialist
-      weight: 16
+      weight: 15
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -459,7 +464,7 @@ third_party_settings:
       label: 'Merkinnät asiakastietojärjestelmään'
       region: content
       parent_name: group_specialist
-      weight: 11
+      weight: 10
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -476,6 +481,7 @@ third_party_settings:
     group_guidance_to_service:
       children:
         - field_guidance_to_service
+        - field_municipality_guidance
       label: 'Ohjaus palveluun'
       region: content
       parent_name: group_specialist
@@ -626,7 +632,7 @@ content:
       label_singular: ''
       label_plural: ''
       allow_new: true
-      allow_existing: true
+      allow_existing: false
       match_operator: CONTAINS
       allow_duplicate: false
       collapsible: false
@@ -643,7 +649,7 @@ content:
       label_singular: ''
       label_plural: ''
       allow_new: true
-      allow_existing: true
+      allow_existing: false
       match_operator: CONTAINS
       allow_duplicate: false
       collapsible: false
@@ -735,7 +741,7 @@ content:
     third_party_settings: {  }
   field_links_and_attachments:
     type: inline_entity_form_simple
-    weight: 17
+    weight: 16
     region: content
     settings:
       form_mode: default
@@ -755,28 +761,44 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_municipality_guidance:
-    type: entity_reference_paragraphs
+    type: hel_tpm_editorial_paragraphs_custom
     weight: 9
     region: content
     settings:
-      title: 'kuntakohtainen ohje'
-      title_plural: 'kuntakohtaiset ohjeet'
+      title: 'Kuntakohtaiset ohjeet (valinnainen)'
+      title_plural: 'Kuntakohtaiset ohjeet (valinnainen)'
       edit_mode: closed
+      closed_mode: summary
+      autocollapse: all
+      closed_mode_threshold: '0'
       add_mode: button
       form_display_mode: default
       default_paragraph_type: _none
+      add_label: 'Add a municipality specific guide'
+      features:
+        duplicate: 0
+        collapse_edit_all: 0
+        add_above: 0
     third_party_settings: {  }
   field_municipality_specific:
-    type: entity_reference_paragraphs
+    type: hel_tpm_editorial_paragraphs_custom
     weight: 14
     region: content
     settings:
       title: ' Kuntakohtaiset poikkeustilanteet'
       title_plural: ' Kuntakohtaiset poikkeustilanteet'
       edit_mode: closed
-      add_mode: dropdown
+      closed_mode: summary
+      autocollapse: all
+      closed_mode_threshold: '0'
+      add_mode: button
       form_display_mode: default
-      default_paragraph_type: municipality_guide
+      default_paragraph_type: _none
+      add_label: 'Add a municipality specific guide'
+      features:
+        duplicate: 0
+        collapse_edit_all: 0
+        add_above: 0
     third_party_settings: {  }
   field_obligatoryness:
     type: options_buttons
@@ -804,7 +826,7 @@ content:
     third_party_settings: {  }
   field_other_services:
     type: select2_entity_reference
-    weight: 13
+    weight: 15
     region: content
     settings:
       width: 100%
@@ -818,15 +840,21 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_responsible_updatee:
-    type: hel_tpm_group_user_select_widget
-    weight: 12
+  field_responsible_municipality:
+    type: select2_entity_reference
+    weight: 13
     region: content
     settings:
       width: 100%
+      autocomplete: false
       match_operator: CONTAINS
-      match_limit: '10'
-      autocomplete: 0
+      match_limit: 10
+    third_party_settings: {  }
+  field_responsible_updatee:
+    type: options_select
+    weight: 14
+    region: content
+    settings: {  }
     third_party_settings: {  }
   field_service_benefits:
     type: text_textarea
@@ -909,6 +937,12 @@ content:
       match_operator: CONTAINS
       match_limit: 10
     third_party_settings: {  }
+  field_service_provider_updatee:
+    type: options_select
+    weight: 12
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   field_service_req_speacialist:
     type: text_textarea
     weight: 7
@@ -955,17 +989,16 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_service_time_and_location:
-    type: inline_entity_form_simple
+    type: hel_tpm_service_dates_service_time_and_place_widget
     weight: 17
     region: content
     settings:
-      form_mode: default
-      override_labels: false
-      label_singular: ''
-      label_plural: ''
-      collapsible: false
-      collapsed: false
-      revision: false
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: button
+      form_display_mode: default
+      default_paragraph_type: _none
     third_party_settings: {  }
   field_statements:
     type: options_buttons

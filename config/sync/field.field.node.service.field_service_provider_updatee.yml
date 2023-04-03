@@ -1,0 +1,27 @@
+uuid: 697df67e-a9a6-4e41-90f0-b668637f906f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_service_provider_updatee
+    - node.type.service
+id: node.service.field_service_provider_updatee
+field_name: field_service_provider_updatee
+entity_type: node
+bundle: service
+label: 'Palveluntuottajan vastuupäivättäjä'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: dependent_fields_selection
+  handler_settings:
+    dependent_fields_view:
+      view_name: users_by_group_entity_reference
+      display_name: entity_reference_2
+      parent_field: field_service_producer
+      reference_parent_by_uuid: false
+      arguments: {  }
+field_type: entity_reference

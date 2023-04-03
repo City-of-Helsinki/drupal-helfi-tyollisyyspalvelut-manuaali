@@ -10,21 +10,17 @@ body {
 }
 
 .main {
+  display: block; /* Fix for IE weirdness */
   max-width: $content-max-width;
   .main-content {
     @include make-col();
   }
 }
-/* Add 12 grid for main content for easier element size handling */
 
 *,
 *::after,
 *::before {
   box-sizing: inherit;
-}
-
-.main {
-  display: block; /* Fix for IE weirdness */
 }
 
 .visually-hidden {
@@ -78,7 +74,9 @@ article ol li::before {
   color: clr(text-inverse);
   font-size: 1rem;
   position: absolute;
+
   --size: 32px;
+  
   left: -18px;
   line-height: var(--size);
   width: var(--size);

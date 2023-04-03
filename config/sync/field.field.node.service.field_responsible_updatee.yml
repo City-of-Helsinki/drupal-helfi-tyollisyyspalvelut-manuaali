@@ -5,31 +5,23 @@ dependencies:
   config:
     - field.storage.node.field_responsible_updatee
     - node.type.service
-  module:
-    - require_on_publish
-third_party_settings:
-  require_on_publish:
-    require_on_publish: true
 id: node.service.field_responsible_updatee
 field_name: field_responsible_updatee
 entity_type: node
 bundle: service
-label: 'Palvelun vastuupäivittäjä'
+label: 'Kunnan vastuupäivittäjä'
 description: ''
 required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
-  handler: hel_tpm_group_editor_user_selection
+  handler: dependent_fields_selection
   handler_settings:
-    target_bundles: null
-    sort:
-      field: _none
-      direction: ASC
-    auto_create: false
-    auto_create_bundle: ''
-    filter:
-      type: _none
-    include_anonymous: false
+    dependent_fields_view:
+      view_name: users_by_group_entity_reference
+      display_name: entity_reference_1
+      parent_field: field_responsible_municipality
+      reference_parent_by_uuid: false
+      arguments: {  }
 field_type: entity_reference

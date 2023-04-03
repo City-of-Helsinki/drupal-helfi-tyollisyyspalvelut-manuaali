@@ -8,7 +8,6 @@ dependencies:
     - field.field.node.service_location.field_address
     - node.type.service_location
   module:
-    - address
     - user
 id: node.service_location.default
 targetEntityType: node
@@ -22,21 +21,14 @@ content:
       view_mode: reference
       link: false
     third_party_settings: {  }
-    weight: 2
+    weight: 1
     region: content
   field_accessibility_details:
     type: basic_string
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 3
-    region: content
-  field_address:
-    type: address_default
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    weight: 1
+    weight: 2
     region: content
   links:
     settings: {  }
@@ -47,6 +39,8 @@ hidden:
   entity_print_view_epub: true
   entity_print_view_pdf: true
   entity_print_view_word_docx: true
+  entitygroupfield: true
+  field_address: true
   flag_cart: true
   flag_flag_list_template_1: true
   flag_lists: true
