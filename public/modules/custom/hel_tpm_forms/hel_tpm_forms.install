@@ -27,11 +27,14 @@ function hel_tpm_forms_update_9001(&$sandbox) {
   $nodes = $storage->loadMultiple($nids);
 
   foreach ($nodes as $node) {
+    if (empty($node)) {
+      continue;
+    }
     $node->save();
     $sandbox['progress']++;
+    $sandbox['current_nid'] = $node->id();
   }
 
-  $sandbox['current_nid'] = $node->id();
 
   $sandbox['#finished'] = empty($sandbox['max']) ? 1 : $sandbox['progress'] / $sandbox['max'];
 }
