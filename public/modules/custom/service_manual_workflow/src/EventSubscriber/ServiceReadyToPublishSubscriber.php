@@ -231,9 +231,10 @@ class ServiceReadyToPublishSubscriber implements EventSubscriberInterface {
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
   protected function dispatchMessage(EntityInterface $node, UserInterface $account) {
-    $message = Message::create(['template' => self::MESSAGE_TEMPLATE, 'uid' => $this->currentUser->id()]);
+    $message = Message::create(['template' => self::MESSAGE_TEMPLATE, 'uid' => $account->id()]);
     $message->set('field_node', $node);
     $message->set('field_user', $account);
+    $message->set('field_message_author', $this->currentUser);
     $message->save();
     $notifier = Drupal::service('message_notify.sender');
     $notifier->send($message);
