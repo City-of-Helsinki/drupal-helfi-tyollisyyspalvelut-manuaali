@@ -11,6 +11,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\gcontent_moderation\GroupStateTransitionValidation;
 use Drupal\group\Entity\Group;
 use Drupal\group\Entity\GroupInterface;
+use Drupal\message_notify\MessageNotifier;
 use Drupal\node\NodeInterface;
 use Drupal\service_manual_workflow\ContentGroupService;
 use Drupal\service_manual_workflow\Event\ServiceModerationEvent;
@@ -56,6 +57,8 @@ class ServiceReadyToPublishSubscriber implements EventSubscriberInterface {
 
   protected $currentUser;
 
+  protected $messageSender;
+
   const MESSAGE_TEMPLATE = 'group_ready_to_publish_notificat';
 
   /**
@@ -74,13 +77,14 @@ class ServiceReadyToPublishSubscriber implements EventSubscriberInterface {
    *  Group content state transition validator.
    *
    */
-  public function __construct(MessengerInterface $messenger, EntityTypeManager $entityTypeManager, ContentGroupService $contentGroupService, GroupStateTransitionValidation $stateTransitionValidation, RouteMatchInterface $routeMatch, AccountProxyInterface $currentUser) {
+  public function __construct(MessengerInterface $messenger, EntityTypeManager $entityTypeManager, ContentGroupService $contentGroupService, GroupStateTransitionValidation $stateTransitionValidation, RouteMatchInterface $routeMatch, AccountProxyInterface $currentUser, MessageNotifier $messageSender) {
     $this->messenger = $messenger;
     $this->entityTypeManager = $entityTypeManager;
     $this->contentGroupService = $contentGroupService;
     $this->stateTransitionValidation = $stateTransitionValidation;
     $this->routeMatch = $routeMatch;
     $this->currentUser = $currentUser;
+    $this->messageSender = $messageSender;
   }
 
   /**
@@ -97,7 +101,7 @@ class ServiceReadyToPublishSubscriber implements EventSubscriberInterface {
     $entity = $storage->load($state->content_entity_id->value);
 
     if (!$this->notifyGroupAdministration($account, $entity)) {
- //     return;
+      return;
     }
 
     // Get content group.
@@ -237,8 +241,7 @@ class ServiceReadyToPublishSubscriber implements EventSubscriberInterface {
     $message->set('field_user', $account);
     $message->set('field_message_author', $current_user);
     $message->save();
-    $notifier = Drupal::service('message_notify.sender');
-    $notifier->send($message);
+    $this->messageSender->send($message);
   }
 
   /**
