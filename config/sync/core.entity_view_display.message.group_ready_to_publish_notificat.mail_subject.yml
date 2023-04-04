@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.message.mail_subject
+    - field.field.message.group_ready_to_publish_notificat.field_message_author
     - field.field.message.group_ready_to_publish_notificat.field_node
     - field.field.message.group_ready_to_publish_notificat.field_user
     - message.template.group_ready_to_publish_notificat
@@ -23,6 +24,7 @@ hidden:
   entity_print_view_epub: true
   entity_print_view_pdf: true
   entity_print_view_word_docx: true
+  field_message_author: true
   field_node: true
   field_user: true
   partial_1: true
