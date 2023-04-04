@@ -27,6 +27,7 @@ dependencies:
     - field.field.node.service.field_poma_applicable
     - field.field.node.service.field_poma_applicable_descriptio
     - field.field.node.service.field_related_archive
+    - field.field.node.service.field_responsible_municipality
     - field.field.node.service.field_responsible_updatee
     - field.field.node.service.field_service_benefits
     - field.field.node.service.field_service_exceptions
@@ -37,6 +38,7 @@ dependencies:
     - field.field.node.service.field_service_other_info
     - field.field.node.service.field_service_price
     - field.field.node.service.field_service_producer
+    - field.field.node.service.field_service_provider_updatee
     - field.field.node.service.field_service_radioactivity
     - field.field.node.service.field_service_req_speacialist
     - field.field.node.service.field_service_requirements
@@ -214,6 +216,14 @@ content:
     third_party_settings: {  }
     weight: 20
     region: content
+  field_responsible_municipality:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 21
+    region: content
   field_service_benefits:
     type: text_default
     label: above
@@ -262,6 +272,14 @@ content:
       link: false
     third_party_settings: {  }
     weight: 18
+    region: content
+  field_service_provider_updatee:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 22
     region: content
   field_service_requirements:
     type: text_default

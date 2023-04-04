@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\node\Entity\Node;
 use Drupal\Core\Database\Query;
 use Drupal\Core\Form\FormStateInterface;
@@ -40,8 +41,71 @@ function hel_tpm_forms_theme($existing, $type, $theme, $path) {
  * @return void
  */
 function hel_tpm_forms_form_node_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
-  $bundle = $form_state->getStorage()['form_display']->getTargetBundle();
+  _hel_tpm_forms_node_service_form_alter($form, $form_state, $form_id);
+  _hel_tpm_form_node_service_location_form_alter($form, $form_state);
+}
 
+/**
+ * Implements hook_entity_presave().
+ */
+function hel_tpm_forms_entity_presave(EntityInterface $entity) {
+  _hel_tpm_node_service_location_generate_title($entity);
+}
+
+/**
+ * Generate service location title on save.
+ *
+ * @param \Drupal\Core\Entity\EntityInterface $entity
+ *
+ * @return void
+ */
+function _hel_tpm_node_service_location_generate_title(EntityInterface &$entity) {
+  if ($entity->bundle() !== 'service_location') {
+    return;
+  }
+  $address = $entity->field_address->getValue();
+  if (empty($address)) {
+    return;
+  }
+  $address = reset($address);
+
+  $organization = trim($address['organization']);
+  if (!empty($organization)) {
+    $title = sprintf("%s, %s %s (%s)", $address['address_line1'], $address['postal_code'], $address['locality'], $organization);
+  }
+  else {
+    $title = sprintf("%s, %s %s", $address['address_line1'], $address['postal_code'], $address['locality']);
+  }
+
+  $entity->setTitle($title);
+}
+
+/**
+ * @param $form
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *
+ * @return void
+ */
+function _hel_tpm_form_node_service_location_form_alter(&$form, FormStateInterface &$form_state) {
+  $bundle = $form_state->getStorage()['form_display']->getTargetBundle();
+  // Check that we alter only service bundle.
+  if ($bundle != 'service_location') {
+    return;
+  }
+  $form['title']['#access'] = FALSE;
+}
+
+/**
+ * Service node form alter.
+ *
+ * @param $form
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ * @param $form_id
+ *
+ * @return void
+ */
+function _hel_tpm_forms_node_service_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
+  $bundle = $form_state->getStorage()['form_display']->getTargetBundle();
   // Check that we alter only service bundle.
   if ($bundle != 'service') {
     return;

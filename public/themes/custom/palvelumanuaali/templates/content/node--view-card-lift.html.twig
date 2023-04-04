@@ -71,21 +71,15 @@
  */
 #}
 {% set greeting_text = 'Updated '|t  %}
-{% if node.moderation_state.value == 'draft' %}
-  {% set published_state = 'Draft'|t %}
-  {% set status_modifiers = ['warning'] %}
-{% elseif node.moderation_state.value == 'outdated'%}
-  {% set published_state = 'Outdated'|t %}
-  {% set status_modifiers = ['gray'] %}
-{% endif %}
+
 {# todo: source for card__caption should be added when it is set #}
 
 {% embed "@molecules/card/card.twig" with {
   card__blockname: item.card__blockname,
   card__modifiers: ['view-card'],
   card__caption: content.field_service_set[0]['#title'],
-  card__caption__status: published_state|default('Published'|t),
-  card__caption__status__modifiers: status_modifiers,
+  card__caption__status: state_label|t,
+  card__caption__status__modifiers: status_modifier,
   card__heading: label,
   card__body: content.field_description,
   card__date: greeting_text ~ node.changed.value|date("d.m.Y"),
