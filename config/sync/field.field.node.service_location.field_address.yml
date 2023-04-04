@@ -7,17 +7,22 @@ dependencies:
     - node.type.service_location
   module:
     - address
+    - epp
+third_party_settings:
+  epp:
+    value: ''
+    on_update: 0
 id: node.service_location.field_address
 field_name: field_address
 entity_type: node
 bundle: service_location
 label: Address
 description: ''
-required: false
+required: true
 translatable: false
 default_value:
   -
-    langcode: null
+    langcode: en
     country_code: FI
     administrative_area: null
     locality: ''
@@ -55,7 +60,7 @@ settings:
     dependentLocality:
       override: optional
     locality:
-      override: optional
+      override: required
     administrativeArea:
       override: optional
   fields: {  }
