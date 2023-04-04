@@ -97,7 +97,7 @@ class ServiceReadyToPublishSubscriber implements EventSubscriberInterface {
     $entity = $storage->load($state->content_entity_id->value);
 
     if (!$this->notifyGroupAdministration($account, $entity)) {
-      return;
+ //     return;
     }
 
     // Get content group.
@@ -231,10 +231,11 @@ class ServiceReadyToPublishSubscriber implements EventSubscriberInterface {
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
   protected function dispatchMessage(EntityInterface $node, UserInterface $account) {
+    $current_user = $this->entityTypeManager->getStorage('user')->load($this->currentUser->id());
     $message = Message::create(['template' => self::MESSAGE_TEMPLATE, 'uid' => $account->id()]);
     $message->set('field_node', $node);
     $message->set('field_user', $account);
-    $message->set('field_message_author', $this->currentUser);
+    $message->set('field_message_author', $current_user);
     $message->save();
     $notifier = Drupal::service('message_notify.sender');
     $notifier->send($message);
