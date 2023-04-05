@@ -117,7 +117,7 @@ class GroupUserSelection extends UserSelection {
 
     // Users with administer users permission can list and view all users.
     if ($this->currentUser->hasPermission('administer users')) {
-      return $query;
+    //  return $query;
     }
 
     if (!empty($configuration['entity'])) {
@@ -225,7 +225,7 @@ class GroupUserSelection extends UserSelection {
         continue;
       }
       if ($configuration['filter_users_without_publish']) {
-        $allowed = $this->groupStateTransitionValidator->allowedTransitions($this->currentUser, $mock_service, [$group]);
+        $allowed = $this->groupStateTransitionValidator->allowedTransitions($member->getUser(), $mock_service, [$group]);
         if (empty($allowed['publish'])) {
           continue;
         }
