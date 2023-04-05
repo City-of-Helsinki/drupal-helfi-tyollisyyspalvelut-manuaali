@@ -117,7 +117,7 @@ class GroupUserSelection extends UserSelection {
 
     // Users with administer users permission can list and view all users.
     if ($this->currentUser->hasPermission('administer users')) {
-    //  return $query;
+      return $query;
     }
 
     if (!empty($configuration['entity'])) {
