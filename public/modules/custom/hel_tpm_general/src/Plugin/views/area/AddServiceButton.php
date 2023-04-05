@@ -31,6 +31,10 @@ class AddServiceButton extends AreaPluginBase {
   }
 
   public function render($empty = FALSE) {
+    return $this->addServiceGroupListLink();
+  }
+
+  private function addServiceGroupListLink() {
     return [
       '#type' => 'link',
       '#title' => $this->t('Add service'),
@@ -38,5 +42,4 @@ class AddServiceButton extends AreaPluginBase {
       '#attributes' => ['class' => ['add-service-button', 'button']]
     ];
   }
-
 }
