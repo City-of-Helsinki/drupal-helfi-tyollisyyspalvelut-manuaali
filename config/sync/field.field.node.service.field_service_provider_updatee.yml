@@ -5,6 +5,12 @@ dependencies:
   config:
     - field.storage.node.field_service_provider_updatee
     - node.type.service
+  module:
+    - epp
+third_party_settings:
+  epp:
+    value: ''
+    on_update: 0
 id: node.service.field_service_provider_updatee
 field_name: field_service_provider_updatee
 entity_type: node
@@ -16,12 +22,16 @@ translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
-  handler: dependent_fields_selection
+  handler: hel_tpm_group_editor_user_selection
   handler_settings:
-    dependent_fields_view:
-      view_name: users_by_group_entity_reference
-      display_name: entity_reference_2
-      parent_field: field_service_producer
-      reference_parent_by_uuid: false
-      arguments: {  }
+    target_bundles: null
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+    filter:
+      type: _none
+    include_anonymous: false
+    filter_users_without_publish: 0
 field_type: entity_reference
