@@ -154,6 +154,9 @@ function _hel_tpm_form_publish_service_action(&$form, $form_state) {
       return;
     }
     $group_content = $node->entitygroupfield->entity;
+    if (empty($group_content)) {
+      return;
+    }
     $group = $group_content->getGroup();
   }
   else {
