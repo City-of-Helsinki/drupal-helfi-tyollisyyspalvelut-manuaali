@@ -11,6 +11,8 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\gcontent_moderation\GroupStateTransitionValidation;
 use Drupal\group\Entity\Group;
 use Drupal\group\Entity\GroupInterface;
+use Drupal\message_notify\MessageNotifier;
+use Drupal\node\NodeInterface;
 use Drupal\service_manual_workflow\ContentGroupService;
 use Drupal\service_manual_workflow\Event\ServiceModerationEvent;
 use Drupal\user\UserInterface;
@@ -53,6 +55,10 @@ class ServiceReadyToPublishSubscriber implements EventSubscriberInterface {
    */
   protected $routeMatch;
 
+  protected $currentUser;
+
+  protected $messageSender;
+
   const MESSAGE_TEMPLATE = 'group_ready_to_publish_notificat';
 
   /**
@@ -71,12 +77,14 @@ class ServiceReadyToPublishSubscriber implements EventSubscriberInterface {
    *  Group content state transition validator.
    *
    */
-  public function __construct(MessengerInterface $messenger, EntityTypeManager $entityTypeManager, ContentGroupService $contentGroupService, GroupStateTransitionValidation $stateTransitionValidation, RouteMatchInterface $routeMatch) {
+  public function __construct(MessengerInterface $messenger, EntityTypeManager $entityTypeManager, ContentGroupService $contentGroupService, GroupStateTransitionValidation $stateTransitionValidation, RouteMatchInterface $routeMatch, AccountProxyInterface $currentUser, MessageNotifier $messageSender) {
     $this->messenger = $messenger;
     $this->entityTypeManager = $entityTypeManager;
     $this->contentGroupService = $contentGroupService;
     $this->stateTransitionValidation = $stateTransitionValidation;
     $this->routeMatch = $routeMatch;
+    $this->currentUser = $currentUser;
+    $this->messageSender = $messageSender;
   }
 
   /**
@@ -97,12 +105,16 @@ class ServiceReadyToPublishSubscriber implements EventSubscriberInterface {
     }
 
     // Get content group.
-    $group = $this->getGroups($entity);
+    $group = $this->getGroup($entity);
     if (empty($group)) {
       return;
     }
 
-    $accounts = $this->getEntityGroupAdministration($entity, $group);
+    $accounts = $this->getUsersToNotify($entity);
+
+    if (empty($accounts)) {
+      $this->messenger->addStatus($this->t('Users with publish permissions not found. Please contact site administration.', ['@group' => $group->label()]));
+    }
 
     // Dispatch messages to group administration.
     foreach ($accounts as $user) {
@@ -113,11 +125,68 @@ class ServiceReadyToPublishSubscriber implements EventSubscriberInterface {
   }
 
   /**
+   * Fetch available users for sending notification.
+   *
+   * @param \Drupal\node\NodeInterface $entity
+   *
+   * @return array
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   */
+  protected function getUsersToNotify(NodeInterface $entity) : array {
+    // Return owner(s) if service has one.
+    $users = $this->getServiceOwner($entity);
+    if (!empty($users)) {
+      return $users;
+    }
+
+    // Send message to organization admins in group.
+    $users = $this->getPublishersFromEntityGroup($entity);
+    if (!empty($users)) {
+      return $users;
+    }
+
+    return [];
+  }
+
+  /**
+   * @param \Drupal\node\NodeInterface $entity
+   *
+   * @return array
+   */
+  protected function getPublishersFromEntityGroup(NodeInterface $entity) : array {
+    $group = $this->getGroup($entity);
+    if (empty($group)) {
+      return [];
+    }
+    return $this->getEntityGroupAdministration($entity, $group);
+  }
+
+  /**
+   * @param \Drupal\node\NodeInterface $entity
+   *
+   * @return array
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   */
+  protected function getServiceOwner(NodeInterface $entity) : array {
+    $user = [];
+
+    if ($entity->field_responsible_updatee->isEmpty()) {
+      return $user;
+    }
+
+    $user[] = $entity->field_responsible_updatee->entity;
+
+    return $user;
+  }
+
+  /**
    * @param \Drupal\Core\Entity\ContentEntityInterface $entity
    *
    * @return array|false|mixed
    */
-  protected function getGroups(ContentEntityInterface $entity) {
+  protected function getGroup(ContentEntityInterface $entity) {
     $groups = $this->contentGroupService->getGroupsWithEntity($entity);
 
     if (!empty($groups)) {
@@ -166,12 +235,13 @@ class ServiceReadyToPublishSubscriber implements EventSubscriberInterface {
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
   protected function dispatchMessage(EntityInterface $node, UserInterface $account) {
+    $current_user = $this->entityTypeManager->getStorage('user')->load($this->currentUser->id());
     $message = Message::create(['template' => self::MESSAGE_TEMPLATE, 'uid' => $account->id()]);
     $message->set('field_node', $node);
     $message->set('field_user', $account);
+    $message->set('field_message_author', $current_user);
     $message->save();
-    $notifier = Drupal::service('message_notify.sender');
-    $notifier->send($message);
+    $this->messageSender->send($message);
   }
 
   /**

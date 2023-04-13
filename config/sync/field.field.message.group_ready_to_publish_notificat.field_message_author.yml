@@ -1,28 +1,28 @@
-uuid: 697df67e-a9a6-4e41-90f0-b668637f906f
+uuid: 4299d459-f69c-4ec6-b8e4-6311b32c48e3
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_service_provider_updatee
-    - node.type.service
+    - field.storage.message.field_message_author
+    - message.template.group_ready_to_publish_notificat
   module:
     - epp
 third_party_settings:
   epp:
     value: ''
     on_update: 0
-id: node.service.field_service_provider_updatee
-field_name: field_service_provider_updatee
-entity_type: node
-bundle: service
-label: 'Palveluntuottajan vastuupäivättäjä'
+id: message.group_ready_to_publish_notificat.field_message_author
+field_name: field_message_author
+entity_type: message
+bundle: group_ready_to_publish_notificat
+label: 'Message author'
 description: ''
 required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
-  handler: hel_tpm_group_editor_user_selection
+  handler: 'default:user'
   handler_settings:
     target_bundles: null
     sort:
@@ -33,5 +33,4 @@ settings:
     filter:
       type: _none
     include_anonymous: false
-    filter_users_without_publish: 0
 field_type: entity_reference

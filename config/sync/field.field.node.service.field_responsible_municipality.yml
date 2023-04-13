@@ -6,6 +6,12 @@ dependencies:
     - field.storage.node.field_responsible_municipality
     - group.type.organisation
     - node.type.service
+  module:
+    - epp
+third_party_settings:
+  epp:
+    value: ''
+    on_update: 0
 id: node.service.field_responsible_municipality
 field_name: field_responsible_municipality
 entity_type: node

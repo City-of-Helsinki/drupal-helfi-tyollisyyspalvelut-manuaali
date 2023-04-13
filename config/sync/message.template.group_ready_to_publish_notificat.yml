@@ -4,16 +4,20 @@ status: true
 dependencies:
   config:
     - filter.format.filtered_html
+    - filter.format.full_html
 template: group_ready_to_publish_notificat
 label: 'Group ready to publish notification'
 description: 'Service is ready to publish and needs audit'
 text:
   -
-    value: "<p>Hello!</p>\r\n\r\n<p>[message:author] changed service [message:field_node:entity:url] to ready to publish state.</p>\r\n"
+    value: "<p>Palvelun&nbsp;[message:field_node:entity:title] julkaisu odottaa hyväksyntää sivustolla [site:name]</p>\r\n"
     format: filtered_html
+  -
+    value: "<p>Hei [message:field_user:entity:mail],</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Sinulle on saapunut palvelun [message:field_node:entity:title]&nbsp;tiedot tarkistettaviksi ennen julkaisun vahvistamista.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Käythän tarkistamassa palvelun tiedot ja hyväksy palvelu julkaistavaksi, mikäli tiedot ovat oikein. Seuraa linkkiä klikkaamalla tai kopioi se selaimesi osoiteriville: <a href=\"[message:field_node:entity:url]\">[message:field_node:entity:url]</a></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Tilamuutoksen teet vaihtamalla palvelun tilan ”odottaa julkaisua”-tilasta ”julkaistu”-tilaan. Jos palvelun julkisissa tiedoissa on epäselvyyttä, ole yhteydessä muutoksen tehneeseen käyttäjään [message:field_message_author:entity:mail].</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Huomioithan, että kunnan vastuukäyttäjänä sinun tulee varmistaa sisäisten työohjeiden oikeellisuus suhteessa tehtyihin muutoksiin sekä työohjeiden ajantasaisuus.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Ystävällisin terveisin</p>\r\n\r\n<p>[site:name] tiimi</p>\r\n"
+    format: full_html
 settings:
   'token options':
-    clear: true
+    clear: false
     'token replace': true
   purge_override: false
   purge_methods: {  }

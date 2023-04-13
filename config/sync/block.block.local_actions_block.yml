@@ -3,9 +3,13 @@ langcode: fi
 status: true
 dependencies:
   module:
+    - block_class
     - context
   theme:
     - palvelumanuaali
+third_party_settings:
+  block_class:
+    classes: local-actions-block
 id: local_actions_block
 theme: palvelumanuaali
 region: content

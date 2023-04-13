@@ -1,48 +1,31 @@
-uuid: ef0b164e-d240-4ba4-89f1-f7d6372ec23c
+uuid: 081874f9-e71b-48fe-b1a1-ae4504c69c4e
 langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.message.mail_body
     - field.field.message.group_ready_to_publish_notificat.field_message_author
     - field.field.message.group_ready_to_publish_notificat.field_node
     - field.field.message.group_ready_to_publish_notificat.field_user
     - message.template.group_ready_to_publish_notificat
   module:
     - user
-id: message.group_ready_to_publish_notificat.default
+id: message.group_ready_to_publish_notificat.mail_body
 targetEntityType: message
 bundle: group_ready_to_publish_notificat
-mode: default
+mode: mail_body
 content:
-  field_message_author:
-    type: entity_reference_label
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 3
-    region: content
-  field_node:
-    type: entity_reference_label
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 2
-    region: content
-  partial_0:
-    settings: {  }
-    third_party_settings: {  }
-    weight: 0
-    region: content
   partial_1:
     settings: {  }
     third_party_settings: {  }
-    weight: 1
+    weight: 0
     region: content
 hidden:
   entity_print_view_epub: true
   entity_print_view_pdf: true
   entity_print_view_word_docx: true
+  field_message_author: true
+  field_node: true
   field_user: true
+  partial_0: true
   search_api_excerpt: true
