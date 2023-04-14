@@ -83,6 +83,21 @@
   }
 }
 
+.block--main-block > .node-form > #edit-actions {
+  .button {
+    @include button-base;
+    @include button-medium;
+    @include button-round-corners;
+    @include button-no-color;
+    border: 2px solid clr(background-section);
+    padding-left: $space-double;
+    padding-right: $space-double;
+    width: unset;
+    font-size: 15px;
+    font-weight: 700;
+  }
+}
+
 
 .highlight-error > .label {
   color: clr(error);
