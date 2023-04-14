@@ -498,6 +498,31 @@ there is possibility to add classes button--blue-bordered,
   }
 }
 
+.view-group-services {
+  .add-service-button {
+    @include button-round-corners;
+    @include button-color-blue;
+    line-height: 25px;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 12px 64px 12px 32px;
+    position: relative;
+    &::after {
+      content: "";
+      width: 24px;
+      height: 24px;
+      background-image: url("/themes/custom/palvelumanuaali/images/icons/plus.svg");
+      background-repeat: no-repeat;
+      background-position-y: center;
+      display: block;
+      position: absolute;
+      right: 12px;
+      top: 12px;
+    }
+  }
+}
+
+
 .node-form,
 .node-edit-form {
   .field-add-more-submit,
