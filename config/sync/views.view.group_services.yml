@@ -9,6 +9,7 @@ dependencies:
     - content_moderation
     - gnode
     - group
+    - hel_tpm_general
     - node
 _core:
   default_config_hash: za6rNdVPn3HsOOwx2Yka3EmWEkXSdUIlaUpT8qOAxG0
@@ -971,7 +972,16 @@ display:
           required: true
           group_content_plugins:
             'group_node:service': 'group_node:service'
-      header: {  }
+      header:
+        add_service_button:
+          id: add_service_button
+          table: views
+          field: add_service_button
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: hel_tpm_general_add_service_button
+          empty: false
       footer: {  }
       display_extenders: {  }
     cache_metadata:

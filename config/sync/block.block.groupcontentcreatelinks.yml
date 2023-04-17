@@ -1,32 +1,33 @@
-uuid: 9a5b627e-e466-4ccf-8137-c335b3673687
-langcode: fi
+uuid: 220e0562-3463-4d72-bdfe-8f8eb2f0fdc6
+langcode: en
 status: true
 dependencies:
   module:
     - context
-    - system
+    - hel_tpm_general
   theme:
     - palvelumanuaali
-id: system_main_block
+id: groupcontentcreatelinks
 theme: palvelumanuaali
 region: content
-weight: -1
+weight: -3
 provider: null
-plugin: system_main_block
+plugin: hel_tpm_general_group_content_create_links
 settings:
-  id: system_main_block
-  label: 'Pääsivun sisältö'
+  id: hel_tpm_general_group_content_create_links
+  label: 'Group Content Create Links'
   label_display: '0'
-  provider: system
+  provider: hel_tpm_general
 visibility:
   context_all:
     id: context_all
     negate: null
     values: ''
-  context:
-    id: context
-    negate: null
-    values: ''
+  view_inclusion:
+    id: view_inclusion
+    negate: false
+    view_inclusion:
+      view-maintenance_and_administration-page_1: view-maintenance_and_administration-page_1
   user_status:
     id: user_status
     negate: false
@@ -38,3 +39,7 @@ visibility:
       own_page_true: '0'
       field_value: '0'
     user_fields: uid
+  context:
+    id: context
+    negate: null
+    values: ''

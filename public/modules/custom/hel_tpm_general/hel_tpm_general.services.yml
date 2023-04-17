@@ -3,6 +3,7 @@ services:
     class: Drupal\hel_tpm_general\EventSubscriber\BulkInvitationRouteSubscriber
     tags:
       - { name: event_subscriber }
+
   hel_tpm_general.group_node_add_access_service:
     class: Drupal\hel_tpm_general\Access\GroupNodeCreateAccessService
-    arguments: ['@group.membership_loader', '@access_check.group_content.create_entity', '@router.no_access_checks']
+    arguments: ['@group.membership_loader', '@access_check.group_content.create_entity', '@router.no_access_checks', '@current_user']
