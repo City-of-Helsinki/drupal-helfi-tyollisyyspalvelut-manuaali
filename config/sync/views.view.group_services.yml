@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.storage.node.field_responsible_updatee
     - node.type.service
+    - workflows.workflow.service_moderation
   module:
     - content_moderation
     - gnode
@@ -733,7 +734,10 @@ display:
           plugin_id: moderation_state_filter
           operator: in
           value:
-            all: all
+            service_moderation-draft: service_moderation-draft
+            service_moderation-ready_to_publish: service_moderation-ready_to_publish
+            service_moderation-published: service_moderation-published
+            service_moderation-outdated: service_moderation-outdated
           group: 1
           exposed: true
           expose:
@@ -755,7 +759,8 @@ display:
               admin: '0'
               editor: '0'
               specialist: '0'
-            reduce: false
+              specialist_editor: '0'
+            reduce: true
           is_grouped: false
           group_info:
             label: ''
