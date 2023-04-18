@@ -29,7 +29,7 @@
 
   >h1 {
     grid-area: head;
-    margin-bottom: $space-quadruple;
+    margin-bottom: $space-sextuple;
     font-size: 38px;
     line-height: 48px;
     font-weight: 600;
@@ -37,12 +37,18 @@
   >.view-header {
         grid-area: title;
         display: flex;
+
         align-items: flex-end;
     >span {
       margin-bottom: $space;
       font-size: 18px;
       line-height: 24px;
       font-weight: 600;
+    }
+    .add-service-button {
+      position: absolute;
+      top: 90px;
+      right: 0;
     }
   }
   >.view-filters {
