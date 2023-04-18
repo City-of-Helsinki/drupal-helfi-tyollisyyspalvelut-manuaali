@@ -4,8 +4,13 @@ namespace Drupal\hel_tpm_general\Plugin\views\area;
 
 use Drupal\Core\Access\AccessResultAllowed;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\Url;
+use Drupal\hel_tpm_general\Access\GroupNodeCreateAccessService;
+use Drupal\hel_tpm_general\Controller\GroupNodeAddServiceController;
+use Drupal\hel_tpm_group\CurrentGroup;
 use Drupal\views\Plugin\views\area\AreaPluginBase;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides Add Service button field handler.
@@ -18,17 +23,37 @@ class AddServiceButton extends AreaPluginBase {
   private $groupNodeAddAccessService;
 
   /**
-   * @todo Create dependency injection.
-   *
    * @param array $configuration
    * @param $plugin_id
    * @param $plugin_definition
+   * @param \Drupal\hel_tpm_general\Access\GroupNodeCreateAccessService $groupNodeCreateAccessService
+   * @param \Drupal\hel_tpm_group\CurrentGroup $currentGroup
+   * @param \Drupal\Core\Session\AccountProxyInterface $currentUser
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, GroupNodeCreateAccessService $groupNodeCreateAccessService, CurrentGroup $currentGroup, AccountProxyInterface $currentUser) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->groupNodeAddAccessService = \Drupal::service('hel_tpm_general.group_node_add_access_service');
-    $this->currentGroup = \Drupal::service('hel_tpm_group.current_group');
-    $this->currentUser = \Drupal::service('current_user');
+    $this->groupNodeAddAccessService = $groupNodeCreateAccessService;
+    $this->currentGroup = $currentGroup;
+    $this->currentUser = $currentUser;
+  }
+
+  /**
+   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+   * @param array $configuration
+   * @param $plugin_id
+   * @param $plugin_definition
+   *
+   * @return \Drupal\hel_tpm_general\Plugin\views\area\AddServiceButton|\Drupal\views\Plugin\views\PluginBase|static
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $container->get('hel_tpm_general.group_node_add_access_service'),
+      $container->get('hel_tpm_group.current_group'),
+      $container->get('current_user')
+    );
   }
 
   /**
