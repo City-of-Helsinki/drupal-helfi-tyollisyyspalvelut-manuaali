@@ -45,17 +45,23 @@
 
   .page-controls {
     margin-top: $space;
-    grid-row: 6;
-    margin-left: 172px;
+    grid-row: 7;
     grid-column: 1/2;
     @include xl {
+      margin-left: 280px;
       grid-row:3;
 
     }
     .button-wrapper {
       display: flex;
-      justify-content: space-between;
       width: 100%;
+      gap: $space-one-and-half;
+      height: 48px;
+      flex-direction: column;
+      @include xl {
+        flex-direction: row;
+        justify-content: end;
+      }
     }
   }
 
@@ -74,6 +80,7 @@
     margin-bottom: $space;
     display: flex;
     grid-column: 1/2;
+    gap: $space-one-and-half;
     @include xl {
       grid-row: 3;
 
@@ -283,19 +290,6 @@ details>.form-wrapper:last-child {
   legend {
     display: none;
   }
-  // .field--type-boolean .form-item {
-  //   width: 100%;
-  //   display: flex;
-  //
-  //   input {
-  //     margin-right: 8px;
-  //     width: unset;
-  //   }
-  //
-  //   label {
-  //     font-weight: 400;
-  //   }
-  // }
 }
 
  .field--name-field-dates {
