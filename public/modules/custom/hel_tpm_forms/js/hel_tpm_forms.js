@@ -1,8 +1,8 @@
 (function ($, Drupal, drupalSettings) {
   Drupal.behaviors.hel_tpm_forms = {
     attach: function (context, settings) {
-      var currentTab = 0;
-      var urlParams = new URLSearchParams(window.location.search);
+      let currentTab = 0;
+      let urlParams = new URLSearchParams(window.location.search);
       if (urlParams.has('step')) {
         currentTab = urlParams.get('step');
         currentTab = Number(currentTab);
@@ -27,10 +27,17 @@
       $('.step').click(function () {
         let step = $(this).attr('data-step');
         switchTab(step);
-        urlParams.set('step', step);
-        history.replaceState(null, null, "?"+urlParams.toString());
       });
 
+      /**
+       * Update url step parameter.
+       *
+       * @param step
+       */
+      function updateStepParam(step) {
+        urlParams.set('step', step);
+        history.replaceState(null, null, "?"+urlParams.toString());
+      }
       /**
        * Add custom background position css for add more buttons.
        */
@@ -62,11 +69,9 @@
       }
 
       function switchTab(n) {
-        var x = document.getElementsByClassName("tab");
+        let x = document.getElementsByClassName("tab");
         x[currentTab].style.display = "none";
-
         currentTab = Number(n);
-
         showTab(currentTab);
       }
 
@@ -76,7 +81,7 @@
         hideTime();
         hideAgeRange();
         // This function will display the specified tab of the form ...
-        var x = document.getElementsByClassName("tab");
+        let x = document.getElementsByClassName("tab");
         x[n].style.display = "block";
         // ... and fix the Previous/Next buttons:
         if (n === 0) {
@@ -95,13 +100,14 @@
           document.getElementById('nextBtn').hidden = false;
           document.getElementById("nextBtnText").innerHTML = "Next";
         }
+        updateStepParam(n);
         // ... and run a function that displays the correct step indicator:
-        fixStepIndicator(n)
+        fixStepIndicator(n);
       }
 
       function nextPrev(n) {
         // This function will figure out which tab to display
-        var x = document.getElementsByClassName("tab");
+        let x = document.getElementsByClassName("tab");
         // Exit the function if any field in the current tab is invalid:
         // if (n == 1 && !validateForm()) return false;
         // validateForm has been removed for now.
@@ -123,7 +129,7 @@
 
       function fixStepIndicator(n) {
         // This function removes the "active" class of all steps...
-        var i, x = document.getElementsByClassName("step");
+        let i, x = document.getElementsByClassName("step");
         for (i = 0; i < x.length; i++) {
           x[i].className = x[i].className.replace(" active", "");
         }
