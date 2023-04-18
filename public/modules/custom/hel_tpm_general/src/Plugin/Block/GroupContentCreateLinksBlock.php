@@ -90,14 +90,10 @@ class GroupContentCreateLinksBlock extends BlockBase implements ContainerFactory
    */
   public function build() {
     $build['content'] = [
-      '#theme' => 'item_list',
-      '#items' => [
-        [
-          '#type' => 'link',
-          '#title' => $this->t('Add service'),
-          '#url' => Url::fromRoute('hel_tpm_general.group.node.add.service')
-        ]
-      ],
+      '#type' => 'link',
+      '#title' => $this->t('Add service'),
+      '#url' => Url::fromRoute('hel_tpm_general.group.node.add.service'),
+      '#attributes' => ['class' => ['add-service-button', 'button']]
     ];
     return $build;
   }
