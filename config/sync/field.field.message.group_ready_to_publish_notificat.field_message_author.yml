@@ -1,0 +1,36 @@
+uuid: 4299d459-f69c-4ec6-b8e4-6311b32c48e3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.message.field_message_author
+    - message.template.group_ready_to_publish_notificat
+  module:
+    - epp
+third_party_settings:
+  epp:
+    value: ''
+    on_update: 0
+id: message.group_ready_to_publish_notificat.field_message_author
+field_name: field_message_author
+entity_type: message
+bundle: group_ready_to_publish_notificat
+label: 'Message author'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:user'
+  handler_settings:
+    target_bundles: null
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+    filter:
+      type: _none
+    include_anonymous: false
+field_type: entity_reference

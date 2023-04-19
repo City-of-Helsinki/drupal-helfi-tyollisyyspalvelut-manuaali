@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.message.group_ready_to_publish_notificat.field_message_author
     - field.field.message.group_ready_to_publish_notificat.field_node
     - field.field.message.group_ready_to_publish_notificat.field_user
     - message.template.group_ready_to_publish_notificat
@@ -13,15 +14,15 @@ targetEntityType: message
 bundle: group_ready_to_publish_notificat
 mode: default
 content:
-  field_node:
+  field_message_author:
     type: entity_reference_label
     label: above
     settings:
       link: true
     third_party_settings: {  }
-    weight: 1
+    weight: 3
     region: content
-  field_user:
+  field_node:
     type: entity_reference_label
     label: above
     settings:
@@ -34,8 +35,14 @@ content:
     third_party_settings: {  }
     weight: 0
     region: content
+  partial_1:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
 hidden:
   entity_print_view_epub: true
   entity_print_view_pdf: true
   entity_print_view_word_docx: true
+  field_user: true
   search_api_excerpt: true

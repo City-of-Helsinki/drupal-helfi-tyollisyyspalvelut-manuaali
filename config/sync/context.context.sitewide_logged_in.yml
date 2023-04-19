@@ -3,7 +3,6 @@ langcode: fi
 status: true
 dependencies:
   module:
-    - hel_tpm_general
     - user
 label: 'Sitewide logged-in'
 name: sitewide_logged_in
@@ -24,22 +23,7 @@ reactions:
   blocks:
     id: blocks
     uuid: 792b4779-901f-4c7f-93f6-8bddfcee02b1
-    blocks:
-      6bfdbdc7-1d77-4162-84d0-ddf559fbae1c:
-        uuid: 6bfdbdc7-1d77-4162-84d0-ddf559fbae1c
-        id: hel_tpm_general_group_content_create_links
-        label: 'Group Content Create Links'
-        provider: hel_tpm_general
-        label_display: '0'
-        region: sidebar
-        weight: '1'
-        custom_id: hel_tpm_general_group_content_create_links
-        theme: palvelumanuaali
-        css_class: ''
-        unique: 0
-        context_id: sitewide_logged_in
-        context_mapping: {  }
-        third_party_settings: {  }
+    blocks: {  }
     include_default_blocks: 0
     saved: false
 weight: 2

@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\node\Entity\Node;
 use Drupal\Core\Database\Query;
 use Drupal\Core\Form\FormStateInterface;
@@ -40,8 +41,71 @@ function hel_tpm_forms_theme($existing, $type, $theme, $path) {
  * @return void
  */
 function hel_tpm_forms_form_node_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
-  $bundle = $form_state->getStorage()['form_display']->getTargetBundle();
+  _hel_tpm_forms_node_service_form_alter($form, $form_state, $form_id);
+  _hel_tpm_form_node_service_location_form_alter($form, $form_state);
+}
 
+/**
+ * Implements hook_entity_presave().
+ */
+function hel_tpm_forms_entity_presave(EntityInterface $entity) {
+  _hel_tpm_node_service_location_generate_title($entity);
+}
+
+/**
+ * Generate service location title on save.
+ *
+ * @param \Drupal\Core\Entity\EntityInterface $entity
+ *
+ * @return void
+ */
+function _hel_tpm_node_service_location_generate_title(EntityInterface &$entity) {
+  if ($entity->bundle() !== 'service_location') {
+    return;
+  }
+  $address = $entity->field_address->getValue();
+  if (empty($address)) {
+    return;
+  }
+  $address = reset($address);
+
+  $organization = trim($address['organization']);
+  if (!empty($organization)) {
+    $title = sprintf("%s, %s %s (%s)", $address['address_line1'], $address['postal_code'], $address['locality'], $organization);
+  }
+  else {
+    $title = sprintf("%s, %s %s", $address['address_line1'], $address['postal_code'], $address['locality']);
+  }
+
+  $entity->setTitle($title);
+}
+
+/**
+ * @param $form
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *
+ * @return void
+ */
+function _hel_tpm_form_node_service_location_form_alter(&$form, FormStateInterface &$form_state) {
+  $bundle = $form_state->getStorage()['form_display']->getTargetBundle();
+  // Check that we alter only service bundle.
+  if ($bundle != 'service_location') {
+    return;
+  }
+  $form['title']['#access'] = FALSE;
+}
+
+/**
+ * Service node form alter.
+ *
+ * @param $form
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ * @param $form_id
+ *
+ * @return void
+ */
+function _hel_tpm_forms_node_service_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
+  $bundle = $form_state->getStorage()['form_display']->getTargetBundle();
   // Check that we alter only service bundle.
   if ($bundle != 'service') {
     return;
@@ -63,6 +127,80 @@ function hel_tpm_forms_form_node_form_alter(&$form, FormStateInterface &$form_st
   ];
 
   $form['#attached']['library'][] = 'hel_tpm_forms/hel_tpm_forms';
+
+  _hel_tpm_form_publish_service_action($form, $form_state);
+}
+
+/**
+ * Callback for publish service button.
+ *
+ * @param $form
+ * @param $form_state
+ *
+ * @return void
+ */
+function _hel_tpm_form_publish_service_action(&$form, $form_state) {
+  $form_object = $form_state->getFormObject();
+  $storage = $form_state->getStorage();
+  if (empty($form_object)) {
+    return;
+  }
+
+  $node = $form_object->getEntity();
+
+  // If group isn't in form storage, try to get group from node.
+  if (empty($storage['group'])) {
+    if (empty($node->entitygroupfield)) {
+      return;
+    }
+    $group_content = $node->entitygroupfield->entity;
+    if (empty($group_content)) {
+      return;
+    }
+    $group = $group_content->getGroup();
+  }
+  else {
+    $group = $storage['group'];
+  }
+
+  // No group found.
+  if (empty($group)) {
+    return;
+  }
+
+  // Check user has permission to select publish transition.
+  $transition_validator = \Drupal::service('gcontent_moderation.state_transition_validation');
+  $transitions = $transition_validator->allowedTransitions(\Drupal::currentUser(), $node, [$group]);
+  $action = $form['actions']['submit'];
+  if (empty($transitions['publish'])) {
+    $action['#value'] = t('Ready to publish');
+    array_unshift($action['#submit'], '_hel_tpm_forms_service_ready_to_submit_submit');
+  }
+  else {
+    $action['#value'] = t('Publish');
+    array_unshift($action['#submit'], '_hel_tpm_forms_service_publish_submit');
+  }
+
+
+  $form['actions']['publish_service'] = $action;
+}
+
+/**
+ * Publish service function.
+ */
+function _hel_tpm_forms_service_publish_submit($form, &$form_state) {
+  $form_state->setValue('moderation_state', [['value' => 'published']]);
+}
+
+/**
+ * @param $form
+ * @param $form_state
+ *
+ * @return void
+ */
+function _hel_tpm_forms_service_ready_to_submit_submit($form, &$form_state) {
+  $form_state->setValue('moderation_state', [['value' => 'ready_to_publish']]);
+  \Drupal::messenger()->addStatus(t('Thank you! Service has been sent for review, after which it will be published and can be seen by all user using Palvelumanuaali.'));
 }
 
 /**

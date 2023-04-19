@@ -8,15 +8,19 @@ dependencies:
     - group.type.service_provider
     - node.type.service
   module:
+    - epp
     - require_on_publish
 third_party_settings:
+  epp:
+    value: '[current-page:url:args:value:1]'
+    on_update: 0
   require_on_publish:
     require_on_publish: true
 id: node.service.field_service_producer
 field_name: field_service_producer
 entity_type: node
 bundle: service
-label: 'Palvelun tuottaja'
+label: Palveluntuottaja
 description: ''
 required: false
 translatable: false

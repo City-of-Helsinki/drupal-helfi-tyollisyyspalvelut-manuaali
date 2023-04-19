@@ -217,6 +217,13 @@
     }
   }
 
+
+  > .tab-1,
+  > .tab-2,
+  > .tab-3  {
+    margin-bottom: $space;
+  }
+
   > .tab > .form-fieldset,
   > .tab-1,
   > .tab-2,
@@ -343,7 +350,6 @@
         input[data-drupal-selector*="subform-field-service-languages-add-more-add-more-button-service-language"] {
           width: 259px;
           height: 48px;
-          @include button-color-blue;
           font-size: $small-caption;
         }
 
@@ -427,7 +433,6 @@
 
   .field--name-field-municipality-guide .button,
   .field--name-field-archiving-guide .button,
-  .paragraph-type-top .paragraphs-dropbutton-wrapper .button--small,
   .confirm-remove .form-submit {
     @include button-medium;
     @include button-color-blue;
@@ -525,8 +530,10 @@
     }
   }
 
+  .field--name-entitygroupfield,
   .field--name-field-contact-info,
-  .field--name-field-service-producer,
+  .field--name-field-service-provider-updatee,
+  .field--name-field-responsible-updatee,
   .group--margin-border-bottom {
     padding-bottom: $space-three-and-half;
     margin-bottom: $space-triple !important;

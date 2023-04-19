@@ -53,10 +53,10 @@
   <div{{ attributes.addClass(classes, 'field__item') }}>
     {% if item.content['#markup'] == 'yes' %}
       <span class="icon-i"></span>
-      <span class="text">{{"<b>Palvelu ei sovellu</b> täydentäväksi työnhakukeskusteluksi."|t}}</span>
-  {% elseif item.content['#markup'] == 'no' %}
-      <span class="icon-i"></span>
       <span class="text">{{"<b>Palvelu soveltuu</b> täydentäväksi työnhakukeskusteluksi."|t}}</span>
+    {% elseif item.content['#markup'] == 'no' %}
+      <span class="icon-i"></span>
+      <span class="text">{{"<b>Palvelu ei sovellu</b> täydentäväksi työnhakukeskusteluksi."|t}}</span>
     {% endif %}
   </div>
 {% endfor %}

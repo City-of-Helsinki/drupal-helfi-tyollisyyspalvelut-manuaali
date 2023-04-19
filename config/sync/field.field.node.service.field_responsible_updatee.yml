@@ -5,11 +5,17 @@ dependencies:
   config:
     - field.storage.node.field_responsible_updatee
     - node.type.service
+  module:
+    - epp
+third_party_settings:
+  epp:
+    value: ''
+    on_update: 0
 id: node.service.field_responsible_updatee
 field_name: field_responsible_updatee
 entity_type: node
 bundle: service
-label: 'Palvelun vastuupäivittäjä'
+label: 'Kunnan vastuupäivittäjä'
 description: ''
 required: false
 translatable: false
@@ -27,4 +33,5 @@ settings:
     filter:
       type: _none
     include_anonymous: false
+    filter_users_without_publish: 1
 field_type: entity_reference

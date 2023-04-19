@@ -4,10 +4,13 @@ namespace Drupal\hel_tpm_general\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\Url;
 use Drupal\group\Access\GroupContentCreateEntityAccessCheck;
+use Drupal\group\Entity\GroupInterface;
 use Drupal\group\GroupMembershipLoader;
 use Drupal\hel_tpm_general\Access\GroupNodeCreateAccessService;
+use Drupal\user\UserInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -33,6 +36,8 @@ class GroupNodeAddServiceController extends ControllerBase implements ContainerI
    */
   protected $plugin_id = 'group_node:service';
 
+  protected $user;
+
   /**
    * @var \Drupal\hel_tpm_general\Access\GroupNodeCreateAccessService
    */
@@ -44,10 +49,11 @@ class GroupNodeAddServiceController extends ControllerBase implements ContainerI
    * @param \Drupal\Core\Path\PathValidatorInterface $path_validator
    * @param \Symfony\Component\Routing\RouterInterface $router
    */
-  public function __construct(GroupMembershipLoader $group_membership_loader, RouterInterface $router, GroupNodeCreateAccessService $group_node_create_access_service) {
+  public function __construct(GroupMembershipLoader $group_membership_loader, RouterInterface $router, GroupNodeCreateAccessService $group_node_create_access_service, AccountProxyInterface $user) {
     $this->groupMembershipLoader = $group_membership_loader;
     $this->router = $router;
     $this->groupNodeCreateAccessService = $group_node_create_access_service;
+    $this->user = $user;
   }
 
   /**
@@ -57,7 +63,8 @@ class GroupNodeAddServiceController extends ControllerBase implements ContainerI
     return new static(
       $container->get('group.membership_loader'),
       $container->get('router.no_access_checks'),
-      $container->get('hel_tpm_general.group_node_add_access_service')
+      $container->get('hel_tpm_general.group_node_add_access_service'),
+      $container->get('current_user')
     );
   }
 
@@ -106,7 +113,7 @@ class GroupNodeAddServiceController extends ControllerBase implements ContainerI
       return $links;
     }
     foreach ($groups as $group) {
-      if (!$this->groupNodeCreateAccessService->hasCreateServiceAccess($group, $this->plugin_id, $this->currentUser())) {
+      if (!$this->hasCurrentUserCreateServiceAccess($group)) {
         continue;
       }
       $links[] = [
@@ -118,6 +125,16 @@ class GroupNodeAddServiceController extends ControllerBase implements ContainerI
 
     return $links;
   }
+
+  /**
+   * @param \Drupal\group\Entity\GroupInterface $group
+   *
+   * @return \Drupal\Core\Access\AccessResultInterface
+   */
+  public function hasCurrentUserCreateServiceAccess(GroupInterface $group) {
+    return $this->groupNodeCreateAccessService->hasCreateServiceAccess($group, $this->plugin_id, $this->user);
+  }
+
   /**
    * @param $group
    * @param $plugin_id

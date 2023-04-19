@@ -27,6 +27,7 @@ dependencies:
     - field.field.node.service.field_poma_applicable
     - field.field.node.service.field_poma_applicable_descriptio
     - field.field.node.service.field_related_archive
+    - field.field.node.service.field_responsible_municipality
     - field.field.node.service.field_responsible_updatee
     - field.field.node.service.field_service_benefits
     - field.field.node.service.field_service_exceptions
@@ -37,6 +38,7 @@ dependencies:
     - field.field.node.service.field_service_other_info
     - field.field.node.service.field_service_price
     - field.field.node.service.field_service_producer
+    - field.field.node.service.field_service_provider_updatee
     - field.field.node.service.field_service_radioactivity
     - field.field.node.service.field_service_req_speacialist
     - field.field.node.service.field_service_requirements
@@ -54,6 +56,7 @@ dependencies:
     - field_group
     - hel_tpm_editorial
     - hel_tpm_group
+    - hel_tpm_service_dates
     - inline_entity_form
     - markup
     - maxlength
@@ -82,7 +85,6 @@ third_party_settings:
         - group_service_requirements
         - group_guidance_to_service
         - group_service_obligatoryness
-        - field_municipality_guidance
         - group_markings_for_service
         - group_statements_unemploym
         - group_measures_during
@@ -225,6 +227,8 @@ third_party_settings:
         - field_contact_info
         - entitygroupfield
         - field_service_producer
+        - field_service_provider_updatee
+        - field_responsible_municipality
         - field_responsible_updatee
         - field_other_services
       label: 'Additional info'
@@ -477,6 +481,7 @@ third_party_settings:
     group_guidance_to_service:
       children:
         - field_guidance_to_service
+        - field_municipality_guidance
       label: 'Ohjaus palveluun'
       region: content
       parent_name: group_specialist
@@ -692,10 +697,9 @@ content:
       placeholder: ''
     third_party_settings:
       maxlength:
-        maxlength_js: 2000
+        maxlength_js: null
         maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
         maxlength_js_enforce: false
-        maxlength_js_truncate_html: false
   field_guidance_to_service:
     type: entity_reference_paragraphs
     weight: 8
@@ -768,7 +772,7 @@ content:
       closed_mode_threshold: '0'
       add_mode: button
       form_display_mode: default
-      default_paragraph_type: municipality_guide
+      default_paragraph_type: _none
       add_label: 'Add a municipality specific guide'
       features:
         duplicate: 0
@@ -788,8 +792,8 @@ content:
       closed_mode_threshold: '0'
       add_mode: button
       form_display_mode: default
-      default_paragraph_type: municipality_guide
-      add_label: 'Add a municipality specific guide +'
+      default_paragraph_type: _none
+      add_label: 'Add a municipality specific guide'
       features:
         duplicate: 0
         collapse_edit_all: 0
@@ -821,7 +825,7 @@ content:
     third_party_settings: {  }
   field_other_services:
     type: select2_entity_reference
-    weight: 13
+    weight: 15
     region: content
     settings:
       width: 100%
@@ -835,15 +839,21 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_responsible_updatee:
-    type: hel_tpm_group_user_select_widget
-    weight: 12
+  field_responsible_municipality:
+    type: select2_entity_reference
+    weight: 13
     region: content
     settings:
       width: 100%
+      autocomplete: false
       match_operator: CONTAINS
-      match_limit: '10'
-      autocomplete: 0
+      match_limit: 10
+    third_party_settings: {  }
+  field_responsible_updatee:
+    type: options_select
+    weight: 14
+    region: content
+    settings: {  }
     third_party_settings: {  }
   field_service_benefits:
     type: text_textarea
@@ -854,10 +864,9 @@ content:
       placeholder: ''
     third_party_settings:
       maxlength:
-        maxlength_js: 2000
+        maxlength_js: null
         maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
         maxlength_js_enforce: false
-        maxlength_js_truncate_html: false
   field_service_exceptions:
     type: text_textarea
     weight: 13
@@ -888,7 +897,7 @@ content:
       placeholder: ''
     third_party_settings:
       maxlength:
-        maxlength_js: 1000
+        maxlength_js: null
         maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
         maxlength_js_enforce: false
   field_service_other_info:
@@ -926,6 +935,12 @@ content:
       match_operator: CONTAINS
       match_limit: 10
     third_party_settings: {  }
+  field_service_provider_updatee:
+    type: options_select
+    weight: 12
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   field_service_req_speacialist:
     type: text_textarea
     weight: 7
@@ -943,10 +958,9 @@ content:
       placeholder: ''
     third_party_settings:
       maxlength:
-        maxlength_js: 2000
+        maxlength_js: null
         maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
         maxlength_js_enforce: false
-        maxlength_js_truncate_html: false
   field_service_set:
     type: select2_entity_reference
     weight: 6
@@ -972,17 +986,16 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_service_time_and_location:
-    type: inline_entity_form_simple
+    type: hel_tpm_service_dates_service_time_and_place_widget
     weight: 17
     region: content
     settings:
-      form_mode: default
-      override_labels: true
-      label_singular: ''
-      label_plural: ''
-      collapsible: false
-      collapsed: false
-      revision: false
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: button
+      form_display_mode: default
+      default_paragraph_type: _none
     third_party_settings: {  }
   field_statements:
     type: options_buttons

@@ -6,12 +6,6 @@ name: 'Filtered Html'
 format: filtered_html
 weight: 0
 filters:
-  filter_autop:
-    id: filter_autop
-    provider: filter
-    status: true
-    weight: 0
-    settings: {  }
   filter_html:
     id: filter_html
     provider: filter
@@ -26,4 +20,10 @@ filters:
     provider: filter
     status: true
     weight: 10
+    settings: {  }
+  filter_autop:
+    id: filter_autop
+    provider: filter
+    status: true
+    weight: 0
     settings: {  }

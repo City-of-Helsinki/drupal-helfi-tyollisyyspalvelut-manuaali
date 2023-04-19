@@ -1,0 +1,40 @@
+<?php
+
+/**
+ * Update service location titles.
+ */
+function hel_tpm_forms_update_9001(&$sandbox) {
+  $storage = \Drupal::entityTypeManager()->getStorage('node');
+  $query = $storage->getQuery()
+    ->condition('type', 'service_location');
+
+  // Example function body for a batch update. In this example, the values in
+  // a database field are updated.
+  if (!isset($sandbox['progress'])) {
+    $query_total = clone($query);
+    // This must be the first run. Initialize the sandbox.
+    $sandbox['progress'] = 0;
+    $sandbox['current_nid'] = 0;
+    $sandbox['max'] = $query_total
+      ->count()
+      ->execute();
+  }
+
+  $nids = $query->condition('nid', $sandbox['current_nid'], '>')
+    ->range(0, 20)
+    ->execute();
+
+  $nodes = $storage->loadMultiple($nids);
+
+  foreach ($nodes as $node) {
+    if (empty($node)) {
+      continue;
+    }
+    $node->save();
+    $sandbox['progress']++;
+    $sandbox['current_nid'] = $node->id();
+  }
+
+
+  $sandbox['#finished'] = empty($sandbox['max']) ? 1 : $sandbox['progress'] / $sandbox['max'];
+}

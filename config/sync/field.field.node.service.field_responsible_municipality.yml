@@ -1,0 +1,35 @@
+uuid: dc3d0315-216a-47ee-b3bc-17fb383226a7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_responsible_municipality
+    - group.type.organisation
+    - node.type.service
+  module:
+    - epp
+third_party_settings:
+  epp:
+    value: ''
+    on_update: 0
+id: node.service.field_responsible_municipality
+field_name: field_responsible_municipality
+entity_type: node
+bundle: service
+label: Vastuukunta
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:group'
+  handler_settings:
+    target_bundles:
+      organisation: organisation
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: organisation
+field_type: entity_reference
