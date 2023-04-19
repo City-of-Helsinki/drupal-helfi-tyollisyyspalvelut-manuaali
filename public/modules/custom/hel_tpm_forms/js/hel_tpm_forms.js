@@ -1,43 +1,15 @@
 (function ($, Drupal, drupalSettings) {
   Drupal.behaviors.hel_tpm_forms = {
     attach: function (context, settings) {
-      let currentTab = 0;
-      let urlParams = new URLSearchParams(window.location.search);
-      if (urlParams.has('step')) {
-        currentTab = urlParams.get('step');
-        currentTab = Number(currentTab);
-      } else {
-        currentTab = 0;
-      }
-      showTab(currentTab); // Display the current tab
       addError();
+      togglePrice();
+      toggleTime();
+      toggleAgeRange();
       handleSelectedStatement();
       handleSelectedObligatoryness();
 
       addMoreSubmitBackgroud();
 
-      $('.btn-prev').click(function () {
-        nextPrev(-1);
-      });
-
-      $('.btn-next').click(function () {
-        nextPrev(1);
-      });
-
-      $('.step').click(function () {
-        let step = $(this).attr('data-step');
-        switchTab(step);
-      });
-
-      /**
-       * Update url step parameter.
-       *
-       * @param step
-       */
-      function updateStepParam(step) {
-        urlParams.set('step', step);
-        history.replaceState(null, null, "?"+urlParams.toString());
-      }
       /**
        * Add custom background position css for add more buttons.
        */
@@ -58,6 +30,63 @@
         })
       }
 
+      /**
+       * Toggle price fields.
+       */
+      function togglePrice() {
+        let freeServiceCheckbox = '.field--name-field-free-service .form-checkbox';
+        togglePriceElements(freeServiceCheckbox);
+
+        //handle show/hide logic of service price
+        $(freeServiceCheckbox).once().click(function () {
+          togglePriceElements(this);
+        });
+      }
+
+      /**
+       * Toggle price elements.
+       */
+      function togglePriceElements(priceElement) {
+        let servicePrice = '.field--name-field-service-price .field--name-field-price';
+        let servicePriceDescription = '.field--name-field-service-price .field--name-field-description';
+        if ($(priceElement).is(":checked") === false) {
+          $(servicePrice).hide();
+          $(servicePriceDescription).hide();
+        }
+        else {
+          $(servicePrice).show();
+          $(servicePriceDescription).show();
+        }
+      }
+
+      // hide age range on the first a page of service entity form.
+      function toggleAgeRange() {
+        let ageGroups = '.field--name-field-age-groups .form-item';
+        $(ageGroups).siblings().each(function () {
+          let element = $('.form-radio', this);
+          toggleAgeField(element)
+        });
+
+        //handle age accordion
+        let ageGroupRadio = '.field--name-field-age-groups .form-item .form-radio';
+        $(ageGroupRadio).click(function() {
+          toggleAgeField(this);
+        });
+      }
+
+      function toggleAgeField(elem) {
+        let ageField = '.field--name-field-age';
+        if (!$(elem).is(':checked')) {
+          return;
+        }
+        if ($(elem).val() === "no_age_restriction") {
+          $(ageField).hide();
+        }
+        else {
+          $(ageField).show();
+        }
+      }
+
       function addError() {
         let x = $(".tab.field-group-html-element");
         x.each(function(index) {
@@ -68,106 +97,9 @@
         });
       }
 
-      function switchTab(n) {
-        let x = document.getElementsByClassName("tab");
-        x[currentTab].style.display = "none";
-        currentTab = Number(n);
-        showTab(currentTab);
-      }
-
-      function showTab(n) {
-        n = Number(n);
-        hidePrice();
-        hideTime();
-        hideAgeRange();
-        // This function will display the specified tab of the form ...
-        let x = document.getElementsByClassName("tab");
-        x[n].style.display = "block";
-        // ... and fix the Previous/Next buttons:
-        if (n === 0) {
-          document.getElementById("prevBtn").style.display = "none";
-          hidePrice();
-        } else if (n === 1){
-          document.getElementById("prevBtn").style.display = "inline";
-          hideTime();
-        } else {
-          document.getElementById("prevBtn").style.display = "inline";
-        }
-
-        if (n === (x.length-1)) {
-          document.getElementById('nextBtn').hidden = true;
-        } else {
-          document.getElementById('nextBtn').hidden = false;
-          document.getElementById("nextBtnText").innerHTML = "Next";
-        }
-        updateStepParam(n);
-        // ... and run a function that displays the correct step indicator:
-        fixStepIndicator(n);
-      }
-
-      function nextPrev(n) {
-        // This function will figure out which tab to display
-        let x = document.getElementsByClassName("tab");
-        // Exit the function if any field in the current tab is invalid:
-        // if (n == 1 && !validateForm()) return false;
-        // validateForm has been removed for now.
-        // Hide the current tab:
-        x[currentTab].style.display = "none";
-        // Increase or decrease the current tab by 1:
-        currentTab = Number(currentTab);
-        n = Number(n);
-        currentTab = currentTab + n;
-        // if you have reached the end of the form... :
-        if (currentTab >= x.length) {
-          //...the form gets submitted:
-          document.getElementById("regForm").submit();
-          return false;
-        }
-        // Otherwise, display the correct tab:
-        showTab(currentTab);
-      }
-
-      function fixStepIndicator(n) {
-        // This function removes the "active" class of all steps...
-        let i, x = document.getElementsByClassName("step");
-        for (i = 0; i < x.length; i++) {
-          x[i].className = x[i].className.replace(" active", "");
-        }
-        //... and adds the "active" class to the current step:
-        x[n].className += " active";
-      }
-
-      // hide price elements in the first service entity form page if the checkbox is not checked.
-      function hidePrice() {
-        let freeServiceCheckbox = '.field--name-field-free-service .form-checkbox';
-        let servicePrice = '.field--name-field-service-price .field--name-field-price';
-        let servicePriceDescription = '.field--name-field-service-price .field--name-field-description';
-
-        if ($(freeServiceCheckbox).is(":checked") === false) {
-          $(servicePrice).hide();
-          $(servicePriceDescription).hide();
-        }
-        else  {
-          $(servicePrice).show();
-          $(servicePriceDescription).show();
-
-        }
-
-        //handle show/hide logic of service price
-        $(freeServiceCheckbox).click(function () {
-          if ($(this).is(":checked") === false) {
-            $(servicePrice).hide();
-            $(servicePriceDescription).hide();
-          }
-          else {
-            $(servicePrice).show();
-            $(servicePriceDescription).show();
-          }
-        });
-      }
 
       // hide time element on the second page of service entity form.
-      function hideTime() {
+      function toggleTime() {
         let separateTimeCheckbox = '.field--name-field-separate-time .form-checkbox';
         let hideableTimes = '.event-times';
         $(separateTimeCheckbox).each(function() {
@@ -181,32 +113,8 @@
           if ($(this).is(":checked") === true) {
             $(thisTimeCheckbox).hide();
           }
-          else  {
+          else {
             $(thisTimeCheckbox).show();
-          }
-        });
-      }
-
-      // hide age range on the first a page of service entity form.
-      function hideAgeRange() {
-        let ageGroups = '.field--name-field-age-groups .form-item';
-        let ageField = '.field--name-field-age';
-        $(ageGroups).siblings().each(function () {
-          if ($(this).children('.form-radio').val() === "no_age_restriction" && $(this).children('.form-radio').is(":checked") === true ) {
-            $(ageField).hide();
-          }
-          else if (($(this).children('.form-radio').val() !== "no_age_restriction" && $(this).children('.form-radio').is(":checked") === true )) {
-            $(ageField).show();
-          }
-        });
-        //handle age accordion
-        let ageGroupRadio = '.field--name-field-age-groups .form-item .form-radio';
-          $(ageGroupRadio).click(function() {
-          if ($(this).val() === "no_age_restriction" && $(this).is(":checked") === true ) {
-            $(ageField).hide();
-          }
-          else if (($(this).val() != "no_age_restriction" && $(this).is(":checked") === true )) {
-            $(ageField).show();
           }
         });
       }
