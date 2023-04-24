@@ -169,6 +169,11 @@ function palvelumanuaali_theme_suggestions_details_alter(array &$suggestions, ar
     $formId = str_replace("-", "_", $variables['element']['#form_id']);
     $suggestions[] = $hook . '__' . $type . '__' . $formId;
   }
+  if (isset($variables['element']['#type']) && isset($variables['element']['#id'])) {
+      $id = str_replace("-", "_", $variables['element']['#id']);
+      $suggestions[] = $hook .  '__' . $id;
+  }
+
 }
 
 /**
