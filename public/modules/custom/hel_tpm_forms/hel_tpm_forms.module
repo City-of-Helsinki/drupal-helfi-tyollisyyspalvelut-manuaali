@@ -183,14 +183,10 @@ function _hel_tpm_form_publish_service_action(&$form, $form_state) {
   if (empty($transitions['publish'])) {
     $action['#value'] = t('Ready to publish');
     $action['#attributes']['data-state'] = 'ready_to_publish';
-   // $action['#validate'][] = '_hel_tpm_forms_service_ready_to_submit_submit';
-//    array_unshift($action['#submit'], '_hel_tpm_forms_service_ready_to_submit_submit');
   }
   else {
     $action['#value'] = t('Publish');
     $action['#attributes']['data-state'] = 'published';
-   // $action['#validate'][] = '_hel_tpm_forms_service_publish_submit';
- //   array_unshift($action['#submit'], '_hel_tpm_forms_service_publish_submit');
   }
 
 
