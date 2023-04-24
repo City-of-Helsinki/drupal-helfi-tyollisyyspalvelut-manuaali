@@ -528,6 +528,58 @@
         font-size: $small-font;
       }
     }
+    tbody {
+      tr {
+        display: flex;
+        border-bottom: 2px solid clr(form-border);
+        border-radius: 8px;
+        height: 48px;
+        background: clr(background-dropdown);
+        margin-bottom: $space;
+        padding: $space-three-fourths $space-double $space-three-fourths 20px;
+      }
+      td {
+        padding: 0;
+        font-size: $small-font;
+        &.inline-entity-form-contact_info-label {
+          padding-left: $space-three-fourths;
+          font-size: $small-caption;
+        }
+        input {
+          background-color: transparent;
+          color: clr(background-section);
+          font-weight: 700;
+          font-size: 12px;
+          line-height: 24px;
+          padding: 0;
+          &:hover {
+            background: transparent;
+            color: clr(background-color);
+          }
+        }
+      }
+    }
+    .ief-tabledrag-handle {
+      width: 12px;
+    }
+    .tabledrag-handle {
+      margin-left: 0;
+    }
+    .handle {
+      margin: 0;
+      padding: 0;
+      background-size: contain;
+      background-image: url("/themes/custom/palvelumanuaali/images/icons/union.svg");
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 4px;
+      height: 24px;
+    }
+    .ief-entity-operations {
+      height: 100%;
+      gap: $space-triple;
+      justify-content: end;
+    }
   }
 
   .field--name-entitygroupfield,
