@@ -544,6 +544,10 @@
         &.inline-entity-form-contact_info-label {
           padding-left: $space-three-fourths;
           font-size: $small-caption;
+          max-width: 40ch;
+          overflow: hidden;
+          text-overflow: ellipsis;
+
         }
         input {
           background-color: transparent;
