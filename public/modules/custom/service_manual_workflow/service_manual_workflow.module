@@ -35,11 +35,12 @@ function service_manual_workflow_entity_insert(EntityInterface $entity) {
  */
 function service_manual_workflow_require_on_publish_is_published_alter(&$is_published, $entity, $operation) {
   $entity_type = $entity->getEntityTYpe();
+  $publish_states = ['ready_to_publish', 'published'];
   if ($entity_type->id() !== 'node') {
     return;
   }
   $moderation_state = $entity->moderation_state->value;
-  $is_published = $moderation_state === 'ready_to_publish';
+  $is_published = in_array($moderation_state, $publish_states);
 }
 
 /**
