@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aac3a824ea8eea287ba8e50abbc89db4",
+    "content-hash": "6d53e5b0285c2a8dcc2578bd66948abf",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -9118,6 +9118,50 @@
             "homepage": "https://www.drupal.org/project/token",
             "support": {
                 "source": "https://git.drupalcode.org/project/token"
+            }
+        },
+        {
+            "name": "drupal/token_views_filter",
+            "version": "1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/token_views_filter.git",
+                "reference": "8.x-1.5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/token_views_filter-8.x-1.5.zip",
+                "reference": "8.x-1.5",
+                "shasum": "1a151906690464650ffef3fe8c9a0f4fb5c6733b"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.5",
+                    "datestamp": "1604429711",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "validoll",
+                    "homepage": "https://www.drupal.org/user/144206"
+                }
+            ],
+            "description": "This is module allow to use tokens in views filter criteria values.",
+            "homepage": "https://www.drupal.org/project/token_views_filter",
+            "support": {
+                "source": "https://git.drupalcode.org/project/token_views_filter"
             }
         },
         {
