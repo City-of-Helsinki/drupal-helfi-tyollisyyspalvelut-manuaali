@@ -4,7 +4,13 @@ hel_tpm_forms:
   js:
     js/hel_tpm_forms.js: {}
     js/hel_tpm_forms_service_form_pagination.js: {}
+    js/hel_tpm_forms_custom_submit.js: {}
   dependencies:
     - core/jquery
     - core/drupal
     - core/drupalSettings
+
+service_custom_submit:
+  version: 2.0.1
+  js:
+    js/hel_tpm_forms_custom_submit.js: {}
