@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\hel_tpm_general\EventSubscriber;
+namespace Drupal\hel_tpm_group_invite\EventSubscriber;
 
 use Drupal\Core\Routing\RouteSubscriberBase;
 use Drupal\Core\Routing\RoutingEvents;
@@ -24,15 +24,20 @@ class BulkInvitationRouteSubscriber extends RouteSubscriberBase {
     if (empty($route)) {
       return;
     }
-    $route->setDefault('_form', 'Drupal\hel_tpm_general\Form\BulkGroupInvitationRoles');
+    $route->setDefault('_form', 'Drupal\hel_tpm_group_invite\Form\BulkGroupInvitationCustom');
   }
 
+  /**
+   * @param \Symfony\Component\Routing\RouteCollection $collection
+   *
+   * @return void
+   */
   private function alterGinviteInvitationBulkConfirmRoute(RouteCollection $collection) {
     $route = $collection->get('ginvite.invitation.bulk.confirm');
     if (empty($route)) {
       return;
     }
-    $route->setDefault('_form', 'Drupal\hel_tpm_general\Form\BulkGroupInvitationRolesConfirm');
+    $route->setDefault('_form', 'Drupal\hel_tpm_group_invite\Form\BulkGroupInvitationCustomConfirm');
   }
 
   /**
