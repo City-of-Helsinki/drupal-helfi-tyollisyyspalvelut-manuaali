@@ -107,15 +107,16 @@ class GroupBulkInviteTest extends GroupBrowserTestBase {
     $role->grantPermissions(['administer members']);
     $role->save();
 
+    // Load invite members form.
     $this->drupalGet('/group/' . $this->group->id() . '/invite-members');
     $this->assertSession()->fieldExists('email_address');
     $this->assertSession()->fieldExists('roles');
 
-    $custom_role = $this->group->getGroupType()->getRoles(FALSE);
-    $custom_role = $custom_role['default-custom'];
 
-    $role_checkbox = sprintf('//input[@value="%s"]', $custom_role->id());
+    // Make sure field for role selection is found.
+    $role_checkbox = sprintf('//input[@value="default-custom"]');
     $this->assertSession()->elementExists('xpath', $role_checkbox);
+
   }
 
 }
