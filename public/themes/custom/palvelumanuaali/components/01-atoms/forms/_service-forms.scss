@@ -549,7 +549,7 @@
           text-overflow: ellipsis;
 
         }
-        input {
+        >.form-wrapper >.form-submit {
           background-color: transparent;
           color: clr(background-section);
           font-weight: 700;
@@ -559,6 +559,9 @@
           &:hover {
             background: transparent;
             color: clr(background-color);
+          }
+          @include xxl {
+            height: unset;
           }
         }
       }
