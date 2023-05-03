@@ -102,7 +102,7 @@ function palvelumanuaali_preprocess_fieldset(&$variables) {
     $variables['legend']['attributes']['class'] = [];
     $variables['legend']['attributes']['class'][] = 'field-group--title';
     $variables['legend']['attributes']['class'][] = 'field-group--title-small';
-    $variables['legend_span']['attributes']['class'] = 'field-group--title-small';
+    $variables['legend_span']['attributes']['class'][] = 'field-group--title-small';
   }
   if ($element['#field_name'] == 'field_other_preferences') {
     $variables['legend_span']['attributes']['class'] = 'field-group--title-small';
