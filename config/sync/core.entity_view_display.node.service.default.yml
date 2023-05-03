@@ -52,7 +52,6 @@ dependencies:
     - node.type.service
   module:
     - entity_reference_revisions
-    - entitygroupfield
     - field_group
     - text
     - user
@@ -143,14 +142,6 @@ targetEntityType: node
 bundle: service
 mode: default
 content:
-  entitygroupfield:
-    type: parent_group_label_formatter
-    label: hidden
-    settings:
-      link: false
-    third_party_settings: {  }
-    weight: 19
-    region: content
   field_accessibility:
     type: entity_reference_label
     label: above
@@ -214,15 +205,7 @@ content:
       view_mode: card_lift
       link: false
     third_party_settings: {  }
-    weight: 20
-    region: content
-  field_responsible_municipality:
-    type: entity_reference_label
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 21
+    weight: 19
     region: content
   field_service_benefits:
     type: text_default
@@ -272,14 +255,6 @@ content:
       link: false
     third_party_settings: {  }
     weight: 18
-    region: content
-  field_service_provider_updatee:
-    type: entity_reference_label
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 22
     region: content
   field_service_requirements:
     type: text_default
@@ -354,6 +329,7 @@ hidden:
   entity_print_view_epub: true
   entity_print_view_pdf: true
   entity_print_view_word_docx: true
+  entitygroupfield: true
   field_career_marking: true
   field_client_consent: true
   field_contact_info: true
@@ -370,10 +346,12 @@ hidden:
   field_poma_applicable: true
   field_poma_applicable_descriptio: true
   field_related_archive: true
+  field_responsible_municipality: true
   field_responsible_updatee: true
   field_service_exceptions: true
   field_service_links_external: true
   field_service_links_internal: true
+  field_service_provider_updatee: true
   field_service_radioactivity: true
   field_service_req_speacialist: true
   field_service_suits_info: true
