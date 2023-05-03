@@ -1,12 +1,12 @@
 <?php
 
-namespace Drupal\hel_tpm_general\Form;
+namespace Drupal\hel_tpm_group_invite\Form;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\ginvite\Form\BulkGroupInvitation;
 use Drupal\group\Entity\GroupInterface;
 
-class BulkGroupInvitationRoles extends BulkGroupInvitation {
+class BulkGroupInvitationCustom extends BulkGroupInvitation {
 
   /**
    * @param array $form
@@ -25,7 +25,8 @@ class BulkGroupInvitationRoles extends BulkGroupInvitation {
       '#type' => 'checkboxes',
       '#title' => t('Roles'),
       '#options' => self::getGroupRoleOptions($group),
-      '#weight' => 0
+      '#weight' => 0,
+      '#attributes' => ['id' => 'edit-roles']
     ];
 
     return $form;
@@ -49,7 +50,7 @@ class BulkGroupInvitationRoles extends BulkGroupInvitation {
     if (empty($group_roles)) {
       return $roles;
     }
-    foreach ($group_roles as $id => $role) {
+    foreach ($group_roles as $role) {
       $roles[$role->id()] = $role->label();
     }
     return $roles;
@@ -59,7 +60,6 @@ class BulkGroupInvitationRoles extends BulkGroupInvitation {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-
     // Prepare params to store them in tempstore.
     $params['gid'] = $this->group->id();
     $params['plugin'] = $this->group->getGroupType()->getContentPlugin('group_invitation')->getContentTypeConfigId();
@@ -84,10 +84,20 @@ class BulkGroupInvitationRoles extends BulkGroupInvitation {
    *
    * @param $form_state
    *
-   * @return void
+   * @return array
    */
-  protected function getRoles(FormStateInterface $form_state) {
-    return $form_state->getValue('roles');
+  protected function getRoles(FormStateInterface $form_state) : array {
+    $roles = $form_state->getValue('roles');
+    if (empty($roles)) {
+      return [];
+    }
+    foreach ($roles as $key => $role) {
+      if ($key === $role) {
+        continue;
+      }
+      unset($roles[$key]);
+    }
+     return $roles;
   }
 
   /**
