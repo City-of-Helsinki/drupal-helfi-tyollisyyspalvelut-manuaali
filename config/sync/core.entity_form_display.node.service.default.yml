@@ -1012,17 +1012,16 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_target_group:
-    type: inline_entity_form_simple
+    type: entity_reference_paragraphs
     weight: 11
     region: content
     settings:
-      form_mode: default
-      override_labels: false
-      label_singular: ''
-      label_plural: ''
-      collapsible: false
-      collapsed: false
-      revision: false
+      title: 'Paragraafi '
+      title_plural: Paragraafit
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
     third_party_settings: {  }
   hel_tpm_service_help:
     weight: 0
