@@ -10,7 +10,6 @@ dependencies:
     - user.role.specialist_editor
   module:
     - group
-    - hel_tpm_general
     - user
 id: maintenance_and_administration
 label: 'Hallinta ja ylläpito näkymä'
@@ -200,18 +199,7 @@ display:
       cache:
         type: tag
         options: {  }
-      empty:
-        area_text_custom:
-          id: area_text_custom
-          table: views
-          field: area_text_custom
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: text_custom
-          empty: true
-          content: "<p><b>Sinulla ei ole ryhmiä</b><br>\r\n"
-          tokenize: false
+      empty: {  }
       sorts: {  }
       arguments:
         uid:
@@ -402,15 +390,6 @@ display:
           empty: false
           content: '<span>Valitse organisaatio:</span>'
           tokenize: false
-        add_service_button:
-          id: add_service_button
-          table: views
-          field: add_service_button
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: hel_tpm_general_add_service_button
-          empty: true
       footer: {  }
       display_extenders: {  }
     cache_metadata:

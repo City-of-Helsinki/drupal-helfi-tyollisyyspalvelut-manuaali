@@ -19,17 +19,25 @@
   }
 }
 
-.view-maintenance-and-administration {
+.owner-and-updatee-view-block {
+  margin-bottom: $space-double;
+  font-size: 38px;
+  line-height: 48px;
+  font-weight: 600; 
+}
+
+.view-maintenance-and-administration,
+.view-owner-and-responsible-updatee {
   grid-template-areas:
   "head  head  "
   "title filter"
   "view  view  ";
   display: grid;
   grid-template-columns: 180px 1fr;
-
+  margin-bottom: $space-quadruple;
   >h1 {
     grid-area: head;
-    margin-bottom: $space-sextuple;
+    margin-bottom: $space-double;
     font-size: 38px;
     line-height: 48px;
     font-weight: 600;
