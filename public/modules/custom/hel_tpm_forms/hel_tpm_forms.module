@@ -171,14 +171,22 @@ function _hel_tpm_form_publish_service_action(&$form, $form_state) {
   // Check user has permission to select publish transition.
   $transition_validator = \Drupal::service('gcontent_moderation.state_transition_validation');
   $transitions = $transition_validator->allowedTransitions(\Drupal::currentUser(), $node, [$group]);
-  $action = $form['actions']['submit'];
+  $action = [
+    '#type' => 'button',
+    '#attributes' => ['id' => 'hel-tpm-service-submit-button'],
+    '#attached' => [
+      'library' => [
+        'hel_tpm_forms/service_custom_submit'
+      ]
+    ]
+  ];
   if (empty($transitions['publish'])) {
     $action['#value'] = t('Ready to publish');
-    array_unshift($action['#submit'], '_hel_tpm_forms_service_ready_to_submit_submit');
+    $action['#attributes']['data-state'] = 'ready_to_publish';
   }
   else {
     $action['#value'] = t('Publish');
-    array_unshift($action['#submit'], '_hel_tpm_forms_service_publish_submit');
+    $action['#attributes']['data-state'] = 'published';
   }
 
 
