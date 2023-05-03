@@ -311,13 +311,21 @@ content:
     third_party_settings: {  }
     weight: 10
     region: content
-  field_responsible_updatee:
+  field_responsible_municipality:
     type: entity_reference_label
     label: above
     settings:
       link: true
     third_party_settings: {  }
     weight: 13
+    region: content
+  field_responsible_updatee:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 14
     region: content
   field_service_exceptions:
     type: text_default
@@ -395,7 +403,6 @@ hidden:
   field_other_services: true
   field_poma_applicable: true
   field_poma_applicable_descriptio: true
-  field_responsible_municipality: true
   field_service_benefits: true
   field_service_execution: true
   field_service_implement: true
