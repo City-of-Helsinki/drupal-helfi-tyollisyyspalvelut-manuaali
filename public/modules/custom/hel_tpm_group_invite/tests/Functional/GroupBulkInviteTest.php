@@ -57,6 +57,7 @@ class GroupBulkInviteTest extends GroupBrowserTestBase {
       'create other group',
       'administer group',
       'bypass group access',
+      'administer users'
     ];
   }
 
@@ -110,13 +111,25 @@ class GroupBulkInviteTest extends GroupBrowserTestBase {
     // Load invite members form.
     $this->drupalGet('/group/' . $this->group->id() . '/invite-members');
     $this->assertSession()->fieldExists('email_address');
-    $this->assertSession()->fieldExists('roles');
+    $this->assertSession()->fieldExists('edit-roles');
 
 
     // Make sure field for role selection is found.
     $role_checkbox = sprintf('//input[@value="default-custom"]');
     $this->assertSession()->elementExists('xpath', $role_checkbox);
 
+    // Fill form and submit.
+    $form = $this->getSession()->getPage();
+    $form->fillField('email_address', 'test@test.test');
+    $form->selectFieldOption('edit-roles', 'default-custom');
+    $form->pressButton('edit-submit');
+    $this->assertSession()->statusCodeEquals(200);
+
+    // Submit confirm form.
+    $form = $this->getSession()->getPage();
+    $form->hasButton('edit-submit');
+    $form->pressButton('edit-submit');
+    $this->assertSession()->statusCodeEquals(200);
   }
 
 }

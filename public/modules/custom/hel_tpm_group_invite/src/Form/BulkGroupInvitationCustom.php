@@ -26,7 +26,7 @@ class BulkGroupInvitationCustom extends BulkGroupInvitation {
       '#title' => t('Roles'),
       '#options' => self::getGroupRoleOptions($group),
       '#weight' => 0,
-      '#attributes' => ['name' => 'roles']
+      '#attributes' => ['id' => 'edit-roles']
     ];
 
     return $form;
@@ -60,7 +60,6 @@ class BulkGroupInvitationCustom extends BulkGroupInvitation {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-
     // Prepare params to store them in tempstore.
     $params['gid'] = $this->group->id();
     $params['plugin'] = $this->group->getGroupType()->getContentPlugin('group_invitation')->getContentTypeConfigId();
