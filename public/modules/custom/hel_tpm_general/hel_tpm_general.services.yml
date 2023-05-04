@@ -1,8 +1,4 @@
 services:
-  hel_tpm_general.route_subscriber:
-    class: Drupal\hel_tpm_general\EventSubscriber\BulkInvitationRouteSubscriber
-    tags:
-      - { name: event_subscriber }
 
   hel_tpm_general.group_node_add_access_service:
     class: Drupal\hel_tpm_general\Access\GroupNodeCreateAccessService

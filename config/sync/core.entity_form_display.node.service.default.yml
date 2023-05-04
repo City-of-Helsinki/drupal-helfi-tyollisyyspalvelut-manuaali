@@ -388,7 +388,7 @@ third_party_settings:
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
-        show_empty_fields: true
+        show_empty_fields: false
         id: ''
         element: div
         show_label: true
@@ -477,7 +477,7 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-        required_fields: false
+        required_fields: true
     group_guidance_to_service:
       children:
         - field_guidance_to_service
@@ -498,7 +498,7 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-        required_fields: false
+        required_fields: true
     group_benefits_serfice:
       children:
         - field_service_benefits
@@ -538,7 +538,7 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-        required_fields: false
+        required_fields: true
     group_participation_concent:
       children:
         - field_client_consent
@@ -1012,17 +1012,16 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_target_group:
-    type: inline_entity_form_simple
+    type: entity_reference_paragraphs
     weight: 11
     region: content
     settings:
-      form_mode: default
-      override_labels: false
-      label_singular: ''
-      label_plural: ''
-      collapsible: false
-      collapsed: false
-      revision: false
+      title: 'Paragraafi '
+      title_plural: Paragraafit
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
     third_party_settings: {  }
   hel_tpm_service_help:
     weight: 0

@@ -1,0 +1,23 @@
+ginvite.invitation.bulk:
+  path: '/group/{group}/invite-members'
+  defaults:
+    _form: '\Drupal\hel_tpm_group_invite\Form\BulkGroupInvitation'
+    _title_callback: '\Drupal\ginvite\Controller\InvitationOperations::invitationTitle'
+  requirements:
+    _custom_access: '\Drupal\ginvite\Controller\InvitationOperations::access'
+  options:
+    parameters:
+      group:
+        type: 'entity:group'
+
+ginvite.invitation.bulk.confirm:
+  path: '/group/{group}/invite-members/confirm'
+  defaults:
+    _form: '\Drupal\hel_tpm_group_invite\Form\HelTpmBulkGroupInvitationConfirm'
+    _title_callback: '\Drupal\ginvite\Controller\InvitationOperations::invitationTitle'
+  requirements:
+    _custom_access: '\Drupal\ginvite\Controller\InvitationOperations::access'
+  options:
+    parameters:
+      group:
+        type: 'entity:group'

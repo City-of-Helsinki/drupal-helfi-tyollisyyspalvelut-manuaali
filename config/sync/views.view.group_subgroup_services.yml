@@ -605,14 +605,14 @@ display:
         type: full
         options:
           offset: 0
-          items_per_page: 50
+          items_per_page: 10
           total_pages: null
           id: 0
           tags:
-            next: â€ºâ€º
-            previous: â€¹â€¹
-            first: 'Â« First'
-            last: 'Last Â»'
+            next: ''
+            previous: ''
+            first: '« First'
+            last: 'Last »'
           expose:
             items_per_page: false
             items_per_page_label: 'Items per page'
@@ -621,6 +621,7 @@ display:
             items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
+          quantity: 9
       exposed_form:
         type: basic
         options:
@@ -961,6 +962,7 @@ display:
           admin_label: 'field_service_provider_updatee: User'
           plugin_id: standard
           required: false
+      use_ajax: false
       header: {  }
       footer: {  }
       display_extenders: {  }
