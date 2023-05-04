@@ -6,7 +6,15 @@ dependencies:
     - field.storage.node.field_statements_unemployment
     - node.type.service
   module:
+    - epp
+    - require_on_publish
     - text
+third_party_settings:
+  epp:
+    value: ''
+    on_update: 0
+  require_on_publish:
+    require_on_publish: true
 id: node.service.field_statements_unemployment
 field_name: field_statements_unemployment
 entity_type: node
