@@ -6,12 +6,20 @@ dependencies:
     - field.storage.node.field_obligatoryness_freetext
     - node.type.service
   module:
+    - epp
+    - require_on_publish
     - text
+third_party_settings:
+  epp:
+    value: ''
+    on_update: 0
+  require_on_publish:
+    require_on_publish: true
 id: node.service.field_obligatoryness_freetext
 field_name: field_obligatoryness_freetext
 entity_type: node
 bundle: service
-label: 'Sisältö:'
+label: Sisältö
 description: ''
 required: false
 translatable: true
