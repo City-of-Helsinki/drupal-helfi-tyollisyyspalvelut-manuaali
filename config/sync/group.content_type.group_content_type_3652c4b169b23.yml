@@ -13,6 +13,7 @@ content_plugin: 'subgroup:service_provider'
 plugin_config:
   group_cardinality: 0
   entity_cardinality: 1
+  use_creation_wizard: false
   parent_role_mapping:
     organisation-0b0baeca9: ''
     organisation-4200d0219: ''
@@ -20,7 +21,9 @@ plugin_config:
     organisation-anonymous: ''
     organisation-d6c67468e: ''
     organisation-e7eaf710e: ''
-    organisation-editor: ''
+    organisation-editor: service_provider-organization_ad
+    organisation-efd091e38: ''
+    organisation-expert: ''
     organisation-member: ''
     organisation-outsider: ''
   child_role_mapping:
@@ -29,6 +32,8 @@ plugin_config:
     service_provider-anonymous: ''
     service_provider-d6c67468e: ''
     service_provider-e7eaf710e: ''
+    service_provider-editor: ''
+    service_provider-efd091e38: ''
     service_provider-group_admin: ''
     service_provider-member: ''
     service_provider-organization_ad: ''
