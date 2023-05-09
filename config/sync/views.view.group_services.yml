@@ -616,7 +616,7 @@ display:
       access:
         type: group_permission
         options:
-          group_permission: 'access group_node overview'
+          group_permission: 'view unpublished group_node:service entity'
       cache:
         type: tag
         options: {  }
@@ -1014,7 +1014,7 @@ display:
         type: tab
         title: Services
         description: ''
-        weight: 25
+        weight: -25
         expanded: false
         menu_name: main
         parent: ''
