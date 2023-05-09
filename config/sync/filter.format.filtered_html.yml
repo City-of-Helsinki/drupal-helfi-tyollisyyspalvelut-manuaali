@@ -18,7 +18,7 @@ filters:
     status: true
     weight: -10
     settings:
-      allowed_html: '<a href hreflang> <strong> <ul type> <ol type start> <li> <dl> <dt> <dd> <h3 id> <p>'
+      allowed_html: '<br> <p> <h3 id> <dl> <dt> <dd> <a hreflang href> <ul type> <ol type start> <strong> <li> <em> <blockquote>'
       filter_html_help: true
       filter_html_nofollow: false
   filter_htmlcorrector:
@@ -26,4 +26,17 @@ filters:
     provider: filter
     status: true
     weight: 10
+    settings: {  }
+  filter_url:
+    id: filter_url
+    provider: filter
+    status: true
+    weight: 0
+    settings:
+      filter_url_length: 72
+  filter_html_image_secure:
+    id: filter_html_image_secure
+    provider: filter
+    status: true
+    weight: 9
     settings: {  }
