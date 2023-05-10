@@ -254,6 +254,57 @@ table > :not(caption) > * > * {
   }
 }
 
+.node-service-edit-form .field--widget-municipality-specific-ief-widget {
+  table, tr, td {
+    width: auto;
+  }
+  thead {
+    display: none;
+  }
+  table {
+    display: table;
+    width: 100%;
+    tr {
+      border-radius: 8px;
+      display: grid;
+      grid-template-columns: 60px 3fr 1fr;
+      background-color: $blue05;
+      margin-bottom: 9px;
+      box-shadow: 0 2px 1px 0 $blue40;
+      height: 58px;
+    }
+    td {
+      display: flex;
+      align-items: center;
+      padding: 0;
+    }
+    a.tabledrag-handle {
+      height: auto;
+      margin: auto;
+    }
+    .ief-entity-operations > input.button {
+      background: none;
+      color: $blue100;
+      padding: 0;
+      margin: 0 1em;
+    }
+  }
+  fieldset > div.container-inline input {
+    margin-top: $space-one-half;
+    @include button-color-blue;
+    width: 100%;
+    box-sizing: border-box;
+    background-image: url("/themes/custom/palvelumanuaali/images/icons/plus.svg");
+    background-repeat: no-repeat;
+    background-position-y: center;
+    line-height: 24px;
+    background-position-x: calc(50% + 14ch - 0.5rem);
+    border-radius: 8px;
+    height: 58px;
+  }
+
+}
+
 table {
   margin-top: $space;
   margin-bottom: $space;

@@ -19,7 +19,6 @@ function palvelumanuaali_preprocess_breadcrumb(&$variables){
   $variables['#cache']['contexts'][] = 'url';
 }
 
-
 /**
  * Implements hook_preprocess_block__language_switcher().
  */
@@ -27,8 +26,6 @@ function palvelumanuaali_preprocess_block__language_block(&$variables) {
   // Set force lang count.
   $variables['lang_count'] = 3;
 }
-
-
 
 /**
  * Implements hook_preprocess_links__language_block().
