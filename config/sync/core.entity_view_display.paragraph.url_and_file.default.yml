@@ -7,7 +7,7 @@ dependencies:
     - field.field.paragraph.url_and_file.field_link
     - paragraphs.paragraphs_type.url_and_file
   module:
-    - file
+    - file_download_link
     - link
 id: paragraph.url_and_file.default
 targetEntityType: paragraph
@@ -15,10 +15,14 @@ bundle: url_and_file
 mode: default
 content:
   field_file:
-    type: file_default
+    type: file_download_link
     label: above
     settings:
-      use_description_as_link_text: true
+      link_text: ''
+      link_title: ''
+      new_tab: true
+      force_download: true
+      custom_classes: ''
     third_party_settings: {  }
     weight: 0
     region: content
