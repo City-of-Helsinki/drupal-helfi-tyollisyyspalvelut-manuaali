@@ -54,6 +54,7 @@ dependencies:
   module:
     - content_moderation
     - field_group
+    - hel_tpm_general
     - hel_tpm_group
     - hel_tpm_service_dates
     - inline_entity_form
@@ -759,24 +760,24 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_municipality_guidance:
-    type: inline_entity_form_complex
+    type: municipality_specific_ief_widget
     weight: 9
     region: content
     settings:
       form_mode: default
-      override_labels: true
+      override_labels: '1'
       label_singular: 'kuntakohtainen ohje'
       label_plural: 'kuntakohtaiset ohjeet'
-      allow_new: true
-      allow_existing: false
+      allow_new: '1'
       match_operator: CONTAINS
-      allow_duplicate: false
-      collapsible: false
-      collapsed: false
-      revision: false
+      revision: 0
+      collapsible: 0
+      collapsed: 0
+      allow_existing: 0
+      allow_duplicate: 0
     third_party_settings: {  }
   field_municipality_specific:
-    type: inline_entity_form_complex
+    type: municipality_specific_ief_widget
     weight: 14
     region: content
     settings:
