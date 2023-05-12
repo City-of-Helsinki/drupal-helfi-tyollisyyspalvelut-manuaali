@@ -104,6 +104,12 @@ function palvelumanuaali_preprocess_fieldset(&$variables) {
   if ($element['#field_name'] == 'field_other_preferences') {
     $variables['legend_span']['attributes']['class'] = 'field-group--title-small';
   }
+  if ($element['#field_name'] == 'field_municipality_guidance') {
+    $variables['legend']['attributes']['class'] = 'form-item__label';
+  }
+  if ($element['#field_name'] == 'field_municipality_specific') {
+    $variables['legend_span']['attributes']['class'] = 'form-item__label';
+  }
 
 }
 

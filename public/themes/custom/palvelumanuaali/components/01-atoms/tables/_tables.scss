@@ -254,12 +254,21 @@ table > :not(caption) > * > * {
   }
 }
 
-.node-service-edit-form .field--widget-municipality-specific-ief-widget {
+.node-service-edit-form .field--widget-municipality-specific-ief-widget,
+.node-service-form .field--widget-municipality-specific-ief-widget {
   table, tr, td {
     width: auto;
   }
   thead {
     display: none;
+  }
+  .inline-entity-form-paragraph-label {
+    grid-column: 2;
+  }
+  .table__cell {
+    &:last-child()  {
+      grid-column: 3;
+    }
   }
   table {
     display: table;
@@ -273,6 +282,7 @@ table > :not(caption) > * > * {
       box-shadow: 0 2px 1px 0 $blue40;
       height: 58px;
     }
+
     td {
       display: flex;
       align-items: center;
@@ -282,6 +292,17 @@ table > :not(caption) > * > * {
       height: auto;
       margin: auto;
     }
+    .handle {
+      margin: 0;
+      padding: 0;
+      background-size: contain;
+      background-image: url("/themes/custom/palvelumanuaali/images/icons/union.svg");
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 4px;
+      height: 24px;
+    }
+
     .ief-entity-operations > input.button {
       background: none;
       color: $blue100;
@@ -302,7 +323,9 @@ table > :not(caption) > * > * {
     border-radius: 8px;
     height: 58px;
   }
-
+  &.field--name-field-municipality-specific fieldset > div.container-inline input {
+      background-position-x: calc(50% + 19ch - 0.5rem);
+  }
 }
 
 table {
