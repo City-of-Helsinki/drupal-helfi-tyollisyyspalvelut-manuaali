@@ -3,13 +3,14 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - field.field.paragraph.content_link_file.field_body
     - field.field.paragraph.content_link_file.field_description_plain
     - field.field.paragraph.content_link_file.field_file
     - field.field.paragraph.content_link_file.field_links
     - paragraphs.paragraphs_type.content_link_file
   module:
     - entity_reference_revisions
-    - file
+    - file_download_link
 id: paragraph.content_link_file.default
 targetEntityType: paragraph
 bundle: content_link_file
@@ -23,10 +24,15 @@ content:
     weight: 0
     region: content
   field_file:
-    type: file_default
+    type: file_download_link
     label: above
     settings:
-      use_description_as_link_text: true
+      link_text: ''
+      link_title: ''
+      new_tab: true
+      force_download: false
+      custom_classes: ''
+      aria_label: 'Avaa [file:name] uudessa välilehdessä'
     third_party_settings: {  }
     weight: 5
     region: content
