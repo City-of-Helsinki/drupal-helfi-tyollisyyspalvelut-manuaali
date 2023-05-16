@@ -270,17 +270,21 @@ table > :not(caption) > * > * {
       grid-column: 3;
     }
   }
+
   table {
     display: table;
     width: 100%;
     tr {
       border-radius: 8px;
       display: grid;
-      grid-template-columns: 60px 3fr 1fr;
+      grid-template-columns: 60px 1fr 1fr;
       background-color: $blue05;
       margin-bottom: 9px;
       box-shadow: 0 2px 1px 0 $blue40;
       height: 58px;
+      @include xxl {
+        grid-template-columns: 60px 3fr 1fr;
+      }
     }
 
     td {
@@ -303,11 +307,18 @@ table > :not(caption) > * > * {
       height: 24px;
     }
 
+    .ief-entity-operations {
+      justify-content: flex-end;
+    }
+
     .ief-entity-operations > input.button {
       background: none;
       color: $blue100;
       padding: 0;
       margin: 0 1em;
+      &:last-child {
+        margin-right: $space-double;
+      }
     }
   }
   fieldset > div.container-inline input {
