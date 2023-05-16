@@ -6,7 +6,7 @@ dependencies:
     - group.type.service_provider
 id: service_provider-organization_ad
 label: 'Organization admin'
-weight: -10
+weight: -8
 internal: false
 audience: member
 group_type: service_provider
@@ -22,11 +22,13 @@ permissions:
   - 'delete any group_node:service entity'
   - 'delete any group_node:service_location content'
   - 'delete any group_node:service_location entity'
+  - 'delete any invitation'
   - 'delete own group_node:service content'
   - 'delete own group_node:service entity'
   - 'delete own group_node:service_location content'
   - 'delete own group_node:service_location entity'
   - 'edit group'
+  - 'invite users to group'
   - 'leave group'
   - 'update any group_node:service content'
   - 'update any group_node:service entity'
@@ -47,6 +49,7 @@ permissions:
   - 'use service_moderation transition temporarily_archived'
   - 'view any unpublished group'
   - 'view group'
+  - 'view group invitations'
   - 'view group revisions'
   - 'view group_membership content'
   - 'view group_node:service content'
