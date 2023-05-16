@@ -143,7 +143,7 @@
 }
 
 .field--name-field-service-time-and-location,
-.field--name-field-service-time-and-location .ajax-new-content {
+.field--name-field-service-time-and-location > .ajax-new-content {
   margin-bottom: $space-triple !important;
   input[data-drupal-selector*="edit-field-service-time-and-location-add-more-add-more-button-service-time-and-place"] {
     width: 100%;
@@ -157,12 +157,12 @@
   .field--name-field-separate-time {
     margin-bottom: $space-double;
   }
-  > div > div  > table > tbody > tr > .table__cell {
+  .field-service-time-and-location-values > tbody > tr > .table__cell {
     margin-bottom: $space;
   }
 
-  > div > div  > table > tbody > tr > .table__cell > div > div > div > .paragraphs-dropbutton-wrapper,
-  > div > div  > table > tbody > tr > .table__cell > .ajax-new-content > div > div > div > .paragraphs-dropbutton-wrapper {
+  .field-service-time-and-location-values > tbody > tr > .table__cell > div > div > div > .paragraphs-dropbutton-wrapper,
+  .field-service-time-and-location-values > tbody > tr > .table__cell > .ajax-new-content > div > div > div > .paragraphs-dropbutton-wrapper {
     > input {
       @include close-button;
 
