@@ -21,11 +21,6 @@ type_settings:
       weight: -4
       published: false
       default_revision: false
-    on_hold:
-      label: 'On hold'
-      weight: -1
-      published: true
-      default_revision: false
     outdated:
       label: Outdated
       weight: 0
@@ -41,20 +36,13 @@ type_settings:
       weight: -3
       published: false
       default_revision: false
-    temporarily_archived:
-      label: 'Temporarily archived'
-      weight: 1
-      published: false
-      default_revision: true
   transitions:
     archived:
       label: Archived
       from:
         - archived
-        - on_hold
         - outdated
         - published
-        - temporarily_archived
       to: archived
       weight: 3
     create_new_draft:
@@ -72,21 +60,20 @@ type_settings:
         - published
       to: outdated
       weight: 1
+    outdated_to_draft:
+      label: 'Outdated to draft'
+      from:
+        - outdated
+      to: draft
+      weight: 4
     publish:
       label: Publish
       from:
         - draft
-        - on_hold
         - published
         - ready_to_publish
       to: published
       weight: -1
-    put_on_hold:
-      label: 'Put on hold'
-      from:
-        - published
-      to: on_hold
-      weight: 0
     ready_to_publish:
       label: 'Ready to publish'
       from:
@@ -100,15 +87,6 @@ type_settings:
         - ready_to_publish
       to: draft
       weight: -2
-    temporarily_archived:
-      label: 'Temporarily archived'
-      from:
-        - on_hold
-        - outdated
-        - published
-        - temporarily_archived
-      to: temporarily_archived
-      weight: 2
   entity_types:
     node:
       - service

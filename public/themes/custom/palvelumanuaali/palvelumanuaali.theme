@@ -19,7 +19,6 @@ function palvelumanuaali_preprocess_breadcrumb(&$variables){
   $variables['#cache']['contexts'][] = 'url';
 }
 
-
 /**
  * Implements hook_preprocess_block__language_switcher().
  */
@@ -27,8 +26,6 @@ function palvelumanuaali_preprocess_block__language_block(&$variables) {
   // Set force lang count.
   $variables['lang_count'] = 3;
 }
-
-
 
 /**
  * Implements hook_preprocess_links__language_block().
@@ -107,7 +104,26 @@ function palvelumanuaali_preprocess_fieldset(&$variables) {
   if ($element['#field_name'] == 'field_other_preferences') {
     $variables['legend_span']['attributes']['class'] = 'field-group--title-small';
   }
+  if ($element['#field_name'] == 'field_municipality_guidance') {
+    $variables['legend']['attributes']['class'] = 'form-item__label';
+  }
+  if ($element['#field_name'] == 'field_municipality_specific') {
+    $variables['legend_span']['attributes']['class'] = 'form-item__label';
+  }
 
+}
+
+/**
+ * Implements hook__preprocess_table().
+ */
+function palvelumanuaali_preprocess_table(&$variables) {
+  $element = $variables['attributes']['id'];
+  if (empty($element)) {
+    return;
+  }
+  $separator = "--";
+  $trimmedElement = explode($separator, $element);
+  $variables['attributes']['class'][] = $trimmedElement[0];
 }
 
 /**

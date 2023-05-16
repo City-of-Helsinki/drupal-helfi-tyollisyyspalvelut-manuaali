@@ -1,7 +1,7 @@
 .table {
   margin: 1em 0;
   width: 100%;
-  > tbody {
+  > tbody {
     border-top: 0;
   }
 }
@@ -251,6 +251,91 @@ table > :not(caption) > * > * {
   }
   table {
     background-color: transparent;
+  }
+}
+
+.node-service-edit-form .field--widget-municipality-specific-ief-widget,
+.node-service-form .field--widget-municipality-specific-ief-widget {
+  table, tr, td {
+    width: auto;
+  }
+  thead {
+    display: none;
+  }
+  .inline-entity-form-paragraph-label {
+    grid-column: 2;
+  }
+  .table__cell {
+    &:last-child()  {
+      grid-column: 3;
+    }
+  }
+
+  table {
+    display: table;
+    width: 100%;
+    tr {
+      border-radius: 8px;
+      display: grid;
+      grid-template-columns: 60px 1fr 1fr;
+      background-color: $blue05;
+      margin-bottom: 9px;
+      box-shadow: 0 2px 1px 0 $blue40;
+      height: 58px;
+      @include xxl {
+        grid-template-columns: 60px 3fr 1fr;
+      }
+    }
+
+    td {
+      display: flex;
+      align-items: center;
+      padding: 0;
+    }
+    a.tabledrag-handle {
+      height: auto;
+      margin: auto;
+    }
+    .handle {
+      margin: 0;
+      padding: 0;
+      background-size: contain;
+      background-image: url("/themes/custom/palvelumanuaali/images/icons/union.svg");
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 4px;
+      height: 24px;
+    }
+
+    .ief-entity-operations {
+      justify-content: flex-end;
+    }
+
+    .ief-entity-operations > input.button {
+      background: none;
+      color: $blue100;
+      padding: 0;
+      margin: 0 1em;
+      &:last-child {
+        margin-right: $space-double;
+      }
+    }
+  }
+  fieldset > div.container-inline input {
+    margin-top: $space-one-half;
+    @include button-color-blue;
+    width: 100%;
+    box-sizing: border-box;
+    background-image: url("/themes/custom/palvelumanuaali/images/icons/plus.svg");
+    background-repeat: no-repeat;
+    background-position-y: center;
+    line-height: 24px;
+    background-position-x: calc(50% + 14ch - 0.5rem);
+    border-radius: 8px;
+    height: 58px;
+  }
+  &.field--name-field-municipality-specific fieldset > div.container-inline input {
+      background-position-x: calc(50% + 19ch - 0.5rem);
   }
 }
 

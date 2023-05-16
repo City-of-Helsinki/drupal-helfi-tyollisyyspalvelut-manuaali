@@ -11,7 +11,7 @@ dependencies:
   module:
     - field_group
     - hel_tpm_editorial
-    - paragraphs
+    - hel_tpm_service_dates
 third_party_settings:
   field_group:
     group_location:
@@ -70,7 +70,7 @@ content:
       display_label: true
     third_party_settings: {  }
   field_service_languages:
-    type: entity_reference_paragraphs
+    type: hel_tpm_service_dates_service_time_and_place_widget
     weight: 2
     region: content
     settings:

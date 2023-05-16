@@ -95,7 +95,6 @@
 
 var map = {
 	"./icons/LOGO-white.svg": "./images/icons/LOGO-white.svg",
-	"./icons/Union.svg": "./images/icons/Union.svg",
 	"./icons/animation.svg": "./images/icons/animation.svg",
 	"./icons/app-services.svg": "./images/icons/app-services.svg",
 	"./icons/arrow-left.svg": "./images/icons/arrow-left.svg",
@@ -167,6 +166,7 @@ var map = {
 	"./icons/star.svg": "./images/icons/star.svg",
 	"./icons/trash-1.svg": "./images/icons/trash-1.svg",
 	"./icons/twitter.svg": "./images/icons/twitter.svg",
+	"./icons/union.svg": "./images/icons/union.svg",
 	"./icons/viewmode.svg": "./images/icons/viewmode.svg",
 	"./icons/warning.svg": "./images/icons/warning.svg",
 	"./icons/world.svg": "./images/icons/world.svg",
@@ -209,26 +209,6 @@ __webpack_require__.r(__webpack_exports__);
       id: "LOGO-white-usage",
       viewBox: "0 0 207 48",
       url: __webpack_require__.p + "../dist/icons.svg#LOGO-white",
-      toString: function () {
-        return this.url;
-      }
-    });
-
-/***/ }),
-
-/***/ "./images/icons/Union.svg":
-/*!********************************!*\
-  !*** ./images/icons/Union.svg ***!
-  \********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ({
-      id: "Union-usage",
-      viewBox: "0 0 4 16",
-      url: __webpack_require__.p + "../dist/icons.svg#Union",
       toString: function () {
         return this.url;
       }
@@ -1649,6 +1629,26 @@ __webpack_require__.r(__webpack_exports__);
       id: "twitter-usage",
       viewBox: "0 0 26 28",
       url: __webpack_require__.p + "../dist/icons.svg#twitter",
+      toString: function () {
+        return this.url;
+      }
+    });
+
+/***/ }),
+
+/***/ "./images/icons/union.svg":
+/*!********************************!*\
+  !*** ./images/icons/union.svg ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+      id: "union-usage",
+      viewBox: "0 0 4 16",
+      url: __webpack_require__.p + "../dist/icons.svg#union",
       toString: function () {
         return this.url;
       }

@@ -8,6 +8,7 @@ dependencies:
     - paragraphs.paragraphs_type.municipality_guide
   module:
     - maxlength
+    - select2
     - text
 id: paragraph.municipality_guide.default
 targetEntityType: paragraph
@@ -27,14 +28,14 @@ content:
         maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
         maxlength_js_enforce: false
   field_municipality:
-    type: entity_reference_autocomplete
+    type: select2_entity_reference
     weight: 0
     region: content
     settings:
+      width: 100%
+      autocomplete: false
       match_operator: CONTAINS
       match_limit: 10
-      size: 60
-      placeholder: ''
     third_party_settings: {  }
 hidden:
   created: true

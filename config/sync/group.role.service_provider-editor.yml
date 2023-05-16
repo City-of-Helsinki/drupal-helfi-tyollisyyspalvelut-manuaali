@@ -13,20 +13,19 @@ third_party_settings:
       specialist_editor: 0
 id: service_provider-editor
 label: Editor
-weight: 9
+weight: -10
 internal: false
 audience: member
 group_type: service_provider
 permissions_ui: true
 permissions:
-  - 'access group_node overview'
-  - 'access subgroup overview'
   - 'create group_node:service entity'
   - 'create group_node:service_location entity'
   - 'delete any group_node:service content'
   - 'delete any group_node:service entity'
   - 'delete any group_node:service_location content'
   - 'delete any group_node:service_location entity'
+  - 'leave group'
   - 'update any group_node:service content'
   - 'update any group_node:service entity'
   - 'update any group_node:service_location content'
@@ -36,14 +35,12 @@ permissions:
   - 'use service_moderation transition outdated'
   - 'use service_moderation transition ready_to_publish'
   - 'use service_moderation transition temporarily_archived'
-  - 'view any unpublished group'
   - 'view group'
   - 'view group revisions'
   - 'view group_node:service content'
   - 'view group_node:service entity'
   - 'view group_node:service_location content'
   - 'view group_node:service_location entity'
-  - 'view latest group version'
   - 'view latest version'
   - 'view unpublished group_node:service entity'
   - 'view unpublished group_node:service_location entity'

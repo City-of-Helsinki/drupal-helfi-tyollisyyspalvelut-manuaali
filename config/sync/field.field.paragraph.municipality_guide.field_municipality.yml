@@ -6,13 +6,19 @@ dependencies:
     - field.storage.paragraph.field_municipality
     - paragraphs.paragraphs_type.municipality_guide
     - taxonomy.vocabulary.municipality
+  module:
+    - epp
+third_party_settings:
+  epp:
+    value: ''
+    on_update: 0
 id: paragraph.municipality_guide.field_municipality
 field_name: field_municipality
 entity_type: paragraph
 bundle: municipality_guide
 label: 'Kunta:'
 description: ''
-required: false
+required: true
 translatable: true
 default_value: {  }
 default_value_callback: ''
