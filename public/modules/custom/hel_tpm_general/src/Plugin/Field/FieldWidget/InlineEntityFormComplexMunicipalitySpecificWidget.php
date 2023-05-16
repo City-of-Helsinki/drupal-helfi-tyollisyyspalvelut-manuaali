@@ -74,6 +74,13 @@ class InlineEntityFormComplexMunicipalitySpecificWidget extends InlineEntityForm
     return $element;
   }
 
+  /**
+   * Helper method to relable widget entities.
+   *
+   * @param $entities
+   *
+   * @return void
+   */
   protected function relabelEntities(&$entities) {
     foreach ($entities as $key => &$row) {
       if (empty($row['#entity'])) {
