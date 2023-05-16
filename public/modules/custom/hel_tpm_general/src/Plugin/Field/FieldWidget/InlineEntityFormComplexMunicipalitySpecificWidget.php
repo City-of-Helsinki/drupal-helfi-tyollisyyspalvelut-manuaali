@@ -83,7 +83,7 @@ class InlineEntityFormComplexMunicipalitySpecificWidget extends InlineEntityForm
       if (empty($municipality)) {
         continue;
       }
-      $row['#label'] = sprintf('%s', $municipality->label());
+      $row['#label'] = $municipality->label();
     }
   }
 }
