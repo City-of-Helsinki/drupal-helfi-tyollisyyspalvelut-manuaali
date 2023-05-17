@@ -25,6 +25,10 @@ class HelTpmGroupRouteSubscriber extends RouteSubscriberBase {
       if ($route_name === 'entity.group_content.group_node_relate_page') {
         $route->setRequirement('_permission', 'bypass group access');
       }
+
+      if ($route_name === 'entity.group_content.add_form') {
+        $route->setRequirement('_permission', 'administer users');
+      }
     }
   }
 
