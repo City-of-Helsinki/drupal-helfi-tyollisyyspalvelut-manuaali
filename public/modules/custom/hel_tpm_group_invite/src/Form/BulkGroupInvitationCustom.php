@@ -43,6 +43,8 @@ class BulkGroupInvitationCustom extends BulkGroupInvitation {
    */
   protected function getGroupRoleOptions(GroupInterface $group) {
     $roles = [];
+    $bl = ['service_provider-organization_ad'];
+
     $group_roles = $this->entityTypeManager->getStorage('group_role')->loadByProperties([
       'group_type' => $group->getGroupType()->id(),
       'internal' => FALSE,
@@ -51,6 +53,9 @@ class BulkGroupInvitationCustom extends BulkGroupInvitation {
       return $roles;
     }
     foreach ($group_roles as $role) {
+      if (in_array($role->id(), $bl)) {
+        continue;
+      }
       $roles[$role->id()] = $role->label();
     }
     return $roles;
