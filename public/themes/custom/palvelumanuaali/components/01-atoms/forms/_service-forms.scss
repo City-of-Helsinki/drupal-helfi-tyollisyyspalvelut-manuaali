@@ -264,16 +264,6 @@
       }
     }
 
-    table,
-    tbody,
-    thead,
-    tr,
-    td {
-      display: block;
-      width: 100%;
-      border: 0;
-    }
-
     em {
       background: unset;
       margin: 0px 4px;
@@ -458,43 +448,6 @@
         order: 2;
       }
     }
-
-    tr {
-      display: flex;
-
-      .tabledrag-handle {
-        display: none;
-      }
-      td {
-        &:nth-child(1) {
-          .form-managed-file {
-            display: flex;
-            align-items: center;
-          }
-          .form-item {
-            margin-left: $space;
-            margin-right: $space;
-          }
-        }
-        &:last-child {
-          flex: 1;
-          display: flex;
-          align-items: center;
-        }
-
-        .button{
-          background-color: clr(background-section);
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          padding: 0;
-          background-image: url("/themes/custom/palvelumanuaali/images/icons/minus.svg");
-          color: transparent;
-          background-repeat: no-repeat;
-          background-position: center center;
-        }
-      }
-    }
     .form-item__description {
       display: none;
     }
@@ -507,74 +460,6 @@
     max-width: 560px;
   }
 
-  .field--name-field-contact-info,
-  .field--name-field-contact-info-external {
-    fieldset {
-      legend,
-      legend > span {
-        font-size: $small-font;
-      }
-    }
-    tbody {
-      tr {
-        display: flex;
-        border-bottom: 2px solid clr(form-border);
-        border-radius: 8px;
-        height: 48px;
-        background: clr(background-dropdown);
-        margin-bottom: $space;
-        padding: $space-three-fourths $space-double $space-three-fourths 20px;
-      }
-      td {
-        padding: 0;
-        font-size: $small-font;
-        &.inline-entity-form-contact_info-label {
-          padding-left: $space-three-fourths;
-          font-size: $small-caption;
-          max-width: 40ch;
-          overflow: hidden;
-          text-overflow: ellipsis;
-
-        }
-        >.form-wrapper >.form-submit {
-          background-color: transparent;
-          color: clr(background-section);
-          font-weight: 700;
-          font-size: 12px;
-          line-height: 24px;
-          padding: 0;
-          &:hover {
-            background: transparent;
-            color: clr(background-color);
-          }
-          @include xxl {
-            height: unset;
-          }
-        }
-      }
-    }
-    .ief-tabledrag-handle {
-      width: 12px;
-    }
-    .tabledrag-handle {
-      margin-left: 0;
-    }
-    .handle {
-      margin: 0;
-      padding: 0;
-      background-size: contain;
-      background-image: url("/themes/custom/palvelumanuaali/images/icons/union.svg");
-      background-repeat: no-repeat;
-      background-position: center;
-      width: 4px;
-      height: 24px;
-    }
-    .ief-entity-operations {
-      height: 100%;
-      gap: $space-triple;
-      justify-content: end;
-    }
-  }
 
   .field--name-entitygroupfield,
   .field--name-field-contact-info,
