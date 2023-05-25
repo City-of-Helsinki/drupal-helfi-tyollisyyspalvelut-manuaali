@@ -30,10 +30,8 @@ services:
         PHP_IDE_CONFIG: "serverName=appserver"
         SIMPLETEST_BASE_URL: "http://helfi-manuska.lndo.site"
         SIMPLETEST_DB: "mysql://drupal8:drupal8@database/drupal8"
-        SYSTEM_SITE_FRONT: "/node/4"
-        DRUSH_OPTIONS_URI: "https://helfi-manuska.lndo.site"
         MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless"]}}, "http://chrome:9515"]'
-
+        DRUSH_OPTIONS_URI: "https://helfi-manuska.lndo.site"
         TFA_KEY: ''
   chrome:
     type: compose
