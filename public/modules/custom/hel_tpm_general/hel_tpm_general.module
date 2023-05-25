@@ -51,6 +51,64 @@ function hel_tpm_general_node_view(array &$build, EntityInterface $entity, Entit
 }
 
 /**
+ * Implements hook_ENTITY_TYPE_presave().
+ *
+ * Auto generate username from mail.
+ *
+ * @param $entity
+ *
+ * @return void
+ */
+function hel_tpm_general_user_presave($entity) {
+  // Don't autogenerate admin user name.
+  if ($entity->id() == 1) {
+    return;
+  }
+  $username = _hel_tpm_general_generate_username($entity);
+  $entity->setUsername($username);
+}
+
+/**
+ * Helper function to generate username.
+ *
+ * @param $entity
+ *
+ * @return false|string
+ * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+ * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+ */
+function _hel_tpm_general_generate_username($entity) {
+  $original_username = strstr($entity->getEmail(), '@', TRUE);
+  $username = $original_username;
+  $i = 0;
+  while(_hel_tpm_general_username_exists($username, $entity->id())) {
+    $username = $original_username . '-' . $i;
+    $i++;
+  }
+  return $username;
+}
+
+/**
+ * Helper function to check if username exists.
+ *
+ * @param $username
+ *
+ * @return bool
+ * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+ * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+ */
+function _hel_tpm_general_username_exists($username, $entity_id) {
+  $storage = \Drupal::entityTypeManager()->getStorage('user');
+  $count = $storage->getQuery()
+    ->condition('name', $username)
+    ->condition('uid', $entity_id, '<>')
+    ->count()
+    ->execute();
+
+  return $count > 0;
+}
+
+/**
  * Helper function to create switcher link.
  *
  * @param \Drupal\Core\Entity\EntityInterface $entity
