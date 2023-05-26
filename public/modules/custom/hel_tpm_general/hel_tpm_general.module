@@ -2,6 +2,7 @@
 
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 
 /**
@@ -51,6 +52,36 @@ function hel_tpm_general_node_view(array &$build, EntityInterface $entity, Entit
 }
 
 /**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * @param $form
+ * @param $form_state
+ * @param $form_id
+ *
+ * @return void
+ */
+function hel_tpm_general_form_user_register_form_alter(&$form, &$form_state, $form_id) {
+  $form['account']['name']['#type'] = 'hidden';
+  $form['account']['name']['#value'] = \Drupal::service('password_generator')->generate();
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function hel_tpm_general_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
+  $form['account']['name']['#type'] = 'hidden';
+}
+
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function hel_tpm_general_form_user_form_alter(&$form, &$form_state, $form_id) {
+  $form['account']['name']['#disabled'] = TRUE;
+  $form['#validate'][] = 'hel_tpm_general_form_user_post_validate';
+}
+
+/**
  * Implements hook_ENTITY_TYPE_presave().
  *
  * Auto generate username from mail.
@@ -58,6 +89,8 @@ function hel_tpm_general_node_view(array &$build, EntityInterface $entity, Entit
  * @param $entity
  *
  * @return void
+ * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+ * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
  */
 function hel_tpm_general_user_presave($entity) {
   // Don't autogenerate admin user name.
@@ -65,7 +98,25 @@ function hel_tpm_general_user_presave($entity) {
     return;
   }
   $username = _hel_tpm_general_generate_username($entity);
+  // No point updating anything if the generated name was just the same.
+  if ($entity->label() == $username) {
+    return;
+  }
   $entity->setUsername($username);
+}
+
+/**
+ * Remove the errors related to 'name' field.
+ * @param $form
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ */
+function hel_tpm_general_form_user_post_validate(&$form, FormStateInterface $form_state) {
+  $errors = $form_state->getErrors();
+  unset($errors['name']);
+  $form_state->clearErrors();
+  foreach ($errors as $field => $value) {
+    $form_state->setErrorByName($field, $value);
+  }
 }
 
 /**
@@ -99,14 +150,17 @@ function _hel_tpm_general_generate_username($entity) {
  */
 function _hel_tpm_general_username_exists($username, $entity_id) {
   $storage = \Drupal::entityTypeManager()->getStorage('user');
-  $count = $storage->getQuery()
-    ->condition('name', $username)
-    ->condition('uid', $entity_id, '<>')
-    ->count()
+  $query = $storage->getQuery()
+    ->condition('name', $username);
+  if ($entity_id) {
+    $query->condition('uid', $entity_id, '<>');
+  }
+  $count = $query->count()
     ->execute();
 
   return $count > 0;
 }
+
 
 /**
  * Helper function to create switcher link.
