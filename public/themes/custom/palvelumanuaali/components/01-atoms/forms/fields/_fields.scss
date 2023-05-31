@@ -227,12 +227,10 @@
       @include close-button;
 
       display: block;
-      position: absolute;
-      bottom: 36px;
-      right: 10px;
-      width: 8px;
-      height: 8px;
-      padding: 4px;
+      height: 48px;
+      width: 36px;
+      background-size: 16px;
+      margin-top: auto;
     }
   }
   .field--type-file {
@@ -241,12 +239,32 @@
     }
 
   }
+
 }
 
-.field--type-file {
-  table td {
-    padding-left: $space-one-half;
-    padding-right: $space-one-half;
-    flex: 1;
+.details-file-field {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  summary {
+    order: 1;
+    margin-bottom: $space-one-half;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 24px;
   }
+  >.form-wrapper {
+    order: 3;
+  }
+  >.table{
+    order: 2;
+  }
+    fieldset {
+      legend,
+      legend > span {
+        font-size: $small-font;
+      }
+    }
+
+
 }
