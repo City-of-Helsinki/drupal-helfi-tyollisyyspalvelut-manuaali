@@ -1,17 +1,14 @@
 label: 'Recently read content'
-description: 'Track recently read content'
 display:
   default:
-    display_title: Master
     display_options:
       exposed_form:
-        options:
-          submit_button: Apply
-          reset_button_label: Reset
-          exposed_sorts_label: 'Sort by'
-          sort_asc_label: Asc
-          sort_desc_label: Desc
+        options: {  }
+      fields:
+        title: {  }
+      title: 'Recently read content'
+  recently_viewed_service_table_block:
+    display_options:
       fields:
         title:
-          separator: ', '
-      title: 'Recently read content'
+          label: 'Name of service'

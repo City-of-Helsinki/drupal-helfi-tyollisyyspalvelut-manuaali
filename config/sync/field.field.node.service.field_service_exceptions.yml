@@ -6,13 +6,18 @@ dependencies:
     - field.storage.node.field_service_exceptions
     - node.type.service
   module:
+    - epp
     - text
+third_party_settings:
+  epp:
+    value: ''
+    on_update: 0
 id: node.service.field_service_exceptions
 field_name: field_service_exceptions
 entity_type: node
 bundle: service
 label: 'Sisältö:'
-description: ''
+description: 'Kuvaa asiantuntijalle mahdollisia poikkeustilanteita ja niiden aikaisia toimintaohjeita. Poikkeustilanteita voivat olla esimerkiksi palvelun keskeytyminen tai sairastapaukset.'
 required: false
 translatable: true
 default_value: {  }

@@ -5,12 +5,17 @@ dependencies:
   config:
     - field.storage.contact_info.field_email
   module:
+    - epp
     - hel_tpm_contact_info
+third_party_settings:
+  epp:
+    value: ''
+    on_update: 0
 id: contact_info.contact_info.field_email
 field_name: field_email
 entity_type: contact_info
 bundle: contact_info
-label: Email
+label: 'Email address'
 description: ''
 required: true
 translatable: false

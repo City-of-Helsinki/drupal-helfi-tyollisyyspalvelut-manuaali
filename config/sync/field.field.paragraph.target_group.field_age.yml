@@ -6,13 +6,18 @@ dependencies:
     - field.storage.paragraph.field_age
     - paragraphs.paragraphs_type.target_group
   module:
+    - epp
     - range
+third_party_settings:
+  epp:
+    value: ''
+    on_update: 0
 id: paragraph.target_group.field_age
 field_name: field_age
 entity_type: paragraph
 bundle: target_group
-label: 'Tarkenna tarvittaessa kohderyhmän ikää'
-description: 'Kohderyhmän ikä. Näytetään vain asiantuntijoille'
+label: 'Tarkenna ikäväliä (valinnainen)'
+description: 'Syötä täsmällinen palvelun osallistujien ikäväli. Esim. 18-29 vuotta. '
 required: false
 translatable: true
 default_value: {  }

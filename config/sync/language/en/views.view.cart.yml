@@ -7,3 +7,21 @@ display:
           content: '<strong>Results:</strong> <span class="total-number">@total</span>'
       menu:
         title: Favorites
+  default:
+    display_options:
+      title: Favorites
+  favorites_block:
+    display_options:
+      title: 'Recently added favorites'
+      fields:
+        title:
+          label: 'Name of service'
+        changed:
+          label: Updated
+        field_service_producer:
+          label: 'Service provider'
+        field_service_time_and_location:
+          label: Language
+      empty:
+        area_text_custom:
+          content: "<p><b>No recently added favorites</b><br>\r\n<a class='button button--no-color button--round-corners' href='/haku'>Search services</a></p>"

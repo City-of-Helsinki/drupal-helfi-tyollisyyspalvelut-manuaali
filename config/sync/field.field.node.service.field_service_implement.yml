@@ -5,12 +5,18 @@ dependencies:
   config:
     - field.storage.node.field_service_implement
     - node.type.service
+  module:
+    - epp
+third_party_settings:
+  epp:
+    value: ''
+    on_update: 0
 id: node.service.field_service_implement
 field_name: field_service_implement
 entity_type: node
 bundle: service
-label: 'Lisätiedot (valinnainen):'
-description: ''
+label: 'Ajan ja paikan lisätiedot (valinnainen):'
+description: 'Jos toimipistetietoihin tai järjestämisajankohtaan liittyy jotain tarkennettavaa, voit avata sen tässä. Kuvaa esimerkiksi tarkennuksia sijaintiin, saapumiseen tai palvelun toistuvuuteen.'
 required: false
 translatable: true
 default_value: {  }
