@@ -19,3 +19,5 @@ $databases['default']['default'] = [
 
 // And a bogus hashsalt for now
 $settings['hash_salt'] = json_encode($databases);
+$settings['file_private_path'] = getenv('LANDO_MOUNT') . '/private';
+

@@ -1,0 +1,11 @@
+name: Hel Tpm Tooltips
+type: module
+description: Provides tooltips for content fields
+package: Custom
+core: 8.x
+core_version_requirement: ^8 || ^9
+weight: 1000
+libraries-override:
+  field_description_tooltip/tooltip:
+    js:
+      js/tooltip.js: js/tooltips.js
