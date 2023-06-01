@@ -4,6 +4,9 @@ status: true
 dependencies:
   config:
     - field.storage.group_content.group_roles
+    - field.storage.group_content.invitee_mail
+    - user.role.admin
+    - user.role.root
   module:
     - group
     - user
@@ -489,9 +492,11 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       access:
-        type: group_permission
+        type: role
         options:
-          group_permission: 'administer members'
+          role:
+            root: root
+            admin: admin
       cache:
         type: tag
         options: {  }
@@ -707,8 +712,7 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
-        - route.group
-        - user.group_permissions
+        - user.roles
       tags:
         - 'config:field.storage.group_content.group_roles'
         - 'config:field.storage.group_content.invitee_mail'
@@ -736,8 +740,7 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
-        - route.group
-        - user.group_permissions
+        - user.roles
       tags:
         - 'config:field.storage.group_content.group_roles'
         - 'config:field.storage.group_content.invitee_mail'
