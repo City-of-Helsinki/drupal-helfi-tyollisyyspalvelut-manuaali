@@ -16,8 +16,6 @@
 <div class="js-text-format-wrapper js-form-item form-item form-item--no-margin">
   {{ children }}
   {% if description %}
-    {% set attributes = create_attribute() %}
-    {{ attributes.setAttribute('data-drupal-field-elements', 'description') }}
-    <div{{ attributes }}>{{ description }}</div>
+    <div{{ attributes.setAttribute('data-drupal-field-elements', 'description') }}>{{ description }}</div>
   {% endif %}
 </div>
