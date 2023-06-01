@@ -6,11 +6,17 @@ dependencies:
     - field.storage.paragraph.field_level
     - paragraphs.paragraphs_type.service_language
     - taxonomy.vocabulary.language_level
+  module:
+    - epp
+third_party_settings:
+  epp:
+    value: ''
+    on_update: 0
 id: paragraph.service_language.field_level
 field_name: field_level
 entity_type: paragraph
 bundle: service_language
-label: 'Vaativuusluokka:'
+label: 'Kielitaitotaso:'
 description: ''
 required: false
 translatable: false

@@ -8,8 +8,12 @@ dependencies:
     - paragraphs.paragraphs_type.long_text_field_with_toolbar
   module:
     - entity_reference_revisions
+    - epp
     - require_on_publish
 third_party_settings:
+  epp:
+    value: ''
+    on_update: 0
   require_on_publish:
     require_on_publish: true
 id: node.service.field_service_execution
@@ -17,7 +21,7 @@ field_name: field_service_execution
 entity_type: node
 bundle: service
 label: Toteutustapa
-description: ''
+description: 'Kerro asiakkaalle, mitä palvelussa tapahtuu ja miten se on toteutettu. Mm. Palvelun sisältö, kesto, saatavuus ja järjestämisen tapa.  '
 required: false
 translatable: true
 default_value: {  }

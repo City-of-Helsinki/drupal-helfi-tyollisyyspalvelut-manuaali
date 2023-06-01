@@ -5,12 +5,18 @@ dependencies:
   config:
     - field.storage.node.field_other_services
     - node.type.service
+  module:
+    - epp
+third_party_settings:
+  epp:
+    value: ''
+    on_update: 0
 id: node.service.field_other_services
 field_name: field_other_services
 entity_type: node
 bundle: service
 label: 'Tutustu myös näihin palveluihin'
-description: ''
+description: 'Valitse palveluun liittyviä muita palveluja ja jatkopolkuja Palvelumanuaalin palveluista.  '
 required: false
 translatable: true
 default_value: {  }

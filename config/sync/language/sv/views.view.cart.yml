@@ -5,3 +5,21 @@ display:
       title: Favorit
       menu:
         title: Favorit
+  default:
+    display_options:
+      title: Favorit
+  favorites_block:
+    display_options:
+      title: 'Nyligen tillagda favoriter'
+      fields:
+        title:
+          label: 'Tjänstens namn'
+        changed:
+          label: Uppdaterat
+        field_service_producer:
+          label: Tjänsteproducent
+        field_service_time_and_location:
+          label: Språk
+      empty:
+        area_text_custom:
+          content: "<p><b>Inga nyligen tillagda favoriter</b><br>\r\n<a class='button button--no-color button--round-corners' href='/haku'>Sök tjänster</a></p>"

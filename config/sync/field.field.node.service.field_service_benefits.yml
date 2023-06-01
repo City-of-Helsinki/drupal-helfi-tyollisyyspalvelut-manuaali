@@ -6,13 +6,18 @@ dependencies:
     - field.storage.node.field_service_benefits
     - node.type.service
   module:
+    - epp
     - text
+third_party_settings:
+  epp:
+    value: ''
+    on_update: 0
 id: node.service.field_service_benefits
 field_name: field_service_benefits
 entity_type: node
 bundle: service
 label: 'Sisältö:'
-description: ''
+description: 'Motivoi asiakasta kertomalla palvelun hyödyistä. Kerro esimerkiksi esimerkiksi kehittyvistä taidoista, todistuksista ja jatkovalmiuksista. '
 required: false
 translatable: true
 default_value: {  }

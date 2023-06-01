@@ -6,12 +6,18 @@ dependencies:
     - field.storage.paragraph.field_service_location
     - node.type.service_location
     - paragraphs.paragraphs_type.service_time_and_place
+  module:
+    - epp
+third_party_settings:
+  epp:
+    value: ''
+    on_update: 0
 id: paragraph.service_time_and_place.field_service_location
 field_name: field_service_location
 entity_type: paragraph
 bundle: service_time_and_place
 label: 'Valitse paikka:'
-description: ''
+description: 'Valitse toimipiste listalta. Jos et löydä toimipistettä, ota yhteys oman organisaatiosi pääkäyttäjään.'
 required: false
 translatable: false
 default_value: {  }
