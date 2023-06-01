@@ -8,8 +8,12 @@ dependencies:
     - paragraphs.paragraphs_type.long_text_field_with_toolbar
   module:
     - entity_reference_revisions
+    - epp
     - require_on_publish
 third_party_settings:
+  epp:
+    value: ''
+    on_update: 0
   require_on_publish:
     require_on_publish: true
 id: node.service.field_guidance_to_service
@@ -17,7 +21,7 @@ field_name: field_guidance_to_service
 entity_type: node
 bundle: service
 label: 'Ohjaus palveluun'
-description: ''
+description: 'Kuvaa asiantuntijan toimintaohjeet asiakasohjauksen varmistamiseksi; mitä tehdään ennen asiakasta (taustatyönä), mitä yhdessä asiakkaan kanssa ja erikseen asiakastapaamisen jälkeen tai mitä asiakkaan tulee itse tehdä. Kuvaa myös ohjeet asiantuntijan harkinnan tueksi. '
 required: false
 translatable: true
 default_value: {  }

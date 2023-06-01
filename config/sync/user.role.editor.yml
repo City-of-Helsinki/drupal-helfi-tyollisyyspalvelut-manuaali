@@ -25,7 +25,6 @@ dependencies:
     - paragraphs_type_permissions
     - shortcut
     - system
-    - toolbar
 id: editor
 label: Sisällöntuottaja
 weight: 4
@@ -33,7 +32,6 @@ is_admin: null
 permissions:
   - 'access content'
   - 'access shortcuts'
-  - 'access toolbar'
   - 'add flag lists'
   - 'create contact info'
   - 'create content translations'
@@ -66,6 +64,7 @@ permissions:
   - 'create paragraph content url_and_file'
   - 'create service content'
   - 'create service_location content'
+  - 'delete contact info'
   - 'delete content translations'
   - 'delete paragraph content contact_information'
   - 'delete paragraph content content'
@@ -87,6 +86,7 @@ permissions:
   - 'edit any image media'
   - 'edit any service content'
   - 'edit any service_location content'
+  - 'edit contact info'
   - 'edit field_age'
   - 'edit field_contact_info'
   - 'edit field_contact_info_internal'
@@ -172,5 +172,3 @@ permissions:
   - 'view service revisions'
   - 'view the administration theme'
   - 'view unpublished paragraphs'
-  - 'delete contact info'
-  - 'edit contact info'

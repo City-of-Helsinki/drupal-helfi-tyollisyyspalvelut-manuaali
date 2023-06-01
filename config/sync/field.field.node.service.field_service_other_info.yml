@@ -8,12 +8,17 @@ dependencies:
     - paragraphs.paragraphs_type.url_and_file
   module:
     - entity_reference_revisions
+    - epp
+third_party_settings:
+  epp:
+    value: ''
+    on_update: 0
 id: node.service.field_service_other_info
 field_name: field_service_other_info
 entity_type: node
 bundle: service
-label: 'Muut palvelun tiedot'
-description: ''
+label: 'Liitteet ja linkit'
+description: 'Jos palvelusta on liitteitä tai tietoa muualla verkossa, lisää ne tähän kohtaan. Nimeä linkit ja tiedostot selkeästi ja kuvaavasti. Nimi näkyy palvelukuvauksessa verkkosivuosoitteen (URL) ja tiedostonimen sijasta.   '
 required: false
 translatable: true
 default_value: {  }

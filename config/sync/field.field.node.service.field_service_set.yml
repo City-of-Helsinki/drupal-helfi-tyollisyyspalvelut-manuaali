@@ -7,16 +7,19 @@ dependencies:
     - node.type.service
     - taxonomy.vocabulary.service_set
   module:
+    - epp
     - require_on_publish
 third_party_settings:
+  epp:
+    value: ''
+    on_update: 0
   require_on_publish:
     require_on_publish: true
-    warn_on_empty: false
 id: node.service.field_service_set
 field_name: field_service_set
 entity_type: node
 bundle: service
-label: 'Service set'
+label: 'Service category:'
 description: ''
 required: false
 translatable: false

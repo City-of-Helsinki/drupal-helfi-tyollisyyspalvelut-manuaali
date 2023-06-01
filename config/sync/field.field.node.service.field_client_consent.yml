@@ -5,12 +5,18 @@ dependencies:
   config:
     - field.storage.node.field_client_consent
     - node.type.service
+  module:
+    - epp
+third_party_settings:
+  epp:
+    value: ''
+    on_update: 0
 id: node.service.field_client_consent
 field_name: field_client_consent
 entity_type: node
 bundle: service
-label: 'Client consent needed'
-description: 'Ilmoita, tarvitaanko asiakkaalta suostumus palveluun osallistumiseen. Mikäli suostumus tarvitaan, lisää ohjeet suostumuksen antamiseen (esim. linkki lomakkeelle, muut ohjeet).'
+label: 'Participation requires customer consent.'
+description: 'Choose whether the customer''s consent is required to participate in the service. If consent is required, add instructions.'
 required: false
 translatable: true
 default_value:
