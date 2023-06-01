@@ -6,13 +6,18 @@ dependencies:
     - field.storage.node.field_related_archive
     - node.type.service
   module:
+    - epp
     - options
+third_party_settings:
+  epp:
+    value: ''
+    on_update: 0
 id: node.service.field_related_archive
 field_name: field_related_archive
 entity_type: node
 bundle: service
 label: 'Palveluun liittyy arkistointia'
-description: ''
+description: 'Valitse liittyykö palveluun arkistointia.'
 required: false
 translatable: false
 default_value: {  }

@@ -6,9 +6,13 @@ dependencies:
     - field.storage.paragraph.field_age_groups
     - paragraphs.paragraphs_type.target_group
   module:
+    - epp
     - options
     - require_on_publish
 third_party_settings:
+  epp:
+    value: ''
+    on_update: 0
   require_on_publish:
     require_on_publish: true
 id: paragraph.target_group.field_age_groups
@@ -16,7 +20,7 @@ field_name: field_age_groups
 entity_type: paragraph
 bundle: target_group
 label: Ikäryhmät
-description: 'Valitse palvelulle sopivat ikäryhmät'
+description: 'Valitse, minkä ikäisille palvelu on tarkoitettu.'
 required: false
 translatable: true
 default_value: {  }

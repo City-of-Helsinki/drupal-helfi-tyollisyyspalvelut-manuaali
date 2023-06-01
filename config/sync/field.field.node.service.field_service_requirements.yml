@@ -6,9 +6,13 @@ dependencies:
     - field.storage.node.field_service_requirements
     - node.type.service
   module:
+    - epp
     - require_on_publish
     - text
 third_party_settings:
+  epp:
+    value: ''
+    on_update: 0
   require_on_publish:
     require_on_publish: true
 id: node.service.field_service_requirements
@@ -16,7 +20,7 @@ field_name: field_service_requirements
 entity_type: node
 bundle: service
 label: 'Sisältö:'
-description: ''
+description: 'Kerro asiakkaalle, millaisten edellytysten tulee täyttyä, jotta hän voi osallistua palveluun. Esim. kielitaitotaso, ikä, pohjakoulutus tai työkokemus, työttömyyden kesto, myönteinen päätös osallistumiselle jne.'
 required: false
 translatable: true
 default_value: {  }
