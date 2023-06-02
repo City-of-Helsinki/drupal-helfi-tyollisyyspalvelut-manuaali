@@ -20,19 +20,28 @@ display:
           label: E-post
           separator: ', '
         name:
+          label: Invitee
           separator: ', '
         group_roles:
           label: Roller
           separator: ', '
         uid:
+          label: 'Invited by'
           separator: ', '
         created:
+          label: 'Invited on'
           separator: ', '
+        delete_group_content:
+          text: 'Remove invitation'
         dropbutton:
           label: Funktioner
       arguments:
         gid:
           exception:
             title: Alla
+      title: Invitations
   page_1:
     display_title: Sida
+    display_options:
+      menu:
+        title: Invitations

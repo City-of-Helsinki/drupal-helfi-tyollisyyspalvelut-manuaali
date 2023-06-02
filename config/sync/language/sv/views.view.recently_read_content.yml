@@ -1,5 +1,9 @@
-label: 'Nyligen visad '
 display:
+  recently_viewed_service_table_block:
+    display_options:
+      fields:
+        title:
+          label: 'Tjänstens namn '
   default:
     display_title: Huvud
     display_options:
@@ -11,10 +15,7 @@ display:
           sort_asc_label: Stigande
           sort_desc_label: Fallande
       fields:
-        title: {  }
-      title: 'Nyligen visad '
-  recently_viewed_service_table_block:
-    display_options:
-      fields:
         title:
-          label: 'Tjänstens namn '
+          separator: ', '
+      title: 'Nyligen visad '
+label: 'Nyligen visad '
