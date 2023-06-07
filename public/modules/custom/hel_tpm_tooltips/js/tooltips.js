@@ -7,7 +7,6 @@
   Drupal.behaviors.fieldDescriptionTooltip = {
     attach: function (context, settings) {
       let tooltipFields = $('[data-description-tooltip="1"]', context);
-
       // Check if there are any fields that are configured as tooltip.
       if (tooltipFields.length <= 0) {
         return;
@@ -29,14 +28,64 @@
 
       });
 
+      let tooltipFieldsAjax = $('[data-description-tooltip="1"] .ajax-new-content', context);
+      // Check if there are any fields that are configured as tooltip.
+      if (tooltipFieldsAjax.length <= 0) {
+        return;
+      }
+
+      let ajaxContext = $(tooltipFieldsAjax).closest('table');
+
+      if (ajaxContext.length > 0) {
+        $(ajaxContext, context).each(function () {
+          let description = $(this).find('[data-drupal-field-elements="description"], [class="form-item__description"]');
+
+          // Check if there is a description available in order to start the
+          // js manipulations.
+          if (description.length <= 0) {
+            return
+          }
+
+          description.each(function() {
+            addTooltip(this);
+            moveDescriptionAfterLabel(this);
+          });
+
+        });
+      } else {
+        $(tooltipFieldsAjax, context).each(function () {
+          let description = $(this).find('[data-drupal-field-elements="description"], [class="form-item__description"]');
+
+          // Check if there is a description available in order to start the
+          // js manipulations.
+          if (description.length <= 0) {
+            return
+          }
+
+          description.each(function() {
+            addTooltip(this);
+            moveDescriptionAfterLabel(this);
+          });
+
+        });
+      }
+
+
+
+
       function moveDescriptionAfterLabel(item) {
         let context = $(item).closest('div[class*=field--name]').first();
-        let label = $("label[class!=option]", context).first();
-        if (label.length <= 0) {
-          return;
-        }
+        let label = $("label:not(.option)", context).first();
+        let legendSpan = $("legend span", context).first();
+        if ((label.length <= 0) && (legendSpan.legend <= 0) ) {
+            return
+          }
 
-        $(item).insertAfter(label);
+        if (!(label.length <= 0) ) {
+          $(item).appendTo(label);
+        } else {
+          $(item).appendTo(legendSpan);
+        }
       }
 
       function addTooltip(item) {
