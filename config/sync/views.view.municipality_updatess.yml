@@ -5,6 +5,7 @@ dependencies:
   config:
     - group.content_type.group_content_type_a689b6d6f98cc
     - group.content_type.organisation-group_membership
+    - user.role.specialist_editor
   module:
     - entity_reference_revisions
     - group
@@ -206,6 +207,49 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
+        roles_target_id:
+          id: roles_target_id
+          table: user__roles
+          field: roles_target_id
+          relationship: gc__user
+          group_type: group
+          admin_label: ''
+          entity_type: user
+          entity_field: roles
+          plugin_id: user_roles
+          operator: or
+          value:
+            specialist_editor: specialist_editor
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
       style:
         type: default
         options:

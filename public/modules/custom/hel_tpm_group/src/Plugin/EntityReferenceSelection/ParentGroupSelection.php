@@ -117,7 +117,7 @@ class ParentGroupSelection extends UserSelection {
       $entity = $configuration['entity'];
     }
 
-    $include_supergroups = empty($configuration['include_supergroup_members']) ? FALSE : $configuration['include_supergroup_members'];
+    $include_supergroups = empty($configuration['include_supergroup']) ? FALSE : $configuration['include_supergroup'];
 
     $groups = $this->getGroups($entity, $include_supergroups);
 
@@ -168,7 +168,7 @@ class ParentGroupSelection extends UserSelection {
     if ($include_supergroups) {
       // Fetch parent groups for subgroups.
       foreach ($groups as $group) {
-        $super_groups = $this->groupHierarchyManager->getGroupSupergroupIds($group->id());
+        $super_groups = $this->groupHierarchyManager->getGroupSupergroupIds($group);
         if (empty($super_groups)) {
           continue;
         }
