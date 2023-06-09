@@ -1,0 +1,21 @@
+uuid: b0b86e2c-6233-47b1-b993-de15025a52cd
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_target_group_municipality
+    - paragraphs.paragraphs_type.target_group
+id: paragraph.target_group.field_target_group_municipality
+field_name: field_target_group_municipality
+entity_type: paragraph
+bundle: target_group
+label: Municipality
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings: {  }
+field_type: entity_reference
