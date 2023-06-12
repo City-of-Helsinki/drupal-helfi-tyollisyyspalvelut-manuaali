@@ -163,7 +163,7 @@ function hel_tpm_general_update_8111() {
  * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
  * @throws \Drupal\Core\Entity\EntityStorageException
  */
-function hel_tpm_general_update_8114() {
+function hel_tpm_general_update_8112() {
   $storage = \Drupal::entityTypeManager()->getStorage('paragraph');
   $paragraphs = $storage->loadByProperties(['type' => 'target_group']);
   foreach ($paragraphs as $paragraph) {
