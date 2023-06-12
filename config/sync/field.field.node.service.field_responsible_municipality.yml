@@ -25,6 +25,9 @@ default_value_callback: ''
 settings:
   handler: hel_tpm_group_parent_group_selection
   handler_settings:
+    include_anonymous: 1
+    filter:
+      type: _none
     target_bundles:
       organisation: organisation
     sort:
@@ -32,4 +35,5 @@ settings:
       direction: ASC
     auto_create: 0
     auto_create_bundle: organisation
+    include_supergroup: 1
 field_type: entity_reference
