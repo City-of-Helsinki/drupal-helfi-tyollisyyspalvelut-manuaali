@@ -112,6 +112,8 @@ class GroupBulkInviteTest extends GroupBrowserTestBase {
     $this->drupalGet('/group/' . $this->group->id() . '/invite-members');
     $this->assertSession()->fieldExists('email_address');
     $this->assertSession()->fieldExists('edit-roles');
+    // Validate that roles selection is required.
+    $this->assertSession()->elementAttributeContains('css', 'fieldset#edit-roles--wrapper', 'required', 'required');
 
 
     // Make sure field for role selection is found.
