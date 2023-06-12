@@ -48,21 +48,11 @@ content:
         maxlength_js: null
         maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
         maxlength_js_enforce: false
-  field_municipality:
+  field_target_group_municipality:
     type: options_buttons
     weight: 2
     region: content
     settings: {  }
-    third_party_settings: {  }
-  field_target_group_municipality:
-    type: entity_reference_autocomplete
-    weight: 5
-    region: content
-    settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
     third_party_settings: {  }
   translation:
     weight: 4
@@ -71,4 +61,5 @@ content:
     third_party_settings: {  }
 hidden:
   created: true
+  field_municipality: true
   status: true

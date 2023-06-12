@@ -5,17 +5,34 @@ dependencies:
   config:
     - field.storage.paragraph.field_target_group_municipality
     - paragraphs.paragraphs_type.target_group
+    - taxonomy.vocabulary.municipality
+  module:
+    - epp
+    - require_on_publish
+third_party_settings:
+  epp:
+    value: ''
+    on_update: 0
+  require_on_publish:
+    require_on_publish: true
 id: paragraph.target_group.field_target_group_municipality
 field_name: field_target_group_municipality
 entity_type: paragraph
 bundle: target_group
-label: Municipality
+label: 'Kunta:'
 description: ''
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:
   handler: 'default:taxonomy_term'
-  handler_settings: {  }
+  handler_settings:
+    target_bundles:
+      municipality: municipality
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
 field_type: entity_reference
