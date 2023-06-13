@@ -22,16 +22,12 @@ translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
-  handler: hel_tpm_group_editor_user_selection
+  handler: dependent_fields_selection
   handler_settings:
-    target_bundles: null
-    sort:
-      field: _none
-      direction: ASC
-    auto_create: false
-    auto_create_bundle: ''
-    filter:
-      type: _none
-    include_anonymous: false
-    filter_users_without_publish: 1
+    dependent_fields_view:
+      view_name: users_by_group_entity_reference
+      display_name: entity_reference_1
+      parent_field: field_responsible_municipality
+      reference_parent_by_uuid: false
+      arguments: {  }
 field_type: entity_reference

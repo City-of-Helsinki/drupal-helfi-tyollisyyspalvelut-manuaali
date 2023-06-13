@@ -1,0 +1,40 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Hel Tpm Tooltips module.
+ *
+ * @DCG
+ * This file is no longer required in Drupal 8.
+ * @see https://www.drupal.org/node/2217931
+ */
+
+use Drupal\Core\Entity\EntityForm;
+
+/**
+ * Implements hook_library_info_alter().
+ */
+function hel_tpm_tooltips_library_info_alter(&$libraries, $extension) {
+  if ($extension != 'field_description_tooltip') {
+    return;
+  }
+  $libraries['tooltip']['js'] = [ '/' . \Drupal::service('extension.list.module')->getPath('hel_tpm_tooltips') . '/js/tooltips.js' => []];
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function hel_tpm_tooltips_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  // We only filter the entity forms.
+  if (!$form_state->getFormObject() instanceof EntityForm) {
+    return;
+  }
+  if (empty($form['#attached']['drupalSettings']['fieldDescriptionTooltip']['img'])) {
+    return;
+  }
+  $module_path = \Drupal::service('extension.list.module')
+    ->getPath('hel_tpm_tooltips');
+
+  $img = sprintf('%s/img/tooltip.svg', $module_path);
+  $form['#attached']['drupalSettings']['fieldDescriptionTooltip']['img'] = $img;
+}

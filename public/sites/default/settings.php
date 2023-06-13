@@ -22,7 +22,7 @@ $settings['file_scan_ignore_directories'] = [
 $settings['config_sync_directory'] = '../config/sync';
 
 if (getenv('SYSTEM_SITE_FRONT')) {
-$config['system.site']['page']['front'] = getenv('SYSTEM_SITE_FRONT');
+  $config['system.site']['page']['front'] = getenv('SYSTEM_SITE_FRONT');
 }
 
 // Automatic Platform.sh settings.
@@ -42,4 +42,8 @@ if (isset($_ENV['LANDO_INFO'])) {
 // Local settings. These come last so that they can override anything.
 if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
   include $app_root . '/' . $site_path . '/settings.local.php';
+}
+
+if (getenv('FILE_PRIVATE_PATH')) {
+  $settings['file_private_path'] = getenv('FILE_PRIVATE_PATH');
 }

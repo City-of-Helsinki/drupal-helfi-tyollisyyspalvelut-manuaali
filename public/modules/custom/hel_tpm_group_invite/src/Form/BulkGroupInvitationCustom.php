@@ -26,7 +26,8 @@ class BulkGroupInvitationCustom extends BulkGroupInvitation {
       '#title' => t('Roles'),
       '#options' => self::getGroupRoleOptions($group),
       '#weight' => 0,
-      '#attributes' => ['id' => 'edit-roles']
+      '#attributes' => ['id' => 'edit-roles'],
+      '#required' => TRUE
     ];
 
     return $form;

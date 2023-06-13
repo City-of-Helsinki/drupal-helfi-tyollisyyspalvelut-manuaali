@@ -9,7 +9,6 @@
         event.preventDefault();
         let state = this.getAttribute('data-state')
         moderationState.val(state);
-        console.log(submitButton);
         submitButton.click();
       })
     }
