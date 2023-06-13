@@ -30,40 +30,33 @@ content:
       to_prefix_suffix: false
       combined_prefix_suffix: false
     third_party_settings: {  }
-    weight: 4
+    weight: 3
     region: content
   field_age_groups:
     type: list_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 3
+    weight: 2
     region: content
   field_description:
     type: text_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 1
-    region: content
-  field_municipality:
-    type: entity_reference_label
-    label: above
-    settings:
-      link: false
-    third_party_settings: {  }
-    weight: 2
+    weight: 0
     region: content
   field_target_group_municipality:
     type: entity_reference_label
     label: above
     settings:
-      link: true
+      link: false
     third_party_settings: {  }
-    weight: 5
+    weight: 1
     region: content
 hidden:
   entity_print_view_epub: true
   entity_print_view_pdf: true
   entity_print_view_word_docx: true
+  field_municipality: true
   search_api_excerpt: true
