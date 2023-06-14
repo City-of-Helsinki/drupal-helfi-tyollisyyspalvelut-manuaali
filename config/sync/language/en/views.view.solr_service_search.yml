@@ -4,3 +4,36 @@ display:
       exposed_form:
         options:
           submit_button: 'Search services'
+          reset_button_label: 'Empty selection'
+      header:
+        result:
+          content: '<strong>Search results:</strong> <span class="total-number">@total</span>'
+  default:
+    display_options:
+      filters:
+        field_service_set:
+          expose:
+            label: 'Service category:'
+        field_life_situations:
+          expose:
+            label: 'Life situation:'
+        field_language:
+          expose:
+            label: 'Service language:'
+        field_free_service:
+          expose:
+            description: ''
+          group_info:
+            label: 'Service is chargeable'
+        field_age_groups:
+          expose:
+            label: 'Target groups age'
+        field_accessibility:
+          expose:
+            label: Accessibility
+        field_implementation_extra_info:
+          expose:
+            label: Implementation
+        field_municipality:
+          expose:
+            label: Municipality
