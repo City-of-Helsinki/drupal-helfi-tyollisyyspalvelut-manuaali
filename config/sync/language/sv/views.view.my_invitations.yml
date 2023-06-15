@@ -23,16 +23,27 @@ display:
           label: Roller
           separator: ', '
         uid:
+          label: 'Invited by'
           separator: ', '
         created:
+          label: 'Invited on'
           separator: ', '
         id:
           separator: ', '
+        nothing:
+          label: Accept
+          alter:
+            text: Accept
+        nothing_1:
+          label: Decline
+          alter:
+            text: Decline
         dropbutton:
           label: Funktioner
       arguments:
         entity_id:
           exception:
             title: Alla
+      title: Invitations
   page_1:
     display_title: Sida

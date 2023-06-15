@@ -18,22 +18,17 @@
   .error {
     @include field-error;
   }
-}
-
-fieldset {
-  &.error {
-    @include field-error;
+  > label {
+    display: flex;
   }
 }
 
 select.error ~ .select2-container {
   @include field-error;
   padding: 12px 12px 12px 16px;
-
 }
 
 .form-item__label {
-  display: block;
   font-size: 12px;
   line-height: 24px;
   font-weight: 600;

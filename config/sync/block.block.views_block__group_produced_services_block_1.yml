@@ -7,6 +7,7 @@ dependencies:
   module:
     - context
     - group
+    - system
     - views
   theme:
     - palvelumanuaali
@@ -44,6 +45,11 @@ visibility:
     id: context
     negate: null
     values: ''
+  http_status_code:
+    id: http_status_code
+    negate: false
+    status_codes:
+      200: 200
   group_type:
     id: group_type
     group_types:
@@ -52,8 +58,7 @@ visibility:
     negate: false
     context_mapping:
       group: '@group.group_route_context:group'
-  http_status_code:
-    id: http_status_code
+  request_path:
+    id: request_path
     negate: false
-    status_codes:
-      200: 200
+    pages: '/group/*/services'

@@ -33,6 +33,7 @@ services:
         MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless"]}}, "http://chrome:9515"]'
         DRUSH_OPTIONS_URI: "https://helfi-manuska.lndo.site"
         TFA_KEY: ''
+        FILE_PRIVATE_PATH: "/app/private"
   chrome:
     type: compose
     services:

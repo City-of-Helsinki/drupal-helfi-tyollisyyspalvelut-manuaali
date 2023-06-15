@@ -7,6 +7,7 @@ dependencies:
     - field.field.paragraph.target_group.field_age_groups
     - field.field.paragraph.target_group.field_description
     - field.field.paragraph.target_group.field_municipality
+    - field.field.paragraph.target_group.field_target_group_municipality
     - paragraphs.paragraphs_type.target_group
   module:
     - maxlength
@@ -47,7 +48,7 @@ content:
         maxlength_js: null
         maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
         maxlength_js_enforce: false
-  field_municipality:
+  field_target_group_municipality:
     type: options_buttons
     weight: 2
     region: content
@@ -60,4 +61,5 @@ content:
     third_party_settings: {  }
 hidden:
   created: true
+  field_municipality: true
   status: true

@@ -13,9 +13,11 @@ use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\gcontent_moderation\GroupStateTransitionValidation;
+use Drupal\ggroup\GroupHierarchyManagerInterface;
 use Drupal\group\Entity\GroupContentInterface;
 use Drupal\group\Entity\GroupInterface;
 use Drupal\group\GroupMembershipLoaderInterface;
+use Drupal\node\NodeInterface;
 use Drupal\user\Plugin\EntityReferenceSelection\UserSelection;
 use Drupal\user\UserInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -46,6 +48,8 @@ class GroupUserSelection extends UserSelection {
 
   private $groupStateTransitionValidator;
 
+  private $groupHierarchyManager;
+
   public function __construct(array $configuration,
                               $plugin_id,
                               $plugin_definition,
@@ -57,11 +61,13 @@ class GroupUserSelection extends UserSelection {
                               EntityTypeBundleInfoInterface $entity_type_bundle_info = NULL,
                               EntityRepositoryInterface $entity_repository = NULL,
                               GroupMembershipLoaderInterface $group_membership_loader,
-                              GroupStateTransitionValidation $groupStateTransitionValidator) {
+                              GroupStateTransitionValidation $group_state_transition_validator,
+                              GroupHierarchyManagerInterface $group_hierarchy_manager) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_type_manager, $module_handler, $current_user,  $connection,  $entity_field_manager, $entity_type_bundle_info, $entity_repository);
 
     $this->group_membership_loader = $group_membership_loader;
-    $this->groupStateTransitionValidator = $groupStateTransitionValidator;
+    $this->groupStateTransitionValidator = $group_state_transition_validator;
+    $this->groupHierarchyManager = $group_hierarchy_manager;
   }
 
   /**
@@ -80,7 +86,8 @@ class GroupUserSelection extends UserSelection {
       $container->get('entity_type.bundle.info'),
       $container->get('entity.repository'),
       $container->get('group.membership_loader'),
-      $container->get('gcontent_moderation.state_transition_validation')
+      $container->get('gcontent_moderation.state_transition_validation'),
+      $container->get('ggroup.group_hierarchy_manager'),
     );
   }
 
@@ -104,6 +111,10 @@ class GroupUserSelection extends UserSelection {
       '#title' => $this->t('Filter users without publish permission'),
       '#default_value' => !empty($configuration['filter_users_without_publish']) ? $configuration['filter_users_without_publish'] : FALSE
     ];
+    $form['include_supergroup_members'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Include members from super groups')
+    ];
     return $form;
   }
 
@@ -113,27 +124,14 @@ class GroupUserSelection extends UserSelection {
   protected function buildEntityQuery($match = NULL, $match_operator = 'CONTAINS') {
     $query = parent::buildEntityQuery($match, $match_operator);
     $configuration = $this->getConfiguration();
-    $members = [];
-
-    // Users with administer users permission can list and view all users.
-    if ($this->currentUser->hasPermission('administer users')) {
-      return $query;
-    }
+    $include_supergroups = empty($configuration['include_supergroup_members']) ? FALSE : $configuration['include_supergroup_members'];
 
     if (!empty($configuration['entity'])) {
       $entity = $configuration['entity'];
     }
 
-    // Validate referenced entity is of type group content interface.
-    if ($entity instanceof GroupContentInterface) {
-      $group = $entity->getGroup();
-      if (!empty($group)) {
-        $members = $this->groupMembers($group);
-      }
-    }
-    else {
-      $members = $this->getUserGroupMembers($this->currentUser);
-    }
+    $groups = $this->getGroups($entity, $include_supergroups);
+    $members = $this->getMembers($groups);
 
     // Append uids to query condition.
     if (!empty($members)) {
@@ -144,6 +142,82 @@ class GroupUserSelection extends UserSelection {
     }
 
     return $query;
+  }
+
+  /**
+   * Get members for groups.
+   *
+   * @param $groups
+   *
+   * @return array|int|string|null
+   */
+  private function getMembers($groups) {
+    $members = [];
+
+    if (empty($groups)) {
+      return NULL;
+    }
+    foreach ($groups as $group) {
+      if ($group instanceof GroupContentInterface) {
+        $group = $group->getGroup();
+      }
+      // Validate referenced entity is of type group content interface.
+      if ($group instanceof GroupInterface) {
+        $members = array_merge($members, $this->groupMembers($group));
+      }
+    }
+
+    return $members;
+  }
+
+  /**
+   * Get groups from node.
+   *
+   * @param $node
+   *
+   * @return array
+   */
+  private function getGroups($node, $include_supergroups) {
+    $groups = [];
+    if (!$node instanceof NodeInterface) {
+      return $groups;
+    }
+
+    if ($node->isNew()) {
+      $route = \Drupal::routeMatch();
+      $group = $route->getParameter('group');
+      if (empty($group)) {
+        return [];
+      }
+      $groups[] = $route->getParameter('group');
+    }
+    else {
+      // Get groups from node.
+      foreach ($node->entitygroupfield->referencedEntities() as $group) {
+        if (empty($group)) {
+          continue;
+        }
+        $groups[] = $group->getGroup();
+      }
+    }
+
+    // Return if no groups found.
+    if (empty($groups)) {
+      return [];
+    }
+
+    if ($include_supergroups) {
+      // Fetch parent groups for subgroups.
+      foreach ($groups as $group) {
+        $super_groups = $this->groupHierarchyManager->getGroupSupergroups($group->id());
+        if (empty($super_groups)) {
+          continue;
+        }
+        $groups = array_merge($groups, $super_groups);
+      }
+    }
+
+    return $groups;
   }
 
   /**
