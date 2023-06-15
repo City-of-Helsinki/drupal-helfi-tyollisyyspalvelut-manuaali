@@ -10,6 +10,7 @@ dependencies:
     - user.role.specialist_editor
   module:
     - group
+    - hel_tpm_general
     - user
 id: maintenance_and_administration
 label: 'Hallinta ja ylläpito näkymä'
@@ -79,9 +80,8 @@ display:
           empty_zero: false
           hide_alter_empty: true
           click_sort_column: value
-          type: string
-          settings:
-            link_to_entity: true
+          type: hel_tpm_general_language_link_to_content
+          settings: {  }
           group_column: value
           group_columns: {  }
           group_rows: true
