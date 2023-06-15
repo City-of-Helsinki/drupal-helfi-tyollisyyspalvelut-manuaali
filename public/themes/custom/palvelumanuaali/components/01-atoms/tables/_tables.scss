@@ -248,6 +248,17 @@ table > :not(caption) > * > * {
   .table > :not(caption) > * > *,
   table > :not(caption) > * > * {
     padding: 0;
+    background-color: transparent;
+
+  }
+}
+.field-service-time-and-location-values {
+  >tbody {
+    display: flex;
+    flex-direction: column;
+  }
+  >tbody > tr {
+    display: grid;
   }
 }
 
