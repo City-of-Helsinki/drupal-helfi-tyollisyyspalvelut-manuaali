@@ -58,6 +58,11 @@
           }
 
           description.each(function() {
+            $(this).attr('data-bs-toggle', 'tooltip');
+            $(this).attr('data-bs-html', 'true');
+            $(this).attr('data-bs-placement', 'right');
+            $(this).attr('data-bs-custom-class', 'styled-tooltip');
+            $(this).attr('data-bs-delay', '200');
             addTooltip(this);
             moveDescriptionAfterLabel(this);
           });
