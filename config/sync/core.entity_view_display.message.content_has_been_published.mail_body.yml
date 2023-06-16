@@ -1,0 +1,25 @@
+uuid: c5db33cb-4776-4014-80aa-32b31e9bdaf2
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.message.mail_body
+    - field.field.message.content_has_been_published.field_node
+    - message.template.content_has_been_published
+  module:
+    - user
+id: message.content_has_been_published.mail_body
+targetEntityType: message
+bundle: content_has_been_published
+mode: mail_body
+content:
+  partial_1:
+    weight: 0
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  field_node: true
+  partial_0: true
+  search_api_excerpt: true
