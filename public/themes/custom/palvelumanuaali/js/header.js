@@ -11,7 +11,7 @@
           return;
         }
         let height = header.offsetHeight;
-        $(window).scroll(function () {
+        addEventListener('scroll', function () {
           let currentScrollY = $(this).scrollTop();
           if ($(window).width() > 920 ) {
             if (lastScrollY < currentScrollY && currentScrollY > 50) {
