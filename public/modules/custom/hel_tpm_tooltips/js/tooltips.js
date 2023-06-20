@@ -23,49 +23,39 @@
         }
 
         description.each(function() {
-          $(this).attr('data-bs-toggle', 'tooltip');
-          $(this).attr('data-bs-html', 'true');
-          $(this).attr('data-bs-placement', 'right');
-          $(this).attr('data-bs-custom-class', 'styled-tooltip');
-          $(this).attr('data-bs-delay', '200');
-            addTooltip(this);
-            moveDescriptionAfterLabel(this);
+          addTooltip(this);
+          moveDescriptionAfterLabel(this);
 
         });
+        fixBootstrapTriggerlist();
+      });
+
+      $(document).ajaxComplete(function () {
+        let description = $(this).find('[data-drupal-field-elements="description"], [class="form-item__description"]');
+        description.each(function() {
+          addTooltip(this);
+          moveDescriptionAfterLabel(this);
+        });
+        fixBootstrapTriggerlist();
+      });
+
+      /**
+       * Fix for bootstrap.
+       */
+      function fixBootstrapTriggerlist() {
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
           return new bootstrap.Tooltip(tooltipTriggerEl);
         })
-      });
-
-      clearOnceFromIEF();
-      clearOnceFromServicePlace();
-
-    function clearOnceFromIEF () {
-      let tooltipFieldsIEF = $('[data-description-tooltip="1"].field--widget-municipality-specific-ief-widget', context);
-      $(tooltipFieldsIEF, context).each(function () {
-        $(this).attr('data-once',"");
-
-      });
-    }
-
-    function clearOnceFromServicePlace () {
-      let tooltipFieldsIEF = $('[data-description-tooltip="1"].field--widget-hel-tpm-service-dates-service-time-and-place-widget', context);
-      $(tooltipFieldsIEF, context).each(function () {
-        $(this).attr('data-once',"");
-
-      });
-    }
-
-
+      }
 
       function moveDescriptionAfterLabel(item) {
         let context = $(item).closest('div[class*=field--name]').first();
         let label = $("label:not(.option)", context).first();
         let legendSpan = $("legend span", context).first();
         if ((label.length <= 0) && (legendSpan.legend <= 0) ) {
-            return
-          }
+          return
+        }
 
         if (!(label.length <= 0) ) {
           $(item).appendTo(label);
@@ -74,66 +64,43 @@
         }
       }
 
+      /**
+       * Function to add tooltips.
+       * @param item
+       */
       function addTooltip(item) {
+        $(item).attr('data-bs-toggle', 'tooltip');
+        $(item).attr('data-bs-html', 'true');
+        $(item).attr('data-bs-placement', 'right');
+        $(item).attr('data-bs-custom-class', 'styled-tooltip');
+        $(item).attr('data-bs-delay', '200');
 
+        let tooltipText = "";
         // Get the description text to be prepared as tooltip.
         if ($(item).hasClass('tooltipInitiated')) {
-            var tooltipText = $(item).prop('title');
+          tooltipText = $(item).prop('title');
         } else {
-            var tooltipText = $(item).html().trim();
+          tooltipText = $(item).html().trim();
         }
         let lineBreak = '<br />';
         $(item).addClass('tooltipInitiated');
-
         // Remove the description text and move it to the "title" attribute.
         $(item).prop('title', tooltipText);
         $(item).html('<img width="20" src="/' + settings.fieldDescriptionTooltip.img + '" />');
-
-        // Set the tooltip position.
-        let position_my = settings.fieldDescriptionTooltip.position.my_1 + ' ' + settings.fieldDescriptionTooltip.position.my_2;
-        let position_at = settings.fieldDescriptionTooltip.position.at_1 + ' ' + settings.fieldDescriptionTooltip.position.at_2;
-
         // Add the tooltip js trigger.
         $(item).tooltip(
-            {
-              // For any custom styling.
-              tooltipClass: "description-tooltip",
-              content: function() {
-                let tooltipText = $(item).prop('title');
-                // Convert default line breaks into html breaks.
-                return tooltipText
-                  .replaceAll("\r\n", lineBreak)
-                  .replaceAll("\r", lineBreak)
-                  .replaceAll("\n", lineBreak)
-              }
-            });
-
-      }
-
-      function addTooltipNoImage(item) {
-
-        // Get the description text to be prepared as tooltip.
-        var tooltipText = $(item).html().trim();
-        let lineBreak = '<br />';
-
-
-        // Remove the description text and move it to the "title" attribute.
-        $(item).prop('title', tooltipText);
-        // Add the tooltip js trigger.
-        $(item).tooltip(
-            {
-              // For any custom styling.
-              tooltipClass: "description-tooltip",
-              content: function() {
-                let tooltipText = $(item).prop('title');
-                // Convert default line breaks into html breaks.
-                return tooltipText
-                  .replaceAll("\r\n", lineBreak)
-                  .replaceAll("\r", lineBreak)
-                  .replaceAll("\n", lineBreak)
-              }
-            });
-
+          {
+            // For any custom styling.
+            tooltipClass: "description-tooltip",
+            content: function() {
+              let tooltipText = $(item).prop('title');
+              // Convert default line breaks into html breaks.
+              return tooltipText
+                .replaceAll("\r\n", lineBreak)
+                .replaceAll("\r", lineBreak)
+                .replaceAll("\n", lineBreak)
+            }
+          });
       }
     }
   };
