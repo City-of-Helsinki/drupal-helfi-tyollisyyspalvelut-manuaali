@@ -244,6 +244,16 @@ table > :not(caption) > * > * {
   padding: 20px 18px 20px $space-double;
 }
 
+
+.node-form  {
+  .table > :not(caption) > * > *,
+  table > :not(caption) > * > * {
+    padding: 0;
+    background-color: transparent;
+
+  }
+}
+
 .field--name-field-service-time-and-location  {
   .table > :not(caption) > * > *,
   table > :not(caption) > * > * {
