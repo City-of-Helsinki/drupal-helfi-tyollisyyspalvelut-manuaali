@@ -3,7 +3,9 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.message.content_has_been_published.field_message_author
     - field.field.message.content_has_been_published.field_node
+    - field.field.message.content_has_been_published.field_user
     - message.template.content_has_been_published
   module:
     - user
@@ -12,6 +14,14 @@ targetEntityType: message
 bundle: content_has_been_published
 mode: default
 content:
+  field_message_author:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 3
+    region: content
   field_node:
     type: entity_reference_label
     label: above
@@ -19,6 +29,14 @@ content:
       link: true
     third_party_settings: {  }
     weight: 1
+    region: content
+  field_user:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 2
     region: content
   partial_0:
     settings: {  }
