@@ -38,40 +38,41 @@
         })
       });
       clearOnceFromIEF();
+      clearOnceFromServicePlace();
 
-      let tooltipFieldsAjax = $('[data-description-tooltip="1"] .ajax-new-content', context);
-      // Check if there are any fields that are configured as tooltip.
-      if (tooltipFieldsAjax.length <= 0) {
-        return;
-      }
-
-      let ajaxContext = $(tooltipFieldsAjax).closest('table');
-
-      if (ajaxContext.length > 0) {
-        $(ajaxContext, context).each(function () {
-          let description = $(this).find('[data-drupal-field-elements="description"], [class="form-item__description"]');
-
-          // Check if there is a description available in order to start the
-          // js manipulations.
-          if (description.length <= 0) {
-            return
-          }
-
-          description.each(function() {
-            $(this).attr('data-bs-toggle', 'tooltip');
-            $(this).attr('data-bs-html', 'true');
-            $(this).attr('data-bs-placement', 'right');
-            $(this).attr('data-bs-custom-class', 'styled-tooltip');
-            $(this).attr('data-bs-delay', '200');
-            addTooltip(this);
-            moveDescriptionAfterLabel(this);
-          });
-          var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-          var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl);
-          })
-        });
-      }
+      // let tooltipFieldsAjax = $('[data-description-tooltip="1"] .ajax-new-content', context);
+      // // Check if there are any fields that are configured as tooltip.
+      // if (tooltipFieldsAjax.length <= 0) {
+      //   return;
+      // }
+      //
+      // let ajaxContext = $(tooltipFieldsAjax).closest('table');
+      //
+      // if (ajaxContext.length > 0) {
+      //   $(ajaxContext, context).each(function () {
+      //     let description = $(this).find('[data-drupal-field-elements="description"], [class="form-item__description"]');
+      //
+      //     // Check if there is a description available in order to start the
+      //     // js manipulations.
+      //     if (description.length <= 0) {
+      //       return
+      //     }
+      //
+      //     description.each(function() {
+      //       $(this).attr('data-bs-toggle', 'tooltip');
+      //       $(this).attr('data-bs-html', 'true');
+      //       $(this).attr('data-bs-placement', 'right');
+      //       $(this).attr('data-bs-custom-class', 'styled-tooltip');
+      //       $(this).attr('data-bs-delay', '200');
+      //       addTooltip(this);
+      //       moveDescriptionAfterLabel(this);
+      //     });
+      //     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+      //     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      //       return new bootstrap.Tooltip(tooltipTriggerEl);
+      //     })
+      //   });
+      // }
 
     function clearOnceFromIEF () {
       let tooltipFieldsIEF = $('[data-description-tooltip="1"].field--widget-municipality-specific-ief-widget', context);
@@ -80,6 +81,15 @@
 
       });
     }
+
+    function clearOnceFromServicePlace () {
+      let tooltipFieldsIEF = $('[data-description-tooltip="1"].field--widget-hel-tpm-service-dates-service-time-and-place-widget', context);
+      $(tooltipFieldsIEF, context).each(function () {
+        $(this).attr('data-once',"");
+
+      });
+    }
+
 
 
       function moveDescriptionAfterLabel(item) {
@@ -100,10 +110,7 @@
       function addTooltip(item) {
 
         // Get the description text to be prepared as tooltip.
-        console.log($(item));
-        console.log($(item).hasClass('tooltipInitiated'));
         if ($(item).hasClass('tooltipInitiated')) {
-            console.log('initioi');
             var tooltipText = $(item).prop('title');
         } else {
             var tooltipText = $(item).html().trim();
