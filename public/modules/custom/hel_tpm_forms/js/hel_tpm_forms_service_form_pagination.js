@@ -60,6 +60,7 @@
         });
         currentTab = Number(n);
         showTab(currentTab);
+        scrollTop();
       }
 
       /**
@@ -91,6 +92,16 @@
         updateStepParam(n);
         // ... and run a function that displays the correct step indicator:
         fixStepIndicator(n);
+      }
+
+      /**
+       * Method for scrolling window to top.
+       */
+      function scrollTop() {
+        // I have no idea why this needs this to work but it does
+        $(this).scrollTop();
+        // Scroll window to top.
+        window.scroll(0, 0);
       }
 
       /**
