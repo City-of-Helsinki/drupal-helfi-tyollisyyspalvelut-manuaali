@@ -13,6 +13,8 @@ dependencies:
     - admin_toolbar_search
     - content_moderation
     - content_translation
+    - dropzonejs
+    - entity_browser
     - eu_cookie_compliance
     - field_permissions
     - filter
@@ -31,6 +33,7 @@ weight: 4
 is_admin: null
 permissions:
   - 'access content'
+  - 'access entity_browser entity browser pages'
   - 'access shortcuts'
   - 'add flag lists'
   - 'create contact info'
@@ -83,6 +86,7 @@ permissions:
   - 'delete paragraph content target_group'
   - 'delete paragraph content url_and_file'
   - 'display eu cookie compliance popup'
+  - 'dropzone upload files'
   - 'edit any image media'
   - 'edit any service content'
   - 'edit any service_location content'
