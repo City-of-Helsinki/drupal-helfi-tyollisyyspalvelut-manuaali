@@ -144,6 +144,15 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
     $this->dispatchMessage($entity, $service_provider_updatee, 'content_has_been_published');
   }
 
+  /**
+   * Check if service provider should be notified or not.
+   *
+   * @param \Drupal\node\NodeInterface $entity
+   *
+   * @return bool
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   */
   protected function notifyServiceProvider(NodeInterface $entity) {
     $service_provider_updatee = $entity->get('field_service_provider_updatee')->entity;
     $municipality_updatee = $this->getServiceOwner($entity);
