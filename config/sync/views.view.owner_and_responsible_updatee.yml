@@ -564,7 +564,23 @@ display:
         type: tag
         options: {  }
       empty: {  }
-      sorts: {  }
+      sorts:
+        changed:
+          id: changed
+          table: node_field_data
+          field: changed
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: changed
+          plugin_id: date
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: ''
+          exposed: false
+          granularity: second
       arguments: {  }
       filters:
         moderation_state:
@@ -823,18 +839,24 @@ display:
           default_row_class: true
           columns:
             title: title
+            langcode: langcode
             gid: gid
-            field_responsible_updatee: field_responsible_updatee
             moderation_state: moderation_state
-            status: status
             changed: changed
             edit_node: edit_node
             delete_node: delete_node
             dropbutton: dropbutton
-          default: changed
+          default: '-1'
           info:
             title:
               sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            langcode:
+              sortable: false
               default_sort_order: asc
               align: ''
               separator: ''
@@ -847,21 +869,7 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
-            field_responsible_updatee:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
             moderation_state:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            status:
               sortable: true
               default_sort_order: asc
               align: ''
