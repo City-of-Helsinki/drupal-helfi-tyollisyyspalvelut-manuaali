@@ -1,0 +1,14 @@
+diff --git a/field_description_tooltip.module b/field_description_tooltip.module
+index d3c5988..275c505 100644
+--- a/field_description_tooltip.module
++++ b/field_description_tooltip.module
+@@ -54,6 +54,9 @@ function field_description_tooltip_form_alter(&$form, FormStateInterface &$form_
+       if ($use_tooltip || $config['tooltip_all']) {
+         $exploded = explode(':', $field_config);
+         $field = end($exploded);
++        if (empty($form[$field])) {
++          continue;
++        }
+         // Set the tooltip flag.
+         $form[$field]['#attributes']['data-description-tooltip'] = [TRUE];
+         $tooltip_fields_count++;
