@@ -62,6 +62,7 @@ third_party_settings:
         - field_attendance
         - field_service_requirements
         - field_service_benefits
+        - field_client_consent
         - field_field_client_consent_descr
       label: Osallistuminen
       parent_name: ''
@@ -105,7 +106,7 @@ third_party_settings:
       label: 'Missä ja milloin'
       parent_name: ''
       region: content
-      weight: 14
+      weight: 15
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--where-and-when'
@@ -159,6 +160,16 @@ content:
     third_party_settings: {  }
     weight: 15
     region: content
+  field_client_consent:
+    type: boolean
+    label: hidden
+    settings:
+      format: custom
+      format_custom_false: 'Osallistumiseen ei tarvita asiakkaan suostumusta.'
+      format_custom_true: 'Osallistumiseen tarvitaan asiakkaan suostumus.'
+    third_party_settings: {  }
+    weight: 18
+    region: content
   field_contact_info_external:
     type: entity_reference_entity_view
     label: hidden
@@ -166,7 +177,7 @@ content:
       view_mode: default
       link: false
     third_party_settings: {  }
-    weight: 17
+    weight: 18
     region: content
   field_description:
     type: basic_string
@@ -180,7 +191,7 @@ content:
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 18
+    weight: 19
     region: content
   field_implementation_extra_info:
     type: entity_reference_label
@@ -205,7 +216,7 @@ content:
       view_mode: card_lift
       link: false
     third_party_settings: {  }
-    weight: 19
+    weight: 20
     region: content
   field_service_benefits:
     type: text_default
@@ -228,7 +239,7 @@ content:
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 15
+    weight: 16
     region: content
   field_service_other_info:
     type: entity_reference_revisions_entity_view
@@ -254,7 +265,7 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 18
+    weight: 19
     region: content
   field_service_requirements:
     type: text_default
@@ -322,7 +333,7 @@ content:
   view_mode_switcher:
     settings: {  }
     third_party_settings: {  }
-    weight: 16
+    weight: 17
     region: content
 hidden:
   content_moderation_control: true
@@ -331,7 +342,6 @@ hidden:
   entity_print_view_word_docx: true
   entitygroupfield: true
   field_career_marking: true
-  field_client_consent: true
   field_contact_info: true
   field_contact_info_internal: true
   field_guidance_to_service: true
