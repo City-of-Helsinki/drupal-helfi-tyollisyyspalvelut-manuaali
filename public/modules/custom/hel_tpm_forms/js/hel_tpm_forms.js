@@ -61,25 +61,23 @@
 
       // hide age range on the first a page of service entity form.
       function toggleAgeRange() {
-        let ageGroups = '.field--name-field-age-groups .form-item';
-        $(ageGroups).siblings().each(function () {
-          let element = $('.form-radio', this);
-          toggleAgeField(element)
-        });
+        let ageGroupRadio = '.field--name-field-age-groups .form-item .form-checkbox';
+        toggleAgeField(ageGroupRadio)
 
         //handle age accordion
-        let ageGroupRadio = '.field--name-field-age-groups .form-item .form-radio';
         $(ageGroupRadio).click(function() {
           toggleAgeField(this);
         });
       }
 
+      /**
+       * Toggle field age element.
+       *
+       * @param elem
+       */
       function toggleAgeField(elem) {
         let ageField = '.field--name-field-age';
-        if (!$(elem).is(':checked')) {
-          return;
-        }
-        if ($(elem).val() === "no_age_restriction") {
+        if ($(elem).is(':checked')) {
           $(ageField).hide();
         }
         else {

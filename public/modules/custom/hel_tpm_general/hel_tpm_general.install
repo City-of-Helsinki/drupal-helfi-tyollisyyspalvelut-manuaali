@@ -171,3 +171,33 @@ function hel_tpm_general_update_8112() {
     $paragraph->save();
   }
 }
+
+/**
+ * Migrate age groups.
+ */
+function hel_tpm_general_update_8113(&$sandbox) {
+  $storage = \Drupal::entityTypeManager()->getStorage('paragraph');
+  $paragraphs = $storage->loadByProperties(['type' => 'target_group']);
+  $age_group_mapping = [
+    'under_30' => ['from' => 16, 'to' => 30],
+    'over_30' => ['from' => 31, 'to' => 54],
+    'over_57' => ['from' => 55, 'to' => 70]
+  ];
+
+  foreach ($paragraphs as $paragraph) {
+    $translation_languages = $paragraph->getTranslationLanguages();
+    foreach ($translation_languages as $langcode => $language) {
+      $translation = $paragraph->getTranslation($langcode);
+      $age_groups = $translation->field_age_groups->value;
+      if (empty($age_groups) || $age_groups == 'no_age_restriction') {
+        continue;
+      }
+      $translation->set('field_age_groups', NULL);
+      $age = $translation->field_age->getValue();
+      if (empty($age)) {
+        $translation->set('field_age', $age_group_mapping[$age_groups]);
+      }
+      $translation->save();
+    }
+  }
+}
