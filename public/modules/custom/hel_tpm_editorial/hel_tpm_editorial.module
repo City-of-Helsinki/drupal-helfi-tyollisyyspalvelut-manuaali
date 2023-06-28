@@ -19,6 +19,19 @@ function hel_tpm_editorial_entity_base_field_info_alter(&$fields, EntityTypeInte
 }
 
 /**
+ * Implements hook_views_data().
+ */
+function hel_tpm_editorial_views_data() {
+  $data['views']['hel_tpm_editorial_service_has_unpublished_changes'] = [
+    'title' => t('Service has changes'),
+    'field' => [
+      'id' => 'hel_tpm_editorial_service_has_unpublished_changes'
+    ],
+  ];
+  return $data;
+}
+
+/**
  * Implements hook_form_views_exposed_form_alter().
  *
  * @param $form
