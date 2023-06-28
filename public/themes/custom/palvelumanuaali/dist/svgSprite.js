@@ -151,11 +151,13 @@ var map = {
 	"./icons/magnifier.svg": "./images/icons/magnifier.svg",
 	"./icons/magnifier2.svg": "./images/icons/magnifier2.svg",
 	"./icons/menu.svg": "./images/icons/menu.svg",
+	"./icons/minus-blue.svg": "./images/icons/minus-blue.svg",
 	"./icons/minus.svg": "./images/icons/minus.svg",
 	"./icons/padlock-blue.svg": "./images/icons/padlock-blue.svg",
 	"./icons/padlock.svg": "./images/icons/padlock.svg",
 	"./icons/parent-1.svg": "./images/icons/parent-1.svg",
 	"./icons/pen.svg": "./images/icons/pen.svg",
+	"./icons/plus-blue.svg": "./images/icons/plus-blue.svg",
 	"./icons/plus.svg": "./images/icons/plus.svg",
 	"./icons/preferences-white.svg": "./images/icons/preferences-white.svg",
 	"./icons/preferences.svg": "./images/icons/preferences.svg",
@@ -1336,6 +1338,26 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./images/icons/minus-blue.svg":
+/*!*************************************!*\
+  !*** ./images/icons/minus-blue.svg ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+      id: "minus-blue-usage",
+      viewBox: "0 0 24 24",
+      url: __webpack_require__.p + "../dist/icons.svg#minus-blue",
+      toString: function () {
+        return this.url;
+      }
+    });
+
+/***/ }),
+
 /***/ "./images/icons/minus.svg":
 /*!********************************!*\
   !*** ./images/icons/minus.svg ***!
@@ -1429,6 +1451,26 @@ __webpack_require__.r(__webpack_exports__);
       id: "pen-usage",
       viewBox: "0 0 32 32",
       url: __webpack_require__.p + "../dist/icons.svg#pen",
+      toString: function () {
+        return this.url;
+      }
+    });
+
+/***/ }),
+
+/***/ "./images/icons/plus-blue.svg":
+/*!************************************!*\
+  !*** ./images/icons/plus-blue.svg ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+      id: "plus-blue-usage",
+      viewBox: "0 0 24 24",
+      url: __webpack_require__.p + "../dist/icons.svg#plus-blue",
       toString: function () {
         return this.url;
       }
