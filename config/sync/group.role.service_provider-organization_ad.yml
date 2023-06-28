@@ -4,6 +4,13 @@ status: true
 dependencies:
   config:
     - group.type.service_provider
+  module:
+    - hel_tpm_group
+third_party_settings:
+  hel_tpm_group:
+    site_wide_role:
+      editor: editor
+      specialist_editor: specialist_editor
 id: service_provider-organization_ad
 label: 'Organization admin'
 weight: -8
