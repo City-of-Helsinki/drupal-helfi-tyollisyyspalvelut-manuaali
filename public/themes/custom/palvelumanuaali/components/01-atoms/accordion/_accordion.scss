@@ -60,9 +60,13 @@
       border-bottom: 2px solid clr(light-border);
       border-left: 2px solid clr(light-border);
       border-right: 2px solid clr(light-border);
-      transition: 400ms;
+      transition-duration: 600ms;
+      transition-delay: 0.2ms;
+      transition-property: border-bottom, border-bottom-right-radius, border-bottom-left-radius;
+      transition-timing-function: ease;
       &.active {
-        border-bottom: 0px solid $blue05;
+        transition-duration: 0ms;
+        border-bottom: 2px solid $blue05;
         border-bottom-right-radius: 0;
         border-bottom-left-radius: 0;
         border-top-right-radius: 8px;
@@ -122,6 +126,7 @@
       border-bottom-right-radius: 8px;
       border-bottom-left-radius: 8px;
       color: clr(text);
+      transition: 0ms;
     }
   }
 }
