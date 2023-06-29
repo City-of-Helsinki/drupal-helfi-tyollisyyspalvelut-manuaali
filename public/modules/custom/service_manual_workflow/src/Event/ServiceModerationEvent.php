@@ -3,6 +3,7 @@
 namespace Drupal\service_manual_workflow\Event;
 
 use Drupal\Component\EventDispatcher\Event;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\content_moderation\Entity\ContentModerationStateInterface;
 
@@ -16,8 +17,8 @@ class ServiceModerationEvent extends Event {
    *
    * @var \Drupal\user\UserInterface
    */
-  public $moderation_state;
-  public $account;
+  protected $moderation_state;
+  protected $account;
 
   /**
    * Constructs the object.
@@ -30,4 +31,11 @@ class ServiceModerationEvent extends Event {
     $this->account = $account;
   }
 
+  public function getModerationState() : ContentModerationStateInterface {
+    return $this->moderation_state;
+  }
+
+  public function getAccount() : AccountProxyInterface {
+    return $this->account;
+  }
 }

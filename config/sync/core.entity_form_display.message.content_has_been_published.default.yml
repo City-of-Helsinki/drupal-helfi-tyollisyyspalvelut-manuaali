@@ -1,0 +1,62 @@
+uuid: 4c13bf9c-de83-4e89-a0ca-f37b67f09f7e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.message.content_has_been_published.field_message_author
+    - field.field.message.content_has_been_published.field_node
+    - field.field.message.content_has_been_published.field_user
+    - message.template.content_has_been_published
+id: message.content_has_been_published.default
+targetEntityType: message
+bundle: content_has_been_published
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_message_author:
+    type: entity_reference_autocomplete
+    weight: 14
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_node:
+    type: entity_reference_autocomplete
+    weight: 12
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_user:
+    type: entity_reference_autocomplete
+    weight: 13
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 5
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    '#group': advanced
+hidden: {  }

@@ -1,0 +1,36 @@
+uuid: b90cfa2d-7cc4-4ae6-9ec8-5f7eb2a660b0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.message.field_user
+    - message.template.content_has_been_published
+  module:
+    - epp
+third_party_settings:
+  epp:
+    value: ''
+    on_update: 0
+id: message.content_has_been_published.field_user
+field_name: field_user
+entity_type: message
+bundle: content_has_been_published
+label: User
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:user'
+  handler_settings:
+    target_bundles: null
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+    filter:
+      type: _none
+    include_anonymous: false
+field_type: entity_reference

@@ -24,8 +24,8 @@ function service_manual_workflow_entity_insert(EntityInterface $entity) {
   $state = $entity->moderation_state->value;
   // Service is set ready to publish from the start.
   if ($state == 'ready_to_publish') {
-    $transition = 'service_manual_workflow.draft.to.ready_to_publish';
     $event = new ServiceModerationEvent($entity, \Drupal::currentUser());
+    $transition = 'service_manual_workflow.draft.to.ready_to_publish';
     Drupal::service('event_dispatcher')->dispatch($transition, $event);
   }
 }
