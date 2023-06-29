@@ -7,12 +7,14 @@
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\group\Entity\GroupContentInterface;
 use Drupal\group\Entity\GroupRole;
 use Drupal\hel_tpm_group\Event\GroupMembershipChanged;
 use Drupal\hel_tpm_group\Event\GroupMembershipDeleted;
 use Drupal\hel_tpm_group\Event\GroupMembershipUpdated;
 use Drupal\hel_tpm_group\Event\GroupSiteWideRoleChanged;
+use Drupal\node\NodeInterface;
 
 /**
  * Implements hook_form_FORM_ID_alter().
@@ -35,6 +37,37 @@ function hel_tpm_group_form_group_role_edit_form_alter(&$form, &$form_state) {
   ];
 
   $form['#entity_builders'][] = 'hel_tpm_group_form_group_role_edit_form_builder';
+}
+
+/**
+ * Implements hook_node_access_records().
+ */
+function hel_tpm_group_node_access_records(NodeInterface $node) {
+  $grants = [];
+  // Other grants
+  if (!$node->isPublished()) {
+    $grants[] = [
+      'realm' => 'hel_tpm_group_unpublished_realm',
+      'gid' => 1,
+      'grant_view' => 1,
+      'grant_update' => 0,
+      'grant_delete' => 0,
+      'priority' => 1,
+    ];
+  }
+  return $grants;
+}
+
+/**
+ * Implements hook_node_grants().
+ */
+function hel_tpm_group_node_grants(AccountInterface $account, $op) {
+  if ($op !== 'view') {
+    return [];
+  }
+  $grants = [];
+  $grants['hel_tpm_group_unpublished_realm'][] = 1;
+  return $grants;
 }
 
 /**
