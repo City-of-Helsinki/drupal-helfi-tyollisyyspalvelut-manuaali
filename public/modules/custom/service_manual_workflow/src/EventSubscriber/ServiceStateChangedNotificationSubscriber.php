@@ -154,12 +154,11 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   protected function notifyServiceProvider(NodeInterface $entity) {
+    $current_uid = $this->currentUser->id();
     $service_provider_updatee = $entity->get('field_service_provider_updatee')->entity;
-    $municipality_updatee = $this->getServiceOwner($entity);
-    foreach ($municipality_updatee as $updatee) {
-      if ($updatee->id() === $service_provider_updatee->id()) {
-        return FALSE;
-      }
+    // If service provider is the same as user publishing service don't send message.
+    if ($current_uid === $service_provider_updatee->id()) {
+      return FALSE;
     }
     return TRUE;
   }
