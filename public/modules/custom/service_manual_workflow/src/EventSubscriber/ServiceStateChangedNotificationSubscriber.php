@@ -15,6 +15,7 @@ use Drupal\message_notify\MessageNotifier;
 use Drupal\node\NodeInterface;
 use Drupal\service_manual_workflow\ContentGroupService;
 use Drupal\service_manual_workflow\Event\ServiceModerationEvent;
+use Drupal\service_manual_workflow\ServiceNotificationTrait;
 use Drupal\user\UserInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Drupal\Core\Entity\EntityInterface;
@@ -24,9 +25,11 @@ use Drupal\Core\Routing\RouteMatchInterface;
 /**
  * Service manual workflow event subscriber.
  */
-class ServiceReadyToPublishSubscriber implements EventSubscriberInterface {
+class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterface {
 
   use StringTranslationTrait;
+
+  use ServiceNotificationTrait;
 
   /**
    * The messenger.
@@ -94,34 +97,70 @@ class ServiceReadyToPublishSubscriber implements EventSubscriberInterface {
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public function draftToReadyToPublish(ServiceModerationEvent $event) {
-    $account = $event->account;
-    $state = $event->moderation_state;
-
+    $account = $event->getAccount();
+    $state = $event->getModerationState();
     $storage = $this->entityTypeManager->getStorage($state->content_entity_type_id->value);
     $entity = $storage->load($state->content_entity_id->value);
 
     if (!$this->notifyGroupAdministration($account, $entity)) {
       return;
     }
-
     // Get content group.
     $group = $this->getGroup($entity);
     if (empty($group)) {
       return;
     }
-
     $accounts = $this->getUsersToNotify($entity);
-
     if (empty($accounts)) {
       $this->messenger->addStatus($this->t('Users with publish permissions not found. Please contact site administration.', ['@group' => $group->label()]));
     }
-
     // Dispatch messages to group administration.
     foreach ($accounts as $user) {
-      $this->dispatchMessage($entity, $user);
+      $this->dispatchMessage($entity, $user,'group_ready_to_publish_notificat');
+    }
+    $this->messenger->addStatus($this->t('Notified @group administration', ['@group' => $group->label()]));
+  }
+
+  /**
+   * Service from ready to publish to published subscriber event.
+   *
+   * @param \Drupal\service_manual_workflow\Event\ServiceModerationEvent $event
+   *
+   * @return void
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   */
+  public function readyToPublishToPublished(ServiceModerationEvent $event) {
+    $state = $event->getModerationState();
+    $storage = $this->entityTypeManager->getStorage($state->content_entity_type_id->value);
+    $entity = $storage->load($state->content_entity_id->value);
+
+    if (!$this->notifyServiceProvider($entity)) {
+      return;
     }
 
-    $this->messenger->addStatus($this->t('Notified @group administration', ['@group' => $group->label()]));
+    $service_provider_updatee = $entity->get('field_service_provider_updatee')->entity;
+    // Send content published notification to service provider updatee.
+    $this->dispatchMessage($entity, $service_provider_updatee, 'content_has_been_published');
+  }
+
+  /**
+   * Check if service provider should be notified or not.
+   *
+   * @param \Drupal\node\NodeInterface $entity
+   *
+   * @return bool
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   */
+  protected function notifyServiceProvider(NodeInterface $entity) {
+    $current_uid = $this->currentUser->id();
+    $service_provider_updatee = $entity->get('field_service_provider_updatee')->entity;
+    // If service provider is the same as user publishing service don't send message.
+    if ($current_uid === $service_provider_updatee->id()) {
+      return FALSE;
+    }
+    return TRUE;
   }
 
   /**
@@ -163,70 +202,6 @@ class ServiceReadyToPublishSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * @param \Drupal\node\NodeInterface $entity
-   *
-   * @return array
-   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
-   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
-   */
-  protected function getServiceOwner(NodeInterface $entity) : array {
-    $user = [];
-
-    if ($entity->field_responsible_updatee->isEmpty()) {
-      return $user;
-    }
-
-    $user[] = $entity->field_responsible_updatee->entity;
-
-    return $user;
-  }
-
-  /**
-   * @param \Drupal\Core\Entity\ContentEntityInterface $entity
-   *
-   * @return array|false|mixed
-   */
-  protected function getGroup(ContentEntityInterface $entity) {
-    $groups = $this->contentGroupService->getGroupsWithEntity($entity);
-
-    if (!empty($groups)) {
-      $group = reset($groups);
-    }
-    else {
-      $group = $this->getGroupFromRoute();
-    }
-
-    if (empty($group)) {
-      return [];
-    }
-
-    return $group;
-  }
-
-  /**
-   * Get all group users with permission to create publish transition.
-   *
-   * @param \Drupal\Core\Entity\ContentEntityInterface $entity
-   * @param \Drupal\group\Entity\GroupInterface $group
-   *
-   * @return array
-   */
-  protected function getEntityGroupAdministration(ContentEntityInterface $entity, GroupInterface $group) : array {
-    $accounts = [];
-
-    foreach ($group->getMembers() as $key => $member) {
-      $account = $member->getGroupContent()->getEntity();
-      $allowed = $this->stateTransitionValidation->allowedTransitions($account, $entity, [$group]);
-      if (empty($allowed['publish'])) {
-        continue;
-      }
-      $accounts[$account->id()] = $account;
-    }
-
-    return $accounts;
-  }
-
-  /**
    * Message dispatcher.
    *
    * @param \Drupal\Core\Entity\EntityInterface $node
@@ -234,9 +209,9 @@ class ServiceReadyToPublishSubscriber implements EventSubscriberInterface {
    *
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  protected function dispatchMessage(EntityInterface $node, UserInterface $account) {
+  protected function dispatchMessage(EntityInterface $node, UserInterface $account, $message_template) {
     $current_user = $this->entityTypeManager->getStorage('user')->load($this->currentUser->id());
-    $message = Message::create(['template' => self::MESSAGE_TEMPLATE, 'uid' => $account->id()]);
+    $message = Message::create(['template' => $message_template, 'uid' => $account->id()]);
     $message->set('field_node', $node);
     $message->set('field_user', $account);
     $message->set('field_message_author', $current_user);
@@ -249,7 +224,8 @@ class ServiceReadyToPublishSubscriber implements EventSubscriberInterface {
    */
   public static function getSubscribedEvents() {
     return [
-      'service_manual_workflow.draft.to.ready_to_publish'=> ['draftToReadyToPublish'],
+      'service_manual_workflow.draft.to.ready_to_publish' => ['draftToReadyToPublish'],
+      'service_manual_workflow.ready_to_publish.to.published' => ['readyToPublishToPublished']
     ];
   }
 
@@ -266,17 +242,4 @@ class ServiceReadyToPublishSubscriber implements EventSubscriberInterface {
     return empty($valid_transitions['publish']);
   }
 
-  /**
-   * Get the group from the current route match.
-   *
-   * @return bool|\Drupal\group\Entity\GroupInterface
-   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
-   */
-  public function getGroupFromRoute() {
-    $parameters = $this->routeMatch->getParameters()->all();
-    if (empty($parameters['group']) || !$parameters['group'] instanceof GroupInterface) {
-      return FALSE;
-    }
-    return $parameters['group'];
-  }
 }
