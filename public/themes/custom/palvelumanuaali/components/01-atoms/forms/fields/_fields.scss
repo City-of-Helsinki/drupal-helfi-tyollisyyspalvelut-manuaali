@@ -246,18 +246,18 @@
   list-style: none;
   display: flex;
   flex-direction: column;
+  td:first-child {
+    width: 80%;
+  }
   summary {
-    order: 1;
     margin-bottom: $space-one-half;
     font-weight: 600;
     font-size: 12px;
     line-height: 24px;
   }
   >.form-wrapper {
-    order: 3;
   }
   >.table{
-    order: 2;
   }
     fieldset {
       legend,
