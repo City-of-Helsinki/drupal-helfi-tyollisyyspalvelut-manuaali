@@ -1,14 +1,31 @@
 <?php
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\content_moderation\Entity\ContentModerationStateInterface;
 use Drupal\service_manual_workflow\Event\ServiceModerationEvent;
 
 /**
  * @file
  * Primary module hooks for Service manual workflow module.
- *
- * @see https://www.drupal.org/node/2217931
  */
+
+
+/**
+ * Implements hook_form_alter().
+ */
+function service_manual_workflow_form_node_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $form['actions']['buttons']['Submit'] = [
+    '#type'   => 'submit',
+    '#value'  => 'Save',
+    '#id' => 'service-manual-workflow-submit-after-check',
+    '#class' => 'button js-form-submit form-submit',
+    '#attributes' => [
+      'style' => ['display:none'],
+    ],
+  ];
+  $form['#attached']['library'][] = 'service_manual_workflow/service-confirm-js';
+}
+
 
 /**
  * Implements hook_entity_insert().
