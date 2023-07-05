@@ -42,7 +42,7 @@
     border-bottom-right-radius: 0;
     border: 0;
 
-    padding: $space-one-and-half 29px 0 $space-one-and-half;
+    padding: $space-one-and-half 29px 0.5em $space-one-and-half;
 
     background-color: clr(text-inverse);
 
@@ -70,22 +70,27 @@
 
   .ui-dialog-content {
     border-radius: 0;
-
     padding: $space-two-and-half $space-three-and-half $space-two-and-half  $space-one-and-half !important;
-
   }
 
+  .ui-dialog-titlebar-close {
+    display: none;
+  }
+
+  .ui-widget.ui-widget-content {
+    border: none;
+  }
+  .ui-dialog {
+    background-color: transparent;
+  }
   .ief-popup-actions {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     border-bottom-left-radius: 16px;
     border-bottom-right-radius: 16px;
     border: 0;
-
-    padding: 0 $space-one-and-half $space-one-and-half $space-one-and-half;
-
+    padding: 0.5em $space-one-and-half $space-one-and-half $space-one-and-half;
     background-color: clr(text-inverse);
-
     display: flex;
     justify-content: space-between;
 
@@ -106,7 +111,4 @@
       @include button-round-corners;
     }
   }
-
-
-
 }
