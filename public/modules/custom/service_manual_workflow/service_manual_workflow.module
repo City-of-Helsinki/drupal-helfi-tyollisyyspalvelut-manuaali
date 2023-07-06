@@ -1,14 +1,37 @@
 <?php
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\content_moderation\Entity\ContentModerationStateInterface;
 use Drupal\service_manual_workflow\Event\ServiceModerationEvent;
 
 /**
  * @file
  * Primary module hooks for Service manual workflow module.
- *
- * @see https://www.drupal.org/node/2217931
  */
+
+
+/**
+ * Implements hook_form_alter().
+ */
+function service_manual_workflow_form_node_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Add popup only for service node form.
+  if ($form_id === 'node_service_edit_form') {
+    // Create custom save button for confirm dialog.
+    $form['actions']['submit_popup'] = [
+      '#type' => 'button',
+      '#value' => t('Save')
+    ];
+
+    // Hide submit button.
+    $form['actions']['submit']['#attributes']['style'] = ['display:none'];
+    // Add service-confirm library to form.
+    $form['#attached']['library'][] = 'service_manual_workflow/service-confirm-js';
+    // Attach module config to javascsript drupalSettings.
+    $config =  \Drupal::config('service_manual_workflow.popup_settings');
+    $form['#attached']['drupalSettings']['service_manual_workflow']['popup_settings'] = $config->getRawData();
+  }
+}
+
 
 /**
  * Implements hook_entity_insert().
