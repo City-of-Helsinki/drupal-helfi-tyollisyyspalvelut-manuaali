@@ -24,6 +24,8 @@ function service_manual_workflow_form_node_form_alter(&$form, FormStateInterface
     ],
   ];
   $form['#attached']['library'][] = 'service_manual_workflow/service-confirm-js';
+  $config =  \Drupal::config('service_manual_workflow.popup_settings');
+  $form['#attached']['drupalSettings']['service_manual_workflow']['popup_settings'] = $config->getRawData();
 }
 
 
