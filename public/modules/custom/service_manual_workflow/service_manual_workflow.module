@@ -16,7 +16,6 @@ use Drupal\service_manual_workflow\Event\ServiceModerationEvent;
 function service_manual_workflow_form_node_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   // Add popup only for service node form.
   if ($form_id === 'node_service_edit_form') {
-
     // Create custom save button for confirm dialog.
     $form['actions']['submit_popup'] = [
       '#type' => 'button',
