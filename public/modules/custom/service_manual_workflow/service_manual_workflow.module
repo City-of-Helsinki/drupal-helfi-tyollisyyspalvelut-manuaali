@@ -14,18 +14,23 @@ use Drupal\service_manual_workflow\Event\ServiceModerationEvent;
  * Implements hook_form_alter().
  */
 function service_manual_workflow_form_node_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  $form['actions']['buttons']['Submit'] = [
-    '#type'   => 'submit',
-    '#value'  => 'Save',
-    '#id' => 'service-manual-workflow-submit-after-check',
-    '#class' => 'button js-form-submit form-submit',
-    '#attributes' => [
-      'style' => ['display:none'],
-    ],
-  ];
-  $form['#attached']['library'][] = 'service_manual_workflow/service-confirm-js';
-  $config =  \Drupal::config('service_manual_workflow.popup_settings');
-  $form['#attached']['drupalSettings']['service_manual_workflow']['popup_settings'] = $config->getRawData();
+  // Add popup only for service node form.
+  if ($form_id === 'node_service_edit_form') {
+
+    // Create custom save button for confirm dialog.
+    $form['actions']['submit_popup'] = [
+      '#type' => 'button',
+      '#value' => t('Save')
+    ];
+
+    // Hide submit button.
+    $form['actions']['submit']['#attributes']['style'] = ['display:none'];
+    // Add service-confirm library to form.
+    $form['#attached']['library'][] = 'service_manual_workflow/service-confirm-js';
+    // Attach module config to javascsript drupalSettings.
+    $config =  \Drupal::config('service_manual_workflow.popup_settings');
+    $form['#attached']['drupalSettings']['service_manual_workflow']['popup_settings'] = $config->getRawData();
+  }
 }
 
 

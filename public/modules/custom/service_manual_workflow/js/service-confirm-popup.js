@@ -4,13 +4,16 @@
     attach: function (context, settings) {
 
       // call to function to open popup
-      $("#edit-submit").click(function (e) {
+      $("#edit-submit-popup").click(function (e) {
         e.preventDefault();
+        let title = '';
         let message = getConfirmMessage(context);
         if ($('#edit-title-0-value').val() != '') {
           title = $('#edit-title-0-value').val();
         }
-        confirmPopup(title, message);
+        if (message !== null) {
+          confirmPopup(title, message);
+        }
       });
 
       /**
@@ -28,16 +31,16 @@
           title: title,
           buttons: [
             {
-              text: 'Confirm',
-              class: 'button--primary button',
+              text: Drupal.t('Cancel'),
               click: function () {
-                $('#custom-form-submit-after-check').click();
+                $(this).dialog('close');
               }
             },
             {
-              text: 'Close',
+              text: Drupal.t('Approve'),
+              class: 'button--primary button',
               click: function () {
-                $(this).dialog('close');
+                $('#edit-submit').click();
               }
             }
           ],
