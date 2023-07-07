@@ -102,8 +102,7 @@ class ServiceHasUnpublishedChanges extends FieldPluginBase {
     $revision_id = $storage->getLatestTranslationAffectedRevisionId($node->id(), $langcode);
     $revision = $storage->loadRevision($revision_id);
     // Load translation for current language
-    $translation = $revision->getTranslation($langcode);
-    return $translation;
+    return $revision->getTranslation($langcode);
   }
 
   /**
