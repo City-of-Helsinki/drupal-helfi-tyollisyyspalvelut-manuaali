@@ -68,6 +68,13 @@ function hel_tpm_editorial_theme() {
     'hel_tpm_editorial_date_recur_custom_widget' => [
       'render element' => 'widget',
     ],
+    'service_has_changes_field' => [
+      'template' => 'service_has_changes_field',
+      'variables' => [
+        'link' => NULL,
+        'state' => NULL,
+      ],
+    ],
   ];
 }
 
