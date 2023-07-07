@@ -638,6 +638,7 @@ content:
       collapsible: false
       collapsed: false
       revision: false
+      removed_reference: optional
     third_party_settings: {  }
   field_contact_info_external:
     type: inline_entity_form_complex
@@ -655,6 +656,7 @@ content:
       collapsible: false
       collapsed: false
       revision: false
+      removed_reference: optional
     third_party_settings: {  }
   field_description:
     type: string_textarea
@@ -775,6 +777,7 @@ content:
       collapsed: 0
       allow_existing: 0
       allow_duplicate: 0
+      removed_reference: optional
     third_party_settings: {  }
   field_municipality_specific:
     type: municipality_specific_ief_widget
@@ -792,6 +795,7 @@ content:
       collapsible: false
       collapsed: false
       revision: false
+      removed_reference: optional
     third_party_settings: {  }
   field_obligatoryness:
     type: options_buttons
@@ -834,7 +838,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_responsible_municipality:
-    type: select2_entity_reference
+    type: hel_tpm_group_select2_widget
     weight: 13
     region: content
     settings:
