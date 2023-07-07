@@ -9,7 +9,7 @@
         event.preventDefault();
         let state = this.getAttribute('data-state')
         moderationState.val(state);
-        submitButton.click();
+        Drupal.behaviors.serviceConfirmPopup.addPopup(context, settings);
       })
     }
   }
