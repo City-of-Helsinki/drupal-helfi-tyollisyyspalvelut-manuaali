@@ -104,4 +104,4 @@
       }
     }
   };
-})(jQuery, Drupal, bootstrap);
+})(jQuery, Drupal);
