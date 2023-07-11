@@ -122,7 +122,7 @@ class ParentGroupSelection extends UserSelection {
 
     // Append uids to query condition.
     if (!empty($groups)) {
-     // $query->condition('id', $groups, 'IN');
+      $query->condition('id', $groups, 'IN');
     }
 
     return $query;

@@ -1,0 +1,20 @@
+.confirm-dialog {
+  border-radius: 16px;
+  padding: 1em;
+  z-index: 9999;
+  .ui-widget-header {
+    background-color: transparent;
+    border: none;
+  }
+  .ui-dialog-titlebar-close {
+    display: none;
+  }
+  .ui-dialog-buttonpane {
+    padding-top: 0;
+    padding-bottom: 0.5em;
+    border: none;
+    button {
+      border-radius: 8px;
+    }
+  }
+}

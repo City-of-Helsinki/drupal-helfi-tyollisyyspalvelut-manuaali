@@ -14,3 +14,5 @@ service_custom_submit:
   version: 2.0.1
   js:
     js/hel_tpm_forms_custom_submit.js: {}
+  dependencies:
+    - service_manual_workflow/service-confirm-popup

@@ -6,12 +6,6 @@ dependencies:
     - field.storage.node.field_responsible_municipality
     - group.type.organisation
     - node.type.service
-  module:
-    - epp
-third_party_settings:
-  epp:
-    value: ''
-    on_update: 0
 id: node.service.field_responsible_municipality
 field_name: field_responsible_municipality
 entity_type: node
@@ -25,7 +19,7 @@ default_value_callback: ''
 settings:
   handler: hel_tpm_group_parent_group_selection
   handler_settings:
-    include_anonymous: 1
+    include_anonymous: 0
     filter:
       type: _none
     target_bundles:
