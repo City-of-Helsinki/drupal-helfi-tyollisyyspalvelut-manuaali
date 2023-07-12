@@ -44,7 +44,7 @@ function service_manual_workflow_entity_operation(\Drupal\Core\Entity\EntityInte
   $operations['set_outdated'] = [
     'title' => t('Set Outdated'),
     'weight' => 60,
-    'url' => \Drupal\Core\Url::fromRoute('service_manual_workflow.service_set_outdated_form', ['node' => $entity->id()])
+    'url' => \Drupal\Core\Url::fromRoute('service_manual_workflow.service_set_outdated_form', ['node' => $entity->id()], ['language' => $entity->language()])
   ];
 
   return $operations;
