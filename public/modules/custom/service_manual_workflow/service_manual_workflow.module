@@ -32,6 +32,23 @@ function service_manual_workflow_form_node_form_alter(&$form, FormStateInterface
   }
 }
 
+/**
+ * Implements hook_entity_operation().
+ */
+function service_manual_workflow_entity_operation(\Drupal\Core\Entity\EntityInterface $entity) {
+  $operations = [];
+  if ($entity->getEntityTypeId() !== 'node' || $entity->bundle() !== 'service') {
+    return $operations;
+  }
+
+  $operations['set_outdated'] = [
+    'title' => t('Set Outdated'),
+    'weight' => 60,
+    'url' => \Drupal\Core\Url::fromRoute('service_manual_workflow.service_set_outdated_form', ['node' => $entity->id()])
+  ];
+
+  return $operations;
+}
 
 /**
  * Implements hook_entity_insert().
