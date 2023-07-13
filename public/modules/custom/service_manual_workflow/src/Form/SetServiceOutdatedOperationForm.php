@@ -7,18 +7,32 @@ use Drupal\Core\Form\ConfirmFormBase;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\node\NodeInterface;
+use Drupal\service_manual_workflow\Access\ServiceOutdatedAccess;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Routing\RouterInterface;
 
 class SetServiceOutdatedOperationForm extends ConfirmFormBase {
 
+  /**
+   * @var \Drupal\Core\Entity\EntityTypeManager
+   */
   protected $entityTypeManager;
 
-  public function __construct(EntityTypeManager $entity_type_manager) {
+  /**
+   * @var \Drupal\service_manual_workflow\Access\ServiceOutdatedAccess
+   */
+  protected $serviceOutdatedAccess;
+
+  public function __construct(EntityTypeManager $entity_type_manager, ServiceOutdatedAccess $service_outdated_access) {
     $this->entityTypeManager = $entity_type_manager;
+    $this->serviceOutdatedAccess = $service_outdated_access;
   }
 
   public static function create(ContainerInterface $container) {
-    return new static($container->get('entity_type.manager'));
+    return new static(
+      $container->get('entity_type.manager'),
+      $container->get('service_manual_workflow.set_outdated_access')
+    );
   }
 
   public function getQuestion() {
@@ -75,8 +89,12 @@ class SetServiceOutdatedOperationForm extends ConfirmFormBase {
     return $form;
   }
 
-  public function access() {
-    return AccessResult::allowed();
+  /**
+   * @param \Drupal\node\NodeInterface $node
+   *
+   * @return \Drupal\Core\Access\AccessResultAllowed|\Drupal\Core\Access\AccessResultForbidden
+   */
+  public function access(NodeInterface $node) {
+    return $this->serviceOutdatedAccess->access($node, $this->currentUser());
   }
-
 }

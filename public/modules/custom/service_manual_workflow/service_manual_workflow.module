@@ -41,6 +41,11 @@ function service_manual_workflow_entity_operation(\Drupal\Core\Entity\EntityInte
     return $operations;
   }
 
+  $access_service = \Drupal::service('service_manual_workflow.set_outdated_access');
+  if ($access_service->access($entity, \Drupal::currentUser()) instanceof \Drupal\Core\Access\AccessResultForbidden) {
+    return $operations;
+  }
+
   $operations['set_outdated'] = [
     'title' => t('Set Outdated'),
     'weight' => 60,
