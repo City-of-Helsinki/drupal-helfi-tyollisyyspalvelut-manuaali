@@ -65,25 +65,15 @@ class ServicePopupConfirmSettingsForm extends ConfigFormBase {
   }
 
   /**
-   * Fetch workflows mapped with node bundles.
-   *
-   * @return array
+   * @return mixed
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  protected function getWorkflows() {
-    $flows = [];
-    $config = $this->getWorkflowConfiguration();
-    foreach ($config['entity_types'] as $entity_type => $bundle) {
-      $flows[$entity_type][reset($bundle)] = $config['states'];
-    }
-    return $flows;
-  }
-
   private function getWorkflowConfiguration() {
     $workflow = $this->entityTypeManager->getStorage('workflow')->load($this->workflowId);
     return $workflow->getPluginCollections()['type_settings']->getConfiguration();
   }
+
   /**
    * {@inheritdoc}
    */
