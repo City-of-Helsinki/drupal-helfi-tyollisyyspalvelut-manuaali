@@ -1,6 +1,6 @@
 uuid: d53a8820-9e16-412c-9e8f-7d93409b6202
 langcode: fi
-status: false
+status: true
 dependencies:
   config:
     - field.storage.node.field_responsible_updatee
@@ -1028,6 +1028,72 @@ display:
                   min: ''
                   max: ''
                   value: ''
+        field_responsible_municipality_target_id:
+          id: field_responsible_municipality_target_id
+          table: node__field_responsible_municipality
+          field: field_responsible_municipality_target_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: numeric
+          operator: '='
+          value:
+            min: ''
+            max: ''
+            value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_responsible_municipality_target_id_op
+            label: 'Vastuukunta: (field_responsible_municipality)'
+            description: null
+            use_operator: false
+            operator: field_responsible_municipality_target_id_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_responsible_municipality_target_id
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            min_placeholder: null
+            max_placeholder: null
+            placeholder: null
+          is_grouped: true
+          group_info:
+            label: Vastuukunta
+            description: ''
+            identifier: field_responsible_municipality_target_id
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items:
+              1:
+                title: 'Is not empty'
+                operator: 'not empty'
+                value:
+                  min: ''
+                  max: ''
+                  value: ''
+              2:
+                title: 'Is empty'
+                operator: empty
+                value:
+                  min: ''
+                  max: ''
+                  value: ''
+              3:
+                title: ''
+                operator: '='
+                value:
+                  min: ''
+                  max: ''
+                  value: ''
+          use_tokens: 0
       filter_groups:
         operator: AND
         groups:
