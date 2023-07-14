@@ -3,21 +3,12 @@ langcode: fi
 status: true
 dependencies:
   config:
-    - field.field.group_content.organisation-group_node-service.field_service_owner
     - group.content_type.organisation-group_node-service
 id: group_content.organisation-group_node-service.default
 targetEntityType: group_content
 bundle: organisation-group_node-service
 mode: default
-content:
-  field_service_owner:
-    type: entity_reference_label
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: -4
-    region: content
+content: {  }
 hidden:
   entity_id: true
   entity_print_view_epub: true
