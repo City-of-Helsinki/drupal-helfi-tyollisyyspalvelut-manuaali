@@ -631,7 +631,7 @@ display:
           output_url_as_text: false
           absolute: false
       pager:
-        type: mini
+        type: full
         options:
           offset: 0
           items_per_page: 50
@@ -640,6 +640,8 @@ display:
           tags:
             next: ››
             previous: ‹‹
+            first: '« Ensimmäinen'
+            last: 'Viimeinen »'
           expose:
             items_per_page: false
             items_per_page_label: 'Items per page'
@@ -648,6 +650,7 @@ display:
             items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
+          quantity: 9
       exposed_form:
         type: bef
         options:
