@@ -17,7 +17,12 @@
       if ($('#edit-title-0-value').val() != '') {
         title = $('#edit-title-0-value').val();
       }
-      if (message !== null) {
+      if (message === undefined) {
+        $('#edit-submit').click();
+        return;
+      }
+
+      if (message.length > 0) {
         this.confirmPopup(title, message);
       }
     },

@@ -5,3 +5,17 @@ service_manual_workflow.service_popup_confirm_settings:
     _form: 'Drupal\service_manual_workflow\Form\ServicePopupConfirmSettingsForm'
   requirements:
     _permission: 'administer site configuration'
+
+service_manual_workflow.service_set_outdated_form:
+  path: '/node/{node}/outdated'
+  defaults:
+    _title: 'Set outdated'
+    _form: 'Drupal\service_manual_workflow\Form\SetServiceOutdatedOperationForm'
+  requirements:
+    _custom_access: '\Drupal\service_manual_workflow\Form\SetServiceOutdatedOperationForm::access'
+    node: \d+
+  options:
+    _node_operation_route: TRUE
+    parameters:
+      node:
+        type: entity:node
