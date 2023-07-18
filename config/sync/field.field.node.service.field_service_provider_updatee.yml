@@ -5,19 +5,13 @@ dependencies:
   config:
     - field.storage.node.field_service_provider_updatee
     - node.type.service
-  module:
-    - epp
-third_party_settings:
-  epp:
-    value: ''
-    on_update: 0
 id: node.service.field_service_provider_updatee
 field_name: field_service_provider_updatee
 entity_type: node
 bundle: service
 label: 'Responsible for service in the organisation'
 description: 'The responsible person is the owner of the service in the organization. They know the service and monitor the up-to-dateness of the information. '
-required: false
+required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''
