@@ -1,0 +1,54 @@
+uuid: 7010ecc0-566f-4afa-8ac5-4ef1cb5f3eb8
+langcode: fi
+status: true
+dependencies:
+  config:
+    - views.view.group_title_view
+  module:
+    - context
+    - group
+    - views
+  theme:
+    - palvelumanuaali
+id: views_block__group_title_view_block_1
+theme: palvelumanuaali
+region: content
+weight: -7
+provider: null
+plugin: 'views_block:group_title_view-block_1'
+settings:
+  id: 'views_block:group_title_view-block_1'
+  label: ''
+  label_display: '0'
+  provider: views
+  context_mapping: {  }
+  views_label: ''
+  items_per_page: none
+visibility:
+  context_all:
+    id: context_all
+    negate: null
+    values: ''
+  context:
+    id: context
+    negate: null
+    values: ''
+  user_status:
+    id: user_status
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    user_status:
+      viewing_profile: '0'
+      logged_viewing_profile: '0'
+      own_page_true: '0'
+      field_value: '0'
+    user_fields: uid
+  group_type:
+    id: group_type
+    group_types:
+      organisation: organisation
+      service_provider: service_provider
+    negate: false
+    context_mapping:
+      group: '@group.group_route_context:group'
