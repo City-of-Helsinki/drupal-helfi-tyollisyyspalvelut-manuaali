@@ -3,7 +3,6 @@ langcode: fi
 status: true
 dependencies:
   config:
-    - field.field.group_content.organisation-group_node-service.field_service_owner
     - group.content_type.organisation-group_node-service
 id: group_content.organisation-group_node-service.default
 targetEntityType: group_content
@@ -21,7 +20,6 @@ content:
       placeholder: ''
     third_party_settings: {  }
 hidden:
-  field_service_owner: true
   langcode: true
   path: true
   uid: true

@@ -3,9 +3,7 @@ langcode: fi
 status: true
 dependencies:
   config:
-    - user.role.admin
     - user.role.editor
-    - user.role.root
     - user.role.specialist_editor
   module:
     - group
@@ -118,12 +116,8 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       access:
-        type: role
-        options:
-          role:
-            root: root
-            admin: admin
-            editor: editor
+        type: none
+        options: {  }
       cache:
         type: tag
         options: {  }
@@ -270,7 +264,6 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
-        - user.roles
       tags: {  }
   entity_reference_1:
     id: entity_reference_1
@@ -278,6 +271,10 @@ display:
     display_plugin: entity_reference
     position: 1
     display_options:
+      pager:
+        type: none
+        options:
+          offset: 0
       style:
         type: entity_reference
         options:
@@ -299,7 +296,6 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
-        - user.roles
       tags: {  }
   entity_reference_2:
     id: entity_reference_2
@@ -307,6 +303,10 @@ display:
     display_plugin: entity_reference
     position: 1
     display_options:
+      pager:
+        type: none
+        options:
+          offset: 0
       filters:
         status:
           id: status
@@ -392,5 +392,4 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
-        - user.roles
       tags: {  }
