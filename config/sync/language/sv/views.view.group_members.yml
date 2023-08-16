@@ -1,4 +1,3 @@
-label: 'Ryhmien jäsenyydet'
 display:
   default:
     display_title: Huvud
@@ -13,8 +12,6 @@ display:
       pager:
         options:
           tags:
-            previous: ‹‹
-            next: ››
             first: '« Första'
             last: 'Sista »'
           expose:
@@ -24,23 +21,18 @@ display:
       fields:
         name:
           label: Användare
-          separator: ', '
         group_roles:
-          label: Roller
-          separator: ', '
-        edit_group_content:
-          text: 'Muokkaa jäsentä'
-        delete_group_content:
-          text: 'Poista jäsen'
+          label: Roll
         dropbutton:
           label: Funktioner
       arguments:
         gid:
           exception:
             title: Alla
-      title: Jäsenet
+      filters:
+        mail:
+          expose:
+            label: 'Filtrera:'
+            placeholder: 'Filtrera efter sökterm '
   page_1:
     display_title: Sida
-    display_options:
-      menu:
-        title: Jäsenet

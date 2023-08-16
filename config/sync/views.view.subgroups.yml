@@ -33,7 +33,7 @@ display:
           entity_type: null
           entity_field: label
           plugin_id: field
-          label: Title
+          label: Organisaatio
           exclude: false
           alter:
             alter_text: false
@@ -98,7 +98,7 @@ display:
           entity_type: group
           entity_field: type
           plugin_id: field
-          label: 'Group type'
+          label: 'Organisaation tyyppi '
           exclude: false
           alter:
             alter_text: false
@@ -163,7 +163,7 @@ display:
           entity_type: group
           entity_field: changed
           plugin_id: field
-          label: Updated
+          label: Päivitetty
           exclude: false
           alter:
             alter_text: false
@@ -229,7 +229,7 @@ display:
           admin_label: 'View relation link'
           entity_type: group_content
           plugin_id: entity_link
-          label: 'Link to Group content'
+          label: 'Linkki ryhmäsisältöön'
           exclude: true
           alter:
             alter_text: false
@@ -270,7 +270,7 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          text: 'view relation'
+          text: Näytä
           output_url_as_text: false
           absolute: false
         edit_group_content:
@@ -282,7 +282,7 @@ display:
           admin_label: 'Edit relation link'
           entity_type: group_content
           plugin_id: entity_link_edit
-          label: 'Link to edit Group content'
+          label: 'Linkki ryhmärelaation muokkaukseen'
           exclude: true
           alter:
             alter_text: false
@@ -323,7 +323,7 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          text: 'Edit relation'
+          text: 'Muokkaa relaatiota'
           output_url_as_text: false
           absolute: false
         delete_group_content:
@@ -376,7 +376,7 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          text: 'Delete relation'
+          text: 'Poista relaatio'
           output_url_as_text: false
           absolute: false
         edit_group:
@@ -441,7 +441,7 @@ display:
           admin_label: 'Delete subgroup link'
           entity_type: group
           plugin_id: entity_link_delete
-          label: 'Link to delete Group'
+          label: 'Poista palveluntuottaja '
           exclude: true
           alter:
             alter_text: false
@@ -482,7 +482,7 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          text: 'Delete subgroup'
+          text: 'Poista palveluntuottaja '
           output_url_as_text: false
           absolute: false
         dropbutton:
@@ -493,7 +493,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: dropbutton
-          label: Operations
+          label: Toiminnot
           exclude: false
           alter:
             alter_text: false
@@ -638,7 +638,7 @@ display:
           exposed: true
           expose:
             operator_id: type_op
-            label: 'Subgroup type'
+            label: 'Organisaation tyyppi '
             description: ''
             use_operator: false
             operator: type_op
@@ -651,7 +651,11 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
-              administrator: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+              specialist_editor: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -845,7 +849,7 @@ display:
       path: group/%group/subgroups2
       menu:
         type: tab
-        title: Subgroups
+        title: Palveluntuottajat
         description: ''
         weight: 26
         expanded: false

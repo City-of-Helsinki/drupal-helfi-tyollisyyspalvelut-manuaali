@@ -1,0 +1,29 @@
+display:
+  default:
+    display_options:
+      fields:
+        title:
+          label: Platser
+        moderation_state:
+          label: 'Tjänstens status'
+        status:
+          label: Publiceringsstatus
+        changed:
+          label: Uppdaterad
+        dropbutton:
+          label: Operationer
+      filters:
+        status:
+          expose:
+            label: 'Publiceringsstatus '
+          group_info:
+            label: 'Publiceringsstatus '
+            group_items:
+              1:
+                title: Publicerad
+              2:
+                title: Opublicerad
+        title:
+          expose:
+            label: 'Filtrera:'
+            placeholder: 'Filtrera efter sökterm'
