@@ -172,8 +172,14 @@
 }
 
 
-.view-ready-to-publish-organisation-content {
-  >.view-content > table > tbody > tr > td {
+.view-ready-to-publish-organisation-content {
+  >.view-content >table >tbody >tr >.views-field {
     padding: 0 0 $space 0;
+  }
+}
+
+.view-ready-to-publish-group-content {
+  >table {
+    margin-top: 0;
   }
 }

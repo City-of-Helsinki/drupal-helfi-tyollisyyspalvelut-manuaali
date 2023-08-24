@@ -1,4 +1,4 @@
-uuid: ba78fbda-c3ea-4f9c-97ab-2c3efdf2390e
+uuid: 7d2d1935-a1aa-413b-8cea-aa9ac2d7718f
 langcode: fi
 status: true
 dependencies:
@@ -6,13 +6,14 @@ dependencies:
     - views.view.ready_to_publish_organisation_content
   module:
     - context
+    - system
     - views
   theme:
     - palvelumanuaali
 id: views_block__ready_to_publish_organisation_content_block_1
 theme: palvelumanuaali
 region: content
-weight: -4
+weight: 0
 provider: null
 plugin: 'views_block:ready_to_publish_organisation_content-block_1'
 settings:
@@ -43,8 +44,7 @@ visibility:
       own_page_true: '0'
       field_value: '0'
     user_fields: uid
-  view_inclusion:
-    id: view_inclusion
+  request_path:
+    id: request_path
     negate: false
-    view_inclusion:
-      view-maintenance_and_administration-page_1: view-maintenance_and_administration-page_1
+    pages: /hallinta-ja-yllapito
