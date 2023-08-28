@@ -157,9 +157,17 @@ function _hel_tpm_forms_node_service_form_alter(&$form, FormStateInterface &$for
  * @return void
  */
 function _hel_tpm_form_validate_service_form(array &$form, FormStateInterface &$form_state): void {
+  // Check extra required fields only when form is publishing ready.
+  $require_fields = FALSE;
+  if ($moderation_state = $form_state->getValue('moderation_state')[0]['value']) {
+    if ($moderation_state === 'published' || $moderation_state === 'ready_to_publish') {
+      $require_fields = TRUE;
+    }
+  }
+
   // Check that age range is given, unless age group is selected. Not trying to
   // validate, if the field `field_target_group` is missing.
-  if ($target_group = $form_state->getValue('field_target_group')) {
+  if (($target_group = $form_state->getValue('field_target_group')) && $require_fields) {
     $age_groups = $target_group[0]['subform']['field_age_groups'][0]['value'] ?? NULL;
     $age_from = $target_group[0]['subform']['field_age'][0]['from'] ?? NULL;
     $age_to = $target_group[0]['subform']['field_age'][0]['to'] ?? NULL;
