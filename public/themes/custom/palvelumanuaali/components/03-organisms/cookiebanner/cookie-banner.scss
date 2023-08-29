@@ -55,6 +55,11 @@ $main-content-width-xl: calc(100% - (#{$sidebar-width} + #{$main-gutter} * 2 ));
   }
   a {
     font-weight: 600;
+    color: clr(text-inverse);
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
 
