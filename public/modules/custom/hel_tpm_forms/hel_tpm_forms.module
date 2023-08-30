@@ -122,13 +122,63 @@ function _hel_tpm_forms_node_service_form_alter(&$form, FormStateInterface &$for
     ],
   ];
 
+  // Require age range to be set, unless the `no age restriction` checkbox is
+  // checked.
+  $form['field_target_group']['widget'][0]['subform']['field_age']['widget'][0]['from']['#states'] = [
+    'required' => [
+      [':input[name="field_target_group[0][subform][field_age_groups][no_age_restriction]"]' => ['checked' => FALSE]],
+    ],
+  ];
+  $form['field_target_group']['widget'][0]['subform']['field_age']['widget'][0]['to']['#states'] = [
+    'required' => [
+      [':input[name="field_target_group[0][subform][field_age_groups][no_age_restriction]"]' => ['checked' => FALSE]],
+    ],
+  ];
+
   $form['paging_footer'] = [
     '#theme' => 'hel_tpm_steps',
   ];
 
   $form['#attached']['library'][] = 'hel_tpm_forms/hel_tpm_forms';
 
+  $form['#validate'][] = '_hel_tpm_form_validate_service_form';
+
   _hel_tpm_form_publish_service_action($form, $form_state);
+}
+
+/**
+ * Extra server-side validation for editing service nodes.
+ *
+ * @param array $form
+ *   The form.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The form state.
+ *
+ * @return void
+ */
+function _hel_tpm_form_validate_service_form(array &$form, FormStateInterface &$form_state): void {
+  // Check extra required fields only when form is publishing ready.
+  $require_fields = FALSE;
+  if ($moderation_state = $form_state->getValue('moderation_state')[0]['value']) {
+    if ($moderation_state === 'published' || $moderation_state === 'ready_to_publish') {
+      $require_fields = TRUE;
+    }
+  }
+
+  // Check that age range is given, unless age group is selected. Not trying to
+  // validate, if the field `field_target_group` is missing.
+  if (($target_group = $form_state->getValue('field_target_group')) && $require_fields) {
+    $age_groups = $target_group[0]['subform']['field_age_groups'][0]['value'] ?? NULL;
+    $age_from = $target_group[0]['subform']['field_age'][0]['from'] ?? NULL;
+    $age_to = $target_group[0]['subform']['field_age'][0]['to'] ?? NULL;
+
+    if (empty($age_groups) && (empty($age_from) || empty($age_to))) {
+      $form_state->setErrorByName(
+        "field_target_group][0][subform][field_age][0",
+        t('Setting an age range is mandatory, unless an age group is selected.')
+      );
+    }
+  }
 }
 
 /**
