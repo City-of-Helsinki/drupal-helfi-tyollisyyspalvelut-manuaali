@@ -75,8 +75,13 @@ class GroupSelect2Widget extends Select2EntityReferenceWidget {
       return $element;
     }
 
+    $default = array_key_first($options);
+
+    // Default value for item.
+    $items->set(0, $default);
+
     // Set default value for field.
-    $element['#default_value'] = array_key_first($options);
+    $element['#default_value'] = $default;
 
     return $element;
   }
