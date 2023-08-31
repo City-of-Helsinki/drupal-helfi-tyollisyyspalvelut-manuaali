@@ -1,32 +1,27 @@
-uuid: 756b786f-af7b-4c12-9e56-fe370f838141
+uuid: bd2e55fb-a6db-4f49-9ff7-9e67880d39de
 langcode: fi
 status: true
 dependencies:
   config:
-    - views.view.services
+    - views.view.service_ready_to_publish_no_responsible_municipality
   module:
-    - block_class
     - context
-    - system
-    - user
+    - node
     - views
   theme:
     - palvelumanuaali
-third_party_settings:
-  block_class:
-    classes: 'col-12 col-xl-6 block-last-updated-services-table'
-id: views_block__services_last_updated_table_block
+id: views_block__service_rtb_no_responsible_municipality_block_1
 theme: palvelumanuaali
 region: content
-weight: 4
+weight: 1
 provider: null
-plugin: 'views_block:services-last_updated_table_block'
+plugin: 'views_block:service_ready_to_publish_no_responsible_municipality-block_1'
 settings:
-  id: 'views_block:services-last_updated_table_block'
-  label: ''
+  id: 'views_block:service_ready_to_publish_no_responsible_municipality-block_1'
+  label: 'Service ready to publish no responsible municipality'
   label_display: visible
   provider: views
-  views_label: ''
+  views_label: 'Service ready to publish no responsible municipality'
   items_per_page: none
 visibility:
   context_all:
@@ -48,14 +43,10 @@ visibility:
     id: context
     negate: null
     values: ''
-  request_path:
-    id: request_path
-    negate: false
-    pages: '<front>'
-  user_role:
-    id: user_role
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
     negate: false
     context_mapping:
-      user: '@user.current_user_context:current_user'
-    roles:
-      authenticated: authenticated
+      node: '@node.node_route_context:node'
+    bundles:
+      landing_page: landing_page
