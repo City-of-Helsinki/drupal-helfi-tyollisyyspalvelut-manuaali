@@ -39,9 +39,10 @@
  * @ingroup themeable
  */
 #}
-<div{{ attributes }}>
-    <div{{ content_attributes }}>
-        {{ content }}
-    </div>
-
-</div>
+{% if content %}
+  <div{{ attributes }}>
+      <div{{ content_attributes }}>
+          {{ content }}
+      </div>
+  </div>
+{% endif %}
