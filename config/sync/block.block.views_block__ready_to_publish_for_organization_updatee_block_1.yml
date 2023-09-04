@@ -1,29 +1,26 @@
-uuid: a4b1574d-6b32-47da-b9d0-30beaf1a8c11
-langcode: en
+uuid: 872d8dbb-ae9e-4a74-a8f9-1c9f6df07fa3
+langcode: fi
 status: true
 dependencies:
   config:
-    - views.view.owner_and_responsible_updatee
+    - views.view.ready_to_publish_for_organization_updatee
   module:
-    - block_class
     - context
     - views
   theme:
     - palvelumanuaali
-third_party_settings:
-  block_class:
-    classes: owner-and-updatee-view-block
-id: views_block__owner_and_responsible_updatee_block_1
+id: views_block__ready_to_publish_for_organization_updatee_block_1
 theme: palvelumanuaali
 region: content
-weight: 1
+weight: -2
 provider: null
-plugin: 'views_block:owner_and_responsible_updatee-block_1'
+plugin: 'views_block:ready_to_publish_for_organization_updatee-block_1'
 settings:
-  id: 'views_block:owner_and_responsible_updatee-block_1'
+  id: 'views_block:ready_to_publish_for_organization_updatee-block_1'
   label: ''
   label_display: visible
   provider: views
+  context_mapping: {  }
   views_label: ''
   items_per_page: none
 visibility:
