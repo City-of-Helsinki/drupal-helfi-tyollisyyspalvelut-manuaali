@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c0a4981868853339a3d55c94547a84ee",
+    "content-hash": "faa9c3375b61858a729d75b814efdb27",
     "packages": [
         {
             "name": "ajgl/breakpoint-twig-extension",
@@ -5160,6 +5160,52 @@
                 "forum": "https://drupal.stackexchange.com/search?q=eu+cookie+compliance",
                 "issues": "https://www.drupal.org/project/issues/eu_cookie_compliance?version=8.x",
                 "slack": "https://app.slack.com/client/T06GX3JTS/C012XBTH81E"
+            }
+        },
+        {
+            "name": "drupal/eu_cookie_compliance_matomo",
+            "version": "1.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/eu_cookie_compliance_matomo.git",
+                "reference": "1.0.6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/eu_cookie_compliance_matomo-1.0.6.zip",
+                "reference": "1.0.6",
+                "shasum": "56eb482eb9ee0691c73bbde1de7d38486c843475"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9 || ^10",
+                "drupal/eu_cookie_compliance": "*",
+                "drupal/matomo": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "1.0.6",
+                    "datestamp": "1691481366",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "marco.aresu",
+                    "homepage": "https://www.drupal.org/user/3248962"
+                }
+            ],
+            "description": "Add Matomo features to EU Cookie Compliance",
+            "homepage": "https://www.drupal.org/project/eu_cookie_compliance_matomo",
+            "support": {
+                "source": "https://git.drupalcode.org/project/eu_cookie_compliance_matomo"
             }
         },
         {
