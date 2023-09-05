@@ -174,8 +174,12 @@ function _hel_tpm_form_validate_service_form(array &$form, FormStateInterface &$
 
     if (empty($age_groups) && (empty($age_from) || empty($age_to))) {
       $form_state->setErrorByName(
+        "field_target_group][0][subform][field_age_groups",
+        t('Selecting an age group is mandatory, unless the age range is set.')
+      );
+      $form_state->setErrorByName(
         "field_target_group][0][subform][field_age][0",
-        t('Setting an age range is mandatory, unless an age group is selected.')
+        t('Setting the age range is mandatory, unless an age group is selected.')
       );
     }
   }
