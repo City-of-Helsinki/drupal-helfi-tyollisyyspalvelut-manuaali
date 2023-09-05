@@ -6,6 +6,7 @@ dependencies:
     - views.view.ready_to_publish_for_organization_updatee
   module:
     - context
+    - user
     - views
   theme:
     - palvelumanuaali
@@ -48,3 +49,12 @@ visibility:
     negate: false
     view_inclusion:
       view-maintenance_and_administration-page_1: view-maintenance_and_administration-page_1
+  user_role:
+    id: user_role
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      root: root
+      admin: admin
+      specialist_editor: specialist_editor
