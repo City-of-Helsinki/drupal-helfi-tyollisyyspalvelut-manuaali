@@ -5,6 +5,9 @@ dependencies:
   config:
     - field.storage.node.field_service_producer
     - node.type.service
+    - user.role.admin
+    - user.role.root
+    - user.role.specialist_editor
     - workflows.workflow.service_moderation
   module:
     - content_moderation
@@ -283,9 +286,12 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       access:
-        type: perm
+        type: role
         options:
-          perm: 'access content'
+          role:
+            root: root
+            admin: admin
+            specialist_editor: specialist_editor
       cache:
         type: tag
         options: {  }
@@ -454,7 +460,7 @@ display:
         - url
         - user
         - 'user.node_grants:view'
-        - user.permissions
+        - user.roles
       tags:
         - 'config:field.storage.node.field_service_producer'
         - 'config:workflow_list'
@@ -475,7 +481,7 @@ display:
         - url
         - user
         - 'user.node_grants:view'
-        - user.permissions
+        - user.roles
       tags:
         - 'config:field.storage.node.field_service_producer'
         - 'config:workflow_list'
