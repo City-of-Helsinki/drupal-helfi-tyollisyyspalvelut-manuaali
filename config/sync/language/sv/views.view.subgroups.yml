@@ -23,27 +23,13 @@ display:
             last: 'Sista »'
       fields:
         label:
-          label: Titel
-          separator: ', '
+          label: Organisation
         type:
           label: Grupptyp
-          separator: ', '
         changed:
           label: Uppdaterad
-          separator: ', '
-        view_group_content:
-          label: 'Link to Group content'
-          text: 'view relation'
-        edit_group_content:
-          label: 'Link to edit Group content'
-          text: 'Edit relation'
         delete_group_content:
           text: 'Hylkää suhde'
-        edit_group:
-          text: 'Edit subgroup'
-        delete_group:
-          label: 'Link to delete Group'
-          text: 'Delete subgroup'
         dropbutton:
           label: Funktioner
       filters:
@@ -55,8 +41,17 @@ display:
         gid:
           exception:
             title: Alla
+      filters:
+        label:
+          expose:
+            label: 'Filtrera:'
+            placeholder: 'Filtrera efter sökterm'
+        type:
+          expose:
+            label: Grupptyp
+      title: Tjänsteleverantörer
   page_1:
     display_title: Sida
     display_options:
       menu:
-        title: Subgroups
+        title: Tjänsteleverantörer

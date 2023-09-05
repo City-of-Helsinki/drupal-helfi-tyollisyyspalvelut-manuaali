@@ -35,7 +35,7 @@ display:
           entity_type: node
           entity_field: title
           plugin_id: field
-          label: Title
+          label: Otsikko
           exclude: false
           alter:
             alter_text: false
@@ -230,7 +230,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: hel_tpm_editorial_service_has_unpublished_changes
-          label: 'Service has changes'
+          label: 'Palvelussa on muutoksia'
           exclude: false
           alter:
             alter_text: false
@@ -281,7 +281,7 @@ display:
           entity_type: node
           entity_field: changed
           plugin_id: field
-          label: Updated
+          label: Päivitetty
           exclude: false
           alter:
             alter_text: false
@@ -603,7 +603,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: dropbutton
-          label: Operations
+          label: Toiminnot
           exclude: false
           alter:
             alter_text: false
@@ -654,6 +654,7 @@ display:
             title: '0'
             type: '0'
             status: '0'
+            hel_tpm_editorial_service_has_unpublished_changes: '0'
             changed: '0'
       pager:
         type: full

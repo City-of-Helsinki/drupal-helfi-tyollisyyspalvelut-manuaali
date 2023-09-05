@@ -1,0 +1,35 @@
+display:
+  default:
+    display_options:
+      fields:
+        title:
+          label: Location
+        moderation_state:
+          label: 'Moderation state'
+        status:
+          label: Status
+        changed:
+          label: Updated
+        edit_node:
+          text: 'Edit node'
+        delete_node:
+          text: 'Delete node'
+        dropbutton:
+          label: Operations
+      filters:
+        status:
+          group_info:
+            label: Status
+            group_items:
+              1:
+                title: Published
+              2:
+                title: Unpublished
+        title:
+          expose:
+            label: 'Filter:'
+            placeholder: 'Filter by search term'
+  page_1:
+    display_options:
+      menu:
+        title: Locations

@@ -36,7 +36,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: field
-          label: Email
+          label: Sähköposti
           exclude: false
           alter:
             alter_text: false
@@ -100,7 +100,7 @@ display:
           entity_type: user
           entity_field: name
           plugin_id: field
-          label: Invitee
+          label: Kutsuttu
           exclude: false
           alter:
             alter_text: false
@@ -163,7 +163,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: field
-          label: Roles
+          label: Rooli
           exclude: false
           alter:
             alter_text: false
@@ -228,7 +228,7 @@ display:
           entity_type: group_content
           entity_field: uid
           plugin_id: field
-          label: 'Invited by'
+          label: Kutsuja
           exclude: false
           alter:
             alter_text: false
@@ -293,7 +293,7 @@ display:
           entity_type: group_content
           entity_field: created
           plugin_id: field
-          label: 'Invited on'
+          label: 'Kutsuttu (pvm)'
           exclude: false
           alter:
             alter_text: false
@@ -411,7 +411,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: dropbutton
-          label: Operations
+          label: Toiminnot
           exclude: false
           alter:
             alter_text: false
@@ -726,8 +726,8 @@ display:
       path: group/%group/invitations
       menu:
         type: tab
-        title: Invitations
-        description: 'Group invitations'
+        title: Kutsut
+        description: 'Ryhmän kutsut'
         weight: 18
         expanded: false
         menu_name: main
