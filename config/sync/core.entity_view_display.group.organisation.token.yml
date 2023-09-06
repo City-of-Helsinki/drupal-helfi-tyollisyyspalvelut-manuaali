@@ -1,20 +1,18 @@
-uuid: 633caffa-ada2-4b16-867a-9081c594f568
+uuid: c3eca27d-6972-4c11-a50f-3da451027938
 langcode: fi
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.group.token
     - field.field.group.organisation.field_group_prioritise_in_search
     - group.type.organisation
-id: group.organisation.default
+id: group.organisation.token
 targetEntityType: group
 bundle: organisation
-mode: default
+mode: token
 content:
-  label:
-    type: string
-    label: hidden
-    settings:
-      link_to_entity: false
+  group_content_ready_to_publish_entity_view_1:
+    settings: {  }
     third_party_settings: {  }
     weight: 0
     region: content
@@ -26,7 +24,7 @@ hidden:
   entity_print_view_word_docx: true
   entitygroupfield: true
   field_group_prioritise_in_search: true
-  group_content_ready_to_publish_entity_view_1: true
+  label: true
   langcode: true
   search_api_excerpt: true
   uid: true

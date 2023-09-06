@@ -1,25 +1,25 @@
-uuid: 7010ecc0-566f-4afa-8ac5-4ef1cb5f3eb8
+uuid: a070cb88-48c8-4aef-8ad7-d1a8eacdbe2a
 langcode: fi
 status: true
 dependencies:
   config:
-    - views.view.group_title_view
+    - views.view.organizatio_with_ready_to_publish_content
   module:
     - context
-    - group
+    - user
     - views
   theme:
     - palvelumanuaali
-id: views_block__group_title_view_block_1
+id: views_block__organizatio_with_ready_to_publish_content_block_1
 theme: palvelumanuaali
 region: content
-weight: -9
+weight: -3
 provider: null
-plugin: 'views_block:group_title_view-block_1'
+plugin: 'views_block:organizatio_with_ready_to_publish_content-block_1'
 settings:
-  id: 'views_block:group_title_view-block_1'
+  id: 'views_block:organizatio_with_ready_to_publish_content-block_1'
   label: ''
-  label_display: '0'
+  label_display: visible
   provider: views
   context_mapping: {  }
   views_label: ''
@@ -44,11 +44,17 @@ visibility:
       own_page_true: '0'
       field_value: '0'
     user_fields: uid
-  group_type:
-    id: group_type
-    group_types:
-      organisation: organisation
-      service_provider: service_provider
+  view_inclusion:
+    id: view_inclusion
+    negate: false
+    view_inclusion:
+      view-maintenance_and_administration-page_1: view-maintenance_and_administration-page_1
+  user_role:
+    id: user_role
     negate: false
     context_mapping:
-      group: '@group.group_route_context:group'
+      user: '@user.current_user_context:current_user'
+    roles:
+      root: root
+      admin: admin
+      specialist_editor: specialist_editor
