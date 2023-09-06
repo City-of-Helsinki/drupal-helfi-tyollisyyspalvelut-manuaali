@@ -5,6 +5,9 @@ dependencies:
   config:
     - core.entity_view_mode.group.token
     - group.type.organisation
+    - user.role.admin
+    - user.role.root
+    - user.role.specialist_editor
   module:
     - group
     - user
@@ -90,8 +93,12 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       access:
-        type: none
-        options: {  }
+        type: role
+        options:
+          role:
+            root: root
+            admin: admin
+            specialist_editor: specialist_editor
       cache:
         type: tag
         options: {  }
@@ -299,6 +306,7 @@ display:
         - 'languages:language_interface'
         - url
         - user
+        - user.roles
       tags:
         - 'config:core.entity_view_display.group.organisation.default'
         - 'config:core.entity_view_display.group.organisation.token'
@@ -318,6 +326,7 @@ display:
         - 'languages:language_interface'
         - url
         - user
+        - user.roles
       tags:
         - 'config:core.entity_view_display.group.organisation.default'
         - 'config:core.entity_view_display.group.organisation.token'

@@ -4,12 +4,16 @@ status: true
 dependencies:
   config:
     - node.type.service
+    - user.role.admin
+    - user.role.root
+    - user.role.specialist_editor
     - workflows.workflow.service_moderation
   module:
     - content_moderation
     - eva
     - group
     - node
+    - user
 id: group_content_ready_to_publish
 label: 'Group content ready to publish'
 module: views
@@ -285,8 +289,12 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       access:
-        type: none
-        options: {  }
+        type: role
+        options:
+          role:
+            root: root
+            admin: admin
+            specialist_editor: specialist_editor
       cache:
         type: tag
         options: {  }
@@ -489,6 +497,7 @@ display:
         - route
         - url
         - 'user.node_grants:view'
+        - user.roles
       tags:
         - 'config:workflow_list'
   entity_view_1:
@@ -509,5 +518,6 @@ display:
         - route
         - url
         - 'user.node_grants:view'
+        - user.roles
       tags:
         - 'config:workflow_list'
