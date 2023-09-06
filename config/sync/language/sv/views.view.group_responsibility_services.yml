@@ -1,0 +1,40 @@
+display:
+  default:
+    display_options:
+      fields:
+        title:
+          label: Tjänst
+        label:
+          label: Tjänsteanordnare
+        langcode:
+          label: Språk
+        field_service_provider_updatee:
+          label: 'Ansvarig person hos tjänsteleverantören'
+        field_responsible_updatee:
+          label: 'Kommunens ansvarsuppdaterare '
+        moderation_state:
+          label: Publiceringsstatus
+        hel_tpm_editorial_service_has_unpublished_changes:
+          label: 'Det sker förändringar i tjänsten'
+        edit_node:
+          text: Redigera
+        changed:
+          label: Uppdaterad
+      filters:
+        moderation_state:
+          expose:
+            label: 'Tjänstens status '
+        type_1:
+          expose:
+            label: 'Grupptyp '
+        langcode:
+          expose:
+            label: Språk
+        title:
+          expose:
+            label: 'Filtrera:'
+            placeholder: 'Filtrera efter sökterm'
+  page_1:
+    display_options:
+      menu:
+        title: 'Tjänster från tjänsteleverantörer '

@@ -37,7 +37,7 @@ display:
           entity_type: node
           entity_field: title
           plugin_id: field
-          label: Otsikko
+          label: Toimipiste
           exclude: false
           alter:
             alter_text: false
@@ -101,7 +101,7 @@ display:
           admin_label: ''
           entity_type: node
           plugin_id: moderation_state_field
-          label: 'Moderation state'
+          label: 'Toimipisteen tila'
           exclude: false
           alter:
             alter_text: false
@@ -165,7 +165,7 @@ display:
           entity_type: node
           entity_field: status
           plugin_id: field
-          label: Status
+          label: Julkaisutila
           exclude: false
           alter:
             alter_text: false
@@ -232,7 +232,7 @@ display:
           entity_type: node
           entity_field: changed
           plugin_id: field
-          label: Updated
+          label: Päivitetty
           exclude: false
           alter:
             alter_text: false
@@ -399,7 +399,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: dropbutton
-          label: Operations
+          label: Toiminnot
           exclude: false
           alter:
             alter_text: false
@@ -442,13 +442,10 @@ display:
           hide_alter_empty: true
           destination: true
           fields:
-            view_group_content: view_group_content
-            edit_group_content: edit_group_content
-            delete_group_content: delete_group_content
             edit_node: edit_node
             delete_node: delete_node
             title: '0'
-            type: '0'
+            moderation_state: '0'
             status: '0'
             changed: '0'
       pager:
@@ -574,7 +571,7 @@ display:
               group_admin: '0'
           is_grouped: true
           group_info:
-            label: 'Published status'
+            label: Julkaisutila
             description: ''
             identifier: status
             optional: true
@@ -585,11 +582,11 @@ display:
             default_group_multiple: {  }
             group_items:
               1:
-                title: Published
+                title: Julkaistu
                 operator: '='
                 value: '1'
               2:
-                title: Unpublished
+                title: Julkaisematon
                 operator: '='
                 value: '0'
         type_1:
@@ -807,7 +804,7 @@ display:
       path: group/%group/service-locations
       menu:
         type: tab
-        title: Locations
+        title: 'Toimipisteet '
         description: ''
         weight: 19
         expanded: false

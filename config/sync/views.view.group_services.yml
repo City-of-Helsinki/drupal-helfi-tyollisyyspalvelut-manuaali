@@ -43,7 +43,7 @@ display:
           entity_type: node
           entity_field: title
           plugin_id: field
-          label: Otsikko
+          label: Palvelu
           exclude: false
           alter:
             alter_text: false
@@ -172,7 +172,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: field
-          label: 'Palvelun vastuupäivittäjä'
+          label: 'Kunnan vastuupäivittäjä'
           exclude: false
           alter:
             alter_text: false
@@ -299,7 +299,7 @@ display:
           admin_label: ''
           entity_type: node
           plugin_id: moderation_state_field
-          label: 'Moderation state'
+          label: 'Palvelun tila'
           exclude: false
           alter:
             alter_text: false
@@ -361,7 +361,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: hel_tpm_editorial_service_has_unpublished_changes
-          label: 'Service has changes'
+          label: 'Palvelussa on muutoksia'
           exclude: false
           alter:
             alter_text: false
@@ -412,7 +412,7 @@ display:
           entity_type: node
           entity_field: changed
           plugin_id: field
-          label: Updated
+          label: Päivitetty
           exclude: false
           alter:
             alter_text: false
@@ -718,7 +718,7 @@ display:
               group_admin: '0'
           is_grouped: true
           group_info:
-            label: 'Published status'
+            label: Julkaisutila
             description: ''
             identifier: status
             optional: true
@@ -729,11 +729,11 @@ display:
             default_group_multiple: {  }
             group_items:
               1:
-                title: Published
+                title: Julkaistu
                 operator: '='
                 value: '1'
               2:
-                title: Unpublished
+                title: Julkaisematon
                 operator: '='
                 value: '0'
         moderation_state:
@@ -755,7 +755,7 @@ display:
           exposed: true
           expose:
             operator_id: moderation_state_op
-            label: 'Moderation state'
+            label: 'Palvelun tila'
             description: ''
             use_operator: false
             operator: moderation_state_op
@@ -1145,7 +1145,7 @@ display:
       path: group/%group/services
       menu:
         type: tab
-        title: Services
+        title: Palvelut
         description: ''
         weight: 16
         expanded: false

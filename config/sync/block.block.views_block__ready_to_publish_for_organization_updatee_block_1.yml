@@ -1,36 +1,36 @@
-uuid: 756b786f-af7b-4c12-9e56-fe370f838141
+uuid: 872d8dbb-ae9e-4a74-a8f9-1c9f6df07fa3
 langcode: fi
 status: true
 dependencies:
   config:
-    - views.view.services
+    - views.view.ready_to_publish_for_organization_updatee
   module:
-    - block_class
     - context
-    - system
     - user
     - views
   theme:
     - palvelumanuaali
-third_party_settings:
-  block_class:
-    classes: 'col-12 col-xl-6 block-last-updated-services-table'
-id: views_block__services_last_updated_table_block
+id: views_block__ready_to_publish_for_organization_updatee_block_1
 theme: palvelumanuaali
 region: content
-weight: 4
+weight: -2
 provider: null
-plugin: 'views_block:services-last_updated_table_block'
+plugin: 'views_block:ready_to_publish_for_organization_updatee-block_1'
 settings:
-  id: 'views_block:services-last_updated_table_block'
+  id: 'views_block:ready_to_publish_for_organization_updatee-block_1'
   label: ''
   label_display: visible
   provider: views
+  context_mapping: {  }
   views_label: ''
   items_per_page: none
 visibility:
   context_all:
     id: context_all
+    negate: null
+    values: ''
+  context:
+    id: context
     negate: null
     values: ''
   user_status:
@@ -44,18 +44,17 @@ visibility:
       own_page_true: '0'
       field_value: '0'
     user_fields: uid
-  context:
-    id: context
-    negate: null
-    values: ''
-  request_path:
-    id: request_path
+  view_inclusion:
+    id: view_inclusion
     negate: false
-    pages: '<front>'
+    view_inclusion:
+      view-maintenance_and_administration-page_1: view-maintenance_and_administration-page_1
   user_role:
     id: user_role
     negate: false
     context_mapping:
       user: '@user.current_user_context:current_user'
     roles:
-      authenticated: authenticated
+      root: root
+      admin: admin
+      specialist_editor: specialist_editor
