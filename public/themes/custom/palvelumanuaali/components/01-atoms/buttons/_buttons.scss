@@ -278,6 +278,18 @@ $button-colors: (
     padding-left: $space-double;
     padding-right: $space-double;
   }
+  &--no-background-image {
+    background-image: none;
+    box-shadow: none;
+    text-shadow: none;
+    &:hover,
+    &:focus,
+    &:active {
+      background-image: none;
+      box-shadow: none;
+      text-shadow: none;
+    }
+  }
 }
 
 #shorten-link {
@@ -581,10 +593,17 @@ input[data-drupal-selector="edit-field-contact-info-external-actions-ief-add"]{
 }
 
 .eu-cookie-compliance-secondary-button,
-.eu-cookie-compliance-default-button {
+.eu-cookie-compliance-default-button,
+.eu-cookie-compliance-save-preferences-button  {
   background-image: none;
   box-shadow: none;
   text-shadow: none;
   @extend .button;
   @extend .button--padding-left-right-double;
+  &:hover,
+  &:focus {
+    background-image: none;
+    box-shadow: none;
+    text-shadow: none;
+  }
 }

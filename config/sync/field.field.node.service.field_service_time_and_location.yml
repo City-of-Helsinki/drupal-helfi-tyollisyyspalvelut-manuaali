@@ -8,6 +8,10 @@ dependencies:
     - paragraphs.paragraphs_type.service_time_and_place
   module:
     - entity_reference_revisions
+    - require_on_publish
+third_party_settings:
+  require_on_publish:
+    require_on_publish: true
 id: node.service.field_service_time_and_location
 field_name: field_service_time_and_location
 entity_type: node

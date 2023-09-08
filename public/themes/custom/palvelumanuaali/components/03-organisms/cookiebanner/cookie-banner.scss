@@ -46,6 +46,7 @@ $main-content-width-xl: calc(100% - (#{$sidebar-width} + #{$main-gutter} * 2 ));
 .eu-cookie-compliance-message {
   p {
     font-size: $small-caption;
+    font-weight: 400;
     line-height: 24px;
   }
   h3 {
@@ -63,7 +64,7 @@ $main-content-width-xl: calc(100% - (#{$sidebar-width} + #{$main-gutter} * 2 ));
   }
 }
 
-.eu-cookie-compliance-buttons {
+.eu-cookie-compliance-categories {
   @include large {
     display: flex;
     justify-content: space-between;
