@@ -1,0 +1,44 @@
+uuid: 2fea0310-1133-4245-818a-545e8260dcc3
+langcode: fi
+status: true
+dependencies:
+  config:
+    - views.view.notifications
+  module:
+    - context
+    - views
+  theme:
+    - palvelumanuaali
+id: views_block__notifications_block_global
+theme: palvelumanuaali
+region: content
+weight: -11
+provider: null
+plugin: 'views_block:notifications-block_global'
+settings:
+  id: 'views_block:notifications-block_global'
+  label: ''
+  label_display: '0'
+  provider: views
+  views_label: ''
+  items_per_page: none
+visibility:
+  context_all:
+    id: context_all
+    negate: null
+    values: ''
+  context:
+    id: context
+    negate: null
+    values: ''
+  user_status:
+    id: user_status
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    user_status:
+      viewing_profile: '0'
+      logged_viewing_profile: '0'
+      own_page_true: '0'
+      field_value: '0'
+    user_fields: uid

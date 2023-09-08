@@ -14,7 +14,7 @@ dependencies:
 id: views_block__group_produced_services_block_1
 theme: palvelumanuaali
 region: content
-weight: -1
+weight: 0
 provider: null
 plugin: 'views_block:group_produced_services-block_1'
 settings:
@@ -45,11 +45,6 @@ visibility:
     id: context
     negate: null
     values: ''
-  http_status_code:
-    id: http_status_code
-    negate: false
-    status_codes:
-      200: 200
   group_type:
     id: group_type
     group_types:
@@ -58,6 +53,11 @@ visibility:
     negate: false
     context_mapping:
       group: '@group.group_route_context:group'
+  http_status_code:
+    id: http_status_code
+    negate: false
+    status_codes:
+      200: 200
   request_path:
     id: request_path
     negate: false
