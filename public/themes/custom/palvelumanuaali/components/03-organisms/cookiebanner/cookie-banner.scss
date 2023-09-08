@@ -38,24 +38,32 @@ $main-content-width-xl: calc(100% - (#{$sidebar-width} + #{$main-gutter} * 2 ));
 
 .popup-content {
   display: flex;
-  flex-direction: column;
-  margin: 0;
-  @include large {
+  flex-wrap: wrap;
+  margin: auto;
+  justify-content: center;
+  @include xl {
+    flex-wrap: nowrap;
     flex-direction: row;
     justify-content: space-between;
     margin: 0 auto;
+  }
+  //override default module theming
+  .eu-cookie-compliance-categories,
+  .eu-cookie-compliance-buttons {
+    display: flex;
+    align-items: center;
+    margin: 0;
+
   }
 }
 
 .eu-cookie-compliance-message {
   max-width: 100%;
   margin-bottom: $space-two-and-half;
-  @include large {
-    max-width: 60%;
-    margin-bottom: 0;
-  }
+
   @include xl {
     max-width: 60%;
+    margin-bottom: 0;
   }
   p {
     font-size: $small-caption;
@@ -74,17 +82,5 @@ $main-content-width-xl: calc(100% - (#{$sidebar-width} + #{$main-gutter} * 2 ));
     &:hover {
       text-decoration: underline;
     }
-  }
-}
-
-.eu-cookie-compliance-categories,
-.eu-cookie-compliance-buttons {
-  display: flex;
-  align-items: center;
-  margin: auto;
-  gap: $space-double;
-  @include large {
-    margin: 0;
-    gap: $space;
   }
 }
