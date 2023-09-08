@@ -336,8 +336,8 @@ third_party_settings:
         required_fields: true
     group_statements_unemploym:
       children:
-        - field_statements_unemployment
         - field_statements
+        - field_statements_unemployment
         - field_other_preferences
       label: 'Lausunnot ja työttömyysetuus'
       region: content
@@ -1003,7 +1003,7 @@ content:
     third_party_settings: {  }
   field_statements_unemployment:
     type: text_textarea
-    weight: 12
+    weight: 14
     region: content
     settings:
       rows: 5

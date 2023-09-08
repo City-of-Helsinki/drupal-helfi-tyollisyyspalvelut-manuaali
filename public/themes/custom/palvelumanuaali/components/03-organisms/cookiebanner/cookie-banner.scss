@@ -19,10 +19,10 @@ $main-content-width-xl: calc(100% - (#{$sidebar-width} + #{$main-gutter} * 2 ));
 }
 
 .eu-cookie-compliance-content {
-
+  max-width: 100%;
   @include large {
     width: $main-content-width;
-
+    max-width: 80%;
   }
   @include xl {
     width: $main-content-width-xl;
@@ -30,20 +30,33 @@ $main-content-width-xl: calc(100% - (#{$sidebar-width} + #{$main-gutter} * 2 ));
 }
 
 .eu-cookie-compliance-banner {
-  padding: $space-double;
+  padding: $space-double $space-one-and-half;
   @include xl {
     padding: $space-double;
   }
 }
 
 .popup-content {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
   @include large {
-    display: flex;
+    flex-direction: row;
     justify-content: space-between;
+    margin: 0 auto;
   }
 }
 
 .eu-cookie-compliance-message {
+  max-width: 100%;
+  margin-bottom: $space-two-and-half;
+  @include large {
+    max-width: 60%;
+    margin-bottom: 0;
+  }
+  @include xl {
+    max-width: 60%;
+  }
   p {
     font-size: $small-caption;
     line-height: 24px;
@@ -64,10 +77,12 @@ $main-content-width-xl: calc(100% - (#{$sidebar-width} + #{$main-gutter} * 2 ));
 }
 
 .eu-cookie-compliance-buttons {
+  display: flex;
+  align-items: center;
+  margin: auto;
+  gap: $space-double;
   @include large {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    margin: 0;
     gap: $space;
   }
 }
