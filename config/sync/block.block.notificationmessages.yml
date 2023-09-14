@@ -1,27 +1,31 @@
-uuid: 2fea0310-1133-4245-818a-545e8260dcc3
+uuid: 235525c5-af6d-434f-bace-b9cbc43ad2e0
 langcode: fi
 status: true
 dependencies:
-  config:
-    - views.view.notifications
   module:
+    - block_class
     - context
-    - views
+    - notification_message
   theme:
     - palvelumanuaali
-id: views_block__notifications_block_global
+third_party_settings:
+  block_class:
+    classes: view-notifications
+id: notificationmessages
 theme: palvelumanuaali
 region: content
 weight: -11
 provider: null
-plugin: 'views_block:notifications-block_global'
+plugin: notification_message
 settings:
-  id: 'views_block:notifications-block_global'
-  label: ''
+  id: notification_message
+  label: 'Notification messages'
   label_display: '0'
-  provider: views
-  views_label: ''
-  items_per_page: none
+  provider: notification_message
+  notification_message:
+    type:
+      global: global
+    display_mode: default
 visibility:
   context_all:
     id: context_all

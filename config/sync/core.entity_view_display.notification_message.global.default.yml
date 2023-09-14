@@ -1,0 +1,37 @@
+uuid: 1851108b-7bd9-4435-bc2b-15dc51aee3fa
+langcode: fi
+status: true
+dependencies:
+  config:
+    - notification_message.type.global
+  module:
+    - text
+id: notification_message.global.default
+targetEntityType: notification_message
+bundle: global
+mode: default
+content:
+  label:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  message:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  langcode: true
+  publish_end_date: true
+  publish_start_date: true
+  search_api_excerpt: true
+  uid: true
