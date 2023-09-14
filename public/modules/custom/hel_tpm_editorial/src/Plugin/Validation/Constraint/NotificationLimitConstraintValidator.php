@@ -17,7 +17,12 @@ class NotificationLimitConstraintValidator extends ConstraintValidator {
     if ($value?->getEntityTypeId() != 'notification_message') {
       return;
     }
+    /** @var \Drupal\notification_message\Entity\NotificationMessage $value */
     if ($value->getBundleEntityTypeEntity()?->id() != $constraint->type) {
+      return;
+    }
+    // Only limit creating new notification messages.
+    if (!$value->isNew()) {
       return;
     }
 
