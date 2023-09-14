@@ -3,6 +3,7 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - field.field.notification_message.global.field_message_level
     - notification_message.type.global
   module:
     - text
@@ -30,6 +31,7 @@ hidden:
   entity_print_view_epub: true
   entity_print_view_pdf: true
   entity_print_view_word_docx: true
+  field_message_level: true
   langcode: true
   publish_end_date: true
   publish_start_date: true
