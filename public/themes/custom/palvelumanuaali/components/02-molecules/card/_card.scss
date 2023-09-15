@@ -365,24 +365,25 @@
   .card__content {
     align-self: stretch;
   }
+  .message__content {
+    width: 100%;
+  }
   .message__close {
     margin-left: auto;
     padding-left: $space;
   }
-
-  .views-field-label {
-    margin-bottom: $space-one-and-half;
-    .field-content {
-      display: flex;
-      h4 {
-        font-weight: 600;
-      }
-    }
-    .icon {
-      margin-right: $space;
-    }
+  .field--name-field-message-level {
+    float: left;
   }
-  .views-field-publish-end-date {
+  .field--name-label {
+    margin-top: $space-one-third;
+    margin-bottom: $space-one-and-half;
+    font-weight: 600;
+  }
+  .icon {
+    margin-right: $space;
+  }
+  .field-publish-end-date {
     font-size: 14px;
     font-weight: 600;
   }
