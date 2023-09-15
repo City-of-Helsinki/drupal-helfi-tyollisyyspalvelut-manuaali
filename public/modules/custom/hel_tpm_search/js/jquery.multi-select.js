@@ -142,11 +142,17 @@
 
       if (selected.length == 0) {
         this.$button.text( this.settings['noneText'] );
-      } else if ( (selected.length === options.length) && this.settings['allText']) {
-        this.$button.text( this.settings['allText'] );
-      } else {
-        this.$button.text( selected.join(', ') );
       }
+      else if (selected.length == 1) {
+        this.$button.text( selected );
+      }
+      else if (selected.length > 1 ) {
+      this.$button.text( selected[0] + ' +' + (selected.length-1) );
+      }
+      else if ((selected.length === options.length) && this.settings['allText']) {
+        this.$button.text( this.settings['allText'] );
+      }
+
       if (selected.length === 0) {
         this.$button.parent().removeClass('active');
       }
