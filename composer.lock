@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2379821e6ee6e864afc1f79e472f617d",
+    "content-hash": "c0a4981868853339a3d55c94547a84ee",
     "packages": [
         {
             "name": "ajgl/breakpoint-twig-extension",
@@ -4202,6 +4202,10 @@
             ],
             "authors": [
                 {
+                    "name": "ikit-claw",
+                    "homepage": "https://www.drupal.org/user/3285813"
+                },
+                {
                     "name": "sch4lly",
                     "homepage": "https://www.drupal.org/user/856550"
                 }
@@ -5807,12 +5811,20 @@
                     "role": "Maintainer"
                 },
                 {
-                    "name": "bramtenhove",
-                    "homepage": "https://www.drupal.org/user/1549848"
+                    "name": "hernani",
+                    "homepage": "https://www.drupal.org/user/448086"
                 },
                 {
                     "name": "jaapjan",
                     "homepage": "https://www.drupal.org/user/555428"
+                },
+                {
+                    "name": "Kingdutch",
+                    "homepage": "https://www.drupal.org/user/1868952"
+                },
+                {
+                    "name": "msnassar",
+                    "homepage": "https://www.drupal.org/user/1199630"
                 },
                 {
                     "name": "ronaldtebrake",
@@ -7166,17 +7178,17 @@
         },
         {
             "name": "drupal/mail_login",
-            "version": "2.7.0",
+            "version": "2.8.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/mail_login.git",
-                "reference": "8.x-2.7"
+                "reference": "8.x-2.8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/mail_login-8.x-2.7.zip",
-                "reference": "8.x-2.7",
-                "shasum": "2a56e1c0dd10d42afaa117a290b0de1c837563cb"
+                "url": "https://ftp.drupal.org/files/projects/mail_login-8.x-2.8.zip",
+                "reference": "8.x-2.8",
+                "shasum": "0795b0a70b0a92cf62218ad4c777485260fefc92"
             },
             "require": {
                 "drupal/core": "^8 || ^9 || ^10"
@@ -7184,8 +7196,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-2.7",
-                    "datestamp": "1676507580",
+                    "version": "8.x-2.8",
+                    "datestamp": "1694625212",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -7353,6 +7365,70 @@
             }
         },
         {
+            "name": "drupal/matomo",
+            "version": "1.22.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/matomo.git",
+                "reference": "8.x-1.22"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/matomo-8.x-1.22.zip",
+                "reference": "8.x-1.22",
+                "shasum": "b41bb83d9c0c6f8c27f72f6b1b62f691dab65a5d"
+            },
+            "require": {
+                "drupal/core": "^9.0 || ^10"
+            },
+            "conflict": {
+                "drupal/csp": "<1.12"
+            },
+            "require-dev": {
+                "drupal/csp": "~1.12",
+                "drupal/php": "~1.1",
+                "drupal/token": "~1.9"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.22",
+                    "datestamp": "1691004328",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "C-Logemann",
+                    "homepage": "https://www.drupal.org/user/218368"
+                },
+                {
+                    "name": "Grimreaper",
+                    "homepage": "https://www.drupal.org/user/2388214"
+                },
+                {
+                    "name": "hass",
+                    "homepage": "https://www.drupal.org/user/85918"
+                },
+                {
+                    "name": "shelane",
+                    "homepage": "https://www.drupal.org/user/2674989"
+                }
+            ],
+            "description": "Adds Matomo javascript tracking code to all your site's pages.",
+            "homepage": "https://www.drupal.org/project/matomo",
+            "support": {
+                "source": "https://git.drupalcode.org/project/matomo"
+            }
+        },
+        {
             "name": "drupal/maxlength",
             "version": "2.1.1",
             "source": {
@@ -7373,7 +7449,7 @@
             "extra": {
                 "drupal": {
                     "version": "2.1.1",
-                    "datestamp": "1681722499",
+                    "datestamp": "1689354615",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -7644,12 +7720,16 @@
             ],
             "authors": [
                 {
-                    "name": "RoySegall",
-                    "homepage": "https://www.drupal.org/user/1812910"
+                    "name": "bluegeek9",
+                    "homepage": "https://www.drupal.org/user/1286304"
                 },
                 {
                     "name": "cosolom",
                     "homepage": "https://www.drupal.org/user/1816882"
+                },
+                {
+                    "name": "RoySegall",
+                    "homepage": "https://www.drupal.org/user/1812910"
                 }
             ],
             "description": "UI for the Message module",
@@ -8536,6 +8616,10 @@
                     "homepage": "https://www.drupal.org/user/53892"
                 },
                 {
+                    "name": "Kristen Pol",
+                    "homepage": "https://www.drupal.org/user/8389"
+                },
+                {
                     "name": "pifagor",
                     "homepage": "https://www.drupal.org/user/2375692"
                 }
@@ -8866,6 +8950,7 @@
                 "reference": "bb491d6a4da5d344c74ee53d56cc2a318352c342"
             },
             "require": {
+                "composer-runtime-api": ">=2.0",
                 "composer/semver": "^1.0|^3.0",
                 "consolidation/annotated-command": "^2.12|^4.1",
                 "drupal/core": "^9.3 || ^10.0",
@@ -8904,8 +8989,8 @@
                     "dev-4.x": "4.x-dev"
                 },
                 "drupal": {
-                    "version": "4.2.11+9-dev",
-                    "datestamp": "1687443728",
+                    "version": "4.2.12+52-dev",
+                    "datestamp": "1691703016",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Dev releases are not covered by Drupal security advisories."
@@ -9417,22 +9502,22 @@
         },
         {
             "name": "drupal/tfa",
-            "version": "1.0.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/tfa.git",
-                "reference": "8.x-1.0"
+                "reference": "8.x-1.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/tfa-8.x-1.0.zip",
-                "reference": "8.x-1.0",
-                "shasum": "5f13121e04ba25cf07be27261269ecf1a1f07a89"
+                "url": "https://ftp.drupal.org/files/projects/tfa-8.x-1.2.zip",
+                "reference": "8.x-1.2",
+                "shasum": "055a26fdad48ef8f9fed3ba3bbd0bfe7e5e600b8"
             },
             "require": {
                 "chillerlan/php-qrcode": "^1.0.9 || ^2.0 || ^3.2 || ^4.0",
                 "christian-riesen/otp": "^2.1",
-                "drupal/core": "^8 || ^9",
+                "drupal/core": "^8 || ^9 || ^10",
                 "drupal/encrypt": "~3.0",
                 "php": ">=7.0"
             },
@@ -9444,8 +9529,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-1.0",
-                    "datestamp": "1669940340",
+                    "version": "8.x-1.2",
+                    "datestamp": "1690225076",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -9462,6 +9547,10 @@
                 "GPL-2.0-or-later"
             ],
             "authors": [
+                {
+                    "name": "cmlara",
+                    "homepage": "https://www.drupal.org/user/1790054"
+                },
                 {
                     "name": "coltrane",
                     "homepage": "https://www.drupal.org/user/91990"
@@ -9481,6 +9570,10 @@
                 {
                     "name": "nerdstein",
                     "homepage": "https://www.drupal.org/user/1557710"
+                },
+                {
+                    "name": "poker10",
+                    "homepage": "https://www.drupal.org/user/272316"
                 }
             ],
             "description": "Pluggable provider of two factor authentication for Drupal",
@@ -9913,6 +10006,10 @@
                 {
                     "name": "Graber",
                     "homepage": "https://www.drupal.org/user/1599440"
+                },
+                {
+                    "name": "joseph.olstad",
+                    "homepage": "https://www.drupal.org/user/1321830"
                 }
             ],
             "description": "Allows bulk edition of entity field values.",
@@ -10000,7 +10097,7 @@
                 "reference": "6400d8e7971f2d755d0fec6ed833e16bc3b0ac85"
             },
             "require": {
-                "drupal/core": "^8 || ^9",
+                "drupal/core": "^9 || ^10",
                 "php": ">=7"
             },
             "type": "drupal-module",
@@ -10009,8 +10106,8 @@
                     "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.5+0-dev",
-                    "datestamp": "1604567448",
+                    "version": "8.x-1.6+1-dev",
+                    "datestamp": "1691742986",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Dev releases are not covered by Drupal security advisories."
@@ -10041,12 +10138,16 @@
             "authors": [
                 {
                     "name": "Pol Dellaiera",
-                    "homepage": "https://www.drupal.org/user/47194",
+                    "homepage": "https://www.drupal.org/user/1632364",
                     "email": "pol.dellaiera@protonmail.com"
                 },
                 {
-                    "name": "ciss",
-                    "homepage": "https://www.drupal.org/user/1632364"
+                    "name": "Eli-T",
+                    "homepage": "https://www.drupal.org/user/516878"
+                },
+                {
+                    "name": "Pol",
+                    "homepage": "https://www.drupal.org/user/47194"
                 }
             ],
             "description": "Provide an option to render the 'exposed form widgets' in a fieldset.",

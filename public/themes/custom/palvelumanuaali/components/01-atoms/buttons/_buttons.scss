@@ -105,10 +105,10 @@ $button-colors: (
 // Button color variations
 // Note how we include dark mode options for each
 @mixin button-color-primary {
-  @include buttonColors(primary);
+  @include buttonColors(blue);
 
   @media (prefers-color-scheme: dark) {
-    @include buttonColors(primary-dark);
+    @include buttonColors(blue);
   }
 }
 
@@ -208,7 +208,7 @@ $button-colors: (
   @include button-base;
   @include button-color-blue;
   @include button-medium;
-
+  @include button-round-corners;
   &--alt {
     @include button-color-secondary;
     @include button-large;
@@ -270,6 +270,13 @@ $button-colors: (
 
   &--arrow-left {
     @include arrow-left;
+  }
+  &--margin-top-double {
+    margin-top: $space-double;
+  }
+  &--padding-left-right-double {
+    padding-left: $space-double;
+    padding-right: $space-double;
   }
 }
 
@@ -571,4 +578,13 @@ input[data-drupal-selector="edit-field-contact-info-external-actions-ief-add"]{
 .field--type-link > div > .form-item > .form-submit,
 .field--type-file > .form-wrapper > .form-wrapper .form-submit {
   @include button-no-color-with-round-border;
+}
+
+.eu-cookie-compliance-secondary-button,
+.eu-cookie-compliance-default-button {
+  background-image: none;
+  box-shadow: none;
+  text-shadow: none;
+  @extend .button;
+  @extend .button--padding-left-right-double;
 }

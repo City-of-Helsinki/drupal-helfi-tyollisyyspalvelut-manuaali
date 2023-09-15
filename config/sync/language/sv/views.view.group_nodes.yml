@@ -1,4 +1,3 @@
-label: 'Ryhmän solmut'
 display:
   default:
     display_title: Huvud
@@ -13,8 +12,6 @@ display:
       pager:
         options:
           tags:
-            previous: ‹‹
-            next: ››
             first: '« Första'
             last: 'Sista »'
           expose:
@@ -24,29 +21,24 @@ display:
       fields:
         title:
           label: Titel
-          separator: ', '
         type:
           label: Innehållstyp
-          separator: ', '
         status:
           label: Status
           settings:
             format_custom_true: Publicerad
             format_custom_false: 'Ej publicerad'
-          separator: ', '
         changed:
           label: Uppdaterad
-          separator: ', '
-        edit_group_content:
-          text: 'Edit relation'
+        edit_group_content: {  }
         delete_group_content:
           text: 'Hylkää suhde'
-        edit_node:
-          text: 'Muokkaa solmua'
-        delete_node:
-          text: 'Poista solmu'
+        edit_node: {  }
+        delete_node: {  }
         dropbutton:
           label: Funktioner
+        hel_tpm_editorial_service_has_unpublished_changes:
+          label: 'Förändringar i tjänsten'
       filters:
         status:
           expose:
@@ -61,6 +53,10 @@ display:
         type:
           expose:
             label: Typ
+        title:
+          expose:
+            label: 'Filtrera:'
+            placeholder: 'Filtrera efter sökterm'
       empty:
         area_text_custom:
           content: 'Inget innehåll tillgängligt.'

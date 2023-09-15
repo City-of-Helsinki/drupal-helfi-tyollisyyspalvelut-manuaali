@@ -34,6 +34,7 @@
   }
   #edit-group-left-column {
     max-width: unset;
+    grid-column: 1/3;
     @include xl {
       grid-column: 1/2;
       grid-row:2;
@@ -67,7 +68,9 @@
   .edit-advanced-content-wrapper {
     grid-row: 4;
     grid-column: 1/3;
+    margin-top: 80px;
     @include xl {
+      margin-top: unset;
       grid-column: 2/3;
       grid-row:2;
     }

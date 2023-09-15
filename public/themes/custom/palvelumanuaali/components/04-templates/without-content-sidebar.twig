@@ -9,7 +9,7 @@
 
 
 <div id={{main_content_id}} {{ bem(content_base_class, content_modifiers, content_blockname) }}>
-  <div {{  bem('content-column', content_colum_modifiers, content_column_base_class, ['offset-xl-2','col-xl-8', 'col-12']) }}>
+  <div {{  bem('content-column', content_colum_modifiers, content_column_base_class, ['offset-xl-2','col-xl-8']) }}>
     {% block page_content %}{% endblock %}
     {% block content %}{% endblock %}
   </div>
