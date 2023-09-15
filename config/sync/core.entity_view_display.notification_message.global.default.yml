@@ -6,12 +6,20 @@ dependencies:
     - field.field.notification_message.global.field_message_level
     - notification_message.type.global
   module:
+    - options
     - text
 id: notification_message.global.default
 targetEntityType: notification_message
 bundle: global
 mode: default
 content:
+  field_message_level:
+    type: list_key
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
   label:
     type: string
     label: hidden
@@ -31,7 +39,6 @@ hidden:
   entity_print_view_epub: true
   entity_print_view_pdf: true
   entity_print_view_word_docx: true
-  field_message_level: true
   langcode: true
   publish_end_date: true
   publish_start_date: true
