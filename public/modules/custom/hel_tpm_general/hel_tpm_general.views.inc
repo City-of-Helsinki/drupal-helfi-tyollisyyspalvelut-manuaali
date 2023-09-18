@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * Hel tpm general views file.
+ */
+
+/**
  * Implements hook_views_data_alter().
  */
 function hel_tpm_general_views_data_alter(array &$data) {

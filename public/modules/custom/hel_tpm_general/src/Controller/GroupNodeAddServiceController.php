@@ -6,48 +6,70 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\Url;
-use Drupal\group\Access\GroupContentCreateEntityAccessCheck;
 use Drupal\group\Entity\GroupInterface;
 use Drupal\group\GroupMembershipLoader;
 use Drupal\hel_tpm_general\Access\GroupNodeCreateAccessService;
-use Drupal\user\UserInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\RouterInterface;
 
+/**
+ * Group node add service controller.
+ */
 class GroupNodeAddServiceController extends ControllerBase implements ContainerInjectionInterface {
 
   /**
+   * Group membership loader.
+   *
    * @var \Drupal\group\GroupMembershipLoader
    */
   protected $groupMembershipLoader;
 
   /**
+   * Group content create enityt access.
+   *
    * @var \Drupal\group\Access\GroupContentCreateEntityAccessCheck
    */
   protected $groupContentCreateEntityAccess;
 
   /**
+   * Router interface.
+   *
    * @var \Symfony\Component\Routing\RouterInterface
    */
   protected $router;
 
   /**
+   * Content plugin id.
+   *
    * @var string
    */
-  protected $plugin_id = 'group_node:service';
+  protected $pluginId = 'group_node:service';
 
+  /**
+   * Current user interface.
+   *
+   * @var \Drupal\Core\Session\AccountProxyInterface
+   */
   protected $user;
 
   /**
+   * Group node create access service.
+   *
    * @var \Drupal\hel_tpm_general\Access\GroupNodeCreateAccessService
    */
   private $groupNodeCreateAccessService;
 
   /**
+   * Constructor for GroupNodeAddServiceController.
+   *
    * @param \Drupal\group\GroupMembershipLoader $group_membership_loader
-   * @param \Drupal\group\Access\GroupContentCreateEntityAccessCheck $group_content_create_entity_access
-   * @param \Drupal\Core\Path\PathValidatorInterface $path_validator
+   *   Group membership loader.
    * @param \Symfony\Component\Routing\RouterInterface $router
+   *   Router service.
+   * @param \Drupal\hel_tpm_general\Access\GroupNodeCreateAccessService $group_node_create_access_service
+   *   Group node create entity access.
+   * @param \Drupal\Core\Session\AccountProxyInterface $user
+   *   Current user account interface.
    */
   public function __construct(GroupMembershipLoader $group_membership_loader, RouterInterface $router, GroupNodeCreateAccessService $group_node_create_access_service, AccountProxyInterface $user) {
     $this->groupMembershipLoader = $group_membership_loader;
@@ -72,15 +94,17 @@ class GroupNodeAddServiceController extends ControllerBase implements ContainerI
    * Access callback.
    *
    * @return \Drupal\Core\Access\AccessResultAllowed|\Drupal\Core\Access\AccessResultForbidden
+   *   Access result.
    */
   public function access() {
-    return $this->groupNodeCreateAccessService->hasAccess($this->currentUser(), $this->plugin_id);
+    return $this->groupNodeCreateAccessService->hasAccess($this->currentUser(), $this->pluginId);
   }
 
   /**
    * Title callback.
    *
    * @return \Drupal\Core\StringTranslation\TranslatableMarkup
+   *   Translatable button label.
    */
   public function title() {
     return $this->t('Create service for group');
@@ -90,24 +114,27 @@ class GroupNodeAddServiceController extends ControllerBase implements ContainerI
    * Add service list method.
    *
    * @return array
+   *   Array of services.
    */
   public function addServiceList() : array {
     $groups = $this->userGroups();
     return [
       '#theme' => 'item_list',
       '#title' => $this->t('Select group'),
-      '#items' => $this->generateLinks($groups)
+      '#items' => $this->generateLinks($groups),
     ];
   }
 
   /**
    * Group selection callback when creating a new service.
    *
-   * @param $groups
+   * @param array $groups
+   *   Array of groups.
    *
    * @return array
+   *   Array of add service groups per group.
    */
-  private function generateLinks($groups) {
+  private function generateLinks(array $groups) {
     $links = [];
     if (empty($groups)) {
       return $links;
@@ -119,7 +146,7 @@ class GroupNodeAddServiceController extends ControllerBase implements ContainerI
       $links[] = [
         '#type' => 'link',
         '#title' => $group->label(),
-        '#url' => Url::fromUserInput($this->buildPath($group, $this->plugin_id))
+        '#url' => Url::fromUserInput($this->buildPath($group, $this->pluginId)),
       ];
     }
 
@@ -127,26 +154,38 @@ class GroupNodeAddServiceController extends ControllerBase implements ContainerI
   }
 
   /**
+   * Access check if user has access to create service.
+   *
    * @param \Drupal\group\Entity\GroupInterface $group
+   *   Given group.
    *
    * @return \Drupal\Core\Access\AccessResultInterface
+   *   Access result.
    */
   public function hasCurrentUserCreateServiceAccess(GroupInterface $group) {
-    return $this->groupNodeCreateAccessService->hasCreateServiceAccess($group, $this->plugin_id, $this->user);
+    return $this->groupNodeCreateAccessService->hasCreateServiceAccess($group, $this->pluginId, $this->user);
   }
 
   /**
-   * @param $group
-   * @param $plugin_id
+   * Build path to group service creation.
+   *
+   * @param \Drupal\group\Entity\GroupInterface $group
+   *   Group interface.
+   * @param string $plugin_id
+   *   Group content plugin id.
    *
    * @return string
+   *   Path to group service creation.
    */
-  private function buildPath($group, $plugin_id) {
+  private function buildPath(GroupInterface $group, string $plugin_id) {
     return sprintf('/group/%s/content/create/%s', $group->id(), $plugin_id);
   }
 
   /**
+   * Get users groups.
+   *
    * @return array
+   *   Array of groups user belongs in.
    */
   protected function userGroups() : array {
     $groups = [];
@@ -160,4 +199,5 @@ class GroupNodeAddServiceController extends ControllerBase implements ContainerI
     }
     return $groups;
   }
+
 }
