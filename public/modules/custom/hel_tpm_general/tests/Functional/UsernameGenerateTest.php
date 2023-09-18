@@ -14,10 +14,6 @@ use Drupal\Tests\BrowserTestBase;
  */
 class UsernameGenerateTest extends BrowserTestBase {
 
-  use AssertMailTrait {
-    getMails as drupalGetMails;
-  }
-
   protected static $modules = [
     'hel_tpm_general',
     'group'
