@@ -2,10 +2,7 @@
 
 namespace Drupal\Tests\hel_tpm_group\Kernel;
 
-use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\group\GroupRoleSynchronizer;
 use Drupal\Tests\group\Functional\GroupBrowserTestBase;
-use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 
 /**
  * Test description.
@@ -17,13 +14,36 @@ class SiteWideGroupRoleTest extends GroupBrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['hel_tpm_group', 'group', 'options', 'entity', 'variationcache', 'group_test_config'];
+  public static $modules = [
+    'hel_tpm_group',
+    'group',
+    'options',
+    'entity',
+    'variationcache',
+    'group_test_config',
+  ];
 
+  /**
+   * Group role storage.
+   *
+   * @var \Drupal\Core\Entity\EntityStorageInterface
+   */
   protected $groupRoleStorage;
 
+  /**
+   * User account.
+   *
+   * @var \Drupal\user\Entity\User|false
+   */
   protected $account;
 
+  /**
+   * Group object.
+   *
+   * @var \Drupal\group\Entity\Group
+   */
   protected $group;
+
   /**
    * {@inheritdoc}
    */
@@ -36,8 +56,6 @@ class SiteWideGroupRoleTest extends GroupBrowserTestBase {
     $this->createUser();
     $this->account = $this->createUser();
     $this->group = $this->createGroup();
-    // Mock required services here.
-    return;
   }
 
   /**
@@ -70,7 +88,6 @@ class SiteWideGroupRoleTest extends GroupBrowserTestBase {
     // Reload account.
     $this->account = $this->entityTypeManager->getStorage('user')->load($this->account->id());
 
-   // $this->assertEqualsCanonicalizing(['authenticated', 'publisher'], $this->account->getRoles(), 'Account has publisher role');
   }
 
   /**

@@ -4,21 +4,14 @@ namespace Drupal\hel_tpm_group\EventSubscriber;
 
 use Drupal\Component\EventDispatcher\Event;
 use Drupal\Core\Messenger\MessengerInterface;
-use Drupal\group\Entity\GroupRole;
 use Drupal\group\Entity\GroupRoleInterface;
-use Drupal\group\GroupMembership;
 use Drupal\hel_tpm_group\Event\GroupMembershipChanged;
-use Drupal\hel_tpm_group\Event\GroupMembershipDeleted;
 use Drupal\hel_tpm_group\Event\GroupSiteWideRoleChanged;
 use Drupal\user\UserInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\HttpKernel\Event\RequestEvent;
-use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
- * hel_tpm_group event subscriber.
+ * Hel_tpm_group event subscriber.
  */
 class HelTpmGroupSubscriber implements EventSubscriberInterface {
 
@@ -30,11 +23,13 @@ class HelTpmGroupSubscriber implements EventSubscriberInterface {
   protected $messenger;
 
   /**
+   * Default roles available.
+   *
    * @var int[]
    */
   protected static $defaultRoles = [
     'editor' => 0,
-    'specialist_editor' => 0
+    'specialist_editor' => 0,
   ];
 
   /**
@@ -48,23 +43,33 @@ class HelTpmGroupSubscriber implements EventSubscriberInterface {
   }
 
   /**
+   * React when site wide role is changed.
+   *
    * @param \Drupal\Component\EventDispatcher\Event $event
+   *   Drupal event.
    *
    * @return void
+   *   Return nothing
+   *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public function onGroupSiteWideRoleChanged(Event $event) {
-    $group_role = $event->group_role;
+    $group_role = $event->groupRole;
     foreach ($this->getMembersByRole($group_role) as $user) {
       $this->updateUserRoles($user);
     }
   }
 
   /**
-   * @param $group_role
+   * Get all group members by role.
+   *
+   * @param \Drupal\group\Entity\GroupRoleInterface $group_role
+   *   Group role object.
    *
    * @return array
+   *   Array of group members.
+   *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
@@ -83,20 +88,28 @@ class HelTpmGroupSubscriber implements EventSubscriberInterface {
   }
 
   /**
+   * OnGroupMembershipChange Event.
+   *
    * @param \Drupal\Component\EventDispatcher\Event $event
+   *   Drupal event.
    *
    * @return void
+   *   Returns nothing.
    */
   public function onGroupMembershipChange(Event $event) {
-    $group_content = $event->group_content;
+    $group_content = $event->groupContent;
     $user = $group_content->getEntity();
     $this->updateUserRoles($user);
   }
 
   /**
+   * Update users roles.
+   *
    * @param \Drupal\user\UserInterface $user
+   *   User object.
    *
    * @return void
+   *   Return nothing.
    */
   protected function updateUserRoles(UserInterface $user) {
     $roles = $this->calculateUserRoles($user);
@@ -120,11 +133,13 @@ class HelTpmGroupSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * Calculate proper global user roles for current user according to group memberships.
+   * Calculate global user roles for current user from to group memberships.
    *
    * @param \Drupal\user\UserInterface $user
+   *   User object.
    *
    * @return array
+   *   Array of user calculated roles.
    */
   protected function calculateUserRoles(UserInterface $user) {
     $membership_loader = \Drupal::service('group.membership_loader');
@@ -140,8 +155,10 @@ class HelTpmGroupSubscriber implements EventSubscriberInterface {
         continue;
       }
 
-      // Go through roles and check if prior group role has already given site wide role to user
-      // so we don't accidentally remove users site wide role if user to another group with lesser configured roles.
+      // Go through roles and check if prior group role
+      // has already given site wide role to user
+      // so we don't accidentally remove users site wide role
+      // if user to another group with lesser configured roles.
       foreach ($swroles as $key => $value) {
         if ($value !== 0) {
           continue;
@@ -160,9 +177,14 @@ class HelTpmGroupSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * @param $type
+   * Get groups by group type.
+   *
+   * @param string $type
+   *   Group type.
    *
    * @return \Drupal\Core\Entity\EntityInterface[]
+   *   Array of Groups.
+   *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
@@ -176,7 +198,7 @@ class HelTpmGroupSubscriber implements EventSubscriberInterface {
   public static function getSubscribedEvents() {
     return [
       GroupSiteWideRoleChanged::EVENT_NAME => ['onGroupSiteWideRoleChanged'],
-      GroupMembershipChanged::EVENT_NAME => ['onGroupMembershipChange']
+      GroupMembershipChanged::EVENT_NAME => ['onGroupMembershipChange'],
     ];
   }
 
