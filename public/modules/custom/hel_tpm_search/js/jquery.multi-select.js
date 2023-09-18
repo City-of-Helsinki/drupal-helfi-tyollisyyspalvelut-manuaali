@@ -90,6 +90,12 @@
     constructButton: function() {
       var _this = this;
       this.$button = $(this.settings['buttonHTML']);
+      if (this.$labels.eq(0).text().length > 14) {
+        this.$button.addClass("extra-long-filter-label");
+      } else {
+        this.$button.addClass("normal-filter-label");
+      }
+
       this.$button.attr({
         'role': 'button',
         'aria-haspopup': 'true',
@@ -144,10 +150,10 @@
         this.$button.text( this.settings['noneText'] );
       }
       else if (selected.length == 1) {
-        this.$button.text( selected );
+        this.$button.html( '<span class=trim-label>' + selected + '</span>');
       }
       else if (selected.length > 1 ) {
-      this.$button.text( selected[0] + ' +' + (selected.length-1) );
+      this.$button.html( '<span class=trim-label>' + selected[0] + '</span>' + ' +' + (selected.length-1) );
       }
       else if ((selected.length === options.length) && this.settings['allText']) {
         this.$button.text( this.settings['allText'] );
