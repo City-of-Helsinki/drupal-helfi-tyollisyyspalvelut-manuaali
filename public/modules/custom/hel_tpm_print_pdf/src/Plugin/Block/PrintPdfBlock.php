@@ -3,8 +3,6 @@
 namespace Drupal\hel_tpm_print_pdf\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
-use Drupal\Core\Link;
-use Drupal\Core\Url;
 
 /**
  * Provide a block with entity print link.
@@ -16,14 +14,16 @@ use Drupal\Core\Url;
  * )
  */
 class PrintPdfBlock extends BlockBase {
+
   /**
    * {@inheritdoc}
    */
   public function build() {
     $output = [];
     $base_url = \Drupal::request()->getRequestUri();
-    $output['#markup'] = '<a class="button log" href="'. $base_url . '?' . $_SERVER['QUERY_STRING'] . '">View PDF</a>';
+    $output['#markup'] = '<a class="button log" href="' . $base_url . '?' . $_SERVER['QUERY_STRING'] . '">View PDF</a>';
     $output['#attached']['library'] = 'hel_tpm_print_pdf/hel_tpm_print_pdf';
     return $output;
   }
+
 }
