@@ -117,10 +117,10 @@ function palvelumanuaali_preprocess_fieldset(&$variables) {
  * Implements hook__preprocess_table().
  */
 function palvelumanuaali_preprocess_table(&$variables) {
-  $element = $variables['attributes']['id'];
-  if (empty($element)) {
+  if (empty($variables['attributes']['id'])) {
     return;
   }
+  $element = $variables['attributes']['id'];
   $separator = "--";
   $trimmedElement = explode($separator, $element);
   $variables['attributes']['class'][] = $trimmedElement[0];
