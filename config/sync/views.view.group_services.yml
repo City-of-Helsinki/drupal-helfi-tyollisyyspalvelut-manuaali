@@ -43,7 +43,7 @@ display:
           entity_type: node
           entity_field: title
           plugin_id: field
-          label: Palvelu
+          label: 'Palvelun nimi'
           exclude: false
           alter:
             alter_text: false
@@ -108,7 +108,7 @@ display:
           entity_type: node
           entity_field: langcode
           plugin_id: field
-          label: Kieli
+          label: Kieliversio
           exclude: false
           alter:
             alter_text: false
@@ -299,7 +299,7 @@ display:
           admin_label: ''
           entity_type: node
           plugin_id: moderation_state_field
-          label: 'Palvelun tila'
+          label: Muokkaustila
           exclude: false
           alter:
             alter_text: false
@@ -361,7 +361,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: hel_tpm_editorial_service_has_unpublished_changes
-          label: 'Palvelussa on muutoksia'
+          label: 'Uusia muutoksia'
           exclude: false
           alter:
             alter_text: false
@@ -412,7 +412,7 @@ display:
           entity_type: node
           entity_field: changed
           plugin_id: field
-          label: Päivitetty
+          label: 'Viimeksi päivitetty'
           exclude: false
           alter:
             alter_text: false
@@ -478,7 +478,7 @@ display:
           admin_label: 'Delete node link'
           entity_type: node
           plugin_id: entity_link_delete
-          label: 'Link to delete Content'
+          label: 'Poista palvelu'
           exclude: true
           alter:
             alter_text: false
@@ -520,6 +520,8 @@ display:
           empty_zero: false
           hide_alter_empty: true
           text: 'Poista solmu'
+          output_url_as_text: false
+          absolute: false
         operations:
           id: operations
           table: node
@@ -529,7 +531,7 @@ display:
           admin_label: ''
           entity_type: node
           plugin_id: entity_operations
-          label: Toimenpidelinkit
+          label: Toiminnot
           exclude: false
           alter:
             alter_text: false
@@ -755,7 +757,7 @@ display:
           exposed: true
           expose:
             operator_id: moderation_state_op
-            label: 'Palvelun tila'
+            label: Muokkaustila
             description: ''
             use_operator: false
             operator: moderation_state_op
@@ -847,7 +849,7 @@ display:
           exposed: true
           expose:
             operator_id: langcode_op
-            label: Kieli
+            label: Kieliversio
             description: ''
             use_operator: false
             operator: langcode_op
@@ -894,7 +896,7 @@ display:
           exposed: true
           expose:
             operator_id: title_op
-            label: 'Suodatus:'
+            label: 'Palvelun nimi'
             description: ''
             use_operator: false
             operator: title_op
@@ -925,6 +927,7 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
+          use_tokens: 0
       filter_groups:
         operator: AND
         groups:

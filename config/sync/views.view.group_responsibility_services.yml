@@ -39,7 +39,7 @@ display:
           entity_type: node
           entity_field: title
           plugin_id: field
-          label: Palvelu
+          label: 'Palvelun nimi'
           exclude: false
           alter:
             alter_text: false
@@ -169,7 +169,7 @@ display:
           entity_type: node
           entity_field: langcode
           plugin_id: field
-          label: Kieli
+          label: Kieliversio
           exclude: false
           alter:
             alter_text: false
@@ -360,7 +360,7 @@ display:
           admin_label: ''
           entity_type: node
           plugin_id: moderation_state_field
-          label: Julkaisutila
+          label: Muokkaustila
           exclude: false
           alter:
             alter_text: false
@@ -422,7 +422,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: hel_tpm_editorial_service_has_unpublished_changes
-          label: 'Palvelussa on muutoksia'
+          label: 'Uusia muutoksia'
           exclude: false
           alter:
             alter_text: false
@@ -473,7 +473,7 @@ display:
           entity_type: node
           entity_field: changed
           plugin_id: field
-          label: Päivitetty
+          label: 'Viimeksi päivitetty'
           exclude: false
           alter:
             alter_text: false
@@ -748,7 +748,7 @@ display:
           exposed: true
           expose:
             operator_id: type_1_op
-            label: 'Organisaation tyyppi'
+            label: 'Ryhmän tyyppi'
             description: ''
             use_operator: false
             operator: type_1_op
@@ -846,7 +846,7 @@ display:
           exposed: true
           expose:
             operator_id: moderation_state_op
-            label: 'Palvelun tila'
+            label: Muokkaustila
             description: ''
             use_operator: false
             operator: moderation_state_op
@@ -893,7 +893,7 @@ display:
           exposed: true
           expose:
             operator_id: title_op
-            label: 'Suodatus:'
+            label: 'Suodata'
             description: ''
             use_operator: false
             operator: title_op
@@ -911,7 +911,7 @@ display:
               editor: '0'
               specialist: '0'
               specialist_editor: '0'
-            placeholder: 'Suodata hakusanalla'
+            placeholder: 'Hae palvelun nimellä'
           is_grouped: false
           group_info:
             label: ''
