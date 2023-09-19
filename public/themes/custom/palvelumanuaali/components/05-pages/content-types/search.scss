@@ -4,6 +4,9 @@
     .form-actions {
       position: absolute;
       right: 0;
+      height: 100%;
+      display: flex;
+      align-items: center;
       input.form-submit {
         color: transparent;
         background-color: transparent;
@@ -11,8 +14,9 @@
         background-repeat: no-repeat;
         background-position: center;
         width: 24px;
-        padding-left: 0;
-        padding-right: 0;
+        height: 24px;
+        margin-top: 0;
+        padding: 0;
         margin-right: $space-one-and-half;
       }
     }
