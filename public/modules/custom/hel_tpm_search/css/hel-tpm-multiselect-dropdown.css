@@ -1,8 +1,12 @@
 .multi-select-container {
   display: inline-block;
   position: relative;
+  max-width: fit-content;
 }
 
+.select--search-background {
+  max-width: fit-content;
+}
 .multi-select-menu {
   position: absolute;
   left: 0;
@@ -75,4 +79,21 @@
 .multi-select-container--positioned .multi-select-menu label {
   /* Allow labels to line wrap when menu is artificially narrowed */
   white-space: normal;
+}
+
+.multi-select-button .trim-label {
+  /* trim labels longer than 14ch */
+  max-width: 14ch;
+  text-overflow: ellipsis;
+  vertical-align: bottom;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.multi-select-button.normal-filter-label {
+  min-width: 200px;
+}
+
+.multi-select-button.extra-long-filter-label {
+  min-width: 250px;
 }
