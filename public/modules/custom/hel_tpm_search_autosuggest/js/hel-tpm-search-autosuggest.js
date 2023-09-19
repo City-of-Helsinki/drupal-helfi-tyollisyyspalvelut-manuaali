@@ -32,7 +32,6 @@
     },
     appendSearchHistory: function(form) {
       let value = $.trim($('input[name="search_api_fulltext"]', form).val());
-      console.log(value);
       if (value.length <= 0) {
         return;
       }
@@ -63,7 +62,6 @@
           i++;
         });
       }
-      console.log(content);
       $('.search-history .item-list', form).html(content);
     },
 
