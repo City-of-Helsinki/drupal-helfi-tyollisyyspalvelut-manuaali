@@ -9,10 +9,11 @@ dependencies:
     - user.role.specialist_editor
     - workflows.workflow.service_moderation
   module:
-    - content_moderation
     - eva
     - group
+    - hel_tpm_editorial
     - node
+    - service_manual_workflow
     - user
 id: group_content_ready_to_publish
 label: 'Group content ready to publish'
@@ -93,16 +94,15 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-        moderation_state:
-          id: moderation_state
-          table: node_field_revision
-          field: moderation_state
+        hel_tpm_editorial_service_has_unpublished_changes:
+          id: hel_tpm_editorial_service_has_unpublished_changes
+          table: views
+          field: hel_tpm_editorial_service_has_unpublished_changes
           relationship: none
           group_type: group
           admin_label: ''
-          entity_type: node
-          plugin_id: moderation_state_field
-          label: 'Palvelun tila'
+          plugin_id: hel_tpm_editorial_service_has_unpublished_changes
+          label: 'Service has changes'
           exclude: false
           alter:
             alter_text: false
@@ -135,7 +135,7 @@ display:
           element_class: ''
           element_label_type: ''
           element_label_class: ''
-          element_label_colon: true
+          element_label_colon: false
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
@@ -143,19 +143,6 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          click_sort_column: value
-          type: content_moderation_state
-          settings: {  }
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
         gid:
           id: gid
           table: group_content_field_data
@@ -373,7 +360,7 @@ display:
           group_type: group
           admin_label: ''
           entity_type: node
-          plugin_id: moderation_state_filter
+          plugin_id: latest_moderation_state_filter
           operator: in
           value:
             service_moderation-ready_to_publish: service_moderation-ready_to_publish
