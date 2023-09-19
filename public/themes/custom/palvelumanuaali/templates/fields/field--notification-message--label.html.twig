@@ -1,0 +1,19 @@
+{#
+/**
+ * @file
+ * Theme override for notification message label field.
+ */
+#}
+{%
+  set classes = [
+  'field',
+  'field--name-' ~ field_name|clean_class,
+  'field--type-' ~ field_type|clean_class,
+  'field--label-' ~ label_display,
+  label_display == 'inline' ? 'clearfix',
+]
+%}
+
+{% for item in items %}
+  <h4{{ attributes.addClass(classes, 'field__item') }}>{{ item.content }}</h4>
+{% endfor %}
