@@ -1,6 +1,18 @@
 <?php
 
 /**
+ * @file
+ * Module file for hel_tpm_search_autosuggest.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\views\ViewExecutable;
+
+/**
  * Implements hook_theme().
  */
 function hel_tpm_search_autosuggest_theme() {
@@ -10,7 +22,10 @@ function hel_tpm_search_autosuggest_theme() {
   return $themes;
 }
 
-function hel_tpm_search_autosuggest_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state) {
+/**
+ * Implements hook_form_alter().
+ */
+function hel_tpm_search_autosuggest_form_alter(&$form, FormStateInterface $form_state) {
   $storage = $form_state->getStorage();
   if (empty($storage['view']) ||
     $storage['view']->id() != 'solr_service_search' ||
@@ -20,22 +35,25 @@ function hel_tpm_search_autosuggest_form_alter(&$form, \Drupal\Core\Form\FormSta
 
   $form['search_wrapper'] = [
     '#type' => 'container',
-    '#attributes' => ['class' => 'search-autocomplete-wrapper']
+    '#attributes' => ['class' => 'search-autocomplete-wrapper'],
   ];
 
   $form['search_api_fulltext'] = [
     '#type' => 'textfield',
     '#id' => 'hel-tpm-search-autocomplete',
-    '#attributes' => ['placeholder'=> t('Search from all services'), 'autocomplete' => 'off'],
+    '#attributes' => [
+      'placeholder' =>
+      t('Search from all services'),
+      'autocomplete' => 'off',
+    ],
     '#attached' => ['library' => ['hel_tpm_search_autosuggest/hel_tpm_search_autosuggest']],
     '#default_value' => \Drupal::request()->query->get('search_api_fulltext'),
   ];
   $form['search_wrapper']['search_api_fulltext'] = $form['search_api_fulltext'];
   $form['search_wrapper']['list_items'] = [
-    '#theme' => 'hel_tpm_search_autocomplete'
+    '#theme' => 'hel_tpm_search_autocomplete',
   ];
   $form['actions']['submit']['#attributes']['title'] = t('Search from all services');
-
 
   // Generate weights for fields.
   _hel_tpm_search_autosuggest_reweight_fields($form, $storage['view']);
@@ -52,11 +70,15 @@ function hel_tpm_search_autosuggest_form_alter(&$form, \Drupal\Core\Form\FormSta
 /**
  * Helper function to generate weights for exposed filter fields.
  *
- * @param $form
- * @param $view
+ * @param array $form
+ *   Form render array.
+ * @param \Drupal\views\ViewExecutable $view
+ *   View where field is used in.
+ *
  * @return void
+ *   -
  */
-function _hel_tpm_search_autosuggest_reweight_fields(&$form, $view) {
+function _hel_tpm_search_autosuggest_reweight_fields(&$form, ViewExecutable $view) {
   $i = 0;
   // Re-weight the fields to match proper placement.
   foreach ($view->filter as $field_key => $filter) {

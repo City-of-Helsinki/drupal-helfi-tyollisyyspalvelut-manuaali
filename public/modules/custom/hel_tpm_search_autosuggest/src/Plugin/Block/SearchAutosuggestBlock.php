@@ -18,15 +18,14 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class SearchAutosuggestBlock extends BlockBase {
 
   /**
+   * Form builder service.
+   *
    * @var \Drupal\Core\Form\FormBuilderInterface
    */
   protected $formBuilder;
 
   /**
-   * @param array $configuration
-   * @param $plugin_id
-   * @param $plugin_definition
-   * @param \Drupal\Core\Form\FormBuilderInterface $formBuilder
+   * {@inheritdoc}
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, FormBuilderInterface $form_builder) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
@@ -34,11 +33,7 @@ class SearchAutosuggestBlock extends BlockBase {
   }
 
   /**
-   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-   * @param array $configuration
-   * @param $plugin_id
-   * @param $plugin_definition
-   * @return static
+   * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     return new static(

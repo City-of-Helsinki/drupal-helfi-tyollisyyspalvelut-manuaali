@@ -1,7 +1,12 @@
 <?php
 
 /**
- * @return void
+ * @file
+ * Install file for hel_tpm_search_autosuggest.
+ */
+
+/**
+ * Implements hook_install().
  */
 function hel_tpm_search_autosuggest_install() {
   module_set_weight('hel_tpm_search_autosuggest', 10);
@@ -9,6 +14,9 @@ function hel_tpm_search_autosuggest_install() {
 
 /**
  * Set module weight to 10.
+ *
+ * @return void
+ *   -
  */
 function hel_tpm_search_autosuggest_update_9001() {
   module_set_weight('hel_tpm_search_autosuggest', 10);
