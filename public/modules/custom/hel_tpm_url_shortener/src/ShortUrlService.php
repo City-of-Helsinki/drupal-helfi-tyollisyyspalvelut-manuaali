@@ -7,7 +7,7 @@ use Drupal\Core\Url;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
- * ShortUrlService service.
+ * Short url service service.
  */
 class ShortUrlService {
 
@@ -26,6 +26,8 @@ class ShortUrlService {
   protected $requestStack;
 
   /**
+   * Entity types that can be short linked.
+   *
    * @var string[]
    */
   protected $entityTypes = [
@@ -47,15 +49,16 @@ class ShortUrlService {
   }
 
   /**
-   * Generate short url
+   * Generate short url.
    *
-   * @return null
+   * @return \Drupal\Core\Entity\EntityInterface|false|null
+   *   Returns shortenrredirect entity if link can be generated.
+   *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function generateShortLink() {
-
     $request = $this->requestStack->getCurrentRequest();
     $request->query->remove('ajax_form');
     $request->query->remove('_wrapper_format');
@@ -80,8 +83,9 @@ class ShortUrlService {
 
     $url = Url::fromRoute($route, $params);
 
-    if ($url->isExternal())
+    if ($url->isExternal()) {
       return NULL;
+    }
 
     $hash = md5($url->toString());
     $shortlink = $this->shortLinkExists($hash);
@@ -89,7 +93,7 @@ class ShortUrlService {
       $short_properties = [
         'hash' => $hash,
         'redirect_source' => $url->toString(),
-        'shortened_link' => '/' . $this->generateRandomString()
+        'shortened_link' => '/' . $this->generateRandomString(),
       ];
       $shortlink = $this->entityTypeManager->getStorage('shortenerredirect')->create($short_properties);
       $shortlink->save();
@@ -101,8 +105,12 @@ class ShortUrlService {
   /**
    * Check if short link exists.
    *
-   * @param $hash
+   * @param string $hash
+   *   Link hash to avoid duplication.
+   *
    * @return \Drupal\Core\Entity\EntityInterface|false|null
+   *   Shortenerredirect entity
+   *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
@@ -120,20 +128,23 @@ class ShortUrlService {
   /**
    * Generate random alphanumeric string.
    *
-   * @param $length
+   * @param int $length
+   *   Length of shortened url string.
+   *
    * @return string
+   *   String used in shortened link.
    */
-  protected function generateRandomString($length = 6){
+  protected function generateRandomString($length = 6) {
     $chars = "abcdfghjkmnpqrstvwxyz|ABCDFGHJKLMNPQRSTVWXYZ|0123456789";
     $sets = explode('|', $chars);
     $all = '';
     $randString = '';
-    foreach($sets as $set){
+    foreach ($sets as $set) {
       $randString .= $set[array_rand(str_split($set))];
       $all .= $set;
     }
     $all = str_split($all);
-    for($i = 0; $i < $length - count($sets); $i++){
+    for ($i = 0; $i < $length - count($sets); $i++) {
       $randString .= $all[array_rand($all)];
     }
     $randString = str_shuffle($randString);

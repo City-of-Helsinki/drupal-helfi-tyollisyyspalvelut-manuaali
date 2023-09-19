@@ -4,8 +4,6 @@ namespace Drupal\hel_tpm_url_shortener\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Link;
-use Drupal\Core\Url;
 
 /**
  * Provides a Hel TPM Url shortener form.
@@ -26,7 +24,7 @@ class ShortenUrlLinkForm extends FormBase {
 
     $form['wrapper'] = [
       '#type' => 'container',
-      '#attributes' => ['id' => 'shorten-link']
+      '#attributes' => ['id' => 'shorten-link'],
     ];
     $form['wrapper']['submit'] = [
       '#type' => 'submit',
@@ -55,10 +53,15 @@ class ShortenUrlLinkForm extends FormBase {
   }
 
   /**
+   * Shorten Url form ajax callback.
+   *
    * @param array $form
+   *   Form render array.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state object.
    *
    * @return mixed
+   *   Returns element form wrapper.
    */
   public function submitAjaxCall(array &$form, FormStateInterface $form_state) {
     $short_link_generator = \Drupal::service('hel_tpm_url_shortener.short_url_service');
