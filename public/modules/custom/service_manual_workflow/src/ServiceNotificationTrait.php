@@ -1,16 +1,25 @@
 <?php
+
 namespace Drupal\service_manual_workflow;
 
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\group\Entity\GroupInterface;
 use Drupal\node\NodeInterface;
 
+/**
+ * Service notification trait.
+ */
 trait ServiceNotificationTrait {
 
   /**
+   * Get service owner method.
+   *
    * @param \Drupal\node\NodeInterface $entity
+   *   Node object.
    *
    * @return array
+   *   Array of municipality updatee users.
+   *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
@@ -24,9 +33,13 @@ trait ServiceNotificationTrait {
   }
 
   /**
+   * Group getter from content entity.
+   *
    * @param \Drupal\Core\Entity\ContentEntityInterface $entity
+   *   Content entity object.
    *
    * @return array|false|mixed
+   *   Group from entity.
    */
   protected function getGroup(ContentEntityInterface $entity) {
     $groups = $this->contentGroupService->getGroupsWithEntity($entity);
@@ -49,9 +62,12 @@ trait ServiceNotificationTrait {
    * Get all group users with permission to create publish transition.
    *
    * @param \Drupal\Core\Entity\ContentEntityInterface $entity
+   *   Content entity object.
    * @param \Drupal\group\Entity\GroupInterface $group
+   *   Group object.
    *
    * @return array
+   *   Array of group admin users.
    */
   protected function getEntityGroupAdministration(ContentEntityInterface $entity, GroupInterface $group) : array {
     $accounts = [];
@@ -72,6 +88,8 @@ trait ServiceNotificationTrait {
    * Get the group from the current route match.
    *
    * @return bool|\Drupal\group\Entity\GroupInterface
+   *   Group object.
+   *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    */
   public function getGroupFromRoute() {
@@ -81,4 +99,5 @@ trait ServiceNotificationTrait {
     }
     return $parameters['group'];
   }
+
 }

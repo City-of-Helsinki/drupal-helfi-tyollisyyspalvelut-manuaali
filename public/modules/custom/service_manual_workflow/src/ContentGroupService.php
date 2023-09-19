@@ -4,12 +4,9 @@ namespace Drupal\service_manual_workflow;
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Session\AccountProxyInterface;
-use Drupal\group\Entity\Group;
-use Drupal\group\Entity\GroupInterface;
-use Drupal\node\NodeInterface;
 use Drupal\group\Entity\GroupContent;
+use Drupal\group\Entity\GroupInterface;
 
 /**
  * ContentGroupService service.
