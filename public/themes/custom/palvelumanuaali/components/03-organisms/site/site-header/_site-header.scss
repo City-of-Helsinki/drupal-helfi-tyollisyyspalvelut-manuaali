@@ -258,6 +258,7 @@
     box-shadow: 0px 8px 16px rgba(30, 64, 182, 0.2);
     background-color: clr(background-dropdown);
     padding-bottom: 32px;
+    top:24px !important;
     @include large {
       width: 336px;
     }
@@ -274,6 +275,9 @@
         text-transform: uppercase;
         padding-top: 0;
         padding-bottom: 4px;
+        @include large  {
+          margin-bottom: 0;
+        }
       }
       input {
         border-radius: 4px 4px 0px 0px;
