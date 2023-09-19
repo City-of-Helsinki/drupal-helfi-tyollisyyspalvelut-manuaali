@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Module file for hel_tpm_update_reminder.
+ */
+
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 use Drupal\message\Entity\Message;
@@ -8,15 +13,21 @@ use Drupal\message\Entity\Message;
  * Implements hook_cron().
  */
 function hel_tpm_update_reminder_cron() {
-  _hel_tpm_node_update_reminder();
-  _hel_tpm_notification_message_expiry_reminder(7);
-  _hel_tpm_notification_message_expiry_reminder(1);
+  _hel_tpm_update_reminder_node_update_reminder();
+  _hel_tpm_update_reminder_notification_message_expiry_reminder(7);
+  _hel_tpm_update_reminder_notification_message_expiry_reminder(1);
 }
 
 /**
  * Process the service node update reminders.
- */
-function _hel_tpm_node_update_reminder() {
+ *
+ * @return void
+ *   -
+ *
+ * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+ * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+ * @throws \Drupal\Core\Entity\EntityStorageException */
+function _hel_tpm_update_reminder_node_update_reminder() {
   $ago = strtotime('-6 months');
   $query = \Drupal::entityQuery('node')
     ->condition('type', 'service')
@@ -35,7 +46,10 @@ function _hel_tpm_node_update_reminder() {
       $node = $nodeStorage->load($nid);
       $account = $node->getOwner();
 
-      $message = Message::create(['template' => 'hel_tpm_update_reminder', 'uid' => $account->id()]);
+      $message = Message::create([
+        'template' => 'hel_tpm_update_reminder',
+        'uid' => $account->id(),
+      ]);
       $message->setOwner($account)
         ->addContext('node', $node)
         ->save();
@@ -56,7 +70,7 @@ function _hel_tpm_node_update_reminder() {
  * @param int $days
  *   Which reminder to process, 1 or 7 days. Usually you should run both.
  */
-function _hel_tpm_notification_message_expiry_reminder($days) {
+function _hel_tpm_update_reminder_notification_message_expiry_reminder($days) {
   $week_limit = new DrupalDateTime('+7 days');
   $day_limit = new DrupalDateTime('+1 days');
   $now_limit = new DrupalDateTime('now');
@@ -72,7 +86,11 @@ function _hel_tpm_notification_message_expiry_reminder($days) {
   }
   $results = $query->execute();
   $storage = \Drupal::entityTypeManager()->getStorage('notification_message');
-  \Drupal::logger('hel_tpm_update_reminder')->notice('Found %count notifications expiring in %days days.', ['%days' => $days, '%count' => count($results)]);
+  \Drupal::logger('hel_tpm_update_reminder')->notice(
+    'Found %count notifications expiring in %days days.', [
+      '%days' => $days,
+      '%count' => count($results),
+    ]);
   $sent = 0;
   foreach ($results as $id) {
     $state_id = 'hel_tpm.update_reminder.notification_message.' . $days . 'd.' . $id;
@@ -82,7 +100,10 @@ function _hel_tpm_notification_message_expiry_reminder($days) {
       $entity = $storage->load($id);
       $account = $entity->getAuthorUser();
 
-      $message = Message::create(['template' => $days . 'd_notification_expiry_reminder', 'uid' => $account->id(), ]);
+      $message = Message::create([
+        'template' => $days . 'd_notification_expiry_reminder',
+        'uid' => $account->id(),
+      ]);
       $message->setOwner($account)
         ->addContext('notification_message', $entity)
         ->save();
@@ -94,5 +115,9 @@ function _hel_tpm_notification_message_expiry_reminder($days) {
       $sent++;
     }
   }
-  \Drupal::logger('hel_tpm_update_reminder')->notice('Sent update reminders for %count notifications expiring in %days days.', ['%count' => $sent, '%days' => $days]);
+  \Drupal::logger('hel_tpm_update_reminder')->notice(
+    'Sent update reminders for %count notifications expiring in %days days.', [
+      '%count' => $sent,
+      '%days' => $days,
+    ]);
 }
