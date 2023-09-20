@@ -132,4 +132,11 @@ class SetServiceOutdatedOperationForm extends ConfirmFormBase {
     return $this->serviceOutdatedAccess->access($node, $this->currentUser());
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getCancelUrl() {
+    return parent::getCancelUrl();
+  }
+
 }
