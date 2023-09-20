@@ -2,9 +2,6 @@
 
 namespace Drupal\Tests\hel_tpm_general\Functional;
 
-use Drupal\Core\Test\AssertMailTrait;
-use Drupal\field\Entity\FieldConfig;
-use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\Tests\BrowserTestBase;
 
 /**
@@ -16,7 +13,7 @@ class UsernameGenerateTest extends BrowserTestBase {
 
   protected static $modules = [
     'hel_tpm_general',
-    'group'
+    'group',
   ];
   /**
    * {@inheritdoc}
@@ -31,7 +28,6 @@ class UsernameGenerateTest extends BrowserTestBase {
     $this->drupalLogin($user);
 
     $this->assertEquals(\Drupal::time()->getRequestTime(), $user->getCreatedTime(), 'Creating a user sets default "created" timestamp.');
-
 
     // Test user creation page for valid fields.
     $this->drupalGet('admin/people/create');
