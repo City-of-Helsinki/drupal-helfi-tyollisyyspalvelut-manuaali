@@ -152,6 +152,7 @@ function _hel_tpm_general_generate_username(EntityInterface $entity) {
 function _hel_tpm_general_username_exists(string $username, int $entity_id = NULL) {
   $storage = \Drupal::entityTypeManager()->getStorage('user');
   $query = $storage->getQuery()
+    ->accessCheck(FALSE)
     ->condition('name', $username);
   if ($entity_id) {
     $query->condition('uid', $entity_id, '<>');
