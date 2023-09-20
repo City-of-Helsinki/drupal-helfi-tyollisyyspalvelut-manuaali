@@ -38,8 +38,10 @@ trait ServiceNotificationTrait {
    * @param \Drupal\Core\Entity\ContentEntityInterface $entity
    *   Content entity object.
    *
-   * @return array|false|mixed
+   * @return array|bool|\Drupal\group\Entity\GroupInterface|mixed
    *   Group from entity.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionExceptio
    */
   protected function getGroup(ContentEntityInterface $entity) {
     $groups = $this->contentGroupService->getGroupsWithEntity($entity);

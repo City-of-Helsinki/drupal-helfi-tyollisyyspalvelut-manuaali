@@ -2,14 +2,12 @@
 
 namespace Drupal\service_manual_workflow;
 
-use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\group\Entity\GroupContent;
-use Drupal\group\Entity\GroupInterface;
 
 /**
- * ContentGroupService service.
+ * Content group service.
  */
 class ContentGroupService {
 
@@ -31,26 +29,15 @@ class ContentGroupService {
   }
 
   /**
-   * @param \Drupal\Core\Session\AccountProxyInterface $account
-   * @param \Drupal\group\Entity\GroupInterface $group
+   * Get groups from content entity.
    *
-   * @return null
+   * @param \Drupal\Core\Entity\ContentEntityInterface $entity
+   *   Content entity object.
+   *
+   * @return array
+   *   Array of groups.
    */
-  public function getAccountGroupRoles(AccountProxyInterface $account, GroupInterface $group) {
-    $member = $group->getMember($account);
-    if (empty($member)) {
-      return NULL;
-    }
-    if (empty($member->getGroupContent()->group_roles)) {
-      return NULL;
-    }
-    return $member->getGroupContent()->group_roles->entity;
-  }
-
-  /**
-   * Method description.
-   */
-  public function getGroupsWithEntity(EntityInterface $entity) {
+  public function getGroupsWithEntity(ContentEntityInterface $entity) {
     $groups = [];
 
     $group_contents = GroupContent::loadByEntity($entity);

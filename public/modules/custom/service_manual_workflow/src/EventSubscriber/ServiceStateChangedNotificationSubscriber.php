@@ -111,10 +111,10 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
   }
 
   /**
-   * From draft to ready to publish event
+   * From draft to ready to publish event.
    *
    * @param \Drupal\service_manual_workflow\Event\ServiceModerationEvent $event
-   *  Service moderation event.
+   *   Service moderation event.
    *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
@@ -148,10 +148,11 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
    * Service from ready to publish to published subscriber event.
    *
    * @param \Drupal\service_manual_workflow\Event\ServiceModerationEvent $event
-   *  Service moderation event.
+   *   Service moderation event.
    *
    * @return void
-   * -
+   *   -
+   *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
@@ -173,10 +174,10 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
    * Check if service provider should be notified or not.
    *
    * @param \Drupal\node\NodeInterface $entity
-   *  Node object.
+   *   Node object.
    *
    * @return bool
-   * Return TRUE if service provider needs to be notified.
+   *   Return TRUE if service provider needs to be notified.
    *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
@@ -196,10 +197,10 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
    * Fetch available users for sending notification.
    *
    * @param \Drupal\node\NodeInterface $entity
-   *  Node object.
+   *   Node object.
    *
    * @return array
-   *  Array of user objects.
+   *   Array of user objects.
    *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
@@ -221,9 +222,13 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
   }
 
   /**
+   * Returns all users that can publish given node entity.
+   *
    * @param \Drupal\node\NodeInterface $entity
+   *   Node object.
    *
    * @return array
+   *   Array of users.
    */
   protected function getPublishersFromEntityGroup(NodeInterface $entity) : array {
     $group = $this->getGroup($entity);
@@ -237,13 +242,26 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
    * Message dispatcher.
    *
    * @param \Drupal\Core\Entity\EntityInterface $node
+   *   Node object.
    * @param \Drupal\user\UserInterface $account
+   *   User object.
+   * @param string $message_template
+   *   Message template id.
    *
+   * @return void
+   *   -
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    * @throws \Drupal\Core\Entity\EntityStorageException
-   */
+   * @throws \Drupal\message_notify\Exception\MessageNotifyException
+   * */
   protected function dispatchMessage(EntityInterface $node, UserInterface $account, $message_template) {
     $current_user = $this->entityTypeManager->getStorage('user')->load($this->currentUser->id());
-    $message = Message::create(['template' => $message_template, 'uid' => $account->id()]);
+    $message = Message::create([
+      'template' => $message_template,
+      'uid' => $account->id(),
+    ]);
     $message->set('field_node', $node);
     $message->set('field_user', $account);
     $message->set('field_message_author', $current_user);
@@ -265,9 +283,12 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
    * Check if current user has publish permission or not.
    *
    * @param \Drupal\Core\Session\AccountProxyInterface $account
+   *   Account proxy object.
    * @param \Drupal\Core\Entity\ContentEntityInterface $node
+   *   Node object.
    *
    * @return bool
+   *   Returns TRUE if administration could be notified.
    */
   protected function notifyGroupAdministration(AccountProxyInterface $account, ContentEntityInterface $node) {
     $valid_transitions = $this->stateTransitionValidation->getValidTransitions($node, $account);

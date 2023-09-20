@@ -2,6 +2,7 @@
 
 /**
  * @file
+ * Primary module hooks for Service manual workflow module.
  */
 
 use Drupal\content_moderation\Entity\ContentModerationStateInterface;
@@ -11,11 +12,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\field\FieldConfigInterface;
 use Drupal\service_manual_workflow\Event\ServiceModerationEvent;
-
-/**
- * @file
- * Primary module hooks for Service manual workflow module.
- */
 
 /**
  * Implements hook_form_alter().
@@ -64,10 +60,6 @@ function service_manual_workflow_entity_operation(EntityInterface $entity) {
 
 /**
  * Implements hook_entity_insert().
- *
- * @param \Drupal\Core\Entity\EntityInterface $entity
- *
- * @return void
  */
 function service_manual_workflow_entity_insert(EntityInterface $entity) {
   if (!$entity instanceof ContentModerationStateInterface) {
@@ -130,13 +122,6 @@ function service_manual_workflow_require_on_publish_is_published_alter(&$is_publ
 
 /**
  * Implements hook_entity_update().
- *
- * @param \Drupal\Core\Entity\EntityInterface $entity
- *
- * @return void
- *
- * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
- * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
  */
 function service_manual_workflow_entity_update(EntityInterface $entity) {
   if (!$entity instanceof ContentModerationStateInterface) {
@@ -161,8 +146,10 @@ function service_manual_workflow_entity_update(EntityInterface $entity) {
  * Fetch previous revision for content moderation state.
  *
  * @param \Drupal\Core\Entity\EntityInterface $entity
+ *   Entity object.
  *
  * @return \Drupal\Core\Entity\EntityInterface|null
+ *   Previous revision of give entity.
  *
  * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
  * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
