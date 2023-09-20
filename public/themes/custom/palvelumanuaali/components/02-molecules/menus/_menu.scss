@@ -107,6 +107,9 @@
   border: 0;
   padding:24px;
   text-align: center;
+  @include large {
+    margin-top: $space-one-and-half;
+  }
   a {
     font-size: $small-font;
     text-decoration: unset;

@@ -258,6 +258,7 @@
     box-shadow: 0px 8px 16px rgba(30, 64, 182, 0.2);
     background-color: clr(background-dropdown);
     padding-bottom: 32px;
+    top:24px !important;
     @include large {
       width: 336px;
     }
@@ -274,6 +275,9 @@
         text-transform: uppercase;
         padding-top: 0;
         padding-bottom: 4px;
+        @include large  {
+          margin-bottom: 0;
+        }
       }
       input {
         border-radius: 4px 4px 0px 0px;
@@ -341,14 +345,19 @@
   }
 }
 
+.search-history-wrapper[style*="display: block"]~.form-item-search-api-fulltext #hel-tpm-search-autocomplete,
+.hel-search-autocomplete[style*="display: block"]~.form-item-search-api-fulltext #hel-tpm-search-autocomplete {
+  box-shadow: inset 0px 0px 0px 2px clr(background-section);
+}
+
 .search-history-wrapper,
 .hel-search-autocomplete {
     z-index: 210;
-    margin-top: -5px;
+    margin-top: 42px;
     position: absolute;
     width: 100%;
     background-color: clr(text-inverse);
-    border: 2px solid #AFCEFD;
+    border: 2px solid clr(background-section);
     border-top: 0;
     border-bottom-right-radius: 8px;
     border-bottom-left-radius: 8px;
@@ -361,6 +370,9 @@
 
     .title {
       letter-spacing: 1px;
+      line-height: 24px;
+      font-size: 12px;
+      font-weight: bold;
       text-transform: uppercase;
       color: clr(gray);
       padding: 4px 0 4px 0;
@@ -379,20 +391,23 @@
           margin-right: $space;
           color: $blue40;
         }
+        &:hover {
+          &::before {
+            color: $blue80;
+          }
+        }
       }
     }
-
+    .item-list{
+      margin-top: $space-one-half;
+      margin-bottom: $space-one-half;
+    }
     .suggestion-item {
       padding: $space-one-half $space-one-half $space-one-half $space-one-and-half;
       display: flex;
-
-      &:first-child {
-        padding-top: $space;
+      &:hover {
+        background-color: clr(background);
       }
-      &:last-child {
-        padding-bottom: $space;
-      }
-
       a {
         color: clr(text);
         text-decoration: none;
@@ -409,12 +424,16 @@
     border-width: 0;
     border-radius: 8px;
     background-image: unset !important;
+    background: clr(text-inverse);
     padding-top: 12px;
     padding-bottom: 12px;
     padding-left: 24px;
     width: 100%;
     line-height: 24px;
-
+    outline: 0;
+    &:focus {
+      box-shadow: inset 0px 0px 0px 2px clr(background-section);
+    }
     @include large {
       max-width: 300px;
     }
