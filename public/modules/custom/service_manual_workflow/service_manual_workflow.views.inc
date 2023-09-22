@@ -17,16 +17,6 @@ function service_manual_workflow_views_data() {
 }
 
 /**
- * Implements hook_views_data().
- */
-/**
- * Implements hook_views_data_alter().
- */
-function service_manual_workflow_views_data_alter(array &$data) {
-  $data = $data;
-}
-
-/**
  * Creates a ViewsData object to respond to views hooks.
  *
  * @return \Drupal\service_manual_workflow\ViewsData
