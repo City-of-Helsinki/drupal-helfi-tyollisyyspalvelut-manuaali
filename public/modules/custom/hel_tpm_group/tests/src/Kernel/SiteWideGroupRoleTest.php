@@ -2,14 +2,16 @@
 
 namespace Drupal\Tests\hel_tpm_group\Kernel;
 
+use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Tests\group\Functional\GroupBrowserTestBase;
+use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 
 /**
  * Test description.
  *
  * @group hel_tpm_group
  */
-class SiteWideGroupRoleTest extends GroupBrowserTestBase {
+class SiteWideGroupRoleTest extends GroupKernelTestBase {
 
   /**
    * {@inheritdoc}
@@ -17,6 +19,7 @@ class SiteWideGroupRoleTest extends GroupBrowserTestBase {
   public static $modules = [
     'hel_tpm_group',
     'group',
+    'hook_post_action',
     'options',
     'entity',
     'variationcache',
@@ -52,12 +55,20 @@ class SiteWideGroupRoleTest extends GroupBrowserTestBase {
     $this->groupRoleStorage = $this->entityTypeManager->getStorage('group_role');
     $this->groupRoleSynchronizer = $this->container->get('group_role.synchronizer');
 
-    $this->drupalCreateRole([], 'siterole');
-    $this->createUser();
-    $this->account = $this->createUser();
+    $container = new ContainerBuilder();
+
+    $site_wide_role_changed = $this->getMockBuilder('Drupal\hel_tpm_group\EventSubscriber\HelTpmGroupSubscriber')
+      ->disableOriginalConstructor()
+      ->getMock();
+    $container->set('hel_tpm_group.site_wide_role_changed', $site_wide_role_changed);
+
+    $this->createRole([], 'siterole', 'Site role');
     $this->group = $this->createGroup();
   }
 
+  public function testGroupSiteWideRoleChanged() {
+
+  }
   /**
    * Test callback.
    */
@@ -78,16 +89,18 @@ class SiteWideGroupRoleTest extends GroupBrowserTestBase {
       'weight' => 0,
       'group_type' => 'default',
     ]);
-    $group_role->set('site_wide_role', ['publisher'])->save();
+    $group_role->set('site_wide_role', ['siterole'])->save();
 
-    $this->assertEqualsCanonicalizing(['publisher'], $group_role->get('site_wide_role'), 'Role has site wide role configured');
+    $this->assertEqualsCanonicalizing(['siterole'], $group_role->get('site_wide_role'), 'Role has site wide role configured');
     $membership = $this->group->getMember($this->account)->getGroupContent();
     $membership->group_roles[] = 'default-editor';
     $membership->save();
 
     // Reload account.
     $this->account = $this->entityTypeManager->getStorage('user')->load($this->account->id());
-
+    $roles = $this->account->getRoles();
+    $this->assertEqualsCanonicalizing(['authenticated', 'publisher'], $this->account->getRoles(), 'Role not inherited properly.');
+    $account = $this->account;
   }
 
   /**

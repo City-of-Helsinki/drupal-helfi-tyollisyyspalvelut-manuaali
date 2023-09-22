@@ -119,7 +119,7 @@ function hel_tpm_forms_node_service_form_alter_helper(&$form, FormStateInterface
 
   $form['#attached']['library'][] = 'hel_tpm_forms/hel_tpm_forms';
 
-  $form['#validate'][] = '_hel_tpm_forms_validate_service_form';
+  $form['#validate'][] = 'hel_tpm_forms_validate_service_form_helper';
 
   hel_tpm_forms_publish_service_action($form, $form_state);
 }
