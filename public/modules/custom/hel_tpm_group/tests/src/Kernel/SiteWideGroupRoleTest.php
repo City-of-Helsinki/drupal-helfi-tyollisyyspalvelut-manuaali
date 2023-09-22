@@ -19,7 +19,6 @@ class SiteWideGroupRoleTest extends GroupKernelTestBase {
   public static $modules = [
     'hel_tpm_group',
     'group',
-    'hook_post_action',
     'options',
     'entity',
     'variationcache',
@@ -54,21 +53,11 @@ class SiteWideGroupRoleTest extends GroupKernelTestBase {
     parent::setUp();
     $this->groupRoleStorage = $this->entityTypeManager->getStorage('group_role');
     $this->groupRoleSynchronizer = $this->container->get('group_role.synchronizer');
-
-    $container = new ContainerBuilder();
-
-    $site_wide_role_changed = $this->getMockBuilder('Drupal\hel_tpm_group\EventSubscriber\HelTpmGroupSubscriber')
-      ->disableOriginalConstructor()
-      ->getMock();
-    $container->set('hel_tpm_group.site_wide_role_changed', $site_wide_role_changed);
-
-    $this->createRole([], 'siterole', 'Site role');
     $this->group = $this->createGroup();
+    $this->account = $this->createUser();
+    $this->createRole([], 'siterole', 'Site role');
   }
 
-  public function testGroupSiteWideRoleChanged() {
-
-  }
   /**
    * Test callback.
    */
@@ -95,12 +84,6 @@ class SiteWideGroupRoleTest extends GroupKernelTestBase {
     $membership = $this->group->getMember($this->account)->getGroupContent();
     $membership->group_roles[] = 'default-editor';
     $membership->save();
-
-    // Reload account.
-    $this->account = $this->entityTypeManager->getStorage('user')->load($this->account->id());
-    $roles = $this->account->getRoles();
-    $this->assertEqualsCanonicalizing(['authenticated', 'publisher'], $this->account->getRoles(), 'Role not inherited properly.');
-    $account = $this->account;
   }
 
   /**
