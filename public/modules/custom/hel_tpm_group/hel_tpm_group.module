@@ -83,7 +83,7 @@ function hel_tpm_group_form_group_role_edit_form_builder($entity_type, GroupRole
 
   // Dispatch site wide role changed event.
   $event = new GroupSiteWideRoleChanged($group_role);
-  \Drupal::service('event_dispatcher')->dispatch($event::EVENT_NAME, $event);
+  \Drupal::service('event_dispatcher')->dispatch($event, $event::EVENT_NAME);
 }
 
 /**
@@ -108,7 +108,7 @@ function hel_tpm_group_entity_postdelete(EntityInterface $entity) {
   }
 
   $event = new GroupMembershipChanged($entity);
-  \Drupal::service('event_dispatcher')->dispatch($event::EVENT_NAME, $event);
+  \Drupal::service('event_dispatcher')->dispatch($event, $event::EVENT_NAME);
 }
 
 /**

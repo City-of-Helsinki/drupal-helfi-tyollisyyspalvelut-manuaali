@@ -109,7 +109,9 @@ class HelTpmGroupSubscriber implements EventSubscriberInterface {
    *   User object.
    *
    * @return void
-   *   Return nothing.
+   *   -
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
    */
   protected function updateUserRoles(UserInterface $user) {
     $roles = $this->calculateUserRoles($user);
@@ -173,6 +175,7 @@ class HelTpmGroupSubscriber implements EventSubscriberInterface {
     if (empty($roles)) {
       return self::$defaultRoles;
     }
+
     return $roles;
   }
 

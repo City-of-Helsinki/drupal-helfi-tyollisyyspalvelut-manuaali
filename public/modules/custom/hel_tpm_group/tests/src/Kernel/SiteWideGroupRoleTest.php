@@ -2,8 +2,6 @@
 
 namespace Drupal\Tests\hel_tpm_group\Kernel;
 
-use Drupal\Core\DependencyInjection\ContainerBuilder;
-use Drupal\Tests\group\Functional\GroupBrowserTestBase;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 
 /**

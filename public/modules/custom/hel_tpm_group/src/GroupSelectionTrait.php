@@ -6,7 +6,7 @@ use Drupal\Component\Utility\Html;
 use Drupal\node\NodeInterface;
 
 /**
- *
+ * Trait used in group selection.
  */
 trait GroupSelectionTrait {
 
