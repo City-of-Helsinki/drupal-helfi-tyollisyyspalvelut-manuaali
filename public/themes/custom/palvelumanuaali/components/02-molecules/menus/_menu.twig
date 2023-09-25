@@ -24,7 +24,7 @@
   @see http://twig.sensiolabs.org/doc/tags/macro.html
 #}
 
-{% macro menu_links(items, attributes, menu_level, menu_class, menu_modifiers, menu_blockname, item_base_class, item_modifiers, item_blockname, directory, icon_name, icon_base_class) %}
+{% macro menu_links(items, attributes, menu_level, menu_class, menu_modifiers, menu_blockname, item_base_class, item_modifiers, item_blockname, directory, icon_name, icon_base_class, icon_modifiers) %}
   {% import _self as menus %}
   {% if items %}
     {# Set classes #}
@@ -38,6 +38,7 @@
     {% include "@molecules/menus/_menu-list.twig" with {
       icon_name: icon_name,
       icon_base_class: icon_base_class,
+      icon_modifiers: icon_modifiers,
     }%}
 
   {% endif %}
@@ -45,4 +46,4 @@
 
 {% import _self as menus %}
 
-{{ menus.menu_links(items, attributes, 0, menu_class, menu_modifiers, menu_blockname, item_base_class, item_modifiers, item_blockname, directory, icon_name, icon_base_class) }}
+{{ menus.menu_links(items, attributes, 0, menu_class, menu_modifiers, menu_blockname, item_base_class, item_modifiers, item_blockname, directory, icon_name, icon_base_class, icon_modifiers) }}
