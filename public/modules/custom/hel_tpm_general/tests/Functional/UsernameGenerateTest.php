@@ -11,10 +11,14 @@ use Drupal\Tests\BrowserTestBase;
  */
 class UsernameGenerateTest extends BrowserTestBase {
 
+  /**
+   * {@inheritdoc}
+   */
   protected static $modules = [
     'hel_tpm_general',
     'group',
   ];
+
   /**
    * {@inheritdoc}
    */
