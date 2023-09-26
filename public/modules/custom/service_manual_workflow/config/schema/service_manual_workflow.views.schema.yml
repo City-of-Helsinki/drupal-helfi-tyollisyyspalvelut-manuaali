@@ -1,0 +1,10 @@
+views.filter.latest_moderation_state_filter:
+  type: views.filter.in_operator
+  label: 'Latest Moderation state filter'
+  mapping:
+    limit_workflows:
+      type: sequence
+      label: 'Workflow'
+      sequence:
+        type: string
+        label: 'Workflow'

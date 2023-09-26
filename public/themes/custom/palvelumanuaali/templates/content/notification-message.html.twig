@@ -1,0 +1,49 @@
+{#
+/**
+ * @file
+ * Override theme implementation to display a notification_message.
+ *
+ * See templates/notification-message.html.twig from contrib module
+ * notification_message for documentation.
+ */
+#}
+
+{% set classes = ['message'] %}
+
+{% if elements['#notification_message'] %}
+  {% set classes = classes|merge([
+    'message--type-' ~ bundle|clean_class,
+    'card--' ~ bundle|clean_class ~ '-notification'
+  ]) %}
+{% endif %}
+
+{% set level = content.field_message_level['#items'].getValue() | first.value %}
+{% if level == "error" %}
+  {% set classes = classes|merge(['card--border-left-red']) %}
+{% elseif level == "warning" %}
+  {% set classes = classes|merge(['card--border-left-yellow']) %}
+{% else %}
+  {% set classes = classes|merge(['card--border-left-blue']) %}
+{% endif %}
+
+{# TODO: Use the card molecule once it supports data-message-id. #}
+<div data-message-id="{{ message.id() }}" class="{{ classes|join(' ') }} card card--bg-light-blue card--square-left card--bottom-gutter card--padded">
+  <div class="message__content card__content">
+    {{ content }}
+  </div>
+
+  {% if notification_dismiss.show and not is_message_entity %}
+    <a
+      href="/"
+      class="message__close"
+      aria-label="Close {{ message.label() }} notification"
+    >
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16 2L2 16" stroke="#13276F" stroke-width="2" stroke-miterlimit="10" stroke-linecap="square"/>
+        <path d="M16 16L2 2" stroke="#13276F" stroke-width="2" stroke-miterlimit="10" stroke-linecap="square"/>
+      </svg>
+    </a>
+  {% endif %}
+</div>
+
+

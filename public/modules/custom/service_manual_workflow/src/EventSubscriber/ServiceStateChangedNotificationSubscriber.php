@@ -224,6 +224,8 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
    */
   public static function getSubscribedEvents() {
     return [
+      'service_manual_workflow.published.to.ready_to_publish' => ['draftToReadyToPublish'],
+      'service_manual_workflow.outdated.to.ready_to_publish' => ['draftToReadyToPublish'],
       'service_manual_workflow.draft.to.ready_to_publish' => ['draftToReadyToPublish'],
       'service_manual_workflow.ready_to_publish.to.published' => ['readyToPublishToPublished']
     ];
