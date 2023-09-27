@@ -38,9 +38,13 @@ $main-content-width-xl: calc(100% - (#{$sidebar-width} + #{$main-gutter} * 2 ));
 
 .popup-content {
   display: flex;
-  flex-direction: column;
   margin: 0;
-  @include large {
+  flex-wrap: wrap;
+  width: 100%;
+  margin: auto;
+  justify-content: space-around;
+  @include xl {
+    flex-wrap: nowrap;
     flex-direction: row;
     justify-content: space-between;
     margin: 0 auto;
@@ -79,6 +83,7 @@ $main-content-width-xl: calc(100% - (#{$sidebar-width} + #{$main-gutter} * 2 ));
 .eu-cookie-compliance-buttons {
   display: flex;
   align-items: center;
+  justify-content: center;
   margin: auto;
   gap: $space-double;
   @include large {
@@ -86,3 +91,19 @@ $main-content-width-xl: calc(100% - (#{$sidebar-width} + #{$main-gutter} * 2 ));
     gap: $space;
   }
 }
+
+.eu-cookie-compliance-categories {
+  padding-top: 0;
+  @include xl {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.eu-cookie-compliance-categories-buttons {
+  margin: 0;
+}
+
+  .eu-cookie-compliance-buttons.eu-cookie-compliance-has-categories {
+    margin-top: 0;
+  }
