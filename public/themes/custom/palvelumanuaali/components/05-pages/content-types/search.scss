@@ -91,6 +91,29 @@
         grid-column: 2;
     }
   }
+  .text-search-wrapper {
+    .form-actions {
+      position: relative;
+    }
+    input[data-drupal-selector="edit-reset"] {
+      position: absolute;
+      top: 0;
+      left: -36px;
+      padding: 0;
+      color: transparent;
+      @extend .button--reset;
+      @extend .icon--small;
+      margin: 12px 0 12px 0;
+      background-size: contain;
+      background-image: url("/themes/custom/palvelumanuaali/images/icons/close.svg");
+      background-repeat: no-repeat;
+      background-position: center;
+      &:hover {
+        background-color: transparent;
+        color: transparent;
+      }
+    }
+  }
 }
 
 

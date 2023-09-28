@@ -177,6 +177,14 @@
         .keyup(function() {
           Drupal.behaviors.hel_tpm_search_autocomplete.createAutocomplete(this, form);
         });
+        $('[id^="edit-reset--"]').on("click", function (event) {
+        event.preventDefault();
+        $(this).closest('form').find("input[type=text], textarea").val("");
+        $(this).closest('form').find('select').val('');
+        $(this).closest('form').find('input[type=radio]').prop('checked', false);
+        $(this).closest('form').find('input[type=checkbox]').prop('checked', false);
+        $(this).closest('form').find('[id^="edit-submit-"]').click();
+      });
     }
   };
 
