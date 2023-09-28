@@ -7,7 +7,7 @@ use Drupal\Core\Form\FormBuilderInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Provides an example block.
+ * Provides an autosuggest block.
  *
  * @Block(
  *   id = "hel_tpm_search_autosuggest_block",
