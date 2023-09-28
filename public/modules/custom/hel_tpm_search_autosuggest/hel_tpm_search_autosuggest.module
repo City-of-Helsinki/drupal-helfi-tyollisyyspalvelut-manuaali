@@ -42,8 +42,7 @@ function hel_tpm_search_autosuggest_form_alter(&$form, FormStateInterface $form_
     '#type' => 'textfield',
     '#id' => 'hel-tpm-search-autocomplete',
     '#attributes' => [
-      'placeholder' =>
-      t('Search from all services'),
+      'placeholder' => t('Search from all services'),
       'autocomplete' => 'off',
     ],
     '#attached' => ['library' => ['hel_tpm_search_autosuggest/hel_tpm_search_autosuggest']],
