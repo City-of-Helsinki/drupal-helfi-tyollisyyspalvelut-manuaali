@@ -42,7 +42,7 @@ display:
           entity_type: node
           entity_field: title
           plugin_id: field
-          label: Otsikko
+          label: 'Palvelun nimi'
           exclude: false
           alter:
             alter_text: false
@@ -169,7 +169,7 @@ display:
           admin_label: ''
           entity_type: node
           plugin_id: moderation_state_field
-          label: 'Moderation state'
+          label: Muokkaustila
           exclude: false
           alter:
             alter_text: false
@@ -233,7 +233,7 @@ display:
           entity_type: node
           entity_field: status
           plugin_id: field
-          label: Status
+          label: Julkaistu
           exclude: false
           alter:
             alter_text: false
@@ -300,7 +300,7 @@ display:
           entity_type: node
           entity_field: changed
           plugin_id: field
-          label: Updated
+          label: 'Viimeksi päivitetty'
           exclude: false
           alter:
             alter_text: false
@@ -366,7 +366,7 @@ display:
           admin_label: 'Edit node link'
           entity_type: node
           plugin_id: entity_link_edit
-          label: 'Link to edit Content'
+          label: Muokkaa
           exclude: true
           alter:
             alter_text: false
@@ -408,6 +408,8 @@ display:
           empty_zero: false
           hide_alter_empty: true
           text: 'Muokkaa solmua'
+          output_url_as_text: false
+          absolute: false
         delete_node:
           id: delete_node
           table: node
@@ -417,7 +419,7 @@ display:
           admin_label: 'Delete node link'
           entity_type: node
           plugin_id: entity_link_delete
-          label: 'Link to delete Content'
+          label: Poista
           exclude: true
           alter:
             alter_text: false
@@ -458,7 +460,9 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          text: 'Poista solmu'
+          text: Poista
+          output_url_as_text: false
+          absolute: false
         dropbutton:
           id: dropbutton
           table: views
@@ -467,7 +471,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: dropbutton
-          label: Operations
+          label: Toiminnot
           exclude: false
           alter:
             alter_text: false
@@ -603,7 +607,7 @@ display:
           exposed: true
           expose:
             operator_id: moderation_state_op
-            label: 'Moderation state'
+            label: Muokkaustila
             description: ''
             use_operator: false
             operator: moderation_state_op
@@ -992,7 +996,7 @@ display:
           entity_type: node
           entity_field: title
           plugin_id: field
-          label: Otsikko
+          label: 'Palvelun nimi'
           exclude: false
           alter:
             alter_text: false
@@ -1056,7 +1060,7 @@ display:
           entity_type: node
           entity_field: langcode
           plugin_id: field
-          label: Kieli
+          label: Kieliversio
           exclude: false
           alter:
             alter_text: false
@@ -1122,7 +1126,7 @@ display:
           entity_type: group_content
           entity_field: gid
           plugin_id: field
-          label: Ryhmä
+          label: 'Palvelun järjestäjä'
           exclude: false
           alter:
             alter_text: false
@@ -1186,7 +1190,7 @@ display:
           admin_label: ''
           entity_type: node
           plugin_id: moderation_state_field
-          label: 'Moderation state'
+          label: Muokkaustila
           exclude: false
           alter:
             alter_text: false
@@ -1248,7 +1252,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: hel_tpm_editorial_service_has_unpublished_changes
-          label: 'Service has changes'
+          label: 'Uusia muutoksia'
           exclude: false
           alter:
             alter_text: false
@@ -1299,7 +1303,7 @@ display:
           entity_type: node
           entity_field: changed
           plugin_id: field
-          label: Updated
+          label: 'Viimeksi päivitetty'
           exclude: false
           alter:
             alter_text: false
@@ -1365,7 +1369,7 @@ display:
           admin_label: 'Edit node link'
           entity_type: node
           plugin_id: entity_link_edit
-          label: 'Link to edit Content'
+          label: Muokkaa
           exclude: true
           alter:
             alter_text: false
@@ -1407,6 +1411,8 @@ display:
           empty_zero: false
           hide_alter_empty: true
           text: 'Muokkaa solmua'
+          output_url_as_text: false
+          absolute: false
         delete_node:
           id: delete_node
           table: node
@@ -1416,7 +1422,7 @@ display:
           admin_label: 'Delete node link'
           entity_type: node
           plugin_id: entity_link_delete
-          label: 'Link to delete Content'
+          label: Poista
           exclude: true
           alter:
             alter_text: false
@@ -1458,6 +1464,8 @@ display:
           empty_zero: false
           hide_alter_empty: true
           text: 'Poista solmu'
+          output_url_as_text: false
+          absolute: false
         dropbutton:
           id: dropbutton
           table: views
@@ -1466,7 +1474,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: dropbutton
-          label: Operations
+          label: Toiminnot
           exclude: false
           alter:
             alter_text: false
@@ -1548,7 +1556,7 @@ display:
           entity_type: node
           entity_field: title
           plugin_id: field
-          label: Otsikko
+          label: 'Palvelun nimi'
           exclude: false
           alter:
             alter_text: false
@@ -1613,7 +1621,7 @@ display:
           entity_type: group_content
           entity_field: gid
           plugin_id: field
-          label: 'Parent group'
+          label: 'Palvelun järjestäjä'
           exclude: false
           alter:
             alter_text: false
@@ -1677,7 +1685,7 @@ display:
           admin_label: ''
           entity_type: node
           plugin_id: moderation_state_field
-          label: 'Moderation state'
+          label: Muokkaustila
           exclude: false
           alter:
             alter_text: false
@@ -1741,7 +1749,7 @@ display:
           entity_type: node
           entity_field: changed
           plugin_id: field
-          label: Updated
+          label: 'Viimeksi päivitetty'
           exclude: false
           alter:
             alter_text: false
@@ -1908,7 +1916,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: dropbutton
-          label: Operations
+          label: Toiminnot
           exclude: false
           alter:
             alter_text: false

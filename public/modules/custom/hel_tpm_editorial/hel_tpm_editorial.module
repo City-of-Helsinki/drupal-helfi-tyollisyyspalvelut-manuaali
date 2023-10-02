@@ -18,6 +18,21 @@ function hel_tpm_editorial_entity_base_field_info_alter(&$fields, EntityTypeInte
 }
 
 /**
+ * Implements hook_entity_type_alter().
+ *
+ * @param array $entity_types
+ *   An array containing the entity types.
+ *
+ * @return void
+ */
+function hel_tpm_editorial_entity_type_alter(array &$entity_types): void {
+  $entity_types['notification_message']->addConstraint('NotificationLimit', [
+    'type' => 'global',
+    'limit' => 3
+  ]);
+}
+
+/**
  * Implements hook_views_data().
  */
 function hel_tpm_editorial_views_data() {

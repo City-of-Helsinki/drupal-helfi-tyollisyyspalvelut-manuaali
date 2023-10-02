@@ -89,6 +89,10 @@
   border-left: 4px solid $yellow;
 }
 
+.card--border-left-red {
+  border-left: 4px solid $red-light;
+}
+
 .card--bottom-gutter {
   margin-bottom: $space;
 }
@@ -349,8 +353,43 @@
  }
 }
 
+.card--global-notification,
 .card--service-notification {
   padding-top: $space-two-and-half;
+}
+
+.card--global-notification {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: row;
+  .card__content {
+    align-self: stretch;
+  }
+  .message__content {
+    width: 100%;
+  }
+  .message__close {
+    margin-left: auto;
+    padding-left: $space;
+  }
+  .field--name-field-message-level {
+    float: left;
+  }
+  .field--name-label {
+    margin-top: $space-one-third;
+    margin-bottom: $space-one-and-half;
+    font-weight: 600;
+  }
+  .icon {
+    margin-right: $space;
+  }
+  .field-publish-end-date {
+    font-size: 14px;
+    font-weight: 600;
+  }
+}
+
+.card--service-notification {
   .views-field-label {
     margin-bottom: $space-one-and-half;
     .field-content {

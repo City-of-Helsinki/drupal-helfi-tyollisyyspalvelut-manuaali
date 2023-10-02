@@ -1,0 +1,46 @@
+uuid: 1851108b-7bd9-4435-bc2b-15dc51aee3fa
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.field.notification_message.global.field_message_level
+    - notification_message.type.global
+  module:
+    - hel_tpm_general
+    - text
+id: notification_message.global.default
+targetEntityType: notification_message
+bundle: global
+mode: default
+content:
+  field_message_level:
+    type: hel_tpm_general_icon_field
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  label:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  message:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  langcode: true
+  publish_end_date: true
+  publish_start_date: true
+  search_api_excerpt: true
+  uid: true

@@ -82,7 +82,13 @@ function _palvelumanuaali_preprocess_view_card_liftup(&$variables) {
     $state_label = $workflow->get('type_settings')['states'][$state_name]['label'];
     $variables['state_label'] = $state_label;
     $variables['status_modifier'] = !empty($status_colors[$state_name]) ? $status_colors[$state_name] : '';
+  }
 
+  // Fetch organizing group value for liftup rendeging.
+  $entity_group_field = $variables['node']->entitygroupfield;
+  if ($entity_group_field->count() > 0) {
+    $group_content = $entity_group_field->get(0)->entity;
+    $variables['organizing_group'] = $group_content->getGroup()->label();
   }
 
 }
@@ -117,10 +123,10 @@ function palvelumanuaali_preprocess_fieldset(&$variables) {
  * Implements hook__preprocess_table().
  */
 function palvelumanuaali_preprocess_table(&$variables) {
-  $element = $variables['attributes']['id'];
-  if (empty($element)) {
+  if (empty($variables['attributes']['id'])) {
     return;
   }
+  $element = $variables['attributes']['id'];
   $separator = "--";
   $trimmedElement = explode($separator, $element);
   $variables['attributes']['class'][] = $trimmedElement[0];

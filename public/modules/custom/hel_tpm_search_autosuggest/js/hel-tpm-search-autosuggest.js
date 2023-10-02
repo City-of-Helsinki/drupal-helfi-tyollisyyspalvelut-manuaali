@@ -114,11 +114,11 @@
       let autocompleteWrapper = '.hel-search-autocomplete';
       if ($(input).val().length <= 0) {
         $(searchWrapper, context).show();
-        $(autocompleteWrapper, context).hide(searchWrapper);
+        $(autocompleteWrapper, context).hide();
       }
       else {
         $(searchWrapper, context).hide();
-        $(autocompleteWrapper, context).show(searchWrapper);
+        $(autocompleteWrapper, context).show();
       }
 
       // Handle click events outside of search element.
