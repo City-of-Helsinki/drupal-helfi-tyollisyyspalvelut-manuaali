@@ -5,11 +5,15 @@ dependencies:
   config:
     - views.view.ready_to_publish_for_organization_updatee
   module:
+    - block_class
     - context
     - user
     - views
   theme:
     - palvelumanuaali
+third_party_settings:
+  block_class:
+    classes: ready-to-publish-for-organization-updatee-view-block
 id: views_block__ready_to_publish_for_organization_updatee_block_1
 theme: palvelumanuaali
 region: content
