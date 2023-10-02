@@ -21,8 +21,8 @@ dependencies:
     - search_api.server.solr_search
   module:
     - search_api_solr
-    - paragraphs
     - node
+    - paragraphs
     - search_api
     - hel_tpm_search
 third_party_settings:
@@ -77,6 +77,14 @@ name: 'Solr Service search index'
 description: ''
 read_only: false
 field_settings:
+  changed:
+    label: Muuttunut
+    datasource_id: 'entity:node'
+    property_path: changed
+    type: date
+    dependencies:
+      module:
+        - node
   field_accessibility:
     label: 'Palvelun saavutettavuustiedot (valinnainen):'
     datasource_id: 'entity:node'
