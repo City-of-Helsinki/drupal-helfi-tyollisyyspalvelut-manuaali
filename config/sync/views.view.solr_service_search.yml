@@ -908,7 +908,7 @@ display:
           submit_button: 'Hae palveluita'
           reset_button: true
           reset_button_label: 'Tyhjennä valinnat'
-          exposed_sorts_label: 'Sort by'
+          exposed_sorts_label: 'Järjestä:'
           expose_sort_order: true
           sort_asc_label: Asc
           sort_desc_label: Desc
@@ -925,6 +925,16 @@ display:
               secondary_label: Lisävaihtoehdot
               secondary_open: false
               reset_button_always_show: true
+            sort:
+              plugin_id: select2
+              advanced:
+                combine: true
+                combine_rewrite: "Relevance Asc|\r\nRelevance Desc|Osuvin\r\nChanged Asc|\r\nChanged Desc|Viimeksi päivitetty\r\nTitle Asc|Aakkosjärjestys A→Z\r\nTitle Desc|Aakkosjärjestys Z→A"
+                reset: false
+                reset_label: ''
+                collapsible: false
+                collapsible_label: 'Sort options'
+                is_secondary: false
             filter:
               search_api_fulltext:
                 plugin_id: default
@@ -998,9 +1008,50 @@ display:
                     filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: false
+      sorts:
+        search_api_relevance:
+          id: search_api_relevance
+          table: search_api_index_service_search_solr_index
+          field: search_api_relevance
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api
+          order: DESC
+          expose:
+            label: Relevance
+            field_identifier: search_api_relevance
+          exposed: true
+        changed:
+          id: changed
+          table: search_api_index_service_search_solr_index
+          field: changed
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api
+          order: DESC
+          expose:
+            label: Changed
+            field_identifier: changed
+          exposed: true
+        title:
+          id: title
+          table: search_api_index_service_search_solr_index
+          field: title
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api
+          order: ASC
+          expose:
+            label: Title
+            field_identifier: title
+          exposed: true
       defaults:
         pager: false
         exposed_form: false
+        sorts: false
         header: false
         footer: false
       header:
@@ -1023,6 +1074,8 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
+        - 'url.query_args:sort_by'
+        - 'url.query_args:sort_order'
         - user
         - 'user.node_grants:view'
       tags:
