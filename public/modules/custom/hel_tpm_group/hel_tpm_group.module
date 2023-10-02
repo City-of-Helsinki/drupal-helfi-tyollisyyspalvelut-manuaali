@@ -11,18 +11,11 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\group\Entity\GroupContentInterface;
 use Drupal\group\Entity\GroupRole;
 use Drupal\hel_tpm_group\Event\GroupMembershipChanged;
-use Drupal\hel_tpm_group\Event\GroupMembershipDeleted;
-use Drupal\hel_tpm_group\Event\GroupMembershipUpdated;
 use Drupal\hel_tpm_group\Event\GroupSiteWideRoleChanged;
 use Drupal\node\NodeInterface;
 
 /**
  * Implements hook_form_FORM_ID_alter().
- *
- * @param $form
- * @param $form_state
- *
- * @return void
  */
 function hel_tpm_group_form_group_role_edit_form_alter(&$form, &$form_state) {
   $user = \Drupal::currentUser();
@@ -44,7 +37,7 @@ function hel_tpm_group_form_group_role_edit_form_alter(&$form, &$form_state) {
  */
 function hel_tpm_group_node_access_records(NodeInterface $node) {
   $grants = [];
-  // Other grants
+  // Other grants.
   if (!$node->isPublished()) {
     $grants[] = [
       'realm' => 'hel_tpm_group_unpublished_realm',
@@ -90,7 +83,7 @@ function hel_tpm_group_form_group_role_edit_form_builder($entity_type, GroupRole
 
   // Dispatch site wide role changed event.
   $event = new GroupSiteWideRoleChanged($group_role);
-  \Drupal::service('event_dispatcher')->dispatch($event::EVENT_NAME, $event);
+  \Drupal::service('event_dispatcher')->dispatch($event, $event::EVENT_NAME);
 }
 
 /**
@@ -100,6 +93,7 @@ function hel_tpm_group_form_group_role_edit_form_builder($entity_type, GroupRole
  *
  * @return void
  */
+
 /**
  * Implements hook_entity_postdelete().
  */
@@ -114,7 +108,7 @@ function hel_tpm_group_entity_postdelete(EntityInterface $entity) {
   }
 
   $event = new GroupMembershipChanged($entity);
-  \Drupal::service('event_dispatcher')->dispatch($event::EVENT_NAME, $event);
+  \Drupal::service('event_dispatcher')->dispatch($event, $event::EVENT_NAME);
 }
 
 /**
@@ -138,6 +132,7 @@ function hel_tpm_group_entity_postsave(EntityInterface $entity, $op) {
  * Helper function to get valid site roles for selection.
  *
  * @return array
+ *   Array of valid user roles.
  */
 function _hel_tpm_group_get_valid_roles() {
   // Unwanted roles.

@@ -57,7 +57,8 @@
       let i = 0;
       if (history != null && history.length > 0) {
         $.each(history, function(key, value) {
-          content +='<span class="suggestion-item" tabindex="' + i + '" value="' + value + '">' + value + '</span>';
+          let val = value.escapeHTML();
+          content +='<span class="suggestion-item" tabindex="' + i + '" value="' + val + '">' + val + '</span>';
           i++;
         });
       }
@@ -96,10 +97,10 @@
       let i = 0;
       for(;data[i];) {
         if (data[i]['url']) {
-          services += '<span class="suggestion-item"><a href="' + data[i]['url'] + '">' + data[i]['value'] + "</a></span>";
+          services += '<span class="suggestion-item"><a href="' + data[i]['url'].escapeHTML() + '">' + data[i]['value'].escapeHTML() + "</a></span>";
         }
         else {
-          suggestions += '<span class="suggestion-item" value="' + data[i]['value'] + '">' + data[i]['label'] + '</span>';
+          suggestions += '<span class="suggestion-item" value="' + data[i]['value'].escapeHTML() + '">' + data[i]['label'].replace(/<\!--.*?-->/g, "") + '</span>';
         }
         i++;
       }
@@ -179,5 +180,20 @@
         });
     }
   };
+
+  var __entityMap = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': '&quot;',
+    "'": '&#39;',
+    "/": '&#x2F;'
+  };
+
+  String.prototype.escapeHTML = function() {
+    return String(this).replace(/[&<>"'\/]/g, function (s) {
+      return __entityMap[s];
+    });
+  }
 
 })(jQuery, Drupal, drupalSettings);

@@ -61,7 +61,7 @@ tooling:
     cmd: /app/scripts/citrus/create-drupal-theme-lando.sh
   test:
     service: appserver
-    cmd: "php /app/vendor/bin/phpunit -c /app/phpunit.xml /app/public/modules/custom"
+    cmd: "php /app/vendor/bin/phpunit -c /app/phpunit.xml"
   test-cs:
     service: appserver
     description: Run Drupal 8 tests
@@ -77,7 +77,10 @@ tooling:
     cmd: /app/vendor/bin/phplint
   phpcs:
     service: appserver
-    cmd: /app/vendor/bin/phpcs
+    cmd: /app/vendor/bin/phpcs --standard=Drupal --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md,yml
+  phpcbf:
+    service: appserver
+    cmd: /app/vendor/bin/phpcbf --standard=Drupal --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md,yml
   phpunit:
     service: appserver
     cmd: /app/vendor/bin/phpunit

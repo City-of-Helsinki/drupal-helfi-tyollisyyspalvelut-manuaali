@@ -2,12 +2,8 @@
 
 namespace Drupal\hel_tpm_migrate_tools\Plugin\migrate\process;
 
-use Drupal\hel_tpm_migrate_tools\Plugin\migrate\process\ParagraphBase;
 use Drupal\migrate\MigrateExecutableInterface;
-use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
-use Drupal\paragraphs\Entity\Paragraph;
-use Drupal\Component\Utility\Html;
 
 /**
  * Generate a paragraph.
@@ -36,7 +32,7 @@ class TPMServiceTimeLocationParagraph extends ParagraphBase {
       $lang = [
         'language' => $val,
       ];
-    
+
       if (!empty($matches[3][$key])) {
         $lang['level'] = $matches[3][$key];
       }
@@ -46,7 +42,7 @@ class TPMServiceTimeLocationParagraph extends ParagraphBase {
     if (!empty($languages)) {
       $paragraphs = [];
       $paragraph = $this->createParagraph($row, $destinationProperty, 'service_time_and_place', 0);
- 
+
       foreach ($languages as $language) {
         $language_paragraph = $this->createParagraph($row, $destinationProperty, 'service_language', 0);
         $language_paragraph->field_language = $this->getTidByName($language['language'], 'service_languages');

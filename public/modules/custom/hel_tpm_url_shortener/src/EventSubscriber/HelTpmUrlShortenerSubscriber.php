@@ -5,9 +5,8 @@ namespace Drupal\hel_tpm_url_shortener\EventSubscriber;
 use Drupal\Core\Messenger\MessengerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\Event\ResponseEvent;
-use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  * Hel TPM Url shortener event subscriber.
@@ -32,12 +31,7 @@ class HelTpmUrlShortenerSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * Kernel request event handler.
-   *
-   * @param ResponseEvent $event
-   * @return bool
-   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
-   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   * {@inheritdoc}
    */
   public function onKernelRequest(RequestEvent $event) {
     $uri = \Drupal::request()->getPathInfo();

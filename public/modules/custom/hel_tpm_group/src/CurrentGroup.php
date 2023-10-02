@@ -1,27 +1,44 @@
 <?php
+
 namespace Drupal\hel_tpm_group;
 
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\group\Entity\Group;
 use Drupal\group\Entity\GroupContent;
 use Drupal\group\Entity\GroupInterface;
-use Drupal\Core\Routing\RouteMatchInterface;
 
+/**
+ * Hel_tpm_group.current_group service class.
+ */
 class CurrentGroup {
 
+  /**
+   * Route match service.
+   *
+   * @var \Drupal\Core\Routing\RouteMatchInterface
+   */
   private $routeMatch;
 
   /**
+   * Constructor for CurrentGroup service class.
+   *
    * @param \Drupal\Core\Routing\RouteMatchInterface $routeMatch
+   *   Route match service.
    */
   public function __construct(RouteMatchInterface $routeMatch) {
     $this->routeMatch = $routeMatch;
   }
 
   /**
+   * Get group by given entity.
+   *
    * @param \Drupal\Core\Entity\EntityInterface $entity
+   *   Content entity object.
    *
    * @return bool|\Drupal\group\Entity\GroupInterface
+   *   Returns groups if found.
+   *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    */
   private function getGroupByEntity(EntityInterface $entity) {
@@ -44,6 +61,8 @@ class CurrentGroup {
    * Get the group from the current route match.
    *
    * @return bool|\Drupal\group\Entity\GroupInterface
+   *   Group object.
+   *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    */
   public function getGroupFromRoute() {
@@ -66,4 +85,5 @@ class CurrentGroup {
     }
     return FALSE;
   }
+
 }
