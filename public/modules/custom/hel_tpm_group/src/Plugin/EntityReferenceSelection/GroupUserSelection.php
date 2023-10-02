@@ -251,8 +251,10 @@ class GroupUserSelection extends UserSelection {
       if ($id == 0) {
         continue;
       }
+
       if ($configuration['filter_users_without_publish']) {
         $allowed = $this->groupStateTransitionValidator->allowedTransitions($member->getUser(), $mock_service, [$group]);
+        // Skip loop is user doesn't have publish permission.
         if (empty($allowed['publish'])) {
           continue;
         }

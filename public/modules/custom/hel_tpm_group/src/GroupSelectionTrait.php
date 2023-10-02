@@ -41,7 +41,12 @@ trait GroupSelectionTrait {
       if (empty($group)) {
         return [];
       }
-      $groups[] = $this->routeMatch->getParameter('group')->id();
+      if ($load_groups === FALSE) {
+        $groups[] = $this->routeMatch->getParameter('group')->id();
+      }
+      else {
+        $groups[] = $this->routeMatch->getParameter('group');
+      }
     }
     else {
       // Get groups from node.
