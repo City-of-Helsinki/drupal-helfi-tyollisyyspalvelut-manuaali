@@ -140,6 +140,12 @@ function hel_tpm_group_entity_postsave(EntityInterface $entity, $op) {
  * @return array
  */
 function _hel_tpm_group_get_valid_roles() {
+  // Unwanted roles.
+  $role_bl = ['authenticated', 'root', 'admin'];
   $roles = array_map(['\Drupal\Component\Utility\Html', 'escape'], user_role_names(TRUE));
-  return ['editor' => $roles['editor'], 'specialist_editor' => $roles['specialist_editor']];
+  // Filter out all roles we don't want to be inherited.
+  foreach ($role_bl as $role) {
+    unset($roles[$role]);
+  }
+  return $roles;
 }
