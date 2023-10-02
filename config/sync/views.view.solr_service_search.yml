@@ -11,7 +11,15 @@ dependencies:
     - taxonomy.vocabulary.service_languages
     - taxonomy.vocabulary.service_set
   content:
-    - 'taxonomy_term:municipality:8ab185fa-ecc4-41d3-97fe-f971e5175689'
+    - 'taxonomy_term:municipality:0b316fca-39a5-42c9-a5ed-fec61654a665'
+    - 'taxonomy_term:municipality:0d144a4b-d279-4a85-9f36-4b6eb84b1281'
+    - 'taxonomy_term:municipality:3718c3d5-6275-4038-a11a-41a19ec16cb5'
+    - 'taxonomy_term:municipality:3da41814-536a-46e5-abad-648400d7d9fe'
+    - 'taxonomy_term:municipality:5a237076-439b-4f6e-8fad-2585f9722753'
+    - 'taxonomy_term:municipality:72ac1850-9c40-4cf3-9ede-352383bb125a'
+    - 'taxonomy_term:municipality:d00e8633-8287-41e3-b6b4-a5a7695265c2'
+    - 'taxonomy_term:municipality:d8aee90f-d5eb-45ea-956a-8518601779ff'
+    - 'taxonomy_term:municipality:f1fef491-9547-4f98-bd16-1899c476c555'
   module:
     - better_exposed_filters
     - search_api
@@ -29,7 +37,7 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: 'Solr service search'
+      title: 'Service search'
       fields:
         search_api_rendered_item:
           id: search_api_rendered_item
@@ -617,7 +625,15 @@ display:
           admin_label: ''
           plugin_id: search_api_term
           operator: or
-          value: {  }
+          value:
+            408: 408
+            33: 33
+            37: 37
+            32: 32
+            35: 35
+            38: 38
+            36: 36
+            34: 34
           group: 2
           exposed: true
           expose:
@@ -640,7 +656,7 @@ display:
               editor: '0'
               specialist: '0'
               specialist_editor: '0'
-            reduce: false
+            reduce: true
           is_grouped: false
           group_info:
             label: ''
@@ -669,7 +685,7 @@ display:
           plugin_id: search_api_term
           operator: or
           value:
-            65: 65
+            39: 39
           group: 2
           exposed: false
           expose:
@@ -900,8 +916,8 @@ display:
           text_input_required_format: filtered_html
           bef:
             general:
-              autosubmit: false
-              autosubmit_exclude_textfield: false
+              autosubmit: true
+              autosubmit_exclude_textfield: true
               autosubmit_textfield_delay: 500
               autosubmit_hide: false
               input_required: false
