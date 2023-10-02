@@ -447,12 +447,13 @@
     /* Search sort element's position and size. */
     .form-item-sort-bef-combine {
       float: left;
+      display: flex;
       margin-top: $space-double;
       flex: unset;
-      display: grid;
-      grid-template-columns: 1fr 2fr;
       @include medium {
         float: right;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
         margin-left: auto;
         margin-top: $space-four-and-half;
       }
