@@ -1,0 +1,335 @@
+uuid: 53c3f55a-2356-460f-9398-6db4b427cf52
+langcode: fi
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.search_index
+    - field.field.node.service.field_accessibility
+    - field.field.node.service.field_attendance
+    - field.field.node.service.field_career_marking
+    - field.field.node.service.field_client_consent
+    - field.field.node.service.field_contact_info
+    - field.field.node.service.field_contact_info_external
+    - field.field.node.service.field_contact_info_internal
+    - field.field.node.service.field_description
+    - field.field.node.service.field_field_client_consent_descr
+    - field.field.node.service.field_guidance_to_service
+    - field.field.node.service.field_implementation_extra_info
+    - field.field.node.service.field_instructions_markup
+    - field.field.node.service.field_life_situations
+    - field.field.node.service.field_links_and_attachments
+    - field.field.node.service.field_measures_during_attendance
+    - field.field.node.service.field_municipality_guidance
+    - field.field.node.service.field_municipality_specific
+    - field.field.node.service.field_obligatoryness
+    - field.field.node.service.field_obligatoryness_freetext
+    - field.field.node.service.field_other_preferences
+    - field.field.node.service.field_other_services
+    - field.field.node.service.field_poma_applicable
+    - field.field.node.service.field_poma_applicable_descriptio
+    - field.field.node.service.field_related_archive
+    - field.field.node.service.field_responsible_municipality
+    - field.field.node.service.field_responsible_updatee
+    - field.field.node.service.field_service_benefits
+    - field.field.node.service.field_service_exceptions
+    - field.field.node.service.field_service_execution
+    - field.field.node.service.field_service_implement
+    - field.field.node.service.field_service_links_external
+    - field.field.node.service.field_service_links_internal
+    - field.field.node.service.field_service_other_info
+    - field.field.node.service.field_service_price
+    - field.field.node.service.field_service_producer
+    - field.field.node.service.field_service_provider_updatee
+    - field.field.node.service.field_service_radioactivity
+    - field.field.node.service.field_service_req_speacialist
+    - field.field.node.service.field_service_requirements
+    - field.field.node.service.field_service_set
+    - field.field.node.service.field_service_suits_info
+    - field.field.node.service.field_service_suits_job_search
+    - field.field.node.service.field_service_time_and_location
+    - field.field.node.service.field_statements
+    - field.field.node.service.field_statements_unemployment
+    - field.field.node.service.field_target_group
+    - node.type.service
+  module:
+    - entity_reference_revisions
+    - field_group
+    - text
+    - user
+third_party_settings:
+  field_group:
+    group_participation:
+      children: {  }
+      label: Osallistuminen
+      parent_name: ''
+      region: hidden
+      weight: 19
+      format_type: html_element
+      format_settings:
+        classes: 'service-group service-group--participation'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: true
+        label_element: h3
+        label_element_classes: 'group-label--h3 h3 group-label'
+        attributes: ''
+        effect: none
+        speed: fast
+    group_execution:
+      children: {  }
+      label: Toteutustapa
+      parent_name: ''
+      region: hidden
+      weight: 20
+      format_type: html_element
+      format_settings:
+        classes: 'service-group service-group--execution'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: true
+        label_element: h3
+        label_element_classes: 'group-label--h3 h3 group-label'
+        attributes: ''
+        effect: none
+        speed: fast
+    group_where_and_when:
+      children: {  }
+      label: 'Missä ja milloin'
+      parent_name: ''
+      region: hidden
+      weight: 21
+      format_type: html_element
+      format_settings:
+        classes: 'service-group service-group--where-and-when'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: true
+        label_element: h4
+        label_element_classes: 'group-label--h4 h4 group-label'
+        attributes: ''
+        effect: none
+        speed: fast
+    group_target_group:
+      children: {  }
+      label: Kohderyhmä
+      parent_name: ''
+      region: hidden
+      weight: 18
+      format_type: html_element
+      format_settings:
+        classes: 'service-group service-group--target-group'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: true
+        label_element: h3
+        label_element_classes: 'group-label--h3 h3 group-label'
+        attributes: ''
+        effect: none
+        speed: fast
+id: node.service.search_index
+targetEntityType: node
+bundle: service
+mode: search_index
+content:
+  field_accessibility:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_attendance:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  field_client_consent:
+    type: boolean
+    label: hidden
+    settings:
+      format: custom
+      format_custom_false: 'Osallistumiseen ei tarvita asiakkaan suostumusta.'
+      format_custom_true: 'Osallistumiseen tarvitaan asiakkaan suostumus.'
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  field_contact_info_external:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: 16
+    region: content
+  field_description:
+    type: basic_string
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_field_client_consent_descr:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 11
+    region: content
+  field_implementation_extra_info:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_life_situations:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_service_benefits:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 9
+    region: content
+  field_service_execution:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 12
+    region: content
+  field_service_implement:
+    type: basic_string
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 15
+    region: content
+  field_service_other_info:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 13
+    region: content
+  field_service_price:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_service_producer:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 17
+    region: content
+  field_service_requirements:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 8
+    region: content
+  field_service_set:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_service_time_and_location:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 14
+    region: content
+  field_target_group:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  flag_lista:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 10
+    region: content
+hidden:
+  content_moderation_control: true
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  entitygroupfield: true
+  field_career_marking: true
+  field_contact_info: true
+  field_contact_info_internal: true
+  field_guidance_to_service: true
+  field_instructions_markup: true
+  field_links_and_attachments: true
+  field_measures_during_attendance: true
+  field_municipality_guidance: true
+  field_municipality_specific: true
+  field_obligatoryness: true
+  field_obligatoryness_freetext: true
+  field_other_preferences: true
+  field_other_services: true
+  field_poma_applicable: true
+  field_poma_applicable_descriptio: true
+  field_related_archive: true
+  field_responsible_municipality: true
+  field_responsible_updatee: true
+  field_service_exceptions: true
+  field_service_links_external: true
+  field_service_links_internal: true
+  field_service_provider_updatee: true
+  field_service_radioactivity: true
+  field_service_req_speacialist: true
+  field_service_suits_info: true
+  field_service_suits_job_search: true
+  field_statements: true
+  field_statements_unemployment: true
+  flag_cart: true
+  flag_flag_list_template_1: true
+  flag_lists: true
+  langcode: true
+  links: true
+  notifications_entity_view_1: true
+  search_api_excerpt: true
+  view_mode_switcher: true
