@@ -77,7 +77,7 @@
 {% embed "@molecules/card/card.twig" with {
   card__blockname: item.card__blockname,
   card__modifiers: ['view-card'],
-  card__caption: content.field_service_set[0]['#title'],
+  card__caption: organizing_group,
   card__caption__status: state_label|t,
   card__caption__status__modifiers: status_modifier,
   card__heading: label,
