@@ -22,12 +22,14 @@
   {% set classes = classes|merge(['card--border-left-red']) %}
 {% elseif level == "warning" %}
   {% set classes = classes|merge(['card--border-left-yellow']) %}
+{% elseif level == "success" %}
+  {% set classes = classes|merge(['card--border-left-green']) %}
 {% else %}
   {% set classes = classes|merge(['card--border-left-blue']) %}
 {% endif %}
 
 {# TODO: Use the card molecule once it supports data-message-id. #}
-<div data-message-id="{{ message.id() }}" class="{{ classes|join(' ') }} card card--bg-light-blue card--square-left card--bottom-gutter card--padded">
+<div data-message-id="{{ message.id() }}" class="{{ classes|join(' ') }} card card--bg-light-blue card--square-left card--bottom-gutter card--padded-centered">
   <div class="message__content card__content">
     {{ content }}
   </div>
@@ -45,5 +47,3 @@
     </a>
   {% endif %}
 </div>
-
-
