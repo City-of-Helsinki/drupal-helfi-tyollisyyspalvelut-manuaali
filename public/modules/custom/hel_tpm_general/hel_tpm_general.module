@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Module file for hel_tpm_general.
+ */
+
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -13,7 +18,7 @@ function hel_tpm_general_theme($existing, $type, $theme, $path) {
     'hel_tpm_general_icon_field' => [
       'template' => 'icon-field',
       'variables' => [
-        'icon' => ''
+        'icon' => '',
       ],
     ],
   ];
@@ -53,12 +58,6 @@ function hel_tpm_general_node_view(array &$build, EntityInterface $entity, Entit
 
 /**
  * Implements hook_form_FORM_ID_alter().
- *
- * @param $form
- * @param $form_state
- * @param $form_id
- *
- * @return void
  */
 function hel_tpm_general_form_user_register_form_alter(&$form, &$form_state, $form_id) {
   $form['account']['name']['#type'] = 'hidden';
@@ -72,7 +71,6 @@ function hel_tpm_general_form_user_profile_form_alter(&$form, &$form_state, $for
   $form['account']['name']['#type'] = 'hidden';
 }
 
-
 /**
  * Implements hook_form_FORM_ID_alter().
  */
@@ -83,14 +81,6 @@ function hel_tpm_general_form_user_form_alter(&$form, &$form_state, $form_id) {
 
 /**
  * Implements hook_ENTITY_TYPE_presave().
- *
- * Auto generate username from mail.
- *
- * @param $entity
- *
- * @return void
- * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
- * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
  */
 function hel_tpm_general_user_presave($entity) {
   // Don't autogenerate admin user name.
@@ -107,10 +97,13 @@ function hel_tpm_general_user_presave($entity) {
 
 /**
  * Remove the errors related to 'name' field.
- * @param $form
+ *
+ * @param array $form
+ *   Form render array.
  * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   Form state object.
  */
-function hel_tpm_general_form_user_post_validate(&$form, FormStateInterface $form_state) {
+function hel_tpm_general_form_user_post_validate(array &$form, FormStateInterface $form_state) {
   $errors = $form_state->getErrors();
   unset($errors['name']);
   $form_state->clearErrors();
@@ -122,17 +115,20 @@ function hel_tpm_general_form_user_post_validate(&$form, FormStateInterface $for
 /**
  * Helper function to generate username.
  *
- * @param $entity
+ * @param \Drupal\Core\Entity\EntityInterface $entity
+ *   User entity.
  *
  * @return false|string
+ *   Formatted username.
+ *
  * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
  * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
  */
-function _hel_tpm_general_generate_username($entity) {
+function _hel_tpm_general_generate_username(EntityInterface $entity) {
   $original_username = strstr($entity->getEmail(), '@', TRUE);
   $username = $original_username;
   $i = 0;
-  while(_hel_tpm_general_username_exists($username, $entity->id())) {
+  while (_hel_tpm_general_username_exists($username, $entity->id())) {
     $username = $original_username . '-' . $i;
     $i++;
   }
@@ -142,15 +138,21 @@ function _hel_tpm_general_generate_username($entity) {
 /**
  * Helper function to check if username exists.
  *
- * @param $username
+ * @param string $username
+ *   Username to check against.
+ * @param int $entity_id
+ *   Current user id.
  *
  * @return bool
+ *   Returns true if user exists.
+ *
  * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
  * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
  */
-function _hel_tpm_general_username_exists($username, $entity_id) {
+function _hel_tpm_general_username_exists(string $username, int $entity_id = NULL) {
   $storage = \Drupal::entityTypeManager()->getStorage('user');
   $query = $storage->getQuery()
+    ->accessCheck(FALSE)
     ->condition('name', $username);
   if ($entity_id) {
     $query->condition('uid', $entity_id, '<>');
@@ -161,26 +163,28 @@ function _hel_tpm_general_username_exists($username, $entity_id) {
   return $count > 0;
 }
 
-
 /**
  * Helper function to create switcher link.
  *
  * @param \Drupal\Core\Entity\EntityInterface $entity
- * @param $view_mode
+ *   Service node.
+ * @param string $view_mode
+ *   Requested view mode for current service.
  *
  * @return \Drupal\Core\Link|null
+ *   Returns either link to view mode or null.
  */
-function _hel_tpm_general_create_switcher_links(EntityInterface $entity, $view_mode) {
+function _hel_tpm_general_create_switcher_links(EntityInterface $entity, string $view_mode) {
   $user = \Drupal::currentUser();
   $routes = [
-    'internal' =>  [
+    'internal' => [
       'route' => 'entity.node.canonical',
       'label' => 'Customer guide',
     ],
-    'full' =>[
+    'full' => [
       'route' => 'entity.node.canonical.internal',
-      'label' => 'Internal guide'
-    ]
+      'label' => 'Internal guide',
+    ],
   ];
 
   if (!$user->hasPermission('access internal service fields')) {

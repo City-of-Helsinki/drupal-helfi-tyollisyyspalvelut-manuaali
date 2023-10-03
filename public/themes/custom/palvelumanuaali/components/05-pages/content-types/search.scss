@@ -91,6 +91,38 @@
         grid-column: 2;
     }
   }
+  .select2-search__field {
+    display: none;
+  }
+    .select2-results__options {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  .select2-results__option,
+  .select2-results__option--highlighted[aria-selected] {
+      display: block;
+      font-size: 0.875em;
+      padding: 0.6em $space-two-and-half 0.6em $space-triple;
+      white-space: nowrap;
+      color: clr(text);
+      font-weight: 400;
+      &:hover,
+      &:focus {
+        background: clr(background);
+        font-weight: 400;
+        color: clr(text);
+      }
+  }
+  .select2-results__option[aria-selected="true"] {
+    font-weight: 400;
+    color: clr(text);
+    &::before {
+      left: 18px;
+      width: 12px;
+      height: 12px;
+      font-size: 9px;
+    }
+  }
 }
 
 
@@ -110,9 +142,10 @@
     flex-direction: column;
     justify-content: center;
     order: 2;
-    margin-top: $space-two-and-half;
     margin-bottom: $space;
-
+    @include medium {
+      margin-top: -4.5rem;
+    }
     @include large {
       display: flex;
       flex-direction: row;
@@ -409,6 +442,48 @@
   .view-filters {
     .js-form-type-select {
       flex-grow: unset;
+    }
+
+    /* Search sort element's position and size. */
+    .form-item-sort-bef-combine {
+      float: left;
+      display: flex;
+      margin-top: $space-double;
+      flex: unset;
+      @include medium {
+        float: right;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        margin-left: auto;
+        margin-top: $space-four-and-half;
+      }
+      > label {
+        align-self: flex-end;
+        justify-self: right;
+        margin-bottom: 6px;
+        padding-right: $space;
+        font-size: 14px;
+      }
+      /* Select element for search sort. */
+      .form-item__dropdown {
+        align-self: flex-end;
+        border: 2px solid $blue40;
+        .select2-container--palvelumanuaali {
+          @extend .multi-select-button;
+          box-shadow: unset;
+          .select2-selection--single {
+            height: 24px;
+          }
+          .select2-selection--single .select2-selection__rendered {
+            background: transparent !important;
+            font-size: 14px !important;
+            line-height: 24px !important;
+          }
+          .select2-selection__arrow {
+            display: none;
+          }
+        }
+      }
     }
   }
 }

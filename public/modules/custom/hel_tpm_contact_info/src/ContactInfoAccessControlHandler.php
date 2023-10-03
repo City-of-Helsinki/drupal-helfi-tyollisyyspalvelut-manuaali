@@ -23,19 +23,22 @@ class ContactInfoAccessControlHandler extends EntityAccessControlHandler {
 
       case 'update':
         if ($account->id() != $entity->getOwnerId()) {
-           return AccessResult::allowedIfHasPermissions($account, [
-             'edit contact info',
-             'administer contact info'
-           ], 'OR');
-         }
+          return AccessResult::allowedIfHasPermissions($account, [
+            'edit contact info',
+            'administer contact info',
+          ], 'OR');
+        }
         return AccessResult::allowedIfHasPermissions($account, [
           'edit own contact info',
           'administer contact info',
-          'edit contact info'
+          'edit contact info',
         ], 'OR');
 
       case 'delete':
-        return AccessResult::allowedIfHasPermissions($account, ['delete contact info', 'administer contact info'], 'OR');
+        return AccessResult::allowedIfHasPermissions($account, [
+          'delete contact info',
+          'administer contact info',
+        ], 'OR');
 
       default:
         // No opinion.
@@ -48,7 +51,10 @@ class ContactInfoAccessControlHandler extends EntityAccessControlHandler {
    * {@inheritdoc}
    */
   protected function checkCreateAccess(AccountInterface $account, array $context, $entity_bundle = NULL) {
-    return AccessResult::allowedIfHasPermissions($account, ['create contact info', 'administer contact info'], 'OR');
+    return AccessResult::allowedIfHasPermissions($account, [
+      'create contact info',
+      'administer contact info',
+    ], 'OR');
   }
 
 }

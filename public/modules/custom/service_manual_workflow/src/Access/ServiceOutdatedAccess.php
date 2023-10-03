@@ -1,29 +1,39 @@
 <?php
+
 namespace Drupal\service_manual_workflow\Access;
 
-use Drupal\Component\DependencyInjection\ContainerInterface;
 use Drupal\content_moderation\ModerationInformationInterface;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\gcontent_moderation\GroupStateTransitionValidation;
 use Drupal\node\NodeInterface;
-use Drupal\node\Plugin\views\filter\Access;
-use Drupal\user\UserInterface;
 
+/**
+ * Service outdated access control handler.
+ */
 class ServiceOutdatedAccess {
 
   /**
+   * Group state transition validator service.
+   *
    * @var \Drupal\gcontent_moderation\GroupStateTransitionValidation
    */
   protected $groupStateTransitionValidator;
 
   /**
+   * Moderation information service.
+   *
    * @var \Drupal\content_moderation\ModerationInformationInterface
    */
   protected $moderationInformation;
 
   /**
+   * Constructor for service outdated access.
+   *
    * @param \Drupal\gcontent_moderation\GroupStateTransitionValidation $group_state_transition_validator
+   *   Group state transition validator.
+   * @param \Drupal\content_moderation\ModerationInformationInterface $moderation_information
+   *   Moderation information service.
    */
   public function __construct(GroupStateTransitionValidation $group_state_transition_validator, ModerationInformationInterface $moderation_information) {
     $this->groupStateTransitionValidator = $group_state_transition_validator;
@@ -31,10 +41,15 @@ class ServiceOutdatedAccess {
   }
 
   /**
+   * Access callback for service outdated access.
+   *
    * @param \Drupal\node\NodeInterface $node
+   *   Node object.
    * @param \Drupal\Core\Session\AccountInterface $user
+   *   User account object.
    *
    * @return \Drupal\Core\Access\AccessResultAllowed|\Drupal\Core\Access\AccessResultForbidden|\Drupal\Core\Access\AccessResultNeutral
+   *   Returns access result object according user access.
    */
   public function access(NodeInterface $node, AccountInterface $user) {
     if (!$this->moderationInformation->isModeratedEntity($node)) {
@@ -48,11 +63,17 @@ class ServiceOutdatedAccess {
   }
 
   /**
+   * Transition validation handler.
+   *
    * @param \Drupal\node\NodeInterface $node
+   *   Node object.
    * @param \Drupal\user\UserInterface $user
-   * @param $transition
+   *   User account object.
+   * @param string $transition
+   *   Transition which is validated.
    *
    * @return \Drupal\Core\Access\AccessResultAllowed|\Drupal\Core\Access\AccessResultForbidden
+   *   Returns access result object.
    */
   protected function transitionValid(NodeInterface $node, AccountInterface $user, $transition) {
     $transitions = $this->groupStateTransitionValidator->getValidTransitions($node, $user);
@@ -61,4 +82,5 @@ class ServiceOutdatedAccess {
     }
     return AccessResult::forbidden();
   }
+
 }

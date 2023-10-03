@@ -4,15 +4,12 @@ namespace Drupal\hel_tpm_editorial\Plugin\views\field;
 
 use Drupal\content_moderation\Entity\ContentModerationState;
 use Drupal\content_moderation\ModerationInformationInterface;
-use Drupal\content_moderation\Plugin\Field\ModerationStateFieldItemList;
-use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Entity\RevisionableInterface;
+use Drupal\Core\Url;
 use Drupal\node\NodeInterface;
 use Drupal\views\Plugin\views\field\FieldPluginBase;
 use Drupal\views\ResultRow;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\Url;
 
 /**
  * Provides Service has unpublished changes field handler.
@@ -28,6 +25,10 @@ use Drupal\Core\Url;
  * self::query() method.
  */
 class ServiceHasUnpublishedChanges extends FieldPluginBase {
+
+  /**
+   * {@inheritdoc}
+   */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, ModerationInformationInterface $moderation_information) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->entityTypeManager = $entity_type_manager;
@@ -47,6 +48,9 @@ class ServiceHasUnpublishedChanges extends FieldPluginBase {
     );
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function query() {}
 
   /**
@@ -76,8 +80,11 @@ class ServiceHasUnpublishedChanges extends FieldPluginBase {
    * Get moderation state for latest revision.
    *
    * @param \Drupal\node\NodeInterface $node
+   *   Node entity.
    *
    * @return string
+   *   State label from latest revision.
+   *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
@@ -89,9 +96,12 @@ class ServiceHasUnpublishedChanges extends FieldPluginBase {
   /**
    * Get latest revision.
    *
-   * @param $node
+   * @param \Drupal\node\NodeInterface $node
+   *   Node interface.
    *
    * @return mixed
+   *   Latest node revision.
+   *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
@@ -101,7 +111,7 @@ class ServiceHasUnpublishedChanges extends FieldPluginBase {
     // Load latesta node revision.
     $revision_id = $storage->getLatestTranslationAffectedRevisionId($node->id(), $langcode);
     $revision = $storage->loadRevision($revision_id);
-    // Load translation for current language
+    // Load translation for current language.
     return $revision->getTranslation($langcode);
   }
 
@@ -109,8 +119,10 @@ class ServiceHasUnpublishedChanges extends FieldPluginBase {
    * Get state label.
    *
    * @param \Drupal\node\NodeInterface $node
+   *   Node interface.
    *
    * @return string
+   *   Node workflow state.
    */
   protected function getStateLabel(NodeInterface $node) {
     $state = ContentModerationState::loadFromModeratedEntity($node);
@@ -118,15 +130,19 @@ class ServiceHasUnpublishedChanges extends FieldPluginBase {
     $moderation_state = $state->moderation_state->value;
     return $workflow->getTypePlugin()->getState($moderation_state)->label();
   }
+
   /**
    * Generate latest revision url.
    *
    * @param \Drupal\node\NodeInterface $entity
+   *   Node interface.
    *
    * @return \Drupal\Core\Url
+   *   Url to latesta node version.
    */
   protected function latestRevisionUrl(NodeInterface $entity) {
     $url = sprintf('/node/%s/latest', $entity->id());
     return Url::fromUserInput($url);
   }
+
 }

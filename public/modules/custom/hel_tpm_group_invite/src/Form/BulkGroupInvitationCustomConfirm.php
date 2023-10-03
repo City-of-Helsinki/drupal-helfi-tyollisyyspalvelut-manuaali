@@ -2,20 +2,17 @@
 
 namespace Drupal\hel_tpm_group_invite\Form;
 
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Logger\LoggerChannelFactoryInterface;
-use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
-use Drupal\Core\TempStore\PrivateTempStoreFactory;
 use Drupal\Core\Url;
 use Drupal\ginvite\Form\BulkGroupInvitationConfirm;
 use Drupal\group\Entity\GroupContent;
-use Drupal\group\Entity\GroupContentInterface;
 use Drupal\user\Entity\User;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
+/**
+ * Bulk group invitation custom confirm form class.
+ */
 class BulkGroupInvitationCustomConfirm extends BulkGroupInvitationConfirm {
 
   /**
@@ -37,7 +34,7 @@ class BulkGroupInvitationCustomConfirm extends BulkGroupInvitationConfirm {
         'gid' => $this->tempstore['gid'],
         'invitee_mail' => $email,
         'entity_id' => 0,
-        'group_roles' => $roles
+        'group_roles' => $roles,
       ];
       $batch['operations'][] = [
         __CLASS__ . '::batchCreateInvite',
@@ -49,10 +46,16 @@ class BulkGroupInvitationCustomConfirm extends BulkGroupInvitationConfirm {
   }
 
   /**
-   * @param $values
-   * @param $context
+   * Create group invites in batch.
+   *
+   * @param array $values
+   *   Array of emails used to invite people.
+   * @param array $context
+   *   Batch context.
    *
    * @return void
+   *   Return nothing.
+   *
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public static function batchCreateInvite($values, &$context) {
@@ -61,9 +64,14 @@ class BulkGroupInvitationCustomConfirm extends BulkGroupInvitationConfirm {
   }
 
   /**
-   * @param $values
+   * Create membership for invitee.
+   *
+   * @param array $values
+   *   Array of invitation data.
    *
    * @return void
+   *   Return nothing.
+   *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    * @throws \Drupal\Core\Entity\EntityStorageException
@@ -97,8 +105,6 @@ class BulkGroupInvitationCustomConfirm extends BulkGroupInvitationConfirm {
     $group_membership->save();
   }
 
-
-
   /**
    * Batch finished callback.
    */
@@ -126,9 +132,14 @@ class BulkGroupInvitationCustomConfirm extends BulkGroupInvitationConfirm {
   }
 
   /**
-   * @param $email
+   * Creates new user.
+   *
+   * @param string $email
+   *   Invitee email.
    *
    * @return void
+   *   Return nothing.
+   *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    * @throws \Drupal\Core\Entity\EntityStorageException
@@ -141,9 +152,10 @@ class BulkGroupInvitationCustomConfirm extends BulkGroupInvitationConfirm {
     $user = User::create([
       'name' => $email,
       'mail' => $email,
-      'status' => 1
+      'status' => 1,
     ]);
     $user->save();
     _user_mail_notify('register_no_approval_required', $user);
   }
+
 }

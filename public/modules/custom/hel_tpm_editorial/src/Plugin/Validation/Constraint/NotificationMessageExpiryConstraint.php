@@ -13,6 +13,12 @@ use Symfony\Component\Validator\Constraint;
  * )
  */
 class NotificationMessageExpiryConstraint extends Constraint {
-  // The message that will be shown if the format is incorrect.
+
+  /**
+   * The message that will be shown if the format is incorrect.
+   *
+   * @var string
+   */
   public $incorrectDurationFormat = 'The expiry date can be no longer than 1 month.';
+
 }

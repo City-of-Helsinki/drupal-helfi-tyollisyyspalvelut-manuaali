@@ -2,7 +2,6 @@
 
 namespace Drupal\hel_tpm_general\Plugin\Block;
 
-use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
@@ -31,11 +30,15 @@ class GroupContentCreateLinksBlock extends BlockBase implements ContainerFactory
   protected $entityTypeManager;
 
   /**
+   * Group membership loader.
+   *
    * @var \Drupal\group\GroupMembershipLoader
    */
   protected $groupMembershipLoader;
 
   /**
+   * Current user.
+   *
    * @var \Drupal\user\Plugin\views\argument_default\CurrentUser
    */
   protected $currentUser;
@@ -54,6 +57,12 @@ class GroupContentCreateLinksBlock extends BlockBase implements ContainerFactory
    *   The plugin implementation definition.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.
+   * @param \Drupal\group\GroupMembershipLoader $group_membership_loader
+   *   Group membership loader service.
+   * @param \Drupal\Core\Session\AccountInterface $current_user
+   *   Current user service.
+   * @param \Drupal\hel_tpm_general\Access\GroupNodeCreateAccessService $group_node_add_access_service
+   *   Group node add access service.
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, GroupMembershipLoader $group_membership_loader, AccountInterface $current_user, GroupNodeCreateAccessService $group_node_add_access_service) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
@@ -93,7 +102,7 @@ class GroupContentCreateLinksBlock extends BlockBase implements ContainerFactory
       '#type' => 'link',
       '#title' => $this->t('Add service'),
       '#url' => Url::fromRoute('hel_tpm_general.group.node.add.service'),
-      '#attributes' => ['class' => ['add-service-button', 'button']]
+      '#attributes' => ['class' => ['add-service-button', 'button']],
     ];
     return $build;
   }

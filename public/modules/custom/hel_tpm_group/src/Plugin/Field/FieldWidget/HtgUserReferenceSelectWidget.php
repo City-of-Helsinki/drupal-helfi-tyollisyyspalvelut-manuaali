@@ -2,15 +2,10 @@
 
 namespace Drupal\hel_tpm_group\Plugin\Field\FieldWidget;
 
-
-use Drupal\Core\Entity\EntityReferenceSelection\SelectionWithAutocreateInterface;
-use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\select2\Plugin\Field\FieldWidget\Select2EntityReferenceWidget;
 use Drupal\select2\Select2Trait;
-use Drupal\user\EntityOwnerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -30,10 +25,15 @@ class HtgUserReferenceSelectWidget extends Select2EntityReferenceWidget {
   use Select2Trait;
 
   /**
+   * Current user object.
+   *
    * @var \Drupal\Core\Session\AccountInterface
    */
   protected $currentUser;
 
+  /**
+   * {@inheritdoc}
+   */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): Select2EntityReferenceWidget {
     $widget = parent::create($container, $configuration, $plugin_id, $plugin_definition);
     $widget->setEntityTypeManager($container->get('entity_type.manager'));
@@ -42,13 +42,7 @@ class HtgUserReferenceSelectWidget extends Select2EntityReferenceWidget {
   }
 
   /**
-   * @param \Drupal\Core\Field\FieldItemListInterface $items
-   * @param $delta
-   * @param array $element
-   * @param array $form
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *
-   * @return array
+   * {@inheritdoc}
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state): array {
     $element = parent::formElement($items, $delta, $element, $form, $form_state);
@@ -71,9 +65,12 @@ class HtgUserReferenceSelectWidget extends Select2EntityReferenceWidget {
    * Check if user can be give access to edit reference.
    *
    * @param \Drupal\Core\Field\FieldItemListInterface $items
-   * @param $element
+   *   Field item list containing field items.
+   * @param array $element
+   *   Element render array.
    *
    * @return bool
+   *   Retrun TRUE if user can access items.
    */
   protected function hasFieldAccess(FieldItemListInterface $items, $element) {
     $values = $items->getValue();

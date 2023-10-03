@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * Hel TPM Forms install.
+ */
+
+/**
  * Update service location titles.
  */
 function hel_tpm_forms_update_9001(&$sandbox) {
@@ -34,7 +39,6 @@ function hel_tpm_forms_update_9001(&$sandbox) {
     $sandbox['progress']++;
     $sandbox['current_nid'] = $node->id();
   }
-
 
   $sandbox['#finished'] = empty($sandbox['max']) ? 1 : $sandbox['progress'] / $sandbox['max'];
 }

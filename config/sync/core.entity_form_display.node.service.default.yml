@@ -336,8 +336,8 @@ third_party_settings:
         required_fields: true
     group_statements_unemploym:
       children:
-        - field_statements
         - field_statements_unemployment
+        - field_statements
         - field_other_preferences
       label: 'Lausunnot ja työttömyysetuus'
       region: content
@@ -817,7 +817,7 @@ content:
         maxlength_js_enforce: false
   field_other_preferences:
     type: options_buttons
-    weight: 15
+    weight: 16
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -997,7 +997,7 @@ content:
     third_party_settings: {  }
   field_statements:
     type: options_buttons
-    weight: 13
+    weight: 15
     region: content
     settings: {  }
     third_party_settings: {  }

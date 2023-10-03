@@ -19,6 +19,15 @@ class BulkInvitationRouteSubscriber extends RouteSubscriberBase {
     $this->alterGinviteInvitationBulkConfirmRoute($collection);
   }
 
+  /**
+   * Alter ginvite module to use BulkGroupInvitationCustom form.
+   *
+   * @param \Symfony\Component\Routing\RouteCollection $collection
+   *   Route collection.
+   *
+   * @return void
+   *   -
+   */
   private function alterGinviteInvitationBulkRoute(RouteCollection $collection) {
     $route = $collection->get('ginvite.invitation.bulk');
     if (empty($route)) {
@@ -28,9 +37,13 @@ class BulkInvitationRouteSubscriber extends RouteSubscriberBase {
   }
 
   /**
+   * Alter bulk confirm form to use BulkGroupInvitationCustomConfirm class.
+   *
    * @param \Symfony\Component\Routing\RouteCollection $collection
+   *   Route collection.
    *
    * @return void
+   *   -
    */
   private function alterGinviteInvitationBulkConfirmRoute(RouteCollection $collection) {
     $route = $collection->get('ginvite.invitation.bulk.confirm');

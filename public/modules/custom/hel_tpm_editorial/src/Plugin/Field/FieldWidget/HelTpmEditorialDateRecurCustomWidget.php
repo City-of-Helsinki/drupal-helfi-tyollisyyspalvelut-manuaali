@@ -4,14 +4,12 @@ declare(strict_types = 1);
 
 namespace Drupal\hel_tpm_editorial\Plugin\Field\FieldWidget;
 
+use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
-use Drupal\Core\Form\FormState;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Component\Utility\Html;
-use Drupal\date_recur\DateRecurPartGrid;
 use Drupal\date_recur\DateRecurRuleInterface;
 use Drupal\date_recur\Exception\DateRecurHelperArgumentException;
 use Drupal\date_recur\Plugin\Field\FieldType\DateRecurItem;
@@ -119,7 +117,10 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state): array {
     /** @var \Drupal\date_recur\Plugin\Field\FieldType\DateRecurFieldItemList|\Drupal\date_recur\Plugin\Field\FieldType\DateRecurItem[] $items */
-    $elementParents = array_merge($element['#field_parents'], [$this->fieldDefinition->getName(), $delta]);
+    $elementParents = array_merge($element['#field_parents'], [
+      $this->fieldDefinition->getName(),
+      $delta,
+    ]);
     $element['#element_validate'][] = [static::class, 'validateModularWidget'];
     $element['#after_build'][] = [static::class, 'afterBuildModularWidget'];
     $element['#theme'] = 'hel_tpm_editorial_date_recur_custom_widget';
@@ -157,7 +158,7 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
       '#date_date_format' => 'd.m.Y',
       '#date_time_format' => 'H:i:s',
       '#attached' => [
-        'library' => ['hel_tpm_editorial/custom-datetimepicker']
+        'library' => ['hel_tpm_editorial/custom-datetimepicker'],
       ],
     ];
 
@@ -209,9 +210,7 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
     $element['weekdays']['#states'] = $this->getVisibilityStates($element, $fieldModes['weekdays'] ?? []);
     $element['ordinals'] = $this->getFieldMonthlyByDayOrdinals($element, $rule);
     $element['ordinals']['#states'] = $this->getVisibilityStates($element, $fieldModes['ordinals'] ?? []);
-    //$element['ordinals']['#title_display'] = 'invisible';
-
-
+    // $element['ordinals']['#title_display'] = 'invisible';
     $endsModeDefault =
       $endsDate ? DateRecurModularWidgetOptions::ENDS_MODE_ON_DATE :
       ($count > 0 ? DateRecurModularWidgetOptions::ENDS_MODE_OCCURRENCES : DateRecurModularWidgetOptions::ENDS_MODE_INFINITE);
@@ -275,27 +274,29 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
     /*
     $wrapper = 'date-preview-wrapper-' . implode('-', $elementParents);;
     $element['preview'] = [
-      '#type' => 'button',
-      '#value' => $this->t('Preview date'),
-      '#ajax' => [
-        'callback' => [$this, 'previewDate'],
-        'wrapper' => $wrapper,
-        'event' => 'click'
-      ],
-      '#limit_validation_errors' => [],
-      '#name' => Html::cleanCssIdentifier(implode('-', array_merge($elementParents, ['preview']))),
+    '#type' => 'button',
+    '#value' => $this->t('Preview date'),
+    '#ajax' => [
+    'callback' => [$this, 'previewDate'],
+    'wrapper' => $wrapper,
+    'event' => 'click'
+    ],
+    '#limit_validation_errors' => [],
+    '#name' => Html::cleanCssIdentifier(implode('-', array_merge(
+    $elementParents, ['preview']
+    ))),
     ];
     $element['preview_element'] = [
-      '#type' => 'html_tag',
-      '#tag' => 'div',
-      '#attributes' => ['id' => $wrapper]
+    '#type' => 'html_tag',
+    '#tag' => 'div',
+    '#attributes' => ['id' => $wrapper]
     ];*/
 
     return $element;
   }
 
   /**
-   * { @inheritdoc }
+   * {@inheritdoc}
    */
   protected function getFieldByDay(?DateRecurRuleInterface $rule, string $weekDayLabels = 'full'): array {
     $element = parent::getFieldByDay($rule, $weekDayLabels);
@@ -304,7 +305,7 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
   }
 
   /**
-   * { @inheritdoc }
+   * {@inheritdoc}
    */
   protected function formMultipleElements(FieldItemListInterface $items, array &$form, FormStateInterface $form_state) {
     $field_name = $this->fieldDefinition->getName();
@@ -349,7 +350,10 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
       // table.
       if ($is_multiple) {
         $element = [
-          '#title' => $this->t('@title (value @number)', ['@title' => $title, '@number' => $delta + 1]),
+          '#title' => $this->t('@title (value @number)', [
+            '@title' => $title,
+            '@number' => $delta + 1,
+          ]),
           '#title_display' => 'invisible',
           '#description' => '',
         ];
@@ -426,13 +430,7 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
   /**
    * Helper method to add remove row button.
    *
-   * @param $elements
-   * @param $parents
-   * @param $field_name
-   * @param $id_prefix
-   * @param $max_delta
-   *
-   * @return void
+   * {@inheritdoc}
    */
   public function addRemoveRowButton(&$elements, $id_prefix, $wrapper_id, $max_delta) {
     for ($delta = 0; $delta < $max_delta; $delta++) {
@@ -487,12 +485,16 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
 
   /**
    * Preview date ajax submit.
-   * @param $form
-   * @param $form_state
    *
-   * @return mixed
+   * @param array $form
+   *   Form array.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state interface.
+   *
+   * @return array
+   *   Return preview date element.
    */
-  public function previewDate($form, FormStateInterface &$form_state) {
+  public function previewDate(array $form, FormStateInterface &$form_state) {
     $triggering_element = $form_state->getTriggeringElement();
     $parents = $triggering_element['#parents'];
     $input = $form_state->getUserInput();
@@ -515,7 +517,7 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
     $element['preview_element'] = [
       '#type' => 'html_tag',
       '#tag' => 'div',
-      '#attributes' => ['id' => $triggering_element['#ajax']['wrapper']]
+      '#attributes' => ['id' => $triggering_element['#ajax']['wrapper']],
     ];
 
     $element['preview_element']['element'] = $items->get(0)->view();
@@ -689,7 +691,17 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
     return $returnValues;
   }
 
+  /**
+   * Create DrauplDateTime element from given date.
+   *
+   * @param array $date
+   *   Date array.
+   *
+   * @return \Drupal\Core\Datetime\DrupalDateTime
+   *   DrupalDateTime object.
+   */
   protected function createDrupalDateTime(array $date) {
     return DrupalDateTime::createFromTimestamp(strtotime(implode($date)));
   }
+
 }
