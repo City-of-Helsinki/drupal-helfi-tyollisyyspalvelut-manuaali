@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c0a4981868853339a3d55c94547a84ee",
+    "content-hash": "08268b88ebb32718538534c896e262eb",
     "packages": [
         {
             "name": "ajgl/breakpoint-twig-extension",
@@ -2940,8 +2940,8 @@
                     "dev-4.x": "4.x-dev"
                 },
                 "drupal": {
-                    "version": "4.0.0-alpha3+1-dev",
-                    "datestamp": "1684117117",
+                    "version": "4.0.0-alpha4+6-dev",
+                    "datestamp": "1695849755",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Dev releases are not covered by Drupal security advisories."
@@ -3333,6 +3333,10 @@
                 {
                     "name": "gisle",
                     "homepage": "https://www.drupal.org/user/409554"
+                },
+                {
+                    "name": "Steven Jones",
+                    "homepage": "https://www.drupal.org/user/99644"
                 }
             ],
             "description": "Provides flexible content access control.",
@@ -4439,13 +4443,15 @@
                 "shasum": "f3b5585efa598eff29a308e21b9bfa3b5bb5fb16"
             },
             "require": {
-                "drupal/core": "^8 || ^9"
+                "drupal/components": "^2.1",
+                "drupal/core": "^8 || ^9",
+                "drupal/emulsify_twig": "^2.0"
             },
             "type": "drupal-theme",
             "extra": {
                 "drupal": {
                     "version": "4.1.0",
-                    "datestamp": "1640288027",
+                    "datestamp": "1640288640",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -4454,24 +4460,28 @@
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
             "license": [
-                "GPL-2.0-or-later"
+                "GPL-2.0-only"
             ],
             "authors": [
                 {
-                    "name": "Aaron Stanush",
-                    "homepage": "https://www.drupal.org/user/89718"
+                    "name": "Brian Lewis",
+                    "homepage": "https://www.drupal.org/user/609802",
+                    "email": "brian@fourkitchens.com"
                 },
                 {
-                    "name": "amazingrando",
-                    "homepage": "https://www.drupal.org/user/609802"
+                    "name": "Chris Martin",
+                    "homepage": "https://www.drupal.org/user/1460062",
+                    "email": "chris.martin@fourkitchens.com"
                 },
                 {
-                    "name": "bjlewis2",
-                    "homepage": "https://www.drupal.org/user/223774"
+                    "name": "Evan Willhite",
+                    "homepage": "https://www.drupal.org/user/2532054",
+                    "email": "evan@fourkitchens.com"
                 },
                 {
-                    "name": "ccjjmartin",
-                    "homepage": "https://www.drupal.org/user/3210801"
+                    "name": "Randy Oest",
+                    "homepage": "https://www.drupal.org/user/3210801",
+                    "email": "randy@fourkitchens.com"
                 },
                 {
                     "name": "evanmwillhite",
@@ -4480,13 +4490,10 @@
                 {
                     "name": "fk_bender",
                     "homepage": "https://www.drupal.org/user/3539842"
-                },
-                {
-                    "name": "techninja",
-                    "homepage": "https://www.drupal.org/user/132895"
                 }
             ],
-            "homepage": "https://www.drupal.org/project/emulsify_drupal",
+            "description": "Storybook development + Webpack Build + Drupal 8 theme",
+            "homepage": "http://emulsify.info",
             "support": {
                 "source": "https://git.drupalcode.org/project/emulsify_drupal"
             }
@@ -5157,6 +5164,52 @@
                 "forum": "https://drupal.stackexchange.com/search?q=eu+cookie+compliance",
                 "issues": "https://www.drupal.org/project/issues/eu_cookie_compliance?version=8.x",
                 "slack": "https://app.slack.com/client/T06GX3JTS/C012XBTH81E"
+            }
+        },
+        {
+            "name": "drupal/eu_cookie_compliance_matomo",
+            "version": "1.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/eu_cookie_compliance_matomo.git",
+                "reference": "1.0.6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/eu_cookie_compliance_matomo-1.0.6.zip",
+                "reference": "1.0.6",
+                "shasum": "56eb482eb9ee0691c73bbde1de7d38486c843475"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9 || ^10",
+                "drupal/eu_cookie_compliance": "*",
+                "drupal/matomo": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "1.0.6",
+                    "datestamp": "1691481366",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "marco.aresu",
+                    "homepage": "https://www.drupal.org/user/3248962"
+                }
+            ],
+            "description": "Add Matomo features to EU Cookie Compliance",
+            "homepage": "https://www.drupal.org/project/eu_cookie_compliance_matomo",
+            "support": {
+                "source": "https://git.drupalcode.org/project/eu_cookie_compliance_matomo"
             }
         },
         {
@@ -6784,10 +6837,6 @@
                     "role": "Maintainer"
                 },
                 {
-                    "name": "ivnish",
-                    "homepage": "https://www.drupal.org/user/3547706"
-                },
-                {
                     "name": "jrockowitz",
                     "homepage": "https://www.drupal.org/user/371407"
                 },
@@ -7210,6 +7259,10 @@
                     "name": "Mohammad AlQanneh",
                     "homepage": "https://www.drupal.org/u/mqanneh",
                     "role": "Maintainer"
+                },
+                {
+                    "name": "mqanneh",
+                    "homepage": "https://www.drupal.org/user/2833163"
                 }
             ],
             "description": "This module enables users to login by email address.",
@@ -8083,10 +8136,6 @@
                     "name": "Travis Tomka",
                     "homepage": "https://www.drupal.org/user/718562",
                     "email": "underoathosx@gmail.com"
-                },
-                {
-                    "name": "gabesullice",
-                    "homepage": "https://www.drupal.org/user/2287430"
                 }
             ],
             "description": "Allow site admins to construct and broadcast notification messages.",
@@ -8402,7 +8451,7 @@
                     "homepage": "https://www.drupal.org/user/73854"
                 },
                 {
-                    "name": "ttadegraaff",
+                    "name": "thomasdegraaff",
                     "homepage": "https://www.drupal.org/user/989866"
                 }
             ],
@@ -8986,8 +9035,8 @@
                     "dev-4.x": "4.x-dev"
                 },
                 "drupal": {
-                    "version": "4.2.12+52-dev",
-                    "datestamp": "1691703016",
+                    "version": "4.3.0-alpha1+2-dev",
+                    "datestamp": "1693403780",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Dev releases are not covered by Drupal security advisories."

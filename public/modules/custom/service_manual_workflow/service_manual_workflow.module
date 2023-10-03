@@ -1,15 +1,17 @@
 <?php
-use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\content_moderation\Entity\ContentModerationStateInterface;
-use Drupal\field\FieldConfigInterface;
-use Drupal\service_manual_workflow\Event\ServiceModerationEvent;
 
 /**
  * @file
  * Primary module hooks for Service manual workflow module.
  */
 
+use Drupal\content_moderation\Entity\ContentModerationStateInterface;
+use Drupal\Core\Access\AccessResultForbidden;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
+use Drupal\field\FieldConfigInterface;
+use Drupal\service_manual_workflow\Event\ServiceModerationEvent;
 
 /**
  * Implements hook_form_alter().
@@ -20,7 +22,7 @@ function service_manual_workflow_form_node_form_alter(&$form, FormStateInterface
     // Create custom save button for confirm dialog.
     $form['actions']['submit_popup'] = [
       '#type' => 'button',
-      '#value' => t('Save')
+      '#value' => t('Save'),
     ];
 
     // Hide submit button.
@@ -28,7 +30,7 @@ function service_manual_workflow_form_node_form_alter(&$form, FormStateInterface
     // Add service-confirm library to form.
     $form['#attached']['library'][] = 'service_manual_workflow/service-confirm-js';
     // Attach module config to javascsript drupalSettings.
-    $config =  \Drupal::config('service_manual_workflow.popup_settings');
+    $config = \Drupal::config('service_manual_workflow.popup_settings');
     $form['#attached']['drupalSettings']['service_manual_workflow']['popup_settings'] = $config->getRawData();
   }
 }
@@ -36,21 +38,21 @@ function service_manual_workflow_form_node_form_alter(&$form, FormStateInterface
 /**
  * Implements hook_entity_operation().
  */
-function service_manual_workflow_entity_operation(\Drupal\Core\Entity\EntityInterface $entity) {
+function service_manual_workflow_entity_operation(EntityInterface $entity) {
   $operations = [];
   if ($entity->getEntityTypeId() !== 'node' || $entity->bundle() !== 'service') {
     return $operations;
   }
 
   $access_service = \Drupal::service('service_manual_workflow.set_outdated_access');
-  if ($access_service->access($entity, \Drupal::currentUser()) instanceof \Drupal\Core\Access\AccessResultForbidden) {
+  if ($access_service->access($entity, \Drupal::currentUser()) instanceof AccessResultForbidden) {
     return $operations;
   }
 
   $operations['set_outdated'] = [
     'title' => t('Set Outdated'),
     'weight' => 60,
-    'url' => \Drupal\Core\Url::fromRoute('service_manual_workflow.service_set_outdated_form', ['node' => $entity->id()], ['language' => $entity->language()])
+    'url' => Url::fromRoute('service_manual_workflow.service_set_outdated_form', ['node' => $entity->id()], ['language' => $entity->language()]),
   ];
 
   return $operations;
@@ -58,10 +60,6 @@ function service_manual_workflow_entity_operation(\Drupal\Core\Entity\EntityInte
 
 /**
  * Implements hook_entity_insert().
- *
- * @param \Drupal\Core\Entity\EntityInterface $entity
- *
- * @return void
  */
 function service_manual_workflow_entity_insert(EntityInterface $entity) {
   if (!$entity instanceof ContentModerationStateInterface) {
@@ -124,12 +122,6 @@ function service_manual_workflow_require_on_publish_is_published_alter(&$is_publ
 
 /**
  * Implements hook_entity_update().
- *
- * @param \Drupal\Core\Entity\EntityInterface $entity
- *
- * @return void
- * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
- * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
  */
 function service_manual_workflow_entity_update(EntityInterface $entity) {
   if (!$entity instanceof ContentModerationStateInterface) {
@@ -154,8 +146,11 @@ function service_manual_workflow_entity_update(EntityInterface $entity) {
  * Fetch previous revision for content moderation state.
  *
  * @param \Drupal\Core\Entity\EntityInterface $entity
+ *   Entity object.
  *
  * @return \Drupal\Core\Entity\EntityInterface|null
+ *   Previous revision of give entity.
+ *
  * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
  * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
  */

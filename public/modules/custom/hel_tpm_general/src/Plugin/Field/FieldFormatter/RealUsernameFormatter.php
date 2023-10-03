@@ -6,7 +6,6 @@ use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
-use Drupal\Core\Field\Plugin\DataType\FieldItem;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\group\GroupMembershipLoaderInterface;
@@ -27,24 +26,40 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class RealUsernameFormatter extends FormatterBase {
 
   /**
+   * Group membership laoder.
+   *
    * @var \Drupal\group\GroupMembershipLoaderInterface
    */
   protected $groupMembershipLoader;
 
   /**
+   * Current user.
+   *
    * @var \Drupal\Core\Session\AccountProxyInterface
    */
   protected $currentUser;
 
   /**
-   * @param $plugin_id
-   * @param $plugin_definition
+   * Constructor for RealUsernameFormatter.
+   *
+   * @param string $plugin_id
+   *   The plugin_id for the formatter.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
    * @param \Drupal\Core\Field\FieldDefinitionInterface $field_definition
+   *   The definition of the field to which the formatter is associated.
    * @param array $settings
-   * @param $label
-   * @param $view_mode
+   *   The formatter settings.
+   * @param string $label
+   *   The formatter label display setting.
+   * @param string $view_mode
+   *   The view mode.
    * @param array $third_party_settings
+   *   Any third party settings.
    * @param \Drupal\group\GroupMembershipLoaderInterface $group_membership_loader
+   *   Group membership loader.
+   * @param \Drupal\Core\Session\AccountProxyInterface $current_user
+   *   Current user account interface.
    */
   public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, GroupMembershipLoaderInterface $group_membership_loader, AccountProxyInterface $current_user) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
@@ -85,9 +100,13 @@ class RealUsernameFormatter extends FormatterBase {
   }
 
   /**
+   * Get groups for given user.
+   *
    * @param \Drupal\Core\Session\AccountInterface $user
+   *   User account interface.
    *
    * @return \Drupal\group\GroupMembership[]
+   *   Users group memberships.
    */
   protected function getUserGroups(AccountInterface $user) : array {
     $memberships = &drupal_static(__FUNCTION__ . '-' . $user->id());
@@ -109,9 +128,13 @@ class RealUsernameFormatter extends FormatterBase {
   }
 
   /**
+   * Generate real username.
+   *
    * @param \Drupal\Core\Field\FieldItemInterface $item
+   *   Field item.
    *
    * @return string
+   *   Formatted username.
    */
   private function generateRealUsername(FieldItemInterface $item) : string {
     $user = $item->getEntity();
@@ -132,9 +155,13 @@ class RealUsernameFormatter extends FormatterBase {
   }
 
   /**
-   * @param $user
+   * Checks if user has access to see real username.
    *
-   * @return void
+   * @param \Drupal\user\UserInterface $user
+   *   User interface.
+   *
+   * @return bool
+   *   Access permission.
    */
   private function showRealUsernameAccess(UserInterface $user) : bool {
     if ($this->currentUser->hasPermission('administer users')) {
@@ -156,4 +183,5 @@ class RealUsernameFormatter extends FormatterBase {
 
     return FALSE;
   }
+
 }

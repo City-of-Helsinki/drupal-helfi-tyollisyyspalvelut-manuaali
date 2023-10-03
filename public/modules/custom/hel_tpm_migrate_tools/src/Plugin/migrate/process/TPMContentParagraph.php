@@ -2,12 +2,8 @@
 
 namespace Drupal\hel_tpm_migrate_tools\Plugin\migrate\process;
 
-use Drupal\hel_tpm_migrate_tools\Plugin\migrate\process\ParagraphBase;
 use Drupal\migrate\MigrateExecutableInterface;
-use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
-use Drupal\paragraphs\Entity\Paragraph;
-use Drupal\Component\Utility\Html;
 
 /**
  * Generate a paragraph.
@@ -41,16 +37,16 @@ class TPMContentParagraph extends ParagraphBase {
    * Create a content paragraph with specified content.
    *
    * @param Drupal\migrate\Row $row
-   *  The row being handled.
+   *   The row being handled.
    * @param string $destinationProperty
-   *  The property we're currently handling.
-   * @param string|NULL $title
-   *  The title of the paragraph.
+   *   The property we're currently handling.
+   * @param string|null $title
+   *   The title of the paragraph.
    * @param string $body
-   *  The body of the paragraph.
+   *   The body of the paragraph.
    *
-   * @return []
-   *  The paragraph's IDs as necessary to include in a entity reference field.
+   * @return array
+   *   The paragraph's IDs as necessary to include in a entity reference field.
    */
   private function createContentParagraph($row, $destinationProperty, $title, $body) {
     $paragraph = $this->createParagraph($row, $destinationProperty, 'content', 0);

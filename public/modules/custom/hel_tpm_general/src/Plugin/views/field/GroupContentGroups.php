@@ -21,10 +21,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class GroupContentGroups extends FieldPluginBase {
 
   /**
+   * Group hierarchy manager service.
+   *
    * @var \Drupal\ggroup\GroupHierarchyManagerInterface
    */
   protected $groupMembershipLoader;
-
 
   /**
    * Constructs a new GroupContentGroups instance.
@@ -38,10 +39,8 @@ class GroupContentGroups extends FieldPluginBase {
    *   The plugin_id for the plugin instance.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
-   * @param \Drupal\example\ExampleInterface $group_membership_loader
-   *   The group.membership_loader service.
-   * @param \Drupal\example\ExampleInterface $ggroup_group_graph_storage
-   *   The ggroup.group_graph_storage service.
+   * @param \Drupal\ggroup\GroupHierarchyManagerInterface $ggroup_membership_loader
+   *   Group hierarchy manager.
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, GroupHierarchyManagerInterface $ggroup_membership_loader) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
@@ -61,7 +60,7 @@ class GroupContentGroups extends FieldPluginBase {
   }
 
   /**
-   * @return void
+   * {@inheritdoc}
    */
   public function query() {}
 
