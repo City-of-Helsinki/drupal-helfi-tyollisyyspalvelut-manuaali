@@ -13,13 +13,15 @@ class GroupBulkInviteTest extends GroupBrowserTestBase {
   use StringTranslationTrait;
 
   /**
+   * Required modules.
+   *
    * @var string[]
    */
   public static $modules = [
     'group',
     'group_test_config',
     'ginvite',
-    'hel_tpm_group_invite'
+    'hel_tpm_group_invite',
   ];
 
   /**
@@ -43,10 +45,11 @@ class GroupBulkInviteTest extends GroupBrowserTestBase {
    */
   protected $account;
 
-  protected $groupRole;
-
   /**
+   * Global permissions.
+   *
    * @return string[]
+   *   Array of permissions.
    */
   protected function getGlobalPermissions() {
     return [
@@ -57,13 +60,12 @@ class GroupBulkInviteTest extends GroupBrowserTestBase {
       'create other group',
       'administer group',
       'bypass group access',
-      'administer users'
+      'administer users',
     ];
   }
 
   /**
-   * @return void
-   * @throws \Drupal\Core\Entity\EntityStorageException
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
@@ -78,10 +80,7 @@ class GroupBulkInviteTest extends GroupBrowserTestBase {
   }
 
   /**
-   * @return void
-   * @throws \Behat\Mink\Exception\ElementNotFoundException
-   * @throws \Behat\Mink\Exception\ExpectationException
-   * @throws \Drupal\Core\Entity\EntityStorageException
+   * Test bulk invitation.
    */
   public function testBulkInvite() {
 
@@ -114,7 +113,6 @@ class GroupBulkInviteTest extends GroupBrowserTestBase {
     $this->assertSession()->fieldExists('edit-roles');
     // Validate that roles selection is required.
     $this->assertSession()->elementAttributeContains('css', 'fieldset#edit-roles--wrapper', 'required', 'required');
-
 
     // Make sure field for role selection is found.
     $role_checkbox = sprintf('//input[@value="default-custom"]');

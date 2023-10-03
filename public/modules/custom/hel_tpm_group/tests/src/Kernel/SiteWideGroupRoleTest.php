@@ -2,9 +2,6 @@
 
 namespace Drupal\Tests\hel_tpm_group\Kernel;
 
-use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\group\GroupRoleSynchronizer;
-use Drupal\Tests\group\Functional\GroupBrowserTestBase;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 
 /**
@@ -12,18 +9,41 @@ use Drupal\Tests\group\Kernel\GroupKernelTestBase;
  *
  * @group hel_tpm_group
  */
-class SiteWideGroupRoleTest extends GroupBrowserTestBase {
+class SiteWideGroupRoleTest extends GroupKernelTestBase {
 
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['hel_tpm_group', 'group', 'options', 'entity', 'variationcache', 'group_test_config'];
+  public static $modules = [
+    'hel_tpm_group',
+    'group',
+    'options',
+    'entity',
+    'variationcache',
+    'group_test_config',
+  ];
 
+  /**
+   * Group role storage.
+   *
+   * @var \Drupal\Core\Entity\EntityStorageInterface
+   */
   protected $groupRoleStorage;
 
+  /**
+   * User account.
+   *
+   * @var \Drupal\user\Entity\User|false
+   */
   protected $account;
 
+  /**
+   * Group object.
+   *
+   * @var \Drupal\group\Entity\Group
+   */
   protected $group;
+
   /**
    * {@inheritdoc}
    */
@@ -31,13 +51,9 @@ class SiteWideGroupRoleTest extends GroupBrowserTestBase {
     parent::setUp();
     $this->groupRoleStorage = $this->entityTypeManager->getStorage('group_role');
     $this->groupRoleSynchronizer = $this->container->get('group_role.synchronizer');
-
-    $this->drupalCreateRole([], 'siterole');
-    $this->createUser();
-    $this->account = $this->createUser();
     $this->group = $this->createGroup();
-    // Mock required services here.
-    return;
+    $this->account = $this->createUser();
+    $this->createRole([], 'siterole', 'Site role');
   }
 
   /**
@@ -60,17 +76,12 @@ class SiteWideGroupRoleTest extends GroupBrowserTestBase {
       'weight' => 0,
       'group_type' => 'default',
     ]);
-    $group_role->set('site_wide_role', ['publisher'])->save();
+    $group_role->set('site_wide_role', ['siterole'])->save();
 
-    $this->assertEqualsCanonicalizing(['publisher'], $group_role->get('site_wide_role'), 'Role has site wide role configured');
+    $this->assertEqualsCanonicalizing(['siterole'], $group_role->get('site_wide_role'), 'Role has site wide role configured');
     $membership = $this->group->getMember($this->account)->getGroupContent();
     $membership->group_roles[] = 'default-editor';
     $membership->save();
-
-    // Reload account.
-    $this->account = $this->entityTypeManager->getStorage('user')->load($this->account->id());
-
-   // $this->assertEqualsCanonicalizing(['authenticated', 'publisher'], $this->account->getRoles(), 'Account has publisher role');
   }
 
   /**

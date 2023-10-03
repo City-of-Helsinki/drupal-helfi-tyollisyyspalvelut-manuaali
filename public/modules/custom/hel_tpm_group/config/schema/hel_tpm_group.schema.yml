@@ -1,10 +1,14 @@
 group.role.*.third_party.hel_tpm_group:
-  type: 'config_entity'
+  type: config_entity
   label: 'Group role'
   mapping:
-    site_wide_role.*:
-      type: 'string'
+    site_wide_role:
+      type: sequence
       label: 'Site wide role'
+      sequence:
+        type: string
+        label: 'Roles'
+
 entity_reference_selection.hel_tpm_group_editor_user_selection:
   type: entity_reference_selection.default:user
   label: 'Group editor user selection handler settings'

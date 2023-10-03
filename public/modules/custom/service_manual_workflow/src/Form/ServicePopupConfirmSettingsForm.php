@@ -4,7 +4,6 @@ namespace Drupal\service_manual_workflow\Form;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
-use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -15,9 +14,37 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class ServicePopupConfirmSettingsForm extends ConfigFormBase {
 
+  /**
+   * Workflow id confirm form is used in.
+   *
+   * @var string
+   */
   private $workflowId = 'service_moderation';
+
+  /**
+   * Entity type manager service.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
   protected $entityTypeManager;
 
+  /**
+   * Entity type bundle info service.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeBundleInfoInterface
+   */
+  protected $entityTypeBundleInfo;
+
+  /**
+   * Constructor for service popup confirm settings form.
+   *
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   Configuration factory.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   Entity type manager.
+   * @param \Drupal\Core\Entity\EntityTypeBundleInfoInterface $entity_type_bundle_info
+   *   Entity type bundle info.
+   */
   public function __construct(ConfigFactoryInterface $config_factory, EntityTypeManagerInterface $entity_type_manager, EntityTypeBundleInfoInterface $entity_type_bundle_info) {
     parent::__construct($config_factory);
     $this->entityTypeManager = $entity_type_manager;
@@ -34,6 +61,7 @@ class ServicePopupConfirmSettingsForm extends ConfigFormBase {
       $container->get('entity_type.bundle.info')
     );
   }
+
   /**
    * {@inheritdoc}
    */
@@ -58,27 +86,24 @@ class ServicePopupConfirmSettingsForm extends ConfigFormBase {
       $form[$state_id] = [
         '#type' => 'textarea',
         '#title' => $this->t($state['label']),
-        '#default_value' => $config->get($state_id)
+        '#default_value' => $config->get($state_id),
       ];
     }
     return parent::buildForm($form, $form_state);
   }
 
   /**
+   * Getter for selected workflow configuration.
+   *
    * @return mixed
+   *   Workflow configuration.
+   *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   private function getWorkflowConfiguration() {
     $workflow = $this->entityTypeManager->getStorage('workflow')->load($this->workflowId);
     return $workflow->getPluginCollections()['type_settings']->getConfiguration();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function validateForm(array &$form, FormStateInterface $form_state) {
-    parent::validateForm($form, $form_state);
   }
 
   /**

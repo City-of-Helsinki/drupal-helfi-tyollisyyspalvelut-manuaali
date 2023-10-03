@@ -48,6 +48,7 @@
       bottom: unset;
       padding: $space-double $space-double $space-one-and-half $space-double;
       margin-left: unset;
+      min-height: 104px;
       &.filters-open {
         @include xl {
           padding-bottom: $space-four-and-half;
@@ -86,7 +87,7 @@
     @include xl {left:213px;}
   }
   #block-kirjautuminen {
-    @include large {right:20px; top: 33px; z-index: 100;}
+    @include large {right:20px; z-index: 100;}
     @include xl {right:50px;}
   }
   #block-kayttajavalikko {

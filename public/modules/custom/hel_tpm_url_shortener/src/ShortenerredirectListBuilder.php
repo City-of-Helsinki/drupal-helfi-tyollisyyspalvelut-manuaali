@@ -2,9 +2,9 @@
 
 namespace Drupal\hel_tpm_url_shortener;
 
+use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityListBuilder;
-use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Routing\RedirectDestinationInterface;
@@ -88,7 +88,7 @@ class ShortenerredirectListBuilder extends EntityListBuilder {
    * {@inheritdoc}
    */
   public function buildRow(EntityInterface $entity) {
-    /* @var $entity \Drupal\hel_tpm_url_shortener\ShortenerredirectInterface */
+    /** @var \Drupal\hel_tpm_url_shortener\ShortenerredirectInterface $entity */
     $row['id'] = $entity->toLink();
     $row['created'] = $this->dateFormatter->format($entity->getCreatedTime());
     $row['changed'] = $this->dateFormatter->format($entity->getChangedTime());

@@ -80,6 +80,10 @@
       color: clr(text);
       display: flex;
       height: 24px;
+      line-height: 24px;
+      display: inline-block;
+      margin-left: 40px;
+
     }
     &:first-child {
       a {
@@ -89,8 +93,8 @@
           background-repeat: no-repeat;
           background-image: url("/themes/custom/palvelumanuaali/images/icons/heart.svg");
           @extend .icon--small;
-          @extend .icon--margin-right;
-          @extend .icon--mobile-margin-left-auto;
+          position: absolute;
+          left: 0;
         }
       }
     }

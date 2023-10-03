@@ -6,10 +6,12 @@ use Drupal\group\Entity\GroupContent;
 use Drupal\search_api\Datasource\DatasourceInterface;
 use Drupal\search_api\Item\ItemInterface;
 use Drupal\search_api\Plugin\search_api\datasource\ContentEntity;
-use Drupal\search_api\Processor\ProcessorProperty;
 use Drupal\search_api\Processor\ProcessorPluginBase;
+use Drupal\search_api\Processor\ProcessorProperty;
 
 /**
+ * Custom search api processor.
+ *
  * @SearchApiProcessor(
  *   id = "service_processor",
  *   label = @Translation("Service processor"),

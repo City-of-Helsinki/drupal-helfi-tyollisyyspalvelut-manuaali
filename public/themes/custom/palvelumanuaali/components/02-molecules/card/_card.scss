@@ -82,11 +82,15 @@
 }
 
 .card--border-left-blue {
-  border-left: 4px solid $blue80;
+  border-left: 4px solid $blue100;
 }
 
 .card--border-left-yellow {
   border-left: 4px solid $yellow;
+}
+
+.card--border-left-green {
+  border-left: 4px solid $green-success;
 }
 
 .card--border-left-red {
@@ -111,6 +115,19 @@
   }
 }
 
+.card--padded-centered {
+  margin-left: $space;
+  margin-right: $space;
+  padding-top: $space;
+  padding-bottom: $space-double;
+  @include large {
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: $space-one-and-half;
+    padding-bottom: $space-one-and-half;
+  }
+}
+
 .card--view-card {
   background-color: clr(sidebar-color);
   border-radius: 8px;
@@ -121,7 +138,6 @@
   .card__content {
     padding: $space-one-and-half $space-two-and-half $space-double $space-two-and-half;
     margin: 0;
-
   }
   .card__body {
       min-height: 50px;
@@ -355,7 +371,7 @@
 
 .card--global-notification,
 .card--service-notification {
-  padding-top: $space-two-and-half;
+
 }
 
 .card--global-notification {
@@ -364,16 +380,42 @@
   flex-direction: row;
   .card__content {
     align-self: stretch;
+    font-size: $small-caption;
+    color: $blue150;
+    p {
+      margin-bottom: 0;
+      @include large {
+        margin-right: $space-double;
+      }
+    }
+    a {
+      text-decoration-line: underline;
+      color: $blue100;
+    }
   }
   .message__content {
     width: 100%;
+    margin-top: 0;
+    @include large {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      max-width: 880px;
+      margin: auto;
+    }
   }
   .message__close {
-    margin-left: auto;
-    padding-left: $space;
+    position: absolute;
+    right: 16px;
+    top: 16px;
   }
   .field--name-field-message-level {
     float: left;
+    width: 100%;
+    @include large {
+      width: unset;
+      margin-left: 60px;
+    }
   }
   .field--name-label {
     margin-top: $space-one-third;
@@ -382,6 +424,13 @@
   }
   .icon {
     margin-right: $space;
+
+    &--medium-large {
+      width: 24px;
+      @include large {
+        width: 40px;
+      }
+    }
   }
   .field-publish-end-date {
     font-size: 14px;

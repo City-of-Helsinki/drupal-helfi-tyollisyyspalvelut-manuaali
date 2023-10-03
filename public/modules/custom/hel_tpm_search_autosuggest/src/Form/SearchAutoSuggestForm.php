@@ -28,20 +28,22 @@ class SearchAutoSuggestForm extends FormBase {
       '#type' => 'textfield',
       '#title' => $this->t('Search'),
       '#id' => 'hel_tpm_search_form',
-      '#attributes' => ['placeholder'=> t('Search from all services'), 'autocomplete' => 'off'],
-   //   '#attached' => ['library' => ['hel_tpm_search_autosuggest/hel_tpm_search_autosuggest']],
+      '#attributes' => [
+        'placeholder' => t('Search from all services'),
+        'autocomplete' => 'off',
+      ],
       '#required' => TRUE,
       '#default_value' => \Drupal::request()->query->get('search_api_fulltext'),
     ];
     $form['submit'] = [
       '#type' => 'submit',
       '#value' => $this->t('Search'),
-      '#title' => $this->t('Search from all services')
+      '#title' => $this->t('Search from all services'),
     ];
 
-    $form['list_items'] = array(
-      '#theme' => 'hel_tpm_search_autocomplete'
-    );
+    $form['list_items'] = [
+      '#theme' => 'hel_tpm_search_autocomplete',
+    ];
 
     return $form;
   }
@@ -51,7 +53,7 @@ class SearchAutoSuggestForm extends FormBase {
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
     if (empty($form_state->getValue('search'))) {
-      $form_state->setErrorByName('search', $this->t('This can\'t be empty'));
+      $form_state->setErrorByName('search', $this->t("This can't be empty"));
     }
   }
 
