@@ -167,6 +167,12 @@
   }
 }
 
+.view-notifications {
+  @include xl {
+    grid-column-start: 2;
+  }
+}
+
 .view-ready-to-publish-for-organization-updatee {
   margin-bottom: $space-quadruple;
 }
@@ -182,4 +188,4 @@
   >h2 {
     margin-bottom: $space-two-and-half;
   }
-}
+}  
