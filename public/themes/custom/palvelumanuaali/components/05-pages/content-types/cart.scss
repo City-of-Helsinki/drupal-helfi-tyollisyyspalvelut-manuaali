@@ -43,42 +43,6 @@
 }
 
 .cart-page {
-  .main-content {
-    >div {
-      @include small {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-      }
-      @include large {
-
-        grid-template-columns: 9fr 3fr;
-      }
-      @include xl {
-        grid-template-columns: 8fr 4fr;
-      }
-    }
-  }
-  #block-system-breadcrumb-block {
-    grid-column-start: 1;
-    grid-column-end: 3;
-  }
-
-  #block-system-main-block {
-    grid-column-start: 2 span;
-    padding: $space-one-and-half;
-    @include large {
-      grid-row-start: 2;
-      grid-row-end: 5;
-      grid-column-start: 1;
-      border-right: 2px solid $blue80;
-    }
-    @include xl {
-    }
-
-    .views-element-container {
-    }
-  }
-
   #block-hel-tpm-url-shortener-form {
     margin-top: $space-double;
     margin-left: $space-two-and-half;
