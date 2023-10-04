@@ -8,8 +8,8 @@
     {% if icon_name %}
       {% include "@atoms/images/icons/_icon.twig" with {
         icon_base_class: icon_base_class,
-        icon_blockname: 'icon',
         icon_name: icon_name,
+        icon_modifiers: icon_modifiers,
       } %}
     {% endif %}
     {% for item in items %}

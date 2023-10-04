@@ -48,6 +48,7 @@
       bottom: unset;
       padding: $space-double $space-double $space-one-and-half $space-double;
       margin-left: unset;
+      min-height: 104px;
       &.filters-open {
         @include xl {
           padding-bottom: $space-four-and-half;
@@ -77,15 +78,16 @@
     }
   }
   #block-kielenvaihtaja {
-    @include large {left:38px; top: 50px; z-index: 100;}
+    @include large {left:38px; z-index: 100;}
     @include xl {left:65px;}
   }
   #block-suosikit {
-    @include large {left:160px; top:50px; z-index: 100;}
+
+    @include large {left:160px; z-index: 100;}
     @include xl {left:213px;}
   }
   #block-kirjautuminen {
-    @include large {right:20px; top: 33px; z-index: 100;}
+    @include large {right:20px; z-index: 100;}
     @include xl {right:50px;}
   }
   #block-kayttajavalikko {
@@ -118,26 +120,22 @@
     flex-direction: row;
     font-size: 12px;
   }
-  @include xxl {
+  @include xl {
     font-size: 15px;
   }
 }
 
 #block-suosikit {
-  .content {
+  .content .menu {
+
     @include large {
       display: flex;
       align-items: center;
+      height: 24px;
     }
   }
   a {
     font-weight: 600;
-  }
-  .icon--margin-right {
-    margin-right: auto;
-    @include large {
-      margin-right: 12px;
-    }
   }
 }
 
@@ -145,6 +143,7 @@
   .content {
     @include large {
       display: flex;
+      align-items: center;
     }
   }
 }
@@ -155,6 +154,7 @@
   #accountMenuButton {
     display: flex;
     align-items: center;
+    border: 0;
     .views-row {
       text-align: left;
       .views-field-name {
