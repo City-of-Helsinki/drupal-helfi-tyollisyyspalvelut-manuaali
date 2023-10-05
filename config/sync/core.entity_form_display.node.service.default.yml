@@ -15,6 +15,8 @@ dependencies:
     - field.field.node.service.field_guidance_to_service
     - field.field.node.service.field_implementation_extra_info
     - field.field.node.service.field_instructions_markup
+    - field.field.node.service.field_internal_files
+    - field.field.node.service.field_internal_links
     - field.field.node.service.field_life_situations
     - field.field.node.service.field_links_and_attachments
     - field.field.node.service.field_measures_during_attendance
@@ -54,10 +56,12 @@ dependencies:
   module:
     - content_moderation
     - field_group
+    - file
     - hel_tpm_general
     - hel_tpm_group
     - hel_tpm_service_dates
     - inline_entity_form
+    - link
     - markup
     - maxlength
     - paragraphs
@@ -92,6 +96,7 @@ third_party_settings:
         - group_complementary_job_search
         - group_archive_guide
         - field_links_and_attachments
+        - group_liitteet_ja_linkit
       label: Specialist
       region: content
       parent_name: group_tabs
@@ -148,7 +153,7 @@ third_party_settings:
       label: POMA
       region: hidden
       parent_name: ''
-      weight: 19
+      weight: 17
       format_type: accordion
       format_settings:
         classes: ''
@@ -342,7 +347,7 @@ third_party_settings:
       label: 'Lausunnot ja työttömyysetuus'
       region: content
       parent_name: group_specialist
-      weight: 11
+      weight: 10
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -363,7 +368,7 @@ third_party_settings:
       label: 'Täydentävä työnhakukeskustelu'
       region: content
       parent_name: group_specialist
-      weight: 14
+      weight: 13
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -384,7 +389,7 @@ third_party_settings:
       label: Poikkeustilanteet
       region: content
       parent_name: group_specialist
-      weight: 13
+      weight: 12
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -404,7 +409,7 @@ third_party_settings:
       label: 'Toimenpiteet osallistumisen ajalta'
       region: content
       parent_name: group_specialist
-      weight: 12
+      weight: 11
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -424,7 +429,7 @@ third_party_settings:
       label: Arkistointiohje
       region: content
       parent_name: group_specialist
-      weight: 15
+      weight: 14
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -464,7 +469,7 @@ third_party_settings:
       label: 'Merkinnät asiakastietojärjestelmään'
       region: content
       parent_name: group_specialist
-      weight: 10
+      weight: 9
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -559,6 +564,21 @@ third_party_settings:
         effect: none
         speed: fast
         required_fields: false
+    group_liitteet_ja_linkit:
+      children:
+        - field_internal_links
+        - field_internal_files
+      label: 'Liitteet ja linkit'
+      region: hidden
+      parent_name: group_specialist
+      weight: 16
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        description: ''
+        required_fields: true
 id: node.service.default
 targetEntityType: node
 bundle: service
@@ -730,6 +750,21 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_internal_files:
+    type: file_generic
+    weight: 19
+    region: content
+    settings:
+      progress_indicator: throbber
+    third_party_settings: {  }
+  field_internal_links:
+    type: link_default
+    weight: 18
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
   field_life_situations:
     type: select2_entity_reference
     weight: 9
@@ -742,7 +777,7 @@ content:
     third_party_settings: {  }
   field_links_and_attachments:
     type: inline_entity_form_simple
-    weight: 16
+    weight: 15
     region: content
     settings:
       form_mode: default
@@ -823,7 +858,7 @@ content:
     third_party_settings: {  }
   field_other_services:
     type: select2_entity_reference
-    weight: 15
+    weight: 16
     region: content
     settings:
       width: 100%
@@ -839,7 +874,7 @@ content:
     third_party_settings: {  }
   field_responsible_municipality:
     type: hel_tpm_group_select2_widget
-    weight: 13
+    weight: 14
     region: content
     settings:
       width: 100%
@@ -849,7 +884,7 @@ content:
     third_party_settings: {  }
   field_responsible_updatee:
     type: options_select
-    weight: 14
+    weight: 15
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -925,7 +960,7 @@ content:
     third_party_settings: {  }
   field_service_producer:
     type: select2_entity_reference
-    weight: 11
+    weight: 12
     region: content
     settings:
       width: 100%
@@ -935,7 +970,7 @@ content:
     third_party_settings: {  }
   field_service_provider_updatee:
     type: options_select
-    weight: 12
+    weight: 13
     region: content
     settings: {  }
     third_party_settings: {  }

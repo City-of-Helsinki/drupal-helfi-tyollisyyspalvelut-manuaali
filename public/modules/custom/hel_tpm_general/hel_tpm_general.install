@@ -203,3 +203,52 @@ function hel_tpm_general_update_8113(&$sandbox) {
     }
   }
 }
+
+/**
+ * Migrate internal urls and files from paragraphs to fields.
+ */
+function hel_tpm_general_update_9110(&$sandbox) {
+  $paragraphs_field = 'field_links_and_attachments';
+  $internal_file_field = 'field_internal_files';
+  $internal_links_field = 'field_internal_links';
+
+  $storage = \Drupal::entityTypeManager()->getStorage('node');
+  $efq = $storage->getQuery();
+  $result = $efq->condition('type', 'service')
+    ->condition($paragraphs_field, '', '<>')
+    ->execute();
+  $nodes = $storage->loadMultiple($result);
+
+  foreach ($nodes as $node) {
+    // Load latest revision.
+    if (!$node->isLatestRevision()) {
+      $vid = $storage->getLatestRevisionId($node->id());
+      $node = $storage->loadRevision($vid);
+    }
+    $paragraph = $node->{$paragraphs_field}->entity;
+    _hel_tpm_general_migrate_paragraph_field($paragraph, 'field_file', $node, $internal_file_field);
+    _hel_tpm_general_migrate_paragraph_field($paragraph, 'field_link', $node, $internal_links_field);
+    // Preserve changed time.
+    $changed = $node->getChangedTime();
+    // Add one second to prevent drupal from updating changed time.
+    $changed++;
+    $node->setChangedTime($changed);
+    $node->save();
+    print_r('Updated node %s', $node->label());
+  }
+}
+
+/**
+ * Helper function to migrate paragraph fields to node fields.
+ *
+ * @param \Drupal\Core\Entity\EntityInterface $paragraph
+ * @param string $paragraph_field
+ * @param \Drupal\Core\Entity\EntityInterface $node
+ * @param string $internal_file_field
+ *
+ * @return void
+ */
+function _hel_tpm_general_migrate_paragraph_field($paragraph, $paragraph_field, $node, $internal_file_field) {
+  $files = $paragraph->{$paragraph_field}->getValue();
+  $node->set($internal_file_field, $files);
+}

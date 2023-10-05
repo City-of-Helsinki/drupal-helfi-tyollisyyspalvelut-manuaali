@@ -15,6 +15,8 @@ dependencies:
     - field.field.node.service.field_guidance_to_service
     - field.field.node.service.field_implementation_extra_info
     - field.field.node.service.field_instructions_markup
+    - field.field.node.service.field_internal_files
+    - field.field.node.service.field_internal_links
     - field.field.node.service.field_life_situations
     - field.field.node.service.field_links_and_attachments
     - field.field.node.service.field_measures_during_attendance
@@ -106,7 +108,7 @@ third_party_settings:
       label: 'Missä ja milloin'
       parent_name: ''
       region: content
-      weight: 15
+      weight: 14
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--where-and-when'
@@ -177,7 +179,7 @@ content:
       view_mode: default
       link: false
     third_party_settings: {  }
-    weight: 18
+    weight: 17
     region: content
   field_description:
     type: basic_string
@@ -216,7 +218,7 @@ content:
       view_mode: card_lift
       link: false
     third_party_settings: {  }
-    weight: 20
+    weight: 19
     region: content
   field_service_benefits:
     type: text_default
@@ -239,7 +241,7 @@ content:
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 16
+    weight: 15
     region: content
   field_service_other_info:
     type: entity_reference_revisions_entity_view
@@ -265,7 +267,7 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 19
+    weight: 18
     region: content
   field_service_requirements:
     type: text_default
@@ -333,7 +335,7 @@ content:
   view_mode_switcher:
     settings: {  }
     third_party_settings: {  }
-    weight: 17
+    weight: 16
     region: content
 hidden:
   content_moderation_control: true
@@ -346,6 +348,8 @@ hidden:
   field_contact_info_internal: true
   field_guidance_to_service: true
   field_instructions_markup: true
+  field_internal_files: true
+  field_internal_links: true
   field_links_and_attachments: true
   field_measures_during_attendance: true
   field_municipality_guidance: true
