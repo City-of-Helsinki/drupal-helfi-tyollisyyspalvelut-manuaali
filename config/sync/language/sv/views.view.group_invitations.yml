@@ -1,4 +1,4 @@
-label: 'Group invitations'
+label: 'Ryhmän kutsut'
 display:
   default:
     display_title: Huvud
@@ -19,23 +19,31 @@ display:
       fields:
         invitee_mail:
           label: E-post
+          separator: ', '
         name:
           label: Inbjudna
+          separator: ', '
         group_roles:
-          label: Roller
+          label: Roll
+          separator: ', '
         uid:
           label: 'Inbjuden av'
+          separator: ', '
         created:
           label: 'Bjudna på '
-        delete_group_content: {  }
+          separator: ', '
+        delete_group_content:
+          text: 'Remove invitation'
         dropbutton:
           label: Funktioner
       arguments:
         gid:
           exception:
             title: Alla
+      title: Inbjudningar
   page_1:
     display_title: Sida
     display_options:
       menu:
         title: Inbjudningar
+        description: 'Ryhmän kutsut'

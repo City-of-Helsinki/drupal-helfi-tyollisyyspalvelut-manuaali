@@ -5,6 +5,8 @@ dependencies:
   config:
     - core.entity_view_mode.message.mail_body
     - message.template.2nd_user_account_expiry_reminder
+  module:
+    - user
 id: message.2nd_user_account_expiry_reminder.mail_body
 targetEntityType: message
 bundle: 2nd_user_account_expiry_reminder
