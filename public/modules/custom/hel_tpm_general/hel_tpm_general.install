@@ -234,7 +234,6 @@ function hel_tpm_general_update_9110(&$sandbox) {
     $changed++;
     $node->setChangedTime($changed);
     $node->save();
-    print_r('Updated node %s', $node->label());
   }
 }
 
