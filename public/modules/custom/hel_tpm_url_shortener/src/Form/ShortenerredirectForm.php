@@ -21,7 +21,7 @@ class ShortenerredirectForm extends ContentEntityForm {
     $link = $entity->toLink($this->t('View'))->toRenderable();
 
     $message_arguments = ['%label' => $this->entity->label()];
-    $logger_arguments = $message_arguments + ['link' => RendererInterface::render($link)];
+    $logger_arguments = $message_arguments + ['link' => \Drupal::service('renderer')->render($link)];
 
     if ($result == SAVED_NEW) {
       $this->logger('hel_tpm_url_shortener')->notice('Created new shortenerredirect %label', $logger_arguments);
