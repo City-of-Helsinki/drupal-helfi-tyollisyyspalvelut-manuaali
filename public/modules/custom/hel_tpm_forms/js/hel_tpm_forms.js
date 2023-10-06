@@ -37,10 +37,11 @@
         let freeServiceCheckbox = '.field--name-field-free-service .form-checkbox';
         togglePriceElements(freeServiceCheckbox);
 
-        //handle show/hide logic of service price
-        $(freeServiceCheckbox).once().click(function () {
-          togglePriceElements(this);
-        });
+        $(once('toggle-price-event', freeServiceCheckbox, context)).each(function() {
+          $(this).click(function() {
+            togglePriceElements(this);
+          })
+        })
       }
 
       /**
