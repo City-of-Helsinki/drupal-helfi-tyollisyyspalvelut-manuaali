@@ -67,6 +67,7 @@ class ShortenerredirectListBuilder extends EntityListBuilder {
 
     $total = $this->getStorage()
       ->getQuery()
+      ->accessCheck()
       ->count()
       ->execute();
 
