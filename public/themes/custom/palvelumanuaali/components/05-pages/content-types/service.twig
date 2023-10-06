@@ -1,7 +1,7 @@
 
 <div class='link-wrapper'>
-  <div id="view-mode-switcher-link"> {{content.view_mode_switcher}}</div>
-  {{content.flag_cart}}
+  <div id="view-mode-switcher-link"> {{ content.view_mode_switcher }}</div>
+  {{ content.flag_cart }}
 </div>
  {% if service__internal %}
    {% embed "@templates/with-content-sidebar.twig" with {
@@ -10,9 +10,9 @@
    } %}
 
  {% block content %}
-{{content|without('flag_cart','flag_lists','view_mode_switcher', 'field_contact_info','field_other_services','field_contact_info_external','entitygroupfield','field_municipality_specific','field_related_archive','field_responsible_updatee')}}{% endblock %}
+{{ content|without('flag_cart', 'flag_lists', 'view_mode_switcher', 'field_contact_info', 'field_other_services', 'field_contact_info_external', 'entitygroupfield', 'field_municipality_specific', 'field_related_archive', 'field_responsible_updatee') }}{% endblock %}
     {% block page_content %}
-        {% if service__updated  %}
+        {% if service__updated %}
           {% include "@atoms/text/text/01-paragraph.twig" with {
             paragraph_base_class: card__date__base_class|default('date'),
             paragraph_modifiers: card__date__modifiers,
@@ -38,7 +38,7 @@
            "heading": 'Archiving guides:'|t,
            "heading_modifiers": 'semibold',
          } %}
-          <a class="small-font" href="/node/275">{{'Archiving guide'|t}}</a>
+          <a class="small-font" href="/node/275">{{ 'Archiving guide'|t }}</a>
        {% endif %}
 
      {% endblock %}
@@ -50,9 +50,9 @@
       main_content_id: main_content_id,
   } %}
 
-  {% block content %} {{content|without('flag_cart','flag_lists','view_mode_switcher','field_other_services','field_contact_info_external','field_service_producer','entitygroupfield')}}{% endblock %}
+  {% block content %} {{ content|without('flag_cart', 'flag_lists', 'view_mode_switcher', 'field_other_services', 'field_contact_info_external', 'field_service_producer', 'entitygroupfield') }}{% endblock %}
     {% block page_content %}
-      {% if service__updated  %}
+      {% if service__updated %}
         {% include "@atoms/text/text/01-paragraph.twig" with {
           paragraph_base_class: card__date__base_class|default('date'),
           paragraph_modifiers: card__date__modifiers,
@@ -75,9 +75,9 @@
       } %}
       {{ content.field_contact_info_external }}
       {{ content.field_service_producer }}
-      {{ content.entitygroupfield}}
+      {{ content.entitygroupfield }}
     {% endblock %}
   {% endembed %}
 {% endif %}
 
-{{ content.field_other_services}}
+{{ content.field_other_services }}

@@ -47,7 +47,7 @@
   ]
 %}
 
-{% set classes = classes|merge(additional_classes)%}
+{% set classes = classes|merge(additional_classes) %}
 
 {%
   set title_classes = [
@@ -73,7 +73,7 @@
     <div class="field__items">
       {% for item in items %}
         <div{{ item.attributes.addClass('field__item') }}>
-          {{item.content}}
+          {{ item.content }}
         </div>
       {% endfor %}
     </div>
