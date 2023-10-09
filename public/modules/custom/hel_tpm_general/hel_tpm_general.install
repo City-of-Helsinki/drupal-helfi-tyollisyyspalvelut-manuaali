@@ -205,9 +205,47 @@ function hel_tpm_general_update_8113(&$sandbox) {
 }
 
 /**
+ * Import selected configurations.
+ */
+function hel_tpm_general_update_10100(&$sandbox) {
+  $config_storage = \Drupal::service('config.storage');
+  $config_path = \Drupal\Core\Site\Settings::get('config_sync_directory');
+  $source = new \Drupal\Core\Config\FileStorage($config_path);
+
+  // Import pathauto configurations.
+  $configs = [
+    'pathauto.pattern.palvelut',
+    'pathauto.pattern.palvelut_en_swe',
+  ];
+  foreach ($configs as $config) {
+    $config_storage->write($config, $source->read($config));
+  }
+
+  // Import field storages
+  $field_storage_conf = [
+    'field.storage.node.field_internal_files',
+    'field.storage.node.field_internal_links',
+  ];
+  $field_storage_config = \Drupal::entityTypeManager()->getStorage('field_storage_config');
+  foreach ($field_storage_conf as $config) {
+    $field_storage_config->create($source->read($config))->save();
+  }
+
+  // Import node field configs.
+  $field_configs = [
+    'field.field.node.service.field_internal_files',
+    'field.field.node.service.field_internal_links',
+  ];
+  $field_config_storage = \Drupal::entityTypeManager()->getStorage('field_config');
+  foreach ($field_configs as $config) {
+    $field_config_storage->create($source->read($config))->save();
+  }
+
+}
+/**
  * Migrate internal urls and files from paragraphs to fields.
  */
-function hel_tpm_general_update_9110(&$sandbox) {
+function hel_tpm_general_update_10101(&$sandbox) {
   $paragraphs_field = 'field_links_and_attachments';
   $internal_file_field = 'field_internal_files';
   $internal_links_field = 'field_internal_links';
@@ -216,6 +254,7 @@ function hel_tpm_general_update_9110(&$sandbox) {
   $efq = $storage->getQuery();
   $result = $efq->condition('type', 'service')
     ->condition($paragraphs_field, '', '<>')
+    ->accessCheck(FALSE)
     ->execute();
   $nodes = $storage->loadMultiple($result);
 

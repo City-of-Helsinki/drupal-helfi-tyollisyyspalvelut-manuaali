@@ -11,6 +11,18 @@
     ],
     "repositories": [
         {
+            "name": "drupal/entitygroupfield",
+            "type": "vcs",
+            "url": "https://git.drupalcode.org/issue/entitygroupfield-3287337.git",
+            "comment": "Drupal 10 compatibility patch. Remove after official release is available."
+        },
+        {
+            "name": "drupal/htmlmail",
+            "type": "vcs",
+            "url": "https://git.drupalcode.org/issue/htmlmail-3287920.git",
+            "comment": "Drupal 10 compatibility patch. Remove after 4.x is released."
+        },
+        {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
         },
@@ -56,25 +68,24 @@
         }
     ],
     "require": {
-        "php": ">=7.3",
+        "php": ">=8.1",
         "composer/installers": "^1.9",
         "cweagans/composer-patches": "^1.7",
         "drupal/address": "^1.10",
         "drupal/admin_toolbar": "^3.0",
         "drupal/auto_username": "^1.3",
         "drupal/autologout": "^1.4",
-        "drupal/better_exposed_filters": "^5.0",
+        "drupal/better_exposed_filters": "^6.0",
         "drupal/block_breakpoint": "^1.0@alpha",
         "drupal/block_class": "^2.0",
+        "drupal/ckeditor": "*",
         "drupal/ckeditor_accordion": "^2.0",
         "drupal/coder": "^8",
-        "drupal/components": "^2.4",
+        "drupal/components": "^3",
         "drupal/conditional_fields": "^4.x-dev",
-        "drupal/console": "^1.9",
-        "drupal/content_access": "^1.0@alpha",
-        "drupal/context": "^4.1",
-        "drupal/core-composer-scaffold": "^9.1",
-        "drupal/core-recommended": "~9.3",
+        "drupal/context": "^5",
+        "drupal/core-composer-scaffold": "^10",
+        "drupal/core-recommended": "^10",
         "drupal/date_recur": "^3.2",
         "drupal/date_recur_modular": "^3.0",
         "drupal/dependent_fields": "^1.0",
@@ -82,12 +93,12 @@
         "drupal/dropzonejs": "^2.8",
         "drupal/editor_advanced_link": "^2.1",
         "drupal/elasticsearch_connector": "^7.0@alpha",
-        "drupal/emulsify_drupal": "^4.1",
-        "drupal/emulsify_twig": "^2.0",
+        "drupal/emulsify_drupal": "^4",
+        "drupal/emulsify_twig": "^4",
         "drupal/entity_browser": "^2.9",
         "drupal/entity_diff_ui": "^1.0",
         "drupal/entity_print": "^2.4",
-        "drupal/entitygroupfield": "^1.0@alpha",
+        "drupal/entitygroupfield": "dev-3287337-automated-drupal-10#8aa3a05c401b6259fce2db788b513f35da7147df",
         "drupal/epp": "^1.3",
         "drupal/eu_cookie_compliance": "^1.24",
         "drupal/eu_cookie_compliance_matomo": "^1.0",
@@ -95,7 +106,7 @@
         "drupal/facets": "^2.0",
         "drupal/field_description_tooltip": "^1.0",
         "drupal/field_group": "^3.2",
-        "drupal/field_group_ajaxified_multipage": "^2.0",
+        "drupal/field_group_ajaxified_multipage": "^3.0",
         "drupal/field_permissions": "^1.1",
         "drupal/file_download_link": "^2.0",
         "drupal/flag": "^4.0@beta",
@@ -105,13 +116,13 @@
         "drupal/gdpr": "^3.0@beta",
         "drupal/geoblock": "^1.0",
         "drupal/geoblock_maxmind": "^1.0",
-        "drupal/ggroup": "^1.0.0-alpha",
+        "drupal/ggroup": "^1",
         "drupal/ginvite": "^2.0",
-        "drupal/group": "^1.4",
+        "drupal/group": "^1",
         "drupal/group_roles_management": "^1.0@alpha",
         "drupal/health_check": "^3.0",
         "drupal/hook_post_action": "^1.1",
-        "drupal/htmlmail": "^3.0@alpha",
+        "drupal/htmlmail": "dev-3287920-automated-drupal-10#f946d82d591e75c799885b0e7710f1b6e724637f",
         "drupal/ief_popup": "^2",
         "drupal/ief_table_view_mode": "^2.2",
         "drupal/inline_entity_form": "^1.0@RC",
@@ -119,7 +130,7 @@
         "drupal/login_security": "^2.0",
         "drupal/mail_login": "^2.6",
         "drupal/mailsystem": "^4.4",
-        "drupal/markup": "^1.0@beta",
+        "drupal/markup": "^2",
         "drupal/matomo": "^1.22",
         "drupal/maxlength": "^2.0@RC",
         "drupal/menu_item_fields": "^1.5",
@@ -131,42 +142,41 @@
         "drupal/migrate_tools": "^6.0",
         "drupal/node_edit_protection": "^1.0",
         "drupal/nodeaccess": "^1.1",
-        "drupal/notification_message": "^1.0@RC",
+        "drupal/notification_message": "^1.x-dev",
         "drupal/other_view_filter": "^1.2",
         "drupal/paragraphs": "^1.12",
         "drupal/password_policy": "^4.0",
         "drupal/pathauto": "^1.8",
-        "drupal/radioactivity": "^3.1",
+        "drupal/radioactivity": "^4",
         "drupal/range": "^1.3",
         "drupal/real_aes": "^2.5",
-        "drupal/recently_read": "^1.2",
+        "drupal/recently_read": "^1.x-dev",
         "drupal/redirect": "^1.7",
         "drupal/redis": "^1.5",
-        "drupal/remove_http_headers": "^1.0",
-        "drupal/require_on_publish": "^1.6",
+        "drupal/remove_http_headers": "^2",
+        "drupal/require_on_publish": "^1.x-dev",
         "drupal/search_api": "^1.23",
         "drupal/search_api_autocomplete": "^1.6",
         "drupal/search_api_solr": "4.x-dev",
-        "drupal/search_api_solr_multilingual": "^3.1",
         "drupal/search_api_sorts": "^1.1",
-        "drupal/search_api_sorts_widget": "^1.0@beta",
         "drupal/seckit": "^2.0",
         "drupal/select2": "^1.13",
         "drupal/smart_date": "^3.5",
         "drupal/smtp": "^1.2",
+        "drupal/stable": "*",
         "drupal/svg_image": "^1.15",
         "drupal/tfa": "^1.0",
         "drupal/themable_forms": "^1.0@beta",
         "drupal/token": "^1.10",
         "drupal/token_views_filter": "^1.5",
-        "drupal/twig_tweak": "^3.1",
+        "drupal/twig_tweak": "^3.2",
         "drupal/twig_xdebug": "^1.3",
+        "drupal/upgrade_status": "^4.0",
         "drupal/view_password": "^6.0",
         "drupal/views_bulk_edit": "^2.8",
         "drupal/views_data_export": "^1.3",
-        "drupal/views_ef_fieldset": "1.x-dev",
         "drupal/views_field_view": "^1.0@beta",
-        "drush/drush": "^10.3",
+        "drush/drush": "^12",
         "enyo/dropzone": "^5.7",
         "npm-asset/jquery-ui-touch-punch": "^0.2.3",
         "npm-asset/select2": "^4.0",
@@ -180,10 +190,9 @@
     },
     "require-dev": {
         "citrussolutions/gulp-workflow": "^2.0",
-        "drupal/core-dev": "^9.3",
-        "drupal/devel": "^4.1",
-        "drupal/devel_kint_extras": "^1.0",
+        "drupal/core-dev": "^10",
         "phpspec/prophecy-phpunit": "^2.0",
+        "vincentlanglet/twig-cs-fixer": "*",
         "weitzman/drupal-test-traits": "^1.5",
         "zaporylie/composer-drupal-optimizations": "^1.2"
     },
@@ -203,7 +212,8 @@
             "zaporylie/composer-drupal-optimizations": true,
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "oomphinc/composer-installers-extender": true,
-            "drupal/console-extend-plugin": true
+            "drupal/console-extend-plugin": true,
+            "phpstan/extension-installer": true
         }
     },
     "autoload": {
@@ -254,7 +264,8 @@
                 "https://www.drupal.org/project/drupal/issues/2800875#comment-14070351": "https://www.drupal.org/files/issues/2021-04-23/2800875-70_0.patch",
                 "https://www.drupal.org/project/drupal/issues/1038316#comment-14308196": "https://www.drupal.org/files/issues/2021-12-01/1038316-242.patch",
                 "https://www.drupal.org/project/drupal/issues/3135409#comment-14746356": "https://www.drupal.org/files/issues/2022-10-17/3135409-17.patch",
-                "https://www.drupal.org/project/drupal/issues/2689459#comment-14837484": "https://www.drupal.org/files/issues/2022-12-20/2689459-161.patch"
+                "https://www.drupal.org/project/drupal/issues/2689459#comment-14837484": "https://www.drupal.org/files/issues/2022-12-20/2689459-161.patch",
+                "https://www.drupal.org/project/drupal/issues/2810355#comment-15173661": "https://www.drupal.org/files/issues/2023-07-31/2810355-121.patch"
             },
             "drupal/message": {
                 "https://www.drupal.org/files/issues/2018-06-24/allow_token_contexts-3.patch": "https://www.drupal.org/files/issues/2018-06-24/allow_token_contexts-3.patch"
@@ -275,9 +286,6 @@
             "drupal/ggroup": {
                 "https://www.drupal.org/project/ggroup/issues/3084153": "./patches/3084153-role-mapper.patch"
             },
-            "drupal/field_group_ajaxified_multipage": {
-                "https://www.drupal.org/project/field_group_ajaxified_multipage/issues/3280612#comment-14515962" : "https://www.drupal.org/files/issues/2022-05-16/3280612-duplicate-core-version-requirement-1.patch"
-            },
             "drupal/file_download_link": {
               "https://www.drupal.org/project/file_download_link/issues/3318657": "https://www.drupal.org/files/issues/2022-11-02/3318657-02.patch"
             },
@@ -288,7 +296,7 @@
                 "https://www.drupal.org/project/nodeaccess/issues/3169490#comment-13814377": "https://www.drupal.org/files/issues/2020-09-07/nodeaccess_unpublish_nodes_visible-3169490-3.patch"
             },
             "drupal/require_on_publish" : {
-                "Paragraph content moderation validation": "./patches/paragraph-content-moderation-1.6.patch",
+                "https://www.drupal.org/project/require_on_publish/issues/3178100#comment-15229842": "https://www.drupal.org/files/issues/2023-09-14/fix-paragraphs-validation-3178100-20.patch",
                 "https://www.drupal.org/project/require_on_publish/issues/3302902#comment-14679167": "https://www.drupal.org/files/issues/2022-08-16/3302902.patch"
             },
             "drupal/address": {
@@ -305,6 +313,9 @@
             },
             "drupal/eu_cookie_compliance": {
                 "Customizations to EU Cookie Compliance": "patches/eu_cookie_compliance_block-8.x-1.24.patch"
+            },
+            "drupal/ckeditor_accordion": {
+                "https://www.drupal.org/project/ckeditor_accordion/issues/3347574#comment-15234985": "https://www.drupal.org/files/issues/2023-09-18/ckeditor_accordion-drupal_get_path_deprecated-3347574-12.patch"
             }
         }
     }
