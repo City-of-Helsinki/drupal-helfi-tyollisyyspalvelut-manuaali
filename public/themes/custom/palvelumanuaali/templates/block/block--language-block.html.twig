@@ -36,11 +36,6 @@
 {% if lang_count > 1 %}
   <nav{{ bem('','','',classes) }}>
   <div class='content'>
-    {% include "@atoms/images/icons/_icon.twig" with {
-      icon_base_class: 'icon',
-      icon_name: 'world',
-      icon_modifiers: ['small'],
-    } %}
     <h2 class="visually-hidden visually-hidden-focusable">
       {{ 'Change language'|t }}
     </h2>

@@ -3,9 +3,7 @@
 namespace Drupal\hel_tpm_migrate_tools\Plugin\migrate\process;
 
 use Drupal\migrate\ProcessPluginBase;
-use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\Row;
-use Drupal\node\Entity\Node;
 use Drupal\paragraphs\Entity\Paragraph;
 
 /**
@@ -33,6 +31,9 @@ class ParagraphBase extends ProcessPluginBase {
     return $paragraph;
   }
 
+  /**
+   *
+   */
   protected function getConfigValues(Row $row, $settingName) {
     $field_name = $this->configuration[$settingName];
     if (!is_array($field_name)) {

@@ -78,6 +78,24 @@
   &--favorites {
     .menu__link {
       color: clr(text);
+      height: 24px;
+      line-height: 24px;
+      display: inline-block;
+      margin-left: 40px;
+
+    }
+    &:first-child {
+      a {
+        &::before {
+          content: "";
+          display: block;
+          background-repeat: no-repeat;
+          background-image: url("/themes/custom/palvelumanuaali/images/icons/heart.svg");
+          @extend .icon--small;
+          position: absolute;
+          left: 0;
+        }
+      }
     }
   }
 }
@@ -138,5 +156,16 @@
     &:first-child {
       padding-left: 0;
     }
+  }
+}
+
+nav.language-switcher-language-url {
+  .dropdown-menu {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .language-link {
+    padding-left: $space-three-and-half;
+    padding-right: $space-one-and-half;
   }
 }

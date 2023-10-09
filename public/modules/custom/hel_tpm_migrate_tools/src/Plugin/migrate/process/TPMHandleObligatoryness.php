@@ -2,11 +2,9 @@
 
 namespace Drupal\hel_tpm_migrate_tools\Plugin\migrate\process;
 
-use Drupal\Core\Database\Database;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
-use Drupal\Component\Utility\UrlHelper;
 
 /**
  * Format date as a timestamp for node dates.

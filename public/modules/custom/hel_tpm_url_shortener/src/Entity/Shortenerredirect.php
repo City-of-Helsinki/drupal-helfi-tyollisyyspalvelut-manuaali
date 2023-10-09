@@ -67,14 +67,20 @@ class Shortenerredirect extends ContentEntityBase implements ShortenerredirectIn
   }
 
   /**
+   * Short url getter.
+   *
    * @return string
+   *   Shortened link uri.
    */
   public function getShortUrl() {
     return \Drupal::request()->getSchemeAndHttpHost() . $this->shortened_link->uri;
   }
 
   /**
+   * Redirect source getter.
+   *
    * @return mixed
+   *   Path to redirection source.
    */
   public function getRedirectSource() {
     return $this->redirect_source->path;
@@ -108,7 +114,7 @@ class Shortenerredirect extends ContentEntityBase implements ShortenerredirectIn
       ->setTranslatable(FALSE)
       ->setSettings([
         'link_type' => LinkItemInterface::LINK_GENERIC,
-        'title' => DRUPAL_DISABLED
+        'title' => DRUPAL_DISABLED,
       ])
       ->setDisplayOptions('form', [
         'type' => 'link',

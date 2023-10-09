@@ -5,6 +5,11 @@ display:
         options:
           submit_button: 'Search services'
           reset_button_label: 'Empty selection'
+          bef:
+            sort:
+              advanced:
+                combine_rewrite: "Relevance Asc|\r\nRelevance Desc|Most relevant\r\nChanged Asc|\r\nChanged Desc|Recently updated\r\nTitle Asc|Alphabetical A→Z\r\nTitle Desc|Alphabetical Z→A"
+          exposed_sorts_label: 'Sort by:'
       header:
         result:
           content: '<strong>Search results:</strong> <span class="total-number">@total</span>'
@@ -21,10 +26,10 @@ display:
           expose:
             label: 'Service language:'
         field_free_service:
-          expose:
-            description: ''
           group_info:
             label: 'Service is chargeable'
+          expose:
+            description: ''
         field_age_groups:
           expose:
             label: 'Target groups age'
@@ -36,4 +41,4 @@ display:
             label: Implementation
         field_municipality:
           expose:
-            label: Municipality
+            label: 'Municipality of residence'

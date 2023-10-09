@@ -10,6 +10,7 @@
  */
 
 use Drupal\Core\Entity\EntityForm;
+use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Implements hook_library_info_alter().
@@ -18,13 +19,13 @@ function hel_tpm_tooltips_library_info_alter(&$libraries, $extension) {
   if ($extension != 'field_description_tooltip') {
     return;
   }
-  $libraries['tooltip']['js'] = [ '/' . \Drupal::service('extension.list.module')->getPath('hel_tpm_tooltips') . '/js/tooltips.js' => []];
+  $libraries['tooltip']['js'] = ['/' . \Drupal::service('extension.list.module')->getPath('hel_tpm_tooltips') . '/js/tooltips.js' => []];
 }
 
 /**
  * Implements hook_form_alter().
  */
-function hel_tpm_tooltips_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+function hel_tpm_tooltips_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   // We only filter the entity forms.
   if (!$form_state->getFormObject() instanceof EntityForm) {
     return;

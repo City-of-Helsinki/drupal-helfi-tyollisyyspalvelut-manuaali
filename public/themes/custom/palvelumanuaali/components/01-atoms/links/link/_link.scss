@@ -25,6 +25,9 @@
   width: unset;
   text-align: left;
 
+  &:hover {
+    background: clr(background);
+  }
   &:last-child {
     margin-bottom: 0;
   }
@@ -41,7 +44,7 @@
       width: 24px;
       height: 24px;
       position: absolute;
-      left: 0;
+      left: $space-one-and-half;
       background-image: url('/themes/custom/palvelumanuaali/images/icons/d-check.svg');
     }
   }

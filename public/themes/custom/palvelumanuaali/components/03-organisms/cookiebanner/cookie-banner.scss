@@ -19,10 +19,10 @@ $main-content-width-xl: calc(100% - (#{$sidebar-width} + #{$main-gutter} * 2 ));
 }
 
 .eu-cookie-compliance-content {
-
+  max-width: 100%;
   @include large {
     width: $main-content-width;
-
+    max-width: 80%;
   }
   @include xl {
     width: $main-content-width-xl;
@@ -30,20 +30,36 @@ $main-content-width-xl: calc(100% - (#{$sidebar-width} + #{$main-gutter} * 2 ));
 }
 
 .eu-cookie-compliance-banner {
-  padding: $space-double;
+  padding: $space-double $space-one-and-half;
   @include xl {
     padding: $space-double;
   }
 }
 
 .popup-content {
-  @include large {
-    display: flex;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: auto;
+  justify-content: space-around;
+  @include xl {
+    flex-wrap: nowrap;
+    flex-direction: row;
     justify-content: space-between;
+    margin: 0 auto;
   }
 }
 
 .eu-cookie-compliance-message {
+  max-width: 100%;
+  margin-bottom: $space-two-and-half;
+  @include large {
+    max-width: 60%;
+    margin-bottom: 0;
+  }
+  @include xl {
+    max-width: 60%;
+  }
   p {
     font-size: $small-caption;
     line-height: 24px;
@@ -64,10 +80,29 @@ $main-content-width-xl: calc(100% - (#{$sidebar-width} + #{$main-gutter} * 2 ));
 }
 
 .eu-cookie-compliance-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  gap: $space-double;
   @include large {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    margin: 0;
     gap: $space;
   }
 }
+
+.eu-cookie-compliance-categories {
+  padding-top: 0;
+  @include xl {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.eu-cookie-compliance-categories-buttons {
+  margin: 0;
+}
+
+  .eu-cookie-compliance-buttons.eu-cookie-compliance-has-categories {
+    margin-top: 0;
+  }

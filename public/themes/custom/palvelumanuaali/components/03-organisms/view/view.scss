@@ -35,12 +35,8 @@
   display: grid;
   grid-template-columns: 180px 1fr;
   margin-bottom: $space-quadruple;
-  >h1 {
+  >h2 {
     grid-area: head;
-    margin-bottom: $space-double;
-    font-size: 38px;
-    line-height: 48px;
-    font-weight: 600;
   }
   >.view-header {
         grid-area: title;
@@ -170,3 +166,26 @@
     line-height: 48px;
   }
 }
+
+.view-notifications {
+  @include xl {
+    grid-column-start: 2;
+  }
+}
+
+.view-ready-to-publish-for-organization-updatee {
+  margin-bottom: $space-quadruple;
+}
+
+.view-organizatio-with-ready-to-publish-content  {
+  margin-bottom: $space-quadruple;
+}
+
+.organization-ready-to-publish-block,
+.view-maintenance-and-administration,
+.owner-and-updatee-view-block,
+.ready-to-publish-for-organization-updatee-view-block {
+  >h2 {
+    margin-bottom: $space-two-and-half;
+  }
+}  

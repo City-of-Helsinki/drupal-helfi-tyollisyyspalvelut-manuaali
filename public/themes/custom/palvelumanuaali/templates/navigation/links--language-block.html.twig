@@ -43,7 +43,14 @@
     {%- if item.link -%}
       {% if loop.first %}
         <button id="languageSwitcherButton" class="btn btn-menu" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          {{ item.link['#langcode'] }}
+          {% include "@atoms/images/icons/_icon.twig" with {
+            icon_base_class: 'icon',
+            icon_name: 'world',
+            icon_modifiers: ['small'],
+          } %}
+          <span class="language-code">
+            {{ item.link['#langcode'] }}
+          </span>
           {% include "@atoms/images/icons/_icon.twig" with {
             icon_base_class: 'icon',
             icon_name: 'arrow-sm-down',

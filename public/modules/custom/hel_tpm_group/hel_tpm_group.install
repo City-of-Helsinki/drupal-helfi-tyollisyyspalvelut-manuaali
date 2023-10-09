@@ -43,7 +43,7 @@ function hel_tpm_group_requirements($phase) {
 function hel_tpm_group_update_9001() {
   $account = \Drupal::entityTypeManager()->getStorage('user')->load(0);
   $membership_loader = \Drupal::service('group.membership_loader');
-  $memberships  = $membership_loader->loadByUser($account);
+  $memberships = $membership_loader->loadByUser($account);
   if (empty($memberships)) {
     return;
   }

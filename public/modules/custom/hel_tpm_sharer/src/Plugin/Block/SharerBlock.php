@@ -5,6 +5,7 @@ namespace Drupal\hel_tpm_sharer\Plugin\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
+use Drupal\node\NodeInterface;
 
 /**
  * Provides a sharer block.
@@ -16,13 +17,14 @@ use Drupal\Core\Url;
  * )
  */
 class SharerBlock extends BlockBase {
+
   /**
    * {@inheritdoc}
    */
   public function build() {
     $output = [];
     $entity = \Drupal::routeMatch()->getParameter('node');
-    if ($entity instanceof \Drupal\node\NodeInterface) {
+    if ($entity instanceof NodeInterface) {
       $vars = [
         ':title' => $entity->getTitle(),
         ':url' => $entity->toUrl()->setAbsolute()->toString(),
@@ -30,10 +32,16 @@ class SharerBlock extends BlockBase {
       ];
       $subject = $this->t('Shared service: :title', $vars);
       $message = $this->t("Take a look at this service: :title (:url).\n\n:desc", $vars);
-      $mailtoUrl = Url::fromUri('mailto:', ['query' => ['subject' => $subject, 'body' => $message]]);
+      $mailtoUrl = Url::fromUri('mailto:', [
+        'query' => [
+          'subject' => $subject,
+          'body' => $message,
+        ],
+      ]);
 
       $output['#markup'] = Link::fromTextAndUrl($this->t('Share'), $mailtoUrl)->toString();
     }
     return $output;
   }
+
 }
