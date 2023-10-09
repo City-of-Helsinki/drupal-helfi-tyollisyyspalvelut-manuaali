@@ -169,6 +169,25 @@
             Drupal.behaviors.hel_tpm_search_autocomplete.appendSearchHistory(form);
           })
         }
+
+        if ($(searchField).val() == "") {
+          $('.text-search-wrapper input[id^="edit-reset--"]').hide();
+        } else {
+            $('.text-search-wrapper input[id^="edit-reset--"]').show();
+        }
+
+        $('.text-search-wrapper input[id^="edit-reset--"]').click (function (event) {
+          event.preventDefault();
+          $(this).closest('form').find("input[type=text], textarea").val("");
+          $(this).closest('form').find('[id^="edit-submit-"]').click();
+        });
+        $('.control-wrapper input[id^="edit-reset--"]').click (function (event) {
+          event.preventDefault();
+          $(this).closest('form').find('select').val('');
+          $(this).closest('form').find('input[type=radio]').prop('checked', false);
+          $(this).closest('form').find('input[type=checkbox]').prop('checked', false);
+          $(this).closest('form').find('[id^="edit-submit-"]').click();
+        });
       });
 
       $(searchField, form)
