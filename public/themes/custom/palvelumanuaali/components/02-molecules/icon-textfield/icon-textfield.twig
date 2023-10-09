@@ -73,7 +73,12 @@
     <div class="field__items">
       {% for item in items %}
         <div{{ item.attributes.addClass('field__item') }}>
-          {{item.content}}
+        {% if loop.index < loop.length - 1 %}
+        {{item.content}} ~ {{","}}
+        {% if loop.index == loop.length - 1 %}
+        {{ "and "|t}}
+        {% else if %}
+        {% endif %}
         </div>
       {% endfor %}
     </div>
