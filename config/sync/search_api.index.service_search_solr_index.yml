@@ -95,7 +95,7 @@ field_settings:
     datasource_id: 'entity:node'
     property_path: 'entitygroupfield:entity:gid:entity:label'
     type: text
-    boost: 0.6
+    boost: 1.2
     dependencies:
       module:
         - entitygroupfield
@@ -201,7 +201,7 @@ field_settings:
     datasource_id: 'entity:node'
     property_path: 'field_service_producer:entity:label'
     type: text
-    boost: 0.6
+    boost: 1.2
     dependencies:
       config:
         - field.storage.node.field_service_producer
