@@ -3,10 +3,13 @@
 namespace Drupal\service_manual_workflow;
 
 use Drupal\content_moderation\ModerationInformationInterface;
+use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\Core\Entity\EntityTypeInterface;
 
+/**
+ * {@inheritdoc}
+ */
 class ViewsData {
   use StringTranslationTrait;
 
@@ -37,6 +40,9 @@ class ViewsData {
     $this->moderationInformation = $moderation_information;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function getViewsData() {
     $data = [];
 
@@ -54,7 +60,9 @@ class ViewsData {
           'default_formatter' => 'content_moderation_state',
           'field_name' => 'moderation_state',
         ],
-        'filter' => ['id' => 'latest_moderation_state_filter', 'allow empty' => TRUE],
+        'filter' => [
+          'id' => 'latest_moderation_state_filter'
+        ],
         'sort' => ['id' => 'moderation_state_sort'],
       ];
     }

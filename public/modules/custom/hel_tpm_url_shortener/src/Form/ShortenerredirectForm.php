@@ -4,7 +4,6 @@ namespace Drupal\hel_tpm_url_shortener\Form;
 
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Render\RendererInterface;
 
 /**
  * Form controller for the shortenerredirect entity edit forms.

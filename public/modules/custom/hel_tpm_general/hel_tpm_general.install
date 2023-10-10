@@ -5,6 +5,8 @@
  * Hel tpm general install file.
  */
 
+use Drupal\Core\Config\FileStorage;
+use Drupal\Core\Site\Settings;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
 
@@ -209,8 +211,8 @@ function hel_tpm_general_update_8113(&$sandbox) {
  */
 function hel_tpm_general_update_10100(&$sandbox) {
   $config_storage = \Drupal::service('config.storage');
-  $config_path = \Drupal\Core\Site\Settings::get('config_sync_directory');
-  $source = new \Drupal\Core\Config\FileStorage($config_path);
+  $config_path = Settings::get('config_sync_directory');
+  $source = new FileStorage($config_path);
 
   // Import pathauto configurations.
   $configs = [
@@ -221,7 +223,7 @@ function hel_tpm_general_update_10100(&$sandbox) {
     $config_storage->write($config, $source->read($config));
   }
 
-  // Import field storages
+  // Import field storages.
   $field_storage_conf = [
     'field.storage.node.field_internal_files',
     'field.storage.node.field_internal_links',
@@ -242,6 +244,7 @@ function hel_tpm_general_update_10100(&$sandbox) {
   }
 
 }
+
 /**
  * Migrate internal urls and files from paragraphs to fields.
  */
@@ -280,13 +283,18 @@ function hel_tpm_general_update_10101(&$sandbox) {
  * Helper function to migrate paragraph fields to node fields.
  *
  * @param \Drupal\Core\Entity\EntityInterface $paragraph
+ *   Paragraph entityinterface.
  * @param string $paragraph_field
+ *   Name of field in paragraph.
  * @param \Drupal\Core\Entity\EntityInterface $node
+ *   Node interface.
  * @param string $internal_file_field
+ *   Name of the internal file field.
  *
  * @return void
+ *   -
  */
-function _hel_tpm_general_migrate_paragraph_field($paragraph, $paragraph_field, $node, $internal_file_field) {
+function _hel_tpm_general_migrate_paragraph_field($paragraph, $paragraph_field, &$node, $internal_file_field) {
   $files = $paragraph->{$paragraph_field}->getValue();
   $node->set($internal_file_field, $files);
 }
