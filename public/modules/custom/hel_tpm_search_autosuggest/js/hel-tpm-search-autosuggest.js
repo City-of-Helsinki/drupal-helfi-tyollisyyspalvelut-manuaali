@@ -157,7 +157,7 @@
 
     attach: function (context, settings) {
       let form = $('.search-autocomplete-wrapper');
-      let searchField = 'input[name="search_api_fulltext"]'
+      let searchField = 'input[name="search_api_fulltext"]';
       let searchForm = $(form).closest('form');
 
       $(document).ready(function() {
@@ -173,7 +173,7 @@
         if ($(searchField).val() == "") {
           $('.text-search-wrapper input[id^="edit-reset--"]').hide();
         } else {
-            $('.text-search-wrapper input[id^="edit-reset--"]').show();
+          $('.text-search-wrapper input[id^="edit-reset--"]').show();
         }
 
         $('.text-search-wrapper input[id^="edit-reset--"]').click (function (event) {
