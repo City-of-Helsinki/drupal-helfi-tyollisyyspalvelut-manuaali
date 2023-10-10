@@ -63,7 +63,7 @@ third_party_settings:
       label: Osallistuminen
       parent_name: ''
       region: hidden
-      weight: 19
+      weight: 60
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--participation'
@@ -81,7 +81,7 @@ third_party_settings:
       label: Toteutustapa
       parent_name: ''
       region: hidden
-      weight: 20
+      weight: 61
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--execution'
@@ -99,7 +99,7 @@ third_party_settings:
       label: 'Missä ja milloin'
       parent_name: ''
       region: hidden
-      weight: 21
+      weight: 62
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--where-and-when'
@@ -117,7 +117,7 @@ third_party_settings:
       label: Kohderyhmä
       parent_name: ''
       region: hidden
-      weight: 18
+      weight: 59
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--target-group'
@@ -244,14 +244,6 @@ content:
     third_party_settings: {  }
     weight: 3
     region: content
-  field_service_producer:
-    type: entity_reference_label
-    label: hidden
-    settings:
-      link: false
-    third_party_settings: {  }
-    weight: 17
-    region: content
   field_service_requirements:
     type: text_default
     label: hidden
@@ -318,6 +310,7 @@ hidden:
   field_service_exceptions: true
   field_service_links_external: true
   field_service_links_internal: true
+  field_service_producer: true
   field_service_provider_updatee: true
   field_service_radioactivity: true
   field_service_req_speacialist: true
