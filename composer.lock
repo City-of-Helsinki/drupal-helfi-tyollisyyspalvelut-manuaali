@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1bde68f3f6dbeb14f6cc0c6cd3a4ade6",
+    "content-hash": "ae96f3c94e5e2dba91a530123df3fbc1",
     "packages": [
         {
             "name": "ajgl/breakpoint-twig-extension",
@@ -8317,17 +8317,11 @@
         },
         {
             "name": "drupal/search_api_autocomplete",
-            "version": "1.7.0",
+            "version": "dev-1.x",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/search_api_autocomplete.git",
-                "reference": "8.x-1.7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/search_api_autocomplete-8.x-1.7.zip",
-                "reference": "8.x-1.7",
-                "shasum": "9be80f9187252adbb265402276e9bdce6a5698cd"
+                "reference": "238e6630f8db6d82d34563c2679c9baba7ba696a"
             },
             "require": {
                 "drupal/core": "^9.2 || ^10",
@@ -8338,12 +8332,15 @@
             },
             "type": "drupal-module",
             "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
                 "drupal": {
-                    "version": "8.x-1.7",
-                    "datestamp": "1664975494",
+                    "version": "8.x-1.7+9-dev",
+                    "datestamp": "1696674758",
                     "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
+                        "status": "not-covered",
+                        "message": "Dev releases are not covered by Drupal security advisories."
                     }
                 }
             },
@@ -21119,6 +21116,7 @@
         "drupal/notification_message": 20,
         "drupal/recently_read": 20,
         "drupal/require_on_publish": 20,
+        "drupal/search_api_autocomplete": 20,
         "drupal/search_api_solr": 20,
         "drupal/themable_forms": 10,
         "drupal/views_field_view": 10
