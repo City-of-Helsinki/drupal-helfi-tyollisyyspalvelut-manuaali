@@ -73,7 +73,7 @@
     <div class="field__items">
       {% for item in items %}
         <div{{ item.attributes.addClass('field__item') }}>
-          {{item.content}}
+      {{item.content}}{% if not loop.last %}<span>,</span>{% endif %}
         </div>
       {% endfor %}
     </div>

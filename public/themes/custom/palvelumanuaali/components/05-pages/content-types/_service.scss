@@ -67,6 +67,13 @@
       background-repeat: no-repeat;
     }
   }
+
+  .service-language {
+    display: flex;
+    .term {
+      display: flex;
+    }
+  }
 }
 
 #service-page-full {
@@ -137,7 +144,8 @@
   }
 
   .field--name-field-implementation-extra-info,
-  .field--name-field-service-price {
+  .field--name-field-service-price,
+  .field--name-field-service-language {
     margin-bottom: $space-double;
     @include large {
       margin-bottom: $space-two-and-half;
