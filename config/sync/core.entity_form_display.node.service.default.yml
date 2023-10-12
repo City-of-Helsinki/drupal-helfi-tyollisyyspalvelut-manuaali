@@ -33,6 +33,7 @@ dependencies:
     - field.field.node.service.field_service_exceptions
     - field.field.node.service.field_service_execution
     - field.field.node.service.field_service_implement
+    - field.field.node.service.field_service_language
     - field.field.node.service.field_service_links_external
     - field.field.node.service.field_service_links_internal
     - field.field.node.service.field_service_other_info
@@ -253,6 +254,8 @@ third_party_settings:
         - title
         - field_description
         - field_service_set
+        - field_service_language
+        - field_service_language_and_level
         - field_service_price
       label: Perustiedot
       region: content
@@ -898,6 +901,16 @@ content:
         maxlength_js: null
         maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
         maxlength_js_enforce: false
+  field_service_language:
+    type: select2_entity_reference
+    weight: 6
+    region: content
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
+    third_party_settings: {  }
   field_service_other_info:
     type: inline_entity_form_simple
     weight: 14
@@ -913,7 +926,7 @@ content:
     third_party_settings: {  }
   field_service_price:
     type: entity_reference_paragraphs
-    weight: 7
+    weight: 8
     region: content
     settings:
       title: Paragraph
@@ -961,7 +974,7 @@ content:
         maxlength_js_enforce: false
   field_service_set:
     type: select2_entity_reference
-    weight: 6
+    weight: 5
     region: content
     settings:
       width: 100%
