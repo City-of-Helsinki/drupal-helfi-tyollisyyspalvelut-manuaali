@@ -159,6 +159,7 @@
       let form = $('.search-autocomplete-wrapper');
       let searchField = 'input[name="search_api_fulltext"]'
       let searchForm = $(form).closest('form');
+      let selectedMultiselect = '.filters-wrapper .multi-select-container.active';
 
       $(document).ready(function() {
         searchForm.on('submit', function(e) {
@@ -176,11 +177,18 @@
             $('.text-search-wrapper input[id^="edit-reset--"]').show();
         }
 
+        if ($(selectedMultiselect).length) {
+            $('.control-wrapper input[id^="edit-reset--"]').show();
+        } else {
+          $('.control-wrapper input[id^="edit-reset--"]').hide();
+        }
+
         $('.text-search-wrapper input[id^="edit-reset--"]').click (function (event) {
           event.preventDefault();
           $(this).closest('form').find("input[type=text], textarea").val("");
           $(this).closest('form').find('[id^="edit-submit-"]').click();
         });
+
         $('.control-wrapper input[id^="edit-reset--"]').click (function (event) {
           event.preventDefault();
           $(this).closest('form').find('select').val('');
