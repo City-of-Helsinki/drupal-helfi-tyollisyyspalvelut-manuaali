@@ -15,6 +15,7 @@ dependencies:
     - field.storage.node.field_address
     - field.storage.paragraph.field_service_location
     - field.storage.node.field_target_group
+    - field.storage.paragraph.field_age
     - field.storage.paragraph.field_age_groups
     - field.storage.paragraph.field_municipality
     - field.storage.node.field_service_execution
@@ -95,6 +96,17 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_accessibility
+  field_age_from:
+    label: 'Target group » Paragraafi  » Tarkenna ikäväliä » Alkaen'
+    datasource_id: 'entity:node'
+    property_path: 'field_target_group:entity:field_age:from'
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_target_group
+        - field.storage.paragraph.field_age
+      module:
+        - paragraphs
   field_age_groups:
     label: 'Target group » Paragraph » Ikäryhmät'
     datasource_id: 'entity:node'
@@ -104,6 +116,17 @@ field_settings:
       config:
         - field.storage.node.field_target_group
         - field.storage.paragraph.field_age_groups
+      module:
+        - paragraphs
+  field_age_to:
+    label: 'Target group » Paragraafi  » Tarkenna ikäväliä » Asti'
+    datasource_id: 'entity:node'
+    property_path: 'field_target_group:entity:field_age:to'
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_target_group
+        - field.storage.paragraph.field_age
       module:
         - paragraphs
   field_description:
