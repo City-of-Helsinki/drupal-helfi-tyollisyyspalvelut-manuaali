@@ -188,4 +188,21 @@
   >h2 {
     margin-bottom: $space-two-and-half;
   }
-}  
+}
+
+.view-taxonomy-term {
+  .view-header {
+    >div {
+      >p {
+        @extend .col-lg-8;
+        @extend .offset-lg-2;
+        @extend .col-xl-6;
+        @extend .offset-xl-3;
+        text-align: center;
+      }
+      >.views-element-container {
+        margin-top: $space-double;
+      }
+    }
+  }
+}

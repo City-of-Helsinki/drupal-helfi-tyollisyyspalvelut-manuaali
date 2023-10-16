@@ -3,9 +3,12 @@ langcode: fi
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.teaser
+    - core.entity_view_mode.node.view_card_lift
+    - field.storage.paragraph.field_title
+    - node.type.service
   module:
     - node
+    - paragraphs
     - taxonomy
     - user
 _core:
@@ -24,7 +27,69 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      fields: {  }
+      fields:
+        field_title:
+          id: field_title
+          table: paragraph__field_title
+          field: field_title
+          relationship: field_target_group
+          group_type: group
+          admin_label: ''
+          plugin_id: field
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings: {  }
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
       pager:
         type: mini
         options:
@@ -61,34 +126,7 @@ display:
         type: tag
         options: {  }
       empty: {  }
-      sorts:
-        sticky:
-          id: sticky
-          table: taxonomy_index
-          field: sticky
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: standard
-          order: DESC
-          expose:
-            label: ''
-            field_identifier: sticky
-          exposed: false
-        created:
-          id: created
-          table: taxonomy_index
-          field: created
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: date
-          order: DESC
-          expose:
-            label: ''
-            field_identifier: created
-          exposed: false
-          granularity: second
+      sorts: {  }
       arguments:
         tid:
           id: tid
@@ -98,16 +136,20 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: taxonomy_index_tid
-          default_action: 'not found'
+          default_action: default
           exception:
             value: ''
             title_enable: false
             title: All
           title_enable: true
           title: '{{ arguments.tid }}'
-          default_argument_type: fixed
+          default_argument_type: taxonomy_tid
           default_argument_options:
-            argument: ''
+            term_page: '1'
+            node: false
+            limit: false
+            vids: {  }
+            anyall: ','
           default_argument_skip_url: false
           summary_options:
             base_path: ''
@@ -174,16 +216,19 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-        status:
-          id: status
-          table: taxonomy_index
-          field: status
+        type:
+          id: type
+          table: node_field_data
+          field: type
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: boolean
-          operator: '='
-          value: '1'
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+          operator: in
+          value:
+            service: service
           group: 1
           exposed: false
           expose:
@@ -200,6 +245,7 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
+            reduce: false
           is_grouped: false
           group_info:
             label: ''
@@ -212,6 +258,10 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
       style:
         type: default
         options:
@@ -222,7 +272,8 @@ display:
       row:
         type: 'entity:node'
         options:
-          view_mode: teaser
+          relationship: none
+          view_mode: view_card_lift
       query:
         type: views_query
         options:
@@ -231,7 +282,25 @@ display:
           distinct: false
           replica: false
           query_tags: {  }
-      relationships: {  }
+      relationships:
+        field_target_group:
+          id: field_target_group
+          table: node__field_target_group
+          field: field_target_group
+          relationship: none
+          group_type: group
+          admin_label: 'field_target_group: Paragraph'
+          plugin_id: standard
+          required: false
+        field_target_group_municipality:
+          id: field_target_group_municipality
+          table: paragraph__field_target_group_municipality
+          field: field_target_group_municipality
+          relationship: field_target_group
+          group_type: group
+          admin_label: 'field_target_group_municipality: Luokittelutermi'
+          plugin_id: standard
+          required: false
       link_display: page_1
       link_url: ''
       header:
@@ -253,12 +322,14 @@ display:
     cache_metadata:
       max-age: -1
       contexts:
+        - 'languages:language_content'
         - 'languages:language_interface'
         - url
         - url.query_args
         - 'user.node_grants:view'
         - user.permissions
-      tags: {  }
+      tags:
+        - 'config:field.storage.paragraph.field_title'
   feed_1:
     id: feed_1
     display_title: Syöte
@@ -292,11 +363,13 @@ display:
     cache_metadata:
       max-age: -1
       contexts:
+        - 'languages:language_content'
         - 'languages:language_interface'
         - url
         - 'user.node_grants:view'
         - user.permissions
-      tags: {  }
+      tags:
+        - 'config:field.storage.paragraph.field_title'
   page_1:
     id: page_1
     display_title: Page
@@ -311,9 +384,11 @@ display:
     cache_metadata:
       max-age: -1
       contexts:
+        - 'languages:language_content'
         - 'languages:language_interface'
         - url
         - url.query_args
         - 'user.node_grants:view'
         - user.permissions
-      tags: {  }
+      tags:
+        - 'config:field.storage.paragraph.field_title'
