@@ -50,31 +50,14 @@ class AgeGroups extends ManyToOne {
         continue;
       }
 
-      // Filter using the age range: the service age range should match either
-      // the lower or the upper limit, or between.
+      // Filter using the age range.
       /** @var \Drupal\search_api\Query\ConditionGroupInterface $itemCondition */
-      $itemCondition = $this->query->createConditionGroup('OR');
+      $itemCondition = $this->query->createConditionGroup('AND');
 
-      // Check the lower limit.
-      /** @var \Drupal\search_api\Query\ConditionGroupInterface $lowerCondition */
-      $lowerCondition = $this->query->createConditionGroup('AND');
-      $lowerCondition->addCondition('field_age_from', $values['from'], ">=");
-      $lowerCondition->addCondition('field_age_from', $values['to'], "<=");
-      $itemCondition->addConditionGroup($lowerCondition);
-
-      // Check between.
-      /** @var \Drupal\search_api\Query\ConditionGroupInterface $betweenCondition */
-      $betweenCondition = $this->query->createConditionGroup('AND');
-      $betweenCondition->addCondition('field_age_from', $values['from'], "<=");
-      $betweenCondition->addCondition('field_age_to', $values['to'], ">=");
-      $itemCondition->addConditionGroup($betweenCondition);
-
-      // Check the upper limit.
-      /** @var \Drupal\search_api\Query\ConditionGroupInterface $upperCondition */
-      $upperCondition = $this->query->createConditionGroup('AND');
-      $upperCondition->addCondition('field_age_to', $values['from'], ">=");
-      $upperCondition->addCondition('field_age_to', $values['to'], "<=");
-      $itemCondition->addConditionGroup($upperCondition);
+      // Selected upper-end can't be lower than service age range lower-end.
+      $itemCondition->addCondition('field_age_from', $values['to'], "<=");
+      // Selected lower-end can't be higher than service age range upper-end.
+      $itemCondition->addCondition('field_age_to', $values['from'], ">=");
 
       $itemsCondition->addConditionGroup($itemCondition);
     }
