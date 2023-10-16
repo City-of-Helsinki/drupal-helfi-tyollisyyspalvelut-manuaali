@@ -42,13 +42,16 @@ class AgeGroups extends ManyToOne {
     /** @var \Drupal\search_api\Query\ConditionGroupInterface $itemsCondition */
     $itemsCondition = $this->query->createConditionGroup('OR');
     foreach ($this->value as $item) {
+      if (!preg_match('/^\d{2}-\d{2}$/', $item)) {
+        continue;
+      }
       [$values['from'], $values['to']] = explode("-", $item);
       if (empty($values['from']) || empty($values['to']) || !is_numeric($values['from']) || !is_numeric($values['to'])) {
         continue;
       }
 
       // Filter using the age range: the service age range should match either
-      // the lower or the upper limit, or both.
+      // the lower or the upper limit, or between.
       /** @var \Drupal\search_api\Query\ConditionGroupInterface $itemCondition */
       $itemCondition = $this->query->createConditionGroup('OR');
 
@@ -58,6 +61,13 @@ class AgeGroups extends ManyToOne {
       $lowerCondition->addCondition('field_age_from', $values['from'], ">=");
       $lowerCondition->addCondition('field_age_from', $values['to'], "<=");
       $itemCondition->addConditionGroup($lowerCondition);
+
+      // Check between.
+      /** @var \Drupal\search_api\Query\ConditionGroupInterface $betweenCondition */
+      $betweenCondition = $this->query->createConditionGroup('AND');
+      $betweenCondition->addCondition('field_age_from', $values['from'], "<=");
+      $betweenCondition->addCondition('field_age_to', $values['to'], ">=");
+      $itemCondition->addConditionGroup($betweenCondition);
 
       // Check the upper limit.
       /** @var \Drupal\search_api\Query\ConditionGroupInterface $upperCondition */
