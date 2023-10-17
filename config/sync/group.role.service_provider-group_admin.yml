@@ -10,7 +10,7 @@ third_party_settings:
   hel_tpm_group:
     site_wide_role:
       editor: editor
-      specialist_editor: 0
+      specialist_editor: '0'
 id: service_provider-group_admin
 label: 'Group admin'
 weight: -9
@@ -30,7 +30,6 @@ permissions:
   - 'update any group_node:service entity'
   - 'update any group_node:service_location content'
   - 'update any group_node:service_location entity'
-  - 'use service_moderation transition archived'
   - 'use service_moderation transition create_new_draft'
   - 'use service_moderation transition outdated'
   - 'use service_moderation transition put_on_hold'
