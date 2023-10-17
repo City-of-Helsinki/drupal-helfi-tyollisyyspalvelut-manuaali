@@ -22,6 +22,7 @@ dependencies:
     - 'taxonomy_term:municipality:f1fef491-9547-4f98-bd16-1899c476c555'
   module:
     - better_exposed_filters
+    - hel_tpm_search
     - search_api
 id: solr_service_search
 label: 'Solr service search'
@@ -468,27 +469,31 @@ display:
                 title: ''
                 operator: '='
                 value: ''
-        field_age_groups:
-          id: field_age_groups
+        age_groups_filter:
+          id: age_groups_filter
           table: search_api_index_service_search_solr_index
-          field: field_age_groups
+          field: age_groups_filter
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: search_api_options
+          plugin_id: age_groups_filter
           operator: or
-          value: {  }
+          value:
+            all: all
+            16-30: 16-30
+            31-54: 31-54
+            55-70: 55-70
           group: 1
           exposed: true
           expose:
-            operator_id: field_age_groups_op
+            operator_id: age_groups_filter_op
             label: 'Kohderyhmän ikä'
             description: ''
             use_operator: false
-            operator: field_age_groups_op
+            operator: age_groups_filter_op
             operator_limit_selection: false
             operator_list: {  }
-            identifier: field_age_groups
+            identifier: age_groups_filter
             required: false
             remember: false
             multiple: true
@@ -500,7 +505,7 @@ display:
               editor: '0'
               specialist: '0'
               specialist_editor: '0'
-            reduce: false
+            reduce: true
           is_grouped: false
           group_info:
             label: ''
@@ -616,6 +621,46 @@ display:
           hierarchy: false
           limit: true
           error_message: true
+        search_api_language:
+          id: search_api_language
+          table: search_api_index_service_search_solr_index
+          field: search_api_language
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_language
+          operator: in
+          value:
+            '***LANGUAGE_language_content***': '***LANGUAGE_language_content***'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
         field_municipality:
           id: field_municipality
           table: search_api_index_service_search_solr_index
@@ -721,46 +766,6 @@ display:
           hierarchy: false
           limit: true
           error_message: true
-        search_api_language:
-          id: search_api_language
-          table: search_api_index_service_search_solr_index
-          field: search_api_language
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: search_api_language
-          operator: in
-          value:
-            '***LANGUAGE_language_content***': '***LANGUAGE_language_content***'
-          group: 1
-          exposed: false
-          expose:
-            operator_id: ''
-            label: ''
-            description: ''
-            use_operator: false
-            operator: ''
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: ''
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-            reduce: false
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
       filter_groups:
         operator: AND
         groups:
@@ -969,6 +974,14 @@ display:
                   collapsible: false
                   is_secondary: false
               field_free_service:
+                plugin_id: bef_dropdown_multiselet
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+              age_groups_filter:
                 plugin_id: bef_dropdown_multiselet
                 advanced:
                   sort_options: false
