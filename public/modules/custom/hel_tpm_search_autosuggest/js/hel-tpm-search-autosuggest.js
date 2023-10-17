@@ -161,7 +161,26 @@
       let searchForm = $(form).closest('form');
       let selectedMultiselect = '.filters-wrapper .multi-select-container.active';
 
+      if ($(searchField).val() == "") {
+          $('.text-search-wrapper input[id^="edit-reset--"]').hide();
+      } else {
+          $('.text-search-wrapper input[id^="edit-reset--"]').show();
+      }
+
+      if ($(searchField).val() == "") {
+        $('.text-search-wrapper input[id^="edit-reset--"]').hide();
+      } else {
+        $('.text-search-wrapper input[id^="edit-reset--"]').show();
+      }
+      
       $(document).ready(function() {
+
+        if ($(selectedMultiselect).length) {
+            $('.control-wrapper input[id^="edit-reset--"]').show();
+        } else {
+          $('.control-wrapper input[id^="edit-reset--"]').hide();
+        }
+
         searchForm.on('submit', function(e) {
           Drupal.behaviors.hel_tpm_search_autocomplete.appendSearchHistory(form);
         });
@@ -171,17 +190,6 @@
           })
         }
 
-        if ($(searchField).val() == "") {
-          $('.text-search-wrapper input[id^="edit-reset--"]').hide();
-        } else {
-          $('.text-search-wrapper input[id^="edit-reset--"]').show();
-        }
-
-        if ($(selectedMultiselect).length) {
-            $('.control-wrapper input[id^="edit-reset--"]').show();
-        } else {
-          $('.control-wrapper input[id^="edit-reset--"]').hide();
-        }
 
         $('.text-search-wrapper input[id^="edit-reset--"]').click (function (event) {
           event.preventDefault();
