@@ -385,6 +385,10 @@
   .control-wrapper {
     display: flex;
     justify-content: space-between;
+
+    input[data-drupal-selector="edit-reset"] {
+      display: none;
+    }
     .collapse-toggler,
     .form-submit  {
       font-size: $small-caption;
