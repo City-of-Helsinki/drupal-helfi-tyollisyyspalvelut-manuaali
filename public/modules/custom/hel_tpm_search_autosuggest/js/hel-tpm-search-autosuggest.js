@@ -157,10 +157,30 @@
 
     attach: function (context, settings) {
       let form = $('.search-autocomplete-wrapper');
-      let searchField = 'input[name="search_api_fulltext"]'
+      let searchField = 'input[name="search_api_fulltext"]';
       let searchForm = $(form).closest('form');
+      let selectedMultiselect = '.filters-wrapper .multi-select-container.active';
 
+      if ($(searchField).val() == "") {
+          $('.text-search-wrapper input[id^="edit-reset--"]').hide();
+      } else {
+          $('.text-search-wrapper input[id^="edit-reset--"]').show();
+      }
+
+      if ($(searchField).val() == "") {
+        $('.text-search-wrapper input[id^="edit-reset--"]').hide();
+      } else {
+        $('.text-search-wrapper input[id^="edit-reset--"]').show();
+      }
+      
       $(document).ready(function() {
+
+        if ($(selectedMultiselect).length) {
+            $('.control-wrapper input[id^="edit-reset--"]').show();
+        } else {
+          $('.control-wrapper input[id^="edit-reset--"]').hide();
+        }
+
         searchForm.on('submit', function(e) {
           Drupal.behaviors.hel_tpm_search_autocomplete.appendSearchHistory(form);
         });
@@ -169,6 +189,21 @@
             Drupal.behaviors.hel_tpm_search_autocomplete.appendSearchHistory(form);
           })
         }
+
+
+        $('.text-search-wrapper input[id^="edit-reset--"]').click (function (event) {
+          event.preventDefault();
+          $(this).closest('form').find("input[type=text], textarea").val("");
+          $(this).closest('form').find('[id^="edit-submit-"]').click();
+        });
+
+        $('.control-wrapper input[id^="edit-reset--"]').click (function (event) {
+          event.preventDefault();
+          $(this).closest('form').find('select').val('');
+          $(this).closest('form').find('input[type=radio]').prop('checked', false);
+          $(this).closest('form').find('input[type=checkbox]').prop('checked', false);
+          $(this).closest('form').find('[id^="edit-submit-"]').click();
+        });
       });
 
       $(searchField, form)
