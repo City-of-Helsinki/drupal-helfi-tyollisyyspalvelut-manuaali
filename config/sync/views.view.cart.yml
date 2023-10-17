@@ -934,6 +934,19 @@ display:
         row: false
         header: false
       header:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text
+          empty: false
+          content:
+            value: '<h1 class="page-header h3 h3--margin-bottom-double">Suosikit</h1>'
+            format: full_html
+          tokenize: false
         result:
           id: result
           table: views
