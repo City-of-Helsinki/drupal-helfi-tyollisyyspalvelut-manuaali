@@ -80,13 +80,7 @@
      {% else %}
       {% for item in items %}
         <div{{ item.attributes.addClass('field__item') }}>
-        {% if loop.index < loop.length - 1 %}
-          {{item.content|render ~ "," }}
-        {% elseif loop.index == loop.length - 1 %}
-          {{item.content|render ~ " and"|t }}
-        {% else %}
-          {{ item.content }}
-        {% endif %}
+      {{item.content}}{% if not loop.last %}<span>,</span>{% endif %}
         </div>
       {% endfor %}
     {% endif %}
