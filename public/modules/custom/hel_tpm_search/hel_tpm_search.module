@@ -50,3 +50,16 @@ function hel_tpm_search_views_data_alter(array &$data): void {
     ];
   }
 }
+
+/**
+ * Implements hook_theme().
+ */
+function hel_tpm_search_theme() {
+  return [
+    'search_header' => [
+      'variables' => [
+        'content' => NULL,
+      ],
+    ],
+  ];
+}
