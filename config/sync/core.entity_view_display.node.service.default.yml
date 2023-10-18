@@ -35,6 +35,7 @@ dependencies:
     - field.field.node.service.field_service_exceptions
     - field.field.node.service.field_service_execution
     - field.field.node.service.field_service_implement
+    - field.field.node.service.field_service_language
     - field.field.node.service.field_service_links_external
     - field.field.node.service.field_service_links_internal
     - field.field.node.service.field_service_other_info
@@ -69,7 +70,7 @@ third_party_settings:
       label: Osallistuminen
       parent_name: ''
       region: content
-      weight: 12
+      weight: 14
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--participation'
@@ -89,7 +90,7 @@ third_party_settings:
       label: Toteutustapa
       parent_name: ''
       region: content
-      weight: 13
+      weight: 15
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--execution'
@@ -108,7 +109,7 @@ third_party_settings:
       label: 'Missä ja milloin'
       parent_name: ''
       region: content
-      weight: 14
+      weight: 16
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--where-and-when'
@@ -127,7 +128,7 @@ third_party_settings:
       label: Kohderyhmä
       parent_name: ''
       region: content
-      weight: 11
+      weight: 13
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--target-group'
@@ -151,7 +152,7 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 10
+    weight: 12
     region: content
   field_attendance:
     type: entity_reference_revisions_entity_view
@@ -179,7 +180,7 @@ content:
       view_mode: default
       link: false
     third_party_settings: {  }
-    weight: 17
+    weight: 19
     region: content
   field_description:
     type: basic_string
@@ -218,7 +219,7 @@ content:
       view_mode: card_lift
       link: false
     third_party_settings: {  }
-    weight: 19
+    weight: 21
     region: content
   field_service_benefits:
     type: text_default
@@ -241,7 +242,15 @@ content:
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 15
+    weight: 17
+    region: content
+  field_service_language:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 9
     region: content
   field_service_other_info:
     type: entity_reference_revisions_entity_view
@@ -259,7 +268,7 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 9
+    weight: 11
     region: content
   field_service_producer:
     type: entity_reference_label
@@ -267,7 +276,7 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 18
+    weight: 20
     region: content
   field_service_requirements:
     type: text_default
@@ -335,7 +344,7 @@ content:
   view_mode_switcher:
     settings: {  }
     third_party_settings: {  }
-    weight: 16
+    weight: 18
     region: content
 hidden:
   content_moderation_control: true

@@ -5,6 +5,7 @@
  * Module file for hel_tpm_search.
  */
 
+use Drupal\search_api\Entity\Index;
 use Drupal\views\Plugin\views\query\QueryPluginBase;
 use Drupal\views\ViewExecutable;
 
@@ -30,4 +31,35 @@ function hel_tpm_search_views_query_alter(ViewExecutable $view, QueryPluginBase 
       }
     }
   }
+}
+
+/**
+ * Implements hook_views_data_alter().
+ */
+function hel_tpm_search_views_data_alter(array &$data): void {
+  /** @var \Drupal\search_api\IndexInterface $index */
+  foreach (Index::loadMultiple() as $index) {
+    $key = 'search_api_index_' . $index->id();
+    $data[$key]['age_groups_filter'] = [
+      'title' => t('Age groups filter'),
+      'filter' => [
+        'title' => t('Age groups filter'),
+        'help' => 'Filters services by age groups.',
+        'id' => 'age_groups_filter',
+      ],
+    ];
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function hel_tpm_search_theme() {
+  return [
+    'search_header' => [
+      'variables' => [
+        'content' => NULL,
+      ],
+    ],
+  ];
 }

@@ -71,11 +71,19 @@
     } %}
     </div>
     <div class="field__items">
+     {% if combined_field %}
+     {% for item in items %}
+       <div{{ item.attributes.addClass('field__item') }}>
+         {{item.content|render ~ "," }}
+       </div>
+     {% endfor %}
+     {% else %}
       {% for item in items %}
         <div{{ item.attributes.addClass('field__item') }}>
-          {{ item.content }}
+      {{item.content}}{% if not loop.last %}<span>,</span>{% endif %}
         </div>
       {% endfor %}
+    {% endif %}
     </div>
   </div>
 </div>

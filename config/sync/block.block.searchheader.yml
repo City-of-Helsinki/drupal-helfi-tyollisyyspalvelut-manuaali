@@ -1,0 +1,49 @@
+uuid: 8390a457-4ba9-45b2-a05c-e093a68a6363
+langcode: fi
+status: true
+dependencies:
+  module:
+    - block_class
+    - context
+    - hel_tpm_search
+    - system
+  theme:
+    - palvelumanuaali
+third_party_settings:
+  block_class:
+    classes: search-page-header-block
+id: searchheader
+theme: palvelumanuaali
+region: content
+weight: -4
+provider: null
+plugin: search_header
+settings:
+  id: search_header
+  label: 'Search header'
+  label_display: '0'
+  provider: hel_tpm_search
+visibility:
+  context_all:
+    id: context_all
+    negate: null
+    values: ''
+  context:
+    id: context
+    negate: null
+    values: ''
+  user_status:
+    id: user_status
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    user_status:
+      viewing_profile: '0'
+      logged_viewing_profile: '0'
+      own_page_true: '0'
+      field_value: '0'
+    user_fields: uid
+  request_path:
+    id: request_path
+    negate: false
+    pages: "/haku*\r\n/search*\r\n/sök*"

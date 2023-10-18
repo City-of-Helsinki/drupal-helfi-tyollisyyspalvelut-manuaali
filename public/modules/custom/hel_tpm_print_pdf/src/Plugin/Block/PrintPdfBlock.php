@@ -17,12 +17,10 @@ class PrintPdfBlock extends BlockBase {
 
   /**
    * {@inheritdoc}
+   * @todo Redo print button logic
    */
   public function build() {
     $output = [];
-    $base_url = \Drupal::request()->getRequestUri();
-    $output['#markup'] = '<a class="button log" href="' . $base_url . '?' . $_SERVER['QUERY_STRING'] . '">View PDF</a>';
-    $output['#attached']['library'] = 'hel_tpm_print_pdf/hel_tpm_print_pdf';
     return $output;
   }
 
