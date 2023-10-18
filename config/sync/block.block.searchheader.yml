@@ -1,24 +1,28 @@
-uuid: fcc3b2d9-913b-4bd0-992b-f6e86b757dff
+uuid: fcbc6462-05f4-4d94-a436-cc3503d4ccb8
 langcode: fi
 status: true
 dependencies:
   module:
+    - block_class
     - context
-    - node
+    - hel_tpm_search
     - system
   theme:
     - palvelumanuaali
-id: system_breadcrumb_bloc
+third_party_settings:
+  block_class:
+    classes: search-page-header-block
+id: searchheader
 theme: palvelumanuaali
 region: content
-weight: -9
+weight: -4
 provider: null
-plugin: system_breadcrumb_block
+plugin: search_header
 settings:
-  id: system_breadcrumb_block
-  label: Murupolku
+  id: search_header
+  label: 'Search header'
   label_display: '0'
-  provider: system
+  provider: hel_tpm_search
 visibility:
   context_all:
     id: context_all
@@ -28,10 +32,6 @@ visibility:
     id: context
     negate: null
     values: ''
-  request_path_exclusion:
-    id: request_path_exclusion
-    negate: true
-    pages: "*/haku*\r\n*/search*\r\n*/edit*\r\n*/add*"
   user_status:
     id: user_status
     negate: false
@@ -43,12 +43,7 @@ visibility:
       own_page_true: '0'
       field_value: '0'
     user_fields: uid
-  'entity_bundle:node':
-    id: 'entity_bundle:node'
+  request_path:
+    id: request_path
     negate: false
-    context_mapping:
-      node: '@node.node_route_context:node'
-    bundles:
-      basic_page: basic_page
-      service: service
-      service_location: service_location
+    pages: "/haku*\r\n/search*\r\n/sök*"
