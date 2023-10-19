@@ -49,8 +49,9 @@ class BulkGroupInvitationCustom extends BulkGroupInvitation {
 
     $group_roles = $this->entityTypeManager->getStorage('group_role')->loadByProperties([
       'group_type' => $group->getGroupType()->id(),
-      'internal' => FALSE,
+      'scope' => 'individual'
     ]);
+
     if (empty($group_roles)) {
       return $roles;
     }
