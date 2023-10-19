@@ -3,7 +3,6 @@ langcode: fi
 status: true
 dependencies:
   module:
-    - context
     - node
     - system
   theme:
@@ -13,7 +12,7 @@ _core:
 id: palvelumanuaali_page_title
 theme: palvelumanuaali
 region: content
-weight: -5
+weight: -6
 provider: null
 plugin: page_title_block
 settings:
@@ -22,25 +21,6 @@ settings:
   label_display: '0'
   provider: core
 visibility:
-  context_all:
-    id: context_all
-    negate: null
-    values: ''
-  context:
-    id: context
-    negate: null
-    values: ''
-  user_status:
-    id: user_status
-    negate: false
-    context_mapping:
-      user: '@user.current_user_context:current_user'
-    user_status:
-      viewing_profile: '0'
-      logged_viewing_profile: '0'
-      own_page_true: '0'
-      field_value: '0'
-    user_fields: uid
   'entity_bundle:node':
     id: 'entity_bundle:node'
     negate: false

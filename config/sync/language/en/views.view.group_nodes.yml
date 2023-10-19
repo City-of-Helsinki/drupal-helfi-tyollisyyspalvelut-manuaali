@@ -1,39 +1,51 @@
-label: 'Group nodes'
 display:
   default:
     display_options:
-      exposed_form:
-        options: {  }
-      pager:
-        options:
-          tags:
-            first: '« First'
-            last: 'Last »'
-          expose: {  }
       fields:
+        hel_tpm_editorial_service_has_unpublished_changes:
+          label: 'Service has changes'
         title:
           label: Title
+          separator: ', '
         type:
           label: 'Content type'
+          separator: ', '
         status:
           label: Status
           settings:
             format_custom_true: Published
             format_custom_false: Unpublished
+          separator: ', '
         changed:
           label: Updated
-        view_group_content: {  }
-        edit_group_content: {  }
-        delete_group_content: {  }
+          separator: ', '
+        view_group_content:
+          admin_label: 'View relation link'
+          label: 'Link to Group content'
+          text: 'View relation'
+        edit_group_content:
+          admin_label: 'Edit relation link'
+          label: 'Link to edit Group content'
+          text: 'Edit relation'
+        delete_group_content:
+          admin_label: 'Delete relation link'
+          label: 'Link to delete Group content'
+          text: 'Delete relation'
         edit_node:
+          admin_label: 'Edit node link'
+          label: 'Link to edit Content'
           text: 'Edit node'
         delete_node:
+          admin_label: 'Delete node link'
+          label: 'Link to delete Content'
           text: 'Delete node'
         dropbutton:
           label: Operations
-        hel_tpm_editorial_service_has_unpublished_changes:
-          label: 'Service has changes'
       filters:
+        title:
+          expose:
+            label: 'Filter:'
+            placeholder: 'Filter by search term'
         status:
           expose:
             label: 'Published status'
@@ -47,18 +59,38 @@ display:
         type:
           expose:
             label: Type
-        title:
+      exposed_form:
+        options:
+          submit_button: Apply
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      pager:
+        options:
+          tags:
+            previous: ‹‹
+            next: ››
+            first: '« First'
+            last: 'Last »'
           expose:
-            label: 'Filter:'
-            placeholder: 'Filter by search term'
+            items_per_page_label: 'Items per page'
+            items_per_page_options_all_label: '- All -'
+            offset_label: Offset
       empty:
         area_text_custom:
           content: 'No content available.'
       arguments:
         gid:
-          exception: {  }
+          exception:
+            title: All
+          title: '{{ arguments.gid|placeholder }} nodes'
       title: Nodes
+    display_title: Master
   page_1:
+    display_title: Page
     display_options:
       menu:
         title: Nodes
+label: 'Group nodes'
+description: 'Lists all of the nodes that have been added to a group.'

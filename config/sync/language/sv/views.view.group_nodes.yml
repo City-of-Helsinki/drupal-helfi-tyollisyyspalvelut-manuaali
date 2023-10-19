@@ -1,45 +1,42 @@
 display:
   default:
-    display_title: Huvud
     display_options:
-      exposed_form:
-        options:
-          submit_button: Verkställ
-          reset_button_label: Återställ
-          exposed_sorts_label: 'Sortera efter'
-          sort_asc_label: Stigande
-          sort_desc_label: Fallande
-      pager:
-        options:
-          tags:
-            first: '« Första'
-            last: 'Sista »'
-          expose:
-            items_per_page_label: 'Inlägg per sida'
-            items_per_page_options_all_label: '- Alla -'
-            offset_label: Kompensera
       fields:
+        hel_tpm_editorial_service_has_unpublished_changes:
+          label: 'Förändringar i tjänsten'
         title:
-          label: Titel
+          label: Organisation
+          separator: ', '
         type:
           label: Innehållstyp
+          separator: ', '
         status:
           label: Status
           settings:
             format_custom_true: Publicerad
             format_custom_false: 'Ej publicerad'
+          separator: ', '
         changed:
           label: Uppdaterad
-        edit_group_content: {  }
+          separator: ', '
+        view_group_content:
+          label: 'Linkki ryhmäsisältöön'
+        edit_group_content:
+          label: 'Linkki ryhmärelaation muokkaukseen'
+          text: 'Muokkaa relaatiota'
         delete_group_content:
           text: 'Hylkää suhde'
-        edit_node: {  }
-        delete_node: {  }
+        edit_node:
+          text: 'Muokkaa solmua'
+        delete_node:
+          text: 'Poista solmu'
         dropbutton:
           label: Funktioner
-        hel_tpm_editorial_service_has_unpublished_changes:
-          label: 'Förändringar i tjänsten'
       filters:
+        title:
+          expose:
+            label: 'Filtrera:'
+            placeholder: 'Filtrera efter sökterm'
         status:
           expose:
             label: 'Status för publicering'
@@ -53,10 +50,24 @@ display:
         type:
           expose:
             label: Typ
-        title:
+      exposed_form:
+        options:
+          submit_button: Verkställ
+          reset_button_label: Återställ
+          exposed_sorts_label: 'Sortera efter'
+          sort_asc_label: Stigande
+          sort_desc_label: Fallande
+      pager:
+        options:
+          tags:
+            previous: ‹‹
+            next: ››
+            first: '« Första'
+            last: 'Sista »'
           expose:
-            label: 'Filtrera:'
-            placeholder: 'Filtrera efter sökterm'
+            items_per_page_label: 'Inlägg per sida'
+            items_per_page_options_all_label: '- Alla -'
+            offset_label: Kompensera
       empty:
         area_text_custom:
           content: 'Inget innehåll tillgängligt.'
@@ -65,8 +76,10 @@ display:
           exception:
             title: Alla
       title: Noder
+    display_title: Huvud
   page_1:
     display_title: Sida
     display_options:
       menu:
         title: Noder
+label: 'Ryhmän solmut'

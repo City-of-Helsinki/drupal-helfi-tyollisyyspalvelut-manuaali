@@ -13,7 +13,7 @@ dependencies:
 _core:
   default_config_hash: YZgK6tSmg1F3D4UuX7Jwp_bgFjIzIfJerHoMoIHY0GI
 id: group_invitations
-label: 'Group invitations'
+label: 'Ryhmän kutsut'
 module: group
 description: ''
 tag: ''
@@ -26,7 +26,7 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: Invitations
+      title: Kutsut
       fields:
         invitee_mail:
           id: invitee_mail
@@ -340,6 +340,15 @@ display:
             date_format: short
             custom_date_format: ''
             timezone: ''
+            tooltip:
+              date_format: ''
+              custom_date_format: ''
+            time_diff:
+              enabled: false
+              future_format: '@interval hence'
+              past_format: '@interval ago'
+              granularity: 2
+              refresh: 60
           group_column: value
           group_columns: {  }
           group_rows: true

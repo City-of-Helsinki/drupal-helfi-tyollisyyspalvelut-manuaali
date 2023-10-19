@@ -5,7 +5,6 @@ dependencies:
   config:
     - views.view.service_ready_to_publish_no_responsible_municipality
   module:
-    - context
     - node
     - views
   theme:
@@ -13,7 +12,7 @@ dependencies:
 id: views_block__service_rtb_no_responsible_municipality_block_1
 theme: palvelumanuaali
 region: content
-weight: 0
+weight: 1
 provider: null
 plugin: 'views_block:service_ready_to_publish_no_responsible_municipality-block_1'
 settings:
@@ -24,25 +23,6 @@ settings:
   views_label: 'Service ready to publish no responsible municipality'
   items_per_page: none
 visibility:
-  context_all:
-    id: context_all
-    negate: null
-    values: ''
-  user_status:
-    id: user_status
-    negate: false
-    context_mapping:
-      user: '@user.current_user_context:current_user'
-    user_status:
-      viewing_profile: '0'
-      logged_viewing_profile: '0'
-      own_page_true: '0'
-      field_value: '0'
-    user_fields: uid
-  context:
-    id: context
-    negate: null
-    values: ''
   'entity_bundle:node':
     id: 'entity_bundle:node'
     negate: false
