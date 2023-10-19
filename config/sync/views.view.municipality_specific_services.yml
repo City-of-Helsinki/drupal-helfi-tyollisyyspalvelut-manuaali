@@ -115,8 +115,8 @@ display:
           exposed: false
           granularity: second
       arguments:
-        tid:
-          id: tid
+        tid_1:
+          id: tid_1
           table: taxonomy_term_field_data
           field: tid
           relationship: field_target_group_municipality
@@ -154,7 +154,44 @@ display:
             type: none
             fail: 'not found'
           validate_options: {  }
-          break_phrase: false
+          break_phrase: true
+          not: false
+        tid:
+          id: tid
+          table: taxonomy_term_field_data
+          field: tid
+          relationship: field_target_group_municipality
+          group_type: group
+          admin_label: ''
+          entity_type: taxonomy_term
+          entity_field: tid
+          plugin_id: taxonomy
+          default_action: default
+          exception:
+            value: all
+            title_enable: false
+            title: All
+          title_enable: false
+          title: ''
+          default_argument_type: fixed
+          default_argument_options:
+            argument: '39'
+          default_argument_skip_url: true
+          summary_options:
+            base_path: ''
+            count: true
+            override: false
+            items_per_page: 25
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: false
+          validate:
+            type: none
+            fail: 'not found'
+          validate_options: {  }
+          break_phrase: true
           not: false
       filters:
         status:
@@ -202,6 +239,7 @@ display:
           distinct: false
           replica: false
           query_tags: {  }
+          contextual_filters_or: true
       relationships:
         field_target_group:
           id: field_target_group
