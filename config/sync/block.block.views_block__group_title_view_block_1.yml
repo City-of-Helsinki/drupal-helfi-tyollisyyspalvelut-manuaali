@@ -5,7 +5,6 @@ dependencies:
   config:
     - views.view.group_title_view
   module:
-    - context
     - group
     - views
   theme:
@@ -25,25 +24,6 @@ settings:
   views_label: ''
   items_per_page: none
 visibility:
-  context_all:
-    id: context_all
-    negate: null
-    values: ''
-  context:
-    id: context
-    negate: null
-    values: ''
-  user_status:
-    id: user_status
-    negate: false
-    context_mapping:
-      user: '@user.current_user_context:current_user'
-    user_status:
-      viewing_profile: '0'
-      logged_viewing_profile: '0'
-      own_page_true: '0'
-      field_value: '0'
-    user_fields: uid
   group_type:
     id: group_type
     group_types:

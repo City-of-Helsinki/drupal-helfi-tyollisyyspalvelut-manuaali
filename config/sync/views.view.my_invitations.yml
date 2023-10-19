@@ -24,7 +24,7 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: Invitations
+      title: Kutsut
       fields:
         gid:
           id: gid
@@ -99,7 +99,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: field
-          label: Roles
+          label: Rooli
           exclude: false
           alter:
             alter_text: false
@@ -164,7 +164,7 @@ display:
           entity_type: group_content
           entity_field: uid
           plugin_id: field
-          label: 'Invited by'
+          label: Kutsuja
           exclude: false
           alter:
             alter_text: false
@@ -229,7 +229,7 @@ display:
           entity_type: group_content
           entity_field: created
           plugin_id: field
-          label: 'Invited on'
+          label: 'Kutsuttu (pvm)'
           exclude: false
           alter:
             alter_text: false
@@ -276,6 +276,15 @@ display:
             date_format: short
             custom_date_format: ''
             timezone: ''
+            tooltip:
+              date_format: ''
+              custom_date_format: ''
+            time_diff:
+              enabled: false
+              future_format: '@interval hence'
+              past_format: '@interval ago'
+              granularity: 2
+              refresh: 60
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -456,7 +465,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: dropbutton
-          label: Operations
+          label: Toiminnot
           exclude: false
           alter:
             alter_text: false

@@ -125,7 +125,7 @@ function hel_tpm_group_entity_postsave(EntityInterface $entity, $op) {
   }
 
   $event = new GroupMembershipChanged($entity);
-  \Drupal::service('event_dispatcher')->dispatch($event::EVENT_NAME, $event);
+  \Drupal::service('event_dispatcher')->dispatch($event, $event::EVENT_NAME);
 }
 
 /**

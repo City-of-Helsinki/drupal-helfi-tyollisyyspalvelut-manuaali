@@ -5,6 +5,8 @@
  * Hel tpm general install file.
  */
 
+use Drupal\Core\Config\FileStorage;
+use Drupal\Core\Site\Settings;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
 
@@ -202,4 +204,97 @@ function hel_tpm_general_update_8113(&$sandbox) {
       $translation->save();
     }
   }
+}
+
+/**
+ * Import selected configurations.
+ */
+function hel_tpm_general_update_10100(&$sandbox) {
+  $config_storage = \Drupal::service('config.storage');
+  $config_path = Settings::get('config_sync_directory');
+  $source = new FileStorage($config_path);
+
+  // Import pathauto configurations.
+  $configs = [
+    'pathauto.pattern.palvelut',
+    'pathauto.pattern.palvelut_en_swe',
+  ];
+  foreach ($configs as $config) {
+    $config_storage->write($config, $source->read($config));
+  }
+
+  // Import field storages.
+  $field_storage_conf = [
+    'field.storage.node.field_internal_files',
+    'field.storage.node.field_internal_links',
+  ];
+  $field_storage_config = \Drupal::entityTypeManager()->getStorage('field_storage_config');
+  foreach ($field_storage_conf as $config) {
+    $field_storage_config->create($source->read($config))->save();
+  }
+
+  // Import node field configs.
+  $field_configs = [
+    'field.field.node.service.field_internal_files',
+    'field.field.node.service.field_internal_links',
+  ];
+  $field_config_storage = \Drupal::entityTypeManager()->getStorage('field_config');
+  foreach ($field_configs as $config) {
+    $field_config_storage->create($source->read($config))->save();
+  }
+
+}
+
+/**
+ * Migrate internal urls and files from paragraphs to fields.
+ */
+function hel_tpm_general_update_10101(&$sandbox) {
+  $paragraphs_field = 'field_links_and_attachments';
+  $internal_file_field = 'field_internal_files';
+  $internal_links_field = 'field_internal_links';
+
+  $storage = \Drupal::entityTypeManager()->getStorage('node');
+  $efq = $storage->getQuery();
+  $result = $efq->condition('type', 'service')
+    ->condition($paragraphs_field, '', '<>')
+    ->accessCheck(FALSE)
+    ->execute();
+  $nodes = $storage->loadMultiple($result);
+
+  foreach ($nodes as $node) {
+    // Load latest revision.
+    if (!$node->isLatestRevision()) {
+      $vid = $storage->getLatestRevisionId($node->id());
+      $node = $storage->loadRevision($vid);
+    }
+    $paragraph = $node->{$paragraphs_field}->entity;
+    _hel_tpm_general_migrate_paragraph_field($paragraph, 'field_file', $node, $internal_file_field);
+    _hel_tpm_general_migrate_paragraph_field($paragraph, 'field_link', $node, $internal_links_field);
+    // Preserve changed time.
+    $changed = $node->getChangedTime();
+    // Add one second to prevent drupal from updating changed time.
+    $changed++;
+    $node->setChangedTime($changed);
+    $node->save();
+  }
+}
+
+/**
+ * Helper function to migrate paragraph fields to node fields.
+ *
+ * @param \Drupal\Core\Entity\EntityInterface $paragraph
+ *   Paragraph entityinterface.
+ * @param string $paragraph_field
+ *   Name of field in paragraph.
+ * @param \Drupal\Core\Entity\EntityInterface $node
+ *   Node interface.
+ * @param string $internal_file_field
+ *   Name of the internal file field.
+ *
+ * @return void
+ *   -
+ */
+function _hel_tpm_general_migrate_paragraph_field($paragraph, $paragraph_field, &$node, $internal_file_field) {
+  $files = $paragraph->{$paragraph_field}->getValue();
+  $node->set($internal_file_field, $files);
 }

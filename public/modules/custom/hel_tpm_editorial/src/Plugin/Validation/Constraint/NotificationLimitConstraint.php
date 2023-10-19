@@ -41,4 +41,5 @@ class NotificationLimitConstraint extends Constraint {
   public function getRequiredOptions(): array {
     return ['type', 'limit'];
   }
+
 }

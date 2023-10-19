@@ -31,7 +31,8 @@ function _hel_tpm_update_reminder_node_update_reminder() {
   $ago = strtotime('-6 months');
   $query = \Drupal::entityQuery('node')
     ->condition('type', 'service')
-    ->condition('changed', $ago, '<');
+    ->condition('changed', $ago, '<')
+    ->accessCheck(FALSE);
   $results = $query->execute();
 
   $nodeStorage = \Drupal::entityTypeManager()->getStorage('node');
