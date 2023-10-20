@@ -7,12 +7,12 @@ dependencies:
 id: service_provider-member
 label: Jäsen
 weight: -100
-internal: true
-audience: member
 group_type: service_provider
-permissions_ui: true
 permissions:
   - 'leave group'
   - 'view group'
   - 'view group_node:service entity'
   - 'view group_node:service_location entity'
+admin: false
+scope: insider
+global_role: authenticated

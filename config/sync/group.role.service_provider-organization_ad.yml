@@ -14,10 +14,7 @@ third_party_settings:
 id: service_provider-organization_ad
 label: 'Organization admin'
 weight: -8
-internal: false
-audience: member
 group_type: service_provider
-permissions_ui: true
 permissions:
   - 'access group_node overview'
   - 'access subgroup overview'
@@ -57,3 +54,5 @@ permissions:
   - 'view latest version'
   - 'view unpublished group_node:service entity'
   - 'view unpublished group_node:service_location entity'
+admin: false
+scope: individual

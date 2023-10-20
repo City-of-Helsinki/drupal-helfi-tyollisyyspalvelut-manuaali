@@ -14,10 +14,7 @@ third_party_settings:
 id: service_provider-group_admin
 label: 'Group admin'
 weight: -9
-internal: false
-audience: member
 group_type: service_provider
-permissions_ui: true
 permissions:
   - 'administer members'
   - 'create group_node:service entity'
@@ -47,3 +44,5 @@ permissions:
   - 'view latest version'
   - 'view unpublished group_node:service entity'
   - 'view unpublished group_node:service_location entity'
+admin: false
+scope: individual

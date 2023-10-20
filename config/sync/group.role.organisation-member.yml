@@ -4,13 +4,14 @@ status: true
 dependencies:
   config:
     - group.type.organisation
+    - user.role.authenticated
 id: organisation-member
 label: Jäsen
-weight: -100
-internal: true
-audience: member
+weight: -7
+admin: false
+scope: insider
+global_role: authenticated
 group_type: organisation
-permissions_ui: true
 permissions:
   - 'view group'
   - 'view group_node:basic_page entity'
