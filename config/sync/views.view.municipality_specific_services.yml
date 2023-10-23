@@ -5,7 +5,6 @@ dependencies:
   config:
     - core.entity_view_mode.node.view_card_lift
     - node.type.service
-    - taxonomy.vocabulary.municipality
   module:
     - eva
     - node
@@ -13,7 +12,7 @@ dependencies:
     - taxonomy
     - user
 id: municipality_specific_services
-label: 'Klooni Kuntakohtainen sisältö'
+label: 'Kuntakohtainen sisältö'
 module: views
 description: ''
 tag: ''
@@ -86,7 +85,7 @@ display:
           reset_button: false
           reset_button_label: Reset
           exposed_sorts_label: 'Sort by'
-          expose_sort_order: true
+          expose_sort_order: false
           sort_asc_label: Asc
           sort_desc_label: Desc
       access:
@@ -236,7 +235,7 @@ display:
         options:
           query_comment: ''
           disable_sql_rewrite: false
-          distinct: false
+          distinct: true
           replica: false
           query_tags: {  }
           contextual_filters_or: true
@@ -304,6 +303,87 @@ display:
           expose:
             operator_limit_selection: false
             operator_list: {  }
+        langcode:
+          id: langcode
+          table: node_field_data
+          field: langcode
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: langcode
+          plugin_id: language
+          operator: in
+          value:
+            '***LANGUAGE_language_interface***': '***LANGUAGE_language_interface***'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        latest_translation_affected_revision:
+          id: latest_translation_affected_revision
+          table: node_revision
+          field: latest_translation_affected_revision
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          plugin_id: latest_translation_affected_revision
+          operator: '='
+          value: ''
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
       filter_groups:
         operator: AND
         groups:
@@ -321,109 +401,6 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
-        - 'user.node_grants:view'
-        - user.permissions
-      tags: {  }
-  page_1:
-    id: page_1
-    display_title: Page
-    display_plugin: page
-    position: 1
-    display_options:
-      enabled: false
-      filters:
-        status:
-          id: status
-          table: node_field_data
-          field: status
-          entity_type: node
-          entity_field: status
-          plugin_id: boolean
-          value: '1'
-          group: 1
-          expose:
-            operator: ''
-            operator_limit_selection: false
-            operator_list: {  }
-        type:
-          id: type
-          table: node_field_data
-          field: type
-          entity_type: node
-          entity_field: type
-          plugin_id: bundle
-          value:
-            service: service
-          expose:
-            operator_limit_selection: false
-            operator_list: {  }
-        field_target_group_municipality_target_id:
-          id: field_target_group_municipality_target_id
-          table: paragraph__field_target_group_municipality
-          field: field_target_group_municipality_target_id
-          relationship: field_target_group
-          group_type: group
-          admin_label: ''
-          plugin_id: taxonomy_index_tid
-          operator: or
-          value: {  }
-          group: 1
-          exposed: true
-          expose:
-            operator_id: field_target_group_municipality_target_id_op
-            label: 'Kotikunta: (field_target_group_municipality)'
-            description: ''
-            use_operator: false
-            operator: field_target_group_municipality_target_id_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: field_target_group_municipality_target_id
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              root: '0'
-              admin: '0'
-              editor: '0'
-              specialist: '0'
-              specialist_editor: '0'
-            reduce: false
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          reduce_duplicates: false
-          vid: municipality
-          type: textfield
-          hierarchy: false
-          limit: true
-          error_message: true
-      filter_groups:
-        operator: AND
-        groups:
-          1: AND
-      defaults:
-        filters: false
-        filter_groups: false
-      display_extenders: {  }
-      path: kunnat/%taxonomy_term
-    cache_metadata:
-      max-age: -1
-      contexts:
-        - 'languages:language_content'
-        - 'languages:language_interface'
-        - url
-        - user
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
