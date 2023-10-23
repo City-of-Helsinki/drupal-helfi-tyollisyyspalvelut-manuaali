@@ -128,7 +128,7 @@ class GroupBulkInviteTest extends GroupBrowserTestBase {
     $form->fillField('email_address', 'test@test.test');
     $form->selectFieldOption('edit-roles', $role->id());
     $form->pressButton('edit-submit');
-    $session = $this->getSession()->getPage()->getContent();
+    // @todo Fix: Test is giving 403 even though 200 is expected.
     $this->assertSession()->statusCodeEquals(200);
 
     // Submit confirm form.
