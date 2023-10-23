@@ -17,7 +17,7 @@ third_party_settings:
 id: views_block__organizatio_with_ready_to_publish_content_block_1
 theme: palvelumanuaali
 region: content
-weight: -3
+weight: -5
 provider: null
 plugin: 'views_block:organizatio_with_ready_to_publish_content-block_1'
 settings:
@@ -29,25 +29,6 @@ settings:
   views_label: ''
   items_per_page: none
 visibility:
-  context_all:
-    id: context_all
-    negate: null
-    values: ''
-  context:
-    id: context
-    negate: null
-    values: ''
-  user_status:
-    id: user_status
-    negate: false
-    context_mapping:
-      user: '@user.current_user_context:current_user'
-    user_status:
-      viewing_profile: '0'
-      logged_viewing_profile: '0'
-      own_page_true: '0'
-      field_value: '0'
-    user_fields: uid
   view_inclusion:
     id: view_inclusion
     negate: false

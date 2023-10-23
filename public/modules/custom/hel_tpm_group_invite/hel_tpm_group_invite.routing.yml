@@ -4,7 +4,7 @@ ginvite.invitation.bulk:
     _form: '\Drupal\hel_tpm_group_invite\Form\BulkGroupInvitation'
     _title_callback: '\Drupal\ginvite\Controller\InvitationOperations::invitationTitle'
   requirements:
-    _custom_access: '\Drupal\ginvite\Controller\InvitationOperations::access'
+    _group_installed_content: 'group_invitation'
   options:
     parameters:
       group:
@@ -16,7 +16,8 @@ ginvite.invitation.bulk.confirm:
     _form: '\Drupal\hel_tpm_group_invite\Form\HelTpmBulkGroupInvitationConfirm'
     _title_callback: '\Drupal\ginvite\Controller\InvitationOperations::invitationTitle'
   requirements:
-    _custom_access: '\Drupal\ginvite\Controller\InvitationOperations::access'
+    _group_permission: 'invite users to group'
+    _group_installed_content: 'group_invitation'
   options:
     parameters:
       group:

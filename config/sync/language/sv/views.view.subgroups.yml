@@ -1,8 +1,14 @@
-label: Subgroups
 display:
   default:
-    display_title: Huvud
     display_options:
+      filters:
+        label:
+          expose:
+            label: 'Filtrera:'
+            placeholder: 'Filtrera efter sökterm'
+        type:
+          expose:
+            label: Grupptyp
       exposed_form:
         options:
           submit_button: Verkställ
@@ -24,29 +30,37 @@ display:
       fields:
         label:
           label: Organisation
+          separator: ', '
         type:
           label: Grupptyp
+          separator: ', '
         changed:
           label: Uppdaterad
+          separator: ', '
+        view_group_content:
+          label: 'Linkki ryhmäsisältöön'
+          text: Näytä
+        edit_group_content:
+          label: 'Linkki ryhmärelaation muokkaukseen'
+          text: 'Muokkaa relaatiota'
         delete_group_content:
           text: 'Hylkää suhde'
+        edit_group:
+          text: 'Edit subgroup'
+        delete_group:
+          label: 'Poista palveluntuottaja '
+          text: 'Poista palveluntuottaja '
         dropbutton:
           label: Funktioner
+      title: Tjänsteleverantörer
       arguments:
         gid:
           exception:
             title: Alla
-      filters:
-        label:
-          expose:
-            label: 'Filtrera:'
-            placeholder: 'Filtrera efter sökterm'
-        type:
-          expose:
-            label: Grupptyp
-      title: Tjänsteleverantörer
+    display_title: Huvud
   page_1:
     display_title: Sida
     display_options:
       menu:
         title: Tjänsteleverantörer
+label: Tjänsteleverantörer

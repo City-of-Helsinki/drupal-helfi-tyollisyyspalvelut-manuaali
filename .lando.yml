@@ -49,6 +49,8 @@ services:
     portforward: true
     config:
       dir: ./.solr/core
+  database:
+    portforward: 37001
 tooling:
   # Create additional commands for lando
   install-drupal:

@@ -13,7 +13,7 @@ use Drupal\views\ViewExecutable;
  *
  * @see \Drupal\Tests\content_moderation\Kernel\ViewsModerationStateSortTest::testSortRevisionBaseTable()
  */
-function content_moderation_test_views_views_query_alter(ViewExecutable $view, QueryPluginBase $query) {
+function service_manual_workflow_test_views_views_query_alter(ViewExecutable $view, QueryPluginBase $query) {
   // Add a secondary sort order to ensure consistent builds when testing click
   // and table sorting.
   if ($view->id() === 'test_content_moderation_state_sort_revision_table') {

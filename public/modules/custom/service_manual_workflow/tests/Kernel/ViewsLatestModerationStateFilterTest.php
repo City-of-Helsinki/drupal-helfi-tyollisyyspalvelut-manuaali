@@ -2,8 +2,6 @@
 
 namespace Drupal\Tests\service_manual_workflow\Kernel;
 
-use Drupal\Core\Database\Query\Select;
-use Drupal\entity_test\Entity\EntityTestNoBundle;
 use Drupal\language\Entity\ConfigurableLanguage;
 use Drupal\node\Entity\Node;
 use Drupal\node\Entity\NodeType;
@@ -41,7 +39,7 @@ class ViewsLatestModerationStateFilterTest extends ViewsKernelTestBase {
     'group',
     'gcontent_moderation',
     'message_notify',
-    'variationcache'
+    'variationcache',
   ];
 
   /**
@@ -84,8 +82,10 @@ class ViewsLatestModerationStateFilterTest extends ViewsKernelTestBase {
     ConfigurableLanguage::createFromLangcode('fr')->save();
   }
 
+  /**
+   * Test that moderation state filter returns expected values.
+   */
   public function testLatestModerationStateViewsFilter() {
-
     $workflow = Workflow::load('editorial');
     $workflow->getTypePlugin()->addEntityTypeAndBundle('node', 'example');
     $workflow->getTypePlugin()->addState('translated_draft', 'Bar');

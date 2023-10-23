@@ -70,7 +70,7 @@ function service_manual_workflow_entity_insert(EntityInterface $entity) {
   if ($state == 'ready_to_publish') {
     $event = new ServiceModerationEvent($entity, \Drupal::currentUser());
     $transition = 'service_manual_workflow.draft.to.ready_to_publish';
-    Drupal::service('event_dispatcher')->dispatch($transition, $event);
+    Drupal::service('event_dispatcher')->dispatch($event, $transition);
   }
 }
 
@@ -139,7 +139,7 @@ function service_manual_workflow_entity_update(EntityInterface $entity) {
   }
   $transition = sprintf('service_manual_workflow.%s.to.%s', $original_state, $state);
   $event = new ServiceModerationEvent($entity, \Drupal::currentUser());
-  Drupal::service('event_dispatcher')->dispatch($transition, $event);
+  Drupal::service('event_dispatcher')->dispatch($event, $transition);
 }
 
 /**

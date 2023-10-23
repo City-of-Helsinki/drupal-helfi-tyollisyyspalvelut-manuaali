@@ -1,0 +1,27 @@
+uuid: 6d7199fa-5404-4e31-b4e0-256a8ee53455
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_internal_files
+    - node.type.service
+  module:
+    - file
+id: node.service.field_internal_files
+field_name: field_internal_files
+entity_type: node
+bundle: service
+label: 'Sisäiset tiedostot'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:file'
+  handler_settings: {  }
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  file_extensions: 'docx doc pdf ppt pptx jpg png'
+  max_filesize: 62MB
+  description_field: false
+field_type: file

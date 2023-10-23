@@ -15,7 +15,7 @@
   class: bem(button_base_class, button_modifiers, button_blockname),
 } %}
 {% if button_url %}
-  <a href="{{button_url}}" {{ bem('link-button', button_modifiers, button_blockname) }} >
+  <a href="{{ button_url }}" {{ bem('link-button', button_modifiers, button_blockname) }} >
 {% endif %}
   <button {{ add_attributes(additional_attributes) }}>
     {% block button_content %}
