@@ -3,7 +3,9 @@
 namespace Drupal\hel_tpm_group_invite\Functional;
 
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\group\PermissionScopeInterface;
 use Drupal\Tests\group\Functional\GroupBrowserTestBase;
+use Drupal\user\RoleInterface;
 
 /**
  * @coversDefaultClass \Drupal\hel_tpm_group_invite\GroupInvitation
@@ -17,19 +19,12 @@ class GroupBulkInviteTest extends GroupBrowserTestBase {
    *
    * @var string[]
    */
-  public static $modules = [
+  protected static $modules = [
     'group',
     'group_test_config',
     'ginvite',
     'hel_tpm_group_invite',
   ];
-
-  /**
-   * The entity type manager service.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
 
   /**
    * The group we will use to test methods on.
@@ -43,7 +38,7 @@ class GroupBulkInviteTest extends GroupBrowserTestBase {
    *
    * @var \Drupal\user\Entity\User
    */
-  protected $account;
+  protected $nonGroupMemeber;
 
   /**
    * Global permissions.
@@ -57,9 +52,7 @@ class GroupBulkInviteTest extends GroupBrowserTestBase {
       'access administration pages',
       'access group overview',
       'create default group',
-      'create other group',
       'administer group',
-      'bypass group access',
       'administer users',
     ];
   }
@@ -69,25 +62,42 @@ class GroupBulkInviteTest extends GroupBrowserTestBase {
    */
   protected function setUp(): void {
     parent::setUp();
+    $type = $this->entityTypeManager->getStorage('group_type')->load('default');
 
-    $this->group = $this->createGroup(['uid' => $this->groupCreator->id()]);
+    $this->groupAdmin = $this->createUser($this->getGlobalPermissions());
+    $this->nonGroupMemeber = $this->createUser();
 
-    $this->account = $this->drupalCreateUser();
-    $this->group->addMember($this->account);
+    $this->group = $this->createGroup([
+      'type' => $type->id()
+    ]);
+
+    // Set permissions for content moderation in the default group type.
+    $this->createGroupRole([
+      'group_type' => $type->id(),
+      'scope' => PermissionScopeInterface::INSIDER_ID,
+      'global_role' => RoleInterface::AUTHENTICATED_ID,
+    ]);
+
+    $adminRole = $this->createGroupRole([
+      'group_type' => $type->id(),
+      'scope' => PermissionScopeInterface::INDIVIDUAL_ID,
+      'admin' => TRUE,
+    ]);
+
+    $this->group->addMember($this->nonGroupMemeber);
+    $this->group->addMember($this->groupAdmin, ['group_roles' => [$adminRole->id()]]);
     $this->group->save();
-
-    $this->entityTypeManager = $this->container->get('entity_type.manager');
   }
 
   /**
    * Test bulk invitation.
    */
   public function testBulkInvite() {
-
-    $this->drupalLogin($this->groupCreator);
+    $this->drupalLogin($this->groupAdmin);
 
     // Install and configure the Group Invitation plugin.
-    $this->drupalGet('/admin/group/content/install/default/group_invitation');
+    $path = sprintf('/admin/group/content/install/%s/group_invitation', $this->group->getGroupType()->id());
+    $this->drupalGet($path);
     $this->submitForm([], 'Install plugin');
     $this->assertSession()->statusCodeEquals(200);
 
@@ -95,17 +105,12 @@ class GroupBulkInviteTest extends GroupBrowserTestBase {
     // plugin config doesn't seem to be available.
     drupal_flush_all_caches();
 
-    $this->drupalLogin($this->account);
+    $this->drupalLogin($this->nonGroupMemeber);
 
     // Add permissions to invite users to members of the group.
-    $role = $this->group->getGroupType()->getMemberRole();
-    $role->grantPermissions(['invite users to group']);
-    $role->save();
 
-    // Add permissions to administer members to members of the group.
-    $role = $this->group->getGroupType()->getMemberRole();
-    $role->grantPermissions(['administer members']);
-    $role->save();
+    $role = $this->group->getGroupType()->getRoles(FALSE);
+    $role = reset($role);
 
     // Load invite members form.
     $this->drupalGet('/group/' . $this->group->id() . '/invite-members');
@@ -115,14 +120,15 @@ class GroupBulkInviteTest extends GroupBrowserTestBase {
     $this->assertSession()->elementAttributeContains('css', 'fieldset#edit-roles--wrapper', 'required', 'required');
 
     // Make sure field for role selection is found.
-    $role_checkbox = sprintf('//input[@value="default-custom"]');
+    $role_checkbox = sprintf('//input[@value="%s"]',  $role->id());
     $this->assertSession()->elementExists('xpath', $role_checkbox);
 
     // Fill form and submit.
     $form = $this->getSession()->getPage();
     $form->fillField('email_address', 'test@test.test');
-    $form->selectFieldOption('edit-roles', 'default-custom');
+    $form->selectFieldOption('edit-roles', $role->id());
     $form->pressButton('edit-submit');
+    $session = $this->getSession()->getPage()->getContent();
     $this->assertSession()->statusCodeEquals(200);
 
     // Submit confirm form.

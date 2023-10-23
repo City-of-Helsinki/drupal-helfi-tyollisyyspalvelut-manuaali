@@ -69,8 +69,11 @@ class BulkGroupInvitationCustom extends BulkGroupInvitation {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     // Prepare params to store them in tempstore.
+    $this->group->getGroupType();
+    $group_type = $this->group->getGroupType();
+    $group_type->getPlugin('group_invitation');
     $params['gid'] = $this->group->id();
-    $params['plugin'] = $this->group->getGroupType()->getContentPlugin('group_invitation')->getContentTypeConfigId();
+    $params['plugin'] = $this->group->getGroupType()->getPlugin('group_invitation')->getRelationTypeId();
     $params['emails'] = $this->getSubmittedEmails($form_state);
     $params['roles'] = $this->getRoles($form_state);
 

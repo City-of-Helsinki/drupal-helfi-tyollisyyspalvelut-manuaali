@@ -7,6 +7,8 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
 use Drupal\ginvite\Form\BulkGroupInvitationConfirm;
 use Drupal\group\Entity\GroupContent;
+use Drupal\group\Entity\GroupRelationship;
+use Drupal\group\Plugin\Group\Relation\GroupRelationBase;
 use Drupal\user\Entity\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -83,20 +85,17 @@ class BulkGroupInvitationCustomConfirm extends BulkGroupInvitationConfirm {
     $account = reset($account);
     $current_user = \Drupal::currentUser();
 
-    $contentTypeConfigId = $group
-      ->getGroupType()
-      ->getContentPlugin('group_membership')
-      ->getContentTypeConfigId();
-
+    $plugin = $entity_type_manager
+      ->getStorage('group_content_type')
+      ->getRelationshipTypeId($group->getGroupType()->id(), 'group_membership');
     $roles = [];
     foreach ($values['group_roles'] as $rid => $value) {
       $roles[]['target_id'] = $rid;
     }
 
-    $group_membership = GroupContent::create([
-      'type' => $contentTypeConfigId,
+    $group_membership = GroupRelationship::create([
+      'type' => $plugin,
       'entity_id' => $account->id(),
-      'content_plugin' => 'group_membership',
       'gid' => $group->id(),
       'uid' => $current_user->id(),
       'group_roles' => $roles,
