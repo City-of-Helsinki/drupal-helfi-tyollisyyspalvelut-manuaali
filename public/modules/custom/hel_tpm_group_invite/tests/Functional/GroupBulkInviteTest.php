@@ -68,7 +68,7 @@ class GroupBulkInviteTest extends GroupBrowserTestBase {
     $this->nonGroupMemeber = $this->createUser();
 
     $this->group = $this->createGroup([
-      'type' => $type->id()
+      'type' => $type->id(),
     ]);
 
     // Set permissions for content moderation in the default group type.
@@ -108,7 +108,6 @@ class GroupBulkInviteTest extends GroupBrowserTestBase {
     $this->drupalLogin($this->nonGroupMemeber);
 
     // Add permissions to invite users to members of the group.
-
     $role = $this->group->getGroupType()->getRoles(FALSE);
     $role = reset($role);
 
@@ -120,7 +119,7 @@ class GroupBulkInviteTest extends GroupBrowserTestBase {
     $this->assertSession()->elementAttributeContains('css', 'fieldset#edit-roles--wrapper', 'required', 'required');
 
     // Make sure field for role selection is found.
-    $role_checkbox = sprintf('//input[@value="%s"]',  $role->id());
+    $role_checkbox = sprintf('//input[@value="%s"]', $role->id());
     $this->assertSession()->elementExists('xpath', $role_checkbox);
 
     // Fill form and submit.
