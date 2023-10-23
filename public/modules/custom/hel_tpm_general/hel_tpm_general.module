@@ -59,43 +59,6 @@ function hel_tpm_general_node_view(array &$build, EntityInterface $entity, Entit
 }
 
 /**
- * Implements hook_ENTITY_TYPE_access().
- */
-function hel_tpm_general_file_access($file_entity, $operation, $account) {
-  $ops = ['download', 'view'];
-  $access_result = AccessResult::neutral();
-  $revision_access_checker = \Drupal::service('access_check.entity');
-  $route_matcher = \Drupal::routeMatch();
-
-  $file_usage = file_get_file_references($file_entity);
-  // We are interested only in download operation.
-  if (!in_array($operation, $ops) ) {
-    return $access_result->addCacheableDependency($file_entity);
-  }
-
-  // If file has no usage data return neutral.
-  if (empty($file_usage)) {
-    return $access_result->addCacheableDependency($file_entity);
-  }
-
-  foreach ($file_usage as $field => $referencing_entities) {
-    foreach ($referencing_entities as $entity_type => $entities) {
-      foreach ($entities as $entity) {
-        $url = $entity->toUrl();
-        $entity_access = $revision_access_checker->access($entity, $account);
-        $access = $entity->{$field}->access();
-        if ($entity_access === TRUE && $access === TRUE) {
-          $access_result = AccessResult::allowed();
-          break 3;
-        }
-      }
-    }
-  }
-
-  return $access_result->addCacheableDependency($file_entity);
-}
-
-/**
  * Implements hook_form_FORM_ID_alter().
  */
 function hel_tpm_general_form_user_register_form_alter(&$form, &$form_state, $form_id) {

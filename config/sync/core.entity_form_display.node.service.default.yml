@@ -97,7 +97,6 @@ third_party_settings:
         - group_complementary_job_search
         - group_archive_guide
         - group_liitteet_ja_linkit
-        - field_links_and_attachments
       label: Specialist
       region: content
       parent_name: group_tabs
@@ -260,7 +259,6 @@ third_party_settings:
         - field_description
         - field_service_set
         - field_service_language
-        - field_service_language_and_level
         - field_service_price
       label: Perustiedot
       region: content
@@ -778,19 +776,6 @@ content:
       match_operator: CONTAINS
       match_limit: 10
     third_party_settings: {  }
-  field_links_and_attachments:
-    type: inline_entity_form_simple
-    weight: 16
-    region: content
-    settings:
-      form_mode: default
-      override_labels: false
-      label_singular: ''
-      label_plural: ''
-      collapsible: false
-      collapsed: false
-      revision: false
-    third_party_settings: {  }
   field_measures_during_attendance:
     type: text_textarea
     weight: 10
@@ -1117,6 +1102,7 @@ content:
     third_party_settings: {  }
 hidden:
   field_contact_info_internal: true
+  field_links_and_attachments: true
   field_poma_applicable: true
   field_poma_applicable_descriptio: true
   field_service_links_external: true
