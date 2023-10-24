@@ -2,7 +2,6 @@
 
 namespace Drupal\hel_tpm_search\Plugin\search_api\processor;
 
-use Drupal\group\Entity\GroupContent;
 use Drupal\group\Entity\GroupRelationship;
 use Drupal\search_api\Datasource\DatasourceInterface;
 use Drupal\search_api\Item\ItemInterface;
