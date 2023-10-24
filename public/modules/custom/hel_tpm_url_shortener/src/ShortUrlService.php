@@ -118,6 +118,7 @@ class ShortUrlService {
     $entity_storage = $this->entityTypeManager->getStorage('shortenerredirect');
     $result = $entity_storage->getQuery()
       ->condition('hash', $hash)
+      ->accessCheck()
       ->execute();
     if (empty($result)) {
       return FALSE;

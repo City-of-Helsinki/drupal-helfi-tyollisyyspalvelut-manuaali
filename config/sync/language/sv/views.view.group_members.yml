@@ -1,7 +1,11 @@
 display:
   default:
-    display_title: Huvud
     display_options:
+      filters:
+        mail:
+          expose:
+            label: 'Filtrera:'
+            placeholder: 'Filtrera efter sökterm '
       exposed_form:
         options:
           submit_button: Verkställ
@@ -12,6 +16,8 @@ display:
       pager:
         options:
           tags:
+            previous: ‹‹
+            next: ››
             first: '« Första'
             last: 'Sista »'
           expose:
@@ -21,22 +27,27 @@ display:
       fields:
         name:
           label: Användare
+          separator: ', '
         group_roles:
           label: Roll
+          separator: ', '
+        view_group_content:
+          text: 'Näytä jäsen'
+        edit_group_content:
+          text: 'Muokkaa jäsentä'
+        delete_group_content:
+          text: 'Poista jäsen'
         dropbutton:
           label: Funktioner
       arguments:
         gid:
           exception:
             title: Alla
-      filters:
-        mail:
-          expose:
-            label: 'Filtrera:'
-            placeholder: 'Filtrera efter sökterm '
       title: Medlemskap
+    display_title: Huvud
   page_1:
     display_title: Sida
     display_options:
       menu:
         title: Medlemskap
+label: 'Ryhmien jäsenyydet'

@@ -28,7 +28,7 @@
 <li{{ attributes }}>
   {# Detect if Drupal #}
   {% if attributes %}
-    {{ link(link['#title'], link['#url'], { 'class' : link_classes }) }}
+    {{ link(link['#title'], link['#url'], {'class': link_classes}) }}
   {% else %}
     <a href="{{ tab_link }}" class="tabs__link tabs__link--local-tasks{% if key == 0 %} is-active{% endif %}">{{ tab_text }}</a>
   {% endif %}

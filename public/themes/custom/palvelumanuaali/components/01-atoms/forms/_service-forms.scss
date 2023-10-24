@@ -276,6 +276,7 @@
       display: none;
     }
 
+    .field--name-field-internal-links,
     .field--name-field-service-languages,
     .field--name-field-links {
       .table__cell {
@@ -408,6 +409,7 @@
     @include button-round-corners;
   }
 
+  .field--name-field-internal-links,
   .field--name-field-link {
     .table__cell,
     .table__cell .ajax-new-content {
@@ -428,11 +430,12 @@
     }
   }
 
+  .field--name-field-internal-files,
   .field--name-field-file {
     > div .details-content-wrapper {
       display: flex;
       flex-wrap: grid;
-      >.form-item {
+      >.form-item {
         order: 1;
       }
       >table {

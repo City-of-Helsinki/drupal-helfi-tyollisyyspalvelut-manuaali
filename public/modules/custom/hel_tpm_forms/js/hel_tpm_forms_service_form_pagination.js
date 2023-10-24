@@ -18,12 +18,16 @@
        * Provides for next and previous navigation events.
        */
       function nextPrevNav() {
-        $('.btn-prev').once().click(function () {
-          nextPrev(-1);
+        $(once('prev-click-event', '.btn-prev', context)).each(function() {
+          $(this).click(function() {
+            nextPrev(-1);
+          })
         });
 
-        $('.btn-next').once().click(function () {
-          nextPrev(1);
+        $(once('next-click-event', '.btn-next', context)).each(function() {
+          $(this).click(function() {
+            nextPrev(1);
+          })
         });
       }
 
@@ -31,9 +35,11 @@
        * Pager navigation.
        */
       function stepNav() {
-        $('.step').once().click(function () {
-          let step = $(this).attr('data-step');
-          switchTab(step);
+        $(once('step-event', '.step', context)).each(function() {
+          $(this).click(function() {
+            let step = $(this).attr('data-step');
+            switchTab(step);
+          });
         });
       }
 

@@ -5,6 +5,8 @@ dependencies:
   config:
     - core.entity_view_mode.message.mail_body
     - message.template.1d_notification_expiry_reminder
+  module:
+    - user
 id: message.1d_notification_expiry_reminder.mail_body
 targetEntityType: message
 bundle: 1d_notification_expiry_reminder

@@ -4,7 +4,7 @@
 } %}
 
 {% block content %}
-  {{content|without('field_other_services')}}
+  {{ content|without('field_other_services') }}
 {% endblock %}
 {% block page_content %}
   {% include "@atoms/text/headings/_heading.twig" with {
@@ -16,4 +16,4 @@
   {% endblock %}
 {% endembed %}
 
-{{ content.field_other_services}}
+{{ content.field_other_services }}

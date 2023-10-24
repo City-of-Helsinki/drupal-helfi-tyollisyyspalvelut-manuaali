@@ -36,7 +36,10 @@ class HelTpmUrlShortenerSubscriber implements EventSubscriberInterface {
   public function onKernelRequest(RequestEvent $event) {
     $uri = \Drupal::request()->getPathInfo();
     $storage = \Drupal::entityTypeManager()->getStorage('shortenerredirect');
-    $result = $storage->getQuery()->condition('shortened_link', $uri)->execute();
+    $result = $storage->getQuery()
+      ->condition('shortened_link', $uri)
+      ->accessCheck()
+      ->execute();
     if (empty($result)) {
       return FALSE;
     }
