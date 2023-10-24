@@ -3,6 +3,7 @@
 namespace Drupal\hel_tpm_search\Plugin\search_api\processor;
 
 use Drupal\group\Entity\GroupContent;
+use Drupal\group\Entity\GroupRelationship;
 use Drupal\search_api\Datasource\DatasourceInterface;
 use Drupal\search_api\Item\ItemInterface;
 use Drupal\search_api\Plugin\search_api\datasource\ContentEntity;
@@ -54,7 +55,7 @@ class ServiceProcessor extends ProcessorPluginBase {
     $entity = $item->getOriginalObject()->getValue();
 
     // Load the group content related to this entity.
-    $group_content_array = GroupContent::loadByEntity($entity);
+    $group_content_array = GroupRelationship::loadByEntity($entity);
 
     if (!empty($group_content_array)) {
       /** @var \Drupal\group\Entity\GroupContentInterface $group_content */
