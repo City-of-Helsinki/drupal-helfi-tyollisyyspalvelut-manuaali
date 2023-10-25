@@ -15,7 +15,7 @@ class SiteWideGroupRoleTest extends GroupKernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'hel_tpm_group',
     'group',
     'options',
