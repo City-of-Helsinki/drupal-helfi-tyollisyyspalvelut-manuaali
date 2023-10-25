@@ -5,6 +5,11 @@ services:
     tags:
       - { name: event_subscriber }
 
+  hel_tpm_group.route_subscriber:
+    class: Drupal\hel_tpm_group\EventSubscriber\HelTpmGroupRouteSubscriber
+    tags:
+      - { name: event_subscriber }
+
   hel_tpm_group.current_group:
     class: Drupal\hel_tpm_group\CurrentGroup
     arguments: ['@current_route_match']
