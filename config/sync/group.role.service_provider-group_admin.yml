@@ -14,10 +14,10 @@ third_party_settings:
 id: service_provider-group_admin
 label: 'Group admin'
 weight: -9
-internal: false
-audience: member
+admin: false
+scope: individual
+global_role: null
 group_type: service_provider
-permissions_ui: true
 permissions:
   - 'administer members'
   - 'create group_node:service entity'

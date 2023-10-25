@@ -1,0 +1,15 @@
+uuid: fcaabd96-852c-4a9c-99ae-6eaefcd64e15
+langcode: fi
+status: true
+dependencies:
+  config:
+    - group.type.service_provider
+    - user.role.root
+id: service_provider-super_admin
+label: 'Super admin'
+weight: -6
+admin: true
+scope: outsider
+global_role: root
+group_type: service_provider
+permissions: {  }

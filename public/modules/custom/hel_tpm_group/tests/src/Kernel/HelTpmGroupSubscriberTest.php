@@ -2,7 +2,7 @@
 
 namespace Drupal\Tests\hel_tpm_group\Kernel;
 
-use Drupal\group\Entity\GroupContentInterface;
+use Drupal\group\Entity\GroupRelationshipInterface;
 use Drupal\group\Entity\GroupRoleInterface;
 use Drupal\hel_tpm_group\Event\GroupMembershipChanged;
 use Drupal\hel_tpm_group\Event\GroupSiteWideRoleChanged;
@@ -155,7 +155,7 @@ class HelTpmGroupSubscriberTest extends GroupKernelTestBase {
   /**
    * Helper method to dispatch GroupMembershipChangedEvent.
    *
-   * @param \Drupal\group\Entity\GroupContentInterface $group_content
+   * @param \Drupal\group\Entity\GroupRelationshipInterface $group_content
    *   Group membership content interface.
    *
    * @return void
@@ -163,7 +163,7 @@ class HelTpmGroupSubscriberTest extends GroupKernelTestBase {
    *
    * @throws \Exception
    */
-  protected function dispatchGroupMembershipChangedEvent(GroupContentInterface $group_content): void {
+  protected function dispatchGroupMembershipChangedEvent(GroupRelationshipInterface $group_content): void {
     $event = new GroupMembershipChanged($group_content);
     $this->container->get('event_dispatcher')->dispatch($event, $event::EVENT_NAME);
   }

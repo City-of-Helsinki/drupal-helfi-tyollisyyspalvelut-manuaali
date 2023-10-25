@@ -17,6 +17,7 @@ class PrintPdfBlock extends BlockBase {
 
   /**
    * {@inheritdoc}
+   *
    * @todo Redo print button logic
    */
   public function build() {
