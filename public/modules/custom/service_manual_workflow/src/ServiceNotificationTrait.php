@@ -75,7 +75,7 @@ trait ServiceNotificationTrait {
     $accounts = [];
 
     foreach ($group->getMembers() as $key => $member) {
-      $account = $member->getGroupContent()->getEntity();
+      $account = $member->getGroupRelationship()->getEntity();
       $allowed = $this->stateTransitionValidation->allowedTransitions($account, $entity, [$group]);
       if (empty($allowed['publish'])) {
         continue;
