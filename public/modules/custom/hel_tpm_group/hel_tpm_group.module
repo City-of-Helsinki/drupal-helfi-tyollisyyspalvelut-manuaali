@@ -8,7 +8,7 @@
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
-use Drupal\group\Entity\GroupContentInterface;
+use Drupal\group\Entity\GroupRelationshipInterface;
 use Drupal\group\Entity\GroupRole;
 use Drupal\hel_tpm_group\Event\GroupMembershipChanged;
 use Drupal\hel_tpm_group\Event\GroupSiteWideRoleChanged;
@@ -98,12 +98,12 @@ function hel_tpm_group_form_group_role_edit_form_builder($entity_type, GroupRole
  * Implements hook_entity_postdelete().
  */
 function hel_tpm_group_entity_postdelete(EntityInterface $entity) {
-  if (!$entity instanceof GroupContentInterface) {
+  if (!$entity instanceof GroupRelationshipInterface) {
     return;
   }
 
-  $group_content_type = $entity->getGroupContentType();
-  if ($group_content_type->getContentPluginId() != 'group_membership') {
+  $group_content_type = $entity->getRelationshipType();
+  if ($group_content_type->getPluginId() != 'group_membership') {
     return;
   }
 
@@ -115,12 +115,12 @@ function hel_tpm_group_entity_postdelete(EntityInterface $entity) {
  * Implements hook_entity_postsave().
  */
 function hel_tpm_group_entity_postsave(EntityInterface $entity, $op) {
-  if (!$entity instanceof GroupContentInterface) {
+  if (!$entity instanceof GroupRelationshipInterface) {
     return;
   }
 
-  $group_content_type = $entity->getGroupContentType();
-  if ($group_content_type->getContentPluginId() != 'group_membership') {
+  $group_content_type = $entity->getRelationshipType();
+  if ($group_content_type->getPluginId() != 'group_membership') {
     return;
   }
 

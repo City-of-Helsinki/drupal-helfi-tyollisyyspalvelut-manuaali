@@ -14,6 +14,9 @@ third_party_settings:
 id: service_provider-editor
 label: Editor
 weight: -10
+admin: false
+scope: individual
+global_role: null
 group_type: service_provider
 permissions:
   - 'create group_node:service entity'
@@ -36,5 +39,3 @@ permissions:
   - 'view latest version'
   - 'view unpublished group_node:service entity'
   - 'view unpublished group_node:service_location entity'
-admin: false
-scope: individual

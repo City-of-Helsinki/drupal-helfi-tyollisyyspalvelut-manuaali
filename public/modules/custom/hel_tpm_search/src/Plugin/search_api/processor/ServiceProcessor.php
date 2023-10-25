@@ -57,7 +57,7 @@ class ServiceProcessor extends ProcessorPluginBase {
     $group_content_array = GroupRelationship::loadByEntity($entity);
 
     if (!empty($group_content_array)) {
-      /** @var \Drupal\group\Entity\GroupContentInterface $group_content */
+      /** @var \Drupal\group\Entity\GroupRelationshipInterface $group_content */
       foreach ($group_content_array as $group_content) {
         $group = $group_content->getGroup();
         if ($group) {
