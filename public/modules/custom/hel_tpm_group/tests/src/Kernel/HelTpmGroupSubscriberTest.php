@@ -141,7 +141,7 @@ class HelTpmGroupSubscriberTest extends GroupKernelTestBase {
   protected function editUserGroupRoles($roles = []) {
     $r_array = [];
     $member = $this->group->getMember($this->account);
-    $group_content = $member->getGroupContent();
+    $group_content = $member->getGroupRelationship();
     foreach ($roles as $role) {
       $r_array['target_id'] = $role;
     }
