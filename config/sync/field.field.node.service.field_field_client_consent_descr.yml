@@ -6,21 +6,17 @@ dependencies:
     - field.storage.node.field_field_client_consent_descr
     - node.type.service
   module:
-    - epp
     - text
-third_party_settings:
-  epp:
-    value: ''
-    on_update: 0
 id: node.service.field_field_client_consent_descr
 field_name: field_field_client_consent_descr
 entity_type: node
 bundle: service
 label: 'Asiakassuostumusten kuvaus ja ohje'
-description: 'Suostumus voidaan tarvita ilmoittautumiseen, osallistumiseen, tietojen siirtoon tai muuhun palveluprosessin vaiheeseen liittyen. Kuvaile palvelun eri vaiheiden suostumuskäytäntöjä. Mm. Kuka suostumuksen pyytää ja keneltä, miten asiakasta informoidaan ja mistä saa tarvittavat lomakkeet.'
+description: 'Kuvaile palveluun liittyviä suostumuskäytäntöjä tarkemmin, mm. kuka suostumuksen pyytää ja keneltä, miten asiakasta informoidaan, mitä lomaketta käytetään jne. Lisää mahdollinen suostumuslomake liitteeksi.'
 required: false
 translatable: true
 default_value: {  }
 default_value_callback: ''
-settings: {  }
+settings:
+  allowed_formats: {  }
 field_type: text_long
