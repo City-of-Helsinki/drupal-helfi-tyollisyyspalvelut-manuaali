@@ -279,6 +279,9 @@ function hel_tpm_general_update_10101(&$sandbox) {
   }
 }
 
+/**
+ * Migrate language selections from paragraph to field_service_language
+ */
 function hel_tpm_general_update_10102(&$sandbox) {
   $node_field = 'field_service_language';
   $node_storage = \Drupal::entityTypeManager()->getStorage('node');
