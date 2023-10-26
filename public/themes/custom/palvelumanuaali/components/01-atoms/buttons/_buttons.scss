@@ -248,6 +248,44 @@ $button-colors: (
     }
   }
 
+  &--no-color-no-border {
+    @include button-no-color;
+    color: clr(background-section);
+    border: 0;
+    box-shadow: unset;
+    &:hover {
+      color: clr(alt-header-color);
+    }
+    &:active {
+      color: clr(footer-color);
+    }
+    &:disabled {
+      color: clr(gray);
+    }
+  }
+
+  &--dropdown-button {
+    display: flex;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 24px;
+    &::after {
+      content: "";
+      background-image: url("/themes/custom/palvelumanuaali/images/icons/arrow-sm-down.svg");
+      background-repeat: no-repeat;
+      background-position-y: center;
+      width: 24px;
+      height: 24px;
+      margin-left: $space-one-half;
+      display: block;
+    }
+    &[aria-expanded="true"] {
+      &::after {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
   &--round-corners {
     @include button-round-corners;
   }

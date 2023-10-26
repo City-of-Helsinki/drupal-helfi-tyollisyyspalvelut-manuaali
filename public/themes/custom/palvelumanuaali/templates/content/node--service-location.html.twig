@@ -72,12 +72,13 @@
 #}
 
 
-<article {{ bem("node",'','',['flex-wrap']) }}>
+<article {{ bem("node",'service-location','',['flex-wrap']) }}>
 
   {% if not page %}
     {% include "@atoms/text/headings/_heading.twig" with {
       "heading_level": 4,
       "heading": label,
+      "heading_modifiers": "service-location",
       "heading_link_attributes": {
         'rel': 'bookmark'
       },
@@ -85,8 +86,9 @@
   {% endif %}
 
   <div{{ content_attributes }}>
-    {{ content|without('field_accessibility') }}
+    {{ content|without('field_accessibility', 'field_accessibility_details') }}
   </div>
 
 </article>
+{{content.field_accessibility_details}}
 {{content.field_accessibility}}

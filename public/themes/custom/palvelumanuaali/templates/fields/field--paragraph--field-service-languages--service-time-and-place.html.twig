@@ -58,7 +58,7 @@
     <div{{ attributes.addClass(classes, 'field__items') }}>
       {% include "@atoms/images/icons/_icon.twig" with {
         icon_base_class: 'icon',
-        icon_name: 'speech-bubble',
+        icon_name: 'speech-bubble-dark-blue',
         icon_modifiers: ['small'],
       } %}
       <div class='languages-wrapper'>
@@ -66,7 +66,7 @@
           <div{{ item.attributes.addClass('field__item') }}>
             {{ item.content }}
             {% if not loop.last %}
-              <p>{{","}}&nbsp;</p>
+            {{", "}}
             {% endif %}
           </div>
         {% endfor %}
@@ -75,7 +75,7 @@
   {% else %}
     {% include "@atoms/images/icons/_icon.twig" with {
       icon_base_class: 'icon',
-      icon_name: 'speech-bubble',
+      icon_name: 'speech-bubble-dark-blue',
       icon_modifiers: ['small'],
     } %}
     <div class='languages-wrapper'>
@@ -83,7 +83,7 @@
         <div{{ attributes.addClass(classes, 'field__item') }}>
           {{ item.content }}
           {% if not loop.last %}
-            <p>{{","}}&nbsp;</p>
+            {{", "}}
           {% endif %}
         </div>
       {% endfor %}
@@ -93,7 +93,7 @@
   <div{{ attributes.addClass(classes) }}>
     {% include "@atoms/images/icons/_icon.twig" with {
       icon_base_class: 'icon',
-      icon_name: 'speech-bubble',
+      icon_name: 'speech-bubble-dark-blue',
       icon_modifiers: ['small'],
     } %}
     <div{{ title_attributes.addClass(title_classes) }}>{{ label }}</div>
@@ -106,11 +106,11 @@
         <div{{ item.attributes.addClass('field__item') }}>
           {{ item.content }}
           {% if not loop.last %}
-            <p>{{","}}&nbsp;</p>
+            {{", "}}
           {% endif %}
         </div>
       {% endfor %}
-    </div>  
+    </div>
     {% if multiple %}
       </div>
     {% endif %}
