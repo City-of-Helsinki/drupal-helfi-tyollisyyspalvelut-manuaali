@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "98fe63a001f7ecefaef33e99f1bd8ca1",
+    "content-hash": "a83858cc1c9621b50ceec7a1d368e192",
     "packages": [
         {
             "name": "ajgl/breakpoint-twig-extension",
@@ -5880,52 +5880,6 @@
             }
         },
         {
-            "name": "drupal/htmlmail",
-            "version": "dev-3287920-automated-drupal-10",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupalcode.org/issue/htmlmail-3287920.git",
-                "reference": "f946d82d591e75c799885b0e7710f1b6e724637f"
-            },
-            "require": {
-                "drupal/mailsystem": "^4.2"
-            },
-            "type": "drupal-module",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "gaurav.kapoor",
-                    "homepage": "https://www.drupal.org/user/3495331",
-                    "role": "Maintainer"
-                },
-                {
-                    "name": "Nafes",
-                    "homepage": "https://www.drupal.org/user/2489926",
-                    "role": "Maintainer"
-                },
-                {
-                    "name": "RenatoG",
-                    "email": "renatog@ciandt.com",
-                    "homepage": "https://www.drupal.org/u/RenatoG",
-                    "role": "Maintainer"
-                },
-                {
-                    "name": "salvis",
-                    "homepage": "https://www.drupal.org/u/salvis",
-                    "role": "Maintainer"
-                }
-            ],
-            "description": "Enables HTML in system emails.",
-            "homepage": "https://www.drupal.org/project/htmlmail",
-            "support": {
-                "irc": "irc://irc.freenode.org/drupal-contribute",
-                "source": "https://git.drupalcode.org/project/htmlmail"
-            },
-            "time": "2023-08-01T12:18:33+00:00"
-        },
-        {
             "name": "drupal/ief_popup",
             "version": "2.1.0",
             "source": {
@@ -7381,6 +7335,55 @@
                 "source": "https://git.drupalcode.org/project/migrate_tools",
                 "issues": "https://www.drupal.org/project/issues/migrate_tools",
                 "slack": "#migrate"
+            }
+        },
+        {
+            "name": "drupal/mimemail",
+            "version": "1.0.0-alpha6",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/mimemail.git",
+                "reference": "8.x-1.0-alpha6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/mimemail-8.x-1.0-alpha6.zip",
+                "reference": "8.x-1.0-alpha6",
+                "shasum": "c25246747dac4372c7d5a5a5fd0f276d9e468eff"
+            },
+            "require": {
+                "drupal/core": "^9.3 || ^10",
+                "drupal/mailsystem": "^4"
+            },
+            "require-dev": {
+                "drupal/rules": "^3"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.0-alpha6",
+                    "datestamp": "1697143284",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Alpha releases are not covered by Drupal security advisories."
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "TR",
+                    "homepage": "https://www.drupal.org/user/202830"
+                }
+            ],
+            "description": "Sends MIME-encoded emails with embedded images and attachments.",
+            "homepage": "https://www.drupal.org/project/mimemail",
+            "support": {
+                "source": "https://git.drupalcode.org/project/mimemail",
+                "issues": "https://www.drupal.org/project/issues/mimemail"
             }
         },
         {
@@ -21119,7 +21122,6 @@
         "drupal/gcontent_moderation": 10,
         "drupal/gdpr": 10,
         "drupal/group_roles_management": 20,
-        "drupal/htmlmail": 20,
         "drupal/inline_entity_form": 5,
         "drupal/maxlength": 5,
         "drupal/message_ui": 10,
