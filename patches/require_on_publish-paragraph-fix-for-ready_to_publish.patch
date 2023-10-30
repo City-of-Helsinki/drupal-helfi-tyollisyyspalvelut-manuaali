@@ -1,0 +1,14 @@
+diff --git a/src/Plugin/Validation/Constraint/RequireOnPublishValidator.php b/src/Plugin/Validation/Constraint/RequireOnPublishValidator.php
+index f6310cf..56f9d16 100644
+--- a/src/Plugin/Validation/Constraint/RequireOnPublishValidator.php
++++ b/src/Plugin/Validation/Constraint/RequireOnPublishValidator.php
+@@ -243,7 +243,8 @@ class RequireOnPublishValidator extends ConstraintValidator implements Container
+         $workflow = $this->moderationInformation->getWorkflowForEntityTypeAndBundle($entity->getEntityType()->id(), $entity->bundle());
+         $moderation_state = $this->request->request->all('moderation_state');
+         if (isset($moderation_state[0]['state'])) {
+-          return $workflow->getTypePlugin()->getState($moderation_state[0]['state'])->isPublishedState();
++          $state = $workflow->getTypePlugin()->getState($moderation_state[0]['state'])->id();
++          return in_array($state, ['ready_to_publish', 'published']);
+         }
+       }
+       return FALSE;
