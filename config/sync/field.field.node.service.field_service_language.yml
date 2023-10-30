@@ -6,13 +6,18 @@ dependencies:
     - field.storage.node.field_service_language
     - node.type.service
     - taxonomy.vocabulary.service_languages
+  module:
+    - require_on_publish
+third_party_settings:
+  require_on_publish:
+    require_on_publish: true
 id: node.service.field_service_language
 field_name: field_service_language
 entity_type: node
 bundle: service
 label: 'Palvelun kieli'
 description: ''
-required: true
+required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
