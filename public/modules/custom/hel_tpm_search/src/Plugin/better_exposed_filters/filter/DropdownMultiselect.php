@@ -4,6 +4,7 @@ namespace Drupal\hel_tpm_search\Plugin\better_exposed_filters\filter;
 
 use Drupal\better_exposed_filters\Plugin\better_exposed_filters\filter\FilterWidgetBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\selective_better_exposed_filters\Plugin\better_exposed_filters\filter\SelectiveFilterBase;
 
 /**
  * Default widget implementation.
@@ -15,6 +16,23 @@ use Drupal\Core\Form\FormStateInterface;
  */
 class DropdownMultiselect extends FilterWidgetBase {
 
+  /**
+   * {@inheritdoc}
+   */
+  public function defaultConfiguration() {
+    return parent::defaultConfiguration() + SelectiveFilterBase::defaultConfiguration();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
+    /** @var \Drupal\views\Plugin\views\filter\FilterPluginBase $filter */
+    $filter = $this->handler;
+    $form = parent::buildConfigurationForm($form, $form_state);
+    $form += SelectiveFilterBase::buildConfigurationForm($filter, $this->configuration);
+    return $form;
+  }
   /**
    * Add multiselect support for dropdown filter.
    *
@@ -42,6 +60,11 @@ class DropdownMultiselect extends FilterWidgetBase {
     }
     $form[$field_id]['#attributes']['class'][] = 'dropdownMultiselect';
     $form['#attached']['library'][] = 'hel_tpm_search/dropdown_multiselect';
+
+    /** @var \Drupal\views\Plugin\views\filter\FilterPluginBase $filter */
+    $filter = $this->handler;
+    SelectiveFilterBase::exposedFormAlter($this->view, $filter, $this->configuration, $form, $form_state);
   }
+
 
 }
