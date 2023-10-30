@@ -2,6 +2,7 @@
 
 namespace Drupal\Tests\hel_tpm_group\Kernel;
 
+use Drupal\group\PermissionScopeInterface;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 
 /**
@@ -14,7 +15,7 @@ class SiteWideGroupRoleTest extends GroupKernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'hel_tpm_group',
     'group',
     'options',
@@ -50,8 +51,7 @@ class SiteWideGroupRoleTest extends GroupKernelTestBase {
   protected function setUp() : void {
     parent::setUp();
     $this->groupRoleStorage = $this->entityTypeManager->getStorage('group_role');
-    $this->groupRoleSynchronizer = $this->container->get('group_role.synchronizer');
-    $this->group = $this->createGroup();
+    $this->group = $this->createGroup(['type' => $this->createGroupType(['id' => 'default'])->id()]);
     $this->account = $this->createUser();
     $this->createRole([], 'siterole', 'Site role');
   }
@@ -71,15 +71,18 @@ class SiteWideGroupRoleTest extends GroupKernelTestBase {
 
     // Grant the member a new group role and check the storage.
     $group_role = $this->groupRoleStorage->create([
-      'id' => 'default-editor',
+      'id' => 'default-role',
       'label' => 'Default editor',
-      'weight' => 0,
+      'weight' => 1986,
+      'admin' => FALSE,
+      'scope' => PermissionScopeInterface::INDIVIDUAL_ID,
       'group_type' => 'default',
+      'permissions' => [],
     ]);
     $group_role->set('site_wide_role', ['siterole'])->save();
 
     $this->assertEqualsCanonicalizing(['siterole'], $group_role->get('site_wide_role'), 'Role has site wide role configured');
-    $membership = $this->group->getMember($this->account)->getGroupContent();
+    $membership = $this->group->getMember($this->account)->getGroupRelationship();
     $membership->group_roles[] = 'default-editor';
     $membership->save();
   }
