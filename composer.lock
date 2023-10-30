@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0ee1d9df45997f226b63d7435acf8950",
+    "content-hash": "5c54f6ed8ae78be5b3b8c38a3d8fbf9c",
     "packages": [
         {
             "name": "ajgl/breakpoint-twig-extension",
@@ -5802,6 +5802,66 @@
             "support": {
                 "source": "https://cgit.drupalcode.org/hook_post_action",
                 "issues": "https://drupal.org/project/issues/hook_post_action",
+                "irc": "irc://irc.freenode.org/drupal-contribute"
+            }
+        },
+        {
+            "name": "drupal/htmlmail",
+            "version": "dev-4.x",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/htmlmail.git",
+                "reference": "9abc3aea85d53ea4dff08363f6bb219bff6e8e3c"
+            },
+            "require": {
+                "drupal/core": "^10",
+                "drupal/mailsystem": "^4.2"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-4.x": "4.x-dev"
+                },
+                "drupal": {
+                    "version": "4.x-dev",
+                    "datestamp": "1696413568",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Dev releases are not covered by Drupal security advisories."
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "gaurav.kapoor",
+                    "homepage": "https://www.drupal.org/user/3495331",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Nafes",
+                    "homepage": "https://www.drupal.org/user/2489926",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "RenatoG",
+                    "homepage": "https://www.drupal.org/u/RenatoG",
+                    "email": "renatog@ciandt.com",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "salvis",
+                    "homepage": "https://www.drupal.org/u/salvis",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "Enables HTML in system emails.",
+            "homepage": "https://www.drupal.org/project/htmlmail",
+            "support": {
+                "source": "https://git.drupalcode.org/project/htmlmail",
                 "irc": "irc://irc.freenode.org/drupal-contribute"
             }
         },
