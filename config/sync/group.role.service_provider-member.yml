@@ -4,13 +4,20 @@ status: true
 dependencies:
   config:
     - group.type.service_provider
-    - user.role.authenticated
+  module:
+    - hel_tpm_group
+third_party_settings:
+  hel_tpm_group:
+    site_wide_role:
+      editor: '0'
+      specialist: '0'
+      specialist_editor: '0'
 id: service_provider-member
 label: Jäsen
 weight: -100
 admin: false
-scope: insider
-global_role: authenticated
+scope: individual
+global_role: null
 group_type: service_provider
 permissions:
   - 'leave group'
