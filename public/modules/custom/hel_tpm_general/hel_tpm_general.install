@@ -280,6 +280,55 @@ function hel_tpm_general_update_10101(&$sandbox) {
 }
 
 /**
+ * Migrate language selections from paragraph to field_service_language
+ */
+function hel_tpm_general_update_10102(&$sandbox) {
+  $node_field = 'field_service_language';
+  $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+  $nodes = $node_storage->getQuery()
+    ->condition('type', 'service')
+    ->accessCheck(FALSE)
+    ->condition('field_service_time_and_location', '', '<>')
+    ->execute();
+
+  $references = [];
+  foreach ($nodes as $result) {
+    $node = $node_storage->load($result);
+    if (!$node->isLatestRevision()) {
+      $vid = $node_storage->getLatestRevisionId($node->id());
+      $node = $node_storage->loadRevision($vid);
+    }
+    foreach ($node->field_service_time_and_location->referencedEntities() as $paragraph) {
+      $languages_paragraphs = $paragraph->field_service_languages->referencedEntities();
+      foreach ($languages_paragraphs as $languages_paragraph) {
+        $lang = $languages_paragraph->field_language->getValue();
+        if (empty($lang[0])) {
+          continue;
+        }
+        $references[$result][$lang[0]['target_id']] = $lang[0];
+      }
+
+    }
+  }
+
+  // Add references to proper node field.
+  foreach ($references as $nid => $reference) {
+    $node = $node_storage->load($nid);
+    if (!$node->isLatestRevision()) {
+      $vid = $node_storage->getLatestRevisionId($node->id());
+      $node = $node_storage->loadRevision($vid);
+    }
+    // Preserve changed time.
+    $changed = $node->getChangedTime();
+    // Add one second to prevent drupal from updating changed time.
+    $changed++;
+    $node->setChangedTime($changed);
+    $node->set($node_field, $reference);
+    $node->save();
+  }
+}
+
+/**
  * Helper function to migrate paragraph fields to node fields.
  *
  * @param \Drupal\Core\Entity\EntityInterface $paragraph
