@@ -13,8 +13,8 @@ display:
         status:
           label: Status
           settings:
-            format_custom_true: Publicerad
             format_custom_false: 'Ej publicerad'
+            format_custom_true: Publicerad
           separator: ', '
         changed:
           label: Uppdaterad
@@ -25,6 +25,7 @@ display:
           label: 'Linkki ryhmärelaation muokkaukseen'
           text: 'Muokkaa relaatiota'
         delete_group_content:
+          label: 'Link to delete Group content'
           text: 'Hylkää suhde'
         edit_node:
           text: 'Muokkaa solmua'
@@ -50,6 +51,18 @@ display:
         type:
           expose:
             label: Typ
+      title: Noder
+      pager:
+        options:
+          tags:
+            next: ››
+            previous: ‹‹
+            first: '« Första'
+            last: 'Sista »'
+          expose:
+            items_per_page_label: 'Inlägg per sida'
+            items_per_page_options_all_label: '- Alla -'
+            offset_label: Kompensera
       exposed_form:
         options:
           submit_button: Verkställ
@@ -57,17 +70,6 @@ display:
           exposed_sorts_label: 'Sortera efter'
           sort_asc_label: Stigande
           sort_desc_label: Fallande
-      pager:
-        options:
-          tags:
-            previous: ‹‹
-            next: ››
-            first: '« Första'
-            last: 'Sista »'
-          expose:
-            items_per_page_label: 'Inlägg per sida'
-            items_per_page_options_all_label: '- Alla -'
-            offset_label: Kompensera
       empty:
         area_text_custom:
           content: 'Inget innehåll tillgängligt.'
@@ -75,7 +77,6 @@ display:
         gid:
           exception:
             title: Alla
-      title: Noder
     display_title: Huvud
   page_1:
     display_title: Sida

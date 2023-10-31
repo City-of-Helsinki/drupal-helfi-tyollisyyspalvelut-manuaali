@@ -17,13 +17,6 @@
             "comment": "Support for Group v2/v3"
         },
         {
-            "name": "drupal/htmlmail",
-            "type": "vcs",
-            "url": "https://git.drupalcode.org/issue/htmlmail-3287920.git",
-            "comment": "Drupal 10 compatibility patch. Remove after 4.x is released."
-        },
-
-        {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
         },
@@ -104,7 +97,6 @@
         "drupal/eu_cookie_compliance": "^1.24",
         "drupal/eu_cookie_compliance_matomo": "^1.0",
         "drupal/eva": "^2.1",
-        "drupal/facets": "^2.0",
         "drupal/field_description_tooltip": "^1.0",
         "drupal/field_group": "^3.2",
         "drupal/field_group_ajaxified_multipage": "^3.0",
@@ -123,7 +115,7 @@
         "drupal/group_roles_management": "dev-3373100-support-group-version#4eb1038b",
         "drupal/health_check": "^3.0",
         "drupal/hook_post_action": "^1.1",
-        "drupal/htmlmail": "dev-3287920-automated-drupal-10#f946d82d591e75c799885b0e7710f1b6e724637f",
+        "drupal/htmlmail": "*",
         "drupal/ief_popup": "^2",
         "drupal/ief_table_view_mode": "^2.2",
         "drupal/inline_entity_form": "^1.0@RC",
@@ -141,6 +133,7 @@
         "drupal/migrate_plus": "^6.0",
         "drupal/migrate_source_csv": "^3.5",
         "drupal/migrate_tools": "^6.0",
+        "drupal/mimemail": "*",
         "drupal/node_edit_protection": "^1.0",
         "drupal/nodeaccess": "^1.1",
         "drupal/notification_message": "^1.x-dev",
@@ -162,6 +155,7 @@
         "drupal/search_api_sorts": "^1.1",
         "drupal/seckit": "^2.0",
         "drupal/select2": "^1.13",
+        "drupal/selective_better_exposed_filters": "*",
         "drupal/smart_date": "^3.5",
         "drupal/smtp": "^1.2",
         "drupal/stable": "^2",
@@ -268,7 +262,8 @@
                 "https://www.drupal.org/project/drupal/issues/3135409#comment-14746356": "https://www.drupal.org/files/issues/2022-10-17/3135409-17.patch",
                 "https://www.drupal.org/project/drupal/issues/2689459#comment-14837484": "https://www.drupal.org/files/issues/2022-12-20/2689459-161.patch",
                 "https://www.drupal.org/project/drupal/issues/2810355#comment-15173661": "https://www.drupal.org/files/issues/2023-07-31/2810355-121.patch",
-                "https://www.drupal.org/project/drupal/issues/1452100#comment-15199266": "https://www.drupal.org/files/issues/2023-08-21/1452100-150.patch"
+                "https://www.drupal.org/project/drupal/issues/1452100#comment-15199266": "https://www.drupal.org/files/issues/2023-08-21/1452100-150.patch",
+                "https://www.drupal.org/project/drupal/issues/3347343#comment-15227444": "https://www.drupal.org/files/issues/2023-09-12/3347343-92--MR-4053-1bc7bda7.diff"
             },
             "drupal/message": {
                 "https://www.drupal.org/files/issues/2018-06-24/allow_token_contexts-3.patch": "https://www.drupal.org/files/issues/2018-06-24/allow_token_contexts-3.patch"
@@ -285,7 +280,7 @@
                 "https://www.drupal.org/project/group/issues/2942657#comment-15285989": "https://www.drupal.org/files/issues/2023-10-23/2942657-31.patch"
             },
             "drupal/ggroup": {
-                "https://www.drupal.org/project/ggroup/issues/3395476": "https://www.drupal.org/files/issues/2023-10-20/ggroup-role-mapper-group2-compatibility.patch"
+                "https://www.drupal.org/project/ggroup/issues/3395476": "https://www.drupal.org/files/issues/2023-10-30/ggroup-role-mapper-support-3395476-2.patch"
             },
             "drupal/file_download_link": {
               "https://www.drupal.org/project/file_download_link/issues/3318657": "https://www.drupal.org/files/issues/2022-11-02/3318657-02.patch"

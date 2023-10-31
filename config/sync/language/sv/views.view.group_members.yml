@@ -6,24 +6,7 @@ display:
           expose:
             label: 'Filtrera:'
             placeholder: 'Filtrera efter sökterm '
-      exposed_form:
-        options:
-          submit_button: Verkställ
-          reset_button_label: Återställ
-          exposed_sorts_label: 'Sortera efter'
-          sort_asc_label: Stigande
-          sort_desc_label: Fallande
-      pager:
-        options:
-          tags:
-            previous: ‹‹
-            next: ››
-            first: '« Första'
-            last: 'Sista »'
-          expose:
-            items_per_page_label: 'Inlägg per sida'
-            items_per_page_options_all_label: '- Alla -'
-            offset_label: Kompensera
+      title: Medlemskap
       fields:
         name:
           label: Användare
@@ -39,11 +22,28 @@ display:
           text: 'Poista jäsen'
         dropbutton:
           label: Funktioner
+      pager:
+        options:
+          tags:
+            next: ››
+            previous: ‹‹
+            first: '« Första'
+            last: 'Sista »'
+          expose:
+            items_per_page_label: 'Inlägg per sida'
+            items_per_page_options_all_label: '- Alla -'
+            offset_label: Kompensera
+      exposed_form:
+        options:
+          submit_button: Verkställ
+          reset_button_label: Återställ
+          exposed_sorts_label: 'Sortera efter'
+          sort_asc_label: Stigande
+          sort_desc_label: Fallande
       arguments:
         gid:
           exception:
             title: Alla
-      title: Medlemskap
     display_title: Huvud
   page_1:
     display_title: Sida

@@ -185,6 +185,9 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
   protected function notifyServiceProvider(NodeInterface $entity) {
     $current_uid = $this->currentUser->id();
     $service_provider_updatee = $entity->get('field_service_provider_updatee')->entity;
+    if (empty($service_provider_updatee)) {
+      return FALSE;
+    }
     // If service provider is the same as user publishing
     // service don't send message.
     if ($current_uid === $service_provider_updatee->id()) {
