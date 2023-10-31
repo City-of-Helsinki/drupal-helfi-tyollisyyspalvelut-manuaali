@@ -34,6 +34,7 @@ dependencies:
     - group
     - hel_tpm_contact_info
     - hel_tpm_general
+    - hel_tpm_group
     - locale
     - media
     - node
@@ -57,6 +58,7 @@ permissions:
   - 'access entity_browser entity browser pages'
   - 'access flagging collection overview'
   - 'access group overview'
+  - 'access htg entity group field autocomplete widget'
   - 'access internal service fields'
   - 'access media overview'
   - 'access shortcuts'
@@ -74,12 +76,12 @@ permissions:
   - 'administer shortcuts'
   - 'administer url aliases'
   - 'administer users'
-  - 'bypass group access'
   - 'bypass node access'
   - 'bypass paragraphs type content access'
   - 'create basic_page content'
   - 'create contact info'
   - 'create content translations'
+  - 'create field_age'
   - 'create field_career_marking'
   - 'create field_contact_info'
   - 'create field_contact_info_internal'
@@ -170,6 +172,7 @@ permissions:
   - 'edit any basic_page content'
   - 'edit any landing_page content'
   - 'edit contact info'
+  - 'edit field_age'
   - 'edit field_career_marking'
   - 'edit field_contact_info'
   - 'edit field_contact_info_internal'
@@ -196,6 +199,7 @@ permissions:
   - 'edit field_statements_unemployment'
   - 'edit own basic_page content'
   - 'edit own contact info'
+  - 'edit own field_age'
   - 'edit own field_career_marking'
   - 'edit own field_contact_info'
   - 'edit own field_contact_info_internal'
@@ -259,6 +263,7 @@ permissions:
   - 'use text format full_html'
   - 'view all revisions'
   - 'view any unpublished content'
+  - 'view field_age'
   - 'view field_career_marking'
   - 'view field_contact_info'
   - 'view field_contact_info_internal'
@@ -284,6 +289,7 @@ permissions:
   - 'view field_statements'
   - 'view field_statements_unemployment'
   - 'view latest version'
+  - 'view own field_age'
   - 'view own field_career_marking'
   - 'view own field_contact_info'
   - 'view own field_contact_info_internal'

@@ -5,6 +5,7 @@ namespace Drupal\service_manual_workflow;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\group\Entity\GroupContent;
+use Drupal\group\Entity\GroupRelationship;
 
 /**
  * Content group service.
@@ -40,7 +41,7 @@ class ContentGroupService {
   public function getGroupsWithEntity(ContentEntityInterface $entity) {
     $groups = [];
 
-    $group_contents = GroupContent::loadByEntity($entity);
+    $group_contents = GroupRelationship::loadByEntity($entity);
     foreach ($group_contents as $group_content) {
       $groups[] = $group_content->getGroup();
     }

@@ -24,7 +24,7 @@ class HtgEntityGroupFieldAutocompleteWidget extends EntityGroupFieldAutocomplete
    *
    * @var string
    */
-  private $permission = 'bypass group access';
+  private $permission = 'access htg entity group field autocomplete widget';
 
   /**
    * {@inheritdoc}

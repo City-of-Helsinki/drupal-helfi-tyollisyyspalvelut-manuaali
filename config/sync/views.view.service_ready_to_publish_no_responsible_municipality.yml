@@ -10,9 +10,9 @@ dependencies:
     - user.role.root
     - workflows.workflow.service_moderation
   module:
-    - content_moderation
     - group
     - node
+    - service_manual_workflow
     - user
 id: service_ready_to_publish_no_responsible_municipality
 label: 'Service ready to publish no responsible municipality'
@@ -582,7 +582,7 @@ display:
             'group_node:service_location': '0'
         gid:
           id: gid
-          table: group_content_field_data
+          table: group_relationship_field_data
           field: gid
           relationship: group_content
           group_type: group

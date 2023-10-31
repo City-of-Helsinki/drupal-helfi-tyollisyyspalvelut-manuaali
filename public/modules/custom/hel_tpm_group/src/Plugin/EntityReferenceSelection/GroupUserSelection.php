@@ -14,7 +14,7 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\gcontent_moderation\GroupStateTransitionValidation;
 use Drupal\ggroup\GroupHierarchyManagerInterface;
-use Drupal\group\Entity\GroupContentInterface;
+use Drupal\group\Entity\GroupRelationshipInterface;
 use Drupal\group\Entity\GroupInterface;
 use Drupal\group\GroupMembershipLoaderInterface;
 use Drupal\hel_tpm_group\GroupSelectionTrait;
@@ -185,7 +185,7 @@ class GroupUserSelection extends UserSelection {
       return NULL;
     }
     foreach ($groups as $group) {
-      if ($group instanceof GroupContentInterface) {
+      if ($group instanceof GroupRelationshipInterface) {
         $group = $group->getGroup();
       }
       // Validate referenced entity is of type group content interface.
@@ -227,7 +227,7 @@ class GroupUserSelection extends UserSelection {
   /**
    * Get group members with editor / admin roles.
    *
-   * @param \Drupal\group\Entity\GroupContentInterface $group
+   * @param \Drupal\group\Entity\GroupRelationshipInterface $group
    *   Group content entity object.
    *
    * @return array|int|string|null

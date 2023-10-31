@@ -14,10 +14,10 @@ third_party_settings:
 id: service_provider-organization_ad
 label: 'Organization admin'
 weight: -8
-internal: false
-audience: member
+admin: false
+scope: individual
+global_role: null
 group_type: service_provider
-permissions_ui: true
 permissions:
   - 'access group_node overview'
   - 'access subgroup overview'
@@ -28,6 +28,9 @@ permissions:
   - 'delete own group_node:service entity'
   - 'invite users to group'
   - 'leave group'
+  - 'manage members with role service_provider-editor'
+  - 'manage members with role service_provider-group_admin'
+  - 'manage members with role service_provider-organization_ad'
   - 'update any group_node:service content'
   - 'update any group_node:service entity'
   - 'update any group_node:service_location content'

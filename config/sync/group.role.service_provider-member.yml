@@ -4,13 +4,14 @@ status: true
 dependencies:
   config:
     - group.type.service_provider
+    - user.role.authenticated
 id: service_provider-member
 label: Jäsen
 weight: -100
-internal: true
-audience: member
+admin: false
+scope: insider
+global_role: authenticated
 group_type: service_provider
-permissions_ui: true
 permissions:
   - 'leave group'
   - 'view group'

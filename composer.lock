@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e1227ef994ead545788bba96cd47edea",
+    "content-hash": "779b29003ff5ea5fecadf8939a525b71",
     "packages": [
         {
             "name": "ajgl/breakpoint-twig-extension",
@@ -4421,20 +4421,37 @@
         },
         {
             "name": "drupal/entitygroupfield",
-            "version": "dev-3287337-automated-drupal-10",
+            "version": "2.0.0-alpha1",
             "source": {
                 "type": "git",
-                "url": "https://git.drupalcode.org/issue/entitygroupfield-3287337.git",
-                "reference": "8aa3a05c401b6259fce2db788b513f35da7147df"
+                "url": "https://git.drupalcode.org/project/entitygroupfield.git",
+                "reference": "2.0.0-alpha1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/entitygroupfield-2.0.0-alpha1.zip",
+                "reference": "2.0.0-alpha1",
+                "shasum": "8a652543ba7cf587d023c8e4e8652592691b3565"
             },
             "require": {
-                "drupal/core": "^9.5 || ^10",
-                "drupal/group": "~1.0"
+                "drupal/core": "^9.2 || ^10",
+                "drupal/group": "^2.0 || ^3.0"
             },
             "require-dev": {
                 "drupal/variationcache": "~1.0"
             },
             "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "2.0.0-alpha1",
+                    "datestamp": "1687130173",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Alpha releases are not covered by Drupal security advisories."
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
             "license": [
                 "GPL-2.0-or-later"
             ],
@@ -4453,10 +4470,9 @@
             "description": "Defines a field to view and edit the groups associated with content.",
             "homepage": "http://drupal.org/project/entitygroupfield",
             "support": {
-                "issues": "https://drupal.org/project/issues/entitygroupfield",
-                "source": "https://git.drupalcode.org/project/entitygroupfield"
-            },
-            "time": "2023-10-03T12:01:53+00:00"
+                "source": "https://git.drupalcode.org/project/entitygroupfield",
+                "issues": "https://drupal.org/project/issues/entitygroupfield"
+            }
         },
         {
             "name": "drupal/epp",
@@ -5240,27 +5256,27 @@
         },
         {
             "name": "drupal/gcontent_moderation",
-            "version": "1.0.0-beta3",
+            "version": "2.0.0-beta1",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/gcontent_moderation.git",
-                "reference": "1.0.0-beta3"
+                "reference": "2.0.0-beta1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/gcontent_moderation-1.0.0-beta3.zip",
-                "reference": "1.0.0-beta3",
-                "shasum": "be193db65435971e1b68b0271d1f467991d250b1"
+                "url": "https://ftp.drupal.org/files/projects/gcontent_moderation-2.0.0-beta1.zip",
+                "reference": "2.0.0-beta1",
+                "shasum": "eebe296aa6102d4f2c4e408ec898764290c84994"
             },
             "require": {
-                "drupal/core": "^9.1 || ^10",
-                "drupal/group": "^1.0"
+                "drupal/core": "^9.5 || ^10",
+                "drupal/group": "^2.2"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "1.0.0-beta3",
-                    "datestamp": "1693904701",
+                    "version": "2.0.0-beta1",
+                    "datestamp": "1697523250",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Beta releases are not covered by Drupal security advisories."
@@ -5278,31 +5294,37 @@
                     "role": "Maintainer"
                 },
                 {
-                    "name": "hernani",
-                    "homepage": "https://www.drupal.org/user/448086"
+                    "name": "Bram ten Hove",
+                    "homepage": "https://www.drupal.org/u/bramtenhove",
+                    "role": "Maintainer"
                 },
                 {
-                    "name": "jaapjan",
-                    "homepage": "https://www.drupal.org/user/555428"
+                    "name": "Hernâni Borges de Freitas",
+                    "homepage": "https://www.drupal.org/u/hernani",
+                    "role": "Maintainer"
                 },
                 {
-                    "name": "Kingdutch",
-                    "homepage": "https://www.drupal.org/user/1868952"
+                    "name": "Alexander Varwijk",
+                    "homepage": "https://www.drupal.org/u/kingdutch",
+                    "role": "Maintainer"
                 },
                 {
-                    "name": "msnassar",
-                    "homepage": "https://www.drupal.org/user/1199630"
+                    "name": "Mohammed Nassar",
+                    "homepage": "https://www.drupal.org/u/msnassar",
+                    "role": "Maintainer"
                 },
                 {
-                    "name": "naveenvalecha",
-                    "homepage": "https://www.drupal.org/user/2665733"
+                    "name": "Naveen Valecha",
+                    "homepage": "https://www.drupal.org/u/naveenvalecha",
+                    "role": "Maintainer"
                 },
                 {
-                    "name": "ronaldtebrake",
-                    "homepage": "https://www.drupal.org/user/2314038"
+                    "name": "Ronald te Brake",
+                    "homepage": "https://www.drupal.org/u/ronaldtebrake",
+                    "role": "Maintainer"
                 }
             ],
-            "description": "Gcontent moderation",
+            "description": "Enable Content Moderation workflow transistions to be used by group members",
             "homepage": "https://www.drupal.org/project/gcontent_moderation",
             "support": {
                 "source": "https://git.drupalcode.org/project/gcontent_moderation",
@@ -5533,30 +5555,30 @@
         },
         {
             "name": "drupal/ggroup",
-            "version": "1.0.0-alpha4",
+            "version": "2.0.0-beta1",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/ggroup.git",
-                "reference": "1.0.0-alpha4"
+                "reference": "2.0.0-beta1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/ggroup-1.0.0-alpha4.zip",
-                "reference": "1.0.0-alpha4",
-                "shasum": "0ccab0e4bf95ed1a96a2e1c406b0ca8f88f40b8d"
+                "url": "https://ftp.drupal.org/files/projects/ggroup-2.0.0-beta1.zip",
+                "reference": "2.0.0-beta1",
+                "shasum": "5b4035975e882c2e000f75200a277df5cfa3eb81"
             },
             "require": {
-                "drupal/core": "^8.8 || ^9 || ^10",
-                "drupal/group": "^1.0"
+                "drupal/core": "^9 || ^10",
+                "drupal/group": "^2.0"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "1.0.0-alpha4",
-                    "datestamp": "1663612209",
+                    "version": "2.0.0-beta1",
+                    "datestamp": "1662039680",
                     "security-coverage": {
                         "status": "not-covered",
-                        "message": "Alpha releases are not covered by Drupal security advisories."
+                        "message": "Beta releases are not covered by Drupal security advisories."
                     }
                 }
             },
@@ -5584,30 +5606,30 @@
         },
         {
             "name": "drupal/ginvite",
-            "version": "2.2.0",
+            "version": "3.0.0-beta3",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/ginvite.git",
-                "reference": "2.2.0"
+                "reference": "3.0.0-beta3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/ginvite-2.2.0.zip",
-                "reference": "2.2.0",
-                "shasum": "1b8a342154705ff143ad4c2e4d83329a4c73ee3b"
+                "url": "https://ftp.drupal.org/files/projects/ginvite-3.0.0-beta3.zip",
+                "reference": "3.0.0-beta3",
+                "shasum": "15f431cec6a0920b008eb018a1eac0847a2f32bf"
             },
             "require": {
-                "drupal/core": "^8.9 || ^9 || ^10",
-                "drupal/group": "^1.3"
+                "drupal/core": "^9 || ^10",
+                "drupal/group": "^2.0"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "2.2.0",
-                    "datestamp": "1696337524",
+                    "version": "3.0.0-beta3",
+                    "datestamp": "1665060966",
                     "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
+                        "status": "not-covered",
+                        "message": "Beta releases are not covered by Drupal security advisories."
                     }
                 }
             },
@@ -5666,28 +5688,28 @@
         },
         {
             "name": "drupal/group",
-            "version": "1.6.0",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/group.git",
-                "reference": "8.x-1.6"
+                "reference": "2.2.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/group-8.x-1.6.zip",
-                "reference": "8.x-1.6",
-                "shasum": "f9559b6e79db8420f9d13e9d4b2387b3a66fd03b"
+                "url": "https://ftp.drupal.org/files/projects/group-2.2.1.zip",
+                "reference": "2.2.1",
+                "shasum": "c22f86a9e8bc3fac33c9f71f0b3b1f258810a63e"
             },
             "require": {
                 "drupal/core": "^9.5 || ^10",
-                "drupal/entity": "^1.4",
-                "drupal/variationcache": "^1.3"
+                "drupal/entity": "^1.2",
+                "drupal/flexible_permissions": "^1.0"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-1.6",
-                    "datestamp": "1693382492",
+                    "version": "2.2.1",
+                    "datestamp": "1697204407",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -5710,7 +5732,7 @@
                 }
             ],
             "description": "This module allows you to group users, content and other entities",
-            "homepage": "https://drupal.org/project/group",
+            "homepage": "http://drupal.org/project/group",
             "support": {
                 "source": "https://git.drupalcode.org/project/group",
                 "issues": "https://drupal.org/project/issues/group"
@@ -5718,34 +5740,17 @@
         },
         {
             "name": "drupal/group_roles_management",
-            "version": "1.0.0-alpha4",
+            "version": "dev-3373100-support-group-version",
             "source": {
                 "type": "git",
-                "url": "https://git.drupalcode.org/project/group_roles_management.git",
-                "reference": "1.0.0-alpha4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/group_roles_management-1.0.0-alpha4.zip",
-                "reference": "1.0.0-alpha4",
-                "shasum": "152ed01f42b738a4f5d1cdc50a8d837e53adeabc"
+                "url": "https://git.drupalcode.org/issue/group_roles_management-3373100.git",
+                "reference": "4eb1038b"
             },
             "require": {
                 "drupal/core": "^8.8 || ^9 || ^10",
-                "drupal/group": "^1.0"
+                "drupal/group": "^1.0 || ^2.0 || ^3.0"
             },
             "type": "drupal-module",
-            "extra": {
-                "drupal": {
-                    "version": "1.0.0-alpha4",
-                    "datestamp": "1656628168",
-                    "security-coverage": {
-                        "status": "not-covered",
-                        "message": "Project has not opted into security advisory coverage!"
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
             "license": [
                 "GPL-2.0-or-later"
             ],
@@ -5759,9 +5764,10 @@
             "description": "Group roles management module allows a role to manage other roles.",
             "homepage": "https://www.drupal.org/project/group_roles_management",
             "support": {
-                "source": "https://git.drupalcode.org/project/group_roles_management",
-                "issues": "https://www.drupal.org/project/issues/group_roles_management"
-            }
+                "issues": "https://www.drupal.org/project/issues/group_roles_management",
+                "source": "https://git.drupalcode.org/project/group_roles_management"
+            },
+            "time": "2023-10-20T07:28:10+00:00"
         },
         {
             "name": "drupal/health_check",
@@ -8418,8 +8424,8 @@
                     "dev-4.x": "4.x-dev"
                 },
                 "drupal": {
-                    "version": "4.3.0+4-dev",
-                    "datestamp": "1697452799",
+                    "version": "4.3.0+6-dev",
+                    "datestamp": "1698157614",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Dev releases are not covered by Drupal security advisories."
@@ -8850,8 +8856,8 @@
                     "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.16+8-dev",
-                    "datestamp": "1676291047",
+                    "version": "8.x-1.x-dev",
+                    "datestamp": "1698470956",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Dev releases are not covered by Drupal security advisories."
@@ -21150,13 +21156,13 @@
         "drupal/block_breakpoint": 15,
         "drupal/conditional_fields": 20,
         "drupal/elasticsearch_connector": 15,
-        "drupal/entitygroupfield": 20,
+        "drupal/entitygroupfield": 15,
         "drupal/flag": 10,
         "drupal/flag_lists": 5,
         "drupal/flexible_permissions": 10,
         "drupal/gcontent_moderation": 10,
         "drupal/gdpr": 10,
-        "drupal/group_roles_management": 15,
+        "drupal/group_roles_management": 20,
         "drupal/htmlmail": 20,
         "drupal/inline_entity_form": 5,
         "drupal/maxlength": 5,

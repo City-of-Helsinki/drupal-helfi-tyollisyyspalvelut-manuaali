@@ -162,7 +162,7 @@ class HelTpmGroupSubscriber implements EventSubscriberInterface {
       // so we don't accidentally remove users site wide role
       // if user to another group with lesser configured roles.
       foreach ($swroles as $key => $value) {
-        if ($value !== 0) {
+        if ($value != 0) {
           continue;
         }
         if (isset($roles[$key]) && $roles[$key] === $key) {
