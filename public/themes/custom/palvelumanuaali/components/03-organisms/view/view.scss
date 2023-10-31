@@ -190,6 +190,23 @@
   }
 }
 
+.view-taxonomy-term {
+  .view-header {
+    >div {
+      >p {
+        @extend .col-lg-8;
+        @extend .offset-lg-2;
+        @extend .col-xl-6;
+        @extend .offset-xl-3;
+        text-align: center;
+      }
+      >.views-element-container {
+        margin-top: $space-double;
+      }
+    }
+  }
+}
+
 .search-page-header-block {
   grid-column-start: 1;
   grid-column-end: 4;
