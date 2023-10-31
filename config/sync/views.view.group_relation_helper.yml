@@ -112,7 +112,7 @@ display:
       arguments:
         group_id_depth:
           id: group_id_depth
-          table: group_content_field_data
+          table: group_relationship_field_data
           field: group_id_depth
           relationship: group_content
           group_type: group
@@ -146,6 +146,9 @@ display:
           validate_options: {  }
           depth:
             -1: '-1'
+            0: '0'
+            1: '1'
+            2: '2'
       filters: {  }
       style:
         type: html_list
@@ -271,7 +274,7 @@ display:
       arguments:
         entity_id:
           id: entity_id
-          table: group_content_field_data
+          table: group_relationship_field_data
           field: entity_id
           relationship: group_content_id
           group_type: group

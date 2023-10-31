@@ -3,7 +3,6 @@
 namespace Drupal\hel_tpm_search\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
-use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Provides a 'SearchHeader' Block.
@@ -20,8 +19,9 @@ class SearchHeaderBlock extends BlockBase {
    * {@inheritdoc}
    */
   public function build() {
-  return [
-    '#theme' => 'search_header',
+    return [
+      '#theme' => 'search_header',
     ];
   }
+
 }

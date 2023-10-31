@@ -13,11 +13,11 @@ third_party_settings:
       specialist_editor: specialist_editor
 id: organisation-administrator
 label: 'Group admin'
-weight: -8
-internal: false
-audience: member
+weight: -4
+admin: false
+scope: individual
+global_role: null
 group_type: organisation
-permissions_ui: true
 permissions:
   - 'access group_node overview'
   - 'access subgroup overview'
@@ -27,6 +27,9 @@ permissions:
   - 'create group_node:service_location entity'
   - 'delete any invitation'
   - 'invite users to group'
+  - 'manage members with role organisation-administrator'
+  - 'manage members with role organisation-editor'
+  - 'manage members with role organisation-expert'
   - 'update any group_node:service content'
   - 'update any group_node:service entity'
   - 'update any group_node:service_location content'
@@ -48,7 +51,6 @@ permissions:
   - 'view any unpublished subgroup:service_provider entity'
   - 'view group'
   - 'view group invitations'
-  - 'view group revisions'
   - 'view group_membership content'
   - 'view group_node:basic_page entity'
   - 'view group_node:service content'

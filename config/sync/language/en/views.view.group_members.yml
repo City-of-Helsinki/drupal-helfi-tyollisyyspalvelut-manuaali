@@ -6,24 +6,7 @@ display:
           expose:
             label: 'Filter:'
             placeholder: 'Filter by search term'
-      exposed_form:
-        options:
-          submit_button: Apply
-          reset_button_label: Reset
-          exposed_sorts_label: 'Sort by'
-          sort_asc_label: Asc
-          sort_desc_label: Desc
-      pager:
-        options:
-          tags:
-            previous: ‹‹
-            next: ››
-            first: '« First'
-            last: 'Last »'
-          expose:
-            items_per_page_label: 'Items per page'
-            items_per_page_options_all_label: '- All -'
-            offset_label: Offset
+      title: Members
       fields:
         name:
           label: User
@@ -42,6 +25,24 @@ display:
           text: 'Remove member'
         dropbutton:
           label: Operations
+      pager:
+        options:
+          tags:
+            next: ››
+            previous: ‹‹
+            first: '« First'
+            last: 'Last »'
+          expose:
+            items_per_page_label: 'Items per page'
+            items_per_page_options_all_label: '- All -'
+            offset_label: Offset
+      exposed_form:
+        options:
+          submit_button: Apply
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
       empty:
         area_text_custom:
           content: 'No members available.'
@@ -50,7 +51,6 @@ display:
           exception:
             title: All
           title: '{{ arguments.gid|placeholder }} members'
-      title: Members
     display_title: Master
   page_1:
     display_title: Page

@@ -5,7 +5,7 @@ namespace Drupal\hel_tpm_group;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\group\Entity\Group;
-use Drupal\group\Entity\GroupContent;
+use Drupal\group\Entity\GroupRelationship;
 use Drupal\group\Entity\GroupInterface;
 
 /**
@@ -47,8 +47,8 @@ class CurrentGroup {
       return $entity;
     }
     // Load all the group content for this entity.
-    /** @var \Drupal\group\Entity\GroupContent $group_content */
-    $group_content = GroupContent::loadByEntity($entity);
+    /** @var \Drupal\group\Entity\GroupRelationship $group_content */
+    $group_content = GroupRelationship::loadByEntity($entity);
     // Assuming that the content can be related only to 1 group.
     $group_content = reset($group_content);
     if (!empty($group_content)) {
