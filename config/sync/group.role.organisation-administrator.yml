@@ -19,12 +19,10 @@ scope: individual
 global_role: null
 group_type: organisation
 permissions:
-  - 'access group_node overview'
   - 'access subgroup overview'
   - 'administer members'
   - 'administer subgroups'
   - 'create group_node:service entity'
-  - 'create group_node:service_location entity'
   - 'delete any invitation'
   - 'invite users to group'
   - 'manage members with role organisation-administrator'
@@ -38,7 +36,6 @@ permissions:
   - 'update own group_membership content'
   - 'update own group_node:service content'
   - 'update own group_node:service entity'
-  - 'update own group_node:service_location entity'
   - 'update own subgroup:service_provider content'
   - 'use service_moderation transition create_new_draft'
   - 'use service_moderation transition outdated'

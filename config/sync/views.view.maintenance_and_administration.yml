@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - user.role.admin
+    - user.role.editor
     - user.role.root
     - user.role.specialist_editor
   module:
@@ -200,6 +201,7 @@ display:
           role:
             root: root
             admin: admin
+            editor: editor
             specialist_editor: specialist_editor
       cache:
         type: tag
