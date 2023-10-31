@@ -53,44 +53,38 @@
   ]
 %}
 
-{% if label_hidden %}
-  {% if multiple %}
-    <div{{ attributes.addClass(classes, 'field__items') }}>
-      {% include "@atoms/images/icons/_icon.twig" with {
-        icon_base_class: 'icon',
-        icon_name: 'calendar',
-        icon_modifiers: ['small'],
-      } %}
+<div{{ attributes.addClass(classes) }}>
+  {% include "@atoms/images/icons/_icon.twig" with {
+    icon_base_class: 'icon',
+    icon_name: 'calendar-dark-blue',
+    icon_modifiers: ['small'],
+  } %}
+  <div class="field__items">
+    {% if items|length < 4 %}
       {% for item in items %}
-        <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
+        {% if not loop.last %}
+          <div{{ item.attributes.addClass('field__item').addClass('with-comma') }}>{{ item.content }}{{","}}</div>
+        {% else %}
+          <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
+        {% endif %}
       {% endfor %}
-    </div>
-  {% else %}
-    {% for item in items %}
-      <div{{ attributes.addClass(classes, 'field__item') }}>
-      {% include "@atoms/images/icons/_icon.twig" with {
-        icon_base_class: 'icon',
-        icon_name: 'calendar',
-        icon_modifiers: ['small'],
-      } %}{{ item.content }}</div>
-    {% endfor %}
-  {% endif %}
-{% else %}
-  <div{{ attributes.addClass(classes) }}>
-    <div{{ title_attributes.addClass(title_classes) }}>{{ label }}</div>
-    {% if multiple %}
-      <div class="field__items">
-    {% endif %}
-    {% for item in items %}
-    {% include "@atoms/images/icons/_icon.twig" with {
-      icon_base_class: 'icon',
-      icon_name: 'calendar',
-      icon_modifiers: ['small'],
-    } %}
-      <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
-    {% endfor %}
-    {% if multiple %}
+    {% else %}
+      <div class="field-items-wrapper">
+        {% for item in items %}
+          {% if loop.index < 4 %}
+            <div{{ item.attributes.addClass('field__item').addClass('with-comma') }}>{{ item.content }}{{","}}</div>
+          {% else %}
+            {% if not loop.last %}
+              <div{{ item.attributes.addClass('field__item').addClass('collapse').addClass('with-comma').addClass('multi-collapse') }}>{{ item.content }}</div>
+            {% else %}
+              <div{{ item.attributes.addClass('field__item').addClass('collapse').addClass('multi-collapse') }}>{{ item.content }}</div>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="button-wrapper">
+        <button class="button--no-color-no-border button--dropdown-button" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">{{"Show more"|t}}</button>
       </div>
     {% endif %}
   </div>
-{% endif %}
+</div>

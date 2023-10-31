@@ -32,7 +32,7 @@ content:
       same_end_date_format_type: time
       interpreter: default_interpreter
     third_party_settings: {  }
-    weight: 1
+    weight: 0
     region: content
   field_separate_time:
     type: boolean
@@ -42,7 +42,7 @@ content:
       format_custom_false: ''
       format_custom_true: ''
     third_party_settings: {  }
-    weight: 4
+    weight: 2
     region: content
   field_service_languages:
     type: entity_reference_revisions_entity_view
@@ -51,7 +51,7 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 3
+    weight: 1
     region: content
   field_service_location:
     type: entity_reference_entity_view
@@ -60,7 +60,7 @@ content:
       view_mode: default
       link: false
     third_party_settings: {  }
-    weight: 0
+    weight: 3
     region: content
 hidden:
   entity_print_view_epub: true

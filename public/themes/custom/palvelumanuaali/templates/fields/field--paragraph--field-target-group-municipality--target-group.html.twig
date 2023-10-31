@@ -1,0 +1,17 @@
+
+{%
+  set additional_classes = [
+  'field--content--inline',
+  'field--content--blue',
+  'field--content--margin-left-triple',
+  'field--content--margin-bottom-two',
+  ]
+%}
+
+{% include "@molecules/icon-textfield/icon-textfield.twig" with  {
+    items: items,
+    field_header: 'Home municipality:'|t,
+    additional_classes: additional_classes,
+    icon_name: 'property-location',
+  }
+%}
