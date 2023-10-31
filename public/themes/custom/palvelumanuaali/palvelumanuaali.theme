@@ -69,7 +69,7 @@ function palvelumanuaali_preprocess_field(&$variables) {
   if ($variables['field_name'] == 'field_field_client_consent_descr') {
     $node = $variables['element']['#object'];
      if ($node->hasField('field_client_consent')) {
-      if ($node->get('field_client_consent')->isEmpty() || $node->field_client_consent->value === "0") {
+      if ($node->get('field_client_consent')->isEmpty() || $node->field_client_consent->value === "0") {
         unset($variables['items']);
       }
     }
