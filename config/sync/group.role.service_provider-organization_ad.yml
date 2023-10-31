@@ -11,32 +11,24 @@ third_party_settings:
     site_wide_role:
       editor: editor
       specialist_editor: specialist_editor
+      specialist: '0'
 id: service_provider-organization_ad
 label: 'Organization admin'
 weight: -8
-internal: false
-audience: member
+admin: false
+scope: individual
+global_role: null
 group_type: service_provider
-permissions_ui: true
 permissions:
-  - 'access group_node overview'
-  - 'access subgroup overview'
-  - 'administer members'
-  - 'create group_node:service entity'
-  - 'create group_node:service_location entity'
   - 'delete any invitation'
-  - 'delete own group_node:service entity'
   - 'invite users to group'
   - 'leave group'
   - 'update any group_node:service content'
   - 'update any group_node:service entity'
   - 'update any group_node:service_location content'
-  - 'update any group_node:service_location entity'
   - 'update own group_membership content'
   - 'update own group_node:service content'
-  - 'update own group_node:service entity'
   - 'update own group_node:service_location content'
-  - 'update own group_node:service_location entity'
   - 'use service_moderation transition create_new_draft'
   - 'use service_moderation transition outdated'
   - 'use service_moderation transition publish'
@@ -44,10 +36,8 @@ permissions:
   - 'use service_moderation transition ready_to_publish'
   - 'use service_moderation transition ready_to_publish_to_draft'
   - 'use service_moderation transition temporarily_archived'
-  - 'view any unpublished group'
   - 'view group'
   - 'view group invitations'
-  - 'view group revisions'
   - 'view group_membership content'
   - 'view group_node:service content'
   - 'view group_node:service entity'

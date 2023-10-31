@@ -4,13 +4,14 @@ status: true
 dependencies:
   config:
     - group.type.organisation
+    - user.role.authenticated
 id: organisation-outsider
 label: Outsider
-weight: -101
-internal: true
-audience: outsider
+weight: -8
+admin: false
+scope: outsider
+global_role: authenticated
 group_type: organisation
-permissions_ui: true
 permissions:
   - 'view group'
   - 'view group_node:basic_page entity'

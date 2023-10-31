@@ -4,13 +4,21 @@ status: true
 dependencies:
   config:
     - group.type.organisation
+  module:
+    - hel_tpm_group
+third_party_settings:
+  hel_tpm_group:
+    site_wide_role:
+      editor: '0'
+      specialist: '0'
+      specialist_editor: '0'
 id: organisation-member
 label: Jäsen
-weight: -100
-internal: true
-audience: member
+weight: -7
+admin: false
+scope: individual
+global_role: null
 group_type: organisation
-permissions_ui: true
 permissions:
   - 'view group'
   - 'view group_node:basic_page entity'

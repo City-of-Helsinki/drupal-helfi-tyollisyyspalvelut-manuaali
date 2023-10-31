@@ -5,7 +5,7 @@ namespace Drupal\hel_tpm_general\Access;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Access\AccessResultAllowed;
 use Drupal\Core\Session\AccountInterface;
-use Drupal\group\Access\GroupContentCreateEntityAccessCheck;
+use Drupal\group\Access\GroupRelationshipCreateEntityAccessCheck;
 use Drupal\group\Entity\GroupInterface;
 use Drupal\group\GroupMembershipLoader;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -47,7 +47,7 @@ class GroupNodeCreateAccessService {
    * @param \Symfony\Component\Routing\RouterInterface $router
    *   Router service.
    */
-  public function __construct(GroupMembershipLoader $group_membership_loader, GroupContentCreateEntityAccessCheck $group_content_create_entity_access, RouterInterface $router) {
+  public function __construct(GroupMembershipLoader $group_membership_loader, GroupRelationshipCreateEntityAccessCheck $group_content_create_entity_access, RouterInterface $router) {
     $this->groupMembershipLoader = $group_membership_loader;
     $this->groupContentCreateEntityAccess = $group_content_create_entity_access;
     $this->router = $router;

@@ -1,3 +1,10 @@
+$card-font-base: 16px;
+$card-font-base-small: 14px;
+$card-font-small: 14px;
+$card-font-small-mobile: 12px;
+$card-font-small-heading-mobile: 12px;
+$card-font-small-heading: 15px;
+
 .card {
   border: 0;
   &.grid__item {
@@ -85,6 +92,10 @@
   border-left: 4px solid $blue100;
 }
 
+.card--border-left-light-blue {
+  border-left: 4px solid $blue80;
+}
+
 .card--border-left-yellow {
   border-left: 4px solid $yellow;
 }
@@ -114,6 +125,20 @@
     margin: 0;
   }
 }
+
+.card--padded-xl {
+  padding: $space-double $space-two-and-half $space-one-and-half $space-two-and-half;
+  @include xl {
+    padding: $space-two-and-half $space-four-and-half $space-two-and-half $space-two-and-half;
+  }
+  .card__content {
+    margin: 0;
+    >.field__item {
+      margin-bottom: 0;
+    }
+  }
+}
+
 
 .card--padded-centered {
   margin-left: $space;
@@ -223,18 +248,60 @@
       margin-bottom: $space-triple;
     }
     &.icon {
+      min-width: 24px;
       width: 24px;
       order: unset;
       margin-right: 16px;
     }
-
+    .field__items {
+      font-size: $card-font-base-small;
+      @include xl {
+        font-size: $card-font-base;
+      }
+      a {
+        font-size: $card-font-base-small;
+        @include xl {
+          font-size: $card-font-base;
+        }
+      }
+      .field-items-wrapper {
+        display: block;
+        margin-bottom: $space-one-half;
+      }
+      .field__item.collapse {
+        &:not(.show) {
+           display: none;
+        }
+      }
+      .field__item.with-comma {
+        margin-right: 2px;
+        >div {
+          margin-right: -2px;
+        }
+      }
+    }
+    .field__items,
+    .field__items .field__item,
+    .date-recur-date,
+    .date-recur-interpretaton {
+      display: inline;
+    }
+    .date-recur-occurrences {
+      padding-left: 0;
+      li {
+        padding-left: 0;
+        &::before {
+          display: none;
+        }
+      }
+    }
   }
 
   .field--name-field-service-languages {
     width: 100%;
     order: 2;
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     margin-bottom: $space;
     @include large {
       margin-bottom: $space-one-and-half;
@@ -244,6 +311,7 @@
       margin-left: 1px;
     }
     &.icon {
+      min-width: 24px;
       width: 24px;
       margin-right: $space;
       order: unset;
@@ -251,45 +319,71 @@
       margin-bottom: 0 !important;
     }
     >.languages-wrapper {
-      display: flex;
+      display: inline;
       flex-wrap: wrap;
+      width: 100%;
       >.field__item {
-        display: flex;
-        flex-wrap: wrap;
-        width: fit-content;
-        margin-bottom: 0;
+         display: inline;
+         margin-bottom: 0;
+         font-size: $card-font-base-small;
+         @include xl {
+           font-size: $card-font-base;
+         }
       }
     }
     .service-language {
-      display: flex;
-
+      display: inline;
+      margin-right: -2px;
     }
-    .field--name-field-language {
-      margin-right: 5px;
+    .field--name-field-language,
+    .field--name-field-level {
+      display: inline;
       margin-bottom: 0;
     }
   }
 
   .term {
-    display: flex;
+    display: inline;
+    margin-right: -3px;
+    >p {
+      display: inline;
+    }
     .field {
       margin-bottom: 0;
+      display: inline;
+    }
+  }
+
+  .field--name-field-accessibility-details {
+    order: 5;
+    width: 100%;
+    margin-bottom: 0;
+    font-size: $card-font-small-mobile;
+    @include xl {
+      font-size: $card-font-small;
     }
   }
 
   .field--name-field-accessibility {
     order: 4;
     width: 100%;
-    margin-top: $space-double;
+    margin-bottom: $space;
     .field__label {
       font-weight: 600;
+      margin-bottom: $space-one-half;
+      font-size: $card-font-small-heading-mobile;
+      @include xl {
+        font-size: $card-font-small-heading;
+      }
     }
-
     .field__items {
       display: flex;
       flex-wrap: wrap;
+      font-size: $card-font-small-mobile;
+      @include xl {
+        font-size: $card-font-small;
+      }
     }
-
     .field__item {
       display: flex;
       margin-bottom: 0;
@@ -367,11 +461,6 @@
      font-weight: 700;
    }
  }
-}
-
-.card--global-notification,
-.card--service-notification {
-
 }
 
 .card--global-notification {

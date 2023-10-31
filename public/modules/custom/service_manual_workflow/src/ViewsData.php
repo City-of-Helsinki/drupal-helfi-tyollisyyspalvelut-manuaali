@@ -61,7 +61,7 @@ class ViewsData {
           'field_name' => 'moderation_state',
         ],
         'filter' => [
-          'id' => 'latest_moderation_state_filter'
+          'id' => 'latest_moderation_state_filter',
         ],
         'sort' => ['id' => 'moderation_state_sort'],
       ];

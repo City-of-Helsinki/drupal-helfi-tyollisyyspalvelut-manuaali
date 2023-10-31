@@ -2,8 +2,9 @@
 
 namespace Drupal\Tests\hel_tpm_group\Kernel;
 
-use Drupal\group\Entity\GroupContentInterface;
+use Drupal\group\Entity\GroupRelationshipInterface;
 use Drupal\group\Entity\GroupRoleInterface;
+use Drupal\group\PermissionScopeInterface;
 use Drupal\hel_tpm_group\Event\GroupMembershipChanged;
 use Drupal\hel_tpm_group\Event\GroupSiteWideRoleChanged;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
@@ -18,7 +19,7 @@ class HelTpmGroupSubscriberTest extends GroupKernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['hel_tpm_group', 'group'];
+  protected static $modules = ['hel_tpm_group', 'group'];
 
   /**
    * {@inheritdoc}
@@ -28,10 +29,12 @@ class HelTpmGroupSubscriberTest extends GroupKernelTestBase {
     $this->installEntitySchema('group_role');
 
     $this->groupRoleStorage = $this->entityTypeManager->getStorage('group_role');
-    $this->groupRoleSynchronizer = $this->container->get('group_role.synchronizer');
-    $this->group = $this->createGroup();
+    $this->group = $this->createGroup(['type' => $this->createGroupType(['id' => 'default'])->id()]);
     $this->account = $this->createUser();
-    $this->group_role = $this->createGroupRole('group-editor', 'editor');
+    $this->group_role = $this->createGroupRole([
+      'id' => 'group-editor',
+      'label' => 'editor'
+    ]);
 
     $this->createRole([], 'editor', 'Editor');
     $this->createRole([], 'publisher', 'Publisher');
@@ -53,7 +56,7 @@ class HelTpmGroupSubscriberTest extends GroupKernelTestBase {
     // user gets editor site-wide role.
     $this->editUserGroupRoles(['group-editor']);
     $roles = $this->getUserGroupRoles();
-    $this->assertEqualsCanonicalizing(['default-member', 'group-editor'], array_keys($roles));
+    $this->assertEqualsCanonicalizing(['group-editor'], array_keys($roles));
     $this->assertEqualsCanonicalizing(['editor', 'authenticated'], $this->account->getRoles());
 
     // Remove group role and confirm editor role is removed from user.
@@ -141,7 +144,7 @@ class HelTpmGroupSubscriberTest extends GroupKernelTestBase {
   protected function editUserGroupRoles($roles = []) {
     $r_array = [];
     $member = $this->group->getMember($this->account);
-    $group_content = $member->getGroupContent();
+    $group_content = $member->getGroupRelationship();
     foreach ($roles as $role) {
       $r_array['target_id'] = $role;
     }
@@ -155,7 +158,7 @@ class HelTpmGroupSubscriberTest extends GroupKernelTestBase {
   /**
    * Helper method to dispatch GroupMembershipChangedEvent.
    *
-   * @param \Drupal\group\Entity\GroupContentInterface $group_content
+   * @param \Drupal\group\Entity\GroupRelationshipInterface $group_content
    *   Group membership content interface.
    *
    * @return void
@@ -163,7 +166,7 @@ class HelTpmGroupSubscriberTest extends GroupKernelTestBase {
    *
    * @throws \Exception
    */
-  protected function dispatchGroupMembershipChangedEvent(GroupContentInterface $group_content): void {
+  protected function dispatchGroupMembershipChangedEvent(GroupRelationshipInterface $group_content): void {
     $event = new GroupMembershipChanged($group_content);
     $this->container->get('event_dispatcher')->dispatch($event, $event::EVENT_NAME);
   }
@@ -197,12 +200,16 @@ class HelTpmGroupSubscriberTest extends GroupKernelTestBase {
    *
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  protected function createGroupRole(string $group_rid, string $drupal_rid): GroupRoleInterface {
+  protected function createGroupRole(array $values = []): GroupRoleInterface {
+    // Grant the member a new group role and check the storage.
     $group_role = $this->groupRoleStorage->create([
-      'id' => $group_rid,
-      'label' => $group_rid,
-      'weight' => 0,
+      'id' => $values['id'],
+      'label' => $values['label'],
+      'weight' => 1986,
+      'admin' => FALSE,
+      'scope' => PermissionScopeInterface::INDIVIDUAL_ID,
       'group_type' => 'default',
+      'permissions' => [],
     ]);
     $group_role->save();
     return $group_role;

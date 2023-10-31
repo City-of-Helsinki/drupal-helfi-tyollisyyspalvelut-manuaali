@@ -3,8 +3,6 @@ langcode: fi
 status: true
 dependencies:
   config:
-    - group.content_type.group_content_type_a689b6d6f98cc
-    - group.content_type.organisation-group_membership
     - user.role.specialist_editor
   module:
     - entity_reference_revisions
@@ -15,7 +13,7 @@ label: 'Municipality updatees'
 module: views
 description: ''
 tag: ''
-base_table: group_content_field_data
+base_table: group_relationship_field_data
 base_field: id
 display:
   default:
@@ -128,7 +126,7 @@ display:
       arguments:
         gid:
           id: gid
-          table: group_content_field_data
+          table: group_relationship_field_data
           field: gid
           relationship: none
           group_type: group
@@ -166,7 +164,7 @@ display:
       filters:
         type:
           id: type
-          table: group_content_field_data
+          table: group_relationship_field_data
           field: type
           relationship: none
           group_type: group
@@ -275,7 +273,7 @@ display:
       relationships:
         gc__user:
           id: gc__user
-          table: group_content_field_data
+          table: group_relationship_field_data
           field: gc__user
           relationship: none
           group_type: group

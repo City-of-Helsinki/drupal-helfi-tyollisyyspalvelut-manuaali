@@ -13,16 +13,14 @@ third_party_settings:
       specialist_editor: specialist_editor
 id: organisation-editor
 label: Editor
-weight: -9
-internal: false
-audience: member
+weight: -5
+admin: false
+scope: individual
+global_role: null
 group_type: organisation
-permissions_ui: true
 permissions:
-  - 'access group_node overview'
   - 'access subgroup overview'
   - 'create group_node:service entity'
-  - 'create group_node:service_location entity'
   - 'update any group_node:service content'
   - 'update any group_node:service entity'
   - 'update any group_node:service_location content'

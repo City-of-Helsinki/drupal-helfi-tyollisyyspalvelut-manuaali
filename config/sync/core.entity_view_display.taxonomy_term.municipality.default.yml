@@ -1,0 +1,35 @@
+uuid: 08dc0fe6-a18a-4afa-9b76-b266314f2b1b
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.municipality.field_view_header
+    - taxonomy.vocabulary.municipality
+  module:
+    - text
+id: taxonomy_term.municipality.default
+targetEntityType: taxonomy_term
+bundle: municipality
+mode: default
+content:
+  description:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_view_header:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  langcode: true
+  search_api_excerpt: true

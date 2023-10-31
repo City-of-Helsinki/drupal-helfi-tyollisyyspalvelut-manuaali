@@ -66,9 +66,10 @@ class LatestModerationStateFilter extends ModerationStateFilter {
   }
 
   /**
-   * Create content moderation table formula for filtering values from latest revision.
+   * Alter select query for filtering values from latest revision.
    *
    * @return mixed
+   *   Query statement containing latest revision filtering.
    */
   private function contentModerationTableFormula() {
     $select = $this->view->query->getConnection()->select('content_moderation_state_field_revision', 'cmsfr');

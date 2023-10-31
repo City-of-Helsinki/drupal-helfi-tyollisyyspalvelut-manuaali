@@ -3,7 +3,7 @@
 namespace Drupal\hel_tpm_group\Event;
 
 use Drupal\Component\EventDispatcher\Event;
-use Drupal\group\Entity\GroupContentInterface;
+use Drupal\group\Entity\GroupRelationshipInterface;
 
 /**
  * Group membership changed event.
@@ -15,14 +15,14 @@ class GroupMembershipChanged extends Event {
   /**
    * Group role content.
    *
-   * @var \Drupal\group\Entity\GroupContentInterface
+   * @var \Drupal\group\Entity\GroupRelationshipInterface
    */
   public $groupContent;
 
   /**
    * {@inheritdoc}
    */
-  public function __construct(GroupContentInterface $group_content) {
+  public function __construct(GroupRelationshipInterface $group_content) {
     $this->groupContent = $group_content;
   }
 
