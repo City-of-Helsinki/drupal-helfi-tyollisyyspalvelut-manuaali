@@ -364,9 +364,6 @@ function hel_tpm_general_update_10102(&$sandbox) {
 
   }
   $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
-  if ($sandbox['#finished'] == 1) {
-    $foo = 'bar;';
-  }
 }
 
 /**
