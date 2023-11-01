@@ -249,19 +249,34 @@ function hel_tpm_general_update_10100(&$sandbox) {
  * Migrate internal urls and files from paragraphs to fields.
  */
 function hel_tpm_general_update_10101(&$sandbox) {
+  $storage = \Drupal::entityTypeManager()->getStorage('node');
   $paragraphs_field = 'field_links_and_attachments';
   $internal_file_field = 'field_internal_files';
   $internal_links_field = 'field_internal_links';
 
-  $storage = \Drupal::entityTypeManager()->getStorage('node');
+  if (!isset($sandbox['progress'])) {
+    $efq = $storage->getQuery();
+    $max = $efq->condition('type', 'service')
+      ->condition($paragraphs_field, '', '<>')
+      ->accessCheck(FALSE)
+      ->count()
+      ->execute();
+    $sandbox['progress'] = 0;
+    $sandbox['current'] = 0;
+    $sandbox['max'] = $max;
+  }
+
   $efq = $storage->getQuery();
   $result = $efq->condition('type', 'service')
     ->condition($paragraphs_field, '', '<>')
+    ->condition('nid', $sandbox['current'], '>')
     ->accessCheck(FALSE)
+    ->sort('nid')
+    ->range(0, 5)
     ->execute();
-  $nodes = $storage->loadMultiple($result);
 
-  foreach ($nodes as $node) {
+  foreach ($result as $nid) {
+    $node = $storage->load($nid);
     // Load latest revision.
     if (!$node->isLatestRevision()) {
       $vid = $storage->getLatestRevisionId($node->id());
@@ -276,7 +291,10 @@ function hel_tpm_general_update_10101(&$sandbox) {
     $changed++;
     $node->setChangedTime($changed);
     $node->save();
+    $sandbox['progress']++;
+    $sandbox['current'] = $nid;
   }
+  $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
 }
 
 /**
@@ -285,10 +303,27 @@ function hel_tpm_general_update_10101(&$sandbox) {
 function hel_tpm_general_update_10102(&$sandbox) {
   $node_field = 'field_service_language';
   $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+
+  if (!isset($sandbox['progress'])) {
+    $max = $node_storage->getQuery()
+      ->condition('type', 'service')
+      ->accessCheck(FALSE)
+      ->condition('field_service_time_and_location', '', '<>')
+      ->sort('nid')
+      ->count()
+      ->execute();
+    $sandbox['progress'] = 0;
+    $sandbox['current'] = 0;
+    $sandbox['max'] = $max;
+  }
+
   $nodes = $node_storage->getQuery()
     ->condition('type', 'service')
-    ->accessCheck(FALSE)
     ->condition('field_service_time_and_location', '', '<>')
+    ->condition('nid', $sandbox['current'], '>')
+    ->accessCheck(FALSE)
+    ->sort('nid')
+    ->range(0, 5)
     ->execute();
 
   $references = [];
@@ -307,8 +342,9 @@ function hel_tpm_general_update_10102(&$sandbox) {
         }
         $references[$result][$lang[0]['target_id']] = $lang[0];
       }
-
     }
+    $sandbox['current'] = $result;
+    $sandbox['progress']++;
   }
 
   // Add references to proper node field.
@@ -325,6 +361,11 @@ function hel_tpm_general_update_10102(&$sandbox) {
     $node->setChangedTime($changed);
     $node->set($node_field, $reference);
     $node->save();
+
+  }
+  $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
+  if ($sandbox['#finished'] == 1) {
+    $foo = 'bar;';
   }
 }
 
