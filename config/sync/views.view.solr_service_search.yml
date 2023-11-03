@@ -697,17 +697,16 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-        field_municipality:
-          id: field_municipality
+        field_target_group_municipality:
+          id: field_target_group_municipality
           table: search_api_index_service_search_solr_index
-          field: field_municipality
+          field: field_target_group_municipality
           relationship: none
           group_type: group
           admin_label: ''
           plugin_id: search_api_term
           operator: or
           value:
-            408: 408
             33: 33
             37: 37
             32: 32
@@ -715,14 +714,15 @@ display:
             38: 38
             36: 36
             34: 34
+            408: 408
           group: 2
           exposed: true
           expose:
-            operator_id: field_municipality_op
+            operator_id: field_target_group_municipality_op
             label: Kotikunta
             description: ''
             use_operator: false
-            operator: field_municipality_op
+            operator: field_target_group_municipality_op
             operator_limit_selection: false
             operator_list: {  }
             identifier: field_municipality
@@ -756,10 +756,10 @@ display:
           hierarchy: false
           limit: true
           error_message: true
-        field_municipality_1:
-          id: field_municipality_1
+        field_target_group_municipality_1:
+          id: field_target_group_municipality_1
           table: search_api_index_service_search_solr_index
-          field: field_municipality
+          field: field_target_group_municipality
           relationship: none
           group_type: group
           admin_label: ''
@@ -1073,7 +1073,7 @@ display:
                 options_show_only_used_filtered: 0
                 options_hide_when_empty: 0
                 options_show_items_count: 0
-              field_municipality:
+              field_target_group_municipality:
                 plugin_id: bef_dropdown_multiselet
                 advanced:
                   sort_options: false
