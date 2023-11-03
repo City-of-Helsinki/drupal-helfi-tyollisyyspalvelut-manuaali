@@ -17,11 +17,11 @@ dependencies:
     - field.storage.node.field_address
     - field.storage.paragraph.field_service_location
     - field.storage.node.field_target_group
+    - field.storage.paragraph.field_target_group_municipality
     - field.storage.paragraph.field_age
     - field.storage.paragraph.field_age_groups
-    - field.storage.paragraph.field_municipality
-    - field.storage.node.field_service_execution
     - field.storage.node.field_implementation_extra_info
+    - field.storage.node.field_service_execution
     - search_api.server.solr_search
     - core.entity_view_mode.node.search_index
   module:
@@ -201,17 +201,6 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_life_situations
-  field_municipality:
-    label: 'Target group » Paragraph » Kunta'
-    datasource_id: 'entity:node'
-    property_path: 'field_target_group:entity:field_municipality'
-    type: integer
-    dependencies:
-      config:
-        - field.storage.node.field_target_group
-        - field.storage.paragraph.field_municipality
-      module:
-        - paragraphs
   field_service_execution:
     label: Toteutustapa
     datasource_id: 'entity:node'
@@ -255,6 +244,17 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_service_time_and_location
+  field_target_group_municipality:
+    label: 'Target group » Paragraafi  » Kotikunta:'
+    datasource_id: 'entity:node'
+    property_path: 'field_target_group:entity:field_target_group_municipality'
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_target_group
+        - field.storage.paragraph.field_target_group_municipality
+      module:
+        - paragraphs
   locality:
     label: 'Service time and location » Paragraph » Valitse paikka: » Sisältö » Address » The locality (i.e. city)'
     datasource_id: 'entity:node'
