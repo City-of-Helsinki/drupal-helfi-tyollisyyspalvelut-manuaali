@@ -7,7 +7,7 @@
           let label = $('label.form-item__label', parent);
           $(this).multiSelect({
               noneText: $(label).text()
-          })
+          });
           $(label).hide();
         });
       });

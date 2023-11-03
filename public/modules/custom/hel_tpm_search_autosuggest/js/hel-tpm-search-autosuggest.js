@@ -172,7 +172,7 @@
       } else {
         $('.text-search-wrapper input[id^="edit-reset--"]').show();
       }
-      
+
       $(document).ready(function() {
 
         if ($(selectedMultiselect).length) {
@@ -204,6 +204,11 @@
           $(this).closest('form').find('input[type=checkbox]').prop('checked', false);
           $(this).closest('form').find('[id^="edit-submit-"]').click();
         });
+      });
+      $('.select2-results__option').on("click", function() {
+        event.preventDefault();
+        $('.form-item-field-free-service select option').prop("selected", false);
+        $('.form-item-field-free-service .select2-selection__rendered').text("testing");
       });
 
       $(searchField, form)

@@ -58,6 +58,10 @@ class DropdownMultiselect extends FilterWidgetBase {
       $form[$field_id]['#type'] = 'select';
       $form[$field_id]['#multiple'] = TRUE;
     }
+    // if (array_key_exists("field_free_service",$form)) {
+    //       $form['field_free_service']['#multiple'] = FALSE;
+    // }
+
     $form[$field_id]['#attributes']['class'][] = 'dropdownMultiselect';
     $form['#attached']['library'][] = 'hel_tpm_search/dropdown_multiselect';
 
