@@ -17,6 +17,8 @@ display:
         field_free_service:
           group_info:
             label: 'Tjänsten är betald'
+          expose:
+            description: ''
         field_service_set:
           expose:
             label: 'Tjänstekategori:'
@@ -29,9 +31,9 @@ display:
         field_implementation_extra_info:
           expose:
             label: Genomförande
-        field_municipality:
-          expose:
-            label: Hemkommun
         age_groups_filter:
           expose:
             label: 'Målgruppens ålder'
+        field_target_group_municipality:
+          expose:
+            label: Hemstad
