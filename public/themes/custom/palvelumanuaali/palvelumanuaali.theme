@@ -348,20 +348,3 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id) {
     $form['actions']['cancel']['#access'] = FALSE;
   }
 }
-
-/**
- * Implements hook_form_BASE_FORM_ID_alter().
- */
-function palvelumanuaali_form_views_exposed_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
-  // Here is options of your country filter
-  // Note that they key is FIELD_NAME_target_id
-  // Change the FIELD_NAME with you field name
-
-  if ($form['#id'] === 'views-exposed-form-solr-service-search-page-1') {
-      $form['field_free_service']['#multiple'] = FALSE;
-  }
-  // Get the city options the same way .
-  /**
-   * TODO: To alter options array change $form['field_country_target_id']['#options'] not the $countries
-   */
-}

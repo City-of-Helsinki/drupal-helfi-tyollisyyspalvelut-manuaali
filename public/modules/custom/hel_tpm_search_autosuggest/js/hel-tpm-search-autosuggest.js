@@ -204,11 +204,13 @@
           $(this).closest('form').find('input[type=checkbox]').prop('checked', false);
           $(this).closest('form').find('[id^="edit-submit-"]').click();
         });
-      });
-      $('.select2-results__option').on("click", function() {
-        event.preventDefault();
-        $('.form-item-field-free-service select option').prop("selected", false);
-        $('.form-item-field-free-service .select2-selection__rendered').text("testing");
+        $('.cost-reset input[id^="edit-reset--"]').click (function (event) {
+          event.preventDefault();
+          $(this).closest('form').find('.form-item-field-free-service select').val('');
+          $(this).closest('form').find('.form-item-field-free-service input[type=radio]').prop('checked', false);
+          $(this).closest('form').find('.form-item-field-free-service input[type=checkbox]').prop('checked', false);
+          $(this).closest('form').find('[id^="edit-submit-"]').click();
+        });
       });
 
       $(searchField, form)
