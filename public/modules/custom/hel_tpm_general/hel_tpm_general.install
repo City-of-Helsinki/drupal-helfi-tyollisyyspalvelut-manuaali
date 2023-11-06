@@ -367,6 +367,50 @@ function hel_tpm_general_update_10102(&$sandbox) {
 }
 
 /**
+ * Migrate municipality not required fields.
+ */
+function hel_tpm_general_update_10103(&$sandbox) {
+  $municipality_tid = 39;
+
+  $storage = \Drupal::service('entity_type.manager')->getStorage('paragraph');
+
+  if (!isset($sandbox['progress'])) {
+    $max = $storage->getQuery()
+      ->condition('type', 'target_group')
+      ->accessCheck(FALSE)
+      ->condition('field_target_group_municipality', $municipality_tid, 'IN')
+      ->count()
+      ->execute();
+    $sandbox['progress'] = 0;
+    $sandbox['current'] = 0;
+    $sandbox['max'] = $max;
+  }
+
+  $paragraphs = $storage->getQuery()
+    ->condition('type', 'target_group')
+    ->accessCheck(FALSE)
+    ->condition('field_target_group_municipality', $municipality_tid, 'IN')
+    ->condition('id', $sandbox['current'], '>')
+    ->range(0, 20)
+    ->sort('id')
+    ->execute();
+
+  foreach ($paragraphs as $rev_id => $paragraph_id) {
+    $rev = $storage->load($paragraph_id);
+    if (!$rev->isDefaultRevision()) {
+      continue;
+    }
+    $rev->set('field_municipality_irrelevant', 1);
+    $rev->save();
+
+    $sandbox['current'] = $paragraph_id;
+    $sandbox['progress']++;
+  }
+
+  $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
+}
+
+/**
  * Helper function to migrate paragraph fields to node fields.
  *
  * @param \Drupal\Core\Entity\EntityInterface $paragraph
