@@ -121,7 +121,7 @@ function hel_tpm_forms_node_service_form_alter_helper(&$form, FormStateInterface
     ],
     'required' => [
       [':input[name="field_target_group[0][subform][field_municipality_irrelevant][value]"]' => ['checked' => FALSE]],
-    ]
+    ],
   ];
 
   $form['paging_footer'] = [
