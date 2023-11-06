@@ -7,6 +7,7 @@ dependencies:
     - field.field.paragraph.target_group.field_age_groups
     - field.field.paragraph.target_group.field_description
     - field.field.paragraph.target_group.field_municipality
+    - field.field.paragraph.target_group.field_municipality_irrelevant
     - field.field.paragraph.target_group.field_target_group_municipality
     - paragraphs.paragraphs_type.target_group
   module:
@@ -45,6 +46,16 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 0
+    region: content
+  field_municipality_irrelevant:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 4
     region: content
   field_target_group_municipality:
     type: entity_reference_label

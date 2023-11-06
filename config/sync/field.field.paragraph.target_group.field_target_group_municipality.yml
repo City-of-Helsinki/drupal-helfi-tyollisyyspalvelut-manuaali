@@ -6,15 +6,6 @@ dependencies:
     - field.storage.paragraph.field_target_group_municipality
     - paragraphs.paragraphs_type.target_group
     - taxonomy.vocabulary.municipality
-  module:
-    - epp
-    - require_on_publish
-third_party_settings:
-  epp:
-    value: ''
-    on_update: 0
-  require_on_publish:
-    require_on_publish: true
 id: paragraph.target_group.field_target_group_municipality
 field_name: field_target_group_municipality
 entity_type: paragraph
