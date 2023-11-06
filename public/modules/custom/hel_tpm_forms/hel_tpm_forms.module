@@ -113,6 +113,17 @@ function hel_tpm_forms_node_service_form_alter_helper(&$form, FormStateInterface
     ],
   ];
 
+  // Set field_target_group_municipality visible and required
+  // only when field_municipality_irrelevant is not selected.
+  $form['field_target_group']['widget'][0]['subform']['field_target_group_municipality']['widget']['#states'] = [
+    'visible' => [
+      [':input[name="field_target_group[0][subform][field_municipality_irrelevant][value]"]' => ['checked' => FALSE]],
+    ],
+    'required' => [
+      [':input[name="field_target_group[0][subform][field_municipality_irrelevant][value]"]' => ['checked' => FALSE]],
+    ]
+  ];
+
   $form['paging_footer'] = [
     '#theme' => 'hel_tpm_steps',
   ];
