@@ -11,6 +11,7 @@ dependencies:
     - field.field.paragraph.target_group.field_target_group_municipality
     - paragraphs.paragraphs_type.target_group
   module:
+    - hel_tpm_general
     - options
     - range
     - text
@@ -47,21 +48,12 @@ content:
     third_party_settings: {  }
     weight: 0
     region: content
-  field_municipality_irrelevant:
-    type: boolean
-    label: above
-    settings:
-      format: default
-      format_custom_false: ''
-      format_custom_true: ''
-    third_party_settings: {  }
-    weight: 4
-    region: content
   field_target_group_municipality:
-    type: entity_reference_label
+    type: hel_tpm_general_municipality_field_formatter
     label: above
     settings:
-      link: false
+      empty_text: "Municipality doesn't matter"
+      link: 0
     third_party_settings: {  }
     weight: 1
     region: content
@@ -70,4 +62,5 @@ hidden:
   entity_print_view_pdf: true
   entity_print_view_word_docx: true
   field_municipality: true
+  field_municipality_irrelevant: true
   search_api_excerpt: true
