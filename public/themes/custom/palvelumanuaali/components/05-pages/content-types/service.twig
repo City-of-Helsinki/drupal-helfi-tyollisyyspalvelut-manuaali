@@ -95,8 +95,12 @@
             "heading": 'Additional info'|t,
             "heading_modifiers": ['margin-bottom-two', 'blue-desktop'],
           } %}
-          {{ content.entitygroupfield }}
-          {{ content.field_service_producer }}
+          {% if content.entitygroupfield['0'] == content.field_service_producer['0']  %}
+            {{ content.entitygroupfield }}
+          {% else %}
+            {{ content.entitygroupfield }}
+            {{ content.field_service_producer }}
+          {% endif %}
         </div>
       {% endif %}
 
