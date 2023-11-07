@@ -76,6 +76,25 @@
   @include large {
     margin-bottom: 102px;
   }
+  .date {
+    margin-bottom: 0;
+  }
+  .service-header-wrapper {
+    margin-bottom: $space;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: $space-one-and-half;
+    > div {
+      line-height: 24px;
+    }
+    @include large {
+      flex-direction: row;
+    }
+    .organizing-group {
+      @extend .font-small-caption;
+      @extend .font-primary-blue;
+    }
+  }
 }
 
 .service {
@@ -120,10 +139,24 @@
     }
   }
   .content-sidebar {
-    >.h4 {
-      margin-bottom: $space-double;
+    .contact-info-wrapper,
+    .additional-info-wrapper {
       @include large {
-        margin-bottom: $space-two-and-half;
+        border-bottom: 2px solid clr(background);
+        border-radius: 4px;
+        margin-bottom: $space-triple;
+      }
+      >div {
+          margin-bottom: $space-double;
+          &:last-child {
+            margin-bottom: $space-triple;
+          }
+      }
+    }
+    .field--name-field-service-producer,
+    .field--name-entitygroupfield {
+      .field__item {
+        margin-bottom: 0;
       }
     }
   }
