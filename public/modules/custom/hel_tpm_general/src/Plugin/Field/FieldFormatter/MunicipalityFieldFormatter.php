@@ -33,8 +33,10 @@ final class MunicipalityFieldFormatter extends EntityReferenceLabelFormatter {
     if (!empty($element)) {
       return $element;
     }
+    $entity = $items->getEntity()->getParentEntity();
     $element[] = [
       '#markup' => $this->t('Municipality doesn\'t matter'),
+      '#cache' => ['#tags' => !empty($entity) ? $entity->getCacheTags() : NULL]
     ];
     return $element;
   }
