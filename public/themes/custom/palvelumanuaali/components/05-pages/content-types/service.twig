@@ -95,7 +95,7 @@
             "heading": 'Additional information'|t,
             "heading_modifiers": ['margin-bottom-two', 'blue-desktop'],
           } %}
-          {% if content.entitygroupfield['0'] == content.field_service_producer['0']  %}
+          {% if (content.entitygroupfield['0'] == content.field_service_producer['0']) and content.field_service_producer['#items']|length == 1 %}
             {{ content.entitygroupfield }}
           {% else %}
             {{ content.entitygroupfield }}
