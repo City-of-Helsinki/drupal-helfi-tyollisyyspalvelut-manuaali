@@ -142,16 +142,16 @@
   .content-sidebar {
     .contact-info-wrapper,
     .additional-info-wrapper {
-      @include large {
+      @include xl {
         border-bottom: 2px solid clr(background);
         border-radius: 4px;
         margin-bottom: $space-triple;
       }
       >div {
-          margin-bottom: $space-double;
-          &:last-child {
-            margin-bottom: $space-triple;
-          }
+        margin-bottom: $space-double;
+        &:last-child {
+          margin-bottom: $space-triple;
+        }
       }
     }
     .field--name-field-service-producer,
