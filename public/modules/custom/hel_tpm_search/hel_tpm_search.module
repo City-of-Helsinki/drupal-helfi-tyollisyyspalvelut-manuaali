@@ -25,7 +25,7 @@ function hel_tpm_search_views_query_alter(ViewExecutable $view, QueryPluginBase 
         continue;
       }
       foreach ($condition['conditions'] as $key2 => $cond) {
-        if ($cond[0] == 'field_municipality') {
+        if ($cond[0] == 'field_municipality_irrelevant') {
           unset($condition['conditions'][$key2]);
         }
       }

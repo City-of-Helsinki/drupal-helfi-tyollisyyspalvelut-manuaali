@@ -19,7 +19,6 @@ dependencies:
     - 'taxonomy_term:municipality:72ac1850-9c40-4cf3-9ede-352383bb125a'
     - 'taxonomy_term:municipality:d00e8633-8287-41e3-b6b4-a5a7695265c2'
     - 'taxonomy_term:municipality:d8aee90f-d5eb-45ea-956a-8518601779ff'
-    - 'taxonomy_term:municipality:f1fef491-9547-4f98-bd16-1899c476c555'
   module:
     - better_exposed_filters
     - hel_tpm_search
@@ -316,7 +315,7 @@ display:
           exposed: true
           expose:
             operator_id: field_service_set_op
-            label: 'Palvelukategoria:'
+            label: Palvelukategoria
             description: ''
             use_operator: false
             operator: field_service_set_op
@@ -367,7 +366,7 @@ display:
           exposed: true
           expose:
             operator_id: field_life_situations_op
-            label: 'Elämäntilanne:'
+            label: Elämäntilanne
             description: ''
             use_operator: false
             operator: field_life_situations_op
@@ -693,17 +692,54 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-        field_municipality:
-          id: field_municipality
+        status:
+          id: status
           table: search_api_index_service_search_solr_index
-          field: field_municipality
+          field: status
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_boolean
+          operator: '='
+          value: '1'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        field_target_group_municipality:
+          id: field_target_group_municipality
+          table: search_api_index_service_search_solr_index
+          field: field_target_group_municipality
           relationship: none
           group_type: group
           admin_label: ''
           plugin_id: search_api_term
           operator: or
           value:
-            408: 408
             33: 33
             37: 37
             32: 32
@@ -711,14 +747,15 @@ display:
             38: 38
             36: 36
             34: 34
+            408: 408
           group: 2
           exposed: true
           expose:
-            operator_id: field_municipality_op
+            operator_id: field_target_group_municipality_op
             label: Kotikunta
             description: ''
             use_operator: false
-            operator: field_municipality_op
+            operator: field_target_group_municipality_op
             operator_limit_selection: false
             operator_list: {  }
             identifier: field_municipality
@@ -752,17 +789,16 @@ display:
           hierarchy: false
           limit: true
           error_message: true
-        field_municipality_1:
-          id: field_municipality_1
+        field_municipality_irrelevant:
+          id: field_municipality_irrelevant
           table: search_api_index_service_search_solr_index
-          field: field_municipality
+          field: field_municipality_irrelevant
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: search_api_term
-          operator: or
-          value:
-            39: 39
+          plugin_id: search_api_boolean
+          operator: '='
+          value: '1'
           group: 2
           exposed: false
           expose:
@@ -779,7 +815,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-            reduce: false
           is_grouped: false
           group_info:
             label: ''
@@ -792,12 +827,6 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          reduce_duplicates: false
-          vid: municipality
-          type: select
-          hierarchy: false
-          limit: true
-          error_message: true
       filter_groups:
         operator: AND
         groups:
@@ -1069,7 +1098,7 @@ display:
                 options_show_only_used_filtered: 0
                 options_hide_when_empty: 0
                 options_show_items_count: 0
-              field_municipality:
+              field_target_group_municipality:
                 plugin_id: bef_dropdown_multiselet
                 advanced:
                   sort_options: false

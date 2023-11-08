@@ -27,7 +27,8 @@ class NotificationLimitConstraintValidator extends ConstraintValidator {
     }
 
     $entityQuery = \Drupal::entityQuery('notification_message')
-      ->condition('type', $constraint->type);
+      ->condition('type', $constraint->type)
+      ->accessCheck(TRUE);
     $notificationCount = $entityQuery->count()->execute();
 
     if ($notificationCount >= $constraint->limit) {
