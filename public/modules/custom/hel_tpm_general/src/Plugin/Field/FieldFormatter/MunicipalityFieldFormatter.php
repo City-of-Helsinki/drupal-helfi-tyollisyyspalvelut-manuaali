@@ -32,10 +32,10 @@ final class MunicipalityFieldFormatter extends EntityReferenceLabelFormatter {
     $element = parent::viewElements($items, $langcode);
     $paragraph = $items->getEntity();
     $field_municipality_irrelevant = $paragraph->field_municipality_irrelevant;
+    // If there is no value return default render of the element.
     if (empty($field_municipality_irrelevant->value) || $field_municipality_irrelevant->value == 0) {
       return $element;
     }
-
     // Create render from municipality irrelevant field.
     $render = $field_municipality_irrelevant->view([
       'type' => 'boolean_formatter',
