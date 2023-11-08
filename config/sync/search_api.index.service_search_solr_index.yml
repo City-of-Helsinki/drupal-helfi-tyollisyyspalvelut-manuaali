@@ -17,6 +17,7 @@ dependencies:
     - field.storage.node.field_address
     - field.storage.paragraph.field_service_location
     - field.storage.node.field_target_group
+    - field.storage.paragraph.field_municipality_irrelevant
     - field.storage.paragraph.field_target_group_municipality
     - field.storage.paragraph.field_age
     - field.storage.paragraph.field_age_groups
@@ -201,6 +202,17 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_life_situations
+  field_municipality_irrelevant:
+    label: 'Target group » Paragraafi  » Kotikunnalla ei merkitystä'
+    datasource_id: 'entity:node'
+    property_path: 'field_target_group:entity:field_municipality_irrelevant'
+    type: boolean
+    dependencies:
+      config:
+        - field.storage.node.field_target_group
+        - field.storage.paragraph.field_municipality_irrelevant
+      module:
+        - paragraphs
   field_service_execution:
     label: Toteutustapa
     datasource_id: 'entity:node'
