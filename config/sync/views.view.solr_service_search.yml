@@ -483,7 +483,7 @@ display:
               authenticated: authenticated
           is_grouped: true
           group_info:
-            label: 'Palvelu on maksullinen'
+            label: Maksullisuus
             description: ''
             identifier: field_free_service
             optional: true
@@ -501,10 +501,6 @@ display:
                 title: Maksuton
                 operator: '='
                 value: '0'
-              3:
-                title: ''
-                operator: '='
-                value: ''
         age_groups_filter:
           id: age_groups_filter
           table: search_api_index_service_search_solr_index
