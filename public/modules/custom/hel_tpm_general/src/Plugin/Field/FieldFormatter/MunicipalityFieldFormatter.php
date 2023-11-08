@@ -29,15 +29,15 @@ final class MunicipalityFieldFormatter extends EntityReferenceLabelFormatter {
    * {@inheritdoc}
    */
   public function viewElements(FieldItemListInterface $items, $langcode): array {
-    $element = parent::viewElements($items, $langcode);
-    if (!empty($element)) {
-      return $element;
+    $element = [];
+    if (!$items->isEmpty()) {
+      return parent::viewElements($items, $langcode);
     }
-    $entity = $items->getEntity()->getParentEntity();
-    $element[] = [
-      '#markup' => $this->t('Municipality doesn\'t matter'),
-      '#cache' => ['#tags' => !empty($entity) ? $entity->getCacheTags() : NULL]
-    ];
+    $entity = $items->getEntity();
+    $element[] = $entity->field_target_group_municipality->view([
+      'type' => 'entity_reference_label',
+      'label' => 'hidden'
+    ]);
     return $element;
   }
 
