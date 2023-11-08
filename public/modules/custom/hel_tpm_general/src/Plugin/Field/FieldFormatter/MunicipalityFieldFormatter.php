@@ -30,14 +30,22 @@ final class MunicipalityFieldFormatter extends EntityReferenceLabelFormatter {
    */
   public function viewElements(FieldItemListInterface $items, $langcode): array {
     $element = parent::viewElements($items, $langcode);
-    if (!empty($element)) {
+    $paragraph = $items->getEntity();
+    $field_municipality_irrelevant = $paragraph->field_municipality_irrelevant;
+    if (empty($field_municipality_irrelevant->value) || $field_municipality_irrelevant->value == 0) {
       return $element;
     }
-    $entity = $items->getEntity()->getParentEntity();
-    $element[] = [
-      '#markup' => $this->t('Municipality doesn\'t matter'),
-      '#cache' => ['#tags' => !empty($entity) ? $entity->getCacheTags() : NULL]
-    ];
+
+    // Create render from municipality irrelevant field.
+    $render = $field_municipality_irrelevant->view([
+      'type' => 'boolean_formatter',
+      'label' => 'hidden',
+    ]);
+    // Alter markup to show title as value instead of on/off
+    $render[0]['#markup'] = $render['#title'];
+    // Set render to element value.
+    $element[0] = $render;
+
     return $element;
   }
 
