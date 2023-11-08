@@ -13,6 +13,7 @@ dependencies:
   module:
     - maxlength
     - range
+    - select2
     - text
 id: paragraph.target_group.default
 targetEntityType: paragraph
@@ -57,10 +58,14 @@ content:
       display_label: true
     third_party_settings: {  }
   field_target_group_municipality:
-    type: options_buttons
+    type: select2_entity_reference
     weight: 3
     region: content
-    settings: {  }
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
     third_party_settings: {  }
   translation:
     weight: 5
