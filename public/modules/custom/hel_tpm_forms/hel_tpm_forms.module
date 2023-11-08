@@ -156,10 +156,15 @@ function hel_tpm_forms_validate_service_form_helper(array &$form, FormStateInter
 }
 
 /**
+ * Helper validator for municipality selections.
+ *
  * @param array $target_group
- * @param FormStateInterface $form_state
+ *   Submitted target group values.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   Submitted form state object.
  *
  * @return void
+ *   -
  */
 function _hel_tpm_forms_validate_municipality($target_group, FormStateInterface &$form_state) {
   $subform = $target_group[0]['subform'];
@@ -168,7 +173,7 @@ function _hel_tpm_forms_validate_municipality($target_group, FormStateInterface 
   if ((empty($municipality_irrelevant) || $municipality_irrelevant['value'] == 0) && empty($municipalities)) {
     $form_state->setErrorByName(
       'field_target_group][0][subform][field_target_group_municipality',
-      t('Selecting municipalities is required, unless municipality doesn\'t matter  is selected.')
+      t("Selecting municipalities is required, unless municipality doesn't matter  is selected.")
     );
   }
 }
@@ -178,11 +183,11 @@ function _hel_tpm_forms_validate_municipality($target_group, FormStateInterface 
  *
  * @param array $target_group
  *   Target group paragraph values.
- * @param FormStateInterface $form_state
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
  *   Form state interface.
  *
  * @return void
- *  -
+ *   -
  */
 function _hel_tpm_forms_validate_age_groups($target_group, &$form_state) {
   $age_groups = $target_group[0]['subform']['field_age_groups'][0]['value'] ?? NULL;
