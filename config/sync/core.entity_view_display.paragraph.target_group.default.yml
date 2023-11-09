@@ -12,30 +12,14 @@ dependencies:
     - paragraphs.paragraphs_type.target_group
   module:
     - hel_tpm_general
-    - options
-    - range
     - text
 id: paragraph.target_group.default
 targetEntityType: paragraph
 bundle: target_group
 mode: default
 content:
-  field_age:
-    type: range_integer
-    label: above
-    settings:
-      range_separator: '-'
-      thousand_separator: ''
-      range_combine: true
-      field_prefix_suffix: false
-      from_prefix_suffix: false
-      to_prefix_suffix: false
-      combined_prefix_suffix: false
-    third_party_settings: {  }
-    weight: 3
-    region: content
   field_age_groups:
-    type: list_default
+    type: hel_tpm_general_age_group_field_formatter
     label: above
     settings: {  }
     third_party_settings: {  }
@@ -60,6 +44,7 @@ hidden:
   entity_print_view_epub: true
   entity_print_view_pdf: true
   entity_print_view_word_docx: true
+  field_age: true
   field_municipality: true
   field_municipality_irrelevant: true
   search_api_excerpt: true
