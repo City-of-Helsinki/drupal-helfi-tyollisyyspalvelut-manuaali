@@ -7,6 +7,7 @@ dependencies:
     - field.field.paragraph.target_group.field_age_groups
     - field.field.paragraph.target_group.field_description
     - field.field.paragraph.target_group.field_municipality
+    - field.field.paragraph.target_group.field_municipality_irrelevant
     - field.field.paragraph.target_group.field_target_group_municipality
     - paragraphs.paragraphs_type.target_group
   module:
@@ -32,10 +33,10 @@ content:
     weight: 0
     region: content
   field_target_group_municipality:
-    type: entity_reference_label
+    type: hel_tpm_general_municipality_field_formatter
     label: above
     settings:
-      link: false
+      link: 0
     third_party_settings: {  }
     weight: 1
     region: content
@@ -45,4 +46,5 @@ hidden:
   entity_print_view_word_docx: true
   field_age: true
   field_municipality: true
+  field_municipality_irrelevant: true
   search_api_excerpt: true
