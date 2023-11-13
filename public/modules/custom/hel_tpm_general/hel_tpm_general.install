@@ -249,19 +249,34 @@ function hel_tpm_general_update_10100(&$sandbox) {
  * Migrate internal urls and files from paragraphs to fields.
  */
 function hel_tpm_general_update_10101(&$sandbox) {
+  $storage = \Drupal::entityTypeManager()->getStorage('node');
   $paragraphs_field = 'field_links_and_attachments';
   $internal_file_field = 'field_internal_files';
   $internal_links_field = 'field_internal_links';
 
-  $storage = \Drupal::entityTypeManager()->getStorage('node');
+  if (!isset($sandbox['progress'])) {
+    $efq = $storage->getQuery();
+    $max = $efq->condition('type', 'service')
+      ->condition($paragraphs_field, '', '<>')
+      ->accessCheck(FALSE)
+      ->count()
+      ->execute();
+    $sandbox['progress'] = 0;
+    $sandbox['current'] = 0;
+    $sandbox['max'] = $max;
+  }
+
   $efq = $storage->getQuery();
   $result = $efq->condition('type', 'service')
     ->condition($paragraphs_field, '', '<>')
+    ->condition('nid', $sandbox['current'], '>')
     ->accessCheck(FALSE)
+    ->sort('nid')
+    ->range(0, 5)
     ->execute();
-  $nodes = $storage->loadMultiple($result);
 
-  foreach ($nodes as $node) {
+  foreach ($result as $nid) {
+    $node = $storage->load($nid);
     // Load latest revision.
     if (!$node->isLatestRevision()) {
       $vid = $storage->getLatestRevisionId($node->id());
@@ -276,19 +291,39 @@ function hel_tpm_general_update_10101(&$sandbox) {
     $changed++;
     $node->setChangedTime($changed);
     $node->save();
+    $sandbox['progress']++;
+    $sandbox['current'] = $nid;
   }
+  $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
 }
 
 /**
- * Migrate language selections from paragraph to field_service_language
+ * Migrate language selections from paragraph to field_service_language.
  */
 function hel_tpm_general_update_10102(&$sandbox) {
   $node_field = 'field_service_language';
   $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+
+  if (!isset($sandbox['progress'])) {
+    $max = $node_storage->getQuery()
+      ->condition('type', 'service')
+      ->accessCheck(FALSE)
+      ->condition('field_service_time_and_location', '', '<>')
+      ->sort('nid')
+      ->count()
+      ->execute();
+    $sandbox['progress'] = 0;
+    $sandbox['current'] = 0;
+    $sandbox['max'] = $max;
+  }
+
   $nodes = $node_storage->getQuery()
     ->condition('type', 'service')
-    ->accessCheck(FALSE)
     ->condition('field_service_time_and_location', '', '<>')
+    ->condition('nid', $sandbox['current'], '>')
+    ->accessCheck(FALSE)
+    ->sort('nid')
+    ->range(0, 5)
     ->execute();
 
   $references = [];
@@ -307,8 +342,9 @@ function hel_tpm_general_update_10102(&$sandbox) {
         }
         $references[$result][$lang[0]['target_id']] = $lang[0];
       }
-
     }
+    $sandbox['current'] = $result;
+    $sandbox['progress']++;
   }
 
   // Add references to proper node field.
@@ -325,7 +361,61 @@ function hel_tpm_general_update_10102(&$sandbox) {
     $node->setChangedTime($changed);
     $node->set($node_field, $reference);
     $node->save();
+
   }
+  $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
+}
+
+/**
+ * Install field_municipality_irrelevant to paragraph target_group.
+ */
+function hel_tpm_general_update_10103(&$sandbox) {
+  $fields = ['field_municipality_irrelevant'];
+  $entity_type = 'paragraph';
+  $bundle = 'target_group';
+  _hel_tpm_general_ensure_entity_fields($entity_type, $bundle, $fields);
+}
+
+/**
+ * Migrate municipality not required fields.
+ */
+function hel_tpm_general_update_10104(&$sandbox) {
+  $municipality_tid = 39;
+  $storage = \Drupal::service('entity_type.manager')->getStorage('paragraph');
+
+  if (!isset($sandbox['progress'])) {
+    $max = $storage->getQuery()
+      ->condition('type', 'target_group')
+      ->condition('field_target_group_municipality', $municipality_tid, 'IN')
+      ->accessCheck(FALSE)
+      ->latestRevision()
+      ->count()
+      ->execute();
+    $sandbox['progress'] = 0;
+    $sandbox['current'] = 0;
+    $sandbox['max'] = $max;
+  }
+
+  $paragraphs = $storage->getQuery()
+    ->condition('type', 'target_group')
+    ->accessCheck(FALSE)
+    ->condition('field_target_group_municipality', $municipality_tid, 'IN')
+    ->latestRevision()
+    ->condition('revision_id', $sandbox['current'], '>')
+    ->range(0, 50)
+    ->sort('revision_id')
+    ->execute();
+
+  foreach ($paragraphs as $rev_id => $paragraph_id) {
+    $rev = $storage->loadRevision($rev_id);
+    $rev->set('field_municipality_irrelevant', 1);
+    $rev->save();
+
+    $sandbox['current'] = $rev_id;
+    $sandbox['progress']++;
+  }
+
+  $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
 }
 
 /**
@@ -346,4 +436,36 @@ function hel_tpm_general_update_10102(&$sandbox) {
 function _hel_tpm_general_migrate_paragraph_field($paragraph, $paragraph_field, &$node, $internal_file_field) {
   $files = $paragraph->{$paragraph_field}->getValue();
   $node->set($internal_file_field, $files);
+}
+
+/**
+ * Helper function to ensure entity type bundle fields.
+ *
+ * @param string $entity_type
+ *   Entity type id.
+ * @param string $bundle
+ *   Entity bundle id.
+ * @param array $fields
+ *   Fields you want to ensure.
+ *
+ * @return void
+ *   -
+ *
+ * @throws \Drupal\Core\Entity\EntityStorageException
+ */
+function _hel_tpm_general_ensure_entity_fields(string $entity_type, string $bundle, array $fields) : void {
+  $config_dir = Settings::get('config_sync_directory');
+  $config_directory = new FileStorage($config_dir);
+  foreach ($fields as $field) {
+    $field_storage_name = 'field.storage.' . $entity_type . '.' . $field;
+    $config_record = $config_directory->read($field_storage_name);
+    if (!FieldStorageConfig::loadByName($config_record['entity_type'], $config_record['field_name'])) {
+      FieldStorageConfig::create($config_record)->save();
+    }
+    $field_config_name = 'field.field.' . $entity_type . '.' . $bundle . '.' . $field;
+    $config_record = $config_directory->read($field_config_name);
+    if (!FieldConfig::loadByName($config_record['entity_type'], $config_record['bundle'], $config_record['field_name'])) {
+      FieldConfig::create($config_record)->save();
+    }
+  }
 }

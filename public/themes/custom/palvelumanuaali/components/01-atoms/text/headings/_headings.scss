@@ -226,6 +226,10 @@ $color-heading: clr(accent);
 
 .h5 {
   @include heading-xs;
+  font-size: 1rem;
+  @include large {
+    font-size: 1.125rem;
+  }
   &--margin-bottom {
     margin-bottom: $space;
   }
@@ -236,6 +240,15 @@ $color-heading: clr(accent);
       margin-bottom: $space-two-and-half;
     @include xl {
       margin-bottom: $space-three-and-half;
+    }
+  }
+  &--margin-bottom-two {
+    margin-bottom: $space-double;
+  }
+  &--blue-desktop {
+    color: clr(text);
+    @include large {
+      color: clr(alt-header-color);
     }
   }
 }

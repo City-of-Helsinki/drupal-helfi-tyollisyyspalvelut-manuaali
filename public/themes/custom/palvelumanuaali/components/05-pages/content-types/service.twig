@@ -50,16 +50,26 @@
       main_content_id: main_content_id,
   } %}
 
-  {% block content %} {{ content|without('flag_cart', 'flag_lists', 'view_mode_switcher', 'field_other_services', 'field_contact_info_external', 'field_service_producer', 'entitygroupfield') }}{% endblock %}
+{% block content %}  {{ content|without('flag_cart', 'flag_lists', 'view_mode_switcher', 'field_other_services', 'field_contact_info_external', 'field_service_producer', 'entitygroupfield') }}{% endblock %}
     {% block page_content %}
-      {% if service__updated %}
-        {% include "@atoms/text/text/01-paragraph.twig" with {
-          paragraph_base_class: card__date__base_class|default('date'),
-          paragraph_modifiers: card__date__modifiers,
-          paragraph_blockname: card__base_class,
-          paragraph_content: service__updated,
-        } %}
-      {% endif %}
+      <div class="service-header-wrapper">
+        {% if content.entitygroupfield %}
+          {% include "@atoms/text/text/01-paragraph.twig" with {
+            paragraph_base_class: card__date__base_class|default('organizing-group'),
+            paragraph_modifiers: card__date__modifiers,
+            paragraph_blockname: card__base_class,
+            paragraph_content: content.entitygroupfield['0'],
+          } %}
+        {% endif %}
+        {% if service__updated %}
+          {% include "@atoms/text/text/01-paragraph.twig" with {
+            paragraph_base_class: card__date__base_class|default('date'),
+            paragraph_modifiers: card__date__modifiers,
+            paragraph_blockname: card__base_class,
+            paragraph_content: service__updated,
+          } %}
+        {% endif %}
+      </div>
         {% include "@atoms/text/headings/_heading.twig" with {
           heading_level: '1',
           heading: node__label,
@@ -68,14 +78,32 @@
       %}
     {% endblock %}
     {% block page_sidebar %}
-      {% include "@atoms/text/headings/_heading.twig" with {
-        "heading_level": 4,
-        "heading": 'Contacts'|t,
-        "heading_modifiers": 'semibold',
-      } %}
-      {{ content.field_contact_info_external }}
-      {{ content.field_service_producer }}
-      {{ content.entitygroupfield }}
+      {% if content.field_contact_info_external|render %}
+        <div class="contact-info-wrapper">
+          {% include "@atoms/text/headings/_heading.twig" with {
+            "heading_level": 5,
+            "heading": 'Contacts'|t,
+            "heading_modifiers": ['margin-bottom-two', 'blue-desktop'],
+          } %}
+          {{ content.field_contact_info_external }}
+        </div>
+      {% endif %}
+      {% if content.entitygroupfield or content.field_service_producer %}
+        <div class="additional-info-wrapper">
+          {% include "@atoms/text/headings/_heading.twig" with {
+            "heading_level": 5,
+            "heading": 'Additional information'|t,
+            "heading_modifiers": ['margin-bottom-two', 'blue-desktop'],
+          } %}
+          {% if (content.entitygroupfield['0'] == content.field_service_producer['0']) and content.field_service_producer['#items']|length == 1 %}
+            {{ content.entitygroupfield }}
+          {% else %}
+            {{ content.entitygroupfield }}
+            {{ content.field_service_producer }}
+          {% endif %}
+        </div>
+      {% endif %}
+
     {% endblock %}
   {% endembed %}
 {% endif %}

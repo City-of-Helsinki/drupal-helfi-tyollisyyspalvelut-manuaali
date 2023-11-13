@@ -46,6 +46,9 @@
         <span class="link-wrapper">  <a class="collapse-toggler" data-bs-toggle="collapse" href="#collapseItem" role="button" aria-expanded="false" aria-controls="collapseItem">{{ 'Show additional choices'|t }}</a></span>
          {{ form['actions']['reset'] }}
         </div>
+        <div class='cost-reset'>
+             {{ form['actions']['reset'] }}
+        </div>
       {% endif %}
     </div>
     {{ form|without(fieldsMain, fieldsSecondary, 'search_wrapper', 'actions') }}

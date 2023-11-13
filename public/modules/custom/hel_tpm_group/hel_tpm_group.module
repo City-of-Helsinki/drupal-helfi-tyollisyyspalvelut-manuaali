@@ -129,6 +129,21 @@ function hel_tpm_group_entity_postsave(EntityInterface $entity, $op) {
 }
 
 /**
+ * Implements hook_views_data_alter().
+ */
+function hel_tpm_group_views_data_alter(array &$data) {
+  $data['group_relationship_field_data']['group_label_filter'] = [
+    'title' => t('Parent group with label'),
+    'filter' => [
+      'title' => t('Parent group with label'),
+      'help' => 'Filters by parent group, using the group labels.',
+      'field' => 'gid',
+      'id' => 'group_label_filter',
+    ],
+  ];
+}
+
+/**
  * Helper function to get valid site roles for selection.
  *
  * @return array

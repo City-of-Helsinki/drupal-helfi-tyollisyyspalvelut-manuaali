@@ -58,6 +58,7 @@ class DropdownMultiselect extends FilterWidgetBase {
       $form[$field_id]['#type'] = 'select';
       $form[$field_id]['#multiple'] = TRUE;
     }
+
     $form[$field_id]['#attributes']['class'][] = 'dropdownMultiselect';
     $form['#attached']['library'][] = 'hel_tpm_search/dropdown_multiselect';
 

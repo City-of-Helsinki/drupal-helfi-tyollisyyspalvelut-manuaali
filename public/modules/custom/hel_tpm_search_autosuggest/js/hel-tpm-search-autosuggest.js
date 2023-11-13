@@ -172,7 +172,7 @@
       } else {
         $('.text-search-wrapper input[id^="edit-reset--"]').show();
       }
-      
+
       $(document).ready(function() {
 
         if ($(selectedMultiselect).length) {
@@ -202,6 +202,13 @@
           $(this).closest('form').find('select').val('');
           $(this).closest('form').find('input[type=radio]').prop('checked', false);
           $(this).closest('form').find('input[type=checkbox]').prop('checked', false);
+          $(this).closest('form').find('[id^="edit-submit-"]').click();
+        });
+        $('.cost-reset input[id^="edit-reset--"]').click (function (event) {
+          event.preventDefault();
+          $(this).closest('form').find('.form-item-field-free-service select').val('');
+          $(this).closest('form').find('.form-item-field-free-service input[type=radio]').prop('checked', false);
+          $(this).closest('form').find('.form-item-field-free-service input[type=checkbox]').prop('checked', false);
           $(this).closest('form').find('[id^="edit-submit-"]').click();
         });
       });
