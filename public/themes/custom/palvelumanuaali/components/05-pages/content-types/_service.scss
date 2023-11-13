@@ -1,3 +1,20 @@
+.blue-padded-round-corners-card {
+  display: flex;
+  align-items: center;
+
+  background: clr(background-dropdown);
+  border: 2px solid clr(light-border);
+  border-radius: 8px;
+
+  margin-top: $space-double;
+  padding: $space $space-one-and-half;
+
+  font-size: 16px;
+  line-height: 28px;
+
+  color: clr(alt-header-color);
+}
+
 .service-page {
   #block-system-main-block {
     @include large {
@@ -40,20 +57,7 @@
   .field--name-field-obligatoryness,
   .field--name-field-statements,
   .field--name-field-service-suits-job-search {
-    display: flex;
-    align-items: center;
-
-    background: clr(background-dropdown);
-    border: 2px solid clr(light-border);
-    border-radius: 8px;
-
-    margin-top: $space-double;
-    padding: $space $space-one-and-half;
-
-    font-size: 16px;
-    line-height: 28px;
-
-    color: clr(alt-header-color);
+    @extend .blue-padded-round-corners-card;
     .icon-i {
       display: block;
 
@@ -66,6 +70,18 @@
       background-size: cover;
       background-repeat: no-repeat;
     }
+  }
+  .field--name-field-other-preferences{
+     @extend .blue-padded-round-corners-card;
+     display: block;
+     .field__label {
+       margin-bottom: $space;
+     }
+     .field__item {
+       display: list-item;
+       margin-left: $space-triple;
+       padding-left: $space-one-half;
+     }
   }
 }
 
@@ -125,6 +141,7 @@
   .field--name-field-statements  {
     margin-bottom: $space-double;
   }
+
   .field--name-field-service-suits-job-search {
     margin-bottom: $space-double;
   }
@@ -246,6 +263,7 @@
     }
 
   }
+
 }
 
 .field--name-field-internal-links,
