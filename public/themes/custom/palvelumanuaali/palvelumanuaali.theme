@@ -59,6 +59,7 @@ function palvelumanuaali_preprocess_node(&$variables) {
     $variables['is_front'] =  \Drupal::service('path.matcher')->isFrontPage();
   }
   _palvelumanuaali_preprocess_view_card_liftup($variables);
+  _palvelumanuaali_preprocess_taxonomy_card($variables);
 }
 
 /**
@@ -97,6 +98,29 @@ function _palvelumanuaali_preprocess_view_card_liftup(&$variables) {
     $state_label = $workflow->get('type_settings')['states'][$state_name]['label'];
     $variables['state_label'] = $state_label;
     $variables['status_modifier'] = !empty($status_colors[$state_name]) ? $status_colors[$state_name] : '';
+  }
+
+  // Fetch organizing group value for liftup rendeging.
+  $entity_group_field = $variables['node']->entitygroupfield;
+  if ($entity_group_field->count() > 0) {
+    $group_content = $entity_group_field->get(0)->entity;
+    $variables['organizing_group'] = $group_content->getGroup()->label();
+  }
+
+}
+
+function _palvelumanuaali_preprocess_taxonomy_card(&$variables) {
+  if (empty($variables['view_mode']) || $variables['view_mode'] !== 'taxonomy_card') {
+    return;
+  }
+
+  $node = $variables['node'];
+  $content_moderation_state = ContentModerationState::loadFromModeratedEntity($node);
+  if ($content_moderation_state) {
+    $state_name = $content_moderation_state->get('moderation_state')->value;
+    $workflow = $content_moderation_state->get('workflow')->entity;
+    $state_label = $workflow->get('type_settings')['states'][$state_name]['label'];
+    $variables['state_label'] = $state_label;
   }
 
   // Fetch organizing group value for liftup rendeging.

@@ -360,12 +360,16 @@ display:
           1: AND
       style:
         type: default
+        options:
+          row_class: taxonomy-card
+          default_row_class: true
+          uses_fields: false
       row:
         type: search_api
         options:
           view_modes:
             'entity:node':
-              service: view_card_lift
+              service: taxonomy_card
       query:
         type: search_api_query
         options:
@@ -376,7 +380,17 @@ display:
           contextual_filters_or: true
       relationships: {  }
       use_ajax: true
-      header: {  }
+      header:
+        result:
+          id: result
+          table: views
+          field: result
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: result
+          empty: false
+          content: "<div class='view-results-amount-wrapper'><span class='result-amount-mobile'>Palveluiden määrä:</span> <span class='result-number'>@total</span> <span class='result-amount'>Palvelua</span></div>"
       footer: {  }
       display_extenders: {  }
     cache_metadata:

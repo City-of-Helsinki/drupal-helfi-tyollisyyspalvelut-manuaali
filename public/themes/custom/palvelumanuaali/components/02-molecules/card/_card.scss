@@ -545,3 +545,53 @@ $card-font-small-heading: 15px;
     font-weight: 600;
   }
 }
+
+.card--taxonomy-card {
+  @include xl {
+    height: 100%;
+  }
+  .card__caption {
+    @extend .small-uppercase-card-caption;
+  }
+  .card__heading {
+    @extend .card-heading;
+  }
+  .card__content {
+    margin: $space;
+    @include xl {
+      margin: $space-double
+    }
+  }
+  .card__body {
+    display: none;
+    @include xl {
+      display: block;
+      margin-top: $space;
+      margin-bottom: $space-one-and-half;
+    }
+    .field__item {
+      @extend .small-font;
+    }
+  }
+  .icon-wrapper {
+    display: none;
+    @include xl {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    >.icon {
+      position: relative;
+      margin: 0;
+    }
+    .field__item {
+      font-size: 14px;
+      color: clr(text);
+    }
+  }
+  .price-and-language-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: $space;
+  }
+}
