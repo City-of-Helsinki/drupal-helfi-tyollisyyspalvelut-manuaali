@@ -54,6 +54,11 @@ if (getenv('REDIS_HOST')) {
   $settings['cache_prefix'] = getenv('REDIS_PREFIX') . '_';
 }
 
+if (getenv('DRUPAL_VARNISH_HOST') && getenv('DRUPAL_VARNISH_PORT')) {
+  $config['varnish_purger.settings.2ce1889afd']['hostname'] = getenv('DRUPAL_VARNISH_HOST');
+  $config['varnish_purger.settings.2ce1889afd']['port'] = getenv('DRUPAL_VARNISH_PORT');
+}
+
 if (getenv('SMTP_HOST')) {
   $config['smtp.settings']['smtp_host'] = getenv('SMTP_HOST');
 }

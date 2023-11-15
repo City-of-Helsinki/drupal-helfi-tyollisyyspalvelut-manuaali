@@ -172,7 +172,8 @@ $pill-colors: (
   input {
     @extend .visually-hidden;
   }
-  &.highlight {
+  &.highlight,
+  &:hover {
     background: clr(background-section);
     .form-item__label {
       color: clr(text-inverse)

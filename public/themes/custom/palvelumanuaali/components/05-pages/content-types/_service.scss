@@ -1,3 +1,20 @@
+.blue-padded-round-corners-card {
+  display: flex;
+  align-items: center;
+
+  background: clr(background-dropdown);
+  border: 2px solid clr(light-border);
+  border-radius: 8px;
+
+  margin-top: $space-double;
+  padding: $space $space-one-and-half;
+
+  font-size: 16px;
+  line-height: 28px;
+
+  color: clr(alt-header-color);
+}
+
 .service-page {
   #block-system-main-block {
     @include large {
@@ -40,20 +57,7 @@
   .field--name-field-obligatoryness,
   .field--name-field-statements,
   .field--name-field-service-suits-job-search {
-    display: flex;
-    align-items: center;
-
-    background: clr(background-dropdown);
-    border: 2px solid clr(light-border);
-    border-radius: 8px;
-
-    margin-top: $space-double;
-    padding: $space $space-one-and-half;
-
-    font-size: 16px;
-    line-height: 28px;
-
-    color: clr(alt-header-color);
+    @extend .blue-padded-round-corners-card;
     .icon-i {
       display: block;
 
@@ -67,6 +71,18 @@
       background-repeat: no-repeat;
     }
   }
+  .field--name-field-other-preferences{
+     @extend .blue-padded-round-corners-card;
+     display: block;
+     .field__label {
+       margin-bottom: $space;
+     }
+     .field__item {
+       display: list-item;
+       margin-left: $space-triple;
+       padding-left: $space-one-half;
+     }
+  }
 }
 
 #service-page-full {
@@ -76,6 +92,25 @@
   @include large {
     margin-bottom: 102px;
   }
+  .date {
+    margin-bottom: 0;
+  }
+  .service-header-wrapper {
+    margin-bottom: $space;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: $space-one-and-half;
+    > div {
+      line-height: 24px;
+    }
+    @include large {
+      flex-direction: row;
+    }
+    .organizing-group {
+      @extend .font-small-caption;
+      @extend .font-primary-blue;
+    }
+  }
 }
 
 .service {
@@ -83,10 +118,11 @@
   border-radius: 16px;
   padding-top: 40px;
   padding-bottom: 40px;
+  padding-left: $space-one-and-half;
   @include large {
-   padding-left: 64px;
+   padding-left: $space-quadruple;
    padding-top: 35px;
-   padding-right: 32px;
+   padding-right: $space-double;
    padding-bottom: 37px;
   }
   .field {
@@ -105,6 +141,7 @@
   .field--name-field-statements  {
     margin-bottom: $space-double;
   }
+
   .field--name-field-service-suits-job-search {
     margin-bottom: $space-double;
   }
@@ -120,10 +157,24 @@
     }
   }
   .content-sidebar {
-    >.h4 {
-      margin-bottom: $space-double;
-      @include large {
-        margin-bottom: $space-two-and-half;
+    .contact-info-wrapper,
+    .additional-info-wrapper {
+      @include xl {
+        border-bottom: 2px solid clr(background);
+        border-radius: 4px;
+        margin-bottom: $space-triple;
+      }
+      >div {
+        margin-bottom: $space-double;
+        &:last-child {
+          margin-bottom: $space-triple;
+        }
+      }
+    }
+    .field--name-field-service-producer,
+    .field--name-entitygroupfield {
+      .field__item {
+        margin-bottom: 0;
       }
     }
   }
@@ -154,6 +205,7 @@
     .field__item {
       color: clr(alt-header-color);
       letter-spacing: 0.01em;
+      width: 100%;
       span {
         font-weight: 400;
       }
@@ -211,6 +263,7 @@
     }
 
   }
+
 }
 
 .field--name-field-internal-links,
