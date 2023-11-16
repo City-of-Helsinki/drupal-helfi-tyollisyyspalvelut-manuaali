@@ -1,0 +1,27 @@
+uuid: 01685308-83e7-43b7-ab9f-4a82b7e00077
+langcode: fi
+status: true
+dependencies:
+  module:
+    - taxonomy
+label: Taxonomies
+name: taxonomies
+group: null
+description: ''
+requireAllConditions: false
+disabled: false
+conditions:
+  'entity_bundle:taxonomy_term':
+    id: 'entity_bundle:taxonomy_term'
+    negate: false
+    uuid: 82cced19-337a-4fad-a0e5-8e5f5a4a7772
+    context_mapping:
+      taxonomy_term: '@taxonomy_term.taxonomy_term_route_context:taxonomy_term'
+    bundles:
+      municipality: municipality
+reactions:
+  body_class:
+    id: body_class
+    body_class: taxonomy-view-page
+    saved: false
+weight: 0
