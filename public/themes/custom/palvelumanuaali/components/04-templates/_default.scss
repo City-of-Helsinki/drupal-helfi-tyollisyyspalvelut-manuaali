@@ -141,6 +141,38 @@ body {
     }
 }
 
+.taxonomy-view-page {
+  .main-content {
+
+    @include xl {
+      &--with-sidebar {
+        .region-content {
+          margin-right: $space-double;
+          margin-left: $space-double;
+        }
+      }
+    }
+    @media (min-width:1640px) {
+      &--with-sidebar {
+        .region-content {
+          margin-right: $space-quadruple;
+          margin-left: $space-quadruple;
+        }
+      }
+    }
+    @include xxl {
+      &--with-sidebar {
+          .region-content {
+            margin:auto;
+             #block-system-main-block {
+               margin: auto;
+             }
+          }
+        }
+      }
+  }
+}
+
 .date {
   font-weight: bold;
   font-size: 12px;
