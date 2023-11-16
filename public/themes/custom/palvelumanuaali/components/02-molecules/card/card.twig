@@ -130,6 +130,26 @@
                                   button_icon: card__button_icon_src,
                                 } %}
                               {% endif %}
+                              {% if card__price or card__language %}
+                                <div class="price-and-language-wrapper">
+                                  {% if card__language %}
+                                    {% include "@atoms/text/text/01-paragraph.twig" with {
+                                      paragraph_base_class: card__language__base_class|default('langua'),
+                                      paragraph_modifiers: card__language__modifiers,
+                                      paragraph_blockname: card__base_class,
+                                      paragraph_content: card__language,
+                                    } %}
+                                  {% endif %}
+                                  {% if card__price %}
+                                    {% include "@atoms/text/text/01-paragraph.twig" with {
+                                    paragraph_base_class: card__price__base_class|default('price'),
+                                    paragraph_modifiers: card__price__modifiers,
+                                    paragraph_blockname: card__base_class,
+                                    paragraph_content: card__price,
+                                    } %}
+                                  {% endif %}
+                                </div>
+                              {% endif %}
                               {% if card__date %}
                                 {% include "@atoms/text/text/01-paragraph.twig" with {
                                   paragraph_base_class: card__date__base_class|default('date'),
@@ -221,14 +241,34 @@
                       button_icon: card__button_icon_src,
                     } %}
                   {% endif %}
+                  {% if card__price or card__language %}
+                    <div class="price-and-language-wrapper">
+                      {% if card__language %}
+                        {% include "@atoms/text/text/01-paragraph.twig" with {
+                          paragraph_base_class: card__language__base_class|default('langua'),
+                          paragraph_modifiers: card__language__modifiers,
+                          paragraph_blockname: card__base_class,
+                          paragraph_content: card__language,
+                        } %}
+                      {% endif %}
+                      {% if card__price %}
+                        {% include "@atoms/text/text/01-paragraph.twig" with {
+                        paragraph_base_class: card__price__base_class|default('price'),
+                        paragraph_modifiers: card__price__modifiers,
+                        paragraph_blockname: card__base_class,
+                        paragraph_content: card__price,
+                        } %}
+                      {% endif %}
+                    </div>
+                  {% endif %}
                   {% if card__date %}
                     {% include "@atoms/text/text/01-paragraph.twig" with {
-                      paragraph_base_class: card__date__base_class|default('date'),
-                      paragraph_modifiers: card__date__modifiers,
-                      paragraph_blockname: card__base_class,
-                      paragraph_content: card__date,
-                    } %}
-                {% endif %}
+                        paragraph_base_class: card__date__base_class|default('date'),
+                        paragraph_modifiers: card__date__modifiers,
+                        paragraph_blockname: card__base_class,
+                        paragraph_content: card__date,
+                        } %}
+                  {% endif %}
             {% endblock %}
             </div>
         {% endif %}
