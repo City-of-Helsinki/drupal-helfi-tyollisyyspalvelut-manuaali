@@ -96,9 +96,13 @@ class HelTpmGroupSubscriber implements EventSubscriberInterface {
    * @return void
    *   Returns nothing.
    */
-  public function onGroupMembershipChange(Event $event) {
+  public function onGroupMembershipChange(Event $event): void {
     $group_content = $event->groupContent;
     $user = $group_content->getEntity();
+    // No user is found for entity.
+    if (empty($user)) {
+      return;
+    }
     $this->updateUserRoles($user);
   }
 
