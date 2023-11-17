@@ -276,3 +276,30 @@
     width: unset;
   }
 }
+
+.field--name-field-internal-files,
+.field--name-field-file {
+  > .field__items{
+    .file,
+    a {
+      display: block;
+      width: 100%;
+    }
+    .field__item {
+      display: block;
+      position: relative;
+    }
+    a {
+      background-color: clr(background);
+      border-radius: 8px;
+      color: clr(text);
+      text-decoration: none;
+      font-size: 14px;
+      padding: $space 0 $space $space-three-and-half;
+      margin-bottom: $space-one-half;
+      &:hover {
+        background-color: clr(background-border);
+      }
+    }
+  }
+}
