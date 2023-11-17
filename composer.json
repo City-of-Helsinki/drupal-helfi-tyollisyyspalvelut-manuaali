@@ -192,7 +192,7 @@
         "drupal/core-dev": "^10",
         "phpspec/prophecy-phpunit": "^2.0",
         "vincentlanglet/twig-cs-fixer": "*",
-        "weitzman/drupal-test-traits": "^1.5",
+        "weitzman/drupal-test-traits": "^2.2",
         "zaporylie/composer-drupal-optimizations": "^1.2"
     },
     "conflict": {
@@ -219,7 +219,10 @@
         "classmap": [
             "scripts/composer/ScriptHandler.php"
         ],
-        "files": ["load.environment.php"]
+        "files": ["load.environment.php"],
+        "psr-4": {
+            "Drupal\\Tests\\dtt\\": "tests/dtt/src"
+        }
     },
     "scripts": {
         "pre-install-cmd": [

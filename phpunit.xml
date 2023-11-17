@@ -51,6 +51,10 @@
     <env name="MINK_DRIVER_ARGS" value=""/>
     <!-- Example for changing the driver args to webdriver tests MINK_DRIVER_ARGS_WEBDRIVER value: '["chrome", { "chromeOptions": { "w3c": false } }, "http://localhost:4444/wd/hub"]' For using the Firefox browser, replace "chrome" with "firefox" -->
     <env name="MINK_DRIVER_ARGS_WEBDRIVER" value=""/>
+    <env name="DTT_MINK_DRIVER_ARGS" value='["chrome", {"chromeOptions":{"w3c": false }}, "http://chromium:4444"]'/>
+    <env name="DTT_API_OPTIONS" value='{"socketTimeout": 360, "domWaitTimeout": 3600000}' />
+    <env name="DTT_API_URL" value="http://chromium:9222"/>
+    <env name="DTT_BASE_URL" value="https://helfi-manuska.lndo.site"/>
   </php>
   <testsuites>
     <testsuite name="unit">
@@ -67,6 +71,16 @@
     </testsuite>
     <testsuite name="build">
       <file>./tests/TestSuites/BuildTestSuite.php</file>
+    </testsuite>
+    <testsuite name="existing-site">
+      <directory>./tests/dtt/src/ExistingSite</directory>
+      <directory>./public/modules/custom/*/tests/src/ExistingSite</directory>
+      <directory>./public/modules/contrib/*/tests/src/ExistingSite</directory>
+    </testsuite>
+    <testsuite name="existing-site-javascript">
+      <directory>./tests/dtt/src/ExistingSiteJavascript</directory>
+      <directory>./public/modules/custom/*/tests/src/ExistingSiteJavascript</directory>
+      <directory>./public/modules/contrib/*/tests/src/ExistingSiteJavascript</directory>
     </testsuite>
   </testsuites>
   <listeners>
