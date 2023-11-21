@@ -47,3 +47,55 @@
 .text-align-center {
   text-align: center;
 }
+
+.small-uppercase-card-caption {
+  font-size: 8px;
+  color: clr(alt-header-color);
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px; /* 300% */
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  @include xl {
+    font-size: 12px;
+  }
+}
+
+.card-heading {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 20px; /* 166.667% */
+  letter-spacing: 0.12px;
+  color: clr(text);
+  @include xl {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: normal;
+  }
+}
+
+.font-small-caption {
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 16px; /* 177.778% */
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  @include large {
+    /* Desktop/Small Caption */
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px; /* 200% */
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+}
+
+.font-primary-blue {
+  color: clr(alt-header-color);
+}
+
+.font-primary-black {
+  color: clr(text);
+}

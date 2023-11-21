@@ -1,0 +1,32 @@
+uuid: 2454252b-ebeb-4887-ac85-b5bfaa8fe2e4
+langcode: fi
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.limited_fields
+    - field.field.paragraph.service_price.field_description
+    - field.field.paragraph.service_price.field_free_service
+    - field.field.paragraph.service_price.field_price
+    - paragraphs.paragraphs_type.service_price
+id: paragraph.service_price.limited_fields
+targetEntityType: paragraph
+bundle: service_price
+mode: limited_fields
+content:
+  field_free_service:
+    type: boolean
+    label: hidden
+    settings:
+      format: boolean
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  field_description: true
+  field_price: true
+  search_api_excerpt: true

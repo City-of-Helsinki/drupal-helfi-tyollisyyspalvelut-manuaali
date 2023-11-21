@@ -545,3 +545,73 @@ $card-font-small-heading: 15px;
     font-weight: 600;
   }
 }
+
+.card--taxonomy-card {
+  @include xl {
+    height: 100%;
+    min-height: calc()
+  }
+  .card__link {
+    @include xl {
+      display: flex;
+      align-items: stretch;
+    }
+  }
+  .card__caption {
+    @extend .small-uppercase-card-caption;
+  }
+  .card__heading {
+    @extend .card-heading;
+  }
+  .card__content {
+    margin: $space;
+    height: auto;
+    @include xl {
+      margin: $space-double;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  .card__body {
+    display: none;
+    @include xl {
+      display: block;
+      margin-top: $space;
+      margin-bottom: $space-one-and-half;
+    }
+    .field__item {
+      @extend .small-font;
+      @include xl {
+        overflow: hidden;
+        width: 100%;
+        display: -webkit-box;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+      }
+    }
+  }
+  .icon-wrapper {
+    display: none;
+    @include xl {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    >.icon {
+      position: relative;
+      margin: 0;
+    }
+    .field__item {
+      font-size: 14px;
+      color: clr(text);
+    }
+  }
+  .price-and-language-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: $space;
+    @include xl {
+      margin-top: auto;
+    }
+  }
+}
