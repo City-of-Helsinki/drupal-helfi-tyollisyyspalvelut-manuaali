@@ -50,7 +50,7 @@
     grid-column: 1/2;
     @include xl {
       margin-left: 610px;
-      grid-row:3;
+      grid-row: 4;
     }
     .button-wrapper {
       display: flex;
@@ -77,9 +77,9 @@
     @include xl {
       margin-top: unset;
       grid-column: 2/3;
-      grid-row:2;
+      grid-row: 3;
       >.form-item {
-        margin-top: $space-quadruple;
+        margin-top: unset;
       }
     }
   }
@@ -92,7 +92,7 @@
     grid-column: 1/2;
     gap: $space-one-and-half;
     @include xl {
-      grid-row: 3;
+      grid-row: 4;
 
     }
     .button {
