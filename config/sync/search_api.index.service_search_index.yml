@@ -1,6 +1,6 @@
 uuid: 9b52c1fa-8855-4413-a9fe-557610a8a275
 langcode: fi
-status: true
+status: false
 dependencies:
   config:
     - field.storage.node.field_accessibility
@@ -19,7 +19,6 @@ dependencies:
     - field.storage.paragraph.field_age
     - field.storage.node.field_address
     - field.storage.paragraph.field_service_location
-    - search_api.server.elastic_search
     - core.entity_view_mode.node.full
   module:
     - node
@@ -27,6 +26,7 @@ dependencies:
     - content_moderation
     - search_api
     - hel_tpm_search
+    - search_api_solr
 id: service_search_index
 name: 'Service search index'
 description: ''
@@ -258,9 +258,11 @@ datasource_settings:
 processor_settings:
   add_url: {  }
   aggregated_field: {  }
+  auto_aggregated_fulltext_field: {  }
   content_access:
     weights:
       preprocess_query: -30
+  custom_value: {  }
   entity_type: {  }
   html_filter:
     weights:
@@ -315,6 +317,7 @@ processor_settings:
   language_with_fallback: {  }
   rendered_item: {  }
   service_processor: {  }
+  solr_date_range: {  }
   stemmer:
     weights:
       preprocess_index: 0
@@ -354,4 +357,4 @@ options:
   cron_limit: 50
   index_directly: true
   track_changes_in_references: true
-server: elastic_search
+server: null
