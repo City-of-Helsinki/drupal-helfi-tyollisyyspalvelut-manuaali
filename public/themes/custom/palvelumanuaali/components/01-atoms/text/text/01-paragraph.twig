@@ -13,7 +13,7 @@
 #}
 {% set paragraph_base_class = paragraph_base_class|default('paragraph') %}
 
-<div {{ bem(paragraph_base_class, paragraph_modifiers, paragraph_blockname) }}>
+<div {{ bem(paragraph_base_class, paragraph_modifiers, paragraph_blockname, paragraph_extra_class) }}>
   {% block paragraph_content %}
     {{ paragraph_content }}
   {% endblock %}
