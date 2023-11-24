@@ -38,9 +38,47 @@
 
  @TODO: THIS CAN BE REMOVED IF BEM CLASSES CAN BE APPLIED IN WYSIWYG
 #}
-<div class="form-text-wrapper">
-{% for item in items %}
-  <strong>{{"Benefits of participation:"|t}}</strong>
-  {{item.content}}
-{% endfor %}
+{%
+  set classes = [
+    'field',
+    'field--name-' ~ field_name|clean_class,
+    'field--type-' ~ field_type|clean_class,
+    'field--label-' ~ label_display,
+    'field--content--inline',
+    'field--content--blue'
+  ]
+%}
+
+{%
+  set title_classes = [
+    'field__label',
+    label_display == 'visually_hidden' ? 'visually-hidden',
+  ]
+%}
+
+<div{{ attributes.addClass(classes) }}>
+  <div{{ title_attributes.addClass(title_classes) }}>
+  {% include "@atoms/text/headings/_heading.twig" with {
+    "heading_level": 5,
+    "heading": 'Internal attachments (open in a new tab):'|t,
+    "heading_modifiers": ['semibold','margin-bottom-extra'],
+  } %}
+  </div>
+  <div class="field__items">
+    {% for item in items %}
+      <div{{ item.attributes.addClass('field__item') }}>
+      {% include "@atoms/images/icons/_icon.twig" with {
+        icon_base_class: 'icon',
+        icon_name: 'file_1',
+        icon_modifiers: ['small','absolute-left-regular'],
+      } %}
+        {{item.content}}
+        {% include "@atoms/images/icons/_icon.twig" with {
+          icon_base_class: 'icon',
+          icon_name: 'download_1',
+          icon_modifiers: ['small','absolute-right-regular'],
+        } %}
+      </div>
+    {% endfor %}
+  </div>
 </div>
