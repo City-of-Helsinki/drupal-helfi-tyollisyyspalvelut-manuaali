@@ -419,6 +419,34 @@ function hel_tpm_general_update_10104(&$sandbox) {
 }
 
 /**
+ * Import field_service_coordination and field_career_markings.
+ */
+function hel_tpm_general_update_10105(&$sandbox) {
+  $config_path = Settings::get('config_sync_directory');
+  $source = new FileStorage($config_path);
+
+  // Import field storages.
+  $field_storage_configs = [
+    'field.storage.node.field_service_coordination',
+    'field.storage.node.field_career_markings',
+  ];
+  $field_storage_config = \Drupal::entityTypeManager()->getStorage('field_storage_config');
+  foreach ($field_storage_configs as $config) {
+    $field_storage_config->create($source->read($config))->save();
+  }
+
+  // Import node field configs.
+  $field_configs = [
+    'field.field.node.service.field_service_coordination',
+    'field.field.node.service.field_career_markings',
+  ];
+  $field_config = \Drupal::entityTypeManager()->getStorage('field_config');
+  foreach ($field_configs as $config) {
+    $field_config->create($source->read($config))->save();
+  }
+}
+
+/**
  * Helper function to migrate paragraph fields to node fields.
  *
  * @param \Drupal\Core\Entity\EntityInterface $paragraph
