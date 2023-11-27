@@ -1,0 +1,25 @@
+uuid: 4d53d1c0-d634-445d-ba95-b3e268329dc2
+langcode: fi
+status: true
+dependencies:
+  config:
+    - group.type.organisation
+    - group.type.service_provider
+  module:
+    - ggroup
+id: group_content_type_3652c4b169b23
+group_type: organisation
+content_plugin: 'subgroup:service_provider'
+plugin_config:
+  group_cardinality: 0
+  entity_cardinality: 1
+  parent_role_mapping:
+    organisation-expert: ''
+    organisation-editor: service_provider-organization_ad
+    organisation-administrator: service_provider-organization_ad
+    organisation-super_admin: ''
+  child_role_mapping:
+    service_provider-organization_ad: ''
+    service_provider-group_admin: ''
+    service_provider-editor: ''
+    service_provider-super_admin: ''
