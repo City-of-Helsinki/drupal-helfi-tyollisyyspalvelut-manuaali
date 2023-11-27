@@ -159,11 +159,9 @@ class ServiceStateChangedNotificationSubscriberTest extends GroupKernelTestBase 
     $values += [
       'title' => $this->randomMachineName(8),
     ];
-
     // Create node object.
     $node = Node::create($values);
     $node->save();
-
     return $this->reloadEntity($node);
   }
 
