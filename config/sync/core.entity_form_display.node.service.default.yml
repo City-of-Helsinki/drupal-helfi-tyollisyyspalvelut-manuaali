@@ -6,6 +6,7 @@ dependencies:
     - field.field.node.service.field_accessibility
     - field.field.node.service.field_attendance
     - field.field.node.service.field_career_marking
+    - field.field.node.service.field_career_markings
     - field.field.node.service.field_client_consent
     - field.field.node.service.field_contact_info
     - field.field.node.service.field_contact_info_external
@@ -468,6 +469,7 @@ third_party_settings:
     group_markings_for_service:
       children:
         - field_career_marking
+        - field_career_markings
       label: 'Merkinnät asiakastietojärjestelmään'
       region: content
       parent_name: group_specialist
@@ -638,6 +640,18 @@ content:
       form_display_mode: default
       default_paragraph_type: long_text_field_with_toolbar
     third_party_settings: {  }
+  field_career_markings:
+    type: text_textarea
+    weight: 12
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings:
+      maxlength:
+        maxlength_js: null
+        maxlength_js_label: 'Sisältö on rajattu @limit merkkiin, jäljellä: <strong>@remaining</strong>'
+        maxlength_js_enforce: false
   field_client_consent:
     type: boolean_checkbox
     weight: 12

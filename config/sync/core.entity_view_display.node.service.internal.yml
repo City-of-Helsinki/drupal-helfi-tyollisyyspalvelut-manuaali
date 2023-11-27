@@ -7,6 +7,7 @@ dependencies:
     - field.field.node.service.field_accessibility
     - field.field.node.service.field_attendance
     - field.field.node.service.field_career_marking
+    - field.field.node.service.field_career_markings
     - field.field.node.service.field_client_consent
     - field.field.node.service.field_contact_info
     - field.field.node.service.field_contact_info_external
@@ -130,6 +131,7 @@ third_party_settings:
     group_career_marking:
       children:
         - field_career_marking
+        - field_career_markings
       label: 'Merkinnät asiakastietojärjestelmään'
       parent_name: ''
       region: content
@@ -237,6 +239,13 @@ content:
       link: ''
     third_party_settings: {  }
     weight: 5
+    region: content
+  field_career_markings:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 6
     region: content
   field_contact_info:
     type: entity_reference_entity_view

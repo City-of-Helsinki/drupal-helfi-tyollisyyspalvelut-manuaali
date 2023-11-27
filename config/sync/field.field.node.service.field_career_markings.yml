@@ -1,0 +1,26 @@
+uuid: 5509d1a7-9eb3-412b-ac9c-6e5c01046825
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_career_markings
+    - node.type.service
+  module:
+    - require_on_publish
+    - text
+third_party_settings:
+  require_on_publish:
+    require_on_publish: true
+id: node.service.field_career_markings
+field_name: field_career_markings
+entity_type: node
+bundle: service
+label: 'Merkinnät asiakastietojärjestelmään'
+description: 'Ohjeista, mitä järjestelmäkirjauksia tehdään. Ohjeista ainakin mitä työllisyysstatukseen ja työttömyysturvaan liittyen kirjataan, mitä yhteydenottokortille kirjataan sekä tarvitseeko tehdä muistilistavientejä ja päivittää suunnitelmaa.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long
