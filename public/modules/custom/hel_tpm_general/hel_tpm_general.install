@@ -447,6 +447,20 @@ function hel_tpm_general_update_10105(&$sandbox) {
 }
 
 /**
+ * Migrate service coordination from paragraphs field to text field.
+ */
+function hel_tpm_general_update_10106(&$sandbox) {
+  _hel_tpm_general_convert_paragraph_to_normal_field($sandbox, 'field_guidance_to_service', 'field_description', 'field_service_coordination');
+}
+
+/**
+ * Migrate career markings from paragraphs field to text field.
+ */
+function hel_tpm_general_update_10107(&$sandbox) {
+  _hel_tpm_general_convert_paragraph_to_normal_field($sandbox, 'field_career_marking', 'field_description', 'field_career_markings');
+}
+
+/**
  * Helper function to migrate paragraph fields to node fields.
  *
  * @param \Drupal\Core\Entity\EntityInterface $paragraph
@@ -496,4 +510,70 @@ function _hel_tpm_general_ensure_entity_fields(string $entity_type, string $bund
       FieldConfig::create($config_record)->save();
     }
   }
+}
+
+/**
+ * Helper function to convert paragraph with one inner field to normal field.
+ *
+ * @param array $sandbox
+ *   Stores information for batch updates.
+ * @param string $paragraphs_field
+ *   The name of the original paragraph.
+ * @param string $paragraph_inner_field
+ *   The name of the original field inside the paragraph.
+ * @param string $new_field
+ *   The name of the field.
+ *
+ * @return void
+ *   Void.
+ *
+ * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+ * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+ * @throws \Drupal\Core\Entity\EntityStorageException
+ */
+function _hel_tpm_general_convert_paragraph_to_normal_field(array &$sandbox, string $paragraphs_field, string $paragraph_inner_field, string $new_field): void {
+  $storage = \Drupal::entityTypeManager()->getStorage('node');
+
+  if (!isset($sandbox['progress'])) {
+    $efq = $storage->getQuery();
+    $max = $efq->condition('type', 'service')
+      ->condition($paragraphs_field, '', '<>')
+      ->accessCheck(FALSE)
+      ->count()
+      ->execute();
+    $sandbox['progress'] = 0;
+    $sandbox['current'] = 0;
+    $sandbox['max'] = $max;
+  }
+
+  $efq = $storage->getQuery();
+  $result = $efq->condition('type', 'service')
+    ->condition($paragraphs_field, '', '<>')
+    ->condition('nid', $sandbox['current'], '>')
+    ->accessCheck(FALSE)
+    ->sort('nid')
+    ->range(0, 5)
+    ->execute();
+
+  foreach ($result as $nid) {
+    $node = $storage->load($nid);
+    // Load latest revision.
+    if (!$node->isLatestRevision()) {
+      $vid = $storage->getLatestRevisionId($node->id());
+      $node = $storage->loadRevision($vid);
+    }
+    $paragraph = $node->{$paragraphs_field}->entity;
+    $inner_value = $paragraph->{$paragraph_inner_field}->getValue();
+    $node->set($new_field, $inner_value);
+
+    // Preserve changed time.
+    $changed = $node->getChangedTime();
+    // Add one second to prevent drupal from updating changed time.
+    $changed++;
+    $node->setChangedTime($changed);
+    $node->save();
+    $sandbox['progress']++;
+    $sandbox['current'] = $nid;
+  }
+  $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
 }
