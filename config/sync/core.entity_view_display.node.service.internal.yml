@@ -33,6 +33,7 @@ dependencies:
     - field.field.node.service.field_responsible_municipality
     - field.field.node.service.field_responsible_updatee
     - field.field.node.service.field_service_benefits
+    - field.field.node.service.field_service_coordination
     - field.field.node.service.field_service_exceptions
     - field.field.node.service.field_service_execution
     - field.field.node.service.field_service_implement
@@ -66,6 +67,7 @@ third_party_settings:
   field_group:
     group_guidance_to_server:
       children:
+        - field_service_coordination
         - field_guidance_to_service
         - field_service_req_speacialist
       label: 'Ohjaus palveluun'
@@ -252,7 +254,7 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 3
+    weight: 1
     region: content
   field_internal_files:
     type: file_default
@@ -327,6 +329,13 @@ content:
     third_party_settings: {  }
     weight: 10
     region: content
+  field_service_coordination:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
   field_service_exceptions:
     type: text_default
     label: hidden
@@ -339,7 +348,7 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 4
+    weight: 2
     region: content
   field_service_suits_info:
     type: text_default
