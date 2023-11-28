@@ -1,0 +1,31 @@
+uuid: e20f8c89-de86-460f-bfa8-a185eaaae9ee
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.message.field_message_author
+    - message.template.content_has_been_published
+third_party_settings: { }
+id: message.content_has_been_published.field_message_author
+field_name: field_message_author
+entity_type: message
+bundle: content_has_been_published
+label: 'Message author'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:user'
+  handler_settings:
+    target_bundles: null
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+    filter:
+      type: _none
+    include_anonymous: false
+field_type: entity_reference

@@ -1,0 +1,20 @@
+uuid: 0ffae251-7322-49bd-9aa1-b8932c15fb7c
+langcode: fi
+status: true
+dependencies: {  }
+template: 7d_notification_expiry_reminder
+label: '7 days notification expiry reminder'
+description: ''
+text:
+  -
+    value: "<p>Your notification is expiring in 7 days</p>\r\n"
+    format: filtered_html
+  -
+    value: "<p>Hi,</p>\r\n\r\n<p>your notification is about to expire in 7 days. Please check if it's still valid and change the expiry date forward as necessary using the link below.</p>\r\n\r\n<p>[notification_message:url:absolute]</p>\r\n\r\n<p>Best regards,</p>\r\n\r\n<p>Palvelumanuaali administration</p>\r\n"
+    format: filtered_html
+settings:
+  'token options':
+    clear: false
+    'token replace': true
+  purge_override: false
+  purge_methods: {  }

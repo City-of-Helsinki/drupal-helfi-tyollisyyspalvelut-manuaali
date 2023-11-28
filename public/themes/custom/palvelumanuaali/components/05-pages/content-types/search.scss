@@ -149,6 +149,12 @@
       font-size: 9px;
     }
   }
+  .select--white-rounded {
+    select,
+    .select2 {
+      z-index: 0;
+    }
+  }
 }
 
 
@@ -251,7 +257,7 @@
       @include xl {
         grid-template-columns: 1fr 10fr 1fr;
       }
-      @include xxl {
+      @media (min-width:1640px) {
         grid-template-columns: 2fr 8fr 2fr;
       }
     }
@@ -497,20 +503,27 @@
         padding-right: $space;
         font-size: 14px;
       }
+      .select2 {
+        background-color: clr(text-inverse);
+
+      }
       /* Select element for search sort. */
       .form-item__dropdown {
         align-self: flex-end;
         border: 2px solid $blue40;
         .select2-container--palvelumanuaali {
-          @extend .multi-select-button;
           box-shadow: unset;
+          padding: 0;
           .select2-selection--single {
-            height: 24px;
+            @extend .multi-select-button;
+            height: 32px;
+            text-overflow: ellipsis;
           }
           .select2-selection--single .select2-selection__rendered {
             background: transparent !important;
             font-size: 14px !important;
             line-height: 24px !important;
+            padding: 0 !important;
           }
           .select2-selection__arrow {
             display: none;

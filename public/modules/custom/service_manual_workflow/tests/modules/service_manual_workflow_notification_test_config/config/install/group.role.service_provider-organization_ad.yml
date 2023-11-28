@@ -1,0 +1,49 @@
+uuid: bcd21c78-2cca-46bb-a24a-5163766396b4
+langcode: fi
+status: true
+dependencies:
+  config:
+    - group.type.service_provider
+  module:
+    - hel_tpm_group
+third_party_settings:
+  hel_tpm_group:
+    site_wide_role:
+      editor: editor
+      specialist_editor: specialist_editor
+      specialist: '0'
+id: service_provider-organization_ad
+label: 'Organization admin'
+weight: -8
+admin: false
+scope: individual
+global_role: null
+group_type: service_provider
+permissions:
+  - 'delete any invitation'
+  - 'invite users to group'
+  - 'leave group'
+  - 'update any group_node:service content'
+  - 'update any group_node:service entity'
+  - 'update any group_node:service_location content'
+  - 'update own group_membership content'
+  - 'update own group_node:service content'
+  - 'update own group_node:service_location content'
+  - 'use service_moderation transition create_new_draft'
+  - 'use service_moderation transition outdated'
+  - 'use service_moderation transition publish'
+  - 'use service_moderation transition put_on_hold'
+  - 'use service_moderation transition ready_to_publish'
+  - 'use service_moderation transition ready_to_publish_to_draft'
+  - 'use service_moderation transition temporarily_archived'
+  - 'view group'
+  - 'view group invitations'
+  - 'view group_membership content'
+  - 'view group_node:service content'
+  - 'view group_node:service entity'
+  - 'view group_node:service_location content'
+  - 'view group_node:service_location entity'
+  - 'view latest group version'
+  - 'view latest version'
+  - 'view unpublished group_node:service entity'
+  - 'view unpublished group_node:service_location entity'

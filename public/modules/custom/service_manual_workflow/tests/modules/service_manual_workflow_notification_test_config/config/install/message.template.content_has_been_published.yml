@@ -1,0 +1,20 @@
+uuid: 44f72564-bc47-429b-b358-614e0b11eed6
+langcode: en
+status: true
+dependencies: {  }
+template: content_has_been_published
+label: 'Service has been published'
+description: ''
+text:
+  -
+    value: "<p>[message:field_node:entity:title] julkaistu Palvelumanuaalissa</p>\r\n"
+    format: filtered_html
+  -
+    value: "<p>Hei [message:field_node:entity:field_service_provider_updatee],</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Palvelu [message:field_node:entity:title] on nyt julkaistu palvelussa [site:name].</p>\r\n\r\n<p>Voit tarkastella julkaistua palvelua sivustolla:</p>\r\n\r\n<p><a href=\"[message:field_node:entity:url]\" title=\"[message:field_node:entity:url]\">[message:field_node:entity:title]</a></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Terveisin,</p>\r\n\r\n<p>Palvelumanuaalin ylläpito</p>\r\n"
+    format: full_html
+settings:
+  'token options':
+    clear: false
+    'token replace': true
+  purge_override: false
+  purge_methods: {  }

@@ -73,15 +73,26 @@ trait ServiceNotificationTrait {
    */
   protected function getEntityGroupAdministration(ContentEntityInterface $entity, GroupInterface $group) : array {
     $accounts = [];
+    $grid = $group->getGroupType()->id() . '-administrator';
 
     foreach ($group->getMembers() as $key => $member) {
-      $account = $member->getGroupRelationship()->getEntity();
+      $relationship = $member->getGroupRelationship();
+      $roles = $relationship->getRoles();
+      // If user has no roles in group or it isn't administrator role
+      // continue for next loop.
+      if (empty($roles) || empty($roles[$grid])) {
+        continue;
+      }
+      // Validate user has publish access for current node.
+      $account = $relationship->getEntity();
       $allowed = $this->stateTransitionValidation->allowedTransitions($account, $entity, [$group]);
       if (empty($allowed['publish'])) {
         continue;
       }
-      $accounts[$account->id()] = $account;
+      $accounts[$account->getLastAccessedTime()] = $account;
     }
+
+    ksort($accounts);
 
     return $accounts;
   }
