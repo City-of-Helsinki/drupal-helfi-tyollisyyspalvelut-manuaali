@@ -56,7 +56,7 @@ if ($app_env = getenv('APP_ENV')) {
 
 if ($solr_host = getenv('SOLR_SERVICE_HOST')) {
   $config['search_api.server.solr_search']['backend_config']['connector_config']['core'] = 'dev';
-  $config['search_api.server.solr_search']['backend_config']['connector_config']['host'] = $solr_host;
+  $config['search_api.server.solr_search']['backend_config']['connector_config']['host'] = 'solr';
 }
 
 if (getenv('REDIS_HOST')) {
