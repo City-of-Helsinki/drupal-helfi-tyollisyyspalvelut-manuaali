@@ -257,17 +257,20 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
     if (!empty($accounts)) {
       return $accounts;
     }
+
+    // If current group is not service_provider there is no super groups
+    // return empty array.
+    if ($group->getGroupType()->id() !== 'service_provider') {
+      return [];
+    }
+
     // No accounts with publish permissions found from current group.
     // Check if group is subgroup and get one user
     // with admin permissions to notify.
-    if ($group->getGroupType()->id() !== 'service_provider') {
-      return $accounts;
-    }
-
     $super_groups = $this->groupHierarchyManager->getGroupSupergroups($group->id());
 
     if (empty($super_groups)) {
-      return $accounts;
+      return [];
     }
 
     // Get entity administration only from 1 group if there happens to be multiple.
