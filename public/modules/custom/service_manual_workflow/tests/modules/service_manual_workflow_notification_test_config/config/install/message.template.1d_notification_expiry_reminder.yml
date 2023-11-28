@@ -1,0 +1,20 @@
+uuid: c4b58b03-6610-4f8d-8be0-b152eb8a8b18
+langcode: fi
+status: true
+dependencies: {  }
+template: 1d_notification_expiry_reminder
+label: '1 day notification expiry reminder'
+description: ''
+text:
+  -
+    value: "<p>Your notification is expiring in 1 day</p>\r\n"
+    format: filtered_html
+  -
+    value: "<p>Hi,</p>\r\n\r\n<p>your notification is about to expire in 1 day. Please check if it's still valid and change the expiry date forward as necessary using the link below.</p>\r\n\r\n<p>[notification_message:url:absolute]</p>\r\n\r\n<p>Best regards,</p>\r\n\r\n<p>Palvelumanuaali administration</p>\r\n"
+    format: filtered_html
+settings:
+  'token options':
+    clear: false
+    'token replace': true
+  purge_override: false
+  purge_methods: {  }

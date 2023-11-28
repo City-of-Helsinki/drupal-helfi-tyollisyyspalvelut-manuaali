@@ -1,0 +1,64 @@
+uuid: a2520a1a-1ae0-4dab-9281-fd3dfa49e353
+langcode: fi
+status: true
+dependencies:
+  config:
+    - group.type.organisation
+  module:
+    - hel_tpm_group
+third_party_settings:
+  hel_tpm_group:
+    site_wide_role:
+      editor: editor
+      specialist_editor: specialist_editor
+id: organisation-administrator
+label: 'Group admin'
+weight: -4
+admin: false
+scope: individual
+global_role: null
+group_type: organisation
+permissions:
+  - 'access subgroup overview'
+  - 'administer members'
+  - 'administer subgroups'
+  - 'create group_node:service entity'
+  - 'delete any invitation'
+  - 'invite users to group'
+  - 'manage members with role organisation-administrator'
+  - 'manage members with role organisation-editor'
+  - 'manage members with role organisation-expert'
+  - 'update any group_node:service content'
+  - 'update any group_node:service entity'
+  - 'update any group_node:service_location content'
+  - 'update any group_node:service_location entity'
+  - 'update any subgroup:service_provider content'
+  - 'update own group_membership content'
+  - 'update own group_node:service content'
+  - 'update own group_node:service entity'
+  - 'update own subgroup:service_provider content'
+  - 'use service_moderation transition create_new_draft'
+  - 'use service_moderation transition outdated'
+  - 'use service_moderation transition publish'
+  - 'use service_moderation transition put_on_hold'
+  - 'use service_moderation transition ready_to_publish'
+  - 'use service_moderation transition ready_to_publish_to_draft'
+  - 'use service_moderation transition temporarily_archived'
+  - 'view any unpublished group'
+  - 'view any unpublished subgroup:service_provider entity'
+  - 'view group'
+  - 'view group invitations'
+  - 'view group_membership content'
+  - 'view group_node:basic_page entity'
+  - 'view group_node:service content'
+  - 'view group_node:service entity'
+  - 'view group_node:service_location content'
+  - 'view group_node:service_location entity'
+  - 'view latest group version'
+  - 'view latest version'
+  - 'view own unpublished group_node:service entity'
+  - 'view subgroup:service_provider content'
+  - 'view subgroup:service_provider entity'
+  - 'view unpublished group_node:basic_page entity'
+  - 'view unpublished group_node:service entity'
+  - 'view unpublished group_node:service_location entity'

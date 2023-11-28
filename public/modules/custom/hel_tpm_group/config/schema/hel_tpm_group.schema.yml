@@ -12,6 +12,13 @@ group.role.*.third_party.hel_tpm_group:
 entity_reference_selection.hel_tpm_group_editor_user_selection:
   type: entity_reference_selection.default:user
   label: 'Group editor user selection handler settings'
+  mapping:
+    filter_users_without_publish:
+      type: integer
+      label: "Filter users without publish permissions"
+    include_supergroup_members:
+      type: integer
+      label: "Include subgroup members"
 
 # Schema definition for views group label filter.
 views.filter.group_label_filter:

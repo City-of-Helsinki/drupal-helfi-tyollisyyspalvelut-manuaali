@@ -1,0 +1,15 @@
+uuid: 27860c95-9b19-442f-a22e-c8f36997a037
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.organisation
+  module:
+    - user
+id: organisation-group_membership
+group_type: organisation
+content_plugin: group_membership
+plugin_config:
+  group_cardinality: 0
+  entity_cardinality: 1
+  use_creation_wizard: false

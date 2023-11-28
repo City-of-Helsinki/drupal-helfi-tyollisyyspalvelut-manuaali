@@ -10,6 +10,7 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\gcontent_moderation\GroupStateTransitionValidation;
+use Drupal\ggroup\GroupHierarchyManagerInterface;
 use Drupal\message\Entity\Message;
 use Drupal\message_notify\MessageNotifier;
 use Drupal\node\NodeInterface;
@@ -78,6 +79,13 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
   protected $messageSender;
 
   /**
+   * Group hierarchy manager.
+   *
+   * @var \Drupal\ggroup\GroupHierarchyManagerInterface
+   */
+  protected $groupHierarchyManager;
+
+  /**
    * Used message template.
    */
   const MESSAGE_TEMPLATE = 'group_ready_to_publish_notificat';
@@ -99,8 +107,9 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
    *   Current user object.
    * @param \Drupal\message_notify\MessageNotifier $messageSender
    *   Message notifier object.
+   * @param \Drupal\ggroup\GroupHierarchyManagerInterface $groupHierarchyManager
    */
-  public function __construct(MessengerInterface $messenger, EntityTypeManager $entityTypeManager, ContentGroupService $contentGroupService, GroupStateTransitionValidation $stateTransitionValidation, RouteMatchInterface $routeMatch, AccountProxyInterface $currentUser, MessageNotifier $messageSender) {
+  public function __construct(MessengerInterface $messenger, EntityTypeManager $entityTypeManager, ContentGroupService $contentGroupService, GroupStateTransitionValidation $stateTransitionValidation, RouteMatchInterface $routeMatch, AccountProxyInterface $currentUser, MessageNotifier $messageSender, GroupHierarchyManagerInterface $groupHierarchyManager) {
     $this->messenger = $messenger;
     $this->entityTypeManager = $entityTypeManager;
     $this->contentGroupService = $contentGroupService;
@@ -108,6 +117,7 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
     $this->routeMatch = $routeMatch;
     $this->currentUser = $currentUser;
     $this->messageSender = $messageSender;
+    $this->groupHierarchyManager = $groupHierarchyManager;
   }
 
   /**
@@ -133,14 +143,17 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
     if (empty($group)) {
       return;
     }
+
+    // Get users to notify.
     $accounts = $this->getUsersToNotify($entity);
     if (empty($accounts)) {
       $this->messenger->addStatus($this->t('Users with publish permissions not found. Please contact site administration.', ['@group' => $group->label()]));
+      return;
     }
+
     // Dispatch messages to group administration.
-    foreach ($accounts as $user) {
-      $this->dispatchMessage($entity, $user, 'group_ready_to_publish_notificat');
-    }
+    $user = reset($accounts);
+    $this->dispatchMessage($entity, $user, 'group_ready_to_publish_notificat');
     $this->messenger->addStatus($this->t('Notified @group administration', ['@group' => $group->label()]));
   }
 
@@ -238,7 +251,30 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
     if (empty($group)) {
       return [];
     }
-    return $this->getEntityGroupAdministration($entity, $group);
+
+    // Try to fetch user who has publishing permissions from group.
+    $accounts = $this->getEntityGroupAdministration($entity, $group);
+    if (!empty($accounts)) {
+      return $accounts;
+    }
+
+    // If current group is not service_provider there is no super groups
+    // return empty array.
+    if ($group->getGroupType()->id() !== 'service_provider') {
+      return [];
+    }
+
+    // No accounts with publish permissions found from current group.
+    // Check if group is subgroup and get one user
+    // with admin permissions to notify.
+    $super_groups = $this->groupHierarchyManager->getGroupSupergroups($group->id());
+
+    if (empty($super_groups)) {
+      return [];
+    }
+
+    // Get entity administration only from 1 group if there happens to be multiple.
+    return $this->getEntityGroupAdministration($entity, reset($super_groups));
   }
 
   /**

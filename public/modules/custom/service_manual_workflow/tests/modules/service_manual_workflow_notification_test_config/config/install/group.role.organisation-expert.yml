@@ -1,0 +1,27 @@
+uuid: 2c996d24-ec02-4f0a-aaf1-7746fd69ad9e
+langcode: fi
+status: true
+dependencies:
+  config:
+    - group.type.organisation
+  module:
+    - hel_tpm_group
+third_party_settings:
+  hel_tpm_group:
+    site_wide_role:
+      specialist: specialist
+      editor: '0'
+      specialist_editor: '0'
+id: organisation-expert
+label: Expert
+weight: -6
+admin: false
+scope: individual
+global_role: null
+group_type: organisation
+permissions:
+  - 'view group'
+  - 'view group_node:basic_page entity'
+  - 'view group_node:service entity'
+  - 'view group_node:service_location entity'
+  - 'view latest group version'
