@@ -85,7 +85,7 @@
     service_base_class: 'service',
     service_modifiers:service_modifiers,
     service_blockname:service_blockname,
-    service__updated: greeting_text ~ node.changed.value|date("d.m.Y"),
+    service__updated: greeting_text ~ " " ~ node.changed.value|date("d.m.Y"),
     node__label: label,
   } %}
   {% endembed %}
