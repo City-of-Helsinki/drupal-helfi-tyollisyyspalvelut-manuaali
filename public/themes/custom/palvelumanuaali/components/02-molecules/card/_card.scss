@@ -171,14 +171,18 @@ $card-font-small-heading: 15px;
     margin-bottom: $space;
   }
   .card__content {
-    padding: $space-one-and-half $space-two-and-half $space-double $space-two-and-half;
+    padding: $space;
     margin: 0;
+    @include xl {
+      padding: $space-double $space-two-and-half $space-one-and-half $space-two-and-half;
+
+    }
   }
   .card__body {
       min-height: 50px;
       margin: $space 0 $space-one-and-half;
       @include xl {
-        max-width: 60ch;
+        max-width: 67ch;
       }
   }
   .card__caption {
