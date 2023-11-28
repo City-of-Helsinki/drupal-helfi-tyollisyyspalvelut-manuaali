@@ -184,6 +184,9 @@ $card-font-small-heading: 15px;
       @include xl {
         max-width: 67ch;
       }
+      @media (min-width:1640px) {
+        max-width: 75ch;  
+    }
   }
   .card__caption {
     @extend .small-uppercase-card-caption;
