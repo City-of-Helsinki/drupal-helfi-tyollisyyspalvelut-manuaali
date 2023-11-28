@@ -3,6 +3,7 @@
 namespace Drupal\service_manual_workflow\Access;
 
 use Drupal\content_moderation\ModerationInformationInterface;
+use Drupal\content_moderation\StateTransitionValidationInterface;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\gcontent_moderation\GroupStateTransitionValidation;
@@ -35,7 +36,7 @@ class ServiceOutdatedAccess {
    * @param \Drupal\content_moderation\ModerationInformationInterface $moderation_information
    *   Moderation information service.
    */
-  public function __construct(GroupStateTransitionValidation $group_state_transition_validator, ModerationInformationInterface $moderation_information) {
+  public function __construct(StateTransitionValidationInterface $group_state_transition_validator, ModerationInformationInterface $moderation_information) {
     $this->groupStateTransitionValidator = $group_state_transition_validator;
     $this->moderationInformation = $moderation_information;
   }
