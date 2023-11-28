@@ -146,6 +146,14 @@ $button-colors: (
 }
 
 
+@mixin button-small-medium {
+  padding: 14px 16px 14px 15px;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+}
+
 // Button size variations
 @mixin button-medium {
   line-height: 21px;
@@ -187,9 +195,34 @@ $button-colors: (
 @mixin arrow-right {
   &::after {
     @include icons();
-
     content: "\EA12";
     margin-left: $space;
+  }
+}
+
+//button symbol variations
+@mixin arrow-right-background {
+  &::after {
+    background-image: url("/themes/custom/palvelumanuaali/images/icons/arrow-right-2.svg");
+    content: "";
+    display: block;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+  }
+}
+
+//button symbol variations
+@mixin  questionmark-left-background {
+  &::before {
+    background-image: url("/themes/custom/palvelumanuaali/images/icons/c-question.svg");
+    content: "";
+    display: block;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
   }
 }
 
@@ -508,15 +541,28 @@ there is possibility to add classes button--blue-bordered,
     grid-row:2;
   }
   a {
-    @include button-blue-bordered-base;
-    @include button-large;
+    text-decoration: none;
+    @include button-small-medium;
     @include background-white;
-    @include arrow-right;
+    @include arrow-right-background;
+    @include questionmark-left-background;
+    @include button-round-corners;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     font-weight: 600;
-    padding-top: 18px;
-    padding-bottom: 18px;
     line-height: 24px;
     width: 100%;
+    position: relative;
+    z-index: 20;
+    gap: 15px;
+    &:hover {
+      box-shadow: 0px 8px 16px 0px rgba(30, 64, 182, 0.20);
+      transition-delay: 100ms;
+      @include xl {
+        transform: translateX(-3px);
+      }
+    }
   }
 }
 

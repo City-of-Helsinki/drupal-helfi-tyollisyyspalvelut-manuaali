@@ -6,12 +6,7 @@ dependencies:
     - field.storage.node.field_instructions_markup
     - node.type.service
   module:
-    - epp
     - markup
-third_party_settings:
-  epp:
-    value: ''
-    on_update: 0
 id: node.service.field_instructions_markup
 field_name: field_instructions_markup
 entity_type: node
@@ -26,6 +21,6 @@ default_value:
 default_value_callback: ''
 settings:
   markup:
-    value: "<a href=\"/ohjeet-ja-oppaat\" rel=\"noopener\" target=\"_blank\">Instructions for the form</a>\r\n"
+    value: "<p><a href=\"/ohjeet-ja-oppaat\" rel=\"noopener\" target=\"_blank\">Apua lomakkeen täyttöön?</a></p>\r\n"
     format: full_html
 field_type: markup
