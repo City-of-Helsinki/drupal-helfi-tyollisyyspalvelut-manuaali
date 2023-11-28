@@ -69,7 +69,6 @@ third_party_settings:
     group_guidance_to_server:
       children:
         - field_service_coordination
-        - field_guidance_to_service
         - field_service_req_speacialist
       label: 'Ohjaus palveluun'
       parent_name: ''
@@ -130,7 +129,6 @@ third_party_settings:
         speed: fast
     group_career_marking:
       children:
-        - field_career_marking
         - field_career_markings
       label: 'Merkinnät asiakastietojärjestelmään'
       parent_name: ''
@@ -231,15 +229,6 @@ targetEntityType: node
 bundle: service
 mode: internal
 content:
-  field_career_marking:
-    type: entity_reference_revisions_entity_view
-    label: hidden
-    settings:
-      view_mode: default
-      link: ''
-    third_party_settings: {  }
-    weight: 5
-    region: content
   field_career_markings:
     type: text_default
     label: hidden
@@ -255,15 +244,6 @@ content:
       link: true
     third_party_settings: {  }
     weight: 13
-    region: content
-  field_guidance_to_service:
-    type: entity_reference_revisions_entity_view
-    label: hidden
-    settings:
-      view_mode: default
-      link: ''
-    third_party_settings: {  }
-    weight: 1
     region: content
   field_internal_files:
     type: file_default
@@ -410,11 +390,13 @@ hidden:
   entitygroupfield: true
   field_accessibility: true
   field_attendance: true
+  field_career_marking: true
   field_client_consent: true
   field_contact_info_external: true
   field_contact_info_internal: true
   field_description: true
   field_field_client_consent_descr: true
+  field_guidance_to_service: true
   field_implementation_extra_info: true
   field_instructions_markup: true
   field_life_situations: true
