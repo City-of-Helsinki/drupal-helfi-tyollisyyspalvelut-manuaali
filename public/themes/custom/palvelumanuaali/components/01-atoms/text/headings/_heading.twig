@@ -18,7 +18,7 @@
 #}
 {% set heading_base_class = heading_base_class|default('h' ~ heading_level) %}
 
-<h{{ heading_level }} {{ bem(heading_base_class, heading_modifiers, heading_blockname) }}>
+<h{{ heading_level }} {{ bem(heading_base_class, heading_modifiers, heading_blockname, heading_extra_class) }}>
   {% if heading_icon %}
   <div {{ bem('icon', heading_icon__image__modifiers, heading_icon__base_class) }}>
       {{ heading_icon }}
