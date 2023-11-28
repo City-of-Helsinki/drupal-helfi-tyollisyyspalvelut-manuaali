@@ -204,22 +204,35 @@
     margin-bottom: $space;
   }
 
-  > .tab > .form-fieldset,
+  > .tab-0 {
+    grid-row: 2;
+    border-radius: 8px;
+    > .form-fieldset {
+      background-color: clr(text-inverse);
+      width: 100%;
+    }
+    @include xl {
+      grid-column: 1/2;
+      grid-row: 3;
+      margin-top: -68px;
+    }
+  }
+
+
   > .tab-1,
   > .tab-2,
   > .tab-3 {
     grid-row: 2;
     padding: $space;
     border-radius: 8px;
-    @include xl {
-      grid-column: 1/2;
-      grid-row:2;
-    }
     background-color: clr(text-inverse);
-    // max-width: unset;
-
     @include large {
       padding: 48px 56px;
+    }
+    @include xl {
+      grid-column: 1/2;
+      grid-row: 3;
+      margin-top: -68px;
     }
 
     .fieldgroup,
