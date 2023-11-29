@@ -76,13 +76,14 @@
 
 {% embed "@molecules/card/card.twig" with {
   card__blockname: item.card__blockname,
-  card__modifiers: ['view-card'],
+  card__modifiers: ['view-card', 'default-hover'],
   card__caption: organizing_group,
-  card__caption__status: state_label|t,
-  card__caption__status__modifiers: status_modifier,
+  card__caption_extra_class: ['small-uppercase-card-caption'],
   card__heading: label,
+  card__heading_extra_class: ['card-heading'],
   card__body: content.field_description,
-  card__date: greeting_text ~ node.changed.value|date("d.m.Y"),
+  card__body_extra_class: ['small-font'],
+  card__date: greeting_text ~ " " ~ node.changed.value|date("d.m.Y"),
   card__link_wrapped: 'yes',
   card__button__url: url,
 } %}

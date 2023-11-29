@@ -6,12 +6,6 @@ dependencies:
     - field.storage.paragraph.field_language
     - paragraphs.paragraphs_type.service_language
     - taxonomy.vocabulary.service_languages
-  module:
-    - require_on_publish
-third_party_settings:
-  require_on_publish:
-    require_on_publish: true
-    warn_on_empty: false
 id: paragraph.service_language.field_language
 field_name: field_language
 entity_type: paragraph

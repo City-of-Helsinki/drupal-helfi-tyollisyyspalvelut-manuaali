@@ -308,9 +308,11 @@
     &:hover {
       box-shadow: 0px 8px 16px 0px rgba(30, 64, 182, 0.20);
       transition-delay: 100ms;
+      @include xl {
+        transform: translateY(-3px);
+     }
     }
     @include xl {
-      transform: translateY(-3px);
       width: calc(33% - 16px);
       flex-basis: calc(33% - 16px);
       flex-grow: 1;

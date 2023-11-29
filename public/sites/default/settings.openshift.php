@@ -40,9 +40,23 @@ if ($es_username = getenv('ELASTICSEARCH_USER')) {
   }
 }
 
+if ($app_env = getenv('APP_ENV')) {
+  switch($app_env) {
+    case 'development':
+      $settings['simple_environment_indicator'] = '#004984 Development';
+      break;
+    case 'staging':
+      $settings['simple_environment_indicator'] = '#e56716 Stage';
+      break;
+    case 'production':
+      $settings['simple_environment_indicator'] = '#d4000f Production';
+      break;
+  }
+}
+
 if ($solr_host = getenv('SOLR_SERVICE_HOST')) {
   $config['search_api.server.solr_search']['backend_config']['connector_config']['core'] = 'dev';
-  $config['search_api.server.solr_search']['backend_config']['connector_config']['host'] = $solr_host;
+  $config['search_api.server.solr_search']['backend_config']['connector_config']['host'] = 'solr';
 }
 
 if (getenv('REDIS_HOST')) {

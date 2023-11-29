@@ -153,6 +153,16 @@ $card-font-small-heading: 15px;
   }
 }
 
+.card--default-hover {
+  &:hover {
+    box-shadow: 0px 8px 16px 0px rgba(30, 64, 182, 0.20);
+    transition-delay: 100ms;
+    @include xl {
+      transform: translateY(-3px);
+    }
+  }
+}
+
 .card--view-card {
   background-color: clr(sidebar-color);
   border-radius: 8px;
@@ -161,19 +171,25 @@ $card-font-small-heading: 15px;
     margin-bottom: $space;
   }
   .card__content {
-    padding: $space-one-and-half $space-two-and-half $space-double $space-two-and-half;
+    padding: $space;
     margin: 0;
+    @include xl {
+      padding: $space-double $space-two-and-half $space-one-and-half $space-two-and-half;
+
+    }
   }
   .card__body {
       min-height: 50px;
+      margin: $space 0 $space-one-and-half;
+      @include xl {
+        max-width: 67ch;
+      }
+      @media (min-width:1640px) {
+        max-width: 75ch;  
+    }
   }
   .card__caption {
-    color: clr(alt-header-color);
-    font-size: $small-caption;
-    line-height: 24px;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    @extend .small-uppercase-card-caption;
     margin: 0;
     margin-bottom: $space-one-half;
     max-width: 55%;
@@ -182,12 +198,12 @@ $card-font-small-heading: 15px;
     }
   }
   .card__heading {
-    @include heading-xxs();
     margin-right: 122px;
     @include large {
       margin-right: 130px;
     }
   }
+
   // this should be changed to separate 'pill' atom to handle different colors
   .pill {
     position: absolute;
