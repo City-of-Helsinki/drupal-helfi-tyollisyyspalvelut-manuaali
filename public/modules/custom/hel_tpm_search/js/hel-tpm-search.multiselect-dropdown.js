@@ -10,15 +10,16 @@
           });
           $(label).hide();
         });
-        $('.form-item-field-free-service select').each(function () {
-          $(this).removeAttr('multiple');
-        });
-        $('.form-item-field-free-service input:checked').on( 'click', function(event) {
-          event.stopPropagation();
-          event.preventDefault();
-          $(this).closest('form-item__dropdown').find('select').val('');
-          $(this).closest('form').find('.cost-reset input[id^="edit-reset--"]').click();
-        });
+        // HOT FIX: reset default functionality
+        // $('.form-item-field-free-service select').each(function () {
+        //   $(this).removeAttr('multiple');
+        // });
+        // $('.form-item-field-free-service input:checked').on( 'click', function(event) {
+        //   event.stopPropagation();
+        //   event.preventDefault();
+        //   $(this).closest('form-item__dropdown').find('select').val('');
+        //   $(this).closest('form').find('.cost-reset input[id^="edit-reset--"]').click();
+        // });
       });
     }
   };
