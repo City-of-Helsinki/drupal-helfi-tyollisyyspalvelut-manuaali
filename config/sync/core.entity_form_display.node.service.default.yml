@@ -155,7 +155,7 @@ third_party_settings:
       label: POMA
       region: hidden
       parent_name: ''
-      weight: 17
+      weight: 19
       format_type: accordion
       format_settings:
         classes: ''
@@ -468,7 +468,6 @@ third_party_settings:
         required_fields: true
     group_markings_for_service:
       children:
-        - field_career_marking
         - field_career_markings
       label: 'Merkinnät asiakastietojärjestelmään'
       region: content
@@ -489,7 +488,6 @@ third_party_settings:
         required_fields: true
     group_guidance_to_service:
       children:
-        - field_guidance_to_service
         - field_service_coordination
         - field_municipality_guidance
       label: 'Ohjaus palveluun'
@@ -628,18 +626,6 @@ content:
       collapsed: false
       revision: false
     third_party_settings: {  }
-  field_career_marking:
-    type: entity_reference_paragraphs
-    weight: 11
-    region: content
-    settings:
-      title: Paragraph
-      title_plural: Paragraphs
-      edit_mode: open
-      add_mode: button
-      form_display_mode: default
-      default_paragraph_type: long_text_field_with_toolbar
-    third_party_settings: {  }
   field_career_markings:
     type: text_textarea
     weight: 12
@@ -739,18 +725,6 @@ content:
         maxlength_js: null
         maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
         maxlength_js_enforce: false
-  field_guidance_to_service:
-    type: entity_reference_paragraphs
-    weight: 8
-    region: content
-    settings:
-      title: Paragraph
-      title_plural: Paragraphs
-      edit_mode: open
-      add_mode: button
-      form_display_mode: default
-      default_paragraph_type: long_text_field_with_toolbar
-    third_party_settings: {  }
   field_implementation_extra_info:
     type: select2_entity_reference
     weight: 16
@@ -1125,7 +1099,9 @@ content:
       match_limit: 10
     third_party_settings: {  }
 hidden:
+  field_career_marking: true
   field_contact_info_internal: true
+  field_guidance_to_service: true
   field_links_and_attachments: true
   field_poma_applicable: true
   field_poma_applicable_descriptio: true
