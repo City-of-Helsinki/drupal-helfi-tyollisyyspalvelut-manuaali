@@ -1,0 +1,45 @@
+uuid: ed74024d-65e1-4759-ad4d-0dcba6c3932c
+langcode: fi
+status: true
+dependencies:
+  config:
+    - group.type.organisation
+  module:
+    - hel_tpm_group
+third_party_settings:
+  hel_tpm_group:
+    site_wide_role:
+      editor: editor
+      specialist_editor: specialist_editor
+id: organisation-editor
+label: Editor
+weight: -5
+admin: false
+scope: individual
+global_role: null
+group_type: organisation
+permissions:
+  - 'access subgroup overview'
+  - 'create group_node:service entity'
+  - 'update any group_node:service content'
+  - 'update any group_node:service entity'
+  - 'update any group_node:service_location content'
+  - 'update any group_node:service_location entity'
+  - 'use service_moderation transition create_new_draft'
+  - 'use service_moderation transition publish'
+  - 'use service_moderation transition ready_to_publish'
+  - 'use service_moderation transition ready_to_publish_to_draft'
+  - 'view group'
+  - 'view group_node:basic_page entity'
+  - 'view group_node:service content'
+  - 'view group_node:service entity'
+  - 'view group_node:service_location content'
+  - 'view group_node:service_location entity'
+  - 'view latest group version'
+  - 'view latest version'
+  - 'view own unpublished group_node:service entity'
+  - 'view subgroup:service_provider content'
+  - 'view subgroup:service_provider entity'
+  - 'view unpublished group_node:basic_page entity'
+  - 'view unpublished group_node:service entity'
+  - 'view unpublished group_node:service_location entity'
