@@ -447,17 +447,45 @@ function hel_tpm_general_update_10105(&$sandbox) {
 }
 
 /**
- * Migrate service coordination from paragraphs field to text field.
+ * Migrate Finnish service coordination from paragraphs field to text field.
  */
 function hel_tpm_general_update_10106(&$sandbox) {
-  _hel_tpm_general_convert_paragraph_to_normal_field($sandbox, 'field_guidance_to_service', 'field_description', 'field_service_coordination');
+  _hel_tpm_general_convert_paragraph_to_normal_field($sandbox, 'fi', 'field_guidance_to_service', 'field_description', 'field_service_coordination');
 }
 
 /**
- * Migrate career markings from paragraphs field to text field.
+ * Migrate English service coordination from paragraphs field to text field.
  */
 function hel_tpm_general_update_10107(&$sandbox) {
-  _hel_tpm_general_convert_paragraph_to_normal_field($sandbox, 'field_career_marking', 'field_description', 'field_career_markings');
+  _hel_tpm_general_convert_paragraph_to_normal_field($sandbox, 'en', 'field_guidance_to_service', 'field_description', 'field_service_coordination');
+}
+
+/**
+ * Migrate Swedish service coordination from paragraphs field to text field.
+ */
+function hel_tpm_general_update_10108(&$sandbox) {
+  _hel_tpm_general_convert_paragraph_to_normal_field($sandbox, 'sv', 'field_guidance_to_service', 'field_description', 'field_service_coordination');
+}
+
+/**
+ * Migrate Finnish career markings from paragraphs field to text field.
+ */
+function hel_tpm_general_update_10109(&$sandbox) {
+  _hel_tpm_general_convert_paragraph_to_normal_field($sandbox, 'fi', 'field_career_marking', 'field_description', 'field_career_markings');
+}
+
+/**
+ * Migrate English career markings from paragraphs field to text field.
+ */
+function hel_tpm_general_update_10110(&$sandbox) {
+  _hel_tpm_general_convert_paragraph_to_normal_field($sandbox, 'en', 'field_career_marking', 'field_description', 'field_career_markings');
+}
+
+/**
+ * Migrate Swedish career markings from paragraphs field to text field.
+ */
+function hel_tpm_general_update_10111(&$sandbox) {
+  _hel_tpm_general_convert_paragraph_to_normal_field($sandbox, 'sv', 'field_career_marking', 'field_description', 'field_career_markings');
 }
 
 /**
@@ -513,10 +541,12 @@ function _hel_tpm_general_ensure_entity_fields(string $entity_type, string $bund
 }
 
 /**
- * Helper function to convert paragraph with one inner field to normal field.
+ * Helper function to convert paragraph with one inner field to a normal field.
  *
  * @param array $sandbox
  *   Stores information for batch updates.
+ * @param string $langcode
+ *   The node language.
  * @param string $paragraphs_field
  *   The name of the original paragraph.
  * @param string $paragraph_inner_field
@@ -531,13 +561,15 @@ function _hel_tpm_general_ensure_entity_fields(string $entity_type, string $bund
  * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
  * @throws \Drupal\Core\Entity\EntityStorageException
  */
-function _hel_tpm_general_convert_paragraph_to_normal_field(array &$sandbox, string $paragraphs_field, string $paragraph_inner_field, string $new_field): void {
+function _hel_tpm_general_convert_paragraph_to_normal_field(array &$sandbox, string $langcode, string $paragraphs_field, string $paragraph_inner_field, string $new_field): void {
   $storage = \Drupal::entityTypeManager()->getStorage('node');
 
+  // Initialize update process and set the max value.
   if (!isset($sandbox['progress'])) {
     $efq = $storage->getQuery();
     $max = $efq->condition('type', 'service')
       ->condition($paragraphs_field, '', '<>')
+      ->condition('langcode', $langcode)
       ->accessCheck(FALSE)
       ->count()
       ->execute();
@@ -546,9 +578,11 @@ function _hel_tpm_general_convert_paragraph_to_normal_field(array &$sandbox, str
     $sandbox['max'] = $max;
   }
 
+  // Fetch nodes in the given language.
   $efq = $storage->getQuery();
   $result = $efq->condition('type', 'service')
     ->condition($paragraphs_field, '', '<>')
+    ->condition('langcode', $langcode)
     ->condition('nid', $sandbox['current'], '>')
     ->accessCheck(FALSE)
     ->sort('nid')
@@ -556,19 +590,19 @@ function _hel_tpm_general_convert_paragraph_to_normal_field(array &$sandbox, str
     ->execute();
 
   foreach ($result as $nid) {
-    $node = $storage->load($nid);
+    $node = $storage->load($nid)->getTranslation($langcode);
     // Load latest revision.
     if (!$node->isLatestRevision()) {
       $vid = $storage->getLatestRevisionId($node->id());
-      $node = $storage->loadRevision($vid);
+      $node = $storage->loadRevision($vid)->getTranslation($langcode);
     }
-    $paragraph = $node->{$paragraphs_field}->entity;
+    $paragraph = $node->{$paragraphs_field}->entity->getTranslation($langcode);
     $inner_value = $paragraph->{$paragraph_inner_field}->getValue();
     $node->set($new_field, $inner_value);
 
     // Preserve changed time.
     $changed = $node->getChangedTime();
-    // Add one second to prevent drupal from updating changed time.
+    // Add one second to prevent Drupal from updating changed time.
     $changed++;
     $node->setChangedTime($changed);
     $node->save();
