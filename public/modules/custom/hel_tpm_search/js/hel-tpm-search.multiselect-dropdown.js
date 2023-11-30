@@ -10,8 +10,11 @@
           });
           $(label).hide();
         });
-        $('.form-item-field-free-service select').each(function () {
-          $(this).removeAttr('multiple');
+        $('.form-item-field-free-service input:not(:checked)').on( 'click', function(event) {
+
+          $(this).parent().siblings('.multi-select-menuitem').children('input:checked').prop("checked", false);
+
+          $(this).closest('form').find('.text-search-wrapper .form-submit').click();
         });
         $('.form-item-field-free-service input:checked').on( 'click', function(event) {
           event.stopPropagation();
