@@ -10,6 +10,7 @@
           });
           $(label).hide();
         });
+        // Handle clicking not selected input to mimic radiobuttons
         $('.form-item-field-free-service input:not(:checked)').on( 'click', function(event) {
           event.preventDefault();
           let value = $(this).val();
