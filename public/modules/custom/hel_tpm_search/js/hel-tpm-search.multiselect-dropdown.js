@@ -11,11 +11,18 @@
           $(label).hide();
         });
         $('.form-item-field-free-service input:not(:checked)').on( 'click', function(event) {
-
-          $(this).parent().siblings('.multi-select-menuitem').children('input:checked').prop("checked", false);
-
-          $(this).closest('form').find('.text-search-wrapper .form-submit').click();
+          event.preventDefault();
+          let value = $(this).val();
+          if (value == 1 ) {
+            $(this).closest('.form-item__dropdown').find('select:selected').val('');
+            $(this).closest('.form-item__dropdown').find('select').val('1');
+          } else {
+            $(this).closest('.form-item__dropdown').find('select:selected').val('');
+            $(this).closest('.form-item__dropdown').find('select').val('2');
+          }
+           $(this).closest('form').find('.text-search-wrapper .form-submit').click();
         });
+
         $('.form-item-field-free-service input:checked').on( 'click', function(event) {
           event.stopPropagation();
           event.preventDefault();
