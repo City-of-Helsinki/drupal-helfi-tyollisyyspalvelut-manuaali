@@ -185,7 +185,7 @@ $card-font-small-heading: 15px;
         max-width: 67ch;
       }
       @media (min-width:1640px) {
-        max-width: 75ch;  
+        max-width: 75ch;
     }
   }
   .card__caption {
@@ -596,6 +596,7 @@ $card-font-small-heading: 15px;
     }
     .field__item {
       @extend .small-font;
+      word-break: break-word;
       @include xl {
         overflow: hidden;
         width: 100%;
