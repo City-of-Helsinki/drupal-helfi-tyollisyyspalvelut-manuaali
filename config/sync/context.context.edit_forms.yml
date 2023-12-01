@@ -1,0 +1,25 @@
+uuid: d27b02a7-2fce-4357-8ad0-d240874761b6
+langcode: fi
+status: true
+dependencies:
+  module:
+    - system
+label: 'Edit forms'
+name: edit_forms
+group: null
+description: ''
+requireAllConditions: true
+disabled: false
+conditions:
+  request_path:
+    id: request_path
+    negate: false
+    uuid: bda0fc7c-f3eb-41bb-8d06-9f91692d56ce
+    context_mapping: {  }
+    pages: "/node/*/edit*\r\n/node/add*"
+reactions:
+  body_class:
+    id: body_class
+    body_class: edit-create-form
+    saved: false
+weight: 0
