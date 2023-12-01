@@ -1,7 +1,16 @@
 services:
   service_state_changed_notification.event_subscriber:
     class: Drupal\service_manual_workflow\EventSubscriber\ServiceStateChangedNotificationSubscriber
-    arguments: ['@messenger', '@entity_type.manager', '@service_manual_workflow.content_group_service', '@gcontent_moderation.state_transition_validation', '@current_route_match', '@current_user', '@message_notify.sender']
+    arguments: [
+      '@messenger',
+      '@entity_type.manager',
+      '@service_manual_workflow.content_group_service',
+      '@gcontent_moderation.state_transition_validation',
+      '@current_route_match',
+      '@current_user',
+      '@message_notify.sender',
+      '@ggroup.group_hierarchy_manager'
+    ]
     tags:
       - { name: event_subscriber }
 

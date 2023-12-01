@@ -4,6 +4,7 @@ namespace Drupal\hel_tpm_group\EventSubscriber;
 
 use Drupal\Component\EventDispatcher\Event;
 use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\group\Entity\GroupMembership;
 use Drupal\group\Entity\GroupRoleInterface;
 use Drupal\hel_tpm_group\Event\GroupMembershipChanged;
 use Drupal\hel_tpm_group\Event\GroupSiteWideRoleChanged;
@@ -96,9 +97,13 @@ class HelTpmGroupSubscriber implements EventSubscriberInterface {
    * @return void
    *   Returns nothing.
    */
-  public function onGroupMembershipChange(Event $event) {
+  public function onGroupMembershipChange(Event $event): void {
     $group_content = $event->groupContent;
     $user = $group_content->getEntity();
+    // No user is found for entity.
+    if (empty($user)) {
+      return;
+    }
     $this->updateUserRoles($user);
   }
 
@@ -144,8 +149,7 @@ class HelTpmGroupSubscriber implements EventSubscriberInterface {
    *   Array of user calculated roles.
    */
   protected function calculateUserRoles(UserInterface $user) {
-    $membership_loader = \Drupal::service('group.membership_loader');
-    $memberships = $membership_loader->loadByUser($user);
+    $memberships = GroupMembership::loadByUser($user);
     $roles = [];
     $group_roles = [];
     foreach ($memberships as $membership) {
@@ -198,7 +202,7 @@ class HelTpmGroupSubscriber implements EventSubscriberInterface {
   /**
    * {@inheritdoc}
    */
-  public static function getSubscribedEvents() {
+  public static function getSubscribedEvents(): array {
     return [
       GroupSiteWideRoleChanged::EVENT_NAME => ['onGroupSiteWideRoleChanged'],
       GroupMembershipChanged::EVENT_NAME => ['onGroupMembershipChange'],
