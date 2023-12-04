@@ -10,9 +10,20 @@
           });
           $(label).hide();
         });
-        $('.form-item-field-free-service select').each(function () {
-          $(this).removeAttr('multiple');
+        // Handle clicking not selected input to mimic radiobuttons
+        $('.form-item-field-free-service input:not(:checked)').on( 'click', function(event) {
+          event.preventDefault();
+          let value = $(this).val();
+          if (value == 1 ) {
+            $(this).closest('.form-item__dropdown').find('select:selected').val('');
+            $(this).closest('.form-item__dropdown').find('select').val('1');
+          } else {
+            $(this).closest('.form-item__dropdown').find('select:selected').val('');
+            $(this).closest('.form-item__dropdown').find('select').val('2');
+          }
+           $(this).closest('form').find('.text-search-wrapper .form-submit').click();
         });
+
         $('.form-item-field-free-service input:checked').on( 'click', function(event) {
           event.stopPropagation();
           event.preventDefault();
