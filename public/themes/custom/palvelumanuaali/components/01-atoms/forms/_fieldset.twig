@@ -32,11 +32,12 @@
   ]
 %}
 <fieldset{{ attributes.addClass(classes) }}>
-{%
-  set legend_classes = [
-    extra_selector ? extra_selector,
-  ]
-%}
+  {%
+    set legend_classes = [
+      extra_selector ? extra_selector,
+      legend_extra_selector ? legend_extra_selector,
+    ]
+  %}
   {%
     set legend_span_classes = [
       extra_selector ? extra_selector,
