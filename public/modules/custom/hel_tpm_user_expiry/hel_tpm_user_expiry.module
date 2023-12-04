@@ -13,7 +13,7 @@ use Drupal\user\UserInterface;
  * Implements hook_cron().
  */
 function hel_tpm_user_expiry_cron() {
-  $run_time_limit = strtotime('1 second', 0);
+  $run_time_limit = strtotime('12 hours', 0);
   $last_run = Drupal::state()->get('hel_tpm_user_expiry.last_run');
 
   // Run this cron once every 24 hours.
@@ -29,7 +29,6 @@ function hel_tpm_user_expiry_cron() {
     ->condition('uid', 0, '<>')
     ->condition('access', $limit, '<=')
     ->condition('created', $limit, '<=');
-  $q->range(0, 1);
   $result = $q->execute()->fetchAll();
 
   foreach ($result as $user) {

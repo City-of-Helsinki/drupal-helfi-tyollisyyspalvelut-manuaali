@@ -99,7 +99,7 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
       return;
     }
 
-    if ($timestamp >= $this->getTimeLimit(3)) {
+    if ($this->getTimeLimit($count) >= $timestamp) {
       // Deactivate user if last notification has been sent 5 days ago.
       $this->deactivateUser();
       // Delete state after we have queued user for deactivation.
@@ -120,12 +120,12 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
    */
   protected function getTimeLimit($count) {
     $limits = [
-    // Send first notification immediately.
+      // Send first notification immediately.
       0 => 0,
-    // Time since first notification.
+      // Time since first notification.
       1 => strtotime('-2 weeks'),
-    // Time since second notification, deactivation.
-      3 => strtotime('-5 days'),
+      // Time since second notification, deactivation.
+      2 => strtotime('-5 days'),
     ];
     return $limits[$count];
   }
