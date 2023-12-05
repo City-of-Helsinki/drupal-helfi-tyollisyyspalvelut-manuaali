@@ -125,7 +125,7 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
       // Time since first notification.
       1 => strtotime('-2 weeks'),
       // Time since second notification, deactivation.
-      2 => strtotime('-5 days'),
+      2 => strtotime('-2 days'),
     ];
     return $limits[$count];
   }

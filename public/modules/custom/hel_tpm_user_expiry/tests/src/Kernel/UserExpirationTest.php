@@ -151,7 +151,7 @@ final class UserExpirationTest extends EntityKernelTestBase {
     ]));
 
     $this->resetCronLastRun();
-    $this->updateStateTimestamp('-3 days', $user);
+    $this->updateStateTimestamp('-1 days', $user);
     $this->cron->run();
     $user = $this->reloadEntity($user);
     $this->assertEquals('1', $user->get('status')->value);
@@ -159,7 +159,7 @@ final class UserExpirationTest extends EntityKernelTestBase {
     $this->assertCount(2, $mails);
 
     $this->resetCronLastRun();
-    $this->updateStateTimestamp('-5 days', $user);
+    $this->updateStateTimestamp('-2 days', $user);
     $this->cron->run();
     $user = $this->reloadEntity($user);
     $this->assertEquals(0, $user->get('status')->value);
