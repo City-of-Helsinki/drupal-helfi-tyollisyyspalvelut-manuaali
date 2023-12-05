@@ -1,0 +1,18 @@
+uuid: d542fc2e-f7f8-4717-9c4e-94112a09672f
+langcode: fi
+status: true
+dependencies: {  }
+id: smtp
+label: SMTP
+plugin: smtp
+configuration:
+  user: ''
+  pass: ''
+  host: mailhog
+  port: 1025
+  query:
+    verify_peer: false
+    local_domain: ''
+    restart_threshold: null
+    restart_threshold_sleep: null
+    ping_threshold: null

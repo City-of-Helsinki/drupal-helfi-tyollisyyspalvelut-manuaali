@@ -74,6 +74,7 @@ if (getenv('DRUPAL_VARNISH_HOST') && getenv('DRUPAL_VARNISH_PORT')) {
 }
 
 if (getenv('SMTP_HOST')) {
-  $config['smtp.settings']['smtp_host'] = getenv('SMTP_HOST');
+  $config['symfony_mailer.mailer_transport.smtp']['configuration']['host'] = getenv('SMTP_HOST');
+  $config['symfony_mailer.mailer_transport.smtp']['configuration']['port'] = 25;
 }
 $config['user.settings']['password_reset_timeout'] = 604800;
