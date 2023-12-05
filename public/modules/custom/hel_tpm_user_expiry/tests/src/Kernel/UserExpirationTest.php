@@ -1,12 +1,12 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types = 1);
 
 namespace Drupal\Tests\hel_tpm_user_expiry\Kernel;
 
-use Drupal;
 use Drupal\Core\Database\Database;
 use Drupal\Core\Test\AssertMailTrait;
 use Drupal\KernelTests\Core\Entity\EntityKernelTestBase;
-use Drupal\KernelTests\KernelTestBase;
 use Drupal\Tests\user\Traits\UserCreationTrait;
 
 /**
@@ -54,7 +54,7 @@ final class UserExpirationTest extends EntityKernelTestBase {
   /**
    * The queue container.
    *
-   * @var \Drupal\Core\Queue\DatabaseQueue.
+   * @var \Drupal\Core\Queue\DatabaseQueue
    */
   protected $queue;
 
@@ -69,7 +69,7 @@ final class UserExpirationTest extends EntityKernelTestBase {
     $this->installConfig([
       'hel_tpm_user_expiry_messages_test',
     ]);
-    $this->cron = Drupal::service('cron');
+    $this->cron = \Drupal::service('cron');
     $this->connection = Database::getConnection();
     $this->queue = $this->container->get('queue')
       ->get('hel_tpm_user_expiry_user_expiration_notification');
@@ -80,18 +80,18 @@ final class UserExpirationTest extends EntityKernelTestBase {
    */
   public function testUserExpirationCron(): void {
     $this->cron->run();
-    $last_run = Drupal::state()->get('hel_tpm_user_expiry.last_run');
+    $last_run = \Drupal::state()->get('hel_tpm_user_expiry.last_run');
     // Confirm cron is not interrupted.
-    $this->assertEquals(Drupal::time()->getRequestTime(), $last_run);
+    $this->assertEquals(\Drupal::time()->getRequestTime(), $last_run);
 
     $this->cron->run();
     // Confirm cron is not ran again within 12 hours.
-    $this->assertEquals($last_run, Drupal::state()->get('hel_tpm_user_expiry.last_run'));
+    $this->assertEquals($last_run, \Drupal::state()->get('hel_tpm_user_expiry.last_run'));
 
     // Confirm cron runs after 12 hours since last run.
-    Drupal::state()->set('hel_tpm_user_expiry.last_run',  $run_time_limit = strtotime('12 hours', 0));
+    \Drupal::state()->set('hel_tpm_user_expiry.last_run', $run_time_limit = strtotime('12 hours', 0));
     $this->cron->run();
-    $this->assertEquals(Drupal::time()->getRequestTime(), Drupal::state()->get('hel_tpm_user_expiry.last_run'));
+    $this->assertEquals(\Drupal::time()->getRequestTime(), \Drupal::state()->get('hel_tpm_user_expiry.last_run'));
   }
 
   /**
@@ -109,7 +109,7 @@ final class UserExpirationTest extends EntityKernelTestBase {
       ->condition('uid', $user->id())
       ->fields([
         'access' => $last_access,
-        'created' => $last_access
+        'created' => $last_access,
       ])
       ->execute();
 
@@ -118,6 +118,9 @@ final class UserExpirationTest extends EntityKernelTestBase {
     $this->assertEquals(1, $this->queue->numberOfItems());
   }
 
+  /**
+   *
+   */
   public function testUserExpirationNotifications() {
     $last_access = strtotime('-3 months -2 weeks');
     $user = $this->createUser();
@@ -125,12 +128,12 @@ final class UserExpirationTest extends EntityKernelTestBase {
       ->condition('uid', $user->id())
       ->fields([
         'access' => $last_access,
-        'created' => $last_access
+        'created' => $last_access,
       ])
       ->execute();
     $this->cron->run();
     $this->assertNotEmpty($this->drupalGetMails([
-      'id' => 'message_notify_1st_user_account_expiry_reminder'
+      'id' => 'message_notify_1st_user_account_expiry_reminder',
     ]));
 
     $this->resetCronLastRun();
@@ -139,7 +142,7 @@ final class UserExpirationTest extends EntityKernelTestBase {
 
     // Validate that 2nd message is not sent before 2 weeks since last notification.
     $this->assertEmpty($this->drupalGetMails([
-      'id' => 'message_notify_2nd_user_account_expiry_reminder'
+      'id' => 'message_notify_2nd_user_account_expiry_reminder',
     ]));
 
     $this->resetCronLastRun();
@@ -147,7 +150,7 @@ final class UserExpirationTest extends EntityKernelTestBase {
 
     $this->cron->run();
     $this->assertNotEmpty($this->drupalGetMails([
-      'id' => 'message_notify_2nd_user_account_expiry_reminder'
+      'id' => 'message_notify_2nd_user_account_expiry_reminder',
     ]));
 
     $this->resetCronLastRun();
@@ -166,8 +169,11 @@ final class UserExpirationTest extends EntityKernelTestBase {
 
   }
 
+  /**
+   *
+   */
   protected function resetCronLastRun() {
-    Drupal::state()->delete('hel_tpm_user_expiry.last_run');
+    \Drupal::state()->delete('hel_tpm_user_expiry.last_run');
   }
 
   /**
@@ -179,8 +185,9 @@ final class UserExpirationTest extends EntityKernelTestBase {
    * @return void
    */
   protected function updateStateTimestamp($date, $user) {
-    $state = Drupal::state()->get('hel_tpm_user_expiry.notified.' . $user->id());
+    $state = \Drupal::state()->get('hel_tpm_user_expiry.notified.' . $user->id());
     $state['timestamp'] = strtotime($date);
-    Drupal::state()->set('hel_tpm_user_expiry.notified.' . $user->id(), $state);
+    \Drupal::state()->set('hel_tpm_user_expiry.notified.' . $user->id(), $state);
   }
+
 }

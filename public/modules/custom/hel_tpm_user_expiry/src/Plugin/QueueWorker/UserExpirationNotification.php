@@ -10,7 +10,6 @@ use Drupal\Core\Queue\QueueWorkerBase;
 use Drupal\message\Entity\Message;
 use Drupal\message_notify\MessageNotifier;
 use Drupal\user\Entity\User;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -51,6 +50,13 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
   protected $messageNotifier;
 
   /**
+   * User id.
+   *
+   * @var int
+   */
+  private $uid;
+
+  /**
    * Constructor.
    *
    * @param array $configuration
@@ -59,8 +65,6 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
    *   Plugin id string.
    * @param array $plugin_definition
    *   Plugin definition array.
-   * @param \Psr\Log\LoggerInterface $logger
-   *   Logger service.
    * @param \Drupal\message_notify\MessageNotifier $messageNotifier
    *   Message notifier service.
    */
@@ -86,7 +90,7 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
    * {@inheritdoc}
    */
   public function processItem($data): void {
-    $this->setUid($data->uid);
+    $this->setUid((int)$data->uid);
     $notified = $this->getNotified();
     $count = $notified['count'];
     $timestamp = $notified['timestamp'];
@@ -118,7 +122,7 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
    * @return int
    *   Time limit in unix time.
    */
-  protected function getTimeLimit($count) {
+  protected function getTimeLimit($count): int {
     $limits = [
       // Send first notification immediately.
       0 => 0,
@@ -139,7 +143,7 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
    * @return void
    *   -
    */
-  protected function setUid($uid) {
+  protected function setUid(int $uid): void {
     $this->uid = $uid;
   }
 
@@ -149,7 +153,7 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
    * @return int|null
    *   -
    */
-  protected function getUid() {
+  protected function getUid(): int {
     return $this->uid;
   }
 
@@ -159,7 +163,7 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
    * @return void
    *   -
    */
-  protected function updateNotified() {
+  protected function updateNotified(): void {
     $notified = $this->getNotified();
     $notified['count']++;
     $notified['timestamp'] = \Drupal::time()->getRequestTime();
@@ -172,7 +176,7 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
    * @return array
    *   Notified state array.
    */
-  protected function getNotified() {
+  protected function getNotified(): array {
     $notified = \Drupal::state()->get($this->getStateName());
     if (empty($notified)) {
       return ['count' => 0, 'timestamp' => 0];
@@ -186,7 +190,7 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
    * @return string
    *   State name string.
    */
-  protected function getStateName() {
+  protected function getStateName(): string {
     return 'hel_tpm_user_expiry.notified.' . $this->getUid();
   }
 
@@ -196,14 +200,19 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
    * @return void
    *   -
    */
-  protected function deleteState() {
+  protected function deleteState(): void {
     \Drupal::state()->delete($this->getStateName());
   }
 
   /**
    * Deactivate user.
+   *
+   * @return void
+   *   -
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  protected function deactivateUser() {
+  protected function deactivateUser(): void {
     $user = User::load($this->getUid());
     $user->set('status', 0);
     $user->save();
@@ -223,7 +232,7 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
    *
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  protected function sendNotification($uid, $template) {
+  protected function sendNotification(int $uid, string $template): void {
     $message = Message::create([
       'template' => $template,
       'uid' => $uid,
