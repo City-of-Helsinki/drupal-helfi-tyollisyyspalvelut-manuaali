@@ -1,6 +1,9 @@
 .node-service-edit-form,
 .node-service-form {
   display: grid;
+  > * {
+     min-width: 0px;
+  }
   @include xl {
       grid-template-columns: 7fr 3fr;
       grid-column-gap: 24px;
@@ -214,6 +217,9 @@
     @include xl {
       grid-column: 1/2;
       grid-row: 3;
+      margin-top: -92px;
+    }
+    @media (min-width:1470px) {
       margin-top: -68px;
     }
   }
@@ -232,8 +238,17 @@
     @include xl {
       grid-column: 1/2;
       grid-row: 3;
+      margin-top: -92px;
+    }
+    @media (min-width:1470px) {
       margin-top: -68px;
     }
+  }
+
+  > .tab-0 >.form-fieldset,
+  > .tab-1,
+  > .tab-2,
+  > .tab-3 {
 
     .fieldgroup,
     .form-item {
