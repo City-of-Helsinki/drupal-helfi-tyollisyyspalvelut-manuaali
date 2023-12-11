@@ -73,6 +73,10 @@ $button-colors: (
     font-weight: 700;
     text-decoration: unset;
   }
+  &:disabled {
+    border: 2px solid clr(gray);
+    color: clr(gray);
+  }
 }
 
 @mixin button-blue-bordered-base {
@@ -232,6 +236,13 @@ $button-colors: (
 
     content: "\EA11";
     margin-right: $space;
+  }
+}
+
+@mixin border-2-blue {
+  &:disabled {
+    border: 2px solid $gray-light;
+    color: $gray-light;
   }
 }
 
@@ -643,8 +654,7 @@ there is possibility to add classes button--blue-bordered,
       @include button-medium;
       @include button-no-color;
       @include button-round-corners;
-
-      border: 2px solid $blue100;
+      @include border-2-blue;
     }
 }
 
