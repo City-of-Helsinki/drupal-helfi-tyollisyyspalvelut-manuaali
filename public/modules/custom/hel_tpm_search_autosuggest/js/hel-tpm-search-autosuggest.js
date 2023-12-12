@@ -149,7 +149,7 @@
       let term = $(element).val();
       Drupal.behaviors.hel_tpm_search_autocomplete.buildSearchHistory(form);
       Drupal.behaviors.hel_tpm_search_autocomplete.showHideAutocomplete(element, context);
-      if (term.length > 0) {
+      if (term.length >= 3) {
         Drupal.behaviors.hel_tpm_search_autocomplete.submitAjax(term, context);
       }
       Drupal.behaviors.hel_tpm_search_autocomplete.handleSelectionEvents(context);
