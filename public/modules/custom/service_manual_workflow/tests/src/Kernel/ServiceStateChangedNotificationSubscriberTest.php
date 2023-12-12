@@ -5,13 +5,16 @@ namespace Drupal\Tests\service_manual_workflow\Kernel;
 use Drupal\Core\Test\AssertMailTrait;
 use Drupal\node\Entity\Node;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
+use Drupal\Tests\service_manual_workflow\Traits\ServiceManualWorkflowTestTrait;
 
 /**
  * Tests if a specific module is enabled.
  *
- * @group dtt
+ * @covers \Drupal\service_manual_workflow\Access\ServiceOutdatedAccess
  */
 class ServiceStateChangedNotificationSubscriberTest extends GroupKernelTestBase {
+
+  use ServiceManualWorkflowTestTrait;
 
   use AssertMailTrait {
     getMails as drupalGetMails;
@@ -33,6 +36,7 @@ class ServiceStateChangedNotificationSubscriberTest extends GroupKernelTestBase 
     'message_notify',
     'message_notify_test',
     'service_manual_workflow',
+    'service_manual_workflow_service_test',
     'service_manual_workflow_notification_test_config',
     'ggroup',
     'ggroup_role_mapper',
@@ -51,6 +55,7 @@ class ServiceStateChangedNotificationSubscriberTest extends GroupKernelTestBase 
     $this->installSchema('node', ['node_access']);
     $this->installConfig(['field', 'node', 'system']);
     $this->installConfig([
+      'service_manual_workflow_service_test',
       'service_manual_workflow_notification_test_config',
       'content_moderation',
     ]);
@@ -141,51 +146,6 @@ class ServiceStateChangedNotificationSubscriberTest extends GroupKernelTestBase 
     $this->assertEquals('message_notify_content_has_been_published', $mails[1]['id']);
     $this->assertEquals($this->spUser->getEmail(), $mails[1]['to']);
 
-  }
-
-  /**
-   * Create node with randomized title.
-   *
-   * @param array $values
-   *   Array of values mapped for node.
-   *
-   * @return \Drupal\Core\Entity\EntityInterface
-   *   Node entity interface.
-   *
-   * @throws \Drupal\Core\Entity\EntityStorageException
-   */
-  protected function createNode($values) {
-    // Populate defaults array.
-    $values += [
-      'title' => $this->randomMachineName(8),
-    ];
-    // Create node object.
-    $node = Node::create($values);
-    $node->save();
-    return $this->reloadEntity($node);
-  }
-
-  /**
-   * Create users with given drupal roles.
-   *
-   * @param array $roles
-   *   Array of roles.
-   *
-   * @return \Drupal\Core\Entity\EntityInterface|\Drupal\user\Entity\User
-   *   User entity.
-   *
-   * @throws \Drupal\Core\Entity\EntityStorageException
-   */
-  protected function createUserWithRoles($roles) {
-    $user = $this->createUser();
-    if (empty($roles)) {
-      return $user;
-    }
-    foreach ($roles as $role) {
-      $user->addRole($role);
-    }
-    $user->save();
-    return $this->reloadEntity($user);
   }
 
 }
