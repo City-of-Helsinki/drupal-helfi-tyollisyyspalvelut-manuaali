@@ -357,7 +357,6 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id) {
     'node_basic_page_edit_form'
   ];
 
-
   if (in_array($form_id, $forms)) {
     if ($form_id == 'node_service_edit_form' || $form_id == 'node_service_form' ) {
       $node = $form_state->getFormObject()->getEntity();
