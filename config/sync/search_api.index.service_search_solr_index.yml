@@ -360,9 +360,22 @@ processor_settings:
       preprocess_index: -15
       preprocess_query: -15
     all_fields: true
-    fields: {  }
+    fields:
+      - entitygroupfield_labels
+      - field_age_groups
+      - field_description
+      - field_service_producer_labels
+      - locality
+      - rendered_item
+      - title
+      - title_1
     replacement: '|9999999998|'
   entity_type: {  }
+  hierarchy:
+    weights:
+      preprocess_index: -45
+    fields:
+      field_target_group_municipality: taxonomy_term-parent
   html_filter:
     weights:
       preprocess_index: -15
@@ -381,12 +394,10 @@ processor_settings:
     alt: true
     tags:
       b: 2
-      em: 1
       h1: 5
       h2: 3
       h3: 2
       strong: 2
-      u: 1
   ignore_character:
     weights:
       preprocess_index: -10
