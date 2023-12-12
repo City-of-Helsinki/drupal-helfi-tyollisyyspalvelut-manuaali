@@ -359,7 +359,7 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id) {
 
 
   if (in_array($form_id, $forms)) {
-    if ($form_id == 'node_service_edit_form' or $form_id == 'node_service_form' ) {
+    if ($form_id == 'node_service_edit_form' || $form_id == 'node_service_form' ) {
       $node = $form_state->getFormObject()->getEntity();
       if (!($node->isDefaultTranslation())) {
         $form['field_service_price']['widget'][0]['subform']['field_free_service']['#disabled'] = TRUE;
