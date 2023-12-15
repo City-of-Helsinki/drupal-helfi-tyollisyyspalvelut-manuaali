@@ -1,0 +1,261 @@
+.view-solr-service-search .view-filters {
+  position: relative;
+
+  .dropdownMultiselect {
+    display: none;
+  }
+
+  .search-autocomplete-wrapper {
+    >.js-form-type-textfield {
+      @include xl {
+        margin: auto;
+      }
+    }
+  }
+  .filters-wrapper {
+    @include large {
+      margin-top: $space-double;
+    }
+    @include xl {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+  }
+
+  .exposed-filters {
+    max-width: $max-width;
+    width: 100%;
+    .main-filters {
+      display: flex;
+      flex-wrap: wrap;
+      min-height: 76px;
+      @include xl {
+        margin-left: 60px;
+      }
+      .form-item {
+        @include xl {
+          margin-bottom: 0;
+        }
+      }
+
+    }
+    .secondary-filters {
+      &.collapsing,
+      &.show {
+        display: flex;
+        flex-wrap: wrap;
+        @include xl {
+          margin-left: 60px;
+        }
+      }
+    }
+  }
+  .control-wrapper {
+    display: flex;
+    justify-content: space-between;
+
+    input[data-drupal-selector="edit-reset"] {
+      display: none;
+    }
+    .collapse-toggler,
+    .form-submit  {
+      font-size: $small-caption;
+      font-weight: 700;
+      text-decoration: none;
+      background: unset;
+      padding: 0;
+      margin: 0;
+      color: clr(background-section);
+    }
+
+    .collapse-toggler.collapsed  {
+      position: relative;
+      padding-right: 24px;
+      display: block;
+      &:before {
+        background-image: url("/themes/custom/palvelumanuaali/images/icons/arrow-sm-down.svg");
+        background-repeat: no-repeat;
+        background-position-x: right;
+        background-position-y: 1px;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        content:"";
+      }
+    }
+    .collapse-toggler[aria-expanded="true"]  {
+      &:before {
+        transform: rotateX(180deg);
+      }
+    }
+  }
+
+  .bef--secondary {
+    @include xl {
+      display: block;
+    }
+    summary {
+      font-size: 12px;
+      color: $blue100;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      height: 32px;
+      &::marker {
+        content: '';
+      }
+    }
+    .additional-filters {
+      @include large {
+        margin-left: $space-double;
+      }
+    }
+    .reset-wrapper,
+    .additional-filters {
+      @include xl {
+        margin-left: $space-double;
+      }
+      a {
+        text-decoration: none;
+      }
+    }
+
+    .details-wrapper {
+      display: flex;
+      padding-top: 28px;
+      padding-bottom: 28px;
+      @extend .col-md-12;
+      .form-item {
+        margin-bottom: 0;
+      }
+
+      .form-item__label {
+        @extend .visually-hidden;
+      }
+    }
+  }
+}
+
+.view-solr-service-search {
+  .view-filters {
+    .js-form-type-select {
+      flex-grow: unset;
+    }
+
+    /* Search sort element's position and size. */
+    .form-item-sort-bef-combine {
+      float: left;
+      display: flex;
+      margin-top: $space-double;
+      flex: unset;
+      @include medium {
+        float: right;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        margin-left: auto;
+        margin-top: $space-four-and-half;
+      }
+      > label {
+        align-self: flex-end;
+        justify-self: right;
+        margin-bottom: 6px;
+        padding-right: $space;
+        font-size: 14px;
+      }
+      .select2 {
+        background-color: clr(text-inverse);
+
+      }
+      /* Select element for search sort. */
+      .form-item__dropdown {
+        align-self: flex-end;
+        border: 2px solid $blue40;
+        .select2-container--palvelumanuaali {
+          box-shadow: unset;
+          padding: 0;
+          .select2-selection--single {
+            @extend .multi-select-button;
+            height: 32px;
+            text-overflow: ellipsis;
+          }
+          .select2-selection--single .select2-selection__rendered {
+            background: transparent !important;
+            font-size: 14px !important;
+            line-height: 24px !important;
+            padding: 0 !important;
+          }
+          .select2-selection__arrow {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+.search-page {
+  .text-search-wrapper {
+    .form-actions {
+      position: relative;
+    }
+    input[data-drupal-selector="edit-reset"] {
+      position: absolute;
+      top: 0;
+      left: -36px;
+      padding: 0 !important;
+      color: transparent;
+      @extend .button--reset;
+      @extend .icon--small;
+      margin: 12px 0 12px 0 !important;
+      background-size: contain;
+      background-image: url("/themes/custom/palvelumanuaali/images/icons/close.svg");
+      background-repeat: no-repeat;
+      background-position: center;
+      &:hover {
+        background-color: transparent;
+        color: transparent;
+      }
+    }
+  }
+  .select2-search__field {
+    display: none;
+  }
+  .select2-results__options {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .select2-results__option,
+  .select2-results__option--highlighted[aria-selected] {
+    display: block;
+    font-size: 0.875em;
+    padding: 0.6em $space-two-and-half 0.6em $space-triple;
+    white-space: nowrap;
+    color: clr(text);
+    font-weight: 400;
+    &:hover,
+    &:focus {
+      background: clr(background);
+      font-weight: 400;
+      color: clr(text);
+    }
+  }
+  .select2-results__option[aria-selected="true"] {
+    font-weight: 400;
+    color: clr(text);
+    &::before {
+      left: 18px;
+      width: 12px;
+      height: 12px;
+      font-size: 9px;
+    }
+  }
+  .select--white-rounded {
+    select,
+    .select2 {
+      z-index: 0;
+    }
+  }
+}
