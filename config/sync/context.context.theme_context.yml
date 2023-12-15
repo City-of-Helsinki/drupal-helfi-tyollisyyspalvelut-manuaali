@@ -1,0 +1,30 @@
+uuid: 6c1f261c-ba4f-40ea-a3aa-041d09c1ac41
+langcode: fi
+status: true
+dependencies:
+  module:
+    - system
+label: 'Teema konteksti'
+name: theme_context
+group: null
+description: ''
+requireAllConditions: false
+disabled: false
+conditions:
+  request_path:
+    id: request_path
+    negate: false
+    uuid: 265f29f3-a00b-49eb-9cc0-7eb160ccc669
+    context_mapping: {  }
+    pages: '/user/*/edit'
+reactions:
+  theme:
+    id: theme
+    uuid: 5c5d83e8-8e56-41d5-8552-eaa8a6c21276
+    theme: palvelumanuaali
+    saved: false
+  body_class:
+    id: body_class
+    body_class: site-theme
+    saved: false
+weight: 0
