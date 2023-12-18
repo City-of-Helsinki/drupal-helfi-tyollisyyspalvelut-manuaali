@@ -37,6 +37,8 @@ class ViewsLatestModerationStateFilterTest extends ViewsKernelTestBase {
     'content_translation',
     'service_manual_workflow',
     'group',
+    'ggroup',
+    'flexible_permissions',
     'gcontent_moderation',
     'message_notify',
     'variationcache',

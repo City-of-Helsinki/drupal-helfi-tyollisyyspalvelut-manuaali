@@ -56,7 +56,6 @@ select.error ~ .select2-container {
   font-size: 14px;
   line-height: 24px;
   padding: 12px 16px 12px 16px;
-
   color: clr(text);
   &:focus {
     border-color: clr(accent-high);
@@ -64,5 +63,13 @@ select.error ~ .select2-container {
 
   &::placeholder {
     color: clr(gray);
+  }
+}
+
+.disabled-form-element {
+  &:disabled {
+    box-shadow: inset 0px 0px 0px 2px $gray-light;
+    background-color: $near-white;
+    color: $gray-light;
   }
 }

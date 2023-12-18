@@ -5,81 +5,47 @@
  * Module file for hel_tpm_user_expiry.
  */
 
-use Drupal\message\Entity\Message;
-use Drupal\user\Entity\User;
+use Drupal\user\UserInterface;
 
 /**
  * Implements hook_cron().
  */
 function hel_tpm_user_expiry_cron() {
-  $templates = [
-    1 => '1st_user_account_expiry_reminder',
-    2 => '2nd_user_account_expiry_reminder',
-  ];
+  $run_time_limit = strtotime('12 hours', 0);
+  $last_run = Drupal::state()->get('hel_tpm_user_expiry.last_run');
 
-  $logger = \Drupal::logger('hel_tpm_user_expiry');
-
-  // Check that we aren't running already.
-  if (($running = \Drupal::state()->get('hel_tpm_user_expiry.running')) && $running > strtotime('-2 hours')) {
-    $logger->error('Tried restarting already running user expiry cron');
+  // Run this cron once every 24 hours.
+  if ($last_run && (Drupal::time()->getRequestTime() - $last_run) < $run_time_limit) {
     return;
   }
-  \Drupal::state()->set('hel_tpm_user_expiry.running', time());
 
-  $state = \Drupal::state()->get('hel_tpm_user_expiry.notificationdata');
+  $limit = strtotime('-3 months -2 weeks');
 
-  $database = \Drupal::database();
-  $q = 'SELECT ufd.uid, ufd.access
-    FROM {users_field_data} ufd
-    WHERE ufd.access < :limit AND ufd.created < :limit AND ufd.status = 1';
-  $res = $database->query($q, [':limit' => strtotime('-3 months -2 weeks')]);
-  foreach ($res as $row) {
-    unset($notification);
-    // Check if the first notification has been sent.
-    if (isset($state[$row->uid]) && $state[$row->uid]['access'] != $row->access) {
-      // The user has logged in since the notification, restart the cycle.
-      unset($state[$row->uid]);
-    }
+  // Fetch all users have been inactive for 3 months and 2 weeks.
+  $q = Drupal::database()->select('users_field_data', 'ufd')
+    ->fields('ufd', ['uid', 'access'])
+    ->condition('uid', 0, '<>')
+    ->condition('access', $limit, '<=')
+    ->condition('created', $limit, '<=');
+  $result = $q->execute()->fetchAll();
 
-    // A notification has been already sent, so either second notification or
-    // deactivation.
-    if (isset($state[$row->uid]['notificationtimes'][1])) {
-      if (!isset($state[$row->uid]['notificationtimes'][2])) {
-        if ($state[$row->uid]['notificationtimes'][1] < strtotime('-2 weeks')) {
-          $notification = 2;
-        }
-      }
-      elseif ($state[$row->uid]['notificationtimes'][2] < strtotime('-2 days')) {
-        $user = User::load($row->uid);
-        $user->set('status', 0);
-        $user->save();
-        $logger->info('Deactivated user :uid', [':uid' => $row->uid]);
-      }
-    }
-    else {
-      $notification = 1;
-    }
-
-    if (isset($notification)) {
-      $logger->info('Sending notification %notification to user %uid', [
-        '%notification' => $notification,
-        '%uid' => $row->uid,
-      ]);
-      // Record the access date to see if the user has accessed the site.
-      $state[$row->uid]['access'] = $row->access;
-      $state[$row->uid]['notificationtimes'][$notification] = time();
-
-      $message = Message::create([
-        'template' => $templates[$notification],
-        'uid' => $row->uid,
-      ]);
-      $message->save();
-      $notifier = Drupal::service('message_notify.sender');
-      $notifier->send($message);
-    }
+  foreach ($result as $user) {
+    $queue = Drupal::queue('hel_tpm_user_expiry_user_expiration_notification');
+    $queue->createItem($user);
   }
 
-  // Set the updated states to state.
-  \Drupal::state()->set('hel_tpm_user_expiry.notificationdata', $state);
-  \Drupal::state()->delete('hel_tpm_user_expiry.running');
+  Drupal::state()->set('hel_tpm_user_expiry.last_run', Drupal::time()->getRequestTime());
+}
+
+/**
+ * Implements hook_user_login().
+ */
+function hel_tpm_user_expiry_user_login(UserInterface $account) {
+  $state_manager = Drupal::state();
+  $state_name = 'hel_tpm_user_expiry.notified.' . $account->id();
+  $state = $state_manager->get($state_name);
+  // Clear user expiry notification state after user has logged in.
+  if (!empty($state)) {
+    $state_manager->delete($state_name);
+  }
 }

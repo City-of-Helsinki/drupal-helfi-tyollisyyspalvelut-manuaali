@@ -42,6 +42,7 @@ class ContentGroupServiceTest extends GroupKernelTestBase {
     'gcontent_moderation_test',
     'message_notify',
     'gnode',
+    'ggroup',
     'service_manual_workflow',
     'group_test_config',
   ];
@@ -86,7 +87,11 @@ class ContentGroupServiceTest extends GroupKernelTestBase {
     $this->installSchema('node', ['node_access']);
     $this->installConfig(['group', 'group_test_config']);
     $this->createContentType(['type' => 'article']);
-    $this->installConfig('service_manual_workflow');
+    $this->installConfig([
+        'service_manual_workflow',
+        'ggroup',
+      ]
+    );
 
     // Setup the group type.
     $member_permissions = [

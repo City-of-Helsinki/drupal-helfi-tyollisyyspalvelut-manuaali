@@ -306,3 +306,17 @@
     }
   }
 }
+
+
+.basic-page .field--name-field-internal-files,
+.basic-page .field--name-field-file {
+  .field__item {
+    background-color: clr(text-inverse);
+  }
+}
+
+.form-text,
+.select--white-rounded select,
+.form-number {
+  @extend .disabled-form-element;
+}

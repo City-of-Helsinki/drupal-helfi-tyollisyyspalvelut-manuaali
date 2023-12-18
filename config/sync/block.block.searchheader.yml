@@ -24,10 +24,6 @@ settings:
   label_display: '0'
   provider: hel_tpm_search
 visibility:
-  request_path:
-    id: request_path
-    negate: false
-    pages: "/haku*\r\n/search*\r\n/sök*"
   context_all:
     id: context_all
     negate: null
@@ -47,3 +43,7 @@ visibility:
       own_page_true: '0'
       field_value: '0'
     user_fields: uid
+  request_path:
+    id: request_path
+    negate: false
+    pages: "/haku*\r\n/search*\r\n/sök*"
