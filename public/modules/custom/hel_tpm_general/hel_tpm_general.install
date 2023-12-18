@@ -448,24 +448,52 @@ function hel_tpm_general_update_10105(&$sandbox) {
 }
 
 /**
- * Migrate Finnish coordination career and career marking paragraphs to fields.
+ * Migrate coordination career and career marking paragraphs to fields.
  */
 function hel_tpm_general_update_10106(&$sandbox): void {
-  _hel_tpm_general_guidance_and_career_paragraphs_to_fields($sandbox, 'fi');
-}
+  $paragraphs_to_fields = [
+    'field_guidance_to_service' => 'field_service_coordination',
+    'field_career_marking' => 'field_career_markings',
+  ];
 
-/**
- * Migrate English coordination career and career marking paragraphs to fields.
- */
-function hel_tpm_general_update_10107(&$sandbox): void {
-  _hel_tpm_general_guidance_and_career_paragraphs_to_fields($sandbox, 'en');
-}
+  $node_storage = \Drupal::entityTypeManager()->getStorage('node');
 
-/**
- * Migrate Swedish coordination career and career marking paragraphs to fields.
- */
-function hel_tpm_general_update_10108(&$sandbox): void {
-  _hel_tpm_general_guidance_and_career_paragraphs_to_fields($sandbox, 'sv');
+  // Initialize update process and set the max value.
+  if (!isset($sandbox['progress'])) {
+    $efq = $node_storage->getQuery();
+    $max = $efq->condition('type', 'service')
+      ->condition($efq->orConditionGroup()
+        ->condition(array_keys($paragraphs_to_fields)[0], '', '<>')
+        ->condition(array_keys($paragraphs_to_fields)[1], '', '<>'))
+      ->accessCheck(FALSE)
+      ->count()
+      ->execute();
+    $sandbox['progress'] = 0;
+    $sandbox['current'] = 0;
+    $sandbox['max'] = $max;
+  }
+
+  // Fetch nodes in the given language.
+  $efq = $node_storage->getQuery();
+  $result = $efq->condition('type', 'service')
+    ->condition($efq->orConditionGroup()
+      ->condition(array_keys($paragraphs_to_fields)[0], '', '<>')
+      ->condition(array_keys($paragraphs_to_fields)[1], '', '<>'))
+    ->condition('nid', $sandbox['current'], '>')
+    ->accessCheck(FALSE)
+    ->sort('nid')
+    ->range(0, 5)
+    ->execute();
+
+  foreach ($result as $nid) {
+    /** @var \Drupal\node\Entity\Node $node */
+    $node = $node_storage->load($nid);
+    _hel_tpm_general_convert_paragraphs_inner_field($node, $paragraphs_to_fields, 'field_description');
+
+    $sandbox['progress']++;
+    $sandbox['current'] = $nid;
+  }
+  $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
 }
 
 /**
@@ -521,12 +549,14 @@ function _hel_tpm_general_ensure_entity_fields(string $entity_type, string $bund
 }
 
 /**
- * Helper function to convert coordination career and career marking paragraphs.
+ * Helper function to convert paragraphs with one inner field to normal fields.
  *
- * @param array $sandbox
- *   Stores information for batch updates.
- * @param string $langcode
- *   The node language.
+ * @param \Drupal\node\Entity\Node $node
+ *   The node object.
+ * @param array $paragraphs_to_fields
+ *   Array keys are paragraph field names and values new field names.
+ * @param string $paragraph_inner_field
+ *   The name of the original field inside the paragraph.
  *
  * @return void
  *   Void.
@@ -535,87 +565,39 @@ function _hel_tpm_general_ensure_entity_fields(string $entity_type, string $bund
  * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
  * @throws \Drupal\Core\Entity\EntityStorageException
  */
-function _hel_tpm_general_guidance_and_career_paragraphs_to_fields(array &$sandbox, string $langcode): void {
-  $paragraphs_to_fields = [
-    'field_guidance_to_service' => 'field_service_coordination',
-    'field_career_marking' => 'field_career_markings',
-  ];
-  $storage = \Drupal::entityTypeManager()->getStorage('node');
-
-  // Initialize update process and set the max value.
-  if (!isset($sandbox['progress'])) {
-    $efq = $storage->getQuery();
-    $max = $efq->condition('type', 'service')
-      ->condition($efq->orConditionGroup()
-        ->condition(array_keys($paragraphs_to_fields)[0], '', '<>')
-        ->condition(array_keys($paragraphs_to_fields)[1], '', '<>'))
-      ->condition('langcode', $langcode)
-      ->accessCheck(FALSE)
-      ->count()
-      ->execute();
-    $sandbox['progress'] = 0;
-    $sandbox['current'] = 0;
-    $sandbox['max'] = $max;
-  }
-
-  // Fetch nodes in the given language.
-  $efq = $storage->getQuery();
-  $result = $efq->condition('type', 'service')
-    ->condition($efq->orConditionGroup()
-      ->condition(array_keys($paragraphs_to_fields)[0], '', '<>')
-      ->condition(array_keys($paragraphs_to_fields)[1], '', '<>'))
-    ->condition('langcode', $langcode)
-    ->condition('nid', $sandbox['current'], '>')
-    ->accessCheck(FALSE)
-    ->sort('nid')
-    ->range(0, 5)
-    ->execute();
-
-  foreach ($result as $nid) {
-    // Loads the latest published, archived or outdated version of the
-    // translated service.
-    /** @var \Drupal\node\Entity\Node $node */
-    $node = $storage->load($nid)->getTranslation($langcode);
-
-    $latest_not_default_vid = NULL;
-    if ($node->isDefaultRevision() && !$node->isLatestRevision()) {
-      $latest_not_default_vid = $storage->getLatestRevisionId($node->id());
-    }
-
-    foreach ($paragraphs_to_fields as $paragraph_name => $field_name) {
-      $node = _hel_tpm_general_move_paragraph_inner_to_field($node, $paragraph_name, 'field_description', $field_name);
-    }
-
-    // Preserve changed time: add one second to prevent from updating.
-    $changed = $node->getChangedTime();
-    $changed++;
-    $node->setChangedTime($changed);
-    $node->setNewRevision(FALSE);
-    $node->save();
-
-    // Loads latest revision if the default revision was not latest.
-    if ($latest_not_default_vid) {
-      /** @var \Drupal\node\Entity\Node $node */
-      $node = $storage->loadRevision($latest_not_default_vid)->getTranslation($langcode);
-      foreach ($paragraphs_to_fields as $paragraph_name => $field_name) {
-        $node = _hel_tpm_general_move_paragraph_inner_to_field($node, $paragraph_name, 'field_description', $field_name);
+function _hel_tpm_general_convert_paragraphs_inner_field(Node $node, array $paragraphs_to_fields, string $paragraph_inner_field): void {
+  $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+  $languages = $node->getTranslationLanguages();
+  $revisionIds = $node_storage->revisionIds($node);
+  $revisionIds = array_reverse($revisionIds);
+  foreach ($languages as $langcode => $language) {
+    foreach ($revisionIds as $vid) {
+      /** @var \Drupal\node\Entity\Node $revision */
+      $revision = $node_storage->loadRevision($vid);
+      if ($revision->hasTranslation($langcode) && $revision->getTranslation($langcode)->isRevisionTranslationAffected()) {
+        $revision = $revision->getTranslation($langcode);
+        foreach ($paragraphs_to_fields as $paragraph_name => $field_name) {
+          $revision = _hel_tpm_general_move_paragraph_inner_to_field($revision, $langcode, $paragraph_name, $paragraph_inner_field, $field_name);
+        }
+        $revision->setNewRevision(FALSE);
+        // Without setSyncing(TRUE) new revisions would be created despite using
+        // setNewRevision(FALSE). However, this requires using the fix from
+        // https://www.drupal.org/i/3338260 for skipping recalculating the
+        // revision translations.
+        $revision->setSyncing(TRUE);
+        $revision->save();
+        // Only go through most recent revisions until the default revision is
+        // processed.
+        if ($revision->wasDefaultRevision()) {
+          break;
+        }
       }
-      // Preserve changed time: add one second to prevent from updating.
-      $changed = $node->getChangedTime();
-      $changed++;
-      $node->setChangedTime($changed);
-      $node->setNewRevision(FALSE);
-      $node->save();
     }
-
-    $sandbox['progress']++;
-    $sandbox['current'] = $nid;
   }
-  $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
 }
 
 /**
- * Helper function to convert node's paragraph with one inner field to normal.
+ * Helper function to set old paragraph with one inner field to normal field.
  *
  * @param \Drupal\node\Entity\Node $node
  *   The node object.
@@ -629,11 +611,13 @@ function _hel_tpm_general_guidance_and_career_paragraphs_to_fields(array &$sandb
  * @return \Drupal\node\Entity\Node
  *   The node object.
  */
-function _hel_tpm_general_move_paragraph_inner_to_field(Node $node, string $paragraphs_field, string $paragraph_inner_field, string $new_field): Node {
+function _hel_tpm_general_move_paragraph_inner_to_field(Node $node, string $langcode, string $paragraphs_field, string $paragraph_inner_field, string $new_field): Node {
   if (!empty($node->{$paragraphs_field}->entity)) {
-    $paragraph = $node->{$paragraphs_field}->entity->getTranslation($node->language()->getId());
-    $inner_value = $paragraph->{$paragraph_inner_field}->getValue();
-    $node->set($new_field, $inner_value);
+    if ($node->{$paragraphs_field}->entity->hasTranslation($langcode)) {
+      $paragraph = $node->{$paragraphs_field}->entity->getTranslation($langcode);
+      $inner_value = $paragraph->{$paragraph_inner_field}->getValue();
+      $node->set($new_field, $inner_value);
+    }
   }
   return $node;
 }
