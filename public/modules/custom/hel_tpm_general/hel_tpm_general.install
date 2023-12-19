@@ -9,6 +9,7 @@ use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Site\Settings;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\hel_tpm_general\PreventMailUtility;
 use Drupal\node\Entity\Node;
 
 /**
@@ -457,6 +458,8 @@ function hel_tpm_general_update_10106(&$sandbox): void {
   ];
 
   $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+  // Temporarily block sending mails.
+  PreventMailUtility::set();
 
   // Initialize update process and set the max value.
   if (!isset($sandbox['progress'])) {
@@ -494,6 +497,7 @@ function hel_tpm_general_update_10106(&$sandbox): void {
     $sandbox['current'] = $nid;
   }
   $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
+  PreventMailUtility::set(FALSE);
 }
 
 /**
