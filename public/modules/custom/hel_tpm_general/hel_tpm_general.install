@@ -571,6 +571,7 @@ function _hel_tpm_general_ensure_entity_fields(string $entity_type, string $bund
  */
 function _hel_tpm_general_convert_paragraphs_inner_field(Node $node, array $paragraphs_to_fields, string $paragraph_inner_field): void {
   $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+  $node_changed = $node->getChangedTime();
   $languages = $node->getTranslationLanguages();
   $revisionIds = $node_storage->revisionIds($node);
   $revisionIds = array_reverse($revisionIds);
@@ -589,6 +590,9 @@ function _hel_tpm_general_convert_paragraphs_inner_field(Node $node, array $para
         // https://www.drupal.org/i/3338260 for skipping recalculating the
         // revision translations.
         $revision->setSyncing(TRUE);
+        // Preserve revision changed time. This requires some change, e.g.
+        // adding one second to the original value.
+        $revision->setChangedTime($revision->getChangedTime() + 1);
         $revision->save();
         // Only go through most recent revisions until the default revision is
         // processed.
@@ -597,6 +601,16 @@ function _hel_tpm_general_convert_paragraphs_inner_field(Node $node, array $para
         }
       }
     }
+  }
+
+  // Also separately preserve default revision's changed time.
+  /** @var \Drupal\node\Entity\Node $update_node */
+  $update_node = $node_storage->load($node->id());
+  if ($node_changed !== $update_node->getChangedTime()) {
+    $update_node->setNewRevision(FALSE);
+    $update_node->setSyncing(TRUE);
+    $update_node->setChangedTime($node_changed + 1);
+    $update_node->save();
   }
 }
 
