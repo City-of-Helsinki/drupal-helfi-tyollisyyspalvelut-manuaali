@@ -36,7 +36,6 @@ class PreventMailForm extends FormBase {
       '#value' => $this->t('Save configuration'),
       '#button_type' => 'primary',
     ];
-    $form['#theme'] = 'system_config_form';
     return $form;
   }
 
