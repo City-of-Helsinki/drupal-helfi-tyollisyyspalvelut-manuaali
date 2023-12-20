@@ -314,3 +314,9 @@
     background-color: clr(text-inverse);
   }
 }
+
+.form-text,
+.select--white-rounded select,
+.form-number {
+  @extend .disabled-form-element;
+}
