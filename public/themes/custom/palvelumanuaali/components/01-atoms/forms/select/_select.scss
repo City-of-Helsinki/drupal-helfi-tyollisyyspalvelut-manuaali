@@ -22,7 +22,7 @@
   }
 
   &:hover {
-    border-color: clr(accent-high);
+    // border-color: clr(accent-high);
   }
 }
 
@@ -107,7 +107,10 @@
           content:"";
           left: 0;
           top: 0;
-          background-position: top 4px right 4px;
+          background-position: top 10px right 4px;
+          @include xl {
+            background-position: top 10px right 4px;
+          }
         }
       }
     &.multi-select-container--open {
