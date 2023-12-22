@@ -171,6 +171,24 @@ $button-colors: (
   }
 }
 
+// Button size variations
+@mixin button-medium-2 {
+  line-height: 16px;
+  font-size: 12px;
+  padding: 12px 16px;
+  @include xl {
+    padding: $space-one-half $space $space-one-half $space-one-and-half;
+    line-height: 20px;
+  }
+  @include xxl {
+    font-size: 14px;
+    padding: $space-three-fourths $space-double;
+    box-sizing: border-box;
+  }
+}
+
+
+
 @mixin button-large {
   line-height: 2;
   padding: $space $space-double;
@@ -473,28 +491,33 @@ $button-colors: (
 }
 
 .flag-cart {
-  @include button-base;
-  @include button-medium;
-  @include button-round-corners;
   @include button-no-color;
-
+  @include button-round-corners;
   border: 2px solid clr(background-section);
-  display: flex;
-  align-items: center;
-  &::after {
-      @include icons;
-      content: "\EA0E";
-      margin-left: 8px;
+  height: 40px;
+  @include xxl {
+    height: 48px;
   }
-  &.action-unflag {
-    &::after {
-        @include icons;
-        content: "\EA0F";
+    a {
+      text-decoration: none;
+      @include button-base;
+      @include button-medium-2;
+      &::after {
+          @include icons;
+          content: "\EA0E";
+          margin-left: 8px;
+          vertical-align: middle;
+          line-height: 18.5px;
+      }
     }
-  }
-  a {
-    text-decoration: none;
-  }
+    a {
+      &.action-unflag {
+        &::after {
+            @include icons;
+            content: "\EA0F";
+        }
+      }
+    }
 }
 
 .flag-lists {
