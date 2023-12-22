@@ -8,6 +8,11 @@ display:
       header:
         result:
           content: '<strong>Resultat:</strong> <span class="total-number">@total</span>'
+      empty:
+        area:
+          content:
+            value: "<p>Inga resultat hittades för sökningen.</p>\r\n"
+            format: filtered_html
   default:
     display_options:
       exposed_form:
@@ -17,6 +22,8 @@ display:
         field_free_service:
           group_info:
             label: 'Tjänsten är betald'
+          expose:
+            description: ''
         field_service_set:
           expose:
             label: 'Tjänstekategori:'
