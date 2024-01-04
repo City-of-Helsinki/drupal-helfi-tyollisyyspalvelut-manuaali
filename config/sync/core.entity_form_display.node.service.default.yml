@@ -154,7 +154,7 @@ third_party_settings:
       label: POMA
       region: hidden
       parent_name: ''
-      weight: 17
+      weight: 18
       format_type: accordion
       format_settings:
         classes: ''
@@ -259,7 +259,6 @@ third_party_settings:
         - title
         - field_description
         - field_service_set
-        - field_service_language
         - field_service_languages
         - field_service_price
       label: Perustiedot
@@ -923,16 +922,6 @@ content:
         maxlength_js: null
         maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
         maxlength_js_enforce: false
-  field_service_language:
-    type: select2_entity_reference
-    weight: 6
-    region: content
-    settings:
-      width: 100%
-      autocomplete: false
-      match_operator: CONTAINS
-      match_limit: 10
-    third_party_settings: {  }
   field_service_languages:
     type: entity_reference_paragraphs
     weight: 7
@@ -1119,6 +1108,7 @@ hidden:
   field_links_and_attachments: true
   field_poma_applicable: true
   field_poma_applicable_descriptio: true
+  field_service_language: true
   field_service_links_external: true
   field_service_links_internal: true
   field_service_radioactivity: true

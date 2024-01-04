@@ -5,22 +5,24 @@ dependencies:
   config:
     - field.storage.node.field_service_languages
     - node.type.service
+    - paragraphs.paragraphs_type.service_language
   module:
     - entity_reference_revisions
 id: node.service.field_service_languages
 field_name: field_service_languages
 entity_type: node
 bundle: service
-label: 'Service languages'
+label: 'Palvelun kieli'
 description: ''
-required: false
+required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
   handler: 'default:paragraph'
   handler_settings:
-    target_bundles: {  }
+    target_bundles:
+      service_language: service_language
     negate: 0
     target_bundles_drag_drop:
       contact_information:
@@ -58,9 +60,6 @@ settings:
         enabled: false
       service_language:
         weight: 29
-        enabled: false
-      service_languages:
-        weight: 30
         enabled: true
       service_price:
         weight: 31

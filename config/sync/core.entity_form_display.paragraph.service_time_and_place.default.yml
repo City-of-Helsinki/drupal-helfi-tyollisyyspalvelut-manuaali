@@ -12,14 +12,12 @@ dependencies:
   module:
     - field_group
     - hel_tpm_editorial
-    - hel_tpm_service_dates
     - select2
 third_party_settings:
   field_group:
     group_location:
       children:
         - field_service_location
-        - field_service_languages
         - field_service_language
         - field_separate_time
         - group_time
@@ -82,18 +80,6 @@ content:
       match_operator: CONTAINS
       match_limit: 10
     third_party_settings: {  }
-  field_service_languages:
-    type: hel_tpm_service_dates_service_time_and_place_widget
-    weight: 2
-    region: content
-    settings:
-      title: Paragraph
-      title_plural: Paragraphs
-      edit_mode: open
-      add_mode: dropdown
-      form_display_mode: default
-      default_paragraph_type: ''
-    third_party_settings: {  }
   field_service_location:
     type: entity_reference_autocomplete
     weight: 1
@@ -106,4 +92,5 @@ content:
     third_party_settings: {  }
 hidden:
   created: true
+  field_service_languages: true
   status: true
