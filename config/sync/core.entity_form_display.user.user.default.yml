@@ -20,10 +20,53 @@ third_party_settings:
         - field_name
         - field_job_title
         - field_employer
+        - language
       label: 'Personal information'
       region: content
       parent_name: ''
+      weight: 0
+      format_type: html_element
+      format_settings:
+        classes: ' field-group--border-bottom field-group--margin-bottom-three-half'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: true
+        label_element: h1
+        label_element_classes: h1--margin-bottom-three-half
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: true
+    group_log_in:
+      children:
+        - account
+        - field_password_expiration
+        - field_last_password_reset
+      label: 'Log in'
+      region: content
+      parent_name: ''
       weight: 1
+      format_type: html_element
+      format_settings:
+        classes: 'field-group--border-bottom field-group--margin-bottom-three-half'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: true
+        label_element: h4
+        label_element_classes: h4--margin-bottom-double
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: false
+    group_other_settings:
+      children:
+        - matomo
+      label: 'Other settings'
+      region: content
+      parent_name: ''
+      weight: 2
       format_type: html_element
       format_settings:
         classes: ''
@@ -31,8 +74,8 @@ third_party_settings:
         id: ''
         element: div
         show_label: true
-        label_element: h3
-        label_element_classes: ''
+        label_element: h4
+        label_element_classes: h4--margin-bottom-double
         attributes: ''
         effect: none
         speed: fast
@@ -43,7 +86,7 @@ bundle: user
 mode: default
 content:
   account:
-    weight: 0
+    weight: 4
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -65,7 +108,7 @@ content:
     third_party_settings: {  }
   field_last_password_reset:
     type: datetime_default
-    weight: 4
+    weight: 6
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -79,13 +122,18 @@ content:
     third_party_settings: {  }
   field_password_expiration:
     type: boolean_checkbox
-    weight: 3
+    weight: 5
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   language:
-    weight: 2
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  matomo:
+    weight: 4
     region: content
     settings: {  }
     third_party_settings: {  }
