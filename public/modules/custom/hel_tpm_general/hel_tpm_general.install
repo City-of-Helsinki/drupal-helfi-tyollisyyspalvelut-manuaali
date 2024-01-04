@@ -477,6 +477,9 @@ function hel_tpm_general_update_10105(&$sandbox) {
   $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
 }
 
+/**
+ * Migrate service languages paragraphs.
+ */
 function hel_tpm_general_update_10106(&$sandbox) {
   $fields = ['field_service_languages'];
   $entity_type = 'node';
