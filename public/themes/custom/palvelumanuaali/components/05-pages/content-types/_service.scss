@@ -191,6 +191,7 @@
 
   .field--name-field-implementation-extra-info,
   .field--name-field-service-price,
+  .field--name-field-service-languages,
   .field--name-field-service-language {
     margin-bottom: $space-double;
     @include large {
@@ -198,6 +199,9 @@
     }
   }
 
+  .service-language {
+    display: inline;
+  }
   .service-price {
     display: flex;
     flex-wrap: wrap;

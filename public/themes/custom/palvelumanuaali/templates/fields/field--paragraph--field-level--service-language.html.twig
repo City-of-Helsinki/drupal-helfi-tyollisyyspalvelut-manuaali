@@ -33,10 +33,9 @@
  * - field_type: The type of the field.
  * - label_display: The display settings for the label.
  *
+ *
  * @see template_preprocess_field()
  */
-
- @TODO: THIS CAN BE REMOVED IF BEM CLASSES CAN BE APPLIED IN WYSIWYG
 #}
 {%
   set classes = [
@@ -44,11 +43,9 @@
     'field--name-' ~ field_name|clean_class,
     'field--type-' ~ field_type|clean_class,
     'field--label-' ~ label_display,
+    label_display == 'inline' ? 'clearfix',
   ]
 %}
-
-{% set classes = classes|merge(additional_classes) %}
-
 {%
   set title_classes = [
     'field__label',
@@ -56,35 +53,13 @@
   ]
 %}
 
-<div class='icon-wrapper'>
-  {% include "@atoms/images/icons/_icon.twig" with {
-    icon_base_class: 'icon',
-    icon_name: icon_name,
-    icon_modifiers: ['small'],
-  } %}
-  <div{{ attributes.addClass(classes) }}>
-    <div{{ title_attributes.addClass(title_classes) }}>
-    {% include "@atoms/text/headings/_heading.twig" with {
-      "heading_level": 5,
-      "heading": field_header,
-      "heading_modifiers": 'semibold',
-    } %}
-    </div>
-    <div class="field__items">
-     {% if combined_field %}
-     {% for item in items %}
-       <div{{ item.attributes.addClass('field__item') }}>
-         {{item.content|render ~ "," }}
-       </div>
-     {% endfor %}
-     {% else %}
-      {% for item in items %}
-        <div{{ item.attributes.addClass('field__item') }}>
-          {{item.content}}
-        </div>
-        {% if not loop.last %}<span>,</span>{% endif %}
-      {% endfor %}
-    {% endif %}
-    </div>
-  </div>
+<div{{ attributes.addClass(classes, 'field__items') }}>
+  <span class="prefix">(</span>
+    {% for item in items %}
+      <span {{ item.attributes.addClass('language-level') }}>{{ item.content }}</span>
+      {% if not loop.last %}
+        <span class="delimiter">,</span>
+      {% endif %}
+    {% endfor %}
+  <span class="suffix">)</span>
 </div>

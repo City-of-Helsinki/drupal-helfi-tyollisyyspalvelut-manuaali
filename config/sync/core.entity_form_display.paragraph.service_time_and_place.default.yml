@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.paragraph.service_time_and_place.field_dates
     - field.field.paragraph.service_time_and_place.field_separate_time
+    - field.field.paragraph.service_time_and_place.field_service_language
     - field.field.paragraph.service_time_and_place.field_service_languages
     - field.field.paragraph.service_time_and_place.field_service_location
     - paragraphs.paragraphs_type.service_time_and_place
@@ -12,12 +13,14 @@ dependencies:
     - field_group
     - hel_tpm_editorial
     - hel_tpm_service_dates
+    - select2
 third_party_settings:
   field_group:
     group_location:
       children:
         - field_service_location
         - field_service_languages
+        - field_service_language
         - field_separate_time
         - group_time
       label: ''
@@ -37,7 +40,7 @@ third_party_settings:
       label: 'Milloin palvelu järjestetään'
       region: content
       parent_name: group_location
-      weight: 4
+      weight: 5
       format_type: html_element
       format_settings:
         classes: event-times
@@ -64,10 +67,20 @@ content:
     third_party_settings: {  }
   field_separate_time:
     type: boolean_checkbox
-    weight: 3
+    weight: 4
     region: content
     settings:
       display_label: true
+    third_party_settings: {  }
+  field_service_language:
+    type: select2_entity_reference
+    weight: 3
+    region: content
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
     third_party_settings: {  }
   field_service_languages:
     type: hel_tpm_service_dates_service_time_and_place_widget
