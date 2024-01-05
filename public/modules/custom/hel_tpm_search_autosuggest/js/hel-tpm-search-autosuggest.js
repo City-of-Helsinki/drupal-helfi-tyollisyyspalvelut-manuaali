@@ -167,12 +167,6 @@
           $('.text-search-wrapper input[id^="edit-reset--"]').show();
       }
 
-      if ($(searchField).val() == "") {
-        $('.text-search-wrapper input[id^="edit-reset--"]').hide();
-      } else {
-        $('.text-search-wrapper input[id^="edit-reset--"]').show();
-      }
-
       $(document).ready(function() {
 
         if ($(selectedMultiselect).length) {
