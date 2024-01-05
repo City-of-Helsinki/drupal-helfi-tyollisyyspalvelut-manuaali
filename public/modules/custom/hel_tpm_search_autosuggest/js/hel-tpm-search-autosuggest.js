@@ -112,7 +112,7 @@
     showHideAutocomplete: function(input, context) {
       let searchWrapper = '.search-history-wrapper';
       let autocompleteWrapper = '.hel-search-autocomplete';
-      if ($(input).val().length <= 0) {
+      if ($(input).val().length <= 2) {
         $(searchWrapper, context).show();
         $(autocompleteWrapper, context).hide();
       }
