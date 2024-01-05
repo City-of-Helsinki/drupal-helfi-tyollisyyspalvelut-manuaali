@@ -161,7 +161,7 @@
       let searchForm = $(form).closest('form');
       let selectedMultiselect = '.filters-wrapper .multi-select-container.active';
 
-      if ($(searchField).val() == "") {
+      if ($(searchField).val().length === 0) {
           $('.text-search-wrapper input[id^="edit-reset--"]').hide();
       } else {
           $('.text-search-wrapper input[id^="edit-reset--"]').show();
