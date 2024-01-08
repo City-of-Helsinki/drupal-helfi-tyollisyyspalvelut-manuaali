@@ -1,0 +1,81 @@
+.site-theme {
+  .user-form {
+    display: flex;
+    flex-direction: column;
+     > .js-form-type-textfield {
+       order: 1;
+       margin-bottom: $space-three-and-half;
+     }
+     .form-actions {
+       order: 2;
+     }
+  }
+  .layout-container {
+    margin: 0;
+  }
+  .main-content--with-sidebar .region-content #block-system-main-block {
+    max-width: 528px;
+  }
+
+  .form-item {
+    margin-bottom: $space-double;
+    &__description {
+      font-size: 14px;
+    }
+    .form-item {
+      margin-bottom: 0;
+      &-checkbox {
+        margin-bottom: $space-one-and-half;
+      }
+    }
+    legend {
+      font-size: 14px;
+      font-weight: 600;
+    }
+    >.form-item {
+      margin-bottom: $space-double;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  .field--name-field-password-expiration {
+    >.form-item {
+      flex-wrap: wrap;
+    }
+  }
+  .select2-selection {
+    background: transparent;
+    border: unset;
+    &__arrow {
+      display: none;
+    }
+  }
+  .select2-container--open {
+    margin-top: -6px;
+  }
+  .select2-dropdown {
+    border-right: 2px solid clr(form-border);
+    border-bottom: 2px solid clr(form-border);
+    border-left: 2px solid clr(form-border);
+  }
+  .form-item__dropdown {
+    border: 0;
+    &:hover {
+      border: 0;
+    }
+  }
+  fieldset {
+    padding: 0;
+  }
+  .field--type-datetime {
+    >.form-item > div {
+      display: flex;
+      flex-wrap: wrap;
+      gap: $space;
+      > div {
+        max-width: 200px;
+      }
+    }
+  }
+}
