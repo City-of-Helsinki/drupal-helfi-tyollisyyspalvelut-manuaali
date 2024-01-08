@@ -68,7 +68,7 @@
       color: clr(background-section);
     }
 
-    .collapse-toggler.collapsed  {
+    .collapse-toggler {
       position: relative;
       padding-right: 24px;
       display: block;
@@ -86,6 +86,7 @@
     .collapse-toggler[aria-expanded="true"]  {
       &:before {
         transform: rotateX(180deg);
+        background-position-y: 0px;
       }
     }
   }

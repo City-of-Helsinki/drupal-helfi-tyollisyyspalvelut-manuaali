@@ -114,9 +114,6 @@
     flex-direction: column;
     justify-content: center;
     order: 2;
-    @include medium {
-      // margin-top: -4.5rem;
-    }
     @include xl {
       display: block;
       margin-top: -$space-two-and-half;
@@ -154,6 +151,7 @@
   .view-content {
     order: 3;
     width: 100%;
+    margin-top: $space;
   }
 
   .pager {
