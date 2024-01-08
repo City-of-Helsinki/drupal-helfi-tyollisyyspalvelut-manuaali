@@ -112,7 +112,7 @@
     showHideAutocomplete: function(input, context) {
       let searchWrapper = '.search-history-wrapper';
       let autocompleteWrapper = '.hel-search-autocomplete';
-      if ($(input).val().length <= 0) {
+      if ($(input).val().length <= 2) {
         $(searchWrapper, context).show();
         $(autocompleteWrapper, context).hide();
       }
@@ -149,7 +149,7 @@
       let term = $(element).val();
       Drupal.behaviors.hel_tpm_search_autocomplete.buildSearchHistory(form);
       Drupal.behaviors.hel_tpm_search_autocomplete.showHideAutocomplete(element, context);
-      if (term.length > 0) {
+      if (term.length >= 3) {
         Drupal.behaviors.hel_tpm_search_autocomplete.submitAjax(term, context);
       }
       Drupal.behaviors.hel_tpm_search_autocomplete.handleSelectionEvents(context);
@@ -161,16 +161,10 @@
       let searchForm = $(form).closest('form');
       let selectedMultiselect = '.filters-wrapper .multi-select-container.active';
 
-      if ($(searchField).val() == "") {
+      if ($(searchField).val().length === 0) {
           $('.text-search-wrapper input[id^="edit-reset--"]').hide();
       } else {
           $('.text-search-wrapper input[id^="edit-reset--"]').show();
-      }
-
-      if ($(searchField).val() == "") {
-        $('.text-search-wrapper input[id^="edit-reset--"]').hide();
-      } else {
-        $('.text-search-wrapper input[id^="edit-reset--"]').show();
       }
 
       $(document).ready(function() {
