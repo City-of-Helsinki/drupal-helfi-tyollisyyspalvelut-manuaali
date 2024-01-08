@@ -10,50 +10,35 @@ display:
       fields:
         name:
           label: User
-          separator: ', '
         group_roles:
           label: Roles
-          separator: ', '
         view_group_content:
-          admin_label: 'View member link'
           text: 'View member'
         edit_group_content:
-          admin_label: 'Edit member link'
           text: 'Edit member'
         delete_group_content:
-          admin_label: 'Remove member link'
           text: 'Remove member'
         dropbutton:
           label: Operations
+        status:
+          label: Status
+          settings:
+            format_custom_false: Blocked
+            format_custom_true: Active
       pager:
         options:
           tags:
-            next: ››
-            previous: ‹‹
             first: '« First'
             last: 'Last »'
-          expose:
-            items_per_page_label: 'Items per page'
-            items_per_page_options_all_label: '- All -'
-            offset_label: Offset
+          expose: {  }
       exposed_form:
-        options:
-          submit_button: Apply
-          reset_button_label: Reset
-          exposed_sorts_label: 'Sort by'
-          sort_asc_label: Asc
-          sort_desc_label: Desc
+        options: {  }
       empty:
-        area_text_custom:
-          content: 'No members available.'
+        area_text_custom: {  }
       arguments:
         gid:
-          exception:
-            title: All
-          title: '{{ arguments.gid|placeholder }} members'
-    display_title: Master
+          exception: {  }
   page_1:
-    display_title: Page
     display_options:
       menu:
         title: Members
