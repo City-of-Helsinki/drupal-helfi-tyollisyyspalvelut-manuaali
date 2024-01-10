@@ -153,6 +153,37 @@ function hel_tpm_forms_validate_service_form_helper(array &$form, FormStateInter
     _hel_tpm_forms_validate_age_groups($target_group, $form_state);
     _hel_tpm_forms_validate_municipality($target_group, $form_state);
   }
+
+  if ($languages = $form_state->getValue('field_service_languages')) {
+    _hel_tpm_forms_validate_paragraph_language_selection($languages, $form_state);
+  }
+}
+
+/**
+ * Language field validation.
+ *
+ * @param $languages
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *
+ * @return void
+ */
+function _hel_tpm_forms_validate_paragraph_language_selection($languages, FormStateInterface &$form_state) {
+  $lang = [];
+  foreach ($languages as $delta => $paragraph) {
+    if (empty($paragraph['subform'])) {
+      continue;
+    }
+    foreach ($paragraph['subform']['field_language'] as $delta_field => $value) {
+      if (!empty($lang[$value['target_id']])) {
+        $field_key = sprintf('field_service_languages][%s][subform][field_language', $delta);
+        $form_state->setErrorByName(
+          $field_key,
+          t("Select each language only once and set minimum language level.")
+        );
+      }
+      $lang[$value['target_id']] = $value['target_id'];
+    }
+  }
 }
 
 /**
