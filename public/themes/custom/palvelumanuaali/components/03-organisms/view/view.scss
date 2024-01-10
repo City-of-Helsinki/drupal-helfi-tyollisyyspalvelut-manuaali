@@ -1,11 +1,14 @@
 .view-filters {
   .form--inline {
-    margin-top: $space;
-    margin-bottom: $space;
+    // margin-top: $space;
+    // margin-bottom: $space;
     display: flex;
     flex-wrap: wrap;
     align-items: end;
-    gap: $space;
+    gap: $space-one-half;
+    @include xl {
+      gap: $space-double;
+    }
   }
   .form-item,
   .form-actions {

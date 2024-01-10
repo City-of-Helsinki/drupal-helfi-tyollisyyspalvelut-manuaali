@@ -34,6 +34,20 @@ function hel_tpm_search_views_query_alter(ViewExecutable $view, QueryPluginBase 
 }
 
 /**
+ * Implements hook_views_post_render().
+ */
+function hel_tpm_search_views_post_render(ViewExecutable $view) {
+  switch ($view->id()) {
+    case 'solr_service_search':
+      // Hide sorting options when results are empty.
+      if (empty($view->result) && !empty($view->exposed_widgets['sort_bef_combine'])) {
+        $view->exposed_widgets['sort_bef_combine'] = NULL;
+      }
+      break;
+  }
+}
+
+/**
  * Implements hook_views_data_alter().
  */
 function hel_tpm_search_views_data_alter(array &$data): void {

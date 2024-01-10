@@ -16,8 +16,18 @@
   #}
 {{ q }}
 {% endif %}
-{% set fieldsMain = ['field_municipality', 'field_service_set', 'field_life_situations', 'field_language_1', 'field_free_service'] %}
-{% set fieldsSecondary = ['age_groups_filter', 'field_implementation_extra_info', 'field_accessibility']%}
+
+{% set fieldsMain = [
+  'field_municipality',
+  'field_service_set',
+  'field_life_situations',
+  'field_language_1',
+  'field_free_service',
+  'age_groups_filter',
+  'field_implementation_extra_info',
+  'field_accessibility'
+] %}
+{{ attach_library('palvelumanuaali/search-filters') }}
 
 <div class="form--inline clearfix search-form">
   <div class="text-search-wrapper">
@@ -26,15 +36,8 @@
   </div>
   <div class="filters-wrapper">
     <div class="exposed-filters">
-      <div class="main-filters filters">
+      <div class="main-filters filters" data-is-collapsed="true" >
         {% for field in fieldsMain %}
-          {% if field in form|keys %}
-            {{ form[ field ] }}
-          {% endif %}
-        {% endfor %}
-      </div>
-      <div class="secondary-filters filters collapse" id="collapseItem" >
-        {% for field in fieldsSecondary %}
           {% if field in form|keys %}
             {{ form[ field ] }}
           {% endif %}
@@ -43,7 +46,8 @@
       {% if  form['#display_id'] is defined and form['#display_id'] == 'block_1'  %}
       {% else %}
         <div class='control-wrapper'>
-        <span class="link-wrapper">  <a class="collapse-toggler" data-bs-toggle="collapse" href="#collapseItem" role="button" aria-expanded="false" aria-controls="collapseItem">{{ 'Show additional choices'|t }}</a></span>
+        <span class="link-wrapper">
+          <a class="collapse-toggler" data-bs-toggle="collapse" href="#" role="button" aria-expanded="false" aria-controls="collapseItem">{{ 'Show additional choices'|t }}</a></span>
          {{ form['actions']['reset'] }}
         </div>
         <div class='cost-reset'>

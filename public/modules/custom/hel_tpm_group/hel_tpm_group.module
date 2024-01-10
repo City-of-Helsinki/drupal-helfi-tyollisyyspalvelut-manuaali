@@ -5,14 +5,57 @@
  * Primary module hooks for hel_tpm_group module.
  */
 
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\group\Entity\GroupInterface;
 use Drupal\group\Entity\GroupRelationshipInterface;
 use Drupal\group\Entity\GroupRole;
 use Drupal\hel_tpm_group\Event\GroupMembershipChanged;
 use Drupal\hel_tpm_group\Event\GroupSiteWideRoleChanged;
 use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_entity_field_access().
+ *
+ * Allows group admins to see members' status field.
+ */
+function hel_tpm_group_entity_field_access($operation, FieldDefinitionInterface $field_definition, AccountInterface $account, FieldItemListInterface $items = NULL): AccessResultInterface {
+  // Don't interfere if not trying to view user's status field.
+  if (empty($field_definition->getTargetEntityTypeId())
+    || $field_definition->getTargetEntityTypeId() != 'user'
+    || $operation != 'view'
+    || $field_definition->getName() != 'status') {
+    return AccessResult::neutral();
+  }
+  // Don't interfere if group is not specified with route parameter.
+  $route_match = \Drupal::routeMatch();
+  $parameters = $route_match->getParameters();
+  if (!$parameters->has('group')) {
+    return AccessResult::neutral();
+  }
+  // Don't interfere if parameter is not a group.
+  $group = $parameters->get('group');
+  if (!$group instanceof GroupInterface) {
+    return AccessResult::neutral();
+  }
+  // Don't interfere if user is not a member of the group.
+  if (!$membership = $group->getMember($account)) {
+    return AccessResult::neutral();
+  }
+  // Allow group admins to view the user status field if the user also has
+  // correct permission.
+  $roles = $membership->getRoles();
+  if (array_key_exists('organisation-administrator', $roles)
+    || array_key_exists('service_provider-group_admin', $roles)) {
+    return AccessResult::allowedIfHasPermission($account, 'access extra member info if group admin')->cachePerPermissions();
+  }
+  return AccessResult::neutral();
+}
 
 /**
  * Implements hook_form_FORM_ID_alter().
