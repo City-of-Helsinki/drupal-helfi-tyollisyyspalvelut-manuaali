@@ -9,6 +9,7 @@ use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Site\Settings;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\menu_link_content\Entity\MenuLinkContent;
 
 /**
  * Remove the taxonomy contents.
@@ -416,6 +417,27 @@ function hel_tpm_general_update_10104(&$sandbox) {
   }
 
   $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
+}
+
+/**
+ * Create My account menu link and translations.
+ */
+function hel_tpm_general_update_10109(&$sandbox) {
+  $menu_link = MenuLinkContent::create([
+    'title' => 'Oma käyttäjätilini',
+    'link' => ['uri' => 'internal:/user/edit'],
+    'menu_name' => 'account',
+    'expanded' => TRUE,
+    'weight' => -10
+  ]);
+  $menu_link->save();
+  $translation = $menu_link->addTranslation('en');
+  $translation->set('title', 'My account');
+  $translation->save();
+
+  $translation = $menu_link->addTranslation('sv');
+  $translation->set('title', 'Mitt konto');
+  $translation->save();
 }
 
 /**
