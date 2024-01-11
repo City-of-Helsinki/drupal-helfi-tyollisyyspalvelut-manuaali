@@ -13,7 +13,7 @@
       function showHideAdditionalFilters(filterWrapper, isCollapsed) {
         let filterRows = calculateFilterRows(filterWrapper);
         // Maximum number of rows when filters are collapsed
-        let minRows= 2;
+        let minRows= 1;
         $(filterRows).each(function(i, filterRow) {
           $(filterRow).each(function(j, item) {
             if (i < minRows) {
