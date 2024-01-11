@@ -162,10 +162,13 @@ function hel_tpm_forms_validate_service_form_helper(array &$form, FormStateInter
 /**
  * Language field validation.
  *
- * @param $languages
+ * @param array $languages
+ *  Array of selected languages
  * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   Form state interface
  *
  * @return void
+ *  -
  */
 function _hel_tpm_forms_validate_paragraph_language_selection($languages, FormStateInterface &$form_state) {
   $lang = [];
