@@ -145,14 +145,15 @@
 
     /* Search sort element's position and size. */
     .form-item-sort-bef-combine {
-      float: left;
+      float: right;
       display: flex;
+      flex-direction: column;
       margin-top: $space-double;
       flex: unset;
-      @include medium {
+      gap: 8px;
+      @include xl {
         float: right;
         display: grid;
-        grid-template-columns: 1fr 2fr;
         margin-left: auto;
         margin-top: $space-two-and-half;
       }
@@ -168,6 +169,7 @@
         line-height: 24px;
         margin-bottom: auto;
         margin-top: auto;
+        grid-row: 1 / 2;
       }
       .select2 {
         background-color: clr(text-inverse);
@@ -177,6 +179,7 @@
       .form-item__dropdown {
         align-self: flex-end;
         border: 2px solid $blue40;
+        grid-row: 1 / 2;
         .select2-container--palvelumanuaali {
           box-shadow: unset;
           padding: 0;
