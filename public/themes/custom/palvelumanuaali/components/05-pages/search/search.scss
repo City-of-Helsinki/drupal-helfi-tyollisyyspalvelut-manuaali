@@ -112,11 +112,19 @@
     @extend .col-xl-6;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     order: 2;
+    gap: 8px;
+    margin-top: -96px;
     @include xl {
       display: block;
       margin-top: -$space-two-and-half;
+    }
+    &.empty-view-header {
+      padding-top: $space-two-and-half;
+      margin-top: 0;
+      @include xl {
+        margin-top: -$space-two-and-half;
+      }
     }
     strong {
       font-size: 15px;
