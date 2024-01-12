@@ -125,7 +125,7 @@
       function initFilterToggle(filterWrapper) {
         let isCollapsed = localStorage.getItem('searchFiltersIsCollapsed');
         if (!isCollapsed) {
-          return false;
+          isCollapsed = "true";
         }
         $(filterWrapper).attr('data-is-collapsed', isCollapsed);
         showHideAdditionalFilters(filterWrapper, isCollapsed);
