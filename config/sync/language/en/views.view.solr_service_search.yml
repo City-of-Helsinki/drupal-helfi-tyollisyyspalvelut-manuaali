@@ -13,6 +13,11 @@ display:
       header:
         result:
           content: '<strong>Search results:</strong> <span class="total-number">@total</span>'
+      empty:
+        area:
+          content:
+            value: "<p>No results were found for the search.</p>\r\n"
+            format: filtered_html
   default:
     display_options:
       filters:
@@ -25,6 +30,8 @@ display:
         field_free_service:
           group_info:
             label: 'Service is chargeable'
+          expose:
+            description: ''
         field_accessibility:
           expose:
             label: Accessibility

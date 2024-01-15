@@ -5,7 +5,20 @@
     display: flex;
     flex-wrap: wrap;
     align-items: end;
-    gap: $space;
+    @include xl {
+      margin-top: 0;
+    }
+    @include xxl {
+      margin-top: $space-double;
+    }
+    &.search-form {
+      margin-top: 0;
+      margin-bottom: 0;
+      gap: $space-one-half;
+      @include xl {
+        gap: $space-double;
+      }
+    }
   }
   .form-item,
   .form-actions {

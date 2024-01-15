@@ -46,9 +46,15 @@
   {% endif %}
   {{ title_suffix }}
   {% if header %}
-    <div class="view-header">
+    {% if empty %}
+    <div class="view-header empty-view-header">
       {{ header }}
     </div>
+    {% else %}
+      <div class="view-header">
+        {{ header }}
+      </div>
+    {% endif %}  
   {% endif %}
   {% if exposed %}
     <div class="view-filters">
