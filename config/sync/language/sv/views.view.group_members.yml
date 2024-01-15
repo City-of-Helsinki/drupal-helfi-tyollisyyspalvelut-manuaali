@@ -10,23 +10,21 @@ display:
       fields:
         name:
           label: Användare
-          separator: ', '
         group_roles:
           label: Roll
-          separator: ', '
-        view_group_content:
-          text: 'Näytä jäsen'
-        edit_group_content:
-          text: 'Muokkaa jäsentä'
-        delete_group_content:
-          text: 'Poista jäsen'
+        view_group_content: {  }
+        edit_group_content: {  }
+        delete_group_content: {  }
         dropbutton:
           label: Funktioner
+        status:
+          label: Status
+          settings:
+            format_custom_false: Spärrad
+            format_custom_true: Aktiv
       pager:
         options:
           tags:
-            next: ››
-            previous: ‹‹
             first: '« Första'
             last: 'Sista »'
           expose:
@@ -50,4 +48,3 @@ display:
     display_options:
       menu:
         title: Medlemskap
-label: 'Ryhmien jäsenyydet'

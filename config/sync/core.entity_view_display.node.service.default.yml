@@ -59,6 +59,7 @@ dependencies:
     - entity_reference_revisions
     - entitygroupfield
     - field_group
+    - hel_tpm_general
     - text
     - user
 third_party_settings:
@@ -179,8 +180,8 @@ content:
     label: hidden
     settings:
       format: custom
-      format_custom_false: ''
-      format_custom_true: 'Palveluun osallistuminen edellyttää asiakkaan suostumusta hänen henkilötietojensa luovuttamiseen.'
+      format_custom_false: "Participation  doesn't require customer consent."
+      format_custom_true: 'Participation requires customer consent.'
     third_party_settings: {  }
     weight: 18
     region: content
@@ -305,7 +306,7 @@ content:
     weight: 9
     region: content
   field_service_time_and_location:
-    type: entity_reference_revisions_entity_view
+    type: hel_tpm_general_time_and_place_formatter
     label: hidden
     settings:
       view_mode: default

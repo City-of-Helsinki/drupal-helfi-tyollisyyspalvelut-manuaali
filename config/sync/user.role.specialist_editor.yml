@@ -9,12 +9,14 @@ dependencies:
     - file
     - hel_tpm_contact_info
     - hel_tpm_general
+    - hel_tpm_group
     - paragraphs_type_permissions
 id: specialist_editor
 label: 'Specialist editor'
 weight: 6
 is_admin: null
 permissions:
+  - 'access extra member info if group admin'
   - 'access internal service fields'
   - 'create contact info'
   - 'create field_age'
