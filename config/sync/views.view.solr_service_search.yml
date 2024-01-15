@@ -848,6 +848,7 @@ display:
           preserve_facet_query_args: false
           query_tags: {  }
       relationships: {  }
+      css_class: service-search
       use_ajax: true
       header: {  }
       footer: {  }
@@ -1110,6 +1111,20 @@ display:
                 options_show_only_used_filtered: 0
                 options_hide_when_empty: 0
                 options_show_items_count: 0
+      empty:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text
+          empty: true
+          content:
+            value: 'Haulle ei löytynyt tuloksia.'
+            format: filtered_html
+          tokenize: false
       sorts:
         search_api_relevance:
           id: search_api_relevance
@@ -1151,6 +1166,7 @@ display:
             field_identifier: title
           exposed: true
       defaults:
+        empty: false
         pager: false
         exposed_form: false
         sorts: false
@@ -1165,7 +1181,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: result
-          empty: true
+          empty: false
           content: '<strong>Hakutuloksia:</strong> <span class="total-number">@total</span>'
       footer: {  }
       display_extenders: {  }

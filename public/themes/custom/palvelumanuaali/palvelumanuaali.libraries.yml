@@ -6,7 +6,6 @@ global:
     ../../../libraries/bootstrap-dist/js/bootstrap.bundle.min.js: {}
     js/breadcrumbs.js: {}
     js/header.js: {}
-    js/matomo.js: {}
   dependencies:
     - core/popperjs
     - core/jquery
@@ -19,7 +18,14 @@ main-menu:
   dependencies:
     - core/drupal
 
-# IE 11 support for SVG use - disable if not needed.
+search-filters:
+  js:
+    #dist/js/05-pages/search/search-page-filters.js: {}
+    components/05-pages/search/search-page-filters.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+
 # See also components/01-atoms/images/icons/_icon.twig to remove attach_library.
 sprite:
   js:
@@ -31,6 +37,13 @@ tabs:
     dist/js/02-molecules/tabs/tabs.js: {}
   dependencies:
     - core/drupal
+
+user-form:
+  js:
+    dist/js/05-pages/edit-form-overrides/user-form.js: {}
+  dependencies:
+    - core/drupal 
+    - select2/select2
 
 select2.theme:
   css:

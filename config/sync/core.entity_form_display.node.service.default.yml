@@ -573,12 +573,18 @@ third_party_settings:
       region: content
       parent_name: group_specialist
       weight: 15
-      format_type: fieldset
+      format_type: html_element
       format_settings:
         classes: fieldset-internal-files-and-attachments
         show_empty_fields: false
         id: ''
-        description: ''
+        element: div
+        show_label: true
+        label_element: legend
+        label_element_classes: field-group--title
+        attributes: ''
+        effect: none
+        speed: fast
         required_fields: true
 id: node.service.default
 targetEntityType: node

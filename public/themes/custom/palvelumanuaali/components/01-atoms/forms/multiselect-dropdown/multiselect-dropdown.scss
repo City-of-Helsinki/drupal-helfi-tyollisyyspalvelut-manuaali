@@ -58,7 +58,6 @@
       background-color: $blue100;
       .multi-select-button {
         color: #fff;
-
       }
       &:hover, &:active {
         background-color: $blue130;
@@ -85,10 +84,6 @@
   }
 
   .multi-select-container--open {
-    //background-color: $blue130;
-    .multi-select-button {
-    //  color: #fff;
-    }
     ~.icon {
       transform: rotateX(180deg);
       &--hide-while-selected {
@@ -106,8 +101,11 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 24px;
-    padding: 4px 44px 4px 24px;
+    padding: 10px 44px 10px 24px;
     /* identical to box height, or 171% */
+    @include xl {
+      padding: 10px 44px 10px $space-one-and-half;
+    }
 
     /* Primary / Black */
     color: $black;
@@ -118,8 +116,10 @@
     flex-grow: 0;
   }
   .multi-select-menu {
+    top: 38px;
     max-height: 300px;
     overflow: scroll;
+    border-radius: 8px;
   }
 
   .multi-select-menuitems {
@@ -128,7 +128,7 @@
   }
 
   .multi-select-menuitem {
-    padding: $space-one-half $space-double $space-one-half $space-triple;
+    padding: 10px $space-double 10px $space-triple;
 
 
     &:first-child {
@@ -136,6 +136,13 @@
     }
     &:last-child {
       padding-bottom: $space;
+    }
+    &:hover,
+    &:focus {
+      background: clr(background);
+      font-weight: 400;
+      color: clr(text);
+      cursor: pointer;
     }
   }
 
