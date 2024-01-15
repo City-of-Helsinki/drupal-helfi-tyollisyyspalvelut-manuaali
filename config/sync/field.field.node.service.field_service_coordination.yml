@@ -1,0 +1,26 @@
+uuid: 0c33e28e-68d8-4b96-aa4b-5a0cdb44b543
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_service_coordination
+    - node.type.service
+  module:
+    - require_on_publish
+    - text
+third_party_settings:
+  require_on_publish:
+    require_on_publish: true
+id: node.service.field_service_coordination
+field_name: field_service_coordination
+entity_type: node
+bundle: service
+label: 'Ohjaus palveluun'
+description: 'Kuvaa asiantuntijan toimintaohjeet asiakasohjauksen varmistamiseksi; mitä tehdään ennen asiakasta (taustatyönä), mitä yhdessä asiakkaan kanssa ja erikseen asiakastapaamisen jälkeen tai mitä asiakkaan tulee itse tehdä. Kuvaa myös ohjeet asiantuntijan harkinnan tueksi.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long
