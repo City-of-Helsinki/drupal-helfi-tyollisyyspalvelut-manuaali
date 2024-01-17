@@ -1,4 +1,5 @@
-.views-field-field-quick-links ul {
+.views-field-field-quick-links ul,
+.field--name-field-quick-link-row >.field__items {
   display: grid;
   grid-template-columns: 1fr;
   margin: 0;
@@ -25,6 +26,38 @@
   }
 }
 
+.field--name-field-quick-link-row{
+  .h2 {
+    font-size: 18px;
+  }
+   >.field__items {
+    display: grid;
+    grid-template-columns: 1fr;
+    margin: 0;
+    column-gap: 24px;
+    row-gap: 24px;
+    list-style: none;
+    padding: 0;
+    @include xl {
+      grid-template-columns: 1fr 1fr;
+    }
+    @include xxl {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+    li {
+      position: relative;
+      margin-bottom: 2em;
+      height: 100%;
+      &:last-child {
+        margin-bottom: 0;
+      }
+      @include medium {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
 .quick-link {
   display: grid;
   grid-template-columns: 72px 3fr;
@@ -33,6 +66,7 @@
   border-radius: 8px;
   padding: 2em 2.5em;
   width: 100%;
+  position: relative;
 
   @include medium {
     height: 100%;
