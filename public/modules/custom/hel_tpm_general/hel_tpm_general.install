@@ -525,7 +525,7 @@ function hel_tpm_general_update_10107(&$sandbox) {
     $progress_query = $paragraphs;
     $max = $progress_query
       ->countQuery()
-      ->execute()->fetchField();  
+      ->execute()->fetchField();
     $sandbox['progress'] = 0;
     $sandbox['current'] = 0;
     $sandbox['max'] = $max;
@@ -765,10 +765,10 @@ function _hel_tpm_general_build_language_collection($stp_revisions) {
     }
 
   }
-  return $languages; 
+  return $languages;
 }
 
-  /**
+/**
  * Helper function to migrate service language paragraphs to node field.
  *
  * @param \stdClass $revision_row
@@ -826,5 +826,5 @@ function _hel_tpm_general_is_default($revision_id) {
     ->countQuery()
     ->execute()
     ->fetchField();
-  return !((int)$default === 0); 
+  return !((int)$default === 0);
 }
