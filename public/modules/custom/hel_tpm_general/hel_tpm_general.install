@@ -633,8 +633,10 @@ function _hel_tpm_general_move_paragraph_inner_to_field(Node $node, string $lang
   if (!empty($node->{$paragraphs_field}->entity)) {
     if ($node->{$paragraphs_field}->entity->hasTranslation($langcode)) {
       $paragraph = $node->{$paragraphs_field}->entity->getTranslation($langcode);
-      $inner_value = $paragraph->{$paragraph_inner_field}->getValue();
-      $node->set($new_field, $inner_value);
+      if (!empty($paragraph->{$paragraph_inner_field})) {
+        $inner_value = $paragraph->{$paragraph_inner_field}->getValue();
+        $node->set($new_field, $inner_value);
+      }
     }
   }
   return $node;
