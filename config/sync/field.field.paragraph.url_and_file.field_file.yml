@@ -12,7 +12,7 @@ field_name: field_file
 entity_type: paragraph
 bundle: url_and_file
 label: 'Liitetiedostot (valinnainen)'
-description: ''
+description: 'Suurin sallittu tiedoston koko on 50 Mb. '
 required: false
 translatable: true
 default_value: {  }
@@ -21,7 +21,7 @@ settings:
   handler: 'default:file'
   handler_settings: {  }
   file_directory: '[date:custom:Y]-[date:custom:m]'
-  file_extensions: 'docx doc pdf ppt pptx jpg png'
-  max_filesize: '62 MB'
+  file_extensions: 'docx doc pdf ppt pptx jpg png mp4'
+  max_filesize: '50 MB'
   description_field: false
 field_type: file
