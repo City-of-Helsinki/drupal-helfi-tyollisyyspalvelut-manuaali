@@ -6,6 +6,8 @@ dependencies:
     - field.field.paragraph.service_language.field_language
     - field.field.paragraph.service_language.field_level
     - paragraphs.paragraphs_type.service_language
+  module:
+    - select2
 id: paragraph.service_language.default
 targetEntityType: paragraph
 bundle: service_language
@@ -18,10 +20,14 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_level:
-    type: options_select
+    type: select2_entity_reference
     weight: 2
     region: content
-    settings: {  }
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
     third_party_settings: {  }
 hidden:
   created: true

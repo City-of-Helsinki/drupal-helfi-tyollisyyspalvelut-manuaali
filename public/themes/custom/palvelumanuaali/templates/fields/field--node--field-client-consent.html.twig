@@ -33,23 +33,27 @@
  * - field_type: The type of the field.
  * - label_display: The display settings for the label.
  *
- *
  * @see template_preprocess_field()
  */
+
+ @TODO: THIS CAN BE REMOVED IF WYWSIWYG BEM CLASSES CAN BE APPLIED
 #}
 
 {%
-  set additional_classes = [
-  'field--content--inline',
-  'field--content--blue',
-  'field--content--margin-left-triple',
-]
+  set classes = [
+    'field',
+    'field--name-' ~ field_name|clean_class,
+    'field--type-' ~ field_type|clean_class,
+    'field--label-' ~ label_display,
+    'blue-padded-round-corners-card',
+  ]
 %}
 
-{% include "@molecules/icon-textfield/icon-textfield.twig" with  {
-  items: items,
-  field_header: 'Service language'|t,
-  additional_classes: additional_classes,
-  icon_name: 'speech-bubble-dark-blue',
-}
-%}
+{% for item in items %}
+  {% if item.content['#markup'] == '1' %}
+    <div{{ attributes.addClass(classes, 'field__item') }}>
+      <span class="icon-i"></span>
+      <span class="text">{{"Participation requires customer consent."|t}}</span>
+    </div>
+  {% endif %}
+{% endfor %}

@@ -1,85 +1,76 @@
-uuid: 854f0f5b-c570-45a2-b2b6-6a37cb3cb6cb
+uuid: d2243c6d-373c-491a-8a96-5030d382c36b
 langcode: fi
 status: true
 dependencies:
   config:
-    - field.storage.node.field_paragraph
-    - node.type.basic_page
-    - paragraphs.paragraphs_type.content
-    - paragraphs.paragraphs_type.full_width_card_lift
-    - paragraphs.paragraphs_type.quick_link_row
-    - paragraphs.paragraphs_type.url_and_file
+    - field.storage.node.field_service_languages
+    - node.type.service
+    - paragraphs.paragraphs_type.service_language
   module:
     - entity_reference_revisions
-id: node.basic_page.field_paragraph
-field_name: field_paragraph
+id: node.service.field_service_languages
+field_name: field_service_languages
 entity_type: node
-bundle: basic_page
-label: Paragraafi
+bundle: service
+label: 'Palvelun kieli'
 description: ''
-required: false
-translatable: true
+required: true
+translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
   handler: 'default:paragraph'
   handler_settings:
     target_bundles:
-      content: content
-      full_width_card_lift: full_width_card_lift
-      url_and_file: url_and_file
-      quick_link_row: quick_link_row
+      service_language: service_language
     negate: 0
     target_bundles_drag_drop:
       contact_information:
-        weight: 15
-        enabled: false
-      content:
-        weight: 16
-        enabled: true
-      content_card_lift:
-        weight: 17
-        enabled: false
-      content_link_file:
         weight: 18
         enabled: false
-      content_link_file_guide:
+      content:
         weight: 19
         enabled: false
-      full_width_card_lift:
-        weight: 21
-        enabled: true
-      header_description_link:
+      content_card_lift:
         weight: 20
         enabled: false
-      link:
+      content_link_file:
         weight: 21
         enabled: false
-      long_text_field_with_toolbar:
+      content_link_file_guide:
         weight: 22
         enabled: false
-      municipality_guide:
+      full_width_card_lift:
         weight: 23
         enabled: false
-      quick_link:
-        weight: 27
-        enabled: false
-      quick_link_row:
-        weight: 29
-        enabled: true
-      service_language:
+      header_description_link:
         weight: 24
         enabled: false
-      service_price:
+      link:
         weight: 25
         enabled: false
-      service_time_and_place:
+      long_text_field_with_toolbar:
         weight: 26
         enabled: false
-      target_group:
+      municipality_guide:
         weight: 27
         enabled: false
-      url_and_file:
+      quick_link:
         weight: 28
+        enabled: false
+      service_language:
+        weight: 29
         enabled: true
+      service_price:
+        weight: 31
+        enabled: false
+      service_time_and_place:
+        weight: 32
+        enabled: false
+      target_group:
+        weight: 33
+        enabled: false
+      url_and_file:
+        weight: 34
+        enabled: false
 field_type: entity_reference_revisions
