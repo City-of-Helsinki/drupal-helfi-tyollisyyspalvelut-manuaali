@@ -61,8 +61,7 @@ third_party_settings:
         speed: fast
         required_fields: false
     group_other_settings:
-      children:
-        - matomo
+      children: {  }
       label: 'Other settings'
       region: content
       parent_name: ''
@@ -132,13 +131,9 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  matomo:
-    weight: 4
-    region: content
-    settings: {  }
-    third_party_settings: {  }
 hidden:
   entitygroupfield: true
   field_pending_expire_sent: true
   langcode: true
+  matomo: true
   timezone: true
