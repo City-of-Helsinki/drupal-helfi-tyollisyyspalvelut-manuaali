@@ -79,9 +79,12 @@
      {% endfor %}
      {% else %}
       {% for item in items %}
+        {% apply spaceless %}
         <div{{ item.attributes.addClass('field__item') }}>
-      {{item.content}}{% if not loop.last %}<span>,</span>{% endif %}
+          {{item.content}}
         </div>
+        {% if not loop.last %}<span>,</span>{% endif %}
+        {% endapply %}
       {% endfor %}
     {% endif %}
     </div>

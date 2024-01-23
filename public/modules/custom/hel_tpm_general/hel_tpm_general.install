@@ -501,6 +501,109 @@ function hel_tpm_general_update_10106(&$sandbox): void {
 }
 
 /**
+ * Create new service language field and migrate data.
+ */
+function hel_tpm_general_update_10107(&$sandbox) {
+  $fields = ['field_service_language'];
+  $entity_type = 'paragraph';
+  $bundle = 'service_time_and_place';
+  _hel_tpm_general_ensure_entity_fields($entity_type, $bundle, $fields);
+
+  $database = \Drupal::database();
+  $storage = \Drupal::entityTypeManager()->getStorage('paragraph');
+
+  // Init paragraph query.
+  // This is done to mitigate resource usage due to
+  // unlimited amount of revisions per paragraphs.
+  $paragraphs = $database->select('paragraph_revision__field_service_languages', 'p')
+    ->fields('p', ['entity_id'])
+    ->groupBy('entity_id')
+    ->orderBy('p.entity_id');
+
+  // Initialize progression with paragraph count.
+  if (!isset($sandbox['progress'])) {
+    $progress_query = $paragraphs;
+    $max = $progress_query
+      ->countQuery()
+      ->execute()->fetchField();
+    $sandbox['progress'] = 0;
+    $sandbox['current'] = 0;
+    $sandbox['max'] = $max;
+  }
+
+  $paragraphs->condition('p.entity_id', $sandbox['current'], ">");
+  // Fetch only 5 paragraphs.
+  $paragraphs->range(0, 5);
+  $paragraphs = $paragraphs->execute()->fetchAllAssoc('entity_id');
+
+  // Fetch revisions values.
+  $query = $database->select('paragraph_revision__field_service_languages', 'p');
+  $query->fields('p');
+  $query->orderBy('p.revision_id');
+  $query->condition('p.entity_id', array_keys($paragraphs), 'IN');
+  $reference_items = $query->execute()->fetchAll();
+
+  // Create language collection.
+  $language_collection = _hel_tpm_general_build_language_collection($reference_items);
+
+  foreach ($language_collection as $paragraph_id => $revisions) {
+    foreach ($revisions as $stp_rev => $languages) {
+      $rev = $storage->loadRevision($stp_rev);
+      $rev->field_service_language = $languages;
+      $rev->save();
+    }
+    $sandbox['current'] = $paragraph_id;
+    $sandbox['progress']++;
+  }
+
+  $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
+}
+
+/**
+ * Migrate service languages paragraphs.
+ */
+function hel_tpm_general_update_10108(&$sandbox) {
+  $fields = ['field_service_languages'];
+  $entity_type = 'node';
+  $bundle = 'service';
+  _hel_tpm_general_ensure_entity_fields($entity_type, $bundle, $fields);
+
+  $database = \Drupal::database();
+  $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+
+  $node_revision_query = $database->select('node_revision__field_service_time_and_location', 'nr')
+    ->fields('nr')
+    ->groupBy('nr.revision_id')
+    ->orderBy('nr.revision_id');
+
+  // Initialize progression with paragraph count.
+  if (!isset($sandbox['progress'])) {
+    $progress_query = $node_revision_query;
+    $max = $progress_query
+      ->countQuery()
+      ->execute()->fetchField();
+    $sandbox['progress'] = 0;
+    $sandbox['current'] = 0;
+    $sandbox['max'] = (int) $max;
+  }
+
+  $node_revision_query->condition('nr.revision_id', $sandbox['current'], ">");
+  $node_revision_query->range(0, 20);
+  $node_revisions = $node_revision_query->execute()->fetchAll();
+
+  $nids = [];
+  foreach ($node_revisions as $rid => $row) {
+    _hel_tpm_general_migrate_service_languages($row);
+    $nids[$row->entity_id] = $row->entity_id;
+    $sandbox['current'] = (int) $row->revision_id;
+    $sandbox['progress']++;
+  }
+
+  $node_storage->resetCache($nids);
+  $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
+}
+
+/**
  * Helper function to migrate paragraph fields to node fields.
  *
  * @param \Drupal\Core\Entity\EntityInterface $paragraph
@@ -640,4 +743,90 @@ function _hel_tpm_general_move_paragraph_inner_to_field(Node $node, string $lang
     }
   }
   return $node;
+}
+
+/**
+ * Helper function to build language array for revisions.
+ *
+ * @param $stp_revisions
+ *
+ * @return array
+ */
+function _hel_tpm_general_build_language_collection($stp_revisions) {
+  $languages = [];
+  $storage = \Drupal::entityTypeManager()->getStorage('paragraph');
+  foreach ($stp_revisions as $stp_rev) {
+    $rev = $storage->loadRevision($stp_rev->field_service_languages_target_revision_id);
+    // Initialize empty key for language paragraph.
+    if (empty($languages[$stp_rev->entity_id])) {
+      $languages[$stp_rev->entity_id] = [];
+    }
+    $tid = $rev->get('field_language')->target_id;
+    if (!empty($tid)) {
+      $languages[$stp_rev->entity_id][$stp_rev->revision_id][]['target_id'] = $tid;
+    }
+
+  }
+  return $languages;
+}
+
+/**
+ * Helper function to migrate service language paragraphs to node field.
+ *
+ * @param \stdClass $revision_row
+ *
+ * @return void
+ *  -
+ * @throws \Exception
+ */
+function _hel_tpm_general_migrate_service_languages($revision_row) {
+  $database = \Drupal::database();
+  $tables = ['node_revision__field_service_languages'];
+  $paragraphs_service_languages = $database->select('paragraph_revision__field_service_languages', 'p')
+    ->fields('p')
+    ->condition('p.revision_id', $revision_row->field_service_time_and_location_target_revision_id)
+    ->orderBy('p.revision_id')
+    ->execute()->fetchAll();
+
+  if (empty($paragraphs_service_languages)) {
+    return;
+  }
+
+  $field_service_languages_rows = [];
+  foreach($paragraphs_service_languages as $i => $row) {
+    $row->bundle = $revision_row->bundle;
+    $row->entity_id = $revision_row->entity_id;
+    $row->revision_id = $revision_row->revision_id;
+    $field_service_languages_rows[$i] = (array) $row;
+  }
+
+  if (_hel_tpm_general_is_default($revision_row->revision_id)) {
+    $tables[] = 'node__field_service_languages';
+  }
+
+  foreach ($tables as $table) {
+    $query = $database->insert($table)
+      ->fields(array_keys($field_service_languages_rows[0]));
+    foreach ($field_service_languages_rows as $row) {
+      $query->values($row);
+    }
+    $query->execute();
+  }
+}
+
+/**
+ * Helper function to check if revision id is default revision.
+ *
+ * @param $row
+ *
+ * @return bool
+ */
+function _hel_tpm_general_is_default($revision_id) {
+  $default = \Drupal::database()->select('node_field_data', 'n')
+    ->fields('n')
+    ->condition('n.vid', $revision_id)
+    ->countQuery()
+    ->execute()
+    ->fetchField();
+  return !((int)$default === 0);
 }

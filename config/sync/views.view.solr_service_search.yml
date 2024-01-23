@@ -403,10 +403,10 @@ display:
           hierarchy: false
           limit: true
           error_message: true
-        field_service_language:
-          id: field_service_language
+        field_language_1:
+          id: field_language_1
           table: search_api_index_service_search_solr_index
-          field: field_service_language
+          field: field_language_1
           relationship: none
           group_type: group
           admin_label: ''
@@ -416,14 +416,14 @@ display:
           group: 1
           exposed: true
           expose:
-            operator_id: field_service_language_op
+            operator_id: field_language_1_op
             label: 'Palvelun kieli'
             description: ''
             use_operator: false
-            operator: field_service_language_op
+            operator: field_language_1_op
             operator_limit_selection: false
             operator_list: {  }
-            identifier: field_service_language
+            identifier: field_language_1
             required: false
             remember: false
             multiple: true
@@ -1039,7 +1039,7 @@ display:
                 options_show_only_used_filtered: 0
                 options_hide_when_empty: 0
                 options_show_items_count: 0
-              field_service_language:
+              field_language_1:
                 plugin_id: bef_dropdown_multiselet
                 advanced:
                   sort_options: false
