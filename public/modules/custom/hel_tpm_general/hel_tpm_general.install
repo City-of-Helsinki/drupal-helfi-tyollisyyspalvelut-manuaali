@@ -736,8 +736,10 @@ function _hel_tpm_general_move_paragraph_inner_to_field(Node $node, string $lang
   if (!empty($node->{$paragraphs_field}->entity)) {
     if ($node->{$paragraphs_field}->entity->hasTranslation($langcode)) {
       $paragraph = $node->{$paragraphs_field}->entity->getTranslation($langcode);
-      $inner_value = $paragraph->{$paragraph_inner_field}->getValue();
-      $node->set($new_field, $inner_value);
+      if (!empty($paragraph->{$paragraph_inner_field})) {
+        $inner_value = $paragraph->{$paragraph_inner_field}->getValue();
+        $node->set($new_field, $inner_value);
+      }
     }
   }
   return $node;
@@ -813,7 +815,7 @@ function _hel_tpm_general_migrate_service_languages($revision_row) {
 }
 
 /**
-* Helper function to check if revision id is default revision.
+ * Helper function to check if revision id is default revision.
  *
  * @param $row
  *
