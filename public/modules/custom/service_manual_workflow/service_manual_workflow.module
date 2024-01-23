@@ -94,10 +94,10 @@ function service_manual_workflow_require_on_publish_is_published_alter(&$is_publ
   if ($entity->bundle() === 'service' && $moderation_state === 'ready_to_publish') {
     $required_specialist_fields = [
       'field_service_req_speacialist',
-      'field_guidance_to_service',
+      'field_service_coordination',
       'field_obligatoryness_freetext',
       'field_obligatoryness',
-      'field_career_marking',
+      'field_career_markings',
       'field_statements_unemployment',
       'field_statements',
       'field_service_suits_job_search',
