@@ -23,16 +23,14 @@
  * @see template_preprocess_taxonomy_term()
  */
 #}
-<div {{bem('term')}} >
-  {{ title_prefix }}
+<span {{bem('term')}} >
   {% if name and not page %}
     {% if logged_in %}
-      <p>{{"("}}<a class="modal-link" type="button" data-bs-toggle="modal" data-bs-target="{{'#Modal-' ~ term.id}}">{{ name|render }}</a>{{")"}}</p>
+      <a class="modal-link" type="button" data-bs-toggle="modal" data-bs-target="{{'#Modal-' ~ term.id}}">{{ name|render }}</a>
     {% elseif content.field_vernacular_title %}
-      <p>{{"("}}<a class="modal-link" type="button" data-bs-toggle="modal" data-bs-target="{{'#Modal-' ~ term.id}}">{{ content.field_vernacular_title|render|striptags|trim|lower  }}</a>{{")"}}</p>
+      <a class="modal-link" type="button" data-bs-toggle="modal" data-bs-target="{{'#Modal-' ~ term.id}}">{{ content.field_vernacular_title|render|striptags|trim|lower  }}</a>
     {% endif %}
   {% endif %}
-  {{ title_suffix }}
   <div class="modal fade" id="{{'Modal-' ~ term.id}}" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -48,4 +46,4 @@
       </div>
     </div>
   </div>
-</div>
+</span>

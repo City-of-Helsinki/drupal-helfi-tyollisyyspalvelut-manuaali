@@ -37,19 +37,28 @@
  * @see template_preprocess_field()
  */
 #}
-
 {%
-  set additional_classes = [
-  'field--content--inline',
-  'field--content--blue',
-  'field--content--margin-left-triple',
-]
+  set classes = [
+    'field',
+    'field--name-' ~ field_name|clean_class,
+    'field--type-' ~ field_type|clean_class,
+    'field--label-' ~ label_display,
+    label_display == 'inline' ? 'clearfix',
+  ]
+%}
+{%
+  set title_classes = [
+    'field__label',
+    'h2',
+    label_display == 'visually_hidden' ? 'visually-hidden',
+  ]
 %}
 
-{% include "@molecules/icon-textfield/icon-textfield.twig" with  {
-  items: items,
-  field_header: 'Service language'|t,
-  additional_classes: additional_classes,
-  icon_name: 'speech-bubble-dark-blue',
-}
-%}
+  <div{{ attributes.addClass(classes) }}>
+    <h2{{ title_attributes.addClass(title_classes) }}>{{ label }}</h2>
+      <div class="field__items">
+    {% for item in items %}
+      <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
+    {% endfor %}
+      </div>
+  </div>
