@@ -23,7 +23,6 @@ final class TimeAndPlaceFormatter extends EntityReferenceEntityFormatter {
    */
   public function viewElements(FieldItemListInterface $items, $langcode): array {
     foreach ($this->getEntitiesToView($items, $langcode) as $delta => $entity) {
-
       if (!$entity->hasField('field_service_location')) {
         continue;
       }
