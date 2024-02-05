@@ -55,6 +55,7 @@ dependencies:
     - field.field.node.service.field_statements
     - field.field.node.service.field_statements_unemployment
     - field.field.node.service.field_target_group
+    - field.field.node.service.field_video
     - node.type.service
   module:
     - entity_reference_revisions
@@ -324,6 +325,14 @@ content:
       link: ''
     third_party_settings: {  }
     weight: 8
+    region: content
+  field_video:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 22
     region: content
   flag_cart:
     settings: {  }

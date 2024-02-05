@@ -139,3 +139,57 @@ footer.footer{
 .margin-bottom-one-space {
   margin-bottom: $space;
 }
+
+.margin-bottom-one-and-half {
+  margin-bottom: $space-one-and-half;
+}
+
+.ui-widget-overlay {
+  background: rgba(0, 0, 0, 0.48);
+}
+
+.ui-dialog .ui-dialog-titlebar {
+  position: absolute;
+  width: 100%;
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
+.ui-dialog {
+  border-radius: 8px;
+  padding: 0;
+  background: #020202;
+  &.ui-widget.ui-widget-content {
+    border: unset;
+  }
+  .ui-dialog-titlebar-close {
+    @include close-button-dark;
+    padding: 0;
+    margin: $space $space 0 0;
+    right: 0;
+    top: 0;
+    z-index: 200;
+  }
+}
+
+.ui-dialog-title {
+  display: none;
+}
+.ui-dialog .ui-dialog-content {
+  padding: 0;
+}
+.video-dialog {
+  width: auto !important;
+  video {
+    aspect-ratio: 16/9;
+    width: 100%;
+    max-width: 100%;
+    @media only screen  and (max-width: $large) {
+      height: auto;
+    }
+    @include large {
+      width: auto;
+    }
+  }
+}
