@@ -889,11 +889,14 @@ display:
           columns:
             title: title
             label_1: label_1
-            field_service_owner: field_service_owner
+            field_service_provider_updatee: field_service_provider_updatee
+            field_responsible_updatee: field_responsible_updatee
             uid: uid
             moderation_state: moderation_state
+            hel_tpm_editorial_service_has_unpublished_changes: hel_tpm_editorial_service_has_unpublished_changes
             created: created
             changed: changed
+            edit_node: edit_node
           default: '-1'
           info:
             title:
@@ -910,7 +913,14 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
-            field_service_owner:
+            field_service_provider_updatee:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_responsible_updatee:
               sortable: true
               default_sort_order: asc
               align: ''
@@ -931,6 +941,13 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
+            hel_tpm_editorial_service_has_unpublished_changes:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
             created:
               sortable: true
               default_sort_order: asc
@@ -939,6 +956,13 @@ display:
               empty_column: false
               responsive: ''
             changed:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            edit_node:
               sortable: false
               default_sort_order: asc
               align: ''

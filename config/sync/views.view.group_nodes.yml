@@ -450,7 +450,9 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          text: 'Muokkaa relaatiota'
+          text: Muokkaa
+          output_url_as_text: false
+          absolute: false
         delete_group_content:
           id: delete_group_content
           table: group_relationship
@@ -907,6 +909,7 @@ display:
             title: title
             type: type
             status: status
+            hel_tpm_editorial_service_has_unpublished_changes: hel_tpm_editorial_service_has_unpublished_changes
             changed: changed
             view_group_content: view_group_content
             edit_group_content: edit_group_content
@@ -931,6 +934,13 @@ display:
               empty_column: false
               responsive: ''
             status:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            hel_tpm_editorial_service_has_unpublished_changes:
               sortable: true
               default_sort_order: asc
               align: ''

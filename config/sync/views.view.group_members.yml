@@ -324,7 +324,9 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          text: 'Muokkaa jäsentä'
+          text: Muokkaa
+          output_url_as_text: false
+          absolute: false
         delete_group_content:
           id: delete_group_content
           table: group_relationship
@@ -601,9 +603,8 @@ display:
           default_row_class: true
           columns:
             name: name
+            status: status
             group_roles: group_roles
-            changed: changed
-            created: created
             view_group_content: view_group_content
             edit_group_content: edit_group_content
             delete_group_content: delete_group_content
@@ -617,21 +618,14 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
+            status:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
             group_roles:
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            changed:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            created:
-              sortable: true
-              default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
