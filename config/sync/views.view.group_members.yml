@@ -221,59 +221,6 @@ display:
           multi_type: ul
           separator: ', '
           field_api_classes: false
-        view_group_content:
-          id: view_group_content
-          table: group_relationship
-          field: view_group_content
-          relationship: none
-          group_type: group
-          admin_label: 'View member link'
-          entity_type: group_content
-          plugin_id: entity_link
-          label: ''
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          text: 'Näytä jäsen'
-          output_url_as_text: false
-          absolute: false
         edit_group_content:
           id: edit_group_content
           table: group_relationship
@@ -325,6 +272,59 @@ display:
           empty_zero: false
           hide_alter_empty: true
           text: Muokkaa
+          output_url_as_text: false
+          absolute: false
+        view_group_content:
+          id: view_group_content
+          table: group_relationship
+          field: view_group_content
+          relationship: none
+          group_type: group
+          admin_label: 'View member link'
+          entity_type: group_content
+          plugin_id: entity_link
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          text: Näytä
           output_url_as_text: false
           absolute: false
         delete_group_content:
@@ -429,10 +429,11 @@ display:
           hide_alter_empty: true
           destination: true
           fields:
-            view_group_content: view_group_content
             edit_group_content: edit_group_content
+            view_group_content: view_group_content
             delete_group_content: delete_group_content
             name: '0'
+            status: '0'
             group_roles: '0'
       pager:
         type: full
