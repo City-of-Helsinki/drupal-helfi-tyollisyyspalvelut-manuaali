@@ -26,7 +26,10 @@ final class TimeAndPlaceFormatter extends EntityReferenceEntityFormatter {
       if (!$entity->hasField('field_service_location')) {
         continue;
       }
-      if ($entity->get('field_service_location')->isEmpty()) {
+      if (!$entity->hasField('field_dates')) {
+        continue;
+      }
+      if ($entity->get('field_service_location')->isEmpty() && $entity->get('field_dates')->isEmpty())  {
         $items->removeItem($delta);
       }
     }
