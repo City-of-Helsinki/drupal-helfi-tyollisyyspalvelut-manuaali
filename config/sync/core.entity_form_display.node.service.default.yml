@@ -55,7 +55,6 @@ dependencies:
     - field.field.node.service.field_statements
     - field.field.node.service.field_statements_unemployment
     - field.field.node.service.field_target_group
-    - field.field.node.service.field_video
     - node.type.service
     - workflows.workflow.service_moderation
   module:
@@ -69,7 +68,6 @@ dependencies:
     - link
     - markup
     - maxlength
-    - media_library
     - paragraphs
     - select2
     - text
@@ -1062,13 +1060,6 @@ content:
       add_mode: dropdown
       form_display_mode: default
       default_paragraph_type: ''
-    third_party_settings: {  }
-  field_video:
-    type: media_library_widget
-    weight: 26
-    region: content
-    settings:
-      media_types: {  }
     third_party_settings: {  }
   hel_tpm_service_help:
     weight: 0
