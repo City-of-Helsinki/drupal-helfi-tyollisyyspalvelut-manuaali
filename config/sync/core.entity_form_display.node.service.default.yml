@@ -574,6 +574,7 @@ third_party_settings:
       children:
         - field_internal_links
         - field_internal_files
+        - field_video
       label: 'Liitteet ja linkit'
       region: content
       parent_name: group_specialist
@@ -604,7 +605,7 @@ content:
     third_party_settings: {  }
   entitygroupfield:
     type: hel_tpm_group_autocomplete_widget
-    weight: 10
+    weight: 11
     region: content
     settings:
       help_text: ''
@@ -656,7 +657,7 @@ content:
     third_party_settings: {  }
   field_contact_info:
     type: inline_entity_form_complex
-    weight: 9
+    weight: 10
     region: content
     settings:
       form_mode: default
@@ -1065,7 +1066,7 @@ content:
     third_party_settings: {  }
   field_video:
     type: media_library_widget
-    weight: 26
+    weight: 20
     region: content
     settings:
       media_types: {  }
