@@ -564,11 +564,11 @@ function hel_tpm_general_update_10107(&$sandbox) {
  */
 function hel_tpm_general_update_10108(&$sandbox) {
   $node_storage = \Drupal::entityTypeManager()->getStorage('node');
-
   $fields = ['field_service_languages'];
   $field_tables = 'node_revision__field_service_time_and_location';
   $entity_type = 'node';
   $bundle = 'service';
+
   _hel_tpm_general_ensure_entity_fields($entity_type, $bundle, $fields);
 
   $database = \Drupal::database();
@@ -648,7 +648,7 @@ function _hel_tpm_general_migrate_service_languages($field_revisions) {
       $r->bundle = $field_revision->bundle;
       $r->entity_id = $field_revision->entity_id;
       $r->revision_id = $field_revision->revision_id;
-      $field_service_languages_rows[$i] = (array) $r;
+      $field_service_languages_rows[$r->field_service_languages_target_id] = (array) $r;
     }
 
   }
@@ -661,6 +661,12 @@ function _hel_tpm_general_migrate_service_languages($field_revisions) {
     return;
   }
 
+  $field_service_languages_rows = array_values($field_service_languages_rows);
+  // Re-delta rows.
+  foreach ($field_service_languages_rows as $i => &$r) {
+    $r['delta'] = $i;
+  }
+
   foreach ($tables as $table) {
     $query = $database->insert($table)
       ->fields(array_keys($field_service_languages_rows[0]));
@@ -669,7 +675,6 @@ function _hel_tpm_general_migrate_service_languages($field_revisions) {
     }
     $query->execute();
   }
-
 
 }
 
