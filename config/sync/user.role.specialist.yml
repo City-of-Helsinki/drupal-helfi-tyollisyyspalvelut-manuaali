@@ -9,7 +9,6 @@ dependencies:
     - field_permissions
     - file
     - filter
-    - hel_tpm_contact_info
     - hel_tpm_general
     - paragraphs_type_permissions
 id: specialist
@@ -18,14 +17,13 @@ weight: 5
 is_admin: null
 permissions:
   - 'access internal service fields'
-  - 'create contact info'
   - 'create field_responsible_municipality'
   - 'delete own files'
   - 'display eu cookie compliance popup'
-  - 'edit contact info'
   - 'use text format plain_text_format'
   - 'view field_age'
   - 'view field_career_marking'
+  - 'view field_career_markings'
   - 'view field_contact_info'
   - 'view field_contact_info_internal'
   - 'view field_guidance_to_service'
@@ -39,6 +37,7 @@ permissions:
   - 'view field_obligatoryness_freetext'
   - 'view field_poma_applicable'
   - 'view field_related_archive'
+  - 'view field_service_coordination'
   - 'view field_service_exceptions'
   - 'view field_service_links_internal'
   - 'view field_service_req_speacialist'

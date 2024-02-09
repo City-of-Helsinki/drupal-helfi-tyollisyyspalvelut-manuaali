@@ -313,7 +313,7 @@ $card-font-small-heading: 15px;
     }
   }
 
-  .field--name-field-service-languages {
+  .field--name-field-service-language {
     width: 100%;
     order: 2;
     display: flex;
@@ -620,6 +620,9 @@ $card-font-small-heading: 15px;
     .field__item {
       font-size: 14px;
       color: clr(text);
+    }
+    .field--name-field-service-languages .field__item {
+      display: inline-block;
     }
   }
   .price-and-language-wrapper {

@@ -46,7 +46,22 @@
     {% if content.field_separate_time[0]['#markup'] == 1 %}
       {{content|without('field_separate_time','field_dates')}}
     {% else %}
-      {{content|without('field_separate_time')}}
+
+      {% if content.field_service_location[0]|default(null) %}
+        {{content|without('field_separate_time')}}
+      {% else %}
+        {{content|without('field_separate_time')}}
+        <article {{ bem("node",'service-location','',['flex-wrap']) }}>
+          {% include "@atoms/text/headings/_heading.twig" with {
+            "heading_level": 4,
+            "heading": "No location has been specified."|t,
+            "heading_modifiers": "service-location",
+            "heading_link_attributes": {
+              'rel': 'bookmark'
+            }
+          } %}
+        </article>
+      {% endif %}
     {% endif %}
 
   </div>
