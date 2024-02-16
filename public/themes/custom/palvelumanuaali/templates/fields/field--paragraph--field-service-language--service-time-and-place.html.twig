@@ -78,7 +78,7 @@
       icon_name: 'speech-bubble-dark-blue',
       icon_modifiers: ['small'],
     } %}
-    <div class='languages-wrapper'>
+    <div class='languages-wrapper display-inline-flex flex-wrap'>
       {% for item in items %}
         <div{{ attributes.addClass(classes, 'field__item') }}>
           {{ item.content }}
@@ -101,7 +101,7 @@
       <div class="field__items">
     {% endif %}
 
-    <div class='languages-wrapper'>
+    <div class='languages-wrapper display-inline-flex flex-wrap'>
       {% for item in items %}
         <div{{ item.attributes.addClass('field__item') }}>
           {{ item.content }}
