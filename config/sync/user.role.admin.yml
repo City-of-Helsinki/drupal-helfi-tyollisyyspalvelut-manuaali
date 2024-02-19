@@ -5,6 +5,7 @@ dependencies:
   config:
     - filter.format.filtered_html
     - filter.format.full_html
+    - media.type.image
     - node.type.basic_page
     - node.type.landing_page
     - node.type.service
@@ -74,7 +75,6 @@ permissions:
   - 'administer menu'
   - 'administer nodes'
   - 'administer notification message content'
-  - 'administer permissions'
   - 'administer shortcuts'
   - 'administer url aliases'
   - 'administer users'
@@ -110,6 +110,7 @@ permissions:
   - 'create field_service_suits_job_search'
   - 'create field_statements'
   - 'create field_statements_unemployment'
+  - 'create image media'
   - 'create landing_page content'
   - 'create organisation group'
   - 'create paragraph content contact_information'
@@ -174,6 +175,7 @@ permissions:
   - 'display eu cookie compliance popup'
   - 'dropzone upload files'
   - 'edit any basic_page content'
+  - 'edit any image media'
   - 'edit any landing_page content'
   - 'edit contact info'
   - 'edit field_age'
@@ -232,6 +234,7 @@ permissions:
   - 'edit own field_service_suits_job_search'
   - 'edit own field_statements'
   - 'edit own field_statements_unemployment'
+  - 'edit own flag lists'
   - 'edit terms in employment_status'
   - 'edit terms in language_level'
   - 'edit terms in life_situation'
