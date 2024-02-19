@@ -130,10 +130,29 @@
   }
 }
 
+.form-item-langcode {
+  .form-item__dropdown {
+    max-width: 200px;
+  }
+  .icon {
+    z-index: 100;
+  }
+  .multi-select-container {
+    border: 0;
+  }
+
+  .multi-select-button {
+    padding: 4px 48px 4px 24px;
+    height: 41px;
+    display: flex;
+    align-items: center;
+  }
+}
 .select--white-rounded {
     position: relative;
   select,
-  .select2 {
+  .select2,
+  .multi-select-button {
     margin-top: auto;
     margin-bottom: auto;
     font-size: 14px;
