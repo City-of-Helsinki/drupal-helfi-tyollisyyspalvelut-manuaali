@@ -1,0 +1,39 @@
+uuid: 68ee28a1-ea5c-45a5-92e2-35d5a3712eb4
+langcode: fi
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.render
+    - field.field.media.video.field_media_video_file
+    - media.type.video
+  module:
+    - file
+id: media.video.render
+targetEntityType: media
+bundle: video
+mode: render
+content:
+  field_media_video_file:
+    type: file_video
+    label: visually_hidden
+    settings:
+      controls: true
+      autoplay: false
+      loop: false
+      multiple_file_display_type: tags
+      muted: false
+      width: 640
+      height: 480
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  created: true
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  langcode: true
+  name: true
+  search_api_excerpt: true
+  thumbnail: true
+  uid: true
