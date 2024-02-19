@@ -15,13 +15,7 @@
 #}
 {% set link_base_class = link_base_class|default('link') %}
 
-<a
-  {{ bem(link_base_class, link_modifiers, link_blockname) }}
-  {% for attribute, value in link_attributes %}
-    {{ attribute }}="{{ value }}"
-  {% endfor %}
-  href="{{ link_url }}"
->
+<a {{ bem(link_base_class, link_modifiers, link_blockname) }} href="{{ link_url }}">
   {% block link_content %}
     {{ link_content }}
   {% endblock %}
