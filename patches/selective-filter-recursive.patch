@@ -1,0 +1,123 @@
+diff --git a/src/Plugin/better_exposed_filters/filter/SelectiveFilterBase.php b/src/Plugin/better_exposed_filters/filter/SelectiveFilterBase.php
+index 756ba38..d2c07b0 100644
+--- a/src/Plugin/better_exposed_filters/filter/SelectiveFilterBase.php
++++ b/src/Plugin/better_exposed_filters/filter/SelectiveFilterBase.php
+@@ -200,33 +200,32 @@ abstract class SelectiveFilterBase {
+               && $entity->hasTranslation($row->node_field_data_langcode)) {
+               $entity = $entity->getTranslation($row->node_field_data_langcode);
+             }
+-            if ($entity instanceof FieldableEntityInterface && $entity->hasField($field_id)) {
+-              $item_values = $entity->get($field_id)->getValue();
+ 
+-              if (!empty($item_values)) {
+-                foreach ($item_values as $item_value) {
+-                  if (isset($item_value['target_id'])) {
+-                    $id = $item_value['target_id'];
+-                    $relationship_count[$id] = isset($relationship_count[$id]) ? $relationship_count[$id] + 1 : 1;
+-                    $ids[$id] = $id;
++            $item_values = self::getItemValues($field_id, $entity);
+ 
+-                    if ($hierarchy) {
+-                      $parents = \Drupal::service('entity_type.manager')
+-                        ->getStorage("taxonomy_term")
+-                        ->loadAllParents($id);
++            if (!empty($item_values)) {
++              foreach ($item_values as $item_value) {
++                if (isset($item_value['target_id'])) {
++                  $id = $item_value['target_id'];
++                  $relationship_count[$id] = isset($relationship_count[$id]) ? $relationship_count[$id] + 1 : 1;
++                  $ids[$id] = $id;
+ 
+-                      /** @var \Drupal\taxonomy\TermInterface $term */
+-                      foreach ($parents as $term) {
+-                        $ids[$term->id()] = $term->id();
+-                        $relationship_count[$term->id()] = isset($relationship_count[$term->id()]) ? $relationship_count[$term->id()] + 1 : 1;
+-                      }
++                  if ($hierarchy) {
++                    $parents = \Drupal::service('entity_type.manager')
++                      ->getStorage("taxonomy_term")
++                      ->loadAllParents($id);
++
++                    /** @var \Drupal\taxonomy\TermInterface $term */
++                    foreach ($parents as $term) {
++                      $ids[$term->id()] = $term->id();
++                      $relationship_count[$term->id()] = isset($relationship_count[$term->id()]) ? $relationship_count[$term->id()] + 1 : 1;
+                     }
+                   }
+-                  elseif (isset($item_value['value'])) {
+-                    $id = $item_value['value'];
+-                    $ids[$id] = $id;
+-                    $relationship_count[$id] = isset($relationship_count[$id]) ? $relationship_count[$id] + 1 : 1;
+-                  }
++                }
++                elseif (isset($item_value['value'])) {
++                  $id = $item_value['value'];
++                  $ids[$id] = $id;
++                  $relationship_count[$id] = isset($relationship_count[$id]) ? $relationship_count[$id] + 1 : 1;
+                 }
+               }
+             }
+@@ -276,4 +275,63 @@ abstract class SelectiveFilterBase {
+     }
+   }
+ 
++  /**
++   * Recursively get item values for entity.
++   *
++   * @param string $field_id
++   *   Field id containing possible path for child fields.
++   * @param $entity
++   *   Parent entity.
++   *
++   * @return array|false
++   */
++  protected static function getItemValues($field_id, $entity) {
++    $entities = [$entity];
++    $field_ids = explode(':', $field_id);
++    $last_field = end($field_ids);
++    $values = [];
++    foreach ($field_ids as $i => $fid) {
++      if (!str_contains($fid, 'field_')) {
++        continue;
++      }
++      if ($fid !== $last_field) {
++        $entities = self::getFieldValues($fid, $entities);
++        if (empty($entities)) {
++          return FALSE;
++        }
++        continue;
++      }
++      // Load last items as values.
++      $values = self::getFieldValues($fid, $entities, FALSE);
++    }
++    return $values;
++  }
++
++  /**
++   * Get field values from field.
++   *
++   * @param string $field_id
++   *   Field id value is fetched from.
++   * @param array $entities
++   *   Array of fieldable entities.
++   * @param bool $load_values
++   *   Boolean to decide whether to load referenced entities or just load field value.
++   *
++   * @return array
++   */
++  protected static function getFieldValues($field_id, $entities, $load_values = TRUE) {
++    $values = [];
++    foreach ($entities as $entity) {
++      if (!$entity instanceof FieldableEntityInterface || !$entity->hasField($field_id)) {
++        continue;
++      }
++      if (!$load_values) {
++        $values = array_merge($entity->{$field_id}->getValue(), $values);
++      }
++      else {
++        $values = array_merge($entity->get($field_id)->referencedEntities(), $values);
++      }
++    }
++    return $values;
++  }
+ }

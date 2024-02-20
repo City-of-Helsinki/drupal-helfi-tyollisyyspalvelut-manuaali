@@ -7,6 +7,7 @@ dependencies:
     - node.type.basic_page
     - paragraphs.paragraphs_type.content
     - paragraphs.paragraphs_type.full_width_card_lift
+    - paragraphs.paragraphs_type.quick_link_row
     - paragraphs.paragraphs_type.url_and_file
   module:
     - entity_reference_revisions
@@ -27,6 +28,7 @@ settings:
       content: content
       full_width_card_lift: full_width_card_lift
       url_and_file: url_and_file
+      quick_link_row: quick_link_row
     negate: 0
     target_bundles_drag_drop:
       contact_information:
@@ -59,6 +61,12 @@ settings:
       municipality_guide:
         weight: 23
         enabled: false
+      quick_link:
+        weight: 27
+        enabled: false
+      quick_link_row:
+        weight: 29
+        enabled: true
       service_language:
         weight: 24
         enabled: false

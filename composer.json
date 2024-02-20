@@ -153,7 +153,7 @@
         "drupal/require_on_publish": "^1.x-dev",
         "drupal/search_api": "^1.23",
         "drupal/search_api_autocomplete": "1.x-dev",
-        "drupal/search_api_solr": "4.x-dev",
+        "drupal/search_api_solr": "^4.3",
         "drupal/search_api_sorts": "^1.1",
         "drupal/seckit": "^2.0",
         "drupal/select2": "^1.13",
@@ -199,6 +199,9 @@
         "zaporylie/composer-drupal-optimizations": "^1.2"
     },
     "conflict": {
+        "drupal/core-recommended": ">=10.2",
+        "drupal/core-composer-scaffold": ">=10.2",
+        "drupal/core-dev": ">=10.2",
         "drupal/drupal": "*"
     },
     "minimum-stability": "dev",
@@ -272,7 +275,8 @@
                 "https://www.drupal.org/project/drupal/issues/2689459#comment-14837484": "https://www.drupal.org/files/issues/2022-12-20/2689459-161.patch",
                 "https://www.drupal.org/project/drupal/issues/2810355#comment-15173661": "https://www.drupal.org/files/issues/2023-07-31/2810355-121.patch",
                 "https://www.drupal.org/project/drupal/issues/1452100#comment-15199266": "https://www.drupal.org/files/issues/2023-08-21/1452100-150.patch",
-                "https://www.drupal.org/project/drupal/issues/3347343#comment-15227444": "https://www.drupal.org/files/issues/2023-09-12/3347343-92--MR-4053-1bc7bda7.diff"
+                "https://www.drupal.org/project/drupal/issues/3347343#comment-15227444": "https://www.drupal.org/files/issues/2023-09-12/3347343-92--MR-4053-1bc7bda7.diff",
+                "https://www.drupal.org/project/drupal/issues/3338260#comment-14900238": "https://www.drupal.org/files/issues/2023-02-01/skip_changing_affected_flag_3338260-2.patch"
             },
             "drupal/message": {
                 "https://www.drupal.org/files/issues/2018-06-24/allow_token_contexts-3.patch": "https://www.drupal.org/files/issues/2018-06-24/allow_token_contexts-3.patch"
@@ -326,6 +330,9 @@
             },
             "drupal/symfony_mailer": {
                 "https://www.drupal.org/project/symfony_mailer/issues/3405108": "https://www.drupal.org/files/issues/2023-12-04/symfony-mailer-camelcase-headers-3405108-6.patch"
+            },
+            "drupal/selective_better_exposed_filters": {
+                "Add support for field recursion": "patches/selective-filter-recursive.patch"
             }
         }
     }

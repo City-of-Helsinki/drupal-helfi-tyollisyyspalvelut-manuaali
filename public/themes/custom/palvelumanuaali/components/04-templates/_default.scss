@@ -141,6 +141,21 @@ body {
     }
 }
 
+/* User edit page. */
+.user-edit {
+  .main-content {
+    @include xxl {
+      &--with-sidebar {
+        .region-content {
+          #block-system-main-block {
+            margin-left: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
 
 .taxonomy-view-page,
 .edit-create-form {

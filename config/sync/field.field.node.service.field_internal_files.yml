@@ -12,7 +12,7 @@ field_name: field_internal_files
 entity_type: node
 bundle: service
 label: 'Sisäiset tiedostot'
-description: ''
+description: "Suurin sallittu tiedoston koko on 50 Mb.\r\nTätä suuremmat videotiedostot on linkitettävä jonkin toisen videopalvelun kautta. \r\nHuomioithan, että palvelun tietojen tulee olla saavutettavia. Saavutettavissa videotallenteissa on tekstitykset sekä sisällön kuvailu."
 required: false
 translatable: false
 default_value: {  }
@@ -21,7 +21,7 @@ settings:
   handler: 'default:file'
   handler_settings: {  }
   file_directory: '[date:custom:Y]-[date:custom:m]'
-  file_extensions: 'docx doc pdf ppt pptx jpg png'
-  max_filesize: 62MB
+  file_extensions: 'docx doc pdf ppt pptx jpg png mp4 xls xlsx'
+  max_filesize: 50MB
   description_field: false
 field_type: file
