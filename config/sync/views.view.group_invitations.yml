@@ -409,7 +409,7 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          text: 'Remove invitation'
+          text: Poista
           output_url_as_text: false
           absolute: false
         dropbutton:
@@ -612,16 +612,22 @@ display:
           row_class: ''
           default_row_class: true
           columns:
+            invitee_mail: invitee_mail
             name: name
             group_roles: group_roles
-            changed: changed
+            uid: uid
             created: created
-            view_group_content: view_group_content
-            edit_group_content: edit_group_content
             delete_group_content: delete_group_content
             dropbutton: dropbutton
           default: '-1'
           info:
+            invitee_mail:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
             name:
               sortable: true
               default_sort_order: asc
@@ -634,7 +640,7 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
-            changed:
+            uid:
               sortable: true
               default_sort_order: asc
               align: ''
@@ -643,20 +649,6 @@ display:
               responsive: ''
             created:
               sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            view_group_content:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            edit_group_content:
-              sortable: false
               default_sort_order: asc
               align: ''
               separator: ''
