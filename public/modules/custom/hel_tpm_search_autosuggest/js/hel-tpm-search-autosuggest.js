@@ -112,13 +112,16 @@
     showHideAutocomplete: function(input, context) {
       let searchWrapper = '.search-history-wrapper';
       let autocompleteWrapper = '.hel-search-autocomplete';
+      let searchDropdownWrapper = '.search-dropdown-wrapper';
       if ($(input).val().length <= 2) {
         $(searchWrapper, context).show();
+        $(searchDropdownWrapper, context).show();
         $(autocompleteWrapper, context).hide();
       }
       else {
         $(searchWrapper, context).hide();
         $(autocompleteWrapper, context).show();
+        $(searchDropdownWrapper, context).show();
       }
 
       // Handle click events outside of search element.
@@ -127,6 +130,7 @@
         if(!target.closest('.search-autocomplete-wrapper').length &&
           $('.search-autocomplete-wrapper').is(":visible")) {
           $('.search-wrapper').hide();
+          $('.search-dropdown-wrapper').hide();
         }
       });
     },

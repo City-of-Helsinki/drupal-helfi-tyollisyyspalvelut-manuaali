@@ -16,11 +16,16 @@ use Drupal\views\ViewExecutable;
  * Implements hook_theme().
  */
 function hel_tpm_search_autosuggest_theme() {
+  $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
+
   $themes['hel_tpm_search_autocomplete'] = [
-    'variables' => [],
+    'variables' => [$language],
   ];
+
   return $themes;
 }
+
+
 
 /**
  * Implements hook_form_alter().
