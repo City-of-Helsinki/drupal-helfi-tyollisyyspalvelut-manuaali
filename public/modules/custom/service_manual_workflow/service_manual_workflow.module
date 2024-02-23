@@ -133,10 +133,6 @@ function service_manual_workflow_entity_update(EntityInterface $entity) {
   $previous_entity = _service_manual_workflow_entity_previous_revision($entity);
   $original_state = $previous_entity->moderation_state->value;
   $state = $entity->moderation_state->value;
-  // Do not dispatch anything when state hasn't changed.
-  if ($original_state == $state) {
-    return;
-  }
   $transition = sprintf('service_manual_workflow.%s.to.%s', $original_state, $state);
   $event = new ServiceModerationEvent($entity, \Drupal::currentUser());
   Drupal::service('event_dispatcher')->dispatch($event, $transition);
