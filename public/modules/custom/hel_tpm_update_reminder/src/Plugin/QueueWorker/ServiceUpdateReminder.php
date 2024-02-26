@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Drupal\hel_tpm_update_reminder\Plugin\QueueWorker;
 
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Logger\LoggerChannelTrait;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueWorkerBase;
@@ -29,6 +30,13 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
   use LoggerChannelTrait;
 
   /**
+   * Entity type manager service.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected EntityTypeManagerInterface $entityTypeManager;
+
+  /**
    * Logger interface.
    *
    * @var \Psr\Log\LoggerInterface
@@ -43,18 +51,11 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
   protected MessageNotifier $messageNotifier;
 
   /**
-   * Service node.
-   *
-   * @var \Drupal\node\NodeInterface
-   */
-  private NodeInterface $service;
-
-  /**
-   * Service id.
+   * Service's node id.
    *
    * @var int
    */
-  private int $serviceId;
+  protected int $serviceId;
 
   /**
    * Constructor.
@@ -65,13 +66,16 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
    *   Plugin id string.
    * @param array $plugin_definition
    *   Plugin definition array.
-   * @param \Drupal\message_notify\MessageNotifier $messageNotifier
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   Entity type manager.
+   * @param \Drupal\message_notify\MessageNotifier $message_notifier
    *   Message notifier service.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, MessageNotifier $messageNotifier) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, MessageNotifier $message_notifier) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
+    $this->entityTypeManager = $entity_type_manager;
+    $this->messageNotifier = $message_notifier;
     $this->logger = $this->getLogger('hel_tpm_update_reminder');
-    $this->messageNotifier = $messageNotifier;
   }
 
   /**
@@ -82,6 +86,7 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
       $configuration,
       $plugin_id,
       $plugin_definition,
+      $container->get('entity_type.manager'),
       $container->get('message_notify.sender')
     );
   }
@@ -90,11 +95,10 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
    * {@inheritdoc}
    */
   public function processItem($data): void {
-    if (!$data instanceof NodeInterface) {
+    if (!is_int($data)) {
       return;
     }
-    $this->service = $data;
-    $this->serviceId = (int) $this->service->id();
+    $this->serviceId = $data;
 
     if (empty($changed = UpdateReminderUtility::getChecked($this->serviceId))) {
       return;
@@ -118,46 +122,62 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
    * @return bool
    *   Denoting success or failure of sending the reminder message.
    *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    * @throws \Drupal\Core\Entity\EntityStorageException
    * @throws \Drupal\message_notify\Exception\MessageNotifyException
    */
   protected function remind(int $messageNumber): bool {
-    if (empty($this->service?->get('field_service_provider_updatee')?->entity)) {
+    $storage = $this->entityTypeManager->getStorage('node');
+    /** @var \Drupal\node\NodeInterface $service */
+    if (empty($service = $storage->load($this->serviceId))) {
       return FALSE;
     }
-    $account = $this->service->get('field_service_provider_updatee')->entity;
+
+    if (empty($service?->get('field_service_provider_updatee')?->entity)) {
+      return FALSE;
+    }
+    $account = $service->get('field_service_provider_updatee')->entity;
 
     UpdateReminderUtility::setMessagesSent($this->serviceId, $messageNumber);
-    return $this->sendMessage('hel_tpm_update_reminder_service', $account);
+    return $this->sendMessage('hel_tpm_update_reminder_service', $account, $service);
   }
 
   /**
-   * Marks service as outdated and updates message counter.
+   * Marks service as outdated, informs users and updates message counter.
    *
    * @return bool
    *   Denoting success or failure.
    *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    * @throws \Drupal\Core\Entity\EntityStorageException
    * @throws \Drupal\message_notify\Exception\MessageNotifyException
    */
   protected function outdate(): bool {
+    $storage = $this->entityTypeManager->getStorage('node');
+    /** @var \Drupal\node\NodeInterface $service */
+    if (empty($service = $storage->load($this->serviceId))) {
+      return FALSE;
+    }
+
     $serviceProviderInformed = FALSE;
-    if (!empty($this->service?->get('field_service_provider_updatee')?->entity)) {
-      $serviceProviderAccount = $this->service->get('field_service_provider_updatee')->entity;
-      $serviceProviderInformed = $this->sendMessage('hel_tpm_update_reminder_outdated', $serviceProviderAccount);
+    if (!empty($service?->get('field_service_provider_updatee')?->entity)) {
+      $serviceProviderAccount = $service->get('field_service_provider_updatee')->entity;
+      $serviceProviderInformed = $this->sendMessage('hel_tpm_update_reminder_outdated', $serviceProviderAccount, $service);
     }
 
     $responsibleInformed = FALSE;
-    if (!empty($this->service?->get('field_responsible_updatee')?->entity)) {
-      $responsibleAccount = $this->service->get('field_responsible_updatee')->entity;
-      $responsibleInformed = $this->sendMessage('hel_tpm_update_reminder_outdated', $responsibleAccount);
+    if (!empty($service?->get('field_responsible_updatee')?->entity)) {
+      $responsibleAccount = $service->get('field_responsible_updatee')->entity;
+      $responsibleInformed = $this->sendMessage('hel_tpm_update_reminder_outdated', $responsibleAccount, $service);
     }
 
     if ($serviceProviderInformed || $responsibleInformed) {
-      $this->service->set('moderation_state', 'outdated');
-      $this->service->save();
+      $service->set('moderation_state', 'outdated');
+      $service->save();
       $this->logger->info('Service "%service_title" (ID: %service_id) automatically marked as outdated.', [
-        '%service_title' => $this->service->getTitle(),
+        '%service_title' => $service->getTitle(),
         '%service_id' => $this->serviceId,
       ]);
       UpdateReminderUtility::setMessagesSent($this->serviceId, 3);
@@ -174,6 +194,8 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
    *   The name of the template.
    * @param \Drupal\user\Entity\User $account
    *   The user to receive the message.
+   * @param \Drupal\node\NodeInterface $service
+   *   The service node attached to message.
    *
    * @return bool
    *   Boolean value denoting success or failure of sending the message.
@@ -181,12 +203,12 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
    * @throws \Drupal\Core\Entity\EntityStorageException
    * @throws \Drupal\message_notify\Exception\MessageNotifyException
    */
-  protected function sendMessage(string $template, User $account): bool {
+  protected function sendMessage(string $template, User $account, NodeInterface $service): bool {
     $message = Message::create([
       'template' => $template,
       'uid' => $account->id(),
     ]);
-    $message->set('field_node', $this->service);
+    $message->set('field_node', $service);
     $message->set('field_user', $account);
     $message->save();
     return $this->messageNotifier->send($message);

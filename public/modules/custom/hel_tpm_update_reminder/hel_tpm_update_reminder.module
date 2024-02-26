@@ -53,9 +53,7 @@ function _hel_tpm_update_reminder_service_reminders(): void {
   foreach ($reminder_service_ids as $nid) {
     $checked = UpdateReminderUtility::getChecked($nid);
     if (!empty($checked) && $checked < UpdateReminderUtility::getFirstServiceLimit()) {
-      /** @var \Drupal\node\NodeInterface $service */
-      $service = $node_storage->load($nid);
-      $queue->createItem($service);
+      $queue->createItem((int) $nid);
     }
   }
 }

@@ -105,7 +105,9 @@ class UpdateReminderUtility {
    *   Void.
    */
   public static function markAsChecked(int $nid): void {
-    self::setMessagesSent($nid, 0);
+    if (!empty(\Drupal::state()->get(self::MESSAGES_SENT_BASE_KEY . $nid))) {
+      self::setMessagesSent($nid, 0);
+    }
     self::setChecked($nid);
   }
 

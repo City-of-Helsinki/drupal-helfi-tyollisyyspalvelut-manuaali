@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace Drupal\hel_tpm_update_reminder\EventSubscriber;
 
-use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\hel_tpm_update_reminder\UpdateReminderUtility;
 use Drupal\service_manual_workflow\Event\ServiceModerationEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -13,23 +12,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  * Service state change event subscriber.
  */
 class ServiceStateChangedSubscriber implements EventSubscriberInterface {
-
-  /**
-   * Entity type manager service.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManager
-   */
-  protected EntityTypeManager $entityTypeManager;
-
-  /**
-   * Constructs event subscriber.
-   *
-   * @param \Drupal\Core\Entity\EntityTypeManager $entityTypeManager
-   *   Entity type manager.
-   */
-  public function __construct(EntityTypeManager $entityTypeManager) {
-    $this->entityTypeManager = $entityTypeManager;
-  }
 
   /**
    * {@inheritdoc}
