@@ -124,6 +124,19 @@ function hel_tpm_forms_node_service_form_alter_helper(&$form, FormStateInterface
     ],
   ];
 
+  // Check if current service provider user is included in the options list. If
+  // not, add a 'none' option so that when saving the form, a new user must be
+  // chosen. This prevents accidentally saving with the first user in the list
+  // when the current selection is no longer included in the list.
+  if ($node = $form_state->getFormObject()?->getEntity()) {
+    if ($current_provider_user = $node?->get('field_service_provider_updatee')?->first()?->getValue()['target_id'] &&
+        $provider_user_options = $form['field_service_provider_updatee']['widget']['#options']) {
+      if (!array_key_exists($current_provider_user, $provider_user_options)) {
+        $form['field_service_provider_updatee']['widget']['#options'] = ['_none' => t("- Select a value -")] + $provider_user_options;
+      }
+    }
+  }
+
   $form['paging_footer'] = [
     '#theme' => 'hel_tpm_steps',
   ];
