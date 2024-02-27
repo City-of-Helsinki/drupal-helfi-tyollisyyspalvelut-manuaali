@@ -2,13 +2,35 @@
   .user-form {
     display: flex;
     flex-direction: column;
-     > .js-form-type-textfield {
-       order: 1;
-       margin-bottom: $space-three-and-half;
-     }
-     .form-actions {
-       order: 2;
-     }
+    > .js-form-type-textfield {
+      order: 1;
+      margin-bottom: $space-three-and-half;
+    }
+    .form-actions {
+      order: 2;
+    }
+    .form-item {
+      margin-bottom: $space-double;
+      &__description {
+        font-size: 14px;
+      }
+      .form-item {
+        margin-bottom: 0;
+        &-checkbox {
+          margin-bottom: $space-one-and-half;
+        }
+      }
+      legend {
+        font-size: 14px;
+        font-weight: 600;
+      }
+      >.form-item {
+        margin-bottom: $space-double;
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
   }
   .layout-container {
     margin: 0;
@@ -17,28 +39,7 @@
     max-width: 528px;
   }
 
-  .form-item {
-    margin-bottom: $space-double;
-    &__description {
-      font-size: 14px;
-    }
-    .form-item {
-      margin-bottom: 0;
-      &-checkbox {
-        margin-bottom: $space-one-and-half;
-      }
-    }
-    legend {
-      font-size: 14px;
-      font-weight: 600;
-    }
-    >.form-item {
-      margin-bottom: $space-double;
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
-  }
+
   .field--name-field-password-expiration {
     >.form-item {
       flex-wrap: wrap;
