@@ -6,11 +6,13 @@ global:
     ../../../libraries/bootstrap-dist/js/bootstrap.bundle.min.js: {}
     js/breadcrumbs.js: {}
     js/header.js: {}
+    js/matomo.js: {}
   dependencies:
     - core/popperjs
     - core/jquery
     - core/drupal
     - core/drupalSettings
+    - eu_cookie_compliance/eu_cookie_compliance
 
 main-menu:
   js:
@@ -42,7 +44,7 @@ user-form:
   js:
     dist/js/05-pages/edit-form-overrides/user-form.js: {}
   dependencies:
-    - core/drupal 
+    - core/drupal
     - select2/select2
 
 select2.theme:
