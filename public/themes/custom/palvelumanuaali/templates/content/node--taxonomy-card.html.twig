@@ -85,7 +85,7 @@
   card__language: content.field_service_languages,
   card__price: content.field_service_price,
 } %}
-{% block card__img %}
-  {{ content.moderation_state }}
-{% endblock %}
+  {% block card__img %}
+    {{ content.flag_cart }}
+  {% endblock %}
 {% endembed %}
