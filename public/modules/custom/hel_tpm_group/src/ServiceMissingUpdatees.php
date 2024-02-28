@@ -4,7 +4,10 @@ declare(strict_types = 1);
 
 namespace Drupal\hel_tpm_group;
 
+use Drupal\Core\Database\Connection;
+use Drupal\Core\Database\Database;
 use Drupal\Core\Entity\EntityTypeManager;
+use Drupal\group\Entity\GroupInterface;
 use Drupal\node\NodeInterface;
 
 /**
@@ -18,8 +21,8 @@ class ServiceMissingUpdatees {
    * @var string[]
    */
   private static array $updateeFields = [
-    'field_responsible_municipality' => 'field_responsible_updatee',
-    'field_service_producer' => 'field_service_provider_updatee',
+    'municipality' => 'field_responsible_updatee',
+    'group' => 'field_service_provider_updatee'
   ];
 
   /**
@@ -35,8 +38,9 @@ class ServiceMissingUpdatees {
    * @param \Drupal\Core\Entity\EntityTypeManager $entityTypeManager
    *   Entity type manager service.
    */
-  public function __construct(EntityTypeManager $entityTypeManager) {
+  public function __construct(EntityTypeManager $entityTypeManager, Connection $database) {
     $this->entityTypeManager = $entityTypeManager;
+    $this->database = $database;
   }
 
   /**
@@ -58,46 +62,45 @@ class ServiceMissingUpdatees {
     if (empty($group_id)) {
       return NULL;
     }
+   // $result =& drupal_static(__CLASS__ . '-' . $group_id . '-' . $nids_only);
 
-    $result =& drupal_static(__CLASS__ . '-' . $group_id . '-' . $nids_only);
     if (!empty($result)) {
       return $result;
     }
 
     $result = [];
-
+    $skip_municipality = TRUE;
     $node_storage = $this->entityTypeManager->getStorage('node');
+    $group = $this->entityTypeManager->getStorage('group')->load($group_id);
 
-    // Get all nodes where selected group is either responsible municipality or
-    // service provider.
-    $query = $node_storage->getQuery();
-    $query->condition('type', 'service');
-    $query->condition('status', 1);
-    $query->accessCheck(FALSE);
-    $or = $query->orConditionGroup();
-    foreach (self::$updateeFields as $group_ref => $user_ref) {
-      $or->condition($group_ref, $group_id);
-    }
-    $query->condition($or);
-    $nodes = $query->execute();
-
-    if (empty($nodes)) {
-      return [];
+    $nodes = [
+      'group' => $this->getServicesByGroup($group_id)
+    ];
+    // Only fetch nodes from municipality field only for organisations.
+    if ($group->bundle() == 'organisation') {
+      $skip_municipality = FALSE;
+      $nodes += ['municipality' => $this->getMunicipalityNodes($group_id)];
     }
 
     // Load revision provided by entityquery.
-    $nodes = $node_storage->loadMultipleRevisions(array_keys($nodes));
+    $nodes['group'] = $node_storage->loadMultiple(array_keys($nodes['group']));
 
     // Go through nodes and corresponding fields.
-    foreach ($nodes as $node) {
-      $err = $this->validateReferences($node, $group_id);
-      // If error is set add current node to array.
-      if (!empty($err)) {
-        if ($nids_only === TRUE) {
-          $result[] = $node->id();
-          continue;
+    foreach ($nodes as $source) {
+      foreach ($source as $node) {
+        $err = $this->validateReferences($node, $group, $skip_municipality);
+        // If error is set add current node to array.
+        if (!empty($err)) {
+          if ($nids_only) {
+            $result[] = $node->id();
+          }
+          else {
+            $result[] = [
+              'id' => $node->id(),
+              'errors' => $err
+            ];
+          }
         }
-        $result[$group_ref][$user_ref][] = [$node->id() => $err];
       }
     }
 
@@ -115,12 +118,10 @@ class ServiceMissingUpdatees {
    * @return array
    *   -
    */
-  public function validateReferences(NodeInterface $node, int $group_id) {
+  public function validateReferences(NodeInterface $node, GroupInterface $group, bool $skip_municipality = FALSE) {
     $err = NULL;
     foreach (self::$updateeFields as $group_ref => $user_ref) {
-      // Only check fields that correspond only selected group.
-      $field = $node->{$group_ref}->getValue();
-      if (empty($field) || (int) $field[0]['target_id'] != $group_id) {
+      if ($skip_municipality && $group_ref == 'municipality') {
         continue;
       }
       // Load user object.
@@ -133,12 +134,65 @@ class ServiceMissingUpdatees {
       else {
         $user = reset($user);
         // If user doesn't have update access add to result array.
+        $access = $node->access('update', $user);
         if (!$node->access('update', $user) || $user->isBlocked()) {
           $err[$user_ref] = 'user has no update access';
         }
       }
     }
     return $err;
+  }
+
+  /**
+   * Get group services.
+   *
+   * @param int $group_id
+   *  Group id
+   *
+   * @return array
+   *  Array of group ids
+   */
+  protected function getServicesByGroup($group_id) {
+    $result = $this->database->select('group_relationship_field_data', 'gr')
+      ->fields('gr', ['entity_id'])
+      ->condition('gid', $group_id)
+      ->condition('plugin_id', 'group_node:service')
+      ->execute()->fetchAllAssoc('entity_id');
+    if (empty($result)) {
+      return [];
+    }
+    return $this->entityTypeManager
+      ->getStorage('node')
+      ->loadMultiple(array_keys($result));
+  }
+
+  /**
+   * @param int $group_id
+   *  Group id.
+   *
+   * @return array|int
+   *  -
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   */
+  protected function getMunicipalityNodes($group_id) {
+    $node_storage = $this->entityTypeManager->getStorage('node');
+    // Get all nodes where selected group is either responsible municipality or
+    // service provider.
+    $query = $node_storage->getQuery();
+    $query->condition('type', 'service');
+    $query->accessCheck(FALSE);
+    $query->condition('field_responsible_municipality', $group_id);
+    $nodes = $query->execute();
+
+    if (empty($nodes)) {
+      return [];
+    }
+
+    return $this->entityTypeManager
+      ->getStorage('node')
+      ->loadMultipleRevisions(array_keys($nodes));
   }
 
   /**

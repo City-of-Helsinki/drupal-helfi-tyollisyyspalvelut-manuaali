@@ -16,4 +16,4 @@ services:
 
   hel_tpm_group.service_missing_updatees:
     class: Drupal\hel_tpm_group\ServiceMissingUpdatees
-    arguments: ['@entity_type.manager']
+    arguments: ['@entity_type.manager', '@database']

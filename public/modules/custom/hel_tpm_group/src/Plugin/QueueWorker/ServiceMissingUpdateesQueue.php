@@ -76,8 +76,8 @@ final class ServiceMissingUpdateesQueue extends QueueWorkerBase implements Conta
     if (!$this->validateNotify($group_id)) {
       return;
     }
-    $this->notifyGroupAdmins($group_id);
 
+    $this->notifyGroupAdmins($group_id);
     \Drupal::state()->set('hel_tpm_group_missing_updatees.group.' . $group_id, \Drupal::time()->getRequestTime());
   }
 
@@ -104,8 +104,6 @@ final class ServiceMissingUpdateesQueue extends QueueWorkerBase implements Conta
     foreach ($users as $user) {
       $this->sendNotification($user, $group);
     }
-
-    $foo = 'bar';
   }
 
   /**

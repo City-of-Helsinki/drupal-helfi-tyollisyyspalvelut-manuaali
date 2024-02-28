@@ -1,0 +1,22 @@
+langcode: fi
+status: true
+dependencies:
+  config:
+    - filter.format.filtered_html
+    - filter.format.full_html
+template: services_missing_updatees
+label: 'Services missing updatees'
+description: 'Services in group have missing updatee references notification'
+text:
+  -
+    value: "<p>Ryhmän [message:field_group] palveluissa vastuupäivittäjätiedoissa puutteita</p>\r\n"
+    format: filtered_html
+  -
+    value: "<p>Ryhmässäsi on yksi tai useampi palvelu joiden vastuupäivittäjätieto on puutteellinen. Käy tarkastamassa palvelut <a href=\"[site:base-url]/group/[message:field_group:entity:id]/services-missing-updatee\">täältä</a><br />\r\n&nbsp;</p>\r\n"
+    format: full_html
+settings:
+  'token options':
+    clear: false
+    'token replace': true
+  purge_override: false
+  purge_methods: {  }
