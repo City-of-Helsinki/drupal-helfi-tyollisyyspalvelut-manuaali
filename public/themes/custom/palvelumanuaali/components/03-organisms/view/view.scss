@@ -171,7 +171,9 @@
   .form-item-moderation-state {
     .select--details-select {
       @extend .select--white-rounded;
-
+      .active .multi-select-button {
+        background-color: clr(background-section);
+      }
     }
   }
 }
