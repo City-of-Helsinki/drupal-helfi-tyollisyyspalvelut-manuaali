@@ -88,6 +88,16 @@
   card__button__url: url,
 } %}
 {% block card__img %}
-  {{ content.flag_cart }}
+  {% if content.flag_cart  %}
+    <div class='small-message-wrapper small-message-wrapper--view-card'>
+      {{ content.flag_cart }}
+      <div class='pill--small-message pill--small-message--add pill--padding-small-text pill--small-message-taxonomy small-font font-primary-blue font-weight-bold' aria-live="polite">
+       {{'Added to favorites'|t}}
+      </div>
+      <div class='pill--small-message pill--small-message--remove pill--padding-small-text pill--small-message-taxonomy small-font font-primary-blue font-weight-bold' aria-live="polite">
+       {{'Removed from favorites'|t}}
+      </div>
+    </div>
+  {% endif %}
 {% endblock %}
 {% endembed %}
