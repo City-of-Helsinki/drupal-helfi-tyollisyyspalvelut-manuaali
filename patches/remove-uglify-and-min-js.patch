@@ -1,0 +1,46 @@
+diff --git a/eu_cookie_compliance.libraries.yml b/eu_cookie_compliance.libraries.yml
+index 28b4e51..03a24a8 100644
+--- a/eu_cookie_compliance.libraries.yml
++++ b/eu_cookie_compliance.libraries.yml
+@@ -1,7 +1,7 @@
+ eu_cookie_compliance:
+   version: VERSION
+   js:
+-    js/eu_cookie_compliance.min.js: { attributes: { defer: true } }
++    js/eu_cookie_compliance.js: { attributes: { defer: true } }
+   dependencies:
+     - core/jquery
+     - core/drupal
+diff --git a/package-lock.json b/package-lock.json
+deleted file mode 100644
+index 54a7159..0000000
+--- a/package-lock.json
++++ /dev/null
+@@ -1,12 +0,0 @@
+-{
+-  "name": "eu_cookie_compliance",
+-  "requires": true,
+-  "lockfileVersion": 1,
+-  "dependencies": {
+-    "uglify-js": {
+-      "version": "3.17.0",
+-      "resolved": "https://registry.npmjs.org/uglify-js/-/uglify-js-3.17.0.tgz",
+-      "integrity": "sha512-aTeNPVmgIMPpm1cxXr2Q/nEbvkmV8yq66F3om7X3P/cvOXQ0TMQ64Wk63iyT1gPlmdmGzjGpyLh1f3y8MZWXGg=="
+-    }
+-  }
+-}
+diff --git a/package.json b/package.json
+deleted file mode 100644
+index d31b52c..0000000
+--- a/package.json
++++ /dev/null
+@@ -1,9 +0,0 @@
+-{
+-  "name": "eu_cookie_compliance",
+-  "scripts": {
+-    "uglify": "uglifyjs js/eu_cookie_compliance.js -c -m --output js/eu_cookie_compliance.min.js"
+-  },
+-  "dependencies": {
+-    "uglify-js": "^3.17.0"
+-  }
+-}

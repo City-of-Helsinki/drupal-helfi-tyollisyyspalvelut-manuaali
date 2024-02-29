@@ -608,6 +608,7 @@ $card-font-small-heading: 15px;
   }
   .icon-wrapper {
     display: none;
+
     @include xl {
       display: flex;
       align-items: flex-start;
@@ -616,13 +617,24 @@ $card-font-small-heading: 15px;
     >.icon {
       position: relative;
       margin: 0;
+      min-width: 24px;
     }
     .field__item {
       font-size: 14px;
       color: clr(text);
     }
+    .field--name-field-service-languages .field__items {
+      overflow: hidden;
+      width: 100%;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+    }
     .field--name-field-service-languages .field__item {
       display: inline-block;
+      .service-language {
+        display: flex;
+      }
     }
   }
   .price-and-language-wrapper {
@@ -632,5 +644,8 @@ $card-font-small-heading: 15px;
     @include xl {
       margin-top: auto;
     }
+  }
+  .prefix {
+    margin-left: 2px;
   }
 }
