@@ -31,6 +31,10 @@ function hel_tpm_update_reminder_cron() {
  * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
  */
 function _hel_tpm_update_reminder_service_reminders(): void {
+  if (!UpdateReminderUtility::shouldRun()) {
+    return;
+  }
+
   // Fetch all node ids with published moderation state.
   $published_moderation_nids = \Drupal::database()->select('content_moderation_state_field_data', 'c')
     ->condition('c.moderation_state', 'published')
@@ -40,7 +44,6 @@ function _hel_tpm_update_reminder_service_reminders(): void {
 
   // Fetch all ids for services that might need to be reminded using published
   // services' changed status.
-  $node_storage = \Drupal::entityTypeManager()->getStorage('node');
   $reminder_service_ids = \Drupal::entityQuery('node')
     ->condition('type', 'service')
     ->condition('nid', $published_moderation_nids, 'IN')
@@ -56,6 +59,8 @@ function _hel_tpm_update_reminder_service_reminders(): void {
       $queue->createItem((int) $nid);
     }
   }
+
+  UpdateReminderUtility::updateLastRun();
 }
 
 /**

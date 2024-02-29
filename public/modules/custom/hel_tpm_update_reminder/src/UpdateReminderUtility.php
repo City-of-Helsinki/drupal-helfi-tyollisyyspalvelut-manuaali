@@ -10,6 +10,11 @@ namespace Drupal\hel_tpm_update_reminder;
 class UpdateReminderUtility {
 
   /**
+   * Update reminder cron run limit in hours.
+   */
+  public const RUN_LIMIT_HOURS = 24;
+
+  /**
    * First limit in days for service reminders.
    */
   public const SERVICE_LIMIT_1 = 120;
@@ -25,6 +30,11 @@ class UpdateReminderUtility {
   public const SERVICE_LIMIT_3 = 150;
 
   /**
+   * State API key for update reminder last run timestamp.
+   */
+  private const LAST_RUN_KEY = 'hel_tpm_update_reminder.last_run';
+
+  /**
    * Base State API key for node's last checked timestamp.
    */
   private const CHECKED_TIMESTAMP_BASE_KEY = 'hel_tpm_update_reminder.checked_timestamp.node.';
@@ -33,6 +43,43 @@ class UpdateReminderUtility {
    * Base State API key for node's messages sent counter.
    */
   private const MESSAGES_SENT_BASE_KEY = 'hel_tpm_update_reminder.messages_sent.node.';
+
+  /**
+   * Get the last run timestamp.
+   *
+   * @return int|null
+   *   The timestamp for last run.
+   */
+  public static function getLastRun(): ?int {
+    return \Drupal::state()->get(self::LAST_RUN_KEY, NULL);
+  }
+
+  /**
+   * Updates the last run timestamp to current time.
+   *
+   * @return void
+   *   Void.
+   */
+  public static function updateLastRun(): void {
+    \Drupal::state()->set(self::LAST_RUN_KEY, \Drupal::time()->getRequestTime());
+  }
+
+  /**
+   * Check whether the update reminder should be run according to last run.
+   *
+   * @return bool
+   *   TRUE if update reminder should be run, FALSE otherwise.
+   */
+  public static function shouldRun(): bool {
+    if (empty($lastRun = self::getLastRun())) {
+      return TRUE;
+    }
+    $runTimeLimit = strtotime(self::RUN_LIMIT_HOURS . ' hours', 0);
+    if ((\Drupal::time()->getRequestTime() - $lastRun) < $runTimeLimit) {
+      return FALSE;
+    }
+    return TRUE;
+  }
 
   /**
    * Get the checked content timestamp for node.
@@ -44,10 +91,7 @@ class UpdateReminderUtility {
    *   The checked content timestamp if existing, NULL otherwise.
    */
   public static function getChecked(int $nid): ?int {
-    if ($publishDate = \Drupal::state()->get(self::CHECKED_TIMESTAMP_BASE_KEY . $nid)) {
-      return $publishDate;
-    }
-    return NULL;
+    return \Drupal::state()->get(self::CHECKED_TIMESTAMP_BASE_KEY . $nid, NULL);
   }
 
   /**
@@ -60,8 +104,7 @@ class UpdateReminderUtility {
    *   Void.
    */
   public static function setChecked(int $nid): void {
-    $timestamp = \Drupal::time()->getCurrentTime();
-    \Drupal::state()->set(self::CHECKED_TIMESTAMP_BASE_KEY . $nid, $timestamp);
+    \Drupal::state()->set(self::CHECKED_TIMESTAMP_BASE_KEY . $nid, \Drupal::time()->getRequestTime());
   }
 
   /**
@@ -74,10 +117,7 @@ class UpdateReminderUtility {
    *   The sent messages.
    */
   public static function getMessagesSent(int $nid): int {
-    if ($messagesSent = \Drupal::state()->get(self::MESSAGES_SENT_BASE_KEY . $nid)) {
-      return $messagesSent;
-    }
-    return 0;
+    return \Drupal::state()->get(self::MESSAGES_SENT_BASE_KEY . $nid, 0);
   }
 
   /**
