@@ -97,7 +97,7 @@
     > h2 {
       @extend .visually-hidden;
     }
-    @include large {
+    @include xl {
       width: 100%;
     }
   }
@@ -343,18 +343,12 @@
 .search-history-wrapper[style*="display: block"]~.form-item-search-api-fulltext #hel-tpm-search-autocomplete,
 .hel-search-autocomplete[style*="display: block"]~.form-item-search-api-fulltext #hel-tpm-search-autocomplete,
 .search-dropdown-wrapper[style*="display: block"]~.form-item-search-api-fulltext #hel-tpm-search-autocomplete {
-  box-shadow: inset 0px 0px 0px 1.5px clr(background-section);
+  box-shadow: unset;
+  border-top: 2px solid clr(background-section);
+  border-right:  2px solid clr(background-section);
+  border-left: 2px solid clr(background-section);
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
-  @include large {
-      box-shadow: inset 0px 0px 0px 2px clr(background-section);
-  }
-  @include xl {
-      box-shadow: inset 0px 0px 0px 1.6px clr(background-section);
-  }
-  @include xxl {
-      box-shadow: inset 0px 0px 0px 1px clr(background-section);
-  }
 }
 
 .search-history-wrapper,
@@ -364,7 +358,6 @@
     position: absolute;
     width: 100%;
     background-color: clr(text-inverse);
-  //  border: 2px solid clr(background-section);
     border-top: 0;
     border-bottom-right-radius: 8px;
     border-bottom-left-radius: 8px;
