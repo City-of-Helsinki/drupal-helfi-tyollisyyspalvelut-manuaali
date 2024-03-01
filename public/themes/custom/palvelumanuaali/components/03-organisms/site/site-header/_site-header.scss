@@ -1,15 +1,10 @@
 
 .header {
-  transition: transform 0.5s;
-
-  @media only screen and (max-width: $large) {
-    transform: unset !important;
-  }
 
   @include large {
-    position: fixed;
     z-index: 200;
     width: 100%;
+    margin: auto;
   }
 
   &--hidden {
