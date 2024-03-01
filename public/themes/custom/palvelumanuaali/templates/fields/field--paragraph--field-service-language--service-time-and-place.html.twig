@@ -61,14 +61,9 @@
         icon_name: 'speech-bubble-dark-blue',
         icon_modifiers: ['small'],
       } %}
-      <div class='languages-wrapper'>
+      <div class='languages-wrapper display-inline-flex flex-wrap add-gap-3'>
         {% for item in items %}
-          <div{{ item.attributes.addClass('field__item') }}>
-            {{ item.content }}
-            {% if not loop.last %}
-            {{", "}}
-            {% endif %}
-          </div>
+          <div{{ item.attributes.addClass('field__item') }}><span>{{ item.content }}</span>{% if not loop.last %}{{", "}}{% endif %}</div>
         {% endfor %}
       </div>
     </div>
@@ -78,13 +73,10 @@
       icon_name: 'speech-bubble-dark-blue',
       icon_modifiers: ['small'],
     } %}
-    <div class='languages-wrapper display-inline-flex flex-wrap'>
+    <div class='languages-wrapper display-inline-flex flex-wrap add-gap-3'>
       {% for item in items %}
         <div{{ attributes.addClass(classes, 'field__item') }}>
-          {{ item.content }}
-          {% if not loop.last %}
-            {{", "}}
-          {% endif %}
+          <span>{{ item.content }}</span>{% if not loop.last %}{{", "}}{% endif %}
         </div>
       {% endfor %}
     </div>
@@ -101,13 +93,10 @@
       <div class="field__items">
     {% endif %}
 
-    <div class='languages-wrapper display-inline-flex flex-wrap'>
+    <div class='languages-wrapper display-inline-flex flex-wrap add-gap-3'>
       {% for item in items %}
         <div{{ item.attributes.addClass('field__item') }}>
-          {{ item.content }}
-          {% if not loop.last %}
-            {{", "}}
-          {% endif %}
+      <span>{{ item.content }}</span>{% if not loop.last %}{{", "}}{% endif %}
         </div>
       {% endfor %}
     </div>
