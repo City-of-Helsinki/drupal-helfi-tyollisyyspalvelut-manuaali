@@ -64,10 +64,6 @@ class ServiceMissingUpdatees {
       return NULL;
     }
 
-    if (!empty($result)) {
-      return $result;
-    }
-
     $result = [];
     $skip_municipality = TRUE;
     $node_storage = $this->entityTypeManager->getStorage('node');
