@@ -195,25 +195,4 @@ class ServiceMissingUpdatees {
       ->loadMultipleRevisions(array_keys($nodes));
   }
 
-  /**
-   * Validation for group id.
-   *
-   * @param int $gid
-   *   Group id.
-   *
-   * @return bool
-   *   Return true/false
-   *
-   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
-   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
-   */
-  public function validateGroupId(int $gid) {
-    $query = $this->entityTypeManager->getStorage('group')->getQuery();
-    $result = $query->condition('id', $gid)
-      ->accessCheck(FALSE)
-      ->count()
-      ->execute();
-    return $result > 0;
-  }
-
 }
