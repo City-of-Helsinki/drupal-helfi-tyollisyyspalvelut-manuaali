@@ -63,7 +63,7 @@ class ServiceMissingUpdatees {
     if (empty($group_id)) {
       return NULL;
     }
-    // $result =& drupal_static(__CLASS__ . '-' . $group_id . '-' . $nids_only);
+
     if (!empty($result)) {
       return $result;
     }
@@ -136,7 +136,6 @@ class ServiceMissingUpdatees {
       else {
         $user = reset($user);
         // If user doesn't have update access add to result array.
-        $access = $node->access('update', $user);
         if (!$node->access('update', $user) || $user->isBlocked()) {
           $err[$user_ref] = 'user has no update access';
         }
@@ -153,6 +152,9 @@ class ServiceMissingUpdatees {
    *
    * @return array
    *   Array of group ids
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   protected function getServicesByGroup($group_id) {
     $result = $this->database->select('group_relationship_field_data', 'gr')
