@@ -33,6 +33,8 @@ final class ServiceMissingUpdateesQueue extends QueueWorkerBase implements Conta
    */
   protected static string $messageTemplate = 'services_missing_updatees';
 
+  protected static string $queue = 'hel_tpm_group_missing_updatees.group';
+
   /**
    * Constructs a new ServiceMissingUpdateesQueue instance.
    */
@@ -78,7 +80,7 @@ final class ServiceMissingUpdateesQueue extends QueueWorkerBase implements Conta
     }
 
     $this->notifyGroupAdmins($group_id);
-    \Drupal::state()->set('hel_tpm_group_missing_updatees.group.' . $group_id, \Drupal::time()->getRequestTime());
+    \Drupal::state()->set(self::$queue . '.' . $group_id, \Drupal::time()->getRequestTime());
   }
 
   /**
@@ -167,8 +169,7 @@ final class ServiceMissingUpdateesQueue extends QueueWorkerBase implements Conta
    *   -
    */
   private function validateNotify($gid) {
-    $state = 'hel_tpm_group_missing_updatees_queue.group.' . $gid;
-    $last_reminded = \Drupal::state()->get($state, 0);
+    $last_reminded = \Drupal::state()->get(self::$queue . '.' . $gid, 0);
     $limit = \Drupal::time()->getRequestTime() - strtotime("2 weeks", 0);
     if ($last_reminded > $limit) {
       return FALSE;
