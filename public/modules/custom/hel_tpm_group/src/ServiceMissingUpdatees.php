@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace Drupal\hel_tpm_group;
 
 use Drupal\Core\Database\Connection;
-use Drupal\Core\Database\Database;
 use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\group\Entity\GroupInterface;
 use Drupal\node\NodeInterface;
@@ -22,7 +21,7 @@ class ServiceMissingUpdatees {
    */
   private static array $updateeFields = [
     'municipality' => 'field_responsible_updatee',
-    'group' => 'field_service_provider_updatee'
+    'group' => 'field_service_provider_updatee',
   ];
 
   /**
@@ -37,6 +36,8 @@ class ServiceMissingUpdatees {
    *
    * @param \Drupal\Core\Entity\EntityTypeManager $entityTypeManager
    *   Entity type manager service.
+   * @param \Drupal\Core\Database\Connection $database
+   *   Database connection.
    */
   public function __construct(EntityTypeManager $entityTypeManager, Connection $database) {
     $this->entityTypeManager = $entityTypeManager;
@@ -62,8 +63,7 @@ class ServiceMissingUpdatees {
     if (empty($group_id)) {
       return NULL;
     }
-   // $result =& drupal_static(__CLASS__ . '-' . $group_id . '-' . $nids_only);
-
+    // $result =& drupal_static(__CLASS__ . '-' . $group_id . '-' . $nids_only);
     if (!empty($result)) {
       return $result;
     }
@@ -74,7 +74,7 @@ class ServiceMissingUpdatees {
     $group = $this->entityTypeManager->getStorage('group')->load($group_id);
 
     $nodes = [
-      'group' => $this->getServicesByGroup($group_id)
+      'group' => $this->getServicesByGroup($group_id),
     ];
     // Only fetch nodes from municipality field only for organisations.
     if ($group->bundle() == 'organisation') {
@@ -97,7 +97,7 @@ class ServiceMissingUpdatees {
           else {
             $result[] = [
               'id' => $node->id(),
-              'errors' => $err
+              'errors' => $err,
             ];
           }
         }
@@ -112,8 +112,10 @@ class ServiceMissingUpdatees {
    *
    * @param \Drupal\node\NodeInterface $node
    *   Node object.
-   * @param int $group_id
-   *   Group id.
+   * @param \Drupal\group\Entity\GroupInterface $group
+   *   Group object.
+   * @param bool $skip_municipality
+   *   Boolean whether to skip municipality field values.
    *
    * @return array
    *   -
@@ -147,10 +149,10 @@ class ServiceMissingUpdatees {
    * Get group services.
    *
    * @param int $group_id
-   *  Group id
+   *   Group id.
    *
    * @return array
-   *  Array of group ids
+   *   Array of group ids
    */
   protected function getServicesByGroup($group_id) {
     $result = $this->database->select('group_relationship_field_data', 'gr')
@@ -167,11 +169,13 @@ class ServiceMissingUpdatees {
   }
 
   /**
+   * Get services which refer given group in field_responsible_municipality.
+   *
    * @param int $group_id
-   *  Group id.
+   *   Group id.
    *
    * @return array|int
-   *  -
+   *   -
    *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException

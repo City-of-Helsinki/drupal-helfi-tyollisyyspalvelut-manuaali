@@ -4,15 +4,15 @@ declare(strict_types = 1);
 namespace Drupal\Tests\hel_tpm_group\Kernel;
 
 use Drupal\Core\Test\AssertMailTrait;
-use Drupal\KernelTests\Core\Entity\EntityKernelTestBase;
 use Drupal\Tests\content_moderation\Traits\ContentModerationTestTrait;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
 use Drupal\Tests\service_manual_workflow\Traits\ServiceManualWorkflowTestTrait;
 use Drupal\Tests\user\Traits\UserCreationTrait;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use weitzman\DrupalTestTraits\Entity\NodeCreationTrait;
 
+/**
+ * Provides tests for missing service updatees.
+ */
 class ServiceUpdateeMissingNotificationTest extends GroupKernelTestBase {
   use UserCreationTrait;
   use ContentModerationTestTrait;
@@ -23,8 +23,18 @@ class ServiceUpdateeMissingNotificationTest extends GroupKernelTestBase {
     getMails as drupalGetMails;
   }
 
+  /**
+   * Missing updatee service.
+   *
+   * @var mixed
+   */
   protected $missingUpdateeServices;
 
+  /**
+   * {@inheritdoc}
+   *
+   * @var string[]
+   */
   protected static $modules = [
     'node',
     'system',
@@ -45,9 +55,12 @@ class ServiceUpdateeMissingNotificationTest extends GroupKernelTestBase {
     'flexible_permissions',
     'service_manual_workflow',
     'service_manual_workflow_service_test',
-    'service_manual_workflow_notification_test_config'
+    'service_manual_workflow_notification_test_config',
   ];
 
+  /**
+   * Setup test.
+   */
   protected function setUp(): void {
     parent::setUp();
     $this->installEntitySchema('node');
@@ -72,6 +85,8 @@ class ServiceUpdateeMissingNotificationTest extends GroupKernelTestBase {
    * Test updatee notifications when updatee account is disabled.
    *
    * @return void
+   *   Void.
+   *
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function testServiceProviderMissingUpdatees() {
@@ -95,6 +110,7 @@ class ServiceUpdateeMissingNotificationTest extends GroupKernelTestBase {
    * Test when updatee member is removed from group.
    *
    * @return void
+   *   Void
    *
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
@@ -114,6 +130,7 @@ class ServiceUpdateeMissingNotificationTest extends GroupKernelTestBase {
    * Initialize groups, roles and users.
    *
    * @return void
+   *   -
    *
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
@@ -138,7 +155,11 @@ class ServiceUpdateeMissingNotificationTest extends GroupKernelTestBase {
   }
 
   /**
+   * Create service node.
+   *
    * @return \Drupal\Core\Entity\EntityInterface
+   *   Entity interface.
+   *
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
   protected function createServiceNode() {
@@ -160,4 +181,5 @@ class ServiceUpdateeMissingNotificationTest extends GroupKernelTestBase {
 
     return $spNode;
   }
+
 }
