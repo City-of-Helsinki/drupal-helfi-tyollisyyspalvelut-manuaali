@@ -13,3 +13,7 @@ services:
   hel_tpm_group.current_group:
     class: Drupal\hel_tpm_group\CurrentGroup
     arguments: ['@current_route_match']
+
+  hel_tpm_group.groups_without_admins:
+    class: Drupal\hel_tpm_group\GroupsWithoutAdmins
+    arguments: ['@entity_type.manager']
