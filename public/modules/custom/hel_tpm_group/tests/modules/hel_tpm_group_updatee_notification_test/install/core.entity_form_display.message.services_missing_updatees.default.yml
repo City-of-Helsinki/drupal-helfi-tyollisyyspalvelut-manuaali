@@ -1,0 +1,39 @@
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.field.message.services_missing_updatees.field_group
+    - message.template.services_missing_updatees
+id: message.services_missing_updatees.default
+targetEntityType: message
+bundle: services_missing_updatees
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_group:
+    type: entity_reference_autocomplete
+    weight: 12
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 5
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    '#group': advanced
+hidden: {  }

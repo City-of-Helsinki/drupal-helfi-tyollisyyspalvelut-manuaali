@@ -1,20 +1,20 @@
-uuid: 03e7c13f-7e16-48e4-bc62-881385be9b81
+uuid: a6bd4714-a2cb-4d68-81f8-05606722873b
 langcode: fi
 status: true
 dependencies:
   config:
+    - field.storage.node.field_responsible_municipality
     - field.storage.node.field_responsible_updatee
+    - field.storage.node.field_service_producer
     - field.storage.node.field_service_provider_updatee
-    - node.type.service
     - workflows.workflow.service_moderation
   module:
-    - better_exposed_filters
     - content_moderation
     - group
-    - hel_tpm_editorial
+    - hel_tpm_group
     - node
-id: group_responsibility_services
-label: 'Group responsibility services'
+id: group_services_missing_updatee
+label: 'Group services missing updatee'
 module: views
 description: ''
 tag: ''
@@ -27,7 +27,7 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: 'Group responsibility services'
+      title: 'Puuttuvat vastuupäivittäjät'
       fields:
         title:
           id: title
@@ -39,34 +39,16 @@ display:
           entity_type: node
           entity_field: title
           plugin_id: field
-          label: 'Palvelun nimi'
+          label: Title
           exclude: false
           alter:
             alter_text: false
-            text: ''
             make_link: false
-            path: ''
             absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
             word_boundary: false
             ellipsis: false
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
             strip_tags: false
             trim: false
-            preserve_tags: ''
             html: false
           element_type: ''
           element_class: ''
@@ -94,80 +76,15 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-        label:
-          id: label
-          table: groups_field_data
-          field: label
-          relationship: gid
-          group_type: group
-          admin_label: ''
-          entity_type: group
-          entity_field: label
-          plugin_id: field
-          label: 'Palvelun järjestäjä'
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: string
-          settings:
-            link_to_entity: true
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-        field_service_provider_updatee:
-          id: field_service_provider_updatee
-          table: node__field_service_provider_updatee
-          field: field_service_provider_updatee
+        field_responsible_municipality:
+          id: field_responsible_municipality
+          table: node__field_responsible_municipality
+          field: field_responsible_municipality
           relationship: none
           group_type: group
           admin_label: ''
           plugin_id: field
-          label: 'Palveluntuottajan vastuupäivittäjä'
+          label: 'Vastuukunta:'
           exclude: false
           alter:
             alter_text: false
@@ -211,7 +128,7 @@ display:
           click_sort_column: target_id
           type: entity_reference_label
           settings:
-            link: true
+            link: false
           group_column: target_id
           group_columns: {  }
           group_rows: true
@@ -274,7 +191,7 @@ display:
           click_sort_column: target_id
           type: entity_reference_label
           settings:
-            link: true
+            link: false
           group_column: target_id
           group_columns: {  }
           group_rows: true
@@ -285,17 +202,15 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-        langcode:
-          id: langcode
-          table: node_field_data
-          field: langcode
+        field_service_producer:
+          id: field_service_producer
+          table: node__field_service_producer
+          field: field_service_producer
           relationship: none
           group_type: group
           admin_label: ''
-          entity_type: node
-          entity_field: langcode
           plugin_id: field
-          label: Kieliversio
+          label: 'Palvelun tuottaja'
           exclude: false
           alter:
             alter_text: false
@@ -328,7 +243,7 @@ display:
           element_class: ''
           element_label_type: ''
           element_label_class: ''
-          element_label_colon: false
+          element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
@@ -336,12 +251,74 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          click_sort_column: value
-          type: language
+          click_sort_column: target_id
+          type: entity_reference_label
           settings:
-            link_to_entity: false
-            native_language: false
-          group_column: value
+            link: false
+          group_column: target_id
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        field_service_provider_updatee:
+          id: field_service_provider_updatee
+          table: node__field_service_provider_updatee
+          field: field_service_provider_updatee
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: field
+          label: 'Palveluntuottajan vastuupäivittäjä'
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: target_id
+          type: entity_reference_label
+          settings:
+            link: false
+          group_column: target_id
           group_columns: {  }
           group_rows: true
           delta_limit: 0
@@ -360,7 +337,7 @@ display:
           admin_label: ''
           entity_type: node
           plugin_id: moderation_state_field
-          label: Muokkaustila
+          label: 'Moderation state'
           exclude: false
           alter:
             alter_text: false
@@ -414,141 +391,16 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-        hel_tpm_editorial_service_has_unpublished_changes:
-          id: hel_tpm_editorial_service_has_unpublished_changes
-          table: views
-          field: hel_tpm_editorial_service_has_unpublished_changes
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: hel_tpm_editorial_service_has_unpublished_changes
-          label: 'Uusia muutoksia'
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-        changed:
-          id: changed
-          table: node_field_data
-          field: changed
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          entity_field: changed
-          plugin_id: field
-          label: 'Viimeksi päivitetty'
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: timestamp
-          settings:
-            date_format: medium
-            custom_date_format: ''
-            timezone: ''
-            tooltip:
-              date_format: ''
-              custom_date_format: ''
-            time_diff:
-              enabled: false
-              future_format: '@interval hence'
-              past_format: '@interval ago'
-              granularity: 2
-              refresh: 60
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-        operations:
-          id: operations
+        edit_node:
+          id: edit_node
           table: node
-          field: operations
+          field: edit_node
           relationship: none
           group_type: group
           admin_label: ''
           entity_type: node
-          plugin_id: entity_operations
-          label: Toiminnot
+          plugin_id: entity_link_edit
+          label: Muokkaa
           exclude: false
           alter:
             alter_text: false
@@ -581,7 +433,7 @@ display:
           element_class: ''
           element_label_type: ''
           element_label_class: ''
-          element_label_colon: false
+          element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
@@ -589,9 +441,11 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          destination: false
+          text: muokkaa
+          output_url_as_text: false
+          absolute: false
       pager:
-        type: full
+        type: mini
         options:
           offset: 0
           items_per_page: 50
@@ -600,8 +454,6 @@ display:
           tags:
             next: ››
             previous: ‹‹
-            first: '« Ensimmäinen'
-            last: 'Viimeinen »'
           expose:
             items_per_page: false
             items_per_page_label: 'Items per page'
@@ -610,9 +462,8 @@ display:
             items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
-          quantity: 9
       exposed_form:
-        type: bef
+        type: basic
         options:
           submit_button: Apply
           reset_button: false
@@ -621,84 +472,25 @@ display:
           expose_sort_order: true
           sort_asc_label: Asc
           sort_desc_label: Desc
-          text_input_required: 'Valitse mikä tahansa suodatin ja klikkaa Suorita nähdäksesi tulokset'
-          text_input_required_format: filtered_html
-          bef:
-            general:
-              autosubmit: true
-              autosubmit_exclude_textfield: false
-              autosubmit_textfield_delay: 500
-              autosubmit_hide: false
-              input_required: false
-              allow_secondary: false
-              secondary_label: Lisävaihtoehdot
-              secondary_open: false
-              reset_button_always_show: false
-            filter:
-              type_1:
-                plugin_id: default
-                advanced:
-                  sort_options: false
-                  rewrite:
-                    filter_rewrite_values: ''
-                  collapsible: false
-                  is_secondary: false
-              langcode:
-                plugin_id: default
-                advanced:
-                  sort_options: false
-                  rewrite:
-                    filter_rewrite_values: ''
-                  collapsible: false
-                  is_secondary: false
-              moderation_state:
-                plugin_id: default
-                advanced:
-                  sort_options: false
-                  rewrite:
-                    filter_rewrite_values: ''
-                  collapsible: false
-                  is_secondary: false
-              title:
-                plugin_id: default
-                advanced:
-                  placeholder_text: ''
-                  collapsible: false
-                  is_secondary: false
       access:
         type: group_permission
         options:
-          group_permission: 'access subgroup overview'
+          group_permission: 'view group_membership relationship'
       cache:
-        type: tag
+        type: none
         options: {  }
       empty: {  }
-      sorts:
-        created:
-          id: created
+      sorts: {  }
+      arguments:
+        node_missing_user_dependencies:
+          id: node_missing_user_dependencies
           table: node_field_data
-          field: created
+          field: node_missing_user_dependencies
           relationship: none
           group_type: group
           admin_label: ''
           entity_type: node
-          entity_field: created
-          plugin_id: date
-          order: DESC
-          expose:
-            label: ''
-            field_identifier: ''
-          exposed: false
-          granularity: second
-      arguments:
-        field_responsible_municipality_target_id:
-          id: field_responsible_municipality_target_id
-          table: node__field_responsible_municipality
-          field: field_responsible_municipality_target_id
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: numeric
+          plugin_id: group_services_missing_references
           default_action: default
           exception:
             value: all
@@ -724,115 +516,8 @@ display:
             fail: 'not found'
           validate_options: {  }
           break_phrase: false
-          not: false
+          not: 0
       filters:
-        type:
-          id: type
-          table: node_field_data
-          field: type
-          entity_type: node
-          entity_field: type
-          plugin_id: bundle
-          value:
-            service: service
-          group: 1
-          expose:
-            operator_limit_selection: false
-            operator_list: {  }
-        type_1:
-          id: type_1
-          table: groups_field_data
-          field: type
-          relationship: gid
-          group_type: group
-          admin_label: ''
-          entity_type: group
-          entity_field: type
-          plugin_id: bundle
-          operator: in
-          value: {  }
-          group: 1
-          exposed: true
-          expose:
-            operator_id: type_1_op
-            label: 'Ryhmän tyyppi'
-            description: ''
-            use_operator: false
-            operator: type_1_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: type_1
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              root: '0'
-              admin: '0'
-              editor: '0'
-              specialist: '0'
-              specialist_editor: '0'
-            reduce: false
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-        langcode:
-          id: langcode
-          table: node_field_data
-          field: langcode
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          entity_field: langcode
-          plugin_id: language
-          operator: in
-          value: {  }
-          group: 1
-          exposed: true
-          expose:
-            operator_id: langcode_op
-            label: 'Käännöksen kieli'
-            description: ''
-            use_operator: false
-            operator: langcode_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: langcode
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              root: '0'
-              admin: '0'
-              editor: '0'
-              specialist: '0'
-              specialist_editor: '0'
-            reduce: false
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
         moderation_state:
           id: moderation_state
           table: node_field_data
@@ -844,34 +529,24 @@ display:
           plugin_id: moderation_state_filter
           operator: in
           value:
-            all: all
-            service_moderation-draft: service_moderation-draft
-            service_moderation-ready_to_publish: service_moderation-ready_to_publish
             service_moderation-published: service_moderation-published
-            service_moderation-outdated: service_moderation-outdated
           group: 1
-          exposed: true
+          exposed: false
           expose:
-            operator_id: moderation_state_op
-            label: Muokkaustila
+            operator_id: ''
+            label: ''
             description: ''
             use_operator: false
-            operator: moderation_state_op
+            operator: ''
             operator_limit_selection: false
             operator_list: {  }
-            identifier: moderation_state
+            identifier: ''
             required: false
             remember: false
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              root: '0'
-              admin: '0'
-              editor: '0'
-              specialist: '0'
-              specialist_editor: '0'
-            reduce: true
+            reduce: false
           is_grouped: false
           group_info:
             label: ''
@@ -884,41 +559,34 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-        title:
-          id: title
+        status:
+          id: status
           table: node_field_data
-          field: title
+          field: status
           relationship: none
           group_type: group
           admin_label: ''
           entity_type: node
-          entity_field: title
-          plugin_id: string
-          operator: contains
-          value: ''
+          entity_field: status
+          plugin_id: boolean
+          operator: '='
+          value: '1'
           group: 1
-          exposed: true
+          exposed: false
           expose:
-            operator_id: title_op
-            label: Suodata
+            operator_id: ''
+            label: ''
             description: ''
             use_operator: false
-            operator: title_op
+            operator: ''
             operator_limit_selection: false
             operator_list: {  }
-            identifier: title
+            identifier: ''
             required: false
             remember: false
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              root: '0'
-              admin: '0'
-              editor: '0'
-              specialist: '0'
-              specialist_editor: '0'
-            placeholder: 'Hae palvelun nimellä'
           is_grouped: false
           group_info:
             label: ''
@@ -931,98 +599,12 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          use_tokens: 0
       filter_groups:
         operator: AND
         groups:
           1: AND
       style:
         type: table
-        options:
-          grouping: {  }
-          row_class: ''
-          default_row_class: true
-          columns:
-            title: title
-            label: label
-            langcode: langcode
-            field_service_provider_updatee: field_service_provider_updatee
-            field_responsible_updatee: field_responsible_updatee
-            moderation_state: moderation_state
-            hel_tpm_editorial_service_has_unpublished_changes: hel_tpm_editorial_service_has_unpublished_changes
-            changed: changed
-            edit_node: edit_node
-          default: '-1'
-          info:
-            title:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            label:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            langcode:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            field_service_provider_updatee:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            field_responsible_updatee:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            moderation_state:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            hel_tpm_editorial_service_has_unpublished_changes:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            changed:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            edit_node:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-          override: true
-          sticky: false
-          summary: ''
-          empty_table: false
-          caption: ''
-          description: ''
       row:
         type: fields
       query:
@@ -1033,35 +615,20 @@ display:
           distinct: false
           replica: false
           query_tags: {  }
-      relationships:
-        group_content:
-          id: group_content
-          table: node_field_data
-          field: group_content
+          contextual_filters_or: false
+      relationships: {  }
+      header:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
           relationship: none
           group_type: group
-          admin_label: 'Sisältö ryhmäsisältö'
-          entity_type: node
-          plugin_id: group_content_to_entity_reverse
-          required: false
-          group_content_plugins:
-            'group_node:service': 'group_node:service'
-            'group_node:basic_page': '0'
-            'group_node:landing_page': '0'
-            'group_node:service_location': '0'
-        gid:
-          id: gid
-          table: group_relationship_field_data
-          field: gid
-          relationship: group_content
-          group_type: group
-          admin_label: Group
-          entity_type: group_content
-          entity_field: gid
-          plugin_id: standard
-          required: false
-      use_ajax: true
-      header: {  }
+          admin_label: ''
+          plugin_id: text_custom
+          empty: false
+          content: 'Tältä listalta löydät ne palvelut, joissa vastuupäivittäjätieto on vanhentunut. Palveluilla on aina oltava määritetty vastuupäivittäjä, jolle palveluihin liittyvät viestit lähetetään ja joka vastaa palvelun tietojen ylläpidosta. Muokkaa palvelua ja vaihda uusi päivittäjä käyttäjälistalta.'
+          tokenize: false
       footer: {  }
       display_extenders: {  }
     cache_metadata:
@@ -1076,22 +643,25 @@ display:
         - user.group_permissions
         - 'user.node_grants:view'
       tags:
+        - 'config:field.storage.node.field_responsible_municipality'
         - 'config:field.storage.node.field_responsible_updatee'
+        - 'config:field.storage.node.field_service_producer'
         - 'config:field.storage.node.field_service_provider_updatee'
         - 'config:workflow_list'
   page_1:
     id: page_1
-    display_title: Page
+    display_title: 'Puuttuvat vastuupäivittäjät'
     display_plugin: page
     position: 1
     display_options:
+      display_description: ''
       display_extenders: {  }
-      path: group/%group/group-responsibility-services
+      path: 'group/{group}/services-missing-updatee'
       menu:
         type: tab
-        title: Vastuupalvelut
+        title: 'Puuttuvat vastuupäivittäjät'
         description: ''
-        weight: 30
+        weight: 40
         expanded: false
         menu_name: main
         parent: ''
@@ -1108,6 +678,8 @@ display:
         - user.group_permissions
         - 'user.node_grants:view'
       tags:
+        - 'config:field.storage.node.field_responsible_municipality'
         - 'config:field.storage.node.field_responsible_updatee'
+        - 'config:field.storage.node.field_service_producer'
         - 'config:field.storage.node.field_service_provider_updatee'
         - 'config:workflow_list'

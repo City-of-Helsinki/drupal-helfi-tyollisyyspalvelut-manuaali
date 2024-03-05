@@ -38,9 +38,10 @@ final class SetServiceOutdatedOperationTest extends GroupKernelTestBase {
     'message_notify',
     'group',
     'ggroup',
+    'ggroup_role_mapper',
     'field_permissions',
     'flexible_permissions',
-    'service_manual_workflow_service_test',
+    'service_manual_workflow_service_test'
   ];
 
   use UserCreationTrait;
@@ -56,9 +57,11 @@ final class SetServiceOutdatedOperationTest extends GroupKernelTestBase {
     parent::setUp();
     $this->installEntitySchema('node');
     $this->installEntitySchema('user');
+    $this->installEntitySchema('group');
     $this->installEntitySchema('content_moderation_state');
     $this->installSchema('node', ['node_access']);
     $this->installConfig(['field', 'node', 'system']);
+    $this->installSchema('ggroup', ['group_graph']);
     $this->installConfig([
       'service_manual_workflow_service_test',
       'content_moderation',

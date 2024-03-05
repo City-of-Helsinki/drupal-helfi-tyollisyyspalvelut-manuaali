@@ -33,7 +33,7 @@ class HelTpmGroupSubscriberTest extends GroupKernelTestBase {
     $this->account = $this->createUser();
     $this->group_role = $this->createGroupRole([
       'id' => 'group-editor',
-      'label' => 'editor'
+      'label' => 'editor',
     ]);
 
     $this->createRole([], 'editor', 'Editor');
@@ -190,10 +190,8 @@ class HelTpmGroupSubscriberTest extends GroupKernelTestBase {
   /**
    * Create group role and add mapping for site_wide_role.
    *
-   * @param string $group_rid
-   *   Group role id.
-   * @param string $drupal_rid
-   *   Drupal role id.
+   * @param array $values
+   *   Entity values.
    *
    * @return \Drupal\group\Entity\GroupRoleInterface
    *   Group role interface object.
