@@ -1,0 +1,5 @@
+services:
+  hel_tpm_update_reminder.service_state_changed_subscriber:
+    class: Drupal\hel_tpm_update_reminder\EventSubscriber\ServiceStateChangedSubscriber
+    tags:
+      - { name: event_subscriber }
