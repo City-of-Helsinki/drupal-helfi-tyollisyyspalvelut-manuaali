@@ -489,6 +489,54 @@ $button-colors: (
   right: 0;
 }
 
+  .flag.action-flag,
+  .flag.action-unflag {
+    position: absolute;
+    right: 48px;
+    z-index: 120;
+    font-size: 0;
+    border: 0;
+    display: block;
+    a {
+      width: 48px;
+      overflow: hidden;
+      height: 48px;
+      font-size: 0;
+      padding: 0;
+      position: absolute;
+      &::after {
+        width: 24px;
+        height: 24px;
+        top: 0;
+        left: 0;
+        font-size: 0;
+        margin-left: 0;
+      }
+    }
+  }
+  .flag {
+    .ajax-progress {
+      display: none;
+    }
+  }
+  .flag.action-unflag {
+    a {
+      &::after {
+          transition-delay: 150ms;
+          @extend .icon--favorite-filled;
+      }
+    }
+  }
+  .flag.action-flag {
+    a {
+      &::after {
+          transition-delay: 150ms;
+          @extend .icon--favorite;
+      }
+    }
+  }
+
+
 .flag-cart {
   @include button-no-color;
   @include button-round-corners;

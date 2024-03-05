@@ -5,8 +5,8 @@ namespace Drupal\hel_tpm_group;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\group\Entity\Group;
-use Drupal\group\Entity\GroupRelationship;
 use Drupal\group\Entity\GroupInterface;
+use Drupal\group\Entity\GroupRelationship;
 
 /**
  * Hel_tpm_group.current_group service class.
