@@ -148,6 +148,32 @@ footer.footer{
   margin-bottom: $space;
 }
 
+.margin-bottom-double-space {
+  margin-bottom: $space-double;
+}
+
+.margin-bottom-triple-space {
+  margin-bottom: $space-double;
+  @include xl {
+    margin-bottom: $space-triple;
+  }
+}
+
+.margin-bottom-quadruple-space {
+  margin-bottom: $space-double;
+  @include xl {
+    margin-bottom: $space-quadruple;
+  }
+}
+
+.margin-bottom-quintuple-space {
+  margin-bottom: $space-double;
+  @include xl {
+    margin-bottom: $space-quintuple;
+  }
+}
+
+
 .add-gap-3 {
   gap: 3px;
 }
