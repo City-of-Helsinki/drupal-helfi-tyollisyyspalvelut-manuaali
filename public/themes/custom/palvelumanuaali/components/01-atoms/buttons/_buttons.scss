@@ -497,10 +497,7 @@ $button-colors: (
     z-index: 120;
     font-size: 0;
     border: 0;
-    display: none;
-    @include xl {
-      display: block;
-    }
+    display: block;
     a {
       width: 48px;
       overflow: hidden;
@@ -518,9 +515,15 @@ $button-colors: (
       }
     }
   }
+  .flag {
+    .ajax-progress {
+      display: none;
+    }
+  }
   .flag.action-unflag {
     a {
       &::after {
+          transition-delay: 150ms;
           @extend .icon--favorite-filled;
       }
     }
@@ -528,6 +531,7 @@ $button-colors: (
   .flag.action-flag {
     a {
       &::after {
+          transition-delay: 150ms;
           @extend .icon--favorite;
       }
     }
