@@ -1,0 +1,24 @@
+langcode: fi
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.message.mail_subject
+    - field.field.message.services_missing_updatees.field_group
+    - message.template.services_missing_updatees
+  module:
+    - user
+id: message.services_missing_updatees.mail_subject
+targetEntityType: message
+bundle: services_missing_updatees
+mode: mail_subject
+content:
+  partial_0:
+    weight: 0
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  field_group: true
+  partial_1: true
+  search_api_excerpt: true

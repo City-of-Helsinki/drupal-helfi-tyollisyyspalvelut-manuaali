@@ -8,16 +8,17 @@ dependencies:
     - block_class
     - context
     - node
+    - user
     - views
   theme:
     - palvelumanuaali
 third_party_settings:
   block_class:
-    classes: col-12
+    classes: 'col-12 margin-bottom-quintuple-space'
 id: views_block__quick_links_block_1
 theme: palvelumanuaali
-region: postcontent
-weight: -8
+region: content
+weight: -2
 provider: null
 plugin: 'views_block:quick_links-block_1'
 settings:
@@ -32,7 +33,7 @@ visibility:
   request_path_exclusion:
     id: request_path_exclusion
     negate: true
-    pages: "*/edit\r\n*/edit/"
+    pages: "/*/edit\r\n/*/edit/"
   'entity_bundle:node':
     id: 'entity_bundle:node'
     negate: false
@@ -40,3 +41,10 @@ visibility:
       node: '@node.node_route_context:node'
     bundles:
       landing_page: landing_page
+  user_role:
+    id: user_role
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      authenticated: authenticated

@@ -217,6 +217,11 @@ $card-font-small-heading: 15px;
     font-weight: 600;
     margin: 0;
   }
+  .flag.action-flag,
+  .flag.action-unflag {
+    margin-right: 28px;
+    margin-top: 20px;
+  }
 }
 
 .card--service-card {
@@ -574,6 +579,7 @@ $card-font-small-heading: 15px;
   }
   .card__caption {
     @extend .small-uppercase-card-caption;
+    max-width: 90%;
   }
   .card__heading {
     @extend .card-heading;
@@ -645,6 +651,13 @@ $card-font-small-heading: 15px;
       margin-top: auto;
     }
   }
+
+  .flag.action-flag,
+  .flag.action-unflag {
+    margin-right: 12px;
+    margin-top: 12px;
+  }
+  
   .prefix {
     margin-left: 2px;
   }
