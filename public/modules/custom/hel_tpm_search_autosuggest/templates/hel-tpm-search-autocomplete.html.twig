@@ -1,16 +1,24 @@
-<div class="search-history-wrapper search-wrapper">
-    <div id="search-history" class="search-history list">
-        <div class="title">{{ 'History'|t }}</div>
-        <div class="item-list"></div>
-    </div>
-</div>
-<div id="search-autocomplete" class="hel-search-autocomplete search-wrapper">
-    <div id="search-suggestions" class="list suggestions">
-        <div class="title">{{ 'Search Suggestions'|t }}</div>
-        <div class="item-list"></div>
-    </div>
-    <div id="search-service-list" class="list service-list">
-        <div class="title">{{ 'Services'|t }}</div>
-        <div class="item-list"></div>
-    </div>
+<div class="search-dropdown-wrapper">
+  <div class="search-history-wrapper search-wrapper">
+      <div id="search-history" class="search-history list">
+          <div class="title">{{ 'History'|t }}</div>
+          <div class="item-list"></div>
+          <div class="link-to-search">
+            <a href="{{ search_link }}" title="{{ 'Go to advanced search'|t }}">{{ 'Go to advanced search >'|t }}</a>
+          </div>
+      </div>
+  </div>
+  <div id="search-autocomplete" class="hel-search-autocomplete search-wrapper">
+      <div id="search-suggestions" class="list suggestions">
+          <div class="title">{{ 'Search Suggestions'|t }}</div>
+          <div class="item-list"></div>
+      </div>
+      <div id="search-service-list" class="list service-list">
+          <div class="title">{{ 'Services'|t }}</div>
+          <div class="item-list"></div>
+          <div class="link-to-search">
+            <a href="{{ search_link }}" title="{{ 'Go to advanced search'|t }}">{{ 'Go to advanced search >'|t }}</a>
+          </div>
+      </div>
+  </div>
 </div>

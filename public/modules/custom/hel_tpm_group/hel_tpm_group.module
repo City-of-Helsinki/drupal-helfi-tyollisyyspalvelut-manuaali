@@ -20,6 +20,38 @@ use Drupal\hel_tpm_group\Event\GroupSiteWideRoleChanged;
 use Drupal\node\NodeInterface;
 
 /**
+ * Implements hook_cron().
+ */
+function hel_tpm_group_cron() {
+  _hel_tpm_group_create_missing_updatees_queue_items();
+}
+
+/**
+ * Cron callback for creating service missing updatee queue items.
+ *
+ * @return void
+ *   -
+ *
+ * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+ * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+ */
+function _hel_tpm_group_create_missing_updatees_queue_items() {
+  $last_run = \Drupal::state()->get('hel_tpm_group.missing_updatees_last_run', 0);
+  $run_time_limit = strtotime("24 hours", 0);
+  if ((\Drupal::time()->getRequestTime() - $last_run) < $run_time_limit) {
+    return;
+  }
+  $query = \Drupal::entityTypeManager()->getStorage('group')->getQuery();
+  $query->accessCheck(FALSE);
+  $groups = $query->execute();
+  foreach ($groups as $gid => $group) {
+    $queue = \Drupal::queue('hel_tpm_group_service_missing_updatees_queue');
+    $queue->createItem(['gid' => $gid]);
+  }
+  \Drupal::state()->get('hel_tpm_group.missing_updatees_last_run', \Drupal::time()->getRequestTime());
+}
+
+/**
  * Implements hook_entity_field_access().
  *
  * Allows group admins to see members' status field.
@@ -191,6 +223,20 @@ function hel_tpm_group_views_data_alter(array &$data) {
       'title' => t('Groups without admin filter'),
       'help' => 'List only groups with without any admin users',
       'field' => 'id',
+    ],
+  ];
+  $data['node_field_data']['node_missing_user_dependencies'] = [
+    'title' => t('Missing user depdencies filter'),
+    'filter' => [
+      'title' => t('Missing user dependencies filter'),
+      'field' => 'nid',
+      'id' => 'user_reference_edit_permission',
+    ],
+    'argument' => [
+      'title' => t('Missing service references'),
+      'field' => 'nid',
+      'id' => 'group_services_missing_references',
+      'zero is null' => TRUE,
     ],
   ];
 }

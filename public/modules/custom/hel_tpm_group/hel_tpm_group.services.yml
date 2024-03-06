@@ -17,3 +17,7 @@ services:
   hel_tpm_group.groups_without_admins:
     class: Drupal\hel_tpm_group\GroupsWithoutAdmins
     arguments: ['@entity_type.manager','@database']
+
+  hel_tpm_group.service_missing_updatees:
+    class: Drupal\hel_tpm_group\ServiceMissingUpdatees
+    arguments: ['@entity_type.manager', '@database']

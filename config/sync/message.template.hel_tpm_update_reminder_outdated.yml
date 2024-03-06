@@ -1,0 +1,23 @@
+uuid: 979f004a-a2f6-4cf6-a2cf-f210233a6211
+langcode: fi
+status: true
+dependencies:
+  config:
+    - filter.format.email_html
+    - filter.format.plain_text_format
+template: hel_tpm_update_reminder_outdated
+label: hel_tpm_update_reminder_outdated
+description: 'Service outdated message'
+text:
+  -
+    value: 'Palvelu [message:field_node:entity:title] on vanhentunut Palvelumanuaalissa'
+    format: plain_text_format
+  -
+    value: "<p>Hei [message:field_user:entity:name]</p>\r\n\r\n<p>Palvelu [message:field_node:entity:title] on vanhentunut. Palvelu on merkitty vanhentuneeksi eikä se ole enää löydettävissä Palvelumanuaali-sivustolla.</p>\r\n\r\n<p>Saat tämän viestin, koska palvelu on ollut merkitty osaksi vastuupalveluita. Palvelun uudelleen julkaisu vaatii kunnan hyväksynnän järjestelmässä. Jos palvelua ei julkaista uudelleen, kunnan ylläpitovastuu tiedoista päättyy.</p>\r\n\r\n<p>Tämä ilmoitus on automaattinen.</p>\r\n\r\n<p>Ystävällisin terveisin,<br />\r\nPalvelumanuaalin tiimi</p>\r\n"
+    format: email_html
+settings:
+  'token options':
+    clear: false
+    'token replace': true
+  purge_override: false
+  purge_methods: {  }

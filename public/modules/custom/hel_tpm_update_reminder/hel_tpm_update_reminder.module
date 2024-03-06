@@ -7,62 +7,60 @@
 
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
+use Drupal\hel_tpm_update_reminder\UpdateReminderUtility;
 use Drupal\message\Entity\Message;
+use Drupal\node\NodeInterface;
 
 /**
  * Implements hook_cron().
  */
 function hel_tpm_update_reminder_cron() {
-  _hel_tpm_update_reminder_node_update_reminder();
+  _hel_tpm_update_reminder_service_reminders();
+
   _hel_tpm_update_reminder_notification_message_expiry_reminder(7);
   _hel_tpm_update_reminder_notification_message_expiry_reminder(1);
 }
 
 /**
- * Process the service node update reminders.
+ * Sends service reminder messages and mark outdated services as such.
  *
  * @return void
- *   -
+ *   Void.
  *
  * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
  * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
- * @throws \Drupal\Core\Entity\EntityStorageException */
-function _hel_tpm_update_reminder_node_update_reminder() {
-  $ago = strtotime('-6 months');
-  $query = \Drupal::entityQuery('node')
+ */
+function _hel_tpm_update_reminder_service_reminders(): void {
+  if (!UpdateReminderUtility::shouldRun()) {
+    return;
+  }
+
+  // Fetch all node ids with published moderation state.
+  $published_moderation_nids = \Drupal::database()->select('content_moderation_state_field_data', 'c')
+    ->condition('c.moderation_state', 'published')
+    ->fields('c', ['content_entity_id'])
+    ->execute()
+    ->fetchAll(\PDO::FETCH_COLUMN);
+
+  // Fetch all ids for services that might need to be reminded using published
+  // services' changed status.
+  $reminder_service_ids = \Drupal::entityQuery('node')
     ->condition('type', 'service')
-    ->condition('changed', $ago, '<')
-    ->accessCheck(FALSE);
-  $results = $query->execute();
+    ->condition('nid', $published_moderation_nids, 'IN')
+    ->condition('status', NodeInterface::PUBLISHED)
+    ->condition('changed', UpdateReminderUtility::getFirstServiceLimit(), '<')
+    ->accessCheck(FALSE)
+    ->execute();
 
-  $nodeStorage = \Drupal::entityTypeManager()->getStorage('node');
-  \Drupal::logger('hel_tpm_update_reminder')->notice('Found %count expired nodes.', ['%count' => count($results)]);
-  $sent = 0;
-  foreach ($results as $nid) {
-    $state_id = 'hel_tpm.update_reminder.node.' . $nid;
-    $last_reminded = \Drupal::state()->get($state_id);
-
-    // We haven't reminded about this yet or in two weeks.
-    if ($last_reminded == NULL || $last_reminded < strtotime('-2 weeks')) {
-      $node = $nodeStorage->load($nid);
-      $account = $node->getOwner();
-
-      $message = Message::create([
-        'template' => 'hel_tpm_update_reminder',
-        'uid' => $account->id(),
-      ]);
-      $message->setOwner($account)
-        ->addContext('node', $node)
-        ->save();
-
-      $notifier = Drupal::service('message_notify.sender');
-      $notifier->send($message);
-
-      \Drupal::state()->set($state_id, time());
-      $sent++;
+  $queue = Drupal::queue('hel_tpm_update_reminder_service');
+  foreach ($reminder_service_ids as $nid) {
+    $checked = UpdateReminderUtility::getChecked($nid);
+    if (!empty($checked) && $checked < UpdateReminderUtility::getFirstServiceLimit()) {
+      $queue->createItem((int) $nid);
     }
   }
-  \Drupal::logger('hel_tpm_update_reminder')->notice('Sent update reminders for %count expired nodes.', ['%count' => $sent]);
+
+  UpdateReminderUtility::updateLastRun();
 }
 
 /**

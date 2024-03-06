@@ -10,9 +10,10 @@ third_party_settings:
   hel_tpm_group:
     site_wide_role:
       editor: editor
+      specialist: '0'
       specialist_editor: '0'
 id: service_provider-group_admin
-label: 'Group admin'
+label: 'Ryhmän pääkäyttäjä'
 weight: -9
 admin: false
 scope: individual
@@ -21,6 +22,7 @@ group_type: service_provider
 permissions:
   - 'administer members'
   - 'create group_node:service entity'
+  - 'create group_node:service_location entity'
   - 'delete any invitation'
   - 'invite users to group'
   - 'manage members with role service_provider-editor'
@@ -28,16 +30,18 @@ permissions:
   - 'update any group_node:service content'
   - 'update any group_node:service entity'
   - 'update any group_node:service_location content'
+  - 'update any group_node:service_location entity'
+  - 'update own group_node:service_location entity'
   - 'use service_moderation transition create_new_draft'
   - 'use service_moderation transition outdated'
+  - 'use service_moderation transition outdated_to_draft'
   - 'use service_moderation transition put_on_hold'
   - 'use service_moderation transition ready_to_publish'
-  - 'use service_moderation transition ready_to_publish_to_draft'
   - 'use service_moderation transition temporarily_archived'
   - 'view group'
   - 'view group invitations'
-  - 'view group revisions'
   - 'view group_membership content'
+  - 'view group_membership relationship'
   - 'view group_node:service content'
   - 'view group_node:service entity'
   - 'view group_node:service_location content'
