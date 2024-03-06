@@ -184,6 +184,15 @@ function hel_tpm_group_views_data_alter(array &$data) {
       'id' => 'group_label_filter',
     ],
   ];
+  $data['groups']['group_without_admin_filter'] = [
+    'title' => t('Groups without admin filter'),
+    'filter' => [
+      'id' => 'group_without_admin_filter',
+      'title' => t('Groups without admin filter'),
+      'help' => 'List only groups with without any admin users',
+      'field' => 'id',
+    ],
+  ];
 }
 
 /**
