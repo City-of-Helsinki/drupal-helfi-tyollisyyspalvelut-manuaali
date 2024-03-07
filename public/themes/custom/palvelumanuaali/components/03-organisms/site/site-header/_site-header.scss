@@ -259,7 +259,11 @@
     }
     .form-item {
       position: relative;
-
+      &:focus-within {
+        &::before {
+          color: clr(alt-header-color)!important;
+        }
+      }
       label {
         text-align: left;
         font-weight: 700;
@@ -275,32 +279,38 @@
         }
       }
       input {
-        border-radius: 4px 4px 0px 0px;
-        border-left: 0;
-        border-top: 0;
-        border-right: 0;
-        border-bottom: 2px solid #AFCEFD;
+        border-radius: 8px;
         padding-left: 35px;
         background: clr(sidebar-color);
+        &:focus {
+          box-shadow: inset 0px 0px 0px 2px clr(background-section);
+          outline: none;
+        }
       }
       &:first-child {
         &::before {
           @include icons;
           content: "\EA02";
           position: absolute;
-          left: 10px;
+          left: 18px;
           bottom: 15px;
           color: clr(gray);
         }
+
       }
       &:nth-child(2) {
         &::before {
           @include icons;
           content: "\EA04";
           position: absolute;
-          left: 10px;
+          left: 18px;
           bottom: 15px;
           color: clr(gray);
+        }
+        &:focus {
+          &::before {
+            color: clr(alt-header-color);
+          }
         }
       }
     }
