@@ -176,6 +176,11 @@
         }
       }
     }
+    &[aria-expanded="true"] {
+      svg {
+        transform: rotate(180deg);
+      }
+    }
   }
   .dropdown-menu {
     padding: 18px 16px 18px 16px;
