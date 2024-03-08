@@ -1,15 +1,10 @@
 
 .header {
-  transition: transform 0.5s;
-
-  @media only screen and (max-width: $large) {
-    transform: unset !important;
-  }
 
   @include large {
-    position: fixed;
     z-index: 200;
     width: 100%;
+    margin: auto;
   }
 
   &--hidden {
@@ -102,7 +97,7 @@
     > h2 {
       @extend .visually-hidden;
     }
-    @include large {
+    @include xl {
       width: 100%;
     }
   }
@@ -346,8 +341,14 @@
 }
 
 .search-history-wrapper[style*="display: block"]~.form-item-search-api-fulltext #hel-tpm-search-autocomplete,
-.hel-search-autocomplete[style*="display: block"]~.form-item-search-api-fulltext #hel-tpm-search-autocomplete {
-  box-shadow: inset 0px 0px 0px 2px clr(background-section);
+.hel-search-autocomplete[style*="display: block"]~.form-item-search-api-fulltext #hel-tpm-search-autocomplete,
+.search-dropdown-wrapper[style*="display: block"]~.form-item-search-api-fulltext #hel-tpm-search-autocomplete {
+  box-shadow: unset;
+  border-top: 2px solid clr(background-section);
+  border-right:  2px solid clr(background-section);
+  border-left: 2px solid clr(background-section);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .search-history-wrapper,
@@ -357,13 +358,11 @@
     position: absolute;
     width: 100%;
     background-color: clr(text-inverse);
-    border: 2px solid clr(background-section);
     border-top: 0;
     border-bottom-right-radius: 8px;
     border-bottom-left-radius: 8px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    box-shadow: 0px 8px 16px rgba(30, 64, 182, 0.2);
     font-weight: 400;
     font-size: 14px;
     line-height: 24px;

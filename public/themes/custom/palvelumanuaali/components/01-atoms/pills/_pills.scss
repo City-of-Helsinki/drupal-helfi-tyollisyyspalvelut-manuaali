@@ -157,6 +157,25 @@ $pill-colors: (
     @include pill-small;
     @include pill-color-gray;
   }
+  &--padding-small-text {
+    padding: $space-one-fourth $space;
+  }
+  &--small-message {
+    border-radius: 4px;
+    background: var(--Primary-Blue-5, #F7F9FD);
+    box-shadow: 0px 4px 8px 0px rgba(30, 64, 182, 0.24);
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: max-content;
+    display: none;
+    transition-timing-function: linear;
+  }
+  &--small-message-taxonomy {
+    position: absolute;
+    right: 0;
+    bottom: -32px;
+    z-index: 100;
+  }
 }
 
 .checkbox-pill {
@@ -189,4 +208,8 @@ $pill-colors: (
       cursor: pointer;
     }
   }
+}
+
+.small-message-pill {
+
 }

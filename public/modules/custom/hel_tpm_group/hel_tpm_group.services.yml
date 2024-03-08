@@ -13,3 +13,7 @@ services:
   hel_tpm_group.current_group:
     class: Drupal\hel_tpm_group\CurrentGroup
     arguments: ['@current_route_match']
+
+  hel_tpm_group.service_missing_updatees:
+    class: Drupal\hel_tpm_group\ServiceMissingUpdatees
+    arguments: ['@entity_type.manager', '@database']

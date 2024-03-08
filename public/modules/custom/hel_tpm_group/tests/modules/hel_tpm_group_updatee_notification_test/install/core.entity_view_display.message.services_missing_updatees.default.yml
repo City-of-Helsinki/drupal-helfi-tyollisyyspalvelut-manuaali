@@ -1,0 +1,36 @@
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.field.message.services_missing_updatees.field_group
+    - message.template.services_missing_updatees
+  module:
+    - user
+id: message.services_missing_updatees.default
+targetEntityType: message
+bundle: services_missing_updatees
+mode: default
+content:
+  field_group:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  partial_0:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  partial_1:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  search_api_excerpt: true

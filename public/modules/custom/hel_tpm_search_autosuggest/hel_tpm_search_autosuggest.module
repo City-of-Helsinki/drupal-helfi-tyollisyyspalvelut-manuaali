@@ -10,6 +10,7 @@
  */
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
 use Drupal\views\ViewExecutable;
 
 /**
@@ -17,10 +18,14 @@ use Drupal\views\ViewExecutable;
  */
 function hel_tpm_search_autosuggest_theme() {
   $themes['hel_tpm_search_autocomplete'] = [
-    'variables' => [],
+    'variables' => [
+      'search_link' => Url::fromRoute('view.solr_service_search.page_1')
+    ],
   ];
   return $themes;
 }
+
+
 
 /**
  * Implements hook_form_alter().

@@ -88,11 +88,15 @@ function service_manual_workflow_require_on_publish_is_published_alter(&$is_publ
   $moderation_state = $entity->moderation_state->value;
   $is_published = in_array($moderation_state, $publish_states);
 
-  // Allow saving a service node to `ready to publish` state without filling the
-  // `Specialist` fields which are required for specialist editors. The fields
-  // are still required before publishing the node.
+  // Allow saving a service node to `ready to publish` state without e.g.
+  // filling the `Specialist` fields which are required for specialist editors.
+  // The fields are still required before publishing the node.
+  //
+  // @todo Consider replacing the require_on_publish module with a custom
+  // module. As emphasized by this workaround, there is a need for separate
+  // "require on publish" and "require on publish and ready to publish" states.
   if ($entity->bundle() === 'service' && $moderation_state === 'ready_to_publish') {
-    $required_specialist_fields = [
+    $fields_not_required_on_ready_to_publish = [
       'field_service_req_speacialist',
       'field_service_coordination',
       'field_obligatoryness_freetext',
@@ -101,6 +105,7 @@ function service_manual_workflow_require_on_publish_is_published_alter(&$is_publ
       'field_statements_unemployment',
       'field_statements',
       'field_service_suits_job_search',
+      'field_responsible_updatee',
     ];
 
     /** @var \Drupal\Core\Field\FieldItemListInterface $field */
@@ -109,7 +114,7 @@ function service_manual_workflow_require_on_publish_is_published_alter(&$is_publ
       if (!($field_config instanceof FieldConfigInterface)) {
         continue;
       }
-      if (in_array($field->getName(), $required_specialist_fields)) {
+      if (in_array($field->getName(), $fields_not_required_on_ready_to_publish)) {
         // This setting is read at RequireOnPublish constraint's validate().
         // The entity itself is not saved, so the change is not persistent.
         // Setting the value to false means that validate() does not build
@@ -133,10 +138,6 @@ function service_manual_workflow_entity_update(EntityInterface $entity) {
   $previous_entity = _service_manual_workflow_entity_previous_revision($entity);
   $original_state = $previous_entity->moderation_state->value;
   $state = $entity->moderation_state->value;
-  // Do not dispatch anything when state hasn't changed.
-  if ($original_state == $state) {
-    return;
-  }
   $transition = sprintf('service_manual_workflow.%s.to.%s', $original_state, $state);
   $event = new ServiceModerationEvent($entity, \Drupal::currentUser());
   Drupal::service('event_dispatcher')->dispatch($event, $transition);
