@@ -44,15 +44,15 @@ if ($app_env = getenv('APP_ENV')) {
   switch($app_env) {
     case 'development':
       $settings['simple_environment_indicator'] = '#004984 Development';
-      $settings['trusted_host_patterns'] = [ '^'. preg_quote(getenv('VARNISH_HELFI_ROUTE'), '.') . '$',];
+      $settings['trusted_host_patterns'] = [ '^'. getenv('DRUPAL_TRUSTED_HOST') . '$',];
       break;
     case 'staging':
       $settings['simple_environment_indicator'] = '#e56716 Stage';
-      $settings['trusted_host_patterns'] = [ '^'. preg_quote(getenv('VARNISH_HELFI_ROUTE'), '.') . '$',];
+      $settings['trusted_host_patterns'] = [ '^'. getenv('DRUPAL_TRUSTED_HOST') . '$',];
       break;
     case 'production':
       $settings['simple_environment_indicator'] = '#d4000f Production';
-      $settings['trusted_host_patterns'] = [ '^'. preg_quote(getenv('VARNISH_HELFI_UUSI_ROUTE'), '.') . '$',];
+      $settings['trusted_host_patterns'] = [ '^'. getenv('DRUPAL_TRUSTED_HOST') . '$',];
       break;
   }
 }
