@@ -54,6 +54,10 @@ if ($app_env = getenv('APP_ENV')) {
   }
 }
 
+if (getenv('DRUPAL_TRUSTED_HOST')) {
+  $settings['trusted_host_patterns'] = [ '^'. getenv('DRUPAL_TRUSTED_HOST') . '$',];
+}
+
 if ($solr_host = getenv('SOLR_SERVICE_HOST')) {
   $config['search_api.server.solr_search']['backend_config']['connector_config']['core'] = 'dev';
   $config['search_api.server.solr_search']['backend_config']['connector_config']['host'] = 'solr';
