@@ -120,8 +120,8 @@
       }
       else {
         $(searchWrapper, context).hide();
-        $(autocompleteWrapper, context).show();
         $(searchDropdownWrapper, context).show();
+        $(autocompleteWrapper, context).show();
       }
 
       // Handle click events outside of search element.
@@ -129,8 +129,9 @@
         let target = $(event.target);
         if(!target.closest('.search-autocomplete-wrapper').length &&
           $('.search-autocomplete-wrapper').is(":visible")) {
-          $('.search-wrapper').hide();
-          $('.search-dropdown-wrapper').hide();
+          $(searchDropdownWrapper).hide();
+          // Remove autocomplete-open class.
+          $(input).removeClass('autocomplete-open');
         }
       });
     },
@@ -206,11 +207,16 @@
 
       $(searchField, form)
         .focus(function () {
+          // Don't recreate autocomplete element if it is already open.
+          if ($(this).hasClass('autocomplete-open')) {
+            return;
+          }
+          $(this).addClass('autocomplete-open');
           Drupal.behaviors.hel_tpm_search_autocomplete.createAutocomplete(this, form);
         })
-        .keyup(function() {
+        .keyup(_.debounce(function() {
           Drupal.behaviors.hel_tpm_search_autocomplete.createAutocomplete(this, form);
-        });
+        }, 200));
     }
   };
 
