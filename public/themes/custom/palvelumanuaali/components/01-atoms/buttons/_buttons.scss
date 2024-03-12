@@ -263,6 +263,11 @@ $button-colors: (
   }
 }
 
+.background-default {
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 //theming
 
 .button {
@@ -765,4 +770,12 @@ input[data-drupal-selector="edit-field-contact-info-external-actions-ief-add"]{
   &:hover {
     background-image: none;
   }
+}
+
+.login-button {
+  width: 48px;
+  height: 48px;
+  background-color: clr(background-border);
+  background-image: url("/themes/custom/palvelumanuaali/images/icons/user-blue.svg");
+  border-radius: 50%;
 }
