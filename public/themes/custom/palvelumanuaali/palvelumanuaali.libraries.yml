@@ -7,7 +7,6 @@ global:
     js/breadcrumbs.js: {}
     js/header.js: {}
     dist/js/02-molecules/small-message/small-message.js: {}
-    js/matomo.js: {}
   dependencies:
     - core/popperjs
     - core/jquery
@@ -20,6 +19,14 @@ main-menu:
     dist/js/02-molecules/menus/main-menu/main-menu.js: {}
   dependencies:
     - core/drupal
+
+analytics:
+  js:
+    js/matomo.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - eu_cookie_compliance/eu_cookie_compliance
 
 search-filters:
   js:

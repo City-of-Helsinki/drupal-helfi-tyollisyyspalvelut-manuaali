@@ -3,12 +3,12 @@ _core:
 langcode: fi
 enabled: true
 timeout: 28800
-max_timeout: 172800
+max_timeout: 1209600
 padding: 120
 logout_regardless_of_activity: false
-no_individual_logout_threshold: false
-role_logout: false
-role_logout_max: false
+no_individual_logout_threshold: true
+role_logout: true
+role_logout_max: true
 redirect_url: /user/login
 no_dialog: false
 message: 'Your session is about to expire. Do you want to reset it?'
