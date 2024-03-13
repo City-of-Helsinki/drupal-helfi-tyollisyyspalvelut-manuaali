@@ -642,6 +642,37 @@ function hel_tpm_general_update_10109(&$sandbox) {
 }
 
 /**
+ * Fix paragraph parents and parent types to proper values.
+ */
+function hel_tpm_general_update_10110(&$sandbox) {
+  $database = \Drupal::database();
+  $node_field_refs = $database->select('node_revision__field_service_languages', 'nrf')
+    ->fields('nrf', [
+      'entity_id',
+      'field_service_languages_target_id'
+    ])
+    ->execute()
+    ->fetchAllAssoc('field_service_languages_target_id');
+  $paragraph_tables = [
+    'paragraphs_item_field_data',
+    'paragraphs_item_revision_field_data'
+  ];
+  foreach ($node_field_refs as $row) {
+    foreach ($paragraph_tables as $table) {
+      $database->update($table)
+        ->condition('id', $row->field_service_languages_target_id)
+        ->condition('parent_type', 'paragraph')
+        ->condition('parent_field_name', 'field_service_languages')
+        ->fields([
+          'parent_type' => 'node',
+          'parent_id' => $row->entity_id,
+        ])
+        ->execute();
+    }
+  }
+}
+
+/**
  * Helper function to migrate service language paragraphs to node field.
  *
  * @param \stdClass $revision_row

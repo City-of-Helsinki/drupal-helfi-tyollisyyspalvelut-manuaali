@@ -413,6 +413,7 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id) {
         $form['field_target_group']['widget'][0]['subform']['field_municipality_irrelevant']['#disabled'] = TRUE;
         $form['field_target_group']['widget'][0]['subform']['field_target_group_municipality']['#disabled'] = TRUE;
         $form['field_service_time_and_location']['#disabled'] = TRUE;
+        $form['field_service_languages']['#disabled'] = TRUE;
       }
     }
 

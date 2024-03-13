@@ -185,6 +185,12 @@ function hel_tpm_forms_validate_service_form_helper(array &$form, FormStateInter
  */
 function _hel_tpm_forms_validate_paragraph_language_selection($languages, FormStateInterface &$form_state) {
   $lang = [];
+  $build_info = $form_state->getBuildInfo();
+  $entity = $build_info['callback_object']->getEntity();
+  if (!$entity->isDefaultTranslation()) {
+    return;
+  }
+
   foreach ($languages as $delta => $paragraph) {
     if (empty($paragraph['subform'])) {
       continue;
