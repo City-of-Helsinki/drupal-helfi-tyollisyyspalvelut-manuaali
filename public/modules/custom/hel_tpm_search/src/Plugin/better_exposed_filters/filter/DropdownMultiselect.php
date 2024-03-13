@@ -30,7 +30,7 @@ class DropdownMultiselect extends FilterWidgetBase {
     /** @var \Drupal\views\Plugin\views\filter\FilterPluginBase $filter */
     $filter = $this->handler;
     $form = parent::buildConfigurationForm($form, $form_state);
-    $form += SelectiveFilterBase::buildConfigurationForm($filter, $this->configuration);
+    $form += SelectiveLanguageBase::buildConfigurationForm($filter, $this->configuration);
     return $form;
   }
   /**
@@ -64,7 +64,7 @@ class DropdownMultiselect extends FilterWidgetBase {
 
     /** @var \Drupal\views\Plugin\views\filter\FilterPluginBase $filter */
     $filter = $this->handler;
-    SelectiveFilterBase::exposedFormAlter($this->view, $filter, $this->configuration, $form, $form_state);
+    SelectiveLanguageBase::exposedFormAlter($this->view, $filter, $this->configuration, $form, $form_state);
   }
 
 
