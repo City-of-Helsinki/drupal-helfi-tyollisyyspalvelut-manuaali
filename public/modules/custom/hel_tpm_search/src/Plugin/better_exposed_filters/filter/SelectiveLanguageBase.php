@@ -15,6 +15,10 @@ use Drupal\views\Views;
  * Base class for selective service language.
  */
 abstract class SelectiveLanguageBase extends SelectiveFilterBase {
+
+  /**
+   * {@inheritdoc}
+   */
   public static function exposedFormAlter(ViewExecutable &$current_view, FilterPluginBase $filter, array $settings, array &$form, FormStateInterface &$form_state) {
     if (!$filter->isExposed() || empty($settings['options_show_only_used'])) {
       return;
@@ -142,7 +146,7 @@ abstract class SelectiveLanguageBase extends SelectiveFilterBase {
             }
             elseif (!empty($settings['options_show_items_count'])) {
               $count = $relationship_count[$target_id] ?? 0;
-              $element['#options'][$key] =  $element['#options'][$key] . ' (' . $count . ')';
+              $element['#options'][$key] = $element['#options'][$key] . ' (' . $count . ')';
             }
           }
           // Make the element size fit with the new number of options.
@@ -172,10 +176,13 @@ abstract class SelectiveLanguageBase extends SelectiveFilterBase {
   /**
    * Get item values for service language field.
    *
-   * @param $field_id
+   * @param string $field_id
+   *   Field path.
    * @param array $entity_revisions
+   *   Array of entity revisions.
    *
    * @return array
+   *   Array of language tids.
    */
   protected static function getItemValues($field_id, array $entity_revisions) {
     // Currently this plugin is used for specific use case and works only for

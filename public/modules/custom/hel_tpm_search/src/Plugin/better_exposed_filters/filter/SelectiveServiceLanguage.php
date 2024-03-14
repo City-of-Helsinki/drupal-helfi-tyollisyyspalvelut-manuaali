@@ -4,23 +4,22 @@ namespace Drupal\hel_tpm_search\Plugin\better_exposed_filters\filter;
 
 use Drupal\better_exposed_filters\Plugin\better_exposed_filters\filter\FilterWidgetBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\selective_better_exposed_filters\Plugin\better_exposed_filters\filter\SelectiveFilterBase;
 
 /**
  * Default widget implementation.
  *
  * @BetterExposedFiltersFilterWidget(
- *   id = "bef_dropdown_multiselet",
- *   label = @Translation("Multiselect Dropdown"),
+ *   id = "selective_service_language_multiselect",
+ *   label = @Translation("Selective service language multiselect"),
  * )
  */
-class DropdownMultiselect extends FilterWidgetBase {
+class SelectiveServiceLanguage extends FilterWidgetBase {
 
   /**
    * {@inheritdoc}
    */
   public function defaultConfiguration() {
-    return parent::defaultConfiguration() + SelectiveFilterBase::defaultConfiguration();
+    return parent::defaultConfiguration() + SelectiveLanguageBase::defaultConfiguration();
   }
 
   /**
@@ -30,20 +29,12 @@ class DropdownMultiselect extends FilterWidgetBase {
     /** @var \Drupal\views\Plugin\views\filter\FilterPluginBase $filter */
     $filter = $this->handler;
     $form = parent::buildConfigurationForm($form, $form_state);
-    $form += SelectiveFilterBase::buildConfigurationForm($filter, $this->configuration);
+    $form += SelectiveLanguageBase::buildConfigurationForm($filter, $this->configuration);
     return $form;
   }
 
   /**
-   * Add multiselect support for dropdown filter.
-   *
-   * @param array $form
-   *   Form array.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   Form state object.
-   *
-   * @return void
-   *   -
+   * {@inheritdoc}
    */
   public function exposedFormAlter(array &$form, FormStateInterface $form_state) {
     /** @var \Drupal\views\Plugin\views\filter\FilterPluginBase $filter */
@@ -65,7 +56,7 @@ class DropdownMultiselect extends FilterWidgetBase {
 
     /** @var \Drupal\views\Plugin\views\filter\FilterPluginBase $filter */
     $filter = $this->handler;
-    SelectiveFilterBase::exposedFormAlter($this->view, $filter, $this->configuration, $form, $form_state);
+    SelectiveLanguageBase::exposedFormAlter($this->view, $filter, $this->configuration, $form, $form_state);
   }
 
 }
