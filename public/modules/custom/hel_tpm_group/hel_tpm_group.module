@@ -52,6 +52,15 @@ function _hel_tpm_group_create_missing_updatees_queue_items() {
 }
 
 /**
+ * Implements hook_entity_type_alter().
+ */
+function hel_tpm_group_entity_type_alter(array &$entity_types): void {
+  if (isset($entity_types['group_content'])) {
+    $entity_types['group_content']->setFormClass('delete', 'Drupal\hel_tpm_group\Entity\Form\GroupCheckMemberDeleteForm');
+  }
+}
+
+/**
  * Implements hook_entity_field_access().
  *
  * Allows group admins to see members' status field.
