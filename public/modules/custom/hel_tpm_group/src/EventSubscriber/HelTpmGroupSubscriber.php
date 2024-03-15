@@ -3,12 +3,17 @@
 namespace Drupal\hel_tpm_group\EventSubscriber;
 
 use Drupal\Component\EventDispatcher\Event;
+use Drupal\Core\Logger\LoggerChannelTrait;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\group\Entity\GroupMembership;
 use Drupal\group\Entity\GroupRoleInterface;
+use Drupal\group\GroupMembershipLoader;
 use Drupal\hel_tpm_group\Event\GroupMembershipChanged;
+use Drupal\hel_tpm_group\Event\GroupMembershipDeleted;
 use Drupal\hel_tpm_group\Event\GroupSiteWideRoleChanged;
+use Drupal\user\Entity\User;
 use Drupal\user\UserInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -16,12 +21,28 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class HelTpmGroupSubscriber implements EventSubscriberInterface {
 
+  use LoggerChannelTrait;
+
   /**
    * The messenger.
    *
    * @var \Drupal\Core\Messenger\MessengerInterface
    */
   protected $messenger;
+
+  /**
+   * The group membership loader.
+   *
+   * @var \Drupal\group\GroupMembershipLoader
+   */
+  protected GroupMembershipLoader $membershipLoader;
+
+  /**
+   * Logger interface.
+   *
+   * @var \Psr\Log\LoggerInterface
+   */
+  protected LoggerInterface $logger;
 
   /**
    * Default roles available.
@@ -38,9 +59,13 @@ class HelTpmGroupSubscriber implements EventSubscriberInterface {
    *
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   The messenger.
+   * @param \Drupal\group\GroupMembershipLoader $membership_loader
+   *   The group membership loader.
    */
-  public function __construct(MessengerInterface $messenger) {
+  public function __construct(MessengerInterface $messenger, GroupMembershipLoader $membership_loader) {
     $this->messenger = $messenger;
+    $this->membershipLoader = $membership_loader;
+    $this->logger = $this->getLogger('hel_tpm_group');
   }
 
   /**
@@ -105,6 +130,54 @@ class HelTpmGroupSubscriber implements EventSubscriberInterface {
       return;
     }
     $this->updateUserRoles($user);
+  }
+
+  /**
+   * Block regular user if no longer a member of any group.
+   *
+   * @param \Drupal\Component\EventDispatcher\Event $event
+   *   The event.
+   *
+   * @return void
+   *   Void.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  public function onGroupMembershipDelete(Event $event): void {
+    if (!$user = $event->groupContent?->getEntity()) {
+      return;
+    }
+    if (!$user instanceof User) {
+      return;
+    }
+
+    if (empty($this->membershipLoader->loadByUser($user)) && !$this->isUserAdmin($user)) {
+      // User is not a member of any group and not considered to be admin user.
+      $user->set('status', 0);
+      $user->save();
+      $this->logger->info('Deactivated user with ID %user_id as the user is no longer a member of any group.', [
+        '%user_id' => $user->id(),
+      ]);
+    }
+  }
+
+  /**
+   * Check whether user can be considered to be admin user or not.
+   *
+   * @param \Drupal\user\Entity\User $user
+   *   The user.
+   *
+   * @return bool
+   *   TRUE if user is considered admin user, FALSE otherwise.
+   */
+  protected function isUserAdmin(User $user): bool {
+    $roles = $user->getRoles();
+    if ($user->id() === 1
+      || in_array('root', $roles)
+      || in_array('admin', $roles)) {
+      return TRUE;
+    }
+    return FALSE;
   }
 
   /**
@@ -206,6 +279,7 @@ class HelTpmGroupSubscriber implements EventSubscriberInterface {
     return [
       GroupSiteWideRoleChanged::EVENT_NAME => ['onGroupSiteWideRoleChanged'],
       GroupMembershipChanged::EVENT_NAME => ['onGroupMembershipChange'],
+      GroupMembershipDeleted::EVENT_NAME => ['onGroupMembershipDelete'],
     ];
   }
 

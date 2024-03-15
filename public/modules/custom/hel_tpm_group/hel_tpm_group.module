@@ -16,6 +16,7 @@ use Drupal\group\Entity\GroupInterface;
 use Drupal\group\Entity\GroupRelationshipInterface;
 use Drupal\group\Entity\GroupRole;
 use Drupal\hel_tpm_group\Event\GroupMembershipChanged;
+use Drupal\hel_tpm_group\Event\GroupMembershipDeleted;
 use Drupal\hel_tpm_group\Event\GroupSiteWideRoleChanged;
 use Drupal\node\NodeInterface;
 
@@ -192,6 +193,9 @@ function hel_tpm_group_entity_postdelete(EntityInterface $entity) {
   }
 
   $event = new GroupMembershipChanged($entity);
+  \Drupal::service('event_dispatcher')->dispatch($event, $event::EVENT_NAME);
+
+  $event = new GroupMembershipDeleted($entity);
   \Drupal::service('event_dispatcher')->dispatch($event, $event::EVENT_NAME);
 }
 
