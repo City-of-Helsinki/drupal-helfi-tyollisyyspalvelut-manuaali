@@ -25,6 +25,7 @@ settings:
       - '|'
       - italic
       - blockQuote
+      - sourceEditing
   plugins:
     ckeditor5_heading:
       enabled_headings:
@@ -32,6 +33,12 @@ settings:
     ckeditor5_list:
       reversed: false
       startIndex: true
+    ckeditor5_sourceEditing:
+      allowed_tags:
+        - '<h3 id>'
+        - '<a hreflang href>'
+        - '<ul type>'
+        - '<ol type start>'
     editor_advanced_link_link:
       enabled_attributes: {  }
 image_upload:
