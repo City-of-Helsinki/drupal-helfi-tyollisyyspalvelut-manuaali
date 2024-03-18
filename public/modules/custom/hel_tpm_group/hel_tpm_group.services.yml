@@ -1,7 +1,7 @@
 services:
   hel_tpm_group.event_subscriber:
     class: Drupal\hel_tpm_group\EventSubscriber\HelTpmGroupSubscriber
-    arguments: ['@messenger', '@group.membership_loader']
+    arguments: ['@messenger', '@group.membership_loader', '@message_notify.sender']
     tags:
       - { name: event_subscriber }
 
