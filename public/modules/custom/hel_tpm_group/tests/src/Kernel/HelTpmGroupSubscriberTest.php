@@ -19,7 +19,12 @@ class HelTpmGroupSubscriberTest extends GroupKernelTestBase {
   /**
    * {@inheritdoc}
    */
-  protected static $modules = ['hel_tpm_group', 'group'];
+  protected static $modules = [
+    'hel_tpm_group',
+    'group',
+    'message',
+    'message_notify',
+  ];
 
   /**
    * {@inheritdoc}
