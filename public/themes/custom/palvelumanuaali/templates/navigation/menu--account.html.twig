@@ -29,6 +29,9 @@
     icon_modifiers: ['small','margin-left'],
   } %} #}
 </button>
-{% include "@molecules/menus/_menu.twig" with {
-   menu_class: 'dropdown-menu',
-} %}
+<div class='dropdown-menu'>
+  {{ drupal_view('user_info', 'block_1') }}
+  {% include "@molecules/menus/_menu.twig" with {
+     menu_class: 'dropdown-menu-inner',
+  } %}
+</div>
