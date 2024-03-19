@@ -116,7 +116,7 @@ class GroupCheckMemberDeleteForm extends GroupRelationshipDeleteForm {
   protected function getReferencedGroupNodes(Group $group): array {
     $referencedNodes = [];
     foreach ($group->getRelatedEntities() as $relatedEntity) {
-      if ($relatedEntity?->getEntityTypeId() === 'node') {
+      if ($relatedEntity?->getEntityTypeId() === 'node' && $relatedEntity?->bundle() === 'service') {
         /** @var \Drupal\node\Entity\Node $relatedEntity */
         if (!$relatedEntity->isPublished()) {
           continue;
