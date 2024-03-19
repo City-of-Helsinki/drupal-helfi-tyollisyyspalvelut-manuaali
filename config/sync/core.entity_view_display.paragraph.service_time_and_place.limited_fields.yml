@@ -7,25 +7,13 @@ dependencies:
     - field.field.paragraph.service_time_and_place.field_dates
     - field.field.paragraph.service_time_and_place.field_separate_time
     - field.field.paragraph.service_time_and_place.field_service_language
-    - field.field.paragraph.service_time_and_place.field_service_languages
     - field.field.paragraph.service_time_and_place.field_service_location
     - paragraphs.paragraphs_type.service_time_and_place
-  module:
-    - entity_reference_revisions
 id: paragraph.service_time_and_place.limited_fields
 targetEntityType: paragraph
 bundle: service_time_and_place
 mode: limited_fields
-content:
-  field_service_languages:
-    type: entity_reference_revisions_entity_view
-    label: hidden
-    settings:
-      view_mode: limited_fields
-      link: ''
-    third_party_settings: {  }
-    weight: 0
-    region: content
+content: {  }
 hidden:
   entity_print_view_epub: true
   entity_print_view_pdf: true

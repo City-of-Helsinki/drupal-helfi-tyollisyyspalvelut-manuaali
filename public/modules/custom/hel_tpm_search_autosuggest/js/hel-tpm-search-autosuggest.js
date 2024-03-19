@@ -172,7 +172,6 @@
       }
 
       $(document).ready(function() {
-
         if ($(selectedMultiselect).length) {
             $('.control-wrapper input[id^="edit-reset--"]').show();
         } else {
@@ -182,12 +181,6 @@
         searchForm.on('submit', function(e) {
           Drupal.behaviors.hel_tpm_search_autocomplete.appendSearchHistory(form);
         });
-        if ($.isFunction($.fn.ajaxSubmit)) {
-          searchForm.ajaxSubmit(function (e) {
-            Drupal.behaviors.hel_tpm_search_autocomplete.appendSearchHistory(form);
-          })
-        }
-
 
         $('.text-search-wrapper input[id^="edit-reset--"]').click (function (event) {
           event.preventDefault();

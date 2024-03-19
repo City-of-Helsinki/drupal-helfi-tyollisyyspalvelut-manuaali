@@ -211,7 +211,6 @@ function palvelumanuaali_theme_suggestions_form_element_alter(array &$suggestion
   }
 }
 
-
 /**
  * @param array $suggestions
  * @param array $variables
@@ -278,7 +277,6 @@ function palvelumanuaali_theme_suggestions_taxonomy_term_alter(array &$suggestio
   $suggestions[] = 'taxonomy_term__' . $term->bundle() . '__' . $sanitized_view_mode;
   $suggestions[] = 'taxonomy_term__' . $term->id() . '__' . $sanitized_view_mode;
 }
-
 
 /**
  * Implements hook_theme_suggestions_HOOK_alter().
@@ -355,6 +353,36 @@ function palvelumanuaali_theme_suggestions_fieldset_alter(array &$suggestions, a
   }
 }
 
+/**
+ * Implements hook_page_attachments_alter().
+ */
+function palvelumanuaali_page_attachments_alter(array &$attachments) {
+  _palvelumanuaali_attach_analytics($attachments);
+}
+
+/**
+ * Attach analytics to page if conditions are met.
+ *
+ * @param array $attachments
+ *   Array of all attachments provided by hook_page_attachments().
+ *
+ * @return void
+ *   Void.
+ */
+function _palvelumanuaali_attach_analytics(array &$attachments) {
+  // Attach analytics only when user does not have admin or root role and the
+  // path is not excluded with a path pattern.
+  $roles = \Drupal::currentUser()->getRoles();
+  if (in_array('admin', $roles) || in_array('root', $roles)) {
+    return;
+  }
+  $path = \Drupal::service('path.current')->getPath();
+  $exclude_pattern = "/admin/*\n/user/*";
+  if (\Drupal::service('path.matcher')->matchPath($path, $exclude_pattern)) {
+    return;
+  }
+  $attachments['#attached']['library'][] = 'palvelumanuaali/analytics';
+}
 
 /**
  * Implements hook_form_alter().
@@ -385,6 +413,7 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id) {
         $form['field_target_group']['widget'][0]['subform']['field_municipality_irrelevant']['#disabled'] = TRUE;
         $form['field_target_group']['widget'][0]['subform']['field_target_group_municipality']['#disabled'] = TRUE;
         $form['field_service_time_and_location']['#disabled'] = TRUE;
+        $form['field_service_languages']['#disabled'] = TRUE;
       }
     }
 

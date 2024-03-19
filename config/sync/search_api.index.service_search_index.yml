@@ -10,8 +10,6 @@ dependencies:
     - field.storage.paragraph.field_free_service
     - field.storage.node.field_implementation_extra_info
     - field.storage.node.field_service_time_and_location
-    - field.storage.paragraph.field_language
-    - field.storage.paragraph.field_service_languages
     - field.storage.paragraph.field_level
     - field.storage.node.field_life_situations
     - field.storage.paragraph.field_municipality
@@ -94,18 +92,6 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_implementation_extra_info
-  field_language_1:
-    label: 'Service time and location » Paragraph » Service languages » Paragraph » Language'
-    datasource_id: 'entity:node'
-    property_path: 'field_service_time_and_location:entity:field_service_languages:entity:field_language'
-    type: integer
-    dependencies:
-      config:
-        - field.storage.node.field_service_time_and_location
-        - field.storage.paragraph.field_language
-        - field.storage.paragraph.field_service_languages
-      module:
-        - paragraphs
   field_level:
     label: 'Service time and location » Paragraph » Level'
     datasource_id: 'entity:node'

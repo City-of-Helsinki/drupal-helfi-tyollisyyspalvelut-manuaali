@@ -150,6 +150,26 @@
     display: flex;
     align-items: center;
     border: 0;
+  }
+  .view-user-info{
+    .view-content {
+      display: flex;
+      align-items: center;
+      &::before {
+        content: "";
+        width: 32px;
+        height: 32px;
+        background-repeat: no-repeat;
+        display: block;
+        margin-right: 14px;
+        background-color: clr(background-section);
+        background-image: url("/themes/custom/palvelumanuaali/images/icons/user-white.svg");
+        background-position: center;
+        background-size: 16px;
+        border-radius: 50%;
+      }
+      margin-bottom: $space-one-and-half;
+    }
     .views-row {
       text-align: left;
       .views-field-name {
@@ -178,35 +198,40 @@
     }
   }
   .dropdown-menu {
-    padding: 18px 16px 18px 16px;
+    padding: $space-one-and-half 18px;
+    min-width: 220px;
   }
-  .dropdown-menu__item {
+  .dropdown-menu-inner {
+    padding: 0 0 0 6px;
+    margin-bottom: 0;
+  }
+  .dropdown-menu-inner__item {
     text-align: left;
     margin-bottom: $space;
     &:first-child {
-      .dropdown-menu__link {
+      .dropdown-menu-inner__link {
         &::before {
           background-image: url("/themes/custom/palvelumanuaali/images/icons/cogwheel.svg");
           content: "";
-          width: 24px;
-          height: 24px;
+          width: 20px;
+          height: 20px;
           background-repeat: no-repeat;
           display: block;
-          margin-right: $space;
+          margin-right: 20px;
           background-size: cover;
         }
       }
     }
     &:nth-child(2) {
-      .dropdown-menu__link {
+      .dropdown-menu-inner__link {
         &::before {
           background-image: url("/themes/custom/palvelumanuaali/images/icons/door.svg");
           content: "";
-          width: 24px;
-          height: 24px;
+          width: 20px;
+          height: 20px;
           background-repeat: no-repeat;
           display: block;
-          margin-right: $space;
+          margin-right: 20px;
           background-size: cover;
         }
       }
@@ -215,7 +240,7 @@
       margin-bottom: 0;
     }
   }
-  .dropdown-menu__link {
+  .dropdown-menu-inner__link {
     font-size: 12px;
     line-height: 24px;
     font-weight: 600;
@@ -259,7 +284,11 @@
     }
     .form-item {
       position: relative;
-
+      &:focus-within {
+        &::before {
+          color: clr(alt-header-color)!important;
+        }
+      }
       label {
         text-align: left;
         font-weight: 700;
@@ -275,32 +304,38 @@
         }
       }
       input {
-        border-radius: 4px 4px 0px 0px;
-        border-left: 0;
-        border-top: 0;
-        border-right: 0;
-        border-bottom: 2px solid #AFCEFD;
-        padding-left: 35px;
+        border-radius: 8px;
+        padding-left: 51px;
         background: clr(sidebar-color);
+        &:focus {
+          box-shadow: inset 0px 0px 0px 2px clr(background-section);
+          outline: none;
+        }
       }
       &:first-child {
         &::before {
           @include icons;
           content: "\EA02";
           position: absolute;
-          left: 10px;
+          left: 18px;
           bottom: 15px;
           color: clr(gray);
         }
+
       }
       &:nth-child(2) {
         &::before {
           @include icons;
           content: "\EA04";
           position: absolute;
-          left: 10px;
+          left: 18px;
           bottom: 15px;
           color: clr(gray);
+        }
+        &:focus {
+          &::before {
+            color: clr(alt-header-color);
+          }
         }
       }
     }
