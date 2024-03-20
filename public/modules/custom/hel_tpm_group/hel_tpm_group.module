@@ -16,6 +16,7 @@ use Drupal\group\Entity\GroupInterface;
 use Drupal\group\Entity\GroupRelationshipInterface;
 use Drupal\group\Entity\GroupRole;
 use Drupal\hel_tpm_group\Event\GroupMembershipChanged;
+use Drupal\hel_tpm_group\Event\GroupMembershipDeleted;
 use Drupal\hel_tpm_group\Event\GroupSiteWideRoleChanged;
 use Drupal\node\NodeInterface;
 
@@ -49,6 +50,15 @@ function _hel_tpm_group_create_missing_updatees_queue_items() {
     $queue->createItem(['gid' => $gid]);
   }
   \Drupal::state()->get('hel_tpm_group.missing_updatees_last_run', \Drupal::time()->getRequestTime());
+}
+
+/**
+ * Implements hook_entity_type_alter().
+ */
+function hel_tpm_group_entity_type_alter(array &$entity_types): void {
+  if (isset($entity_types['group_content'])) {
+    $entity_types['group_content']->setFormClass('delete', 'Drupal\hel_tpm_group\Entity\Form\GroupCheckMemberDeleteForm');
+  }
 }
 
 /**
@@ -183,6 +193,9 @@ function hel_tpm_group_entity_postdelete(EntityInterface $entity) {
   }
 
   $event = new GroupMembershipChanged($entity);
+  \Drupal::service('event_dispatcher')->dispatch($event, $event::EVENT_NAME);
+
+  $event = new GroupMembershipDeleted($entity);
   \Drupal::service('event_dispatcher')->dispatch($event, $event::EVENT_NAME);
 }
 

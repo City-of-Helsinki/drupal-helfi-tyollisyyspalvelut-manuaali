@@ -22,6 +22,8 @@ class SiteWideGroupRoleTest extends GroupKernelTestBase {
     'entity',
     'variationcache',
     'group_test_config',
+    'message',
+    'message_notify',
   ];
 
   /**

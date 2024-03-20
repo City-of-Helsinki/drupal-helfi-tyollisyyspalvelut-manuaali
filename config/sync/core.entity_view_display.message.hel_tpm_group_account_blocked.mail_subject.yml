@@ -1,0 +1,25 @@
+uuid: 30c216b8-f336-486d-8872-5701a18cc704
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.message.mail_subject
+    - field.field.message.hel_tpm_group_account_blocked.field_user
+    - message.template.hel_tpm_group_account_blocked
+  module:
+    - user
+id: message.hel_tpm_group_account_blocked.mail_subject
+targetEntityType: message
+bundle: hel_tpm_group_account_blocked
+mode: mail_subject
+content:
+  partial_0:
+    weight: 0
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  field_user: true
+  partial_1: true
+  search_api_excerpt: true
