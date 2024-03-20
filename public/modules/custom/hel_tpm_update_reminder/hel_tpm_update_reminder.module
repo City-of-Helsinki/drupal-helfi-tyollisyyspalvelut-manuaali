@@ -16,9 +16,36 @@ use Drupal\node\NodeInterface;
  */
 function hel_tpm_update_reminder_cron() {
   _hel_tpm_update_reminder_service_reminders();
-
   _hel_tpm_update_reminder_notification_message_expiry_reminder(7);
   _hel_tpm_update_reminder_notification_message_expiry_reminder(1);
+  _hel_tpm_update_reminder_notification_cleanup();
+}
+
+/**
+ * Delete all over 6 months old message objects.
+ */
+function _hel_tpm_update_reminder_notification_cleanup() {
+  $run_time_limit = strtotime('24 hours', 0);
+  $last_run = Drupal::state()->get('hel_tpm_update_reminder_notification_cleanup.last_run');
+
+  // Run this cron once every 24 hours.
+  if ($last_run && (Drupal::time()->getRequestTime() - $last_run) < $run_time_limit) {
+    return;
+  }
+
+  $storage = \Drupal::service('entity_type.manager')->getStorage('message');
+  $query = $storage->getQuery();
+  $result = $query->condition('created', strtotime('-6 month'), '<=')
+    ->sort('mid', 'ASC')
+    ->accessCheck(FALSE)
+    ->execute();
+  if (!empty($result)) {
+    $messages = $storage->loadMultiple($result);
+    $storage->delete($messages);
+  }
+
+  Drupal::state()->set('hel_tpm_update_reminder_notification_cleanup.last_run', Drupal::time()->getRequestTime());
+
 }
 
 /**
@@ -74,7 +101,8 @@ function _hel_tpm_update_reminder_notification_message_expiry_reminder($days) {
   $day_limit = new DrupalDateTime('+1 days');
   $now_limit = new DrupalDateTime('now');
   $query = \Drupal::entityQuery('notification_message')
-    ->condition('type', 'service_notification');
+    ->condition('type', 'service_notification')
+    ->accessCheck(FALSE);
   if ($days == 7) {
     $query->condition('publish_end_date', $week_limit->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT), '<')
       ->condition('publish_end_date', $day_limit->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT), '>');

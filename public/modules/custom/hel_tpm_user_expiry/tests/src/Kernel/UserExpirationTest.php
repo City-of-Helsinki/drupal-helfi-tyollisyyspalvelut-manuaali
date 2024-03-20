@@ -154,18 +154,25 @@ final class UserExpirationTest extends EntityKernelTestBase {
     ]));
 
     $this->resetCronLastRun();
+    $this->cron->run();
+
+
+    $this->resetCronLastRun();
     $this->updateStateTimestamp('-1 days', $user);
     $this->cron->run();
     $user = $this->reloadEntity($user);
     $this->assertEquals('1', $user->get('status')->value);
-    $mails = $this->drupalGetMails();
-    $this->assertCount(2, $mails);
 
     $this->resetCronLastRun();
     $this->updateStateTimestamp('-2 days', $user);
     $this->cron->run();
     $user = $this->reloadEntity($user);
     $this->assertEquals(0, $user->get('status')->value);
+
+    $this->resetCronLastRun();
+    $this->cron->run();
+    // Confirm no mails are sent to user after user is disabled.
+    $this->assertCount(2, $this->drupalGetMails());
 
   }
 
