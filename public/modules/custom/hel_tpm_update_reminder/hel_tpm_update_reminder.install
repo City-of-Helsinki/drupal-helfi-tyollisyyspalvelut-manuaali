@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * Install file for hel_tpm_update_reminder.
+ */
+
+/**
  * Remove over 6 months old message entities.
  */
 function hel_tpm_update_reminder_update_10000(&$sandbox) {
@@ -27,7 +32,7 @@ function hel_tpm_update_reminder_update_10000(&$sandbox) {
   $messages = $storage->loadMultiple($result);
   $storage->delete($messages);
 
-  // Get last item from array as current
+  // Get last item from array as current.
   $sandbox['current'] = (int) array_key_last($result);
   $sandbox['progress'] += count($result);
 
