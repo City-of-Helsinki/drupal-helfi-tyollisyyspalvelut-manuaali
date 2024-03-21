@@ -14,6 +14,10 @@ display:
           label: Uppdaterad
         operations:
           label: Operationer
+        name_1:
+          label: 'Ansvarig person hos tjänsteleverantören'
+        name:
+          label: 'Kommunens ansvarsuppdaterare'
       filters:
         moderation_state:
           expose:
@@ -28,6 +32,9 @@ display:
         status:
           group_info:
             label: Publiceringsstatus
+      exposed_form:
+        options:
+          text_input_required_format: ''
   page_1:
     display_options:
       menu:
