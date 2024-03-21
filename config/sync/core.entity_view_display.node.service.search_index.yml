@@ -10,7 +10,6 @@ dependencies:
     - field.field.node.service.field_client_consent
     - field.field.node.service.field_contact_info
     - field.field.node.service.field_contact_info_external
-    - field.field.node.service.field_contact_info_internal
     - field.field.node.service.field_description
     - field.field.node.service.field_field_client_consent_descr
     - field.field.node.service.field_implementation_extra_info
@@ -18,7 +17,6 @@ dependencies:
     - field.field.node.service.field_internal_files
     - field.field.node.service.field_internal_links
     - field.field.node.service.field_life_situations
-    - field.field.node.service.field_links_and_attachments
     - field.field.node.service.field_measures_during_attendance
     - field.field.node.service.field_municipality_guidance
     - field.field.node.service.field_municipality_specific
@@ -26,8 +24,6 @@ dependencies:
     - field.field.node.service.field_obligatoryness_freetext
     - field.field.node.service.field_other_preferences
     - field.field.node.service.field_other_services
-    - field.field.node.service.field_poma_applicable
-    - field.field.node.service.field_poma_applicable_descriptio
     - field.field.node.service.field_related_archive
     - field.field.node.service.field_responsible_municipality
     - field.field.node.service.field_responsible_updatee
@@ -36,10 +32,7 @@ dependencies:
     - field.field.node.service.field_service_exceptions
     - field.field.node.service.field_service_execution
     - field.field.node.service.field_service_implement
-    - field.field.node.service.field_service_language
     - field.field.node.service.field_service_languages
-    - field.field.node.service.field_service_links_external
-    - field.field.node.service.field_service_links_internal
     - field.field.node.service.field_service_other_info
     - field.field.node.service.field_service_price
     - field.field.node.service.field_service_producer
@@ -295,11 +288,9 @@ hidden:
   entitygroupfield: true
   field_career_markings: true
   field_contact_info: true
-  field_contact_info_internal: true
   field_instructions_markup: true
   field_internal_files: true
   field_internal_links: true
-  field_links_and_attachments: true
   field_measures_during_attendance: true
   field_municipality_guidance: true
   field_municipality_specific: true
@@ -307,17 +298,12 @@ hidden:
   field_obligatoryness_freetext: true
   field_other_preferences: true
   field_other_services: true
-  field_poma_applicable: true
-  field_poma_applicable_descriptio: true
   field_related_archive: true
   field_responsible_municipality: true
   field_responsible_updatee: true
   field_service_coordination: true
   field_service_exceptions: true
-  field_service_language: true
   field_service_languages: true
-  field_service_links_external: true
-  field_service_links_internal: true
   field_service_producer: true
   field_service_provider_updatee: true
   field_service_radioactivity: true
