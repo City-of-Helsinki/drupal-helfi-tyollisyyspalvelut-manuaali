@@ -7,11 +7,41 @@
 
 use Drupal\content_moderation\Entity\ContentModerationStateInterface;
 use Drupal\Core\Access\AccessResultForbidden;
+use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\field\FieldConfigInterface;
 use Drupal\service_manual_workflow\Event\ServiceModerationEvent;
+
+/**
+ * Implements hook_Cron().
+ */
+function service_manual_workflow_cron() {
+  _service_manual_workflow_queue_services_for_archival();
+}
+
+/**
+ * Helper function to queue service items.
+ */
+function _service_manual_workflow_queue_services_for_archival() {
+  $storage = \Drupal::service('entity_type.manager')->getStorage('node');
+  $date = new DrupalDateTime('-2 months');
+
+  $nids = $storage->getQuery()
+    ->condition('moderation_state', 'outdated') // Change 'outdated' to your specific moderation state machine name.
+    ->condition('changed', $date->format('U'), '<')
+    ->execute();
+
+  if (empty($nids)) {
+    return;
+  }
+
+  $queue = \Drupal::queue('service_manual_workflow_service_archival_queue');
+  foreach ($nids as $nid) {
+    $queue->createItem($nid);
+  }
+}
 
 /**
  * Implements hook_form_alter().
