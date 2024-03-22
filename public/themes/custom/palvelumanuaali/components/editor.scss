@@ -1,10 +1,44 @@
-.cke_editable {
+.ck-editor__editable {
   background: transparent;
   margin: 0;
-  padding: 16px 16px 32px 16px;
+  padding: 16px 16px 32px 16px !important;
   font-size: 14px;
   line-height: 24px;
   p {
-    margin-top: 0;
+    margin-top: 0 !important;
   }
+}
+
+
+.ck.ck-editor .ck-editor__top .ck-sticky-panel .ck-toolbar {
+  border: 0;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.ck-editor {
+  box-shadow: 0 0 0 2px #AFCEFD;
+  border-radius: 8px;
+}
+
+.ck-rounded-corners .ck.ck-editor__top .ck-sticky-panel .ck-toolbar {
+  background-color: #EDF1FA;
+  border-bottom: 0;
+  border-top-left-radius: 8px !important;
+  border-top-right-radius: 8px !important;
+  box-sizing: border-box;
+  border: 0;
+}
+
+.ck.ck-editor__main > .ck-editor__editable.ck-rounded-corners {
+  background-color: #F7F9FD;
+  border-top: 0;
+  border-bottom-left-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
+  box-sizing: border-box;
+  border: 0 !important;
+}
+
+.ck-powered-by-balloon {
+  display: none !important;
 }
