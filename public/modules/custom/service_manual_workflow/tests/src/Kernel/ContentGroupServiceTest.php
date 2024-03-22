@@ -2,15 +2,12 @@
 
 namespace Drupal\Tests\service_manual_workflow\Kernel;
 
-use Drupal\Core\Access\AccessResultAllowed;
-use Drupal\Core\Access\AccessResultForbidden;
 use Drupal\group\PermissionScopeInterface;
 use Drupal\Tests\content_moderation\Traits\ContentModerationTestTrait;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
 use Drupal\Tests\node\Traits\NodeCreationTrait;
 use Drupal\user\RoleInterface;
-use Drupal\workflows\Entity\Workflow;
 use Prophecy\PhpUnit\ProphecyTrait;
 
 /**
@@ -88,9 +85,9 @@ class ContentGroupServiceTest extends GroupKernelTestBase {
     $this->installConfig(['group', 'group_test_config']);
     $this->createContentType(['type' => 'article']);
     $this->installConfig([
-        'service_manual_workflow',
-        'ggroup',
-      ]
+      'service_manual_workflow',
+      'ggroup',
+    ]
     );
 
     // Setup the group type.

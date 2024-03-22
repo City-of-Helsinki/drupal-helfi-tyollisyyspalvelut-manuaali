@@ -6,7 +6,7 @@ use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
 
 /**
- *
+ * Service manual workflow test trait.
  */
 trait ServiceManualWorkflowTestTrait {
 
@@ -22,8 +22,8 @@ trait ServiceManualWorkflowTestTrait {
   protected function createGroup(array $values = []) {
     $storage = $this->entityTypeManager->getStorage('group');
     $group = $storage->create($values + [
-        'label' => $this->randomString(),
-      ]);
+      'label' => $this->randomString(),
+    ]);
     $group->enforceIsNew();
     $storage->save($group);
     return $group;
@@ -83,7 +83,7 @@ trait ServiceManualWorkflowTestTrait {
    *   Moderation state as a string.
    *
    * @return \Drupal\Core\Entity\EntityInterface
-   *  -
+   *   -
    */
   protected function setNodeModerationState(NodeInterface $node, string $state) {
     $node->set('moderation_state', $state);

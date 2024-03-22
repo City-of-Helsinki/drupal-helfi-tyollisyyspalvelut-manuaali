@@ -7,6 +7,7 @@
 
 use Drupal\content_moderation\Entity\ContentModerationStateInterface;
 use Drupal\Core\Access\AccessResultForbidden;
+use Drupal\Core\Database\Query\AlterableInterface;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -23,14 +24,30 @@ function service_manual_workflow_cron() {
 
 /**
  * Helper function to queue service items.
+ *
+ * @param string $time_limit
+ *   Time limit how old services are queued.
+ *
+ * @return void
+ *   Void
  */
-function _service_manual_workflow_queue_services_for_archival() {
+function _service_manual_workflow_queue_services_for_archival($time_limit = "-2 months") {
+  $last_run_state = 'service_manual_workflow_last_run';
+  $last_run = \Drupal::state()->get($last_run_state);
+  $limit = new DrupalDateTime('-1 day');
+
+  if ($last_run >= $limit->getTimestamp()) {
+    return;
+  }
+
   $storage = \Drupal::service('entity_type.manager')->getStorage('node');
-  $date = new DrupalDateTime('-2 months');
+  $date = new DrupalDateTime($time_limit);
 
   $nids = $storage->getQuery()
-    ->condition('moderation_state', 'outdated') // Change 'outdated' to your specific moderation state machine name.
     ->condition('changed', $date->format('U'), '<')
+    ->accessCheck(FALSE)
+    ->addTag('outdated_services')
+    ->currentRevision()
     ->execute();
 
   if (empty($nids)) {
@@ -38,9 +55,22 @@ function _service_manual_workflow_queue_services_for_archival() {
   }
 
   $queue = \Drupal::queue('service_manual_workflow_service_archival_queue');
-  foreach ($nids as $nid) {
-    $queue->createItem($nid);
+  foreach ($nids as $vid => $nid) {
+    $queue->createItem([
+      'vid' => $vid,
+      'nid' => $nid,
+    ]);
   }
+
+  \Drupal::state()->set($last_run_state, \Drupal::time()->getCurrentTime());
+}
+
+/**
+ * Implements hook_query_TAG_alter().
+ */
+function service_manual_workflow_query_outdated_services_alter(AlterableInterface $query) {
+  $query->addJoin('LEFT', 'content_moderation_state_field_data', 'md', 'md.content_entity_revision_id = base_table.vid');
+  $query->condition('md.moderation_state', 'outdated', '=');
 }
 
 /**

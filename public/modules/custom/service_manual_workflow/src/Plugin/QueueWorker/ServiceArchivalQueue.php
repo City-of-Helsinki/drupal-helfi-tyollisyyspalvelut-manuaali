@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types = 1);
 
 namespace Drupal\service_manual_workflow\Plugin\QueueWorker;
 
@@ -46,8 +48,12 @@ final class ServiceArchivalQueue extends QueueWorkerBase implements ContainerFac
    * {@inheritdoc}
    */
   public function processItem($data): void {
-
-    // @todo Process data here.
+    $node = $this->entityTypeManager->getStorage('node')->loadRevision($data['vid']);
+    $node->set('moderation_state', 'archived');
+    if ($node->isPublished()) {
+      $node->set('status', 0);
+    }
+    $node->save();
   }
 
 }
