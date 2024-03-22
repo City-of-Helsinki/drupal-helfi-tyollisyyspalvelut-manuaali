@@ -53,6 +53,9 @@ final class ServiceArchivalQueue extends QueueWorkerBase implements ContainerFac
     if ($node->isPublished()) {
       $node->set('status', 0);
     }
+    $node->setNewRevision(TRUE);
+    $node->setRevisionCreationTime(\Drupal::time()->getRequestTime());
+    $node->setRevisionUserId(1);
     $node->save();
   }
 
