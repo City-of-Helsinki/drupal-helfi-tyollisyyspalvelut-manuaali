@@ -775,9 +775,12 @@ input[data-drupal-selector="edit-field-contact-info-external-actions-ief-add"]{
 .login-button {
   width: 48px;
   height: 48px;
-  background-color: clr(background-border);
+  background-color: clr(text-inverse);
   background-image: url("/themes/custom/palvelumanuaali/images/icons/user-blue.svg");
   border-radius: 50%;
+  &:hover {
+    background-color: clr(background-border);
+  }
 }
 
 button {
