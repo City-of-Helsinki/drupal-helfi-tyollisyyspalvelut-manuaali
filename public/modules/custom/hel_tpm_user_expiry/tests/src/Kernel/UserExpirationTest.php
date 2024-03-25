@@ -98,7 +98,7 @@ final class UserExpirationTest extends EntityKernelTestBase {
    * Test user expiration cron queueing.
    */
   public function testUserExpirationQueueingCron() {
-    $last_access = strtotime('-3 months -2 weeks');
+    $last_access = strtotime('-165 days');
     $user = $this->createUser();
     $this->cron->run();
     $this->assertEquals(0, $this->queue->numberOfItems());
@@ -122,7 +122,7 @@ final class UserExpirationTest extends EntityKernelTestBase {
    * Test user expiration notifications.
    */
   public function testUserExpirationNotifications() {
-    $last_access = strtotime('-3 months -2 weeks');
+    $last_access = strtotime('-165 days');
     $user = $this->createUser();
     $this->connection->update('users_field_data')
       ->condition('uid', $user->id())

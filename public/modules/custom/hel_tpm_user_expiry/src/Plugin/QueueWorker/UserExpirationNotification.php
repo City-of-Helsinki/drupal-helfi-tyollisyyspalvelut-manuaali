@@ -104,7 +104,7 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
     }
 
     if ($this->getTimeLimit($count) >= $timestamp) {
-      // Deactivate user if last notification has been sent 5 days ago.
+      // Deactivate user if last notification has been sent 2 days ago.
       $this->deactivateUser();
       // Delete state after we have queued user for deactivation.
       // Prevents continous deactivation if account is activated by hand
@@ -220,7 +220,7 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
   }
 
   /**
-   * Notification sending methdo.
+   * Notification sending method.
    *
    * @param int $uid
    *   User id who message is sent.
@@ -231,6 +231,7 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
    *   -
    *
    * @throws \Drupal\Core\Entity\EntityStorageException
+   * @throws \Drupal\message_notify\Exception\MessageNotifyException
    */
   protected function sendNotification(int $uid, string $template): void {
     $message = Message::create([

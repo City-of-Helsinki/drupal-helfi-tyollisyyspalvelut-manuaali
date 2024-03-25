@@ -26,7 +26,7 @@ function _hel_tpm_user_expiry_notification_cron() {
     return;
   }
 
-  $limit = strtotime('-3 months -2 weeks');
+  $limit = strtotime('-165 days');
 
   // Fetch all users have been inactive for 3 months and 2 weeks.
   $q = Drupal::database()->select('users_field_data', 'ufd')
