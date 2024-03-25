@@ -11,6 +11,13 @@ use Drupal\user\UserInterface;
  * Implements hook_cron().
  */
 function hel_tpm_user_expiry_cron() {
+  _hel_tpm_user_expiry_notification_cron();
+}
+
+/**
+ * User expire notification cron job.
+ */
+function _hel_tpm_user_expiry_notification_cron() {
   $run_time_limit = strtotime('12 hours', 0);
   $last_run = Drupal::state()->get('hel_tpm_user_expiry.last_run');
 
@@ -23,10 +30,11 @@ function hel_tpm_user_expiry_cron() {
 
   // Fetch all users have been inactive for 3 months and 2 weeks.
   $q = Drupal::database()->select('users_field_data', 'ufd')
-    ->fields('ufd', ['uid', 'access'])
+    ->fields('ufd', ['uid', 'access', 'status'])
     ->condition('uid', 0, '<>')
     ->condition('access', $limit, '<=')
-    ->condition('created', $limit, '<=');
+    ->condition('created', $limit, '<=')
+    ->condition('status', 1);
   $result = $q->execute()->fetchAll();
 
   foreach ($result as $user) {
