@@ -60,7 +60,11 @@ dependencies:
     - entity_reference_revisions
     - entitygroupfield
     - field_group
+    - file
     - hel_tpm_general
+    - link
+    - options
+    - search_api_solr
     - text
     - user
 third_party_settings:
@@ -71,16 +75,18 @@ third_party_settings:
         - field_service_requirements
         - field_service_benefits
         - field_client_consent
-        - field_field_client_consent_descr
+        - field_service_producer
+        - field_other_services
       label: Osallistuminen
-      parent_name: ''
+      parent_name: group_customer_view
       region: content
-      weight: 14
-      format_type: html_element
+      weight: 11
+      format_type: fieldset
       format_settings:
         classes: 'service-group service-group--participation'
         show_empty_fields: false
         id: ''
+        description: ''
         element: div
         show_label: true
         label_element: h3
@@ -93,14 +99,15 @@ third_party_settings:
         - field_service_execution
         - field_service_other_info
       label: Toteutustapa
-      parent_name: ''
+      parent_name: group_customer_view
       region: content
-      weight: 15
-      format_type: html_element
+      weight: 9
+      format_type: fieldset
       format_settings:
         classes: 'service-group service-group--execution'
         show_empty_fields: false
         id: ''
+        description: ''
         element: div
         show_label: true
         label_element: h3
@@ -110,14 +117,204 @@ third_party_settings:
         speed: fast
     group_where_and_when:
       children:
-        - field_service_time_and_location
+        - field_service_implement
+        - field_contact_info_external
+        - field_field_client_consent_descr
       label: 'Missä ja milloin'
-      parent_name: ''
+      parent_name: group_customer_view
       region: content
-      weight: 16
-      format_type: html_element
+      weight: 10
+      format_type: fieldset
       format_settings:
         classes: 'service-group service-group--where-and-when'
+        show_empty_fields: false
+        id: ''
+        description: ''
+        element: div
+        show_label: true
+        label_element: h4
+        label_element_classes: 'group-label--h4 h4 group-label'
+        attributes: ''
+        effect: none
+        speed: fast
+    group_target_group:
+      children: {  }
+      label: Kohderyhmä
+      parent_name: group_customer_view
+      region: hidden
+      weight: 14
+      format_type: fieldset
+      format_settings:
+        classes: 'service-group service-group--target-group'
+        show_empty_fields: false
+        id: ''
+        description: ''
+        element: div
+        show_label: true
+        label_element: h3
+        label_element_classes: 'group-label--h3 h3 group-label'
+        attributes: ''
+        effect: none
+        speed: fast
+    group_service_navigation:
+      children:
+        - group_customer_view
+        - group_work_instructions
+      label: 'Service navigation'
+      parent_name: ''
+      region: content
+      weight: 0
+      format_type: tabs
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        direction: horizontal
+        width_breakpoint: 640
+    group_customer_view:
+      children:
+        - field_description
+        - field_service_languages
+        - group_execution
+        - group_where_and_when
+        - group_participation
+        - field_service_time_and_location
+        - field_accessibility
+        - field_implementation_extra_info
+        - field_life_situations
+        - field_service_price
+        - field_service_set
+        - group_target_group
+      label: 'Customer view'
+      parent_name: group_service_navigation
+      region: content
+      weight: 20
+      format_type: tab
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        formatter: open
+        description: ''
+    group_work_instructions:
+      children:
+        - group_guidance_to_server
+        - group_municipal_guidance
+        - group_service_obligatoryness
+        - group_career_marking
+        - group_statements_unemploym
+        - group_measures_during
+        - group_exceptions
+        - group_complementary_job_search
+        - field_related_archive
+        - field_internal_files
+        - field_internal_links
+        - field_contact_info
+      label: 'Work instructions'
+      parent_name: group_service_navigation
+      region: content
+      weight: 23
+      format_type: tab
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        formatter: closed
+        description: ''
+    group_guidance_to_server:
+      children:
+        - field_service_coordination
+        - field_service_req_speacialist
+      label: 'Ohjaus palveluun'
+      parent_name: group_work_instructions
+      region: content
+      weight: 22
+      format_type: fieldset
+      format_settings:
+        classes: 'service-group service-group--guidance-to-service'
+        show_empty_fields: false
+        id: ''
+        description: ''
+        element: div
+        show_label: true
+        label_element: h4
+        label_element_classes: 'group-label--h4 h4 group-label'
+        attributes: ''
+        effect: none
+        speed: fast
+    group_service_obligatoryness:
+      children:
+        - field_obligatoryness
+        - field_obligatoryness_freetext
+      label: 'Palvelun velvoittavuus'
+      parent_name: group_work_instructions
+      region: content
+      weight: 24
+      format_type: fieldset
+      format_settings:
+        classes: 'service-group service-group--service-requirements'
+        show_empty_fields: false
+        id: ''
+        description: ''
+        element: div
+        show_label: true
+        label_element: h4
+        label_element_classes: 'group-label--h4 h4 group-label'
+        attributes: ''
+        effect: none
+        speed: fast
+    group_statements_unemploym:
+      children:
+        - field_statements
+        - field_statements_unemployment
+        - field_other_preferences
+      label: 'Lausunnot ja työttömyysetuus'
+      parent_name: group_work_instructions
+      region: content
+      weight: 26
+      format_type: fieldset
+      format_settings:
+        classes: 'service-group service-group--statements-and-jobprofits'
+        show_empty_fields: false
+        id: ''
+        description: ''
+        element: div
+        show_label: true
+        label_element: h4
+        label_element_classes: 'group-label--h4 h4 group-label'
+        attributes: ''
+        effect: none
+        speed: fast
+    group_career_marking:
+      children:
+        - field_career_markings
+      label: 'Merkinnät asiakastietojärjestelmään'
+      parent_name: group_work_instructions
+      region: content
+      weight: 25
+      format_type: fieldset
+      format_settings:
+        classes: 'service-group service-group--markings-to-system'
+        show_empty_fields: false
+        id: ''
+        description: ''
+        element: div
+        show_label: true
+        label_element: h4
+        label_element_classes: 'group-label--h4 h4 group-label'
+        attributes: ''
+        effect: none
+        speed: fast
+    group_measures_during:
+      children:
+        - field_measures_during_attendance
+      label: 'Toimenpiteet osallistumisen ajalta'
+      parent_name: group_work_instructions
+      region: content
+      weight: 27
+      format_type: html_element
+      format_settings:
+        classes: 'service-group service-group--measures-during'
         show_empty_fields: false
         id: ''
         element: div
@@ -127,22 +324,63 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-    group_target_group:
+    group_exceptions:
       children:
-        - field_target_group
-      label: Kohderyhmä
-      parent_name: ''
+        - field_service_exceptions
+        - field_municipality_specific
+      label: Poikkeustilanteet
+      parent_name: group_work_instructions
       region: content
-      weight: 13
+      weight: 28
       format_type: html_element
       format_settings:
-        classes: 'service-group service-group--target-group'
+        classes: 'service-group service-group--exceptions'
         show_empty_fields: false
         id: ''
         element: div
         show_label: true
-        label_element: h3
-        label_element_classes: 'group-label--h3 h3 group-label'
+        label_element: h4
+        label_element_classes: 'group-label--h4 h4 group-label'
+        attributes: ''
+        effect: none
+        speed: fast
+    group_complementary_job_search:
+      children:
+        - field_service_suits_job_search
+        - field_service_suits_info
+      label: ' Täydentävä työnhakukeskustelu'
+      parent_name: group_work_instructions
+      region: content
+      weight: 29
+      format_type: html_element
+      format_settings:
+        classes: 'service-group service-group--complementary-job-search'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: true
+        label_element: h4
+        label_element_classes: 'group-label--h4 h4 group-label'
+        attributes: ''
+        effect: none
+        speed: fast
+    group_municipal_guidance:
+      children:
+        - field_municipality_guidance
+      label: 'Kuntakohtaiset ohjeet'
+      parent_name: group_work_instructions
+      region: content
+      weight: 23
+      format_type: fieldset
+      format_settings:
+        classes: service-group
+        show_empty_fields: false
+        id: ''
+        description: ''
+        element: div
+        show_label: true
+        label_element: h5
+        label_element_classes: 'group-label--h5 h5 group-label'
         attributes: ''
         effect: none
         speed: fast
@@ -153,32 +391,31 @@ mode: default
 content:
   entitygroupfield:
     type: parent_group_label_formatter
-    label: hidden
+    label: above
     settings:
       link: false
     third_party_settings: {  }
     weight: 5
     region: content
-  field_accessibility:
-    type: entity_reference_label
-    label: above
-    settings:
-      link: false
-    third_party_settings: {  }
-    weight: 12
-    region: content
   field_attendance:
     type: entity_reference_revisions_entity_view
-    label: hidden
+    label: above
     settings:
       view_mode: default
       link: ''
     third_party_settings: {  }
     weight: 15
     region: content
+  field_career_markings:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 23
+    region: content
   field_client_consent:
     type: boolean
-    label: hidden
+    label: above
     settings:
       format: boolean
       format_custom_false: ''
@@ -186,64 +423,147 @@ content:
     third_party_settings: {  }
     weight: 18
     region: content
-  field_contact_info_external:
-    type: entity_reference_entity_view
-    label: hidden
+  field_contact_info:
+    type: hel_tpm_general_municipality_field_formatter
+    label: above
     settings:
-      view_mode: default
+      link: true
+    third_party_settings: {  }
+    weight: 33
+    region: content
+  field_contact_info_external:
+    type: hel_tpm_general_municipality_field_formatter
+    label: above
+    settings:
       link: false
     third_party_settings: {  }
-    weight: 19
+    weight: 12
     region: content
   field_description:
     type: basic_string
-    label: hidden
+    label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 6
+    weight: 7
     region: content
   field_field_client_consent_descr:
+    type: solr_highlighted_text_default
+    label: above
+    settings:
+      prefix: '<strong>'
+      suffix: '</strong>'
+      strict: false
+    third_party_settings: {  }
+    weight: 13
+    region: content
+  field_internal_files:
+    type: file_default
+    label: above
+    settings:
+      use_description_as_link_text: true
+    third_party_settings: {  }
+    weight: 31
+    region: content
+  field_internal_links:
+    type: link
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 32
+    region: content
+  field_measures_during_attendance:
     type: text_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 19
+    weight: 31
     region: content
-  field_implementation_extra_info:
-    type: entity_reference_label
+  field_municipality_guidance:
+    type: entity_reference_revisions_entity_view
     label: hidden
     settings:
-      link: false
+      view_mode: default
+      link: ''
     third_party_settings: {  }
-    weight: 7
+    weight: 6
     region: content
-  field_life_situations:
-    type: entity_reference_label
-    label: hidden
+  field_municipality_specific:
+    type: entity_reference_revisions_entity_view
+    label: above
     settings:
-      link: false
+      view_mode: default
+      link: ''
     third_party_settings: {  }
-    weight: 8
+    weight: 9
+    region: content
+  field_obligatoryness:
+    type: hel_tpm_general_icon_field
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 23
+    region: content
+  field_obligatoryness_freetext:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 24
+    region: content
+  field_other_preferences:
+    type: list_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 23
     region: content
   field_other_services:
-    type: entity_reference_entity_view
-    label: hidden
+    type: hel_tpm_general_municipality_field_formatter
+    label: above
     settings:
-      view_mode: card_lift
       link: false
     third_party_settings: {  }
     weight: 21
     region: content
+  field_related_archive:
+    type: hel_tpm_general_icon_field
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 30
+    region: content
   field_service_benefits:
+    type: solr_highlighted_text_default
+    label: above
+    settings:
+      prefix: '<strong>'
+      suffix: '</strong>'
+      strict: false
+    third_party_settings: {  }
+    weight: 17
+    region: content
+  field_service_coordination:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_service_exceptions:
     type: text_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 17
+    weight: 8
     region: content
   field_service_execution:
     type: entity_reference_revisions_entity_view
-    label: visually_hidden
+    label: above
     settings:
       view_mode: default
       link: ''
@@ -255,7 +575,7 @@ content:
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 17
+    weight: 11
     region: content
   field_service_languages:
     type: entity_reference_revisions_entity_view
@@ -264,9 +584,60 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 10
+    weight: 8
     region: content
   field_service_other_info:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 13
+    region: content
+  field_service_producer:
+    type: hel_tpm_general_municipality_field_formatter
+    label: above
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 20
+    region: content
+  field_service_req_speacialist:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_service_requirements:
+    type: solr_highlighted_text_default
+    label: above
+    settings:
+      prefix: '<strong>'
+      suffix: '</strong>'
+      strict: false
+    third_party_settings: {  }
+    weight: 16
+    region: content
+  field_service_suits_info:
+    type: solr_highlighted_text_default
+    label: hidden
+    settings:
+      prefix: '<strong>'
+      suffix: '</strong>'
+      strict: false
+    third_party_settings: {  }
+    weight: 14
+    region: content
+  field_service_suits_job_search:
+    type: hel_tpm_general_icon_field
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 13
+    region: content
+  field_service_time_and_location:
     type: entity_reference_revisions_entity_view
     label: hidden
     settings:
@@ -275,46 +646,22 @@ content:
     third_party_settings: {  }
     weight: 13
     region: content
-  field_service_price:
-    type: entity_reference_revisions_entity_view
+  field_statements:
+    type: hel_tpm_general_icon_field
     label: hidden
-    settings:
-      view_mode: default
-      link: ''
-    third_party_settings: {  }
-    weight: 11
-    region: content
-  field_service_producer:
-    type: entity_reference_label
-    label: above
-    settings:
-      link: false
-    third_party_settings: {  }
-    weight: 20
-    region: content
-  field_service_requirements:
-    type: text_default
-    label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 16
+    weight: 21
     region: content
-  field_service_set:
-    type: entity_reference_label
-    label: hidden
+  field_statements_unemployment:
+    type: solr_highlighted_text_default
+    label: above
     settings:
-      link: false
+      prefix: '<strong>'
+      suffix: '</strong>'
+      strict: false
     third_party_settings: {  }
-    weight: 9
-    region: content
-  field_service_time_and_location:
-    type: hel_tpm_general_time_and_place_formatter
-    label: hidden
-    settings:
-      view_mode: default
-      link: ''
-    third_party_settings: {  }
-    weight: 14
+    weight: 22
     region: content
   field_target_group:
     type: entity_reference_revisions_entity_view
@@ -323,17 +670,17 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 8
+    weight: 7
     region: content
   flag_cart:
     settings: {  }
     third_party_settings: {  }
-    weight: 0
+    weight: 1
     region: content
   flag_flag_list_template_1:
     settings: {  }
     third_party_settings: {  }
-    weight: 2
+    weight: 3
     region: content
   flag_lista:
     settings: {  }
@@ -343,59 +690,42 @@ content:
   flag_lists:
     settings: {  }
     third_party_settings: {  }
-    weight: 1
+    weight: 2
     region: content
   links:
     settings: {  }
     third_party_settings: {  }
-    weight: 3
+    weight: 4
     region: content
   notifications_entity_view_1:
     settings: {  }
     third_party_settings: {  }
-    weight: 4
-    region: content
-  view_mode_switcher:
-    settings: {  }
-    third_party_settings: {  }
-    weight: 18
+    weight: 6
     region: content
 hidden:
   content_moderation_control: true
   entity_print_view_epub: true
   entity_print_view_pdf: true
   entity_print_view_word_docx: true
+  field_accessibility: true
   field_career_marking: true
-  field_career_markings: true
-  field_contact_info: true
   field_contact_info_internal: true
   field_guidance_to_service: true
+  field_implementation_extra_info: true
   field_instructions_markup: true
-  field_internal_files: true
-  field_internal_links: true
+  field_life_situations: true
   field_links_and_attachments: true
-  field_measures_during_attendance: true
-  field_municipality_guidance: true
-  field_municipality_specific: true
-  field_obligatoryness: true
-  field_obligatoryness_freetext: true
-  field_other_preferences: true
   field_poma_applicable: true
   field_poma_applicable_descriptio: true
-  field_related_archive: true
   field_responsible_municipality: true
   field_responsible_updatee: true
-  field_service_coordination: true
-  field_service_exceptions: true
   field_service_language: true
   field_service_links_external: true
   field_service_links_internal: true
+  field_service_price: true
   field_service_provider_updatee: true
   field_service_radioactivity: true
-  field_service_req_speacialist: true
-  field_service_suits_info: true
-  field_service_suits_job_search: true
-  field_statements: true
-  field_statements_unemployment: true
+  field_service_set: true
   langcode: true
   search_api_excerpt: true
+  view_mode_switcher: true
