@@ -119,7 +119,7 @@ final class UserExpirationTest extends EntityKernelTestBase {
   }
 
   /**
-   *
+   * Test user expiration notifications.
    */
   public function testUserExpirationNotifications() {
     $last_access = strtotime('-3 months -2 weeks');
@@ -140,7 +140,8 @@ final class UserExpirationTest extends EntityKernelTestBase {
     $this->updateStateTimestamp('-1 weeks', $user);
     $this->cron->run();
 
-    // Validate that 2nd message is not sent before 2 weeks since last notification.
+    // Validate that 2nd message is not sent before
+    // 2 weeks since last notification.
     $this->assertEmpty($this->drupalGetMails([
       'id' => 'message_notify_2nd_user_account_expiry_reminder',
     ]));
@@ -154,12 +155,13 @@ final class UserExpirationTest extends EntityKernelTestBase {
     ]));
 
     $this->resetCronLastRun();
+    $this->cron->run();
+
+    $this->resetCronLastRun();
     $this->updateStateTimestamp('-1 days', $user);
     $this->cron->run();
     $user = $this->reloadEntity($user);
     $this->assertEquals('1', $user->get('status')->value);
-    $mails = $this->drupalGetMails();
-    $this->assertCount(2, $mails);
 
     $this->resetCronLastRun();
     $this->updateStateTimestamp('-2 days', $user);
@@ -167,22 +169,30 @@ final class UserExpirationTest extends EntityKernelTestBase {
     $user = $this->reloadEntity($user);
     $this->assertEquals(0, $user->get('status')->value);
 
+    $this->resetCronLastRun();
+    $this->cron->run();
+    // Confirm no mails are sent to user after user is disabled.
+    $this->assertCount(2, $this->drupalGetMails());
+
   }
 
   /**
-   *
+   * Reset last cron run state.
    */
   protected function resetCronLastRun() {
     \Drupal::state()->delete('hel_tpm_user_expiry.last_run');
   }
 
   /**
+   * Update expiry notified timestamp helper.
+   *
    * @param string $date
    *   Date in strtotime format.
    * @param \Drupal\user\UserInterface $user
    *   User object.
    *
    * @return void
+   *   Void
    */
   protected function updateStateTimestamp($date, $user) {
     $state = \Drupal::state()->get('hel_tpm_user_expiry.notified.' . $user->id());
