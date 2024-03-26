@@ -587,23 +587,7 @@ display:
         type: tag
         options: {  }
       empty: {  }
-      sorts:
-        changed:
-          id: changed
-          table: node_field_data
-          field: changed
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          entity_field: changed
-          plugin_id: date
-          order: DESC
-          expose:
-            label: ''
-            field_identifier: ''
-          exposed: false
-          granularity: second
+      sorts: {  }
       arguments: {  }
       filters:
         moderation_state:
@@ -865,6 +849,7 @@ display:
             langcode: langcode
             gid: gid
             moderation_state: moderation_state
+            hel_tpm_editorial_service_has_unpublished_changes: hel_tpm_editorial_service_has_unpublished_changes
             changed: changed
             edit_node: edit_node
             delete_node: delete_node
@@ -893,7 +878,14 @@ display:
               empty_column: false
               responsive: ''
             moderation_state:
-              sortable: true
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            hel_tpm_editorial_service_has_unpublished_changes:
+              sortable: false
               default_sort_order: asc
               align: ''
               separator: ''
@@ -982,7 +974,7 @@ display:
             'group_node:basic_page': '0'
             'group_node:landing_page': '0'
             'group_node:service_location': '0'
-      group_by: true
+      group_by: false
       header: {  }
       footer: {  }
       display_extenders: {  }
