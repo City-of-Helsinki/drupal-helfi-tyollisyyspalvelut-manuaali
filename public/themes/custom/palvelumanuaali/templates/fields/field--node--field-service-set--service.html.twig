@@ -54,7 +54,7 @@
   {% for item in items %}
     <div{{ item.attributes.addClass('field__item') }}>
       {% if loop.index < loop.length %}
-        {{item.content|render ~ "," }}
+        {{ item.content }}{{ not loop.last ? ',' }}
       {% else %}
         {{ item.content }}
       {% endif %}
