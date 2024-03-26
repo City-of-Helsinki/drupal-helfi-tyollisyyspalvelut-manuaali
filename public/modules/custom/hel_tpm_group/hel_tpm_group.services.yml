@@ -1,7 +1,7 @@
 services:
   hel_tpm_group.event_subscriber:
     class: Drupal\hel_tpm_group\EventSubscriber\HelTpmGroupSubscriber
-    arguments: ['@messenger']
+    arguments: ['@messenger', '@group.membership_loader', '@message_notify.sender']
     tags:
       - { name: event_subscriber }
 
@@ -13,6 +13,10 @@ services:
   hel_tpm_group.current_group:
     class: Drupal\hel_tpm_group\CurrentGroup
     arguments: ['@current_route_match']
+
+  hel_tpm_group.groups_without_admins:
+    class: Drupal\hel_tpm_group\GroupsWithoutAdmins
+    arguments: ['@entity_type.manager','@database']
 
   hel_tpm_group.service_missing_updatees:
     class: Drupal\hel_tpm_group\ServiceMissingUpdatees

@@ -263,6 +263,11 @@ $button-colors: (
   }
 }
 
+.background-default {
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 //theming
 
 .button {
@@ -764,5 +769,30 @@ input[data-drupal-selector="edit-field-contact-info-external-actions-ief-add"]{
   @extend .button--padding-left-right-double;
   &:hover {
     background-image: none;
+  }
+}
+
+.login-button {
+  width: 48px;
+  height: 48px;
+  background-color: clr(background-border);
+  background-image: url("/themes/custom/palvelumanuaali/images/icons/user-blue.svg");
+  border-radius: 50%;
+}
+
+button {
+  &.shwpd {
+    @extend .background-default;
+    background-image: url("/themes/custom/palvelumanuaali/images/icons/eye.svg");
+    background-size: 16px;
+    background-position: center;
+    width: 32px;
+    height: 32px;
+    margin-left: -40px;
+  }
+  &.shwpd.eye-open {
+    @extend .background-default;
+    background-color: clr(background-border);
+    border-radius: 50%;
   }
 }
