@@ -26,14 +26,21 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
   use LoggerChannelTrait;
 
   /**
-   * Template mapping.
+   * Reminder message template names.
    *
    * @var string[]
    */
-  protected static $templates = [
+  protected static array $reminderTemplates = [
     0 => '1st_user_account_expiry_reminder',
     1 => '2nd_user_account_expiry_reminder',
   ];
+
+  /**
+   * Deactivated message template name.
+   *
+   * @var string
+   */
+  protected static string $deactivatedTemplate = 'hel_tpm_user_expiry_blocked';
 
   /**
    * Logger interface.
@@ -92,24 +99,24 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
   public function processItem($data): void {
     $this->setUid((int) $data->uid);
     $notified = $this->getNotified();
-    $count = $notified['count'];
+    $count = (int) $notified['count'];
     $timestamp = $notified['timestamp'];
 
     // If user has been notified less than 2 times and last notification
     // has been sent in more.
-    if ($count < 2 && $this->getTimeLimit($count) >= $timestamp) {
-      $this->sendNotification($this->getUid(), self::$templates[$count]);
+    if (($count === 0 || $count === 1) && $this->getTimeLimit($count) >= $timestamp) {
+      // Send inactivity reminder
+      $this->sendNotification($this->getUid(), self::$reminderTemplates[$count]);
       $this->updateNotified();
-      return;
     }
-
-    if ($this->getTimeLimit($count) >= $timestamp) {
+    elseif ($count === 2 && $this->getTimeLimit($count) >= $timestamp) {
       // Deactivate user if last notification has been sent 2 days ago.
       $this->deactivateUser();
       // Delete state after we have queued user for deactivation.
-      // Prevents continous deactivation if account is activated by hand
+      // Prevents continuous deactivation if account is activated by hand
       // until user has been notified again.
       $this->deleteState();
+      $this->sendNotification($this->getUid(), self::$deactivatedTemplate);
     }
   }
 
@@ -240,7 +247,7 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
     ]);
     $message->save();
     $this->messageNotifier->send($message);
-    $this->logger->info('Sending notification %template to user %user', [
+    $this->logger->info('Sending expiry message %template to user %user', [
       '%user' => $uid,
       '%template' => $template,
     ]);
