@@ -72,21 +72,33 @@
     </div>
     <div class="field__items">
      {% if combined_field %}
-     {% for item in items %}
-       <div{{ item.attributes.addClass('field__item') }}>
-         {{item.content|render ~ "," }}
-       </div>
-     {% endfor %}
-     {% else %}
+       {% for item in items %}
+         <div{{ item.attributes.addClass('field__item') }}>
+           {{item.content|render ~ "," }}
+         </div>
+       {% endfor %}
+     {% elseif language_field %}
       {% for item in items %}
         {% apply spaceless %}
-        <div{{ item.attributes.addClass('field__item') }}>
-          {{item.content}}
-        </div>
-        {% if not loop.last %}<span>,</span>{% endif %}
+          <div{{ item.attributes.addClass('field__item') }}>
+            {{item.content}}
+          </div>
+          {% if not loop.last %}<span>,</span>{% endif %}
         {% endapply %}
       {% endfor %}
-    {% endif %}
+     {% else %}
+      {% for item in items %}
+          {% apply spaceless %}
+            <div{{ item.attributes.addClass('field__item') }}>
+              {% if loop.index < loop.length %}
+                {{item.content|render ~ "," }}
+              {% else %}
+                {{ item.content }}
+              {% endif %}
+            </div>
+          {% endapply %}
+        {% endfor %}
+     {% endif %}
     </div>
   </div>
 </div>
