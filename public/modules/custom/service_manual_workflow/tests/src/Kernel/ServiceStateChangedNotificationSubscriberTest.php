@@ -3,7 +3,6 @@
 namespace Drupal\Tests\service_manual_workflow\Kernel;
 
 use Drupal\Core\Test\AssertMailTrait;
-use Drupal\node\Entity\Node;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\Tests\service_manual_workflow\Traits\ServiceManualWorkflowTestTrait;
 
