@@ -9,8 +9,8 @@
      main_content_id: main_content_id,
    } %}
 
- {% block content %}
-{{ content|without('flag_cart', 'flag_lists', 'view_mode_switcher', 'field_contact_info', 'field_other_services', 'field_contact_info_external', 'entitygroupfield', 'field_municipality_specific', 'field_related_archive', 'field_responsible_updatee') }}{% endblock %}
+   {% block content %}
+    {{ content|without('flag_cart', 'flag_lists', 'view_mode_switcher', 'field_contact_info', 'field_other_services', 'field_contact_info_external', 'entitygroupfield', 'field_municipality_specific', 'field_related_archive', 'field_responsible_updatee') }}{% endblock %}
     {% block page_content %}
         {% if service__updated %}
           {% include "@atoms/text/text/01-paragraph.twig" with {
@@ -26,8 +26,8 @@
          heading_base_class: 'page-heading',
          }
         %}
-      {% endblock %}
-      {% block page_sidebar %}
+    {% endblock %}
+    {% block page_sidebar %}
 
        {{ content.field_municipality_specific }}
        {{ content.field_contact_info }}
@@ -40,8 +40,7 @@
          } %}
           <a class="small-font" href="/node/275">{{ 'Archiving guide'|t }}</a>
        {% endif %}
-
-     {% endblock %}
+    {% endblock %}
   {% endembed %}
 {% else %}
 
@@ -50,7 +49,8 @@
       main_content_id: main_content_id,
   } %}
 
-{% block content %}  {{ content|without('flag_cart', 'flag_lists', 'view_mode_switcher', 'field_other_services', 'field_contact_info_external', 'field_service_producer', 'entitygroupfield') }}{% endblock %}
+{% block content %}
+  {{ content|without('flag_cart', 'flag_lists', 'view_mode_switcher', 'field_other_services', 'field_contact_info_external', 'field_service_producer', 'entitygroupfield') }}{% endblock %}
     {% block page_content %}
       <div class="service-header-wrapper">
         {% if content.entitygroupfield %}
