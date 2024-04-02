@@ -39,8 +39,17 @@
       position: relative;
       min-height: 50px;
       @include large {
+        margin-bottom: $space-one-half;
         display: flex;
-        justify-content: flex-end;
+      }
+      .flag {
+        a {
+          background: clr(text-inverse);
+          border-radius: 50%;
+          &:hover {
+            background-color: clr(background-border);
+          }
+        }
       }
     }
     .flag-lists {
@@ -58,7 +67,7 @@
       max-width: 100%;
       width: 100%;
       @include large {
-        margin-top: $space-double;
+        margin-top: 0;
       }
     }
   }

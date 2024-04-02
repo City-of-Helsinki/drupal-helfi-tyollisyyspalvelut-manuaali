@@ -1,0 +1,40 @@
+<?php
+
+/**
+ * @file
+ * Install file for hel_tpm_update_reminder.
+ */
+
+/**
+ * Remove over 6 months old message entities.
+ */
+function hel_tpm_update_reminder_update_10000(&$sandbox) {
+  $storage = \Drupal::service('entity_type.manager')->getStorage('message');
+  $query = $storage->getQuery();
+  $query->condition('created', strtotime('-6 month'), '<=')
+    ->sort('mid', 'ASC')
+    ->accessCheck(FALSE);
+  // Initialize progression with paragraph count.
+  if (!isset($sandbox['progress'])) {
+    $progress_query = clone $query;
+    $max = $progress_query
+      ->count()
+      ->execute();
+    $sandbox['progress'] = 0;
+    $sandbox['current'] = 0;
+    $sandbox['max'] = (int) $max;
+  }
+
+  $query->condition('mid', $sandbox['current'], ">");
+  $query->range(0, 20);
+  $result = $query->execute();
+
+  $messages = $storage->loadMultiple($result);
+  $storage->delete($messages);
+
+  // Get last item from array as current.
+  $sandbox['current'] = (int) array_key_last($result);
+  $sandbox['progress'] += count($result);
+
+  $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
+}

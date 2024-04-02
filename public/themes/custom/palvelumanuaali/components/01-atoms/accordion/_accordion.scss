@@ -62,11 +62,11 @@
       border-right: 2px solid clr(light-border);
       transition-duration: 600ms;
       transition-delay: 0.2ms;
-      transition-property: border-bottom, border-bottom-right-radius, border-bottom-left-radius;
+      transition-property: border-bottom-right-radius, border-bottom-left-radius;
       transition-timing-function: ease;
       &.active {
         transition-duration: 0ms;
-        border-bottom: 2px solid $blue05;
+        border-bottom:0;
         border-bottom-right-radius: 0;
         border-bottom-left-radius: 0;
         border-top-right-radius: 8px;

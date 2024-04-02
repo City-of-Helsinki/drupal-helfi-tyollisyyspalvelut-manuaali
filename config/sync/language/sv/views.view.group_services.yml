@@ -6,10 +6,6 @@ display:
           label: Tjänst
         langcode:
           label: Språk
-        field_responsible_updatee:
-          label: 'Kommunens ansvarsuppdaterare'
-        field_service_provider_updatee:
-          label: 'Ansvarig person hos tjänsteleverantören'
         moderation_state:
           label: 'Tjänstens status'
         hel_tpm_editorial_service_has_unpublished_changes:
@@ -18,6 +14,10 @@ display:
           label: Uppdaterad
         operations:
           label: Operationer
+        name_1:
+          label: 'Ansvarig person hos tjänsteleverantören'
+        name:
+          label: 'Kommunens ansvarsuppdaterare'
       filters:
         moderation_state:
           expose:
@@ -32,6 +32,9 @@ display:
         status:
           group_info:
             label: Publiceringsstatus
+      exposed_form:
+        options:
+          text_input_required_format: ''
   page_1:
     display_options:
       menu:

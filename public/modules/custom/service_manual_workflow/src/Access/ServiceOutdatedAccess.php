@@ -6,7 +6,6 @@ use Drupal\content_moderation\ModerationInformationInterface;
 use Drupal\content_moderation\StateTransitionValidationInterface;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Session\AccountInterface;
-use Drupal\gcontent_moderation\GroupStateTransitionValidation;
 use Drupal\node\NodeInterface;
 
 /**

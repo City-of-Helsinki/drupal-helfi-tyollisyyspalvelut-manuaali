@@ -90,7 +90,7 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
    * {@inheritdoc}
    */
   public function processItem($data): void {
-    $this->setUid((int)$data->uid);
+    $this->setUid((int) $data->uid);
     $notified = $this->getNotified();
     $count = $notified['count'];
     $timestamp = $notified['timestamp'];
