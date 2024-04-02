@@ -16,7 +16,6 @@ use Drupal\node\NodeInterface;
  */
 function hel_tpm_update_reminder_cron() {
   _hel_tpm_update_reminder_service_reminders();
-
   _hel_tpm_update_reminder_notification_message_expiry_reminder(7);
   _hel_tpm_update_reminder_notification_message_expiry_reminder(1);
 }
@@ -74,7 +73,8 @@ function _hel_tpm_update_reminder_notification_message_expiry_reminder($days) {
   $day_limit = new DrupalDateTime('+1 days');
   $now_limit = new DrupalDateTime('now');
   $query = \Drupal::entityQuery('notification_message')
-    ->condition('type', 'service_notification');
+    ->condition('type', 'service_notification')
+    ->accessCheck(FALSE);
   if ($days == 7) {
     $query->condition('publish_end_date', $week_limit->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT), '<')
       ->condition('publish_end_date', $day_limit->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT), '>');

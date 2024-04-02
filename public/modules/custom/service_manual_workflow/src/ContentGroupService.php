@@ -4,7 +4,6 @@ namespace Drupal\service_manual_workflow;
 
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\group\Entity\GroupContent;
 use Drupal\group\Entity\GroupRelationship;
 
 /**

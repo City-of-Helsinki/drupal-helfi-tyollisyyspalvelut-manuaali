@@ -108,6 +108,7 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
    * @param \Drupal\message_notify\MessageNotifier $messageSender
    *   Message notifier object.
    * @param \Drupal\ggroup\GroupHierarchyManagerInterface $groupHierarchyManager
+   *   Group hierarchy manager.
    */
   public function __construct(MessengerInterface $messenger, EntityTypeManager $entityTypeManager, ContentGroupService $contentGroupService, GroupStateTransitionValidation $stateTransitionValidation, RouteMatchInterface $routeMatch, AccountProxyInterface $currentUser, MessageNotifier $messageSender, GroupHierarchyManagerInterface $groupHierarchyManager) {
     $this->messenger = $messenger;
@@ -275,7 +276,8 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
       return [];
     }
 
-    // Get entity administration only from 1 group if there happens to be multiple.
+    // Get entity administration only from
+    // 1 group if there happens to be multiple.
     return $this->getEntityGroupAdministration($entity, reset($super_groups));
   }
 
