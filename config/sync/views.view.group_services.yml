@@ -3,8 +3,6 @@ langcode: fi
 status: true
 dependencies:
   config:
-    - field.storage.node.field_responsible_updatee
-    - field.storage.node.field_service_provider_updatee
     - node.type.service
     - workflows.workflow.service_moderation
   module:
@@ -15,6 +13,7 @@ dependencies:
     - hel_tpm_editorial
     - hel_tpm_general
     - node
+    - user
 _core:
   default_config_hash: za6rNdVPn3HsOOwx2Yka3EmWEkXSdUIlaUpT8qOAxG0
 id: group_services
@@ -98,13 +97,15 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-        field_service_provider_updatee:
-          id: field_service_provider_updatee
-          table: node__field_service_provider_updatee
-          field: field_service_provider_updatee
-          relationship: none
+        name_1:
+          id: name_1
+          table: users_field_data
+          field: name
+          relationship: field_service_provider_updatee
           group_type: group
           admin_label: ''
+          entity_type: user
+          entity_field: name
           plugin_id: field
           label: 'Palveluntuottajan vastuupäivittäjä'
           exclude: false
@@ -139,7 +140,7 @@ display:
           element_class: ''
           element_label_type: ''
           element_label_class: ''
-          element_label_colon: true
+          element_label_colon: false
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
@@ -147,11 +148,11 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          click_sort_column: target_id
-          type: entity_reference_label
+          click_sort_column: value
+          type: user_name
           settings:
-            link: true
-          group_column: target_id
+            link_to_entity: false
+          group_column: value
           group_columns: {  }
           group_rows: true
           delta_limit: 0
@@ -161,13 +162,15 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-        field_responsible_updatee:
-          id: field_responsible_updatee
-          table: node__field_responsible_updatee
-          field: field_responsible_updatee
-          relationship: none
+        name:
+          id: name
+          table: users_field_data
+          field: name
+          relationship: field_responsible_updatee
           group_type: group
           admin_label: ''
+          entity_type: user
+          entity_field: name
           plugin_id: field
           label: 'Kunnan vastuupäivittäjä'
           exclude: false
@@ -202,7 +205,7 @@ display:
           element_class: ''
           element_label_type: ''
           element_label_class: ''
-          element_label_colon: true
+          element_label_colon: false
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
@@ -210,11 +213,11 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          click_sort_column: target_id
-          type: entity_reference_label
+          click_sort_column: value
+          type: user_name
           settings:
-            link: true
-          group_column: target_id
+            link_to_entity: false
+          group_column: value
           group_columns: {  }
           group_rows: true
           delta_limit: 0
@@ -949,9 +952,9 @@ display:
           default_row_class: true
           columns:
             title: title
+            name_1: name_1
+            name: name
             langcode: langcode
-            field_responsible_updatee: field_responsible_updatee
-            field_service_provider_updatee: field_service_provider_updatee
             moderation_state: moderation_state
             hel_tpm_editorial_service_has_unpublished_changes: hel_tpm_editorial_service_has_unpublished_changes
             changed: changed
@@ -966,26 +969,26 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
-            langcode:
+            name_1:
               sortable: true
               default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
               responsive: ''
-            field_responsible_updatee:
+            name:
               sortable: true
               default_sort_order: asc
               align: ''
               separator: ''
-              empty_column: true
+              empty_column: false
               responsive: ''
-            field_service_provider_updatee:
+            langcode:
               sortable: true
               default_sort_order: asc
               align: ''
               separator: ''
-              empty_column: true
+              empty_column: false
               responsive: ''
             moderation_state:
               sortable: true
@@ -1054,6 +1057,24 @@ display:
           required: true
           group_content_plugins:
             'group_node:service': 'group_node:service'
+        field_responsible_updatee:
+          id: field_responsible_updatee
+          table: node__field_responsible_updatee
+          field: field_responsible_updatee
+          relationship: none
+          group_type: group
+          admin_label: 'field_responsible_updatee: Käyttäjä'
+          plugin_id: standard
+          required: false
+        field_service_provider_updatee:
+          id: field_service_provider_updatee
+          table: node__field_service_provider_updatee
+          field: field_service_provider_updatee
+          relationship: none
+          group_type: group
+          admin_label: 'field_service_provider_updatee: Käyttäjä'
+          plugin_id: standard
+          required: false
       use_ajax: true
       header:
         add_service_button:
@@ -1078,8 +1099,6 @@ display:
         - user.group_permissions
         - 'user.node_grants:view'
       tags:
-        - 'config:field.storage.node.field_responsible_updatee'
-        - 'config:field.storage.node.field_service_provider_updatee'
         - 'config:workflow_list'
   page_1:
     id: page_1
@@ -1165,6 +1184,4 @@ display:
         - user.group_permissions
         - 'user.node_grants:view'
       tags:
-        - 'config:field.storage.node.field_responsible_updatee'
-        - 'config:field.storage.node.field_service_provider_updatee'
         - 'config:workflow_list'

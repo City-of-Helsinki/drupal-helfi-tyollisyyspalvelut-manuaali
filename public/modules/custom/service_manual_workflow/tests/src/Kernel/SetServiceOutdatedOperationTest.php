@@ -1,8 +1,9 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types = 1);
 
 namespace Drupal\Tests\service_manual_workflow\Kernel;
 
-use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Access\AccessResultAllowed;
 use Drupal\Core\Access\AccessResultForbidden;
 use Drupal\Core\Form\FormState;
@@ -11,8 +12,6 @@ use Drupal\service_manual_workflow\Form\SetServiceOutdatedOperationForm;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\Tests\service_manual_workflow\Traits\ServiceManualWorkflowTestTrait;
 use Drupal\Tests\user\Traits\UserCreationTrait;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Test description.
@@ -41,13 +40,18 @@ final class SetServiceOutdatedOperationTest extends GroupKernelTestBase {
     'ggroup_role_mapper',
     'field_permissions',
     'flexible_permissions',
-    'service_manual_workflow_service_test'
+    'service_manual_workflow_service_test',
   ];
 
   use UserCreationTrait;
 
   use ServiceManualWorkflowTestTrait;
 
+  /**
+   * Service outdated operation form.
+   *
+   * @var \Drupal\service_manual_workflow\Form\SetServiceOutdatedOperationForm
+   */
   protected $serviceOutdatedOperationForm;
 
   /**
@@ -80,7 +84,7 @@ final class SetServiceOutdatedOperationTest extends GroupKernelTestBase {
     $user = $this->createUser([], NULL, TRUE);
     $node = $this->createNode([
       'type' => 'service',
-      'moderation_state' => 'draft'
+      'moderation_state' => 'draft',
     ]);
 
     $this->setCurrentUser($user);
@@ -99,7 +103,6 @@ final class SetServiceOutdatedOperationTest extends GroupKernelTestBase {
     $this->serviceOutdatedOperationForm->submitForm($form, $form_state);
     $node = $this->reloadEntity($node);
     $this->assertEquals('outdated', $node->get('moderation_state')->value);
-    $foo = 'bar';
   }
 
   /**
