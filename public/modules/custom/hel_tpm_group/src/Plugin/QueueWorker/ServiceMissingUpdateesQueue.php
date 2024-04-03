@@ -145,7 +145,7 @@ final class ServiceMissingUpdateesQueue extends QueueWorkerBase implements Conta
    * @return array|null
    *   Array of users or null.
    */
-  private function getUsersToNotify(GroupInterface $group) {
+  public static function getUsersToNotify(GroupInterface $group) {
     $roles = [
       'organisation-administrator',
       'service_provider-group_admin',
@@ -157,7 +157,10 @@ final class ServiceMissingUpdateesQueue extends QueueWorkerBase implements Conta
       return;
     }
     foreach ($memberships as $membership) {
-      $user = $membership->get('uid')->entity;
+      $user = $membership->get('entity_id')->entity;
+      if ($user->isBlocked()) {
+        continue;
+      }
       $members[$user->id()] = $user;
     }
 
