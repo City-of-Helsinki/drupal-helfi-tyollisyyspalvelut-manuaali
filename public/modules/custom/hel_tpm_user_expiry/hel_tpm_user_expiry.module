@@ -33,8 +33,13 @@ function _hel_tpm_user_expiry_notification_cron() {
     ->fields('ufd', ['uid', 'access', 'status'])
     ->condition('uid', 0, '<>')
     ->condition('access', $limit, '<=')
-    ->condition('created', $limit, '<=')
-    ->condition('status', 1);
+    ->condition('created', $limit, '<=');
+
+  // Exclude users that has been anonymized.
+  if ($anonymized_users = \Drupal::state()->get('hel_tpm_user_expiry.anonymized_users')) {
+    $q->condition('uid', $anonymized_users, 'NOT IN');
+  }
+
   $result = $q->execute()->fetchAll();
 
   foreach ($result as $user) {

@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Drupal\hel_tpm_user_expiry\Plugin\QueueWorker;
 
 use Drupal\Core\Logger\LoggerChannelTrait;
+use Drupal\Core\Password\PasswordGeneratorInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueWorkerBase;
 use Drupal\message\Entity\Message;
@@ -57,6 +58,13 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
   protected $messageNotifier;
 
   /**
+   * Password generator service.
+   *
+   * @var \Drupal\Core\Password\PasswordGeneratorInterface
+   */
+  protected $passwordGenerator;
+
+  /**
    * User id.
    *
    * @var int
@@ -72,13 +80,16 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
    *   Plugin id string.
    * @param array $plugin_definition
    *   Plugin definition array.
-   * @param \Drupal\message_notify\MessageNotifier $messageNotifier
+   * @param \Drupal\message_notify\MessageNotifier $message_notifier
    *   Message notifier service.
+   * @param \Drupal\Core\Password\PasswordGeneratorInterface $password_generator
+   *   Password generator service.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, MessageNotifier $messageNotifier) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, MessageNotifier $message_notifier, PasswordGeneratorInterface $password_generator) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->logger = $this->getLogger('hel_tpm_user_expiry');
-    $this->messageNotifier = $messageNotifier;
+    $this->messageNotifier = $message_notifier;
+    $this->passwordGenerator = $password_generator;
   }
 
   /**
@@ -89,7 +100,8 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('message_notify.sender')
+      $container->get('message_notify.sender'),
+      $container->get('password_generator'),
     );
   }
 
@@ -105,18 +117,21 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
     // If user has been notified less than 2 times and last notification
     // has been sent in more.
     if (($count === 0 || $count === 1) && $this->getTimeLimit($count) >= $timestamp) {
-      // Send inactivity reminder
+      // Send inactivity reminder.
       $this->sendNotification($this->getUid(), self::$reminderTemplates[$count]);
       $this->updateNotified();
     }
     elseif ($count === 2 && $this->getTimeLimit($count) >= $timestamp) {
       // Deactivate user if last notification has been sent 2 days ago.
       $this->deactivateUser();
-      // Delete state after we have queued user for deactivation.
-      // Prevents continuous deactivation if account is activated by hand
-      // until user has been notified again.
-      $this->deleteState();
       $this->sendNotification($this->getUid(), self::$deactivatedTemplate);
+      $this->updateNotified();
+    }
+    elseif ($count === 3 && $this->getTimeLimit($count) >= $timestamp) {
+      // Anonymize user if deactivation happened 30 days ago.
+      if ($this->anonymizeUser()) {
+        $this->updateNotified();
+      }
     }
   }
 
@@ -129,7 +144,7 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
    * @return int
    *   Time limit in unix time.
    */
-  protected function getTimeLimit($count): int {
+  protected function getTimeLimit(int $count): int {
     $limits = [
       // Send first notification immediately.
       0 => 0,
@@ -137,6 +152,8 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
       1 => strtotime('-2 weeks'),
       // Time since second notification, deactivation.
       2 => strtotime('-2 days'),
+      // Time since deactivation, user is anonymized.
+      3 => strtotime('-30 days'),
     ];
     return $limits[$count];
   }
@@ -157,7 +174,7 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
   /**
    * Getter for uid.
    *
-   * @return int|null
+   * @return int
    *   -
    */
   protected function getUid(): int {
@@ -224,6 +241,55 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
     $user->set('status', 0);
     $user->save();
     $this->logger->info('Deactivated %user', ['%user' => $user->id()]);
+  }
+
+  /**
+   * Anonymize inactive and blocked user.
+   *
+   * @return bool
+   *   TRUE when successful, FALSE otherwise.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   * @throws \Exception
+   */
+  protected function anonymizeUser(): bool {
+    $user = User::load($this->getUid());
+    // Perform extra checks before anonymizing user data.
+    if (!$user->isBlocked()
+      || $user->get('access') > strtotime('-210 days')
+      || ($user->id() == 0 || $user->id() == 1)) {
+      return FALSE;
+    }
+
+    // Anonymize user data.
+    // Setting the email will also change the username.
+    // See hel_tpm_general.module for more information.
+    $user->setEmail('anonymous-' . $user->id() . '-' . random_int(100000, 999999) . '@anonymous.invalid');
+    $user->setPassword($this->passwordGenerator->generate(20));
+    $user->set('field_name', '');
+    $user->set('field_job_title', '');
+    $user->set('field_employer', '');
+    foreach ($user->getRoles() as $role) {
+      $user->removeRole($role);
+    }
+
+    if (count($user->validate())) {
+      $this->logger->error('Anonymization of user %user failed for validation errors.', ['%user' => $user->id()]);
+      return FALSE;
+    }
+    $user->save();
+
+    // Store anonymized user IDs using State API.
+    if (is_array($anonymized_users = \Drupal::state()->get('hel_tpm_user_expiry.anonymized_users'))) {
+      $anonymized_users[] = $user->id();
+    }
+    else {
+      $anonymized_users = [$user->id()];
+    }
+    \Drupal::state()->set('hel_tpm_user_expiry.anonymized_users', $anonymized_users);
+
+    $this->logger->info('Anonymized inactive and blocked user %user.', ['%user' => $user->id()]);
+    return TRUE;
   }
 
   /**

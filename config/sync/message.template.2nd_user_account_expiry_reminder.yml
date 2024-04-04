@@ -3,7 +3,7 @@ langcode: fi
 status: true
 dependencies:
   config:
-    - filter.format.filtered_html
+    - filter.format.email_html
     - filter.format.plain_text_format
 template: 2nd_user_account_expiry_reminder
 label: '2nd user account expiry reminder'
@@ -14,7 +14,7 @@ text:
     format: plain_text_format
   -
     value: "<p>Hei [user:display-name]</p>\r\n\r\n<p>Käyttäjätilisi sivustolla [site:name] on ollut epäaktiivinen yli 5 kuukautta. Tilisi vanhenee ja poistetaan, jos et käytä palvelua.</p>\r\n\r\n<p>Jos haluat jatkaa palvelun käyttöä, käy aktivoimassa tilisi. Seuraa linkkiä klikkaamalla tai kopioi se selaimesi osoiteriville: <a href=\"[site:login-url]\">[site:login-url]</a></p>\r\n\r\n<p>Jos et enää käytä palvelua, voit jättää tämän viestin huomioimatta ja tilisi vanhenee automaattisesti 48 tunnin kuluttua.</p>\r\n\r\n<p>Ystävällisin terveisin<br />\r\n[site:name]-tiimi</p>\r\n\r\n<p>Epäaktiivisten käyttäjien tietojen käsittely järjestelmässä on perusteetonta. Henkilötietosi poistetaan palvelusta pysyvästi 30 päivää tilin sulkemisen jälkeen. Tänä aikana järjestelmän ylläpitäjä voi vielä palauttaa tilin.</p>\r\n"
-    format: filtered_html
+    format: email_html
 settings:
   'token options':
     clear: false
