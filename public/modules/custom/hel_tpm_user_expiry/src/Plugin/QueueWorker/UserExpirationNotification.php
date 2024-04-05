@@ -256,7 +256,7 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
     $user = User::load($this->getUid());
     // Perform extra checks before anonymizing user data.
     if (!$user->isBlocked()
-      || $user->get('access') > strtotime('-210 days')
+      || $user->get('access')->value >= strtotime('-210 days')
       || ($user->id() == 0 || $user->id() == 1)) {
       return FALSE;
     }
