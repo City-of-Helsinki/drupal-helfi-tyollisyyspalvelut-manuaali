@@ -203,6 +203,7 @@ final class UserExpirationTest extends EntityKernelTestBase {
     $users = [
       'inactive' => $this->createLastAccessUser(2, '-250 days'),
       'active' => $this->createLastAccessUser(3, '-165 days'),
+      'user_id_1' => $this->createLastAccessUser(1, '-250 days'),
     ];
 
     $this->cron->run();
@@ -211,10 +212,12 @@ final class UserExpirationTest extends EntityKernelTestBase {
 
     $inactiveOldValues = $this->getFieldsForAnonymizationTest($users['inactive']);
     $activeOldValues = $this->getFieldsForAnonymizationTest($users['active']);
+    $uid1OldValues = $this->getFieldsForAnonymizationTest($users['user_id_1']);
 
     $this->cronRunHelper('-30 days', $users);
     $users['inactive'] = $this->reloadEntity($users['inactive']);
     $users['active'] = $this->reloadEntity($users['active']);
+    $users['user_id_1'] = $this->reloadEntity($users['user_id_1']);
 
     // Ensure values are anonymized for user with enough inactivation time.
     foreach ($inactiveOldValues as $key => $oldValue) {
@@ -225,6 +228,11 @@ final class UserExpirationTest extends EntityKernelTestBase {
     // time.
     foreach ($activeOldValues as $key => $oldValue) {
       $this->assertEquals($oldValue, $users['active']->get($key)->value);
+    }
+
+    // Ensure values are not anonymized for user ID 1.
+    foreach ($inactiveOldValues as $key => $oldValue) {
+      $this->assertEquals($oldValue, $users['inactive']->get($key)->value);
     }
   }
 

@@ -32,6 +32,7 @@ function _hel_tpm_user_expiry_notification_cron() {
   $q = Drupal::database()->select('users_field_data', 'ufd')
     ->fields('ufd', ['uid', 'access', 'status'])
     ->condition('uid', 0, '<>')
+    ->condition('uid', 1, '<>')
     ->condition('access', $limit, '<=')
     ->condition('created', $limit, '<=');
 
