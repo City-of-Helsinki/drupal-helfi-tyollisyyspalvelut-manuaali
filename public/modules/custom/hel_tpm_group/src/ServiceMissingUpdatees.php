@@ -84,7 +84,7 @@ class ServiceMissingUpdatees {
     // Go through nodes and corresponding fields.
     foreach ($nodes as $source) {
       foreach ($source as $node) {
-        $err = $this->validateReferences($node, $group, $skip_municipality);
+        $err = $this->validateReferences($node, $skip_municipality);
         // If error is set add current node to array.
         if (!empty($err)) {
           if ($nids_only) {
@@ -116,7 +116,7 @@ class ServiceMissingUpdatees {
    * @return array
    *   -
    */
-  public function validateReferences(NodeInterface $node, GroupInterface $group, bool $skip_municipality = FALSE) {
+  public function validateReferences(NodeInterface $node, bool $skip_municipality = FALSE) {
     $err = NULL;
     foreach (self::$updateeFields as $group_ref => $user_ref) {
       if ($skip_municipality && $group_ref == 'municipality') {
