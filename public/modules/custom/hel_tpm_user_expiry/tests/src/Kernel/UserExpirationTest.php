@@ -102,14 +102,26 @@ final class UserExpirationTest extends EntityKernelTestBase {
    */
   public function testUserExpirationQueueingCron() {
     $last_access = strtotime('-165 days');
-    $user = $this->createUser();
+    $userId1 = $this->createUser([], NULL, FALSE, [
+      'uid' => 1,
+    ]);
+    $userId2 = $this->createUser([], NULL, FALSE, [
+      'uid' => 2,
+    ]);
     $this->cron->run();
     $this->assertEquals(0, $this->queue->numberOfItems());
 
     $this->resetCronLastRun();
 
     $this->connection->update('users_field_data')
-      ->condition('uid', $user->id())
+      ->condition('uid', $userId1->id())
+      ->fields([
+        'access' => $last_access,
+        'created' => $last_access,
+      ])
+      ->execute();
+    $this->connection->update('users_field_data')
+      ->condition('uid', $userId2->id())
       ->fields([
         'access' => $last_access,
         'created' => $last_access,
@@ -118,6 +130,7 @@ final class UserExpirationTest extends EntityKernelTestBase {
 
     // Run only hel_tpm_user_expiry_cron() to prevent queue from running.
     hel_tpm_user_expiry_cron();
+    // User with id 2 is included and user with id 1 is excluded.
     $this->assertEquals(1, $this->queue->numberOfItems());
   }
 
@@ -231,8 +244,8 @@ final class UserExpirationTest extends EntityKernelTestBase {
     }
 
     // Ensure values are not anonymized for user ID 1.
-    foreach ($inactiveOldValues as $key => $oldValue) {
-      $this->assertEquals($oldValue, $users['inactive']->get($key)->value);
+    foreach ($uid1OldValues as $key => $oldValue) {
+      $this->assertEquals($oldValue, $users['user_id_1']->get($key)->value);
     }
   }
 
