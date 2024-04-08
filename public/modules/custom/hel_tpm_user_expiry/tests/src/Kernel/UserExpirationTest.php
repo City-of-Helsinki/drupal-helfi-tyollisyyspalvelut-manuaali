@@ -101,7 +101,7 @@ final class UserExpirationTest extends EntityKernelTestBase {
    * Test user expiration cron queueing.
    */
   public function testUserExpirationQueueingCron() {
-    $last_access = strtotime('-165 days');
+    $last_access = strtotime('-166 days');
     $userId1 = $this->createUser([], NULL, FALSE, [
       'uid' => 1,
     ]);
@@ -214,9 +214,9 @@ final class UserExpirationTest extends EntityKernelTestBase {
    */
   public function testUserExpirationAnonymization(): void {
     $users = [
-      'inactive' => $this->createLastAccessUser(2, '-250 days'),
-      'active' => $this->createLastAccessUser(3, '-165 days'),
-      'user_id_1' => $this->createLastAccessUser(1, '-250 days'),
+      'inactive' => $this->createLastAccessUser(2, '-220 days'),
+      'active' => $this->createLastAccessUser(3),
+      'user_id_1' => $this->createLastAccessUser(1, '-220 days'),
     ];
 
     $this->cron->run();
@@ -250,6 +250,46 @@ final class UserExpirationTest extends EntityKernelTestBase {
   }
 
   /**
+   * Test that messages are not sent to already blocked users.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  public function testUserExpirationBlockedUser() {
+    $blockedUser = $this->createLastAccessUser(2, '-220 days', 0);
+    $blockedUserOriginalValues = $this->getFieldsForAnonymizationTest($blockedUser);
+    $this->assertEquals('0', $blockedUser->get('status')->value);
+
+    $this->cron->run();
+    // Ensure the first notification is not sent for blocked user.
+    $this->assertEmpty($this->drupalGetMails([
+      'id' => 'message_notify_1st_user_account_expiry_reminder',
+    ]));
+
+    $this->cronRunHelper('-2 weeks', [$blockedUser]);
+    // Ensure the second notification is not sent for blocked user.
+    $this->assertEmpty($this->drupalGetMails([
+      'id' => 'message_notify_2nd_user_account_expiry_reminder',
+    ]));
+
+    $this->cronRunHelper('-2 days', [$blockedUser]);
+    // Ensure the deactivation message is not sent for blocked user.
+    $this->assertEmpty($this->drupalGetMails([
+      'id' => 'message_notify_hel_tpm_user_expiry_blocked',
+    ]));
+    // Ensure the blocked user is still blocked.
+    $this->assertEquals('0', $blockedUser->get('status')->value);
+
+    $this->cronRunHelper('-30 days', [$blockedUser]);
+    $blockedUser = $this->reloadEntity($blockedUser);
+    // Ensure values are not anonymized for already blocked user.
+    foreach ($blockedUserOriginalValues as $key => $oldValue) {
+      $this->assertEquals($oldValue, $blockedUser->get($key)->value);
+    }
+    // Ensure the blocked user is still blocked.
+    $this->assertEquals('0', $blockedUser->get('status')->value);
+  }
+
+  /**
    * Creates a user with given inactivity period.
    *
    * @param int $uid
@@ -262,7 +302,7 @@ final class UserExpirationTest extends EntityKernelTestBase {
    *
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  protected function createLastAccessUser(int $uid = 1, string $lastAccess = '-165 days'): UserInterface {
+  protected function createLastAccessUser(int $uid = 1, string $lastAccess = '-166 days', int $status = 1): UserInterface {
     $access = strtotime($lastAccess);
     $user = $this->createUser([], NULL, FALSE, [
       'uid' => $uid,
@@ -272,6 +312,7 @@ final class UserExpirationTest extends EntityKernelTestBase {
       'field_employer' => 'Test employer ' . $uid,
       'created' => $access,
       'access' => $access,
+      'status' => $status,
     ]);
     $this->connection->update('users_field_data')
       ->condition('uid', $user->id())

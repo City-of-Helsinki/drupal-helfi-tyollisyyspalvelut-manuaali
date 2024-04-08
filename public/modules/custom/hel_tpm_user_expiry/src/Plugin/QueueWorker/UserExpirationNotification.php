@@ -117,15 +117,19 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
     // If user has been notified less than 2 times and last notification
     // has been sent in more.
     if (($count === 0 || $count === 1) && $this->getTimeLimit($count) >= $timestamp) {
-      // Send inactivity reminder.
-      $this->sendNotification($this->getUid(), self::$reminderTemplates[$count]);
-      $this->updateNotified();
+      $user = User::load($this->getUid());
+      if (!$user->isBlocked()) {
+        // Send inactivity reminder.
+        $this->sendNotification($this->getUid(), self::$reminderTemplates[$count]);
+        $this->updateNotified();
+      }
     }
     elseif ($count === 2 && $this->getTimeLimit($count) >= $timestamp) {
       // Deactivate user if last notification has been sent 2 days ago.
-      $this->deactivateUser();
-      $this->sendNotification($this->getUid(), self::$deactivatedTemplate);
-      $this->updateNotified();
+      if ($this->deactivateUser()) {
+        $this->sendNotification($this->getUid(), self::$deactivatedTemplate);
+        $this->updateNotified();
+      }
     }
     elseif ($count === 3 && $this->getTimeLimit($count) >= $timestamp) {
       // Anonymize user if deactivation happened 30 days ago.
@@ -231,16 +235,20 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
   /**
    * Deactivate user.
    *
-   * @return void
-   *   -
+   * @return bool
+   *   TRUE if deactivating success, FALSE otherwise.
    *
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  protected function deactivateUser(): void {
+  protected function deactivateUser(): bool {
     $user = User::load($this->getUid());
+    if ($user->isBlocked()) {
+      return FALSE;
+    }
     $user->set('status', 0);
     $user->save();
     $this->logger->info('Deactivated %user', ['%user' => $user->id()]);
+    return TRUE;
   }
 
   /**
