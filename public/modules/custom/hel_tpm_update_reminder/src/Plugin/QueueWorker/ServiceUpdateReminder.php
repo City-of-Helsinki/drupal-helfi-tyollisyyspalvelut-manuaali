@@ -138,9 +138,6 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
       return FALSE;
     }
     $account = $service->get('field_service_provider_updatee')->entity;
-    if ($account->isBlocked()) {
-      return FALSE;
-    }
 
     $reminded = $this->sendMessage('hel_tpm_update_reminder_service', $account, $service);
     if ($reminded === TRUE) {
