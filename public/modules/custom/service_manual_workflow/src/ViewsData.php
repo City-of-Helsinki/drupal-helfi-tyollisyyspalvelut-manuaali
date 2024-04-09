@@ -6,12 +6,11 @@ use Drupal\content_moderation\ModerationInformationInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\views\EntityViewsData;
 
 /**
  * {@inheritdoc}
  */
-class ViewsData extends EntityViewsData {
+class ViewsData {
   use StringTranslationTrait;
 
   /**
