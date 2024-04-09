@@ -8,6 +8,7 @@ use Drupal\Core\Logger\LoggerChannelTrait;
 use Drupal\Core\Password\PasswordGeneratorInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueWorkerBase;
+use Drupal\Core\State\State;
 use Drupal\message\Entity\Message;
 use Drupal\message_notify\MessageNotifier;
 use Drupal\user\Entity\User;
@@ -65,6 +66,13 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
   protected $passwordGenerator;
 
   /**
+   * The state store.
+   *
+   * @var \Drupal\Core\State\State
+   */
+  protected $state;
+
+  /**
    * User id.
    *
    * @var int
@@ -85,11 +93,12 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
    * @param \Drupal\Core\Password\PasswordGeneratorInterface $password_generator
    *   Password generator service.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, MessageNotifier $message_notifier, PasswordGeneratorInterface $password_generator) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, MessageNotifier $message_notifier, PasswordGeneratorInterface $password_generator, State $state) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->logger = $this->getLogger('hel_tpm_user_expiry');
     $this->messageNotifier = $message_notifier;
     $this->passwordGenerator = $password_generator;
+    $this->state = $state;
   }
 
   /**
@@ -102,6 +111,7 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
       $plugin_definition,
       $container->get('message_notify.sender'),
       $container->get('password_generator'),
+      $container->get('state'),
     );
   }
 
@@ -195,7 +205,7 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
     $notified = $this->getNotified();
     $notified['count']++;
     $notified['timestamp'] = \Drupal::time()->getRequestTime();
-    \Drupal::state()->set($this->getStateName(), $notified);
+    $this->state->set($this->getStateName(), $notified);
   }
 
   /**
@@ -205,7 +215,7 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
    *   Notified state array.
    */
   protected function getNotified(): array {
-    $notified = \Drupal::state()->get($this->getStateName());
+    $notified = $this->state->get($this->getStateName());
     if (empty($notified)) {
       return ['count' => 0, 'timestamp' => 0];
     }
@@ -229,7 +239,7 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
    *   -
    */
   protected function deleteState(): void {
-    \Drupal::state()->delete($this->getStateName());
+    $this->state->delete($this->getStateName());
   }
 
   /**
@@ -288,13 +298,13 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
     $user->save();
 
     // Store anonymized user IDs using State API.
-    if (is_array($anonymized_users = \Drupal::state()->get('hel_tpm_user_expiry.anonymized_users'))) {
+    if (is_array($anonymized_users = $this->state->get('hel_tpm_user_expiry.anonymized_users'))) {
       $anonymized_users[] = $user->id();
     }
     else {
       $anonymized_users = [$user->id()];
     }
-    \Drupal::state()->set('hel_tpm_user_expiry.anonymized_users', $anonymized_users);
+    $this->state->set('hel_tpm_user_expiry.anonymized_users', $anonymized_users);
 
     $this->logger->info('Anonymized inactive and blocked user %user.', ['%user' => $user->id()]);
     return TRUE;
