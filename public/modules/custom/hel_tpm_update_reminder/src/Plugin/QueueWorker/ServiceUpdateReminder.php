@@ -139,8 +139,11 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
     }
     $account = $service->get('field_service_provider_updatee')->entity;
 
-    UpdateReminderUtility::setMessagesSent($this->serviceId, $messageNumber);
-    return $this->sendMessage('hel_tpm_update_reminder_service', $account, $service);
+    $reminded = $this->sendMessage('hel_tpm_update_reminder_service', $account, $service);
+    if ($reminded === TRUE) {
+      UpdateReminderUtility::setMessagesSent($this->serviceId, $messageNumber);
+    }
+    return $reminded;
   }
 
   /**
@@ -204,6 +207,9 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
    * @throws \Drupal\message_notify\Exception\MessageNotifyException
    */
   protected function sendMessage(string $template, User $account, NodeInterface $service): bool {
+    if ($account->isBlocked()) {
+      return FALSE;
+    }
     $message = Message::create([
       'template' => $template,
       'uid' => $account->id(),
