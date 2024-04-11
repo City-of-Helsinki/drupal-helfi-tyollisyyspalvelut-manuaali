@@ -44,23 +44,23 @@ final class UsernameSanitizeCommands extends DrushCommands {
     $query = $this->database->update('users_field_data')->condition('uid', 0, '>');
     $messages = [];
 
-    // Sanitize email addresses.
+    // Sanitize usernames.
     if ($this->isEnabled($options['sanitize-name'])) {
       if (str_contains($options['sanitize-name'], '%')) {
         // We need a different sanitization query for MSSQL, Postgres and Mysql.
         $sql = SqlBase::create($commandData->input()->getOptions());
         $db_driver = $sql->scheme();
         if ($db_driver == 'pgsql') {
-          $email_map = ['%uid' => "' || uid || '", '%mail' => "' || replace(mail, '@', '_') || '", '%name' => "' || replace(name, ' ', '_') || '"];
-          $new_mail =  "'" . str_replace(array_keys($email_map), array_values($email_map), $options['sanitize-name']) . "'";
+          $username_map = ['%uid' => "' || uid || '", '%mail' => "' || replace(mail, '@', '_') || '", '%name' => "' || replace(name, ' ', '_') || '"];
+          $new_username =  "'" . str_replace(array_keys($username_map), array_values($username_map), $options['sanitize-name']) . "'";
         } elseif ($db_driver == 'mssql') {
-          $email_map = ['%uid' => "' + uid + '", '%mail' => "' + replace(mail, '@', '_') + '", '%name' => "' + replace(name, ' ', '_') + '"];
-          $new_mail =  "'" . str_replace(array_keys($email_map), array_values($email_map), $options['sanitize-name']) . "'";
+          $username_map = ['%uid' => "' + uid + '", '%mail' => "' + replace(mail, '@', '_') + '", '%name' => "' + replace(name, ' ', '_') + '"];
+          $new_username =  "'" . str_replace(array_keys($username_map), array_values($username_map), $options['sanitize-name']) . "'";
         } else {
-          $email_map = ['%uid' => "', uid, '", '%mail' => "', replace(mail, '@', '_'), '", '%name' => "', replace(name, ' ', '_'), '"];
-          $new_mail =  "concat('" . str_replace(array_keys($email_map), array_values($email_map), $options['sanitize-name']) . "')";
+          $username_map = ['%uid' => "', uid, '", '%mail' => "', replace(mail, '@', '_'), '", '%name' => "', replace(name, ' ', '_'), '"];
+          $new_username =  "concat('" . str_replace(array_keys($username_map), array_values($username_map), $options['sanitize-name']) . "')";
         }
-        $query->expression('name', $new_mail);
+        $query->expression('name', $new_username);
       } else {
         $query->fields(['name' => $options['sanitize-name']]);
       }
