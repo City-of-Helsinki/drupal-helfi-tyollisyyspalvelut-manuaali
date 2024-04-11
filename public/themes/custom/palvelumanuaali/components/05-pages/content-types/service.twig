@@ -43,14 +43,13 @@
     {% endblock %}
   {% endembed %}
 {% else %}
-
   {% embed "@templates/with-content-sidebar.twig" with {
       content_base_class: service_base_class,
       main_content_id: main_content_id,
   } %}
 
 {% block content %}
-  {{ content|without('flag_cart', 'flag_lists', 'view_mode_switcher', 'field_other_services', 'field_contact_info_external', 'field_service_producer', 'entitygroupfield') }}{% endblock %}
+{{ content|without('flag_cart', 'flag_lists', 'view_mode_switcher', 'field_other_services', 'field_contact_info_external', 'field_service_producer', 'entitygroupfield') }}{% endblock %}
     {% block page_content %}
       <div class="service-header-wrapper">
         {% if content.entitygroupfield %}
@@ -78,6 +77,9 @@
       %}
     {% endblock %}
     {% block page_sidebar %}
+    {% if content.group_service_navigation.group_customer_view.group_sidebar_public|render %}
+      {{ content.group_service_navigation.group_customer_view.group_sidebar_public }}
+    {% endif %}
       {% if content.field_contact_info_external|render %}
         <div class="contact-info-wrapper">
           {% include "@atoms/text/headings/_heading.twig" with {
