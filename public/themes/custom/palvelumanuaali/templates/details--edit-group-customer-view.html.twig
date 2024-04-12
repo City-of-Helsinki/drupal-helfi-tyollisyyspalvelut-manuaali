@@ -34,14 +34,8 @@
   {% endif %}
 
   {{ description }}
-  <span>
-  {{ children }}
   {% set nidid = nid|render|striptags|spaceless %}
-  {{ drupal_field('field_service_producer','node',nidid,'default') }}
-  {{ drupal_field('field_service_producer','node',nidid,'default') }}
-  {{ drupal_field('field_service_producer','node',nidid,'default') }}
-
-  </span>
+  {{ drupal_entity('node', nidid, 'customer_view') }}
   {{ value }}
 
 </details>

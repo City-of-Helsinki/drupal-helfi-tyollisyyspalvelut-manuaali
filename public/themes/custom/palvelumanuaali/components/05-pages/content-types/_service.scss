@@ -54,12 +54,8 @@
         }
     }
     .service{
-      margin-top: $space;
       max-width: 100%;
       width: 100%;
-      @include large {
-        margin-top: $space-double;
-      }
     }
   }
 
@@ -93,16 +89,22 @@
      }
   }
 
+  &.logged-in {
+    .horizontal-tabs {
+      .horizontal-tabs-list {
+        display: flex;
+      }
+    }
+  }
   //needs to be split to a separate file
   .horizontal-tabs {
     position: unset;
     .horizontal-tabs-list {
-      position: absolute;
+      display: none;
       top: -71px;
       left: 0;
       background-color: transparent;
       border: 0;
-      display: flex;
       align-items: end;
       .horizontal-tab-button {
         border-right: 0;
@@ -163,6 +165,14 @@
   }
 }
 
+
+.logged-in {
+  .service {
+  //needs permission check for tab
+  border-top-left-radius: 0;
+  }
+}
+
 .service {
   background: clr(sidebar-color);
   border-radius: 16px;
@@ -174,8 +184,6 @@
    padding-top: 35px;
    padding-right: $space-double;
    padding-bottom: 37px;
-   //needs permission check for tab
-   border-top-left-radius: 0;
   }
   .field {
     // margin-bottom: $space-double;

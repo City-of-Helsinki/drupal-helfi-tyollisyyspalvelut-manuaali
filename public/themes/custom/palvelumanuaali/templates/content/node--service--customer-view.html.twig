@@ -82,52 +82,71 @@
     hero_text__image__modifiers: ['one-third'],
     hero_text__content__modifiers: ['half'],
     content_base_class: 'service',
+    content_modifiers: content_modifiers,
+    content_blockname: content_blockname,
     content_additional_classes: ['bs--bb'],
     service_modifiers:service_modifiers,
     service_blockname:service_blockname,
     service__updated: greeting_text ~ " " ~ node.changed.value|date("d.m.Y"),
     node__label: label,
   } %}
-
   {% block content %}
-   {{ content|without('flag_cart', 'flag_lists', 'view_mode_switcher', 'field_contact_info', 'field_other_services', 'field_contact_info_external', 'entitygroupfield', 'field_municipality_specific', 'field_related_archive', 'field_responsible_updatee') }}{% endblock %}
-   {% block page_content %}
-     <div class="service-header-wrapper">
-       {% if content.entitygroupfield %}
-         {% include "@atoms/text/text/01-paragraph.twig" with {
-           paragraph_base_class: card__date__base_class|default('organizing-group'),
-           paragraph_modifiers: card__date__modifiers,
-           paragraph_blockname: card__base_class,
-           paragraph_content: content.entitygroupfield['0'],
-         } %}
-       {% endif %}
-       {% if service__updated %}
-         {% include "@atoms/text/text/01-paragraph.twig" with {
-           paragraph_base_class: card__date__base_class|default('date'),
-           paragraph_modifiers: card__date__modifiers,
-           paragraph_blockname: card__base_class,
-           paragraph_content: service__updated,
-         } %}
-       {% endif %}
-     </div>
-       {% include "@atoms/text/headings/_heading.twig" with {
-         heading_level: '1',
-         heading: node__label,
-         heading_base_class: 'page-heading',
-       }
-     %}
-   {% endblock %}
-   {% block page_sidebar %}
-      {{ content.field_municipality_specific }}
-      {{ content.field_contact_info }}
-      {{ content.field_responsible_updatee }}
-      {% if content.field_related_archive['0']['#markup'] == 'yes' %}
-        {% include "@atoms/text/headings/_heading.twig" with {
-          "heading_level": 4,
-          "heading": 'Archiving guides:'|t,
-          "heading_modifiers": 'semibold',
-        } %}
-         <a class="small-font" href="/node/275">{{ 'Archiving guide'|t }}</a>
+  {{ content|without('flag_cart', 'flag_lists', 'view_mode_switcher', 'field_other_services', 'field_contact_info_external', 'field_service_producer', 'entitygroupfield') }}{% endblock %}
+      {% block page_content %}
+        <div class="service-header-wrapper">
+          {% if content.entitygroupfield %}
+            {% include "@atoms/text/text/01-paragraph.twig" with {
+              paragraph_base_class: card__date__base_class|default('organizing-group'),
+              paragraph_modifiers: card__date__modifiers,
+              paragraph_blockname: card__base_class,
+              paragraph_content: content.entitygroupfield['0'],
+            } %}
+          {% endif %}
+          {% if service__updated %}
+            {% include "@atoms/text/text/01-paragraph.twig" with {
+              paragraph_base_class: card__date__base_class|default('date'),
+              paragraph_modifiers: card__date__modifiers,
+              paragraph_blockname: card__base_class,
+              paragraph_content: service__updated,
+            } %}
+          {% endif %}
+        </div>
+          {% include "@atoms/text/headings/_heading.twig" with {
+            heading_level: '1',
+            heading: node__label,
+            heading_base_class: 'page-heading',
+          }
+        %}
+      {% endblock %}
+      {% block page_sidebar %}
+      {% if content.group_service_navigation.group_customer_view.group_sidebar_public|render %}
+        {{ content.group_service_navigation.group_customer_view.group_sidebar_public }}
       {% endif %}
-   {% endblock %}
- {% endembed %}
+        {% if content.field_contact_info_external|render %}
+          <div class="contact-info-wrapper">
+            {% include "@atoms/text/headings/_heading.twig" with {
+              "heading_level": 5,
+              "heading": 'Contacts'|t,
+              "heading_modifiers": ['margin-bottom-two', 'blue-desktop'],
+            } %}
+            {{ content.field_contact_info_external }}
+          </div>
+        {% endif %}
+        {% if content.entitygroupfield or content.field_service_producer %}
+          <div class="additional-info-wrapper">
+            {% include "@atoms/text/headings/_heading.twig" with {
+              "heading_level": 5,
+              "heading": 'Additional information'|t,
+              "heading_modifiers": ['margin-bottom-two', 'blue-desktop'],
+            } %}
+            {% if (content.entitygroupfield['0'] == content.field_service_producer['0']) and content.field_service_producer['#items']|length == 1 %}
+              {{ content.entitygroupfield }}
+            {% else %}
+              {{ content.entitygroupfield }}
+              {{ content.field_service_producer }}
+            {% endif %}
+          </div>
+        {% endif %}
+
+      {% endblock %}
+  {% endembed %}
