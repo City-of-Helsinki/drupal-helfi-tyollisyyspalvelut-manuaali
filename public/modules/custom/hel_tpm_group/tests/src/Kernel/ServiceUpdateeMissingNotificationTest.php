@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace Drupal\Tests\hel_tpm_group\Kernel;
 
 use Drupal\Core\Test\AssertMailTrait;
+use Drupal\hel_tpm_group\Plugin\QueueWorker\ServiceMissingUpdateesQueue;
 use Drupal\Tests\content_moderation\Traits\ContentModerationTestTrait;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
@@ -29,6 +30,11 @@ class ServiceUpdateeMissingNotificationTest extends GroupKernelTestBase {
    * @var mixed
    */
   protected $missingUpdateeServices;
+
+  /**
+   * @var mixed|object|null
+   */
+  protected $queue;
 
   /**
    * {@inheritdoc}
@@ -77,6 +83,7 @@ class ServiceUpdateeMissingNotificationTest extends GroupKernelTestBase {
       'content_moderation',
     ]);
 
+    $this->queue = $this->container->get('queue')->get('hel_tpm_group_service_missing_updatees_queue');
     $this->missingUpdateeServices = \Drupal::service('hel_tpm_group.service_missing_updatees');
 
   }
@@ -104,6 +111,11 @@ class ServiceUpdateeMissingNotificationTest extends GroupKernelTestBase {
 
     $result = $this->missingUpdateeServices->getGroupServiceMissingUpdatee((int) $this->orgGroup->id(), TRUE);
     $this->assertCount(1, $result, 'Expected updatee count didn\'t match');
+
+    $users = ServiceMissingUpdateesQueue::getUsersToNotify($this->orgGroup);
+    $this->assertNotEmpty($users[$this->orgUser->id()], 'Expected user missing.');
+    $this->assertTrue(empty($users[$this->orgUser3->id()]),'Disabled user in users to sent message.');
+    $this->assertCount(1, $users);
   }
 
   /**
@@ -148,10 +160,18 @@ class ServiceUpdateeMissingNotificationTest extends GroupKernelTestBase {
     $this->orgGroup->addMember($this->orgUser, ['group_roles' => ['organisation-administrator']]);
 
     $this->orgUser2 = $this->createUserWithRoles(['specialist editor', 'editor']);
-    $this->orgGroup->addMember($this->orgUser, ['group_roles' => ['organisation-editor']]);
+    $this->orgGroup->addMember($this->orgUser2, ['group_roles' => ['organisation-editor']]);
+
+    $this->orgUser3 = $this->createUserWithRoles(['specialist editor', 'editor']);
+    $this->orgGroup->addMember($this->orgUser3, ['group_roles' => ['organisation-administrator']]);
+    // Disable orgUser3.
+    $this->orgUser3->set('status', 0);
+    $this->orgUser3->save();
 
     // Add service provider to organisation group as subgroup.
     $this->orgGroup->addRelationship($this->spGroup, 'subgroup:service_provider');
+
+    $this->orgGroup->save();
   }
 
   /**

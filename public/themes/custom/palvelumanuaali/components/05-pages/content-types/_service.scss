@@ -39,8 +39,17 @@
       position: relative;
       min-height: 50px;
       @include large {
+        margin-bottom: $space-one-half;
         display: flex;
-        justify-content: flex-end;
+      }
+      .flag {
+        a {
+          background: clr(text-inverse);
+          border-radius: 50%;
+          &:hover {
+            background-color: clr(background-border);
+          }
+        }
       }
     }
     .flag-lists {
@@ -113,8 +122,28 @@
         &::before {
           display: none;
         }
+        strong {
+          display: flex;
+          flex-wrap: wrap;
+          font-weight: 600;
+          &::before {
+            content: "";
+            display: block;
+            margin-right: $space;
+            width: 24px;
+            height: 24px;
+          }
+        }
         &:first-child {
           margin-right: 4px;
+          strong::before {
+            background-image: url("/themes/custom/palvelumanuaali/images/icons/contact-list.svg");
+          }
+        }
+        &:nth-child(2) {
+          strong::before {
+            background-image: url("/themes/custom/palvelumanuaali/images/icons/checklist2.svg");
+          }
         }
         a {
           padding: 14px 56px 18px 48px;
@@ -123,6 +152,7 @@
           color: clr(text);
           background-color: clr(text-inverse);
           border-radius: 16px 16px 0 0;
+          line-height: 24px;
         }
         &.selected {
           a {
@@ -130,6 +160,17 @@
             border-bottom: 0;
             color: clr(text-inverse);
             background: clr(footer-color);
+          }
+          &:first-child {
+            margin-right: 4px;
+            strong::before {
+              background-image: url("/themes/custom/palvelumanuaali/images/icons/contact-list-selected.svg");
+            }
+          }
+          &:nth-child(2) {
+            strong::before {
+              background-image: url("/themes/custom/palvelumanuaali/images/icons/checklist2-selected.svg");
+            }
           }
         }
       }

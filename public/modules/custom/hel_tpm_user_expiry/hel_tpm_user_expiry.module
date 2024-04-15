@@ -26,15 +26,21 @@ function _hel_tpm_user_expiry_notification_cron() {
     return;
   }
 
-  $limit = strtotime('-3 months -2 weeks');
+  $limit = strtotime('-165 days');
 
-  // Fetch all users have been inactive for 3 months and 2 weeks.
+  // Fetch all users have been inactive for 5 months and 2 weeks.
   $q = Drupal::database()->select('users_field_data', 'ufd')
     ->fields('ufd', ['uid', 'access', 'status'])
     ->condition('uid', 0, '<>')
+    ->condition('uid', 1, '<>')
     ->condition('access', $limit, '<=')
-    ->condition('created', $limit, '<=')
-    ->condition('status', 1);
+    ->condition('created', $limit, '<=');
+
+  // Exclude users that has been anonymized.
+  if ($anonymized_users = \Drupal::state()->get('hel_tpm_user_expiry.anonymized_users')) {
+    $q->condition('uid', $anonymized_users, 'NOT IN');
+  }
+
   $result = $q->execute()->fetchAll();
 
   foreach ($result as $user) {

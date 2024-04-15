@@ -51,6 +51,7 @@ dependencies:
   module:
     - entity_print
     - entity_reference_revisions
+    - entitygroupfield
     - field_group
     - hel_tpm_general
     - text
@@ -67,7 +68,7 @@ third_party_settings:
       label: Osallistuminen
       parent_name: ''
       region: content
-      weight: 13
+      weight: 10
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--participation'
@@ -88,7 +89,7 @@ third_party_settings:
       label: Toteutustapa
       parent_name: ''
       region: content
-      weight: 14
+      weight: 11
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--execution'
@@ -108,7 +109,7 @@ third_party_settings:
       label: 'Missä ja milloin'
       parent_name: ''
       region: content
-      weight: 15
+      weight: 12
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--where-and-when'
@@ -128,7 +129,7 @@ third_party_settings:
       label: Kohderyhmä
       parent_name: ''
       region: content
-      weight: 12
+      weight: 9
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--target-group'
@@ -147,7 +148,7 @@ third_party_settings:
       label: 'Service navigation'
       parent_name: ''
       region: hidden
-      weight: 35
+      weight: 33
       format_type: tabs
       format_settings:
         classes: ''
@@ -167,7 +168,7 @@ third_party_settings:
       label: 'Work instructions'
       parent_name: ''
       region: hidden
-      weight: 36
+      weight: 34
       format_type: tab
       format_settings:
         classes: ''
@@ -311,7 +312,7 @@ third_party_settings:
       label: ' Täydentävä työnhakukeskustelu'
       parent_name: ''
       region: hidden
-      weight: 37
+      weight: 35
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--complementary-job-search'
@@ -353,13 +354,21 @@ targetEntityType: node
 bundle: service
 mode: customer_view
 content:
+  entitygroupfield:
+    type: parent_group_label_formatter
+    label: hidden
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 8
+    region: content
   field_accessibility:
     type: entity_reference_label
     label: hidden
     settings:
       link: false
     third_party_settings: {  }
-    weight: 11
+    weight: 7
     region: content
   field_attendance:
     type: entity_reference_revisions_entity_view
@@ -387,14 +396,14 @@ content:
       view_mode: default
       link: false
     third_party_settings: {  }
-    weight: 19
+    weight: 14
     region: content
   field_description:
     type: basic_string
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 4
+    weight: 0
     region: content
   field_field_client_consent_descr:
     type: text_default
@@ -409,7 +418,7 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 5
+    weight: 1
     region: content
   field_life_situations:
     type: entity_reference_label
@@ -417,7 +426,7 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 7
+    weight: 3
     region: content
   field_other_services:
     type: entity_reference_entity_view
@@ -426,7 +435,7 @@ content:
       view_mode: card_lift
       link: false
     third_party_settings: {  }
-    weight: 6
+    weight: 2
     region: content
   field_service_benefits:
     type: text_default
@@ -449,7 +458,7 @@ content:
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 18
+    weight: 13
     region: content
   field_service_languages:
     type: entity_reference_revisions_entity_view
@@ -458,7 +467,7 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 9
+    weight: 5
     region: content
   field_service_other_info:
     type: entity_reference_revisions_entity_view
@@ -476,7 +485,7 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 10
+    weight: 6
     region: content
   field_service_producer:
     type: entity_reference_label
@@ -484,7 +493,7 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 20
+    weight: 15
     region: content
   field_service_requirements:
     type: text_default
@@ -499,7 +508,7 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 8
+    weight: 4
     region: content
   field_service_time_and_location:
     type: hel_tpm_general_time_and_place_formatter
@@ -529,7 +538,6 @@ hidden:
   entity_print_view_epub: true
   entity_print_view_pdf: true
   entity_print_view_word_docx: true
-  entitygroupfield: true
   field_career_marking: true
   field_career_markings: true
   field_contact_info: true

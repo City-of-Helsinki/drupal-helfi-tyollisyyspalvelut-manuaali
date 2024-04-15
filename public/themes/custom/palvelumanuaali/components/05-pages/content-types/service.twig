@@ -1,7 +1,9 @@
 
 <div class='link-wrapper'>
   <div id="view-mode-switcher-link"> {{ content.view_mode_switcher }}</div>
-  {{ content.flag_cart }}
+  {% block flag %}
+    {{ content.flag_cart }}
+  {% endblock %}
 </div>
 
-{{ content|without('entitygroupfield') }}
+{{ content|without('entitygroupfield', 'flag_cart', 'flag_lists') }}
