@@ -153,6 +153,9 @@
           background-color: clr(text-inverse);
           border-radius: 16px 16px 0 0;
           line-height: 24px;
+          &:hover {
+            background-color: clr(background-border);
+          }
         }
         &.selected {
           a {
@@ -160,6 +163,9 @@
             border-bottom: 0;
             color: clr(text-inverse);
             background: clr(footer-color);
+            &:hover {
+              background-color: clr(footer-color);
+            }
           }
           &:first-child {
             margin-right: 4px;

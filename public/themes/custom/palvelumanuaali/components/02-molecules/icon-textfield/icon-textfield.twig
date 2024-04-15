@@ -74,7 +74,7 @@
      {% if combined_field %}
      {% for item in items %}
        <div{{ item.attributes.addClass('field__item') }}>
-         {{ item.content }}{{ not loop.last ? "," }}
+         {{ item.content }}{{ "," }}
        </div>
      {% endfor %}
      {% else %}
