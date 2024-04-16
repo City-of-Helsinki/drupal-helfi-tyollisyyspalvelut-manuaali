@@ -370,7 +370,7 @@ table {
     list-style: none;
   }
   thead {
-    border-bottom: 2px solid $blue20-1;
+    border-bottom: 2px solid $blue20;
     tr {
       position: relative;
     }
@@ -389,7 +389,7 @@ table {
          top: 8px;
          height: calc(100% - 16px);
          width: 2px;
-         border-right: 2px solid $blue20-1;
+         border-right: 2px solid $blue20;
       }
       a {
         color: clr(text);
@@ -470,6 +470,9 @@ table {
         padding: $space $space $space $space-one-and-half;
         line-height: 24px;
         font-size: 14px;
+        .highlight-wrapper {
+          color: red;
+        }
         a {
           font-size: 14px;
           color: clr(alt-header-color);

@@ -39,8 +39,17 @@
       position: relative;
       min-height: 50px;
       @include large {
+        margin-bottom: $space-one-half;
         display: flex;
-        justify-content: flex-end;
+      }
+      .flag {
+        a {
+          background: clr(text-inverse);
+          border-radius: 50%;
+          &:hover {
+            background-color: clr(background-border);
+          }
+        }
       }
     }
     .flag-lists {
@@ -54,12 +63,8 @@
         }
     }
     .service{
-      margin-top: $space;
       max-width: 100%;
       width: 100%;
-      @include large {
-        margin-top: $space-double;
-      }
     }
   }
 
@@ -92,6 +97,91 @@
        padding-left: $space-one-half;
      }
   }
+
+  &.logged-in {
+    .horizontal-tabs {
+      .horizontal-tabs-list {
+        display: flex;
+      }
+    }
+  }
+  //needs to be split to a separate file
+  .horizontal-tabs {
+    position: unset;
+    .horizontal-tabs-list {
+      display: none;
+      top: -71px;
+      left: 0;
+      background-color: transparent;
+      border: 0;
+      align-items: end;
+      .horizontal-tab-button {
+        border-right: 0;
+        padding: 0;
+        border-radius: 16px 16px 0 0;
+        &::before {
+          display: none;
+        }
+        strong {
+          display: flex;
+          flex-wrap: wrap;
+          font-weight: 600;
+          &::before {
+            content: "";
+            display: block;
+            margin-right: $space;
+            width: 24px;
+            height: 24px;
+          }
+        }
+        &:first-child {
+          margin-right: 4px;
+          strong::before {
+            background-image: url("/themes/custom/palvelumanuaali/images/icons/contact-list.svg");
+          }
+        }
+        &:nth-child(2) {
+          strong::before {
+            background-image: url("/themes/custom/palvelumanuaali/images/icons/checklist2.svg");
+          }
+        }
+        a {
+          padding: 14px 56px 18px 48px;
+          border-bottom: 2px solid clr(background-border);
+          font-size: 18px;
+          color: clr(text);
+          background-color: clr(text-inverse);
+          border-radius: 16px 16px 0 0;
+          line-height: 24px;
+          &:hover {
+            background-color: clr(background-border);
+          }
+        }
+        &.selected {
+          a {
+            padding: 18px 56px 22px 48px;
+            border-bottom: 0;
+            color: clr(text-inverse);
+            background: clr(footer-color);
+            &:hover {
+              background-color: clr(footer-color);
+            }
+          }
+          &:first-child {
+            margin-right: 4px;
+            strong::before {
+              background-image: url("/themes/custom/palvelumanuaali/images/icons/contact-list-selected.svg");
+            }
+          }
+          &:nth-child(2) {
+            strong::before {
+              background-image: url("/themes/custom/palvelumanuaali/images/icons/checklist2-selected.svg");
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 #service-page-full {
@@ -119,6 +209,14 @@
       @extend .font-small-caption;
       @extend .font-primary-blue;
     }
+  }
+}
+
+
+.logged-in {
+  .service {
+  //needs permission check for tab
+  border-top-left-radius: 0;
   }
 }
 

@@ -1,0 +1,23 @@
+uuid: c03b7315-1b0d-4b56-b6ad-ff21f099fe9a
+langcode: fi
+status: true
+dependencies:
+  config:
+    - filter.format.email_html
+    - filter.format.plain_text_format
+template: hel_tpm_user_expiry_blocked
+label: hel_tpm_user_expiry_blocked
+description: 'Account deactivated after inactivity'
+text:
+  -
+    value: 'Henkilön [user:display-name] käyttäjätili on lukittu sivustolla [site:name]'
+    format: plain_text_format
+  -
+    value: '<p>Hei [user:display-name]</p><p>Käyttäjätilisi on suljettu sivustolla [site:name]. Jos tilin sulkeminen on ollut virheellinen, ole yhteydessä oman organisaatiosi pääkäyttäjään. Ylläpito voi uudelleen aktivoida suljetun tilin 30 päivän sisällä sen sulkemisesta.</p><p>Tämä viesti on lähetetty automaattisesti.</p><p>Ystävällisin terveisin<br>[site:name]-tiimi</p><p>Epäaktiivisten käyttäjien tietojen käsittely järjestelmässä on perusteetonta. Henkilötietosi poistetaan palvelusta pysyvästi 30 päivää tilin sulkemisen jälkeen. Tänä aikana järjestelmän ylläpitäjä voi vielä palauttaa tilin.</p>'
+    format: email_html
+settings:
+  'token options':
+    clear: false
+    'token replace': true
+  purge_override: false
+  purge_methods: {  }

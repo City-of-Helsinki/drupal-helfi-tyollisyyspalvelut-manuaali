@@ -72,7 +72,6 @@
 #}
 
   {% set greeting_text = 'Updated '|t  %}
-
   {% embed "@pages/content-types/service.twig" with {
     main_content_id: 'service-page-full',
     hero_text__heading: content.field_hero_label,
@@ -88,4 +87,17 @@
     service__updated: greeting_text ~ " " ~ node.changed.value|date("d.m.Y"),
     node__label: label,
   } %}
+    {% block flag %}
+      {% if content.flag_cart  %}
+        <div class='small-message-wrapper small-message-wrapper--service'>
+          {{ content.flag_cart }}
+          <div class='pill--small-message pill--small-message--add pill--padding-small-text pill--small-message-service small-font font-primary-blue font-weight-bold' aria-live="polite">
+           {{'Added to favorites'|t}}
+          </div>
+          <div class='pill--small-message pill--small-message--remove pill--padding-small-text pill--small-message-service small-font font-primary-blue font-weight-bold' aria-live="polite">
+           {{'Removed from favorites'|t}}
+          </div>
+        </div>
+      {% endif %}
+    {% endblock %}
   {% endembed %}

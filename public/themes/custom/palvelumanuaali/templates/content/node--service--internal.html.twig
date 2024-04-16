@@ -72,8 +72,7 @@
 #}
 
   {% set greeting_text = 'Updated '|t  %}
-
-  {% embed "@pages/content-types/service.twig" with {
+  {% embed "@templates/with-content-sidebar.twig" with {
     main_content_id: 'service-page-full',
     hero_text__heading: content.field_hero_label,
     hero_text__body: content.field_hero_text,
@@ -82,11 +81,53 @@
     hero_text__media: content.field_hero_media,
     hero_text__image__modifiers: ['one-third'],
     hero_text__content__modifiers: ['half'],
-    service_base_class: 'service',
+    content_base_class: 'service',
+    content_additional_classes: ['bs--bb'],
     service_modifiers:service_modifiers,
     service_blockname:service_blockname,
-    service__updated: greeting_text ~ node.changed.value|date("d.m.Y"),
+    service__updated: greeting_text ~ " " ~ node.changed.value|date("d.m.Y"),
     node__label: label,
-    service__internal: 'yes',
   } %}
-  {% endembed %}
+
+  {% block content %}
+   {{ content|without('flag_cart', 'flag_lists', 'view_mode_switcher', 'field_contact_info', 'field_other_services', 'field_contact_info_external', 'entitygroupfield', 'field_municipality_specific', 'field_related_archive', 'field_responsible_updatee') }}{% endblock %}
+   {% block page_content %}
+     <div class="service-header-wrapper">
+       {% if content.entitygroupfield %}
+         {% include "@atoms/text/text/01-paragraph.twig" with {
+           paragraph_base_class: card__date__base_class|default('organizing-group'),
+           paragraph_modifiers: card__date__modifiers,
+           paragraph_blockname: card__base_class,
+           paragraph_content: content.entitygroupfield['0'],
+         } %}
+       {% endif %}
+       {% if service__updated %}
+         {% include "@atoms/text/text/01-paragraph.twig" with {
+           paragraph_base_class: card__date__base_class|default('date'),
+           paragraph_modifiers: card__date__modifiers,
+           paragraph_blockname: card__base_class,
+           paragraph_content: service__updated,
+         } %}
+       {% endif %}
+     </div>
+       {% include "@atoms/text/headings/_heading.twig" with {
+         heading_level: '1',
+         heading: node__label,
+         heading_base_class: 'page-heading',
+       }
+     %}
+   {% endblock %}
+   {% block page_sidebar %}
+      {{ content.field_municipality_specific }}
+      {{ content.field_contact_info }}
+      {{ content.field_responsible_updatee }}
+      {% if content.field_related_archive['0']['#markup'] == 'yes' %}
+        {% include "@atoms/text/headings/_heading.twig" with {
+          "heading_level": 4,
+          "heading": 'Archiving guides:'|t,
+          "heading_modifiers": 'semibold',
+        } %}
+         <a class="small-font" href="/node/275">{{ 'Archiving guide'|t }}</a>
+      {% endif %}
+   {% endblock %}
+ {% endembed %}

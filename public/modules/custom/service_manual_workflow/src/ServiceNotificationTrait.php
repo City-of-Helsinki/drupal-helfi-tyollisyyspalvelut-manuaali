@@ -28,7 +28,11 @@ trait ServiceNotificationTrait {
     if ($entity->field_responsible_updatee->isEmpty()) {
       return $user;
     }
-    $user[] = $entity->field_responsible_updatee->entity;
+    $responsible_user = $entity->field_responsible_updatee->entity;
+    if ($responsible_user->isBlocked()) {
+      return $user;
+    }
+    $user[] = $responsible_user;
     return $user;
   }
 

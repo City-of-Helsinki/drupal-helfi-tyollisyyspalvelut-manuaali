@@ -6,10 +6,6 @@ display:
           label: Language
         title:
           label: Service
-        field_responsible_updatee:
-          label: 'Responsible editor (municipality)'
-        field_service_provider_updatee:
-          label: 'Responsible editor (service provider)'
         moderation_state:
           label: 'Moderation state'
         hel_tpm_editorial_service_has_unpublished_changes:
@@ -18,9 +14,14 @@ display:
           label: Updated
         operations:
           label: Operations
+        name_1:
+          label: 'Responsible editor (service provider)'
+        name:
+          label: 'Responsible editor (municipality)'
       exposed_form:
         options:
           submit_button: Apply
+          text_input_required_format: ''
       filters:
         status:
           group_info:

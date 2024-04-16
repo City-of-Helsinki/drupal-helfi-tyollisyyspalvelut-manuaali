@@ -45,7 +45,7 @@ class ServiceOutdatedAccessTest extends GroupKernelTestBase {
     'service_manual_workflow',
     'group_test_config',
     'ggroup',
-    'group'
+    'group',
   ];
 
   /**

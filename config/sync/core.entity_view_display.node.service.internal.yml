@@ -50,6 +50,7 @@ dependencies:
     - node.type.service
   module:
     - entity_reference_revisions
+    - entitygroupfield
     - field_group
     - file
     - link
@@ -65,7 +66,7 @@ third_party_settings:
       label: 'Ohjaus palveluun'
       parent_name: ''
       region: content
-      weight: 2
+      weight: 3
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--guidance-to-service'
@@ -85,7 +86,7 @@ third_party_settings:
       label: 'Palvelun velvoittavuus'
       parent_name: ''
       region: content
-      weight: 4
+      weight: 5
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--service-requirements'
@@ -106,7 +107,7 @@ third_party_settings:
       label: 'Lausunnot ja työttömyysetuus'
       parent_name: ''
       region: content
-      weight: 6
+      weight: 7
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--statements-and-jobprofits'
@@ -125,7 +126,7 @@ third_party_settings:
       label: 'Merkinnät asiakastietojärjestelmään'
       parent_name: ''
       region: content
-      weight: 5
+      weight: 6
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--markings-to-system'
@@ -144,7 +145,7 @@ third_party_settings:
       label: 'Toimenpiteet osallistumisen ajalta'
       parent_name: ''
       region: content
-      weight: 7
+      weight: 8
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--measures-during'
@@ -164,7 +165,7 @@ third_party_settings:
       label: Poikkeustilanteet
       parent_name: ''
       region: content
-      weight: 8
+      weight: 9
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--exceptions'
@@ -184,7 +185,7 @@ third_party_settings:
       label: ' Täydentävä työnhakukeskustelu'
       parent_name: ''
       region: content
-      weight: 9
+      weight: 10
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--complementary-job-search'
@@ -203,7 +204,7 @@ third_party_settings:
       label: 'Kuntakohtaiset ohjeet'
       parent_name: ''
       region: content
-      weight: 3
+      weight: 4
       format_type: html_element
       format_settings:
         classes: service-group
@@ -221,6 +222,14 @@ targetEntityType: node
 bundle: service
 mode: internal
 content:
+  entitygroupfield:
+    type: parent_group_label_formatter
+    label: hidden
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
   field_career_markings:
     type: text_default
     label: hidden
@@ -235,7 +244,7 @@ content:
       view_mode: default
       link: true
     third_party_settings: {  }
-    weight: 13
+    weight: 14
     region: content
   field_internal_files:
     type: file_default
@@ -243,7 +252,7 @@ content:
     settings:
       use_description_as_link_text: true
     third_party_settings: {  }
-    weight: 11
+    weight: 12
     region: content
   field_internal_links:
     type: link
@@ -255,7 +264,7 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
-    weight: 12
+    weight: 13
     region: content
   field_measures_during_attendance:
     type: text_default
@@ -308,7 +317,7 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 10
+    weight: 11
     region: content
   field_service_coordination:
     type: text_default
@@ -379,7 +388,6 @@ hidden:
   entity_print_view_epub: true
   entity_print_view_pdf: true
   entity_print_view_word_docx: true
-  entitygroupfield: true
   field_accessibility: true
   field_attendance: true
   field_client_consent: true

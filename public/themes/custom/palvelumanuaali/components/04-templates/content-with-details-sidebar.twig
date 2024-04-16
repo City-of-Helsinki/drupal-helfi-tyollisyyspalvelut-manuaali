@@ -1,0 +1,15 @@
+{% set layout_modifiers = [] %}
+
+{% set main_base_class = main_base_class|default('main') %}
+{% set main_modifiers = [] %}
+
+{% set main_content_base_class = main_content_base_class|default('main-content') %}
+{% set main_content_modifiers = [] %}
+{% set main_content_id = main_content_id|default('main-content-id') %}
+
+<div id={{ main_content_id }} {{ bem(content_base_class, content_modifiers, content_blockname) }}>
+  <div {{ bem('content-column', content_colum_modifiers, content_column_base_class, ['col-xl-9', 'col-12']) }}>
+    {% block page_content %}{% endblock %}
+    {% block content %}{% endblock %}
+  </div>
+</div>

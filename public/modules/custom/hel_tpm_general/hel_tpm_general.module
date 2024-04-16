@@ -63,6 +63,9 @@ function hel_tpm_general_node_view(array &$build, EntityInterface $entity, Entit
 function hel_tpm_general_form_user_register_form_alter(&$form, &$form_state, $form_id) {
   $form['account']['name']['#type'] = 'hidden';
   $form['account']['name']['#value'] = \Drupal::service('password_generator')->generate();
+
+  // Notify user about new account by default.
+  $form['account']['notify']['#default_value'] = TRUE;
 }
 
 /**
