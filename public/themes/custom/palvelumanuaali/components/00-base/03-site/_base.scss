@@ -177,3 +177,116 @@ footer.footer{
 .add-gap-3 {
   gap: 3px;
 }
+
+//Boxsizing
+.bs {
+  &--bb{
+    box-sizing: border-box;
+  }
+}
+
+//Width
+.width {
+  &--full {
+    width: 100%;
+  }
+}
+
+//Border-color
+.border-color {
+  &--light-blue {
+    border-color: clr(light-border);
+  }
+  &--hover-blue {
+    &:hover {
+      border-color: clr(background-section);
+    }
+  }
+}
+
+//Border-width
+.border-width {
+  &--two {
+    border-width: 2px;
+  }
+}
+
+//Border-radius
+.border-radius {
+  &--eight {
+    border-radius: 8px;
+  }
+}
+
+//Border-style
+.border-style {
+  &--solid {
+    border-style: solid;
+  }
+}
+
+//Background-color
+.background-color {
+  &--offwhite-blue {
+    background-color: clr(background-dropdown);
+  }
+  &--transparent {
+    background-color: transparent;
+  }
+}
+
+//Padding
+.padding {
+  &--space-space-double {
+    padding: $space $space-double;
+  }
+  &--right-left-space-double {
+    padding-right: $space-double;
+    padding-left: $space-double;
+  }
+}
+
+//Margin
+.margin {
+  &--bottom-zero {
+    margin-bottom: 0!important;
+  }
+}
+
+//Font
+.font-size {
+  &--default {
+    font-size: 16px;
+    line-height: 24px;
+  }
+  &--small {
+    font-size: 14px;
+    line-height: 24px;
+  }
+}
+
+.font-weight {
+  &--bold {
+    font-weight: 600;
+  }
+  &--normal {
+    font-weight: 400;
+  }
+}
+
+.font-color {
+  &--blue {
+    color:clr(alt-header-color);
+  }
+  &--not-collapsed-blue {
+    &:not(.collapsed) {
+      color:clr(alt-header-color);
+    }
+  }
+}
+
+.font-spacing {
+  &--spaced {
+    letter-spacing: 0.16px;
+  }
+}
