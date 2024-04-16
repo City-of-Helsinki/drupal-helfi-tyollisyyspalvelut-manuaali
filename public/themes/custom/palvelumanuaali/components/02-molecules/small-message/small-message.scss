@@ -16,6 +16,15 @@
     height: 68px;
     position: absolute;
     right: 0;
-    top: 70px;
+    top: 2px;
+  }
+}
+
+.logged-in {
+  .small-message-wrapper--service {
+    top: 5px;
+    @include large {
+        top: 65px;
+    }
   }
 }
