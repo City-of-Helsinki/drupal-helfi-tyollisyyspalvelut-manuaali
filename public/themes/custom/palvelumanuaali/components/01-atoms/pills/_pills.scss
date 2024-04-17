@@ -196,15 +196,19 @@ $pill-colors: (
   color: clr(alt-header-color);
   &:hover {
     cursor: pointer;
+    outline: 2px solid clr(background-section);
+
   }
   input {
     @extend .visually-hidden;
   }
-  &.highlight,
-  &:hover {
+  &.highlight {
     background: clr(background-section);
     .form-item__label {
       color: clr(text-inverse)
+    }
+    &:hover {
+      outline: unset;
     }
   }
   .form-item__label {
@@ -217,8 +221,4 @@ $pill-colors: (
       cursor: pointer;
     }
   }
-}
-
-.small-message-pill {
-
 }
