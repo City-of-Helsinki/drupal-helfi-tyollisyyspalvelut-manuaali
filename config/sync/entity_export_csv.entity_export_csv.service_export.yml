@@ -79,7 +79,7 @@ fields:
           value: value
         property_separator: '|'
         property_separate_column: 0
-        format: ''
+        format: short
         custom_date_format: ''
   revision_uid:
     enable: false
@@ -106,7 +106,7 @@ fields:
         property_separate_column: 0
         format: ''
   status:
-    enable: true
+    enable: false
     order: 0
     exporter: default_export
     form:
@@ -152,7 +152,7 @@ fields:
           value: value
         property_separator: '|'
         property_separate_column: 0
-        format: ''
+        format: short
         custom_date_format: ''
   changed:
     enable: true
@@ -165,7 +165,7 @@ fields:
           value: value
         property_separator: '|'
         property_separate_column: 0
-        format: ''
+        format: short
         custom_date_format: ''
   promote:
     enable: false
@@ -242,7 +242,7 @@ fields:
   entitygroupfield:
     enable: true
     order: 0
-    exporter: default_export
+    exporter: group_reference_export
     form:
       options:
         header: label
@@ -250,11 +250,11 @@ fields:
           target_id: target_id
         property_separator: '|'
         property_separate_column: 0
-        format: ''
+        format: entity_reference_label
         explode: ''
         separator: '|'
   path:
-    enable: true
+    enable: false
     order: 0
     exporter: default_export
     form:
@@ -314,13 +314,13 @@ fields:
           target_id: target_id
         property_separator: '|'
         property_separate_column: 0
-        format: ''
+        format: entity_reference_label
         explode: ''
         separator: '|'
   field_attendance:
     enable: true
     order: 0
-    exporter: default_export
+    exporter: paragraph_export
     form:
       options:
         header: label
@@ -329,11 +329,11 @@ fields:
           target_revision_id: '0'
         property_separator: '|'
         property_separate_column: 0
-        format: ''
+        format: paragraph_fields
   field_career_markings:
     enable: true
     order: 0
-    exporter: default_export
+    exporter: plaintext_export
     form:
       options:
         header: label
@@ -366,7 +366,7 @@ fields:
           target_id: target_id
         property_separator: '|'
         property_separate_column: 0
-        format: ''
+        format: entity_reference_label
         explode: ''
         separator: '|'
   field_contact_info_external:
@@ -380,7 +380,7 @@ fields:
           target_id: target_id
         property_separator: '|'
         property_separate_column: 0
-        format: ''
+        format: entity_reference_label
         explode: ''
         separator: '|'
   field_description:
@@ -398,7 +398,7 @@ fields:
   field_field_client_consent_descr:
     enable: true
     order: 0
-    exporter: default_export
+    exporter: plaintext_export
     form:
       options:
         header: label
@@ -419,7 +419,7 @@ fields:
           target_id: target_id
         property_separator: '|'
         property_separate_column: 0
-        format: ''
+        format: entity_reference_label
         explode: ''
         separator: '|'
   field_instructions_markup:
@@ -435,7 +435,7 @@ fields:
         property_separate_column: 0
         format: ''
   field_internal_files:
-    enable: true
+    enable: false
     order: 0
     exporter: file_export
     form:
@@ -477,13 +477,13 @@ fields:
           target_id: target_id
         property_separator: '|'
         property_separate_column: 0
-        format: ''
+        format: entity_reference_label
         explode: ''
         separator: '|'
   field_measures_during_attendance:
     enable: true
     order: 0
-    exporter: default_export
+    exporter: plaintext_export
     form:
       options:
         header: field_name
@@ -496,7 +496,7 @@ fields:
   field_municipality_guidance:
     enable: true
     order: 0
-    exporter: default_export
+    exporter: paragraph_export
     form:
       options:
         header: label
@@ -505,13 +505,13 @@ fields:
           target_revision_id: '0'
         property_separator: '|'
         property_separate_column: 0
-        format: ''
+        format: paragraph_fields
         explode: ''
         separator: '|'
   field_municipality_specific:
     enable: true
     order: 0
-    exporter: default_export
+    exporter: paragraph_export
     form:
       options:
         header: label
@@ -520,7 +520,7 @@ fields:
           target_revision_id: '0'
         property_separator: '|'
         property_separate_column: 0
-        format: ''
+        format: paragraph_fields
         explode: ''
         separator: '|'
   field_obligatoryness:
@@ -538,7 +538,7 @@ fields:
   field_obligatoryness_freetext:
     enable: true
     order: 0
-    exporter: default_export
+    exporter: plaintext_export
     form:
       options:
         header: field_name
@@ -559,7 +559,7 @@ fields:
           value: value
         property_separator: '|'
         property_separate_column: 0
-        format: ''
+        format: list_label
         explode: ''
         separator: '|'
   field_other_services:
@@ -573,7 +573,7 @@ fields:
           target_id: target_id
         property_separator: '|'
         property_separate_column: 0
-        format: ''
+        format: entity_reference_label
         explode: ''
         separator: '|'
   field_related_archive:
@@ -587,7 +587,7 @@ fields:
           value: value
         property_separator: '|'
         property_separate_column: 0
-        format: ''
+        format: list_label
         explode: ''
         separator: '|'
   field_responsible_municipality:
@@ -601,7 +601,7 @@ fields:
           target_id: target_id
         property_separator: '|'
         property_separate_column: 0
-        format: ''
+        format: entity_reference_label
         explode: ''
         separator: '|'
   field_responsible_updatee:
@@ -615,11 +615,11 @@ fields:
           target_id: target_id
         property_separator: '|'
         property_separate_column: 0
-        format: ''
+        format: entity_reference_label
   field_service_benefits:
     enable: true
     order: 0
-    exporter: default_export
+    exporter: plaintext_export
     form:
       options:
         header: field_name
@@ -632,7 +632,7 @@ fields:
   field_service_coordination:
     enable: true
     order: 0
-    exporter: default_export
+    exporter: plaintext_export
     form:
       options:
         header: label
@@ -645,7 +645,7 @@ fields:
   field_service_exceptions:
     enable: true
     order: 0
-    exporter: default_export
+    exporter: plaintext_export
     form:
       options:
         header: field_name
@@ -658,7 +658,7 @@ fields:
   field_service_execution:
     enable: true
     order: 0
-    exporter: default_export
+    exporter: paragraph_export
     form:
       options:
         header: label
@@ -667,7 +667,7 @@ fields:
           target_revision_id: '0'
         property_separator: '|'
         property_separate_column: 0
-        format: ''
+        format: paragraph_fields
   field_service_implement:
     enable: true
     order: 0
@@ -683,7 +683,7 @@ fields:
   field_service_languages:
     enable: true
     order: 0
-    exporter: default_export
+    exporter: paragraph_export
     form:
       options:
         header: label
@@ -692,13 +692,13 @@ fields:
           target_revision_id: '0'
         property_separator: '|'
         property_separate_column: 0
-        format: ''
+        format: paragraph_fields
         explode: ''
         separator: '|'
   field_service_other_info:
     enable: true
     order: 0
-    exporter: default_export
+    exporter: paragraph_export
     form:
       options:
         header: label
@@ -707,11 +707,11 @@ fields:
           target_revision_id: '0'
         property_separator: '|'
         property_separate_column: 0
-        format: ''
+        format: paragraph_fields
   field_service_price:
     enable: true
     order: 0
-    exporter: default_export
+    exporter: paragraph_export
     form:
       options:
         header: label
@@ -720,7 +720,7 @@ fields:
           target_revision_id: '0'
         property_separator: '|'
         property_separate_column: 0
-        format: ''
+        format: paragraph_fields
   field_service_producer:
     enable: true
     order: 0
@@ -732,7 +732,7 @@ fields:
           target_id: target_id
         property_separator: '|'
         property_separate_column: 0
-        format: ''
+        format: entity_reference_label
         explode: ''
         separator: '|'
   field_service_provider_updatee:
@@ -746,9 +746,9 @@ fields:
           target_id: target_id
         property_separator: '|'
         property_separate_column: 0
-        format: ''
+        format: entity_reference_label
   field_service_radioactivity:
-    enable: true
+    enable: false
     order: 0
     exporter: default_export
     form:
@@ -760,10 +760,10 @@ fields:
         property_separator: '|'
         property_separate_column: 0
         format: ''
-  field_service_req_speacialist:
+  field_service_requirements:
     enable: true
     order: 0
-    exporter: default_export
+    exporter: plaintext_export
     form:
       options:
         header: field_name
@@ -773,10 +773,10 @@ fields:
         property_separator: '|'
         property_separate_column: 0
         format: ''
-  field_service_requirements:
+  field_service_req_speacialist:
     enable: true
     order: 0
-    exporter: default_export
+    exporter: plaintext_export
     form:
       options:
         header: field_name
@@ -797,13 +797,13 @@ fields:
           target_id: target_id
         property_separator: '|'
         property_separate_column: 0
-        format: ''
+        format: entity_reference_label
         explode: ''
         separator: '|'
   field_service_suits_info:
     enable: true
     order: 0
-    exporter: default_export
+    exporter: plaintext_export
     form:
       options:
         header: label
@@ -824,11 +824,11 @@ fields:
           value: value
         property_separator: '|'
         property_separate_column: 0
-        format: ''
+        format: list_label
   field_service_time_and_location:
     enable: true
     order: 0
-    exporter: default_export
+    exporter: paragraph_export
     form:
       options:
         header: label
@@ -837,7 +837,7 @@ fields:
           target_revision_id: '0'
         property_separator: '|'
         property_separate_column: 0
-        format: ''
+        format: paragraph_fields
         explode: ''
         separator: '|'
   field_statements:
@@ -855,7 +855,7 @@ fields:
   field_statements_unemployment:
     enable: true
     order: 0
-    exporter: default_export
+    exporter: plaintext_export
     form:
       options:
         header: field_name
@@ -868,7 +868,7 @@ fields:
   field_target_group:
     enable: true
     order: 0
-    exporter: default_export
+    exporter: paragraph_export
     form:
       options:
         header: label
@@ -877,4 +877,4 @@ fields:
           target_revision_id: '0'
         property_separator: '|'
         property_separate_column: 0
-        format: ''
+        format: paragraph_fields

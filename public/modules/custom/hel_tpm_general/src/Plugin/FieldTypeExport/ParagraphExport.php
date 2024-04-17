@@ -1,12 +1,18 @@
 <?php
 namespace Drupal\hel_tpm_general\Plugin\FieldTypeExport;
 
-use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\Core\Entity\Entity\EntityViewDisplay;
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Datetime\DateFormatterInterface;
+use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityRepositoryInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemInterface;
+use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\entity_export_csv\Plugin\FieldTypeExportBase;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Defines paragraph field exporter.
@@ -26,6 +32,7 @@ use Drupal\entity_export_csv\Plugin\FieldTypeExportBase;
  *  )
  */
 final class ParagraphExport extends FieldTypeExportBase {
+
   /**
    * {@inheritdoc}
    */
@@ -69,8 +76,7 @@ final class ParagraphExport extends FieldTypeExportBase {
    * @return string
    */
   private function renderFields(EntityInterface $entity) {
-    $entity_type_manager = \Drupal::service('entity_type.manager');
-    $view_builder = $entity_type_manager->getViewBuilder($entity->getEntityTypeId());
+    $view_builder = $this->entityTypeManager->getViewBuilder($entity->getEntityTypeId());
     $view = $view_builder->view($entity, 'full');
     $render = \Drupal::service('renderer')->render($view);
 
