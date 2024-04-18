@@ -1,13 +1,10 @@
 <?php
+
 namespace Drupal\hel_tpm_general\Plugin\FieldTypeExport;
 
-use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\Core\Entity\Entity\EntityViewDisplay;
-use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemInterface;
 use Drupal\entity_export_csv\Plugin\FieldTypeExport\EntityReferenceExport;
-use Drupal\entity_export_csv\Plugin\FieldTypeExportBase;
 use Drupal\group\Entity\GroupRelationship;
 
 /**
@@ -28,6 +25,10 @@ use Drupal\group\Entity\GroupRelationship;
  * )
  */
 class GroupReferenceExport extends EntityReferenceExport {
+
+  /**
+   * {@inheritdoc}
+   */
   public function massageExportPropertyValue(FieldItemInterface $field_item, $property_name, FieldDefinitionInterface $field_definition, $options = []) {
     // If this entity/bundle has no group relation type plugins enabled,
     // there's no way there could be any group associations, so exit early.
