@@ -1,11 +1,11 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types = 1);
 
 namespace Drupal\hel_tpm_general\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceLabelFormatter;
-use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Plugin implementation of the 'Municipality field formatter' formatter.
@@ -41,7 +41,7 @@ final class MunicipalityFieldFormatter extends EntityReferenceLabelFormatter {
       'type' => 'boolean_formatter',
       'label' => 'hidden',
     ]);
-    // Alter markup to show title as value instead of on/off
+    // Alter markup to show title as value instead of on/off.
     $render[0]['#markup'] = $render['#title'];
     // Set render to element value.
     $element[0] = $render;
