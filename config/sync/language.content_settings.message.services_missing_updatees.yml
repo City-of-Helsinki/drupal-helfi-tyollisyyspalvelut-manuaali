@@ -1,0 +1,18 @@
+uuid: e6cd3a7b-913a-4f74-a3c8-89939abc4be4
+langcode: en
+status: true
+dependencies:
+  config:
+    - message.template.services_missing_updatees
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: false
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: message.services_missing_updatees
+target_entity_type_id: message
+target_bundle: services_missing_updatees
+default_langcode: site_default
+language_alterable: false
