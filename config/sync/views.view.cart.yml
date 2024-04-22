@@ -3,6 +3,7 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.node.taxonomy_card
     - core.entity_view_mode.node.view_card_lift
     - field.storage.node.field_description
     - field.storage.node.field_service_producer
@@ -861,20 +862,22 @@ display:
       style:
         type: default
         options:
-          grouping: {  }
-          row_class: ''
+          row_class: taxonomy-card
           default_row_class: true
+          uses_fields: false
       row:
         type: 'entity:node'
         options:
           relationship: none
-          view_mode: view_card_lift
+          view_mode: taxonomy_card
       defaults:
         title: false
+        css_class: false
         pager: false
         style: false
         row: false
         header: false
+      css_class: taxonomy-card-list
       header:
         area:
           id: area
