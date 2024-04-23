@@ -189,9 +189,8 @@ display:
           empty_zero: false
           hide_alter_empty: true
           click_sort_column: target_id
-          type: entity_reference_label
-          settings:
-            link: false
+          type: hel_tpm_group_missing_reference_highlight
+          settings: {  }
           group_column: target_id
           group_columns: {  }
           group_rows: true
@@ -315,9 +314,8 @@ display:
           empty_zero: false
           hide_alter_empty: true
           click_sort_column: target_id
-          type: entity_reference_label
-          settings:
-            link: false
+          type: hel_tpm_group_missing_reference_highlight
+          settings: {  }
           group_column: target_id
           group_columns: {  }
           group_rows: true
@@ -479,7 +477,20 @@ display:
       cache:
         type: none
         options: {  }
-      empty: {  }
+      empty:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text
+          empty: true
+          content:
+            value: 'Palveluiden vastuupäivittäjätiedot on kunnossa'
+            format: filtered_html
+          tokenize: false
       sorts: {  }
       arguments:
         node_missing_user_dependencies:
@@ -510,10 +521,10 @@ display:
             sort_order: asc
             number_of_records: 0
             format: default_summary
-          specify_validation: false
+          specify_validation: true
           validate:
             type: none
-            fail: 'not found'
+            fail: empty
           validate_options: {  }
           break_phrase: false
           not: 0

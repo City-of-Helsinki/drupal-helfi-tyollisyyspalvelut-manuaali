@@ -1,43 +1,24 @@
-.service .accordion-flush .accordion-item {
-  background-color: clr(background-border);
-  border-radius: 8px;
-  border-top: 2px solid clr(light-border);
-  border-bottom: 2px solid clr(light-border);
-  border-left: 2px solid clr(light-border);
-  border-right: 2px solid clr(light-border);
-  .accordion-button {
-    font-size: 16px;
-    line-height: 24px;
-    letter-spacing: 0.01em;
-    color:clr(alt-header-color);
-    font-weight: 600;
-    padding: $space $space-double $space $space-double;
-    background-color: transparent;
+.accordion--default {
+  .accordion-button{
     &::after {
-      background-image: url("/themes/custom/palvelumanuaali/images/icons/minus.svg");
+      background-image: url("/themes/custom/palvelumanuaali/images/icons/minus-blue.svg");
+      width: 24px;
+      height: 24px;
+      padding: 2px;
     }
-    .field--name-field-municipality {
-      margin-bottom: 0;
-    }
-    &.collapsed {
+    &.collapsed{
         &::after {
-          background-image: url("/themes/custom/palvelumanuaali/images/icons/plus.svg");
+          background-image: url("/themes/custom/palvelumanuaali/images/icons/plus-blue.svg");
       }
     }
   }
+}
+
+.service .accordion-flush .accordion-item {
   .accordion-body,
   .accordion-button {
-    background-color: transparent;
     border: unset;
     box-shadow: unset;
-  }
-
-  .accordion-body {
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 24px;
-    padding-left: $space-double;
-    padding-right: $space-double;
   }
 }
 

@@ -5,6 +5,8 @@
  * Module file for hel_tpm_user_expiry.
  */
 
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\user\Entity\User;
 use Drupal\user\UserInterface;
 
 /**
@@ -26,15 +28,21 @@ function _hel_tpm_user_expiry_notification_cron() {
     return;
   }
 
-  $limit = strtotime('-3 months -2 weeks');
+  $limit = strtotime('-165 days');
 
-  // Fetch all users have been inactive for 3 months and 2 weeks.
+  // Fetch all users have been inactive for 5 months and 2 weeks.
   $q = Drupal::database()->select('users_field_data', 'ufd')
     ->fields('ufd', ['uid', 'access', 'status'])
     ->condition('uid', 0, '<>')
+    ->condition('uid', 1, '<>')
     ->condition('access', $limit, '<=')
-    ->condition('created', $limit, '<=')
-    ->condition('status', 1);
+    ->condition('created', $limit, '<=');
+
+  // Exclude users that has been anonymized.
+  if ($anonymized_users = \Drupal::state()->get('hel_tpm_user_expiry.anonymized_users')) {
+    $q->condition('uid', $anonymized_users, 'NOT IN');
+  }
+
   $result = $q->execute()->fetchAll();
 
   foreach ($result as $user) {
@@ -48,12 +56,37 @@ function _hel_tpm_user_expiry_notification_cron() {
 /**
  * Implements hook_user_login().
  */
-function hel_tpm_user_expiry_user_login(UserInterface $account) {
-  $state_manager = Drupal::state();
-  $state_name = 'hel_tpm_user_expiry.notified.' . $account->id();
-  $state = $state_manager->get($state_name);
+function hel_tpm_user_expiry_user_login(UserInterface $account): void {
   // Clear user expiry notification state after user has logged in.
-  if (!empty($state)) {
+  _hel_tpm_user_expiry_delete_notified_state($account->id());
+}
+
+/**
+ * Implements hook_entity_update().
+ */
+function hel_tpm_user_expiry_user_update(EntityInterface $entity): void {
+  if (!$entity instanceof User) {
+    return;
+  }
+  if ($entity->original->isBlocked() && $entity->isActive()) {
+    // Clear user expiry notification state when blocked user is set to active.
+    _hel_tpm_user_expiry_delete_notified_state($entity->id());
+  }
+}
+
+/**
+ * Helper function to clear user expiry notification state.
+ *
+ * @param int $uid
+ *   The user id.
+ *
+ * @return void
+ *   -
+ */
+function _hel_tpm_user_expiry_delete_notified_state(int $uid): void {
+  $state_manager = Drupal::state();
+  $state_name = 'hel_tpm_user_expiry.notified.' . $uid;
+  if (!empty($state_manager->get($state_name))) {
     $state_manager->delete($state_name);
   }
 }

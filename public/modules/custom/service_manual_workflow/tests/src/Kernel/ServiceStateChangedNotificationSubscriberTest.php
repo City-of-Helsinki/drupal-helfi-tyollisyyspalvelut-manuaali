@@ -72,7 +72,7 @@ class ServiceStateChangedNotificationSubscriberTest extends GroupKernelTestBase 
     $this->orgGroup->addMember($this->orgUser, ['group_roles' => ['organisation-administrator']]);
 
     $this->orgUser2 = $this->createUserWithRoles(['specialist editor', 'editor']);
-    $this->orgGroup->addMember($this->orgUser, ['group_roles' => ['organisation-editor']]);
+    $this->orgGroup->addMember($this->orgUser2, ['group_roles' => ['organisation-editor']]);
 
     // Add service provider to organisation group as subgroup.
     $this->orgGroup->addRelationship($this->spGroup, 'subgroup:service_provider');
@@ -104,6 +104,33 @@ class ServiceStateChangedNotificationSubscriberTest extends GroupKernelTestBase 
     $mails = $this->drupalGetMails();
     $this->assertEquals('message_notify_group_ready_to_publish_notificat', $mails[0]['id']);
     $this->assertEquals($this->orgUser2->getEmail(), $mails[0]['to']);
+  }
+
+  /**
+   *
+   */
+  public function testResponsibleUpdaterBlockedNotification() {
+    $user = $this->createUserWithRoles(['specialist editor', 'editor']);
+    $this->orgGroup->addMember($user, ['group_roles' => ['organisation-editor']]);
+    $user->block();
+    $user->save();
+
+    $content_plugin = 'group_node:service';
+    $spNode = $this->createNode([
+      'type' => 'service',
+      'uid' => $this->spUser->id(),
+      'moderation_state' => 'draft',
+    ]);
+    $spNode->set('field_responsible_updatee', $user);
+    $spNode->save();
+    // Add created node to group.
+    $this->spGroup->addRelationship($spNode, $content_plugin);
+    $spNode->set('moderation_state', 'ready_to_publish');
+    $spNode->save();
+
+    $mails = $this->drupalGetMails();
+    $this->assertEquals('message_notify_group_ready_to_publish_notificat', $mails[0]['id']);
+    $this->assertNotEquals($user->getEmail(), $mails[0]['to']);
   }
 
   /**

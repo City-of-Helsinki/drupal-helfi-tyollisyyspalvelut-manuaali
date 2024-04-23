@@ -1,0 +1,21 @@
+uuid: 2600b49a-33bb-483b-9993-3dd9ef765af4
+langcode: fi
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.message.mail_subject
+    - message.template.hel_tpm_user_expiry_blocked
+id: message.hel_tpm_user_expiry_blocked.mail_subject
+targetEntityType: message
+bundle: hel_tpm_user_expiry_blocked
+mode: mail_subject
+content:
+  partial_0:
+    weight: 0
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  partial_1: true
+  search_api_excerpt: true

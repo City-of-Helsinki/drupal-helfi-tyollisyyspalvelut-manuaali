@@ -16,7 +16,7 @@ trait ServiceManualWorkflowTestTrait {
    * @param array $values
    *   (optional) The values used to create the entity.
    *
-   * @return \Drupal\group\Entity\Group
+   * @return \Drupal\group\Entity\GroupInterface
    *   The created group entity.
    */
   protected function createGroup(array $values = []) {
@@ -26,7 +26,7 @@ trait ServiceManualWorkflowTestTrait {
     ]);
     $group->enforceIsNew();
     $storage->save($group);
-    return $group;
+    return $this->reloadEntity($group);
   }
 
   /**

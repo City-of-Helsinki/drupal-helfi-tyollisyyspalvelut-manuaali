@@ -1,0 +1,22 @@
+langcode: fi
+status: true
+dependencies:
+  config:
+    - filter.format.email_html
+    - filter.format.plain_text_format
+template: hel_tpm_user_expiry_blocked
+label: hel_tpm_user_expiry_blocked
+description: 'Account deactivated after inactivity'
+text:
+  -
+    value: 'Account [user:display-name] is closed at the [site:name] site'
+    format: plain_text_format
+  -
+    value: '<p>Hello [user:display-name]</p><p>Your account is deactivated at the [site:name] site.</p>'
+    format: email_html
+settings:
+  'token options':
+    clear: false
+    'token replace': true
+  purge_override: false
+  purge_methods: {  }

@@ -262,7 +262,12 @@ function palvelumanuaali_theme_suggestions_details_alter(array &$suggestions, ar
       $fieldType = str_replace("-", "_", $variables['element']['#field_name']);
       $suggestions[] = $hook .  '__' . $fieldType;
   }
+}
 
+function palvelumanuaali_preprocess_details(&$variables) {
+  if ($node = \Drupal::request()->attributes->get('node')) {
+     $variables['nid'] = $node->id();
+  }
 }
 
 /**
