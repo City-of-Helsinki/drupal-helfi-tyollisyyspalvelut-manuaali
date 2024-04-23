@@ -13,6 +13,7 @@ dependencies:
     - media_library
     - paragraphs
     - path
+    - select2
 third_party_settings:
   field_group:
     group_left_column:
@@ -28,7 +29,7 @@ third_party_settings:
       weight: 0
       format_type: fieldset
       format_settings:
-        classes: 'group--rounded-corners form-background--white form-background--regular-padding'
+        classes: 'group--rounded-corners form-background--white form-background--regular-padding grid--row-2-4'
         show_empty_fields: false
         id: ''
         description: ''
@@ -72,32 +73,26 @@ content:
       media_types: {  }
     third_party_settings: {  }
   field_other_services:
-    type: entity_reference_autocomplete
+    type: select2_entity_reference
     weight: 6
     region: content
     settings:
+      width: 100%
+      autocomplete: false
       match_operator: CONTAINS
       match_limit: 10
-      size: 60
-      placeholder: ''
     third_party_settings: {  }
   field_paragraph:
-    type: paragraphs
+    type: entity_reference_paragraphs
     weight: 5
     region: content
     settings:
       title: Paragraph
       title_plural: Paragraphs
       edit_mode: open
-      closed_mode: summary
-      autocollapse: none
-      closed_mode_threshold: 0
       add_mode: dropdown
       form_display_mode: default
-      default_paragraph_type: ''
-      features:
-        collapse_edit_all: collapse_edit_all
-        duplicate: duplicate
+      default_paragraph_type: _none
     third_party_settings: {  }
   langcode:
     type: language_select
