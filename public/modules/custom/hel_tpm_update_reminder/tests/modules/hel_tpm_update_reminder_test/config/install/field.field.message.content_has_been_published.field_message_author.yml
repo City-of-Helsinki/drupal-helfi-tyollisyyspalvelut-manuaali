@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.message.field_message_author
+    - message.template.content_has_been_published
+third_party_settings: { }
+id: message.content_has_been_published.field_message_author
+field_name: field_message_author
+entity_type: message
+bundle: content_has_been_published
+label: 'Message author'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: entity_reference

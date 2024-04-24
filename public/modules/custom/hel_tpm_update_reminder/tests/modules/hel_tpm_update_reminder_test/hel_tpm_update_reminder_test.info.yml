@@ -1,0 +1,13 @@
+name: 'Update reminder test configs'
+type: module
+description: 'Provides example configurations for update reminder tests'
+package: Testing
+core_version_requirement: ^9 || ^10
+dependencies:
+  - drupal:content_moderation
+  - drupal:node
+  - drupal:entity_test
+  - drupal:message
+  - drupal:message_notify
+  - drupal:message_notify_test
+  - service_manual_workflow:service_manual_workflow

@@ -25,9 +25,6 @@ function hel_tpm_update_reminder_cron() {
  *
  * @return void
  *   Void.
- *
- * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
- * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
  */
 function _hel_tpm_update_reminder_service_reminders(): void {
   if (!UpdateReminderUtility::shouldRun()) {
@@ -45,11 +42,13 @@ function _hel_tpm_update_reminder_service_reminders(): void {
   // services' changed status.
   $reminder_service_ids = \Drupal::entityQuery('node')
     ->condition('type', 'service')
-    ->condition('nid', $published_moderation_nids, 'IN')
     ->condition('status', NodeInterface::PUBLISHED)
     ->condition('changed', UpdateReminderUtility::getFirstServiceLimit(), '<')
-    ->accessCheck(FALSE)
-    ->execute();
+    ->accessCheck(FALSE);
+  if (!empty($published_moderation_nids)) {
+    $reminder_service_ids->condition('nid', $published_moderation_nids, 'IN');
+  }
+  $reminder_service_ids = $reminder_service_ids->execute();
 
   $queue = Drupal::queue('hel_tpm_update_reminder_service');
   foreach ($reminder_service_ids as $nid) {
