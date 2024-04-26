@@ -6,21 +6,27 @@
       if ($('.view-id-cart').length <= 0) {
         return;
       }
-      $('.action-unflag a.use-ajax').click(function() {
-        $(document).ajaxSuccess(function (event, xhr, settings) {
-          let triggeringElement = getTriggeringElement(xhr);
-          if ($(triggeringElement).hasClass('flag-cart')) {
+      let unflagElem = once('unflag-once', '.action-unflag a.use-ajax', context);
+      $(unflagElem).click(function() {
+        console.log('clöikk');
+        $(document).ajaxComplete(function (event, xhr, settings) {
+          console.log(Drupal);
+          let triggElem = getTriggeringElement(xhr);
+          let data = getXhrData(xhr);
+          if ($(triggElem).hasClass('flag-cart')) {
             $('.view-cart').triggerHandler('RefreshView');
-            let data = xhr.responseJSON[0].data;
-            createPopup(Drupal.t('Service removed from favorites'), getCancelUrl(data), triggeringElement)
-      //      showUnflaggedNotice(xhr, triggeringElement);
+            createPopup(Drupal.t('Service removed from favorites'), getCancelUrl(data), triggElem)
           }
+          return;
         });
       })
 
       function createPopup(message, cancelUrl, triggeringElement) {
         // Create a unique identifier for each popup
-        const popupId = `popup${triggeringElement}`;
+        let popupId = `popup${triggeringElement}`;
+        if ($('.' + popupId).length > 0) {
+          return;
+        }
 
         // HTML structure for the popup
         const popupHTML = `
@@ -35,9 +41,9 @@
             </div>
         </div>`;
 
-        // Append the popup to the body
-        let elem = once(popupId,  "body");
-        $(elem).append(popupHTML);
+
+        console.log($("#" + popupId, document));
+        $(popupHTML).appendTo("body");
 
         // Close function to remove popup
         function closePopup(trigger) {
@@ -66,8 +72,11 @@
         setTimeout(closePopup, 20000);
       }
 
+      function getXhrData(xhr) {
+        return xhr.responseJSON[0].data;
+      }
       function getTriggeringElement(xhr) {
-        return once('trigger-once', xhr.responseJSON[0].selector);
+        return xhr.responseJSON[0].selector;
       }
 
       function getCancelUrl(data) {
