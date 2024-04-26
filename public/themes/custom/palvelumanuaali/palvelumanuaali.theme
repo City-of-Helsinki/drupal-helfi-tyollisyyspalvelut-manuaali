@@ -98,11 +98,8 @@ function palvelumanuaali_preprocess_field(&$variables) {
     $variables['attributes']['class'][] = 'font-weight--bold';
   }
   if ($variables['field_name'] == 'field_paragraph' && $variables['element']['#bundle'] == 'basic_page')  {
-    $element = $variables['element'];
-    $delta = 0;
-    while(!empty($element[$delta])) {
-      $variables['items'][$delta]['attributes']->setAttribute('class', 'margin-bottom-double-space');
-      $delta++;
+    foreach ($variables['items'] as $key => $item) {
+      $variables['items'][$key]['attributes']->setAttribute('class', 'margin-bottom-double-space');
     }
   }
 }
