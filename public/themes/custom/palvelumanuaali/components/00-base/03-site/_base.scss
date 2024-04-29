@@ -302,3 +302,15 @@ footer.footer{
     grid-row: 2/4;
   }
 }
+
+.child-div--spaced {
+  >div {
+    margin-bottom: $space-one-and-half;
+  }
+}
+
+.fd--no-border {
+  .form-item__dropdown {
+    border: unset;
+  }
+}

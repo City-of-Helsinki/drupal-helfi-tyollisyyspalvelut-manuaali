@@ -4,7 +4,7 @@
 .form-tel,
 .form-time,
 .form-date {
-  background: clr(text-inverse);
+  background: clr(background-dropdown);
   box-shadow: inset 0px 0px 0px 2px clr(form-border);
   box-sizing: border-box;
   border: 0;
@@ -25,6 +25,10 @@
   &::placeholder {
     color: clr(gray);
   }
+}
+
+.view-filters .form-text {
+  background-color: clr(text-inverse);
 }
 
 .form-item__textarea {

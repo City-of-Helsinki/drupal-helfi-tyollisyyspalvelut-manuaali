@@ -722,10 +722,20 @@ there is possibility to add classes button--blue-bordered,
 }
 
 
+
 .node-form,
 .node-edit-form {
-  .field-add-more-submit,
-    .paragraphs-icon-button {
+  .field-add-more-submit {
+    @include button-medium;
+    @include button-round-corners;
+    @include border-2-blue;
+    @include button-no-color-with-round-border;
+  }
+}
+
+.node-form,
+.node-edit-form {
+  .paragraphs-icon-button {
       @include button-medium;
       @include button-no-color;
       @include button-round-corners;

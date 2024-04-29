@@ -82,13 +82,15 @@ class ParagraphsAltCustomWidget extends ParagraphsWidget {
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
     $widget_element = parent::formElement($items, $delta, $element, $form, $form_state);
-
     $element_top = &$widget_element['top'];
     $element_top['actions']['actions']['remove_button'] = $element_top['actions']['dropdown_actions']['remove_button'];
     $element_top['actions']['actions']['remove_button']['#attributes']['class'][] = 'close-icon-button';
-    $element_top['#attributes']['class'][] = 'paragraph-top-custom';
+    $element_top['#attributes']['class'][] = 'paragraph-alt-custom';
     $element_top['type']['#access'] = FALSE;
     $element_top['actions']['dropdown_actions']['#access'] = FALSE;
+    $element_subform = &$widget_element['subform'];
+    $element_subform['#attributes']['class'][] = 'child-div--spaced';
+
 
     return $widget_element;
   }

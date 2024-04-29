@@ -86,6 +86,7 @@ class ParagraphsCustomWidget extends ParagraphsWidget {
     $element_top = &$widget_element['top'];
     $element_top['actions']['actions']['remove_button'] = $element_top['actions']['dropdown_actions']['remove_button'];
     $element_top['#attributes']['class'][] = 'paragraph-top-custom';
+    $element_top['actions']['actions']['remove_button']['#attributes']['class'][] = 'close-icon-button';
     $element_top['type']['#access'] = FALSE;
     $element_top['actions']['dropdown_actions']['#access'] = FALSE;
 
