@@ -3,68 +3,127 @@
 
   Drupal.behaviors.unFlaggingEvent = {
     attach: function (context, settings) {
-      const cart = once('view-cart-once', '.view-cart');
+      const cart = '.view-cart';
+      const popupWrapper = '.unflag-popup-wrapper';
       if ($('.view-id-cart').length <= 0) {
         return;
       }
+
+      // Create popup wrapper on load.
+      createPopupWrapper();
+
+      // Act on ajaxComplete event when flagging action is invoked.
       $(context).ajaxComplete(function (event, xhr, settings) {
         let triggElem = getTriggeringElement(xhr);
+        if (triggElem === false || typeof triggElem === 'undefined') {
+          return;
+        }
         let data = getXhrData(xhr);
-        if ($(triggElem).hasClass('flag-cart')) {
+        if ($(data).hasClass('action-flag')) {
           createPopup(Drupal.t('Service removed from favorites'), getCancelUrl(data), triggElem)
           $(cart).triggerHandler('RefreshView');
         }
+        if ($(data).hasClass('action-unflag')) {
+          $(cart).triggerHandler('RefreshView');
+          closePopup(triggElem);
+        }
       });
 
+      /**
+       * Create a popup to notify user when item is unflagged.
+       * User can cancel the unflag action from cancel button.
+       *
+       * @param message
+       * @param cancelUrl
+       * @param triggeringElement
+       */
       function createPopup(message, cancelUrl, triggeringElement) {
         // Create a unique identifier for each popup
-        let popupId = `popup${triggeringElement}`;
+        let popupId =  `popup\${triggeringElement}`;
+
         // HTML structure for the popup
-        const popupHTML = `
-        <div class="popup ${popupId}" id="${popupId}">
-            <div class="popup-content">
-                <span class="close">&times;</span>
-                <p>${message}</p>
-                <button class="ok-btn">OK</button>
-                <div class="flag-cart action-unflag">
-                  <a class="use-ajax cancel-btn" href="${cancelUrl}" >Cancel</a>
-                 </div>
-            </div>
-        </div>`;
+        let popupHTML = `
+      <div class="hidden popup unflag-confirm-popup ${popupId}" id="${popupId}">
+        <span class="close">&times;</span>
+        <p>${message}</p>
+        <button class="ok-btn">OK</button>
+        <div class="flag-cart action-unflag">
+          <a class="use-ajax cancel-btn" href="${cancelUrl}" >Cancel</a>
+         </div>
+      </div>`;
 
-        $(popupHTML).appendTo("body");
-
-        // Close function to remove popup
-        function closePopup(trigger) {
-          $(trigger).closest(".popup").remove();
-        }
+        $(popupHTML).appendTo(popupWrapper, context);
 
         // Event handlers for buttons
-        $(`#${popupId} .close, #${popupId} .ok-btn`).click(function () {
-          closePopup();
+        $('.ok-btn').click(function () {
+          $(this).closest('.popup').remove();
         });
 
-        let cancelBtn = once('cancel-once', 'a.cancel-btn');
-        $(cancelBtn).click(function () {
-//          closePopup(this);
-          $(context).ajaxSuccess(function () {
+        $('.cancel-btn').click(function () {
+          $(this).closest('.popup').remove();
+        })
 
-            console.log('adsffsad');
-            $(cart).triggerHandler('RefreshView');
+        setTimeout(function() {
+          $(".popup").each(function () {
+            if ($(this).attr('id') === popupId) {
+              $(this).remove();
+            }
           })
-        });
-        // Set timeout to automatically close the popup after 20 seconds
-        setTimeout(closePopup, 20000);
+        }, 20000)
       }
 
+      /**
+       * Creates popup wrapper.
+       */
+      function createPopupWrapper() {
+        if ($(popupWrapper).length <= 0) {
+          $('body', context).append("<div class='unflag-popup-wrapper'></div>")
+        }
+      }
+      /**
+       * Remove popup element.
+       *
+       * @param triggeringElement
+       * @param context
+       */
+      function closePopup(triggeringElement, context) {
+        // Create a unique identifier for each popup
+        let popupId = `.popup${triggeringElement}`;
+        $(popupId).remove();
+      }
 
+      /**
+       * Fetch response data from xhr.
+       *
+       * @param xhr
+       * @returns {*|boolean}
+       */
       function getXhrData(xhr) {
+        if (xhr.responseJSON.length <= 0) {
+          return false;
+        }
         return xhr.responseJSON[0].data;
       }
+
+      /**
+       * Get element triggering ajax callback.
+       *
+       * @param xhr
+       * @returns {*|boolean}
+       */
       function getTriggeringElement(xhr) {
+        if (xhr.responseJSON.length <= 0) {
+          return false;
+        }
         return xhr.responseJSON[0].selector;
       }
 
+      /**
+       * Get cancellation url.
+       *
+       * @param data
+       * @returns {*|jQuery}
+       */
       function getCancelUrl(data) {
         return $('a', data).attr('href');
       }
