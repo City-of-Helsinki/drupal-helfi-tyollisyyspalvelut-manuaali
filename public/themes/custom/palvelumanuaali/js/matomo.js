@@ -5,10 +5,11 @@
       return;
     }
 
-    // Load Matomo only if statistics cookies are allowed.
-    if (Drupal.eu_cookie_compliance.hasAgreed('statistics')) {
+    // Use tracking also with essential cookie selection as it is done without tracking cookies.
+    if (Drupal.eu_cookie_compliance.hasAgreed('essential_cookies') || Drupal.eu_cookie_compliance.hasAgreed('statistics')) {
       const _paq = window._paq = window._paq || [];
-      _paq.push(["setExcludedQueryParams", ["name","pass-reset-token","destination","autologout_timeout","step","check_logged_in","fbclid","time","complianz_scan_token","complianz_id"]]);
+      _paq.push(["setExcludedQueryParams", ["name", "pass-reset-token", "destination", "autologout_timeout", "step", "check_logged_in", "fbclid", "time", "complianz_scan_token", "complianz_id"]]);
+      _paq.push(['disableCookies']);
       _paq.push(['trackPageView']);
       _paq.push(['enableLinkTracking']);
       const d = document;
