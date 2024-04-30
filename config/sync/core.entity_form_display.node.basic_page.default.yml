@@ -10,9 +10,10 @@ dependencies:
     - node.type.basic_page
   module:
     - field_group
+    - hel_tpm_editorial
     - media_library
-    - paragraphs
     - path
+    - select2
 third_party_settings:
   field_group:
     group_left_column:
@@ -28,7 +29,7 @@ third_party_settings:
       weight: 0
       format_type: fieldset
       format_settings:
-        classes: 'group--rounded-corners form-background--white form-background--regular-padding'
+        classes: 'group--rounded-corners form-background--white form-background--regular-padding grid--row-2-4 child-div--spaced fd--no-border'
         show_empty_fields: false
         id: ''
         description: ''
@@ -72,32 +73,34 @@ content:
       media_types: {  }
     third_party_settings: {  }
   field_other_services:
-    type: entity_reference_autocomplete
+    type: select2_entity_reference
     weight: 6
     region: content
     settings:
+      width: 100%
+      autocomplete: false
       match_operator: CONTAINS
       match_limit: 10
-      size: 60
-      placeholder: ''
     third_party_settings: {  }
   field_paragraph:
-    type: paragraphs
+    type: hel_tpm_editorial_paragraphs_alt_custom
     weight: 5
     region: content
     settings:
-      title: Paragraph
-      title_plural: Paragraphs
-      edit_mode: open
+      title: Paragraafi
+      title_plural: Paragraafit
+      edit_mode: closed
       closed_mode: summary
-      autocollapse: none
-      closed_mode_threshold: 0
-      add_mode: dropdown
+      autocollapse: all
+      closed_mode_threshold: '0'
+      add_mode: modal
       form_display_mode: default
-      default_paragraph_type: ''
+      default_paragraph_type: _none
+      add_label: ''
       features:
-        collapse_edit_all: collapse_edit_all
-        duplicate: duplicate
+        duplicate: 0
+        collapse_edit_all: 0
+        add_above: 0
     third_party_settings: {  }
   langcode:
     type: language_select

@@ -414,4 +414,23 @@ footer.footer{
   &--column-gap-24 {
     column-gap: 24px;
   }
+  &--row-2 {
+    grid-row: 2;
+  }
+  &--row-2-4 {
+    grid-row: 2/4;
+  }
+}
+
+
+.child-div--spaced {
+  >div {
+    margin-bottom: $space-one-and-half;
+  }
+}
+
+.fd--no-border {
+  .form-item__dropdown {
+    border: unset;
+  }
 }

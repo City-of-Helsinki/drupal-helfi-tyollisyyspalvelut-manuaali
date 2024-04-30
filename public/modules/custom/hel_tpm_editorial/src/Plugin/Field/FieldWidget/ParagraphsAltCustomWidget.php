@@ -7,15 +7,15 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\paragraphs\Plugin\Field\FieldWidget\ParagraphsWidget;
 
 /**
- * Defines the 'hel_tpm_editorial_paragraphs_custom' field widget.
+ * Defines the 'hel_tpm_editorial_paragraphs_alt_custom' field widget.
  *
  * @FieldWidget(
- *   id = "hel_tpm_editorial_paragraphs_custom",
- *   label = @Translation("Paragraphs Custom"),
+ *   id = "hel_tpm_editorial_paragraphs_alt_custom",
+ *   label = @Translation("Paragraphs Alt Custom"),
  *   field_types = {"entity_reference_revisions"},
  * )
  */
-class ParagraphsCustomWidget extends ParagraphsWidget {
+class ParagraphsAltCustomWidget extends ParagraphsWidget {
 
   /**
    * {@inheritdoc}
@@ -82,13 +82,15 @@ class ParagraphsCustomWidget extends ParagraphsWidget {
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
     $widget_element = parent::formElement($items, $delta, $element, $form, $form_state);
-
     $element_top = &$widget_element['top'];
     $element_top['actions']['actions']['remove_button'] = $element_top['actions']['dropdown_actions']['remove_button'];
-    $element_top['#attributes']['class'][] = 'paragraph-top-custom';
     $element_top['actions']['actions']['remove_button']['#attributes']['class'][] = 'close-icon-button';
+    $element_top['#attributes']['class'][] = 'paragraph-alt-custom';
     $element_top['type']['#access'] = FALSE;
     $element_top['actions']['dropdown_actions']['#access'] = FALSE;
+    $element_subform = &$widget_element['subform'];
+    $element_subform['#attributes']['class'][] = 'child-div--spaced';
+
 
     return $widget_element;
   }
