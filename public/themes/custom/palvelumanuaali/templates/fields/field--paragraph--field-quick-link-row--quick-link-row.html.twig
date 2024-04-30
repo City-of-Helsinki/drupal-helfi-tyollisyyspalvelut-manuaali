@@ -56,7 +56,7 @@
 
   <div{{ attributes.addClass(classes) }}>
     <h2{{ title_attributes.addClass(title_classes) }}>{{ label }}</h2>
-      <div class="field__items">
+      <div class="field__items display--grid grid--list-style-none grid--3 grid--row-gap-24 grid--column-gap-24">
     {% for item in items %}
       <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
     {% endfor %}
