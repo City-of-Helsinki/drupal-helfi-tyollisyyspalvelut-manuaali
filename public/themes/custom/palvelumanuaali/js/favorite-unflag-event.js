@@ -43,7 +43,7 @@
 
         // HTML structure for the popup
         let popupHTML = `
-      <div class="hidden popup unflag-confirm-popup ${popupId}" id="${popupId}">
+      <div class="popup unflag-confirm-popup ${popupId}" id="${popupId}">
         <span class="close">&times;</span>
         <p>${message}</p>
         <button class="ok-btn">OK</button>
