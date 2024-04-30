@@ -836,7 +836,7 @@ display:
     display_plugin: page
     position: 1
     display_options:
-      title: Suosikit
+      title: 'Omat suosikit'
       pager:
         type: full
         options:
@@ -858,6 +858,18 @@ display:
             offset: false
             offset_label: Offset
           quantity: 5
+      empty:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text_custom
+          empty: true
+          content: "<h4 class='margin-bottom-one-space font-weight--bold font-size--h4'>Suosikkeihin ei ole vielä lisätty palveluita.</h4>\r\n<p class='margin--bottom-two-and-half'>Siirry hakuun ja etsi sopivia palveluita.</p>\r\n<p><a class='button button--line-height-24 button--no-color button--round-corners font-size--small position--relative button--padding-right-quadruple' href='/haku'>Siirry hakusivulle <span class='link__arrow icon--arrow-right-2 position--absolute position--right-zero margin--right-one-and-half'></span></a></p>"
+          tokenize: false
       style:
         type: default
         options:
@@ -870,6 +882,7 @@ display:
           relationship: none
           view_mode: view_card_lift
       defaults:
+        empty: false
         title: false
         pager: false
         style: false
