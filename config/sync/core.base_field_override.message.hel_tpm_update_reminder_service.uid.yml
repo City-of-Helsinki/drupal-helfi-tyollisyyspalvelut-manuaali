@@ -1,0 +1,20 @@
+uuid: 70d0aec5-08fd-4973-b3d4-e965261acd29
+langcode: en
+status: true
+dependencies:
+  config:
+    - message.template.hel_tpm_update_reminder_service
+id: message.hel_tpm_update_reminder_service.uid
+field_name: uid
+entity_type: message
+bundle: hel_tpm_update_reminder_service
+label: 'Created by'
+description: 'The user that created the message.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: 'Drupal\message\Entity\Message::getCurrentUserId'
+settings:
+  handler: default
+  handler_settings: {  }
+field_type: entity_reference

@@ -1,0 +1,20 @@
+uuid: 25252ec2-6366-4bba-99d7-ec68c557cf3f
+langcode: en
+status: true
+dependencies:
+  config:
+    - message.template.hel_tpm_group_account_blocked
+id: message.hel_tpm_group_account_blocked.uid
+field_name: uid
+entity_type: message
+bundle: hel_tpm_group_account_blocked
+label: 'Created by'
+description: 'The user that created the message.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: 'Drupal\message\Entity\Message::getCurrentUserId'
+settings:
+  handler: default
+  handler_settings: {  }
+field_type: entity_reference

@@ -1,0 +1,22 @@
+uuid: 8edc7619-8f09-46a3-874d-9743d8604717
+langcode: en
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.full_width_card_lift
+id: paragraph.full_width_card_lift.status
+field_name: status
+entity_type: paragraph
+bundle: full_width_card_lift
+label: Published
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean
