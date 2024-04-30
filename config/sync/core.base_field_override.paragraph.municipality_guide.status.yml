@@ -1,0 +1,22 @@
+uuid: 7f6daeec-4f24-4d9e-8084-650d9f7d19fb
+langcode: en
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.municipality_guide
+id: paragraph.municipality_guide.status
+field_name: status
+entity_type: paragraph
+bundle: municipality_guide
+label: Published
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

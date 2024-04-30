@@ -10,6 +10,7 @@ dependencies:
     - flag.flag.cart
     - node.type.service
   module:
+    - better_exposed_filters
     - entity_print_views
     - flag
     - node
@@ -264,15 +265,38 @@ display:
             offset: false
             offset_label: Offset
       exposed_form:
-        type: basic
+        type: bef
         options:
           submit_button: Apply
           reset_button: false
           reset_button_label: Reset
-          exposed_sorts_label: 'Sort by'
+          exposed_sorts_label: 'Järjestä:'
           expose_sort_order: true
           sort_asc_label: Asc
           sort_desc_label: Desc
+          text_input_required: 'Select any filter and click on Apply to see results'
+          text_input_required_format: filtered_html
+          bef:
+            general:
+              autosubmit: true
+              autosubmit_exclude_textfield: false
+              autosubmit_textfield_delay: 500
+              autosubmit_hide: true
+              input_required: false
+              allow_secondary: false
+              secondary_label: 'Advanced options'
+              secondary_open: false
+              reset_button_always_show: false
+            sort:
+              plugin_id: select2
+              advanced:
+                combine: true
+                combine_rewrite: "Päivitetty viimeksi Asc|\r\nPäivitetty viimeksi Desc|Viimeksi päivitetty\r\nAakkosjärjestys Asc|Aakkosjärjestys A→Z\r\nAakkosjärjestys Desc|Aakkosjärjestys Z→A"
+                reset: false
+                reset_label: ''
+                collapsible: false
+                collapsible_label: 'Sort options'
+                is_secondary: false
       access:
         type: perm
         options:
@@ -294,7 +318,7 @@ display:
           plugin_id: date
           order: DESC
           expose:
-            label: ''
+            label: Created
             field_identifier: created
           exposed: false
           granularity: second
@@ -748,6 +772,23 @@ display:
           empty: true
           content: "<p><b>Ei lisättyjä suosikkeja</b><br>\r\n<a class='button button--no-color button--round-corners' href='/haku'> Hae palveluita</a></p>"
           tokenize: false
+      sorts:
+        created:
+          id: created
+          table: flagging
+          field: created
+          relationship: flag_relationship
+          group_type: group
+          admin_label: ''
+          entity_type: flagging
+          entity_field: created
+          plugin_id: date
+          order: DESC
+          expose:
+            label: Created
+            field_identifier: created
+          exposed: false
+          granularity: second
       style:
         type: table
         options:
@@ -819,6 +860,7 @@ display:
         style: false
         row: false
         fields: false
+        sorts: false
         header: false
       header: {  }
       display_extenders: {  }
@@ -837,7 +879,7 @@ display:
     display_plugin: page
     position: 1
     display_options:
-      title: Suosikit
+      title: 'Omat suosikit'
       pager:
         type: full
         options:
@@ -859,6 +901,50 @@ display:
             offset: false
             offset_label: Offset
           quantity: 5
+      empty:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text_custom
+          empty: true
+          content: "<h4 class='margin-bottom-one-space font-weight--bold font-size--h4'>Suosikkeihin ei ole vielä lisätty palveluita.</h4>\r\n<p class='margin--bottom-two-and-half'>Siirry hakuun ja etsi sopivia palveluita.</p>\r\n<p><a class='button button--line-height-24 button--no-color button--round-corners font-size--small position--relative button--padding-right-quadruple' href='/haku'>Siirry hakusivulle <span class='link__arrow icon--arrow-right-2 position--absolute position--right-zero margin--right-one-and-half'></span></a></p>"
+          tokenize: false
+      sorts:
+        created_1:
+          id: created_1
+          table: node_field_revision
+          field: created
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: created
+          plugin_id: date
+          order: DESC
+          expose:
+            label: 'Päivitetty viimeksi'
+            field_identifier: created_1
+          exposed: true
+          granularity: second
+        title:
+          id: title
+          table: node_field_data
+          field: title
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: title
+          plugin_id: standard
+          order: ASC
+          expose:
+            label: Aakkosjärjestys
+            field_identifier: title
+          exposed: true
       style:
         type: default
         options:
@@ -871,11 +957,13 @@ display:
           relationship: none
           view_mode: taxonomy_card
       defaults:
+        empty: false
         title: false
         css_class: false
         pager: false
         style: false
         row: false
+        sorts: false
         header: false
       css_class: taxonomy-card-list
       header:
@@ -901,7 +989,7 @@ display:
           admin_label: ''
           plugin_id: result
           empty: false
-          content: '<strong>Hakutuloksia:</strong> <span class="total-number">@total</span>'
+          content: '<strong class="margin--right-one-space font-weight--bold font-size--select-label">Suosikkeja:</strong> <span class="total-number padding--view-summary font-color--light-blue d--inline-block background-color--white width--min-content border-radius--eight">@total</span>'
       display_extenders: {  }
       path: suosikit
       menu:
@@ -919,6 +1007,8 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url.query_args
+        - 'url.query_args:sort_by'
+        - 'url.query_args:sort_order'
         - 'user.node_grants:view'
         - user.permissions
       tags:

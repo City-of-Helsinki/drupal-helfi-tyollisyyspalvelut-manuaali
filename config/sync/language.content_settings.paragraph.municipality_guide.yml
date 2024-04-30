@@ -1,0 +1,18 @@
+uuid: 1c8954b9-1e57-4c2e-9d87-a86b2ec78e3e
+langcode: en
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.municipality_guide
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: false
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: paragraph.municipality_guide
+target_entity_type_id: paragraph
+target_bundle: municipality_guide
+default_langcode: site_default
+language_alterable: false
