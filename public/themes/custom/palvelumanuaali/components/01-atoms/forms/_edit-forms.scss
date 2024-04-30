@@ -387,7 +387,8 @@ details>.form-wrapper:last-child {
   }
   .field-paragraph-values,
   .field-quick-links-values {
-    .field-link-values tbody tr::after {
+    .field-link-values tbody tr::after,
+    .field-service-reference-values tbody tr::after  {
       border-bottom: 0;
     }
   }
@@ -404,7 +405,11 @@ details>.form-wrapper:last-child {
     }
   }
   .field-service-reference-values {
-    .table__cell {
+    border-collapse: separate;
+    border-spacing: 0 $space;
+    margin: 0;
+    .table__cell,
+    .table__cell > .ajax-new-content {
       display: inline-flex;
     }
     input[data-drupal-selector*="-actions-remove-button"] {
@@ -480,7 +485,7 @@ details>.form-wrapper:last-child {
 }
 
 
-//// TODO: separate to dialog @file
+//// TODO: separate to dialog file
 .ui-widget-content.ui-dialog {
   border-radius: 8px;
   padding: $space-one-and-half $space-one-and-half $space-one-and-half $space-two-and-half;
@@ -507,5 +512,15 @@ details>.form-wrapper:last-child {
   .select--white-rounded .form-select,
   .form-select {
     background: clr(background-dropdown);
+  }
+  .field-service-time-and-location-values {
+    .select--white-rounded {
+      .form-item__select {
+        background-color: clr(text-inverse);
+      }
+      .select2 {
+        background-color: clr(text-inverse);
+      }
+    }
   }
 }
