@@ -6,6 +6,7 @@
  */
 
 use Drupal\content_moderation\Entity\ContentModerationState;
+use Drupal\views_infinite_scroll\Plugin\views\pager\InfiniteScroll;
 
 /**
  * Implements hook_preprocess_html().
@@ -85,6 +86,21 @@ function palvelumanuaali_preprocess_field(&$variables) {
       if ($node->get('field_client_consent')->isEmpty() || $node->field_client_consent->value === "0") {
         unset($variables['items']);
       }
+    }
+  }
+  if ($variables['field_name'] == 'field_short_description' && $variables['element']['#bundle'] == 'quick_link') {
+    $variables['attributes']['class'] = [];
+    $variables['attributes']['class'][] = 'font-size--small';
+  }
+  if ($variables['field_name'] == 'field_title' && $variables['element']['#bundle'] == 'quick_link') {
+    $variables['attributes']['class'] = [];
+    $variables['attributes']['class'][] = 'font-color--blue';
+    $variables['attributes']['class'][] = 'font-spacing--spaced';
+    $variables['attributes']['class'][] = 'font-weight--bold';
+  }
+  if ($variables['field_name'] == 'field_paragraph' && $variables['element']['#bundle'] == 'basic_page')  {
+    foreach ($variables['items'] as $key => $item) {
+      $variables['items'][$key]['attributes']->setAttribute('class', 'margin-bottom-double-space');
     }
   }
 }
@@ -269,6 +285,30 @@ function palvelumanuaali_preprocess_details(&$variables) {
   if ($node = \Drupal::request()->attributes->get('node')) {
      $variables['nid'] = $node->id();
   }
+}
+
+
+/**
+ * Implements hook_preprocess_views_view().
+ */
+function palvelumanuaali_preprocess_views_view(&$vars) {
+  $view = $vars['view'];
+  if ($view->getDisplay()->isPagerEnabled() && !empty($vars['rows'])) {
+    $pager = $view->getPager();
+    if ($pager && $pager instanceof InfiniteScroll) {
+      if (!isset($vars['rows']['#theme_wrappers'])) {
+        $vars['rows']['#theme_wrappers'] = [];
+      }
+      $vars['rows']['#theme_wrappers']['container']['#attributes']['class'][] = 'view-content';
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_eva_display_entity_view().
+ */
+function palvelumanuaali_preprocess_eva_display_entity_view(&$vars) {
+  palvelumanuaali_preprocess_views_view($vars);
 }
 
 /**

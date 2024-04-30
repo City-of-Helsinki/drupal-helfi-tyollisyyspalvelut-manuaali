@@ -1,0 +1,22 @@
+uuid: be193214-c889-4d1e-88b5-35912b5a5309
+langcode: en
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.long_text_field_with_toolbar
+id: paragraph.long_text_field_with_toolbar.status
+field_name: status
+entity_type: paragraph
+bundle: long_text_field_with_toolbar
+label: Published
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean
