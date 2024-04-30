@@ -51,7 +51,7 @@
           {{ header }}
         </div>
       {% endif %}
-      {% if exposed %}
+      {% if exposed and not empty %}
         <div class="view-filters margin-bottom-one-space align-content--end">
           {{ exposed }}
         </div>
