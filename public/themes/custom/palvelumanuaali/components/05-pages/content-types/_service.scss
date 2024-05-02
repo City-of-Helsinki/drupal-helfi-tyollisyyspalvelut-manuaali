@@ -102,6 +102,11 @@
     .horizontal-tabs {
       .horizontal-tabs-list {
         display: flex;
+        @include large {
+          position: sticky;
+          top: 50px;
+          z-index: 200;
+        }
       }
     }
   }
