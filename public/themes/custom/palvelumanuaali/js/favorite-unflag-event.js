@@ -5,6 +5,8 @@
     attach: function (context, settings) {
       const cart = '.view-cart';
       const popupWrapper = '.unflag-popup-wrapper';
+      const popupTimeout = 20000;
+
       if ($('.view-id-cart').length <= 0) {
         return;
       }
@@ -19,10 +21,15 @@
           return;
         }
         let data = getXhrData(xhr);
+
+        // Returning data has action-flag class. Create popup and trigger RefreshView.
         if ($(data).hasClass('action-flag')) {
-          createPopup(Drupal.t('Service removed from favorites'), getCancelUrl(data), triggElem)
+          let card = ($(triggElem, context).closest('.card--taxonomy-card'));
+          createPopup(card, getCancelUrl(data), triggElem)
           $(cart).triggerHandler('RefreshView');
         }
+
+        // When data has action-unflag refreshview and close popup.
         if ($(data).hasClass('action-unflag')) {
           $(cart).triggerHandler('RefreshView');
           closePopup(triggElem);
@@ -37,20 +44,23 @@
        * @param cancelUrl
        * @param triggeringElement
        */
-      function createPopup(message, cancelUrl, triggeringElement) {
+      function createPopup(card, cancelUrl, triggeringElement) {
         // Create a unique identifier for each popup
-        let popupId =  `popup\${triggeringElement}`;
+        triggeringElement = triggeringElement.split('.').join("");
+        let popupId =  `popup-${triggeringElement}`;
+        let title = $.trim($('.card__heading', card).text());
+        let message = Drupal.t('@title removed from favorites', {'@title': title});
 
         // HTML structure for the popup
         let popupHTML = `
-      <div class="popup unflag-confirm-popup ${popupId}" id="${popupId}">
-        <span class="close">&times;</span>
-        <p>${message}</p>
-        <button class="ok-btn">OK</button>
-        <div class="flag-cart action-unflag">
-          <a class="use-ajax cancel-btn" href="${cancelUrl}" >Cancel</a>
-         </div>
-      </div>`;
+          <div class="popup unflag-confirm-popup ${popupId}" id="${popupId}">
+            <span class="close">&times;</span>
+            <p>${message}</p>
+            <button class="ok-btn">OK</button>
+            <div class="flag-cart action-unflag">
+              <a class="use-ajax cancel-btn" href="${cancelUrl}" >Cancel</a>
+             </div>
+          </div>`;
 
         $(popupHTML).appendTo(popupWrapper, context);
 
@@ -69,17 +79,18 @@
               $(this).remove();
             }
           })
-        }, 20000)
+        }, popupTimeout);
       }
 
       /**
        * Creates popup wrapper.
        */
       function createPopupWrapper() {
-        if ($(popupWrapper).length <= 0) {
+        if ($(popupWrapper).length >= 0) {
           $('body', context).append("<div class='unflag-popup-wrapper'></div>")
         }
       }
+
       /**
        * Remove popup element.
        *
