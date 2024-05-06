@@ -1,11 +1,11 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types = 1);
 
 namespace Drupal\hel_tpm_general\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceEntityFormatter;
-use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Plugin implementation of the 'Time and Place formatter' formatter.
@@ -29,7 +29,7 @@ final class TimeAndPlaceFormatter extends EntityReferenceEntityFormatter {
       if (!$entity->hasField('field_dates')) {
         continue;
       }
-      if ($entity->get('field_service_location')->isEmpty() && $entity->get('field_dates')->isEmpty())  {
+      if ($entity->get('field_service_location')->isEmpty() && $entity->get('field_dates')->isEmpty()) {
         $items->removeItem($delta);
       }
     }

@@ -103,6 +103,21 @@ $outer-container-break: $small;
   }
 }
 
+.close-icon-button {
+  color: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-color: transparent;
+  border: 0;
+  border-radius: 0;
+  background-image: url("/themes/custom/palvelumanuaali/images/icons/close.svg");
+  padding: 0;
+  background-size: 18px;
+  &:hover {
+    background-color: transparent;
+    color: transparent;
+  }
+}
 
 @mixin close-button {
   color: transparent;
@@ -113,7 +128,7 @@ $outer-container-break: $small;
   border-radius: 0;
   background-image: url("/themes/custom/palvelumanuaali/images/icons/close.svg");
   padding: 0;
-  background-size: contain;
+  background-size: 18px;
   &:hover {
     background-color: transparent;
     color: transparent;

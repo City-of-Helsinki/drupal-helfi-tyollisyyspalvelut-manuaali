@@ -1,0 +1,20 @@
+uuid: 2a0c00e9-db75-4717-95ba-b7ba18a47365
+langcode: en
+status: true
+dependencies:
+  config:
+    - message.template.hel_tpm_user_expiry_blocked
+id: message.hel_tpm_user_expiry_blocked.uid
+field_name: uid
+entity_type: message
+bundle: hel_tpm_user_expiry_blocked
+label: 'Created by'
+description: 'The user that created the message.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: 'Drupal\message\Entity\Message::getCurrentUserId'
+settings:
+  handler: default
+  handler_settings: {  }
+field_type: entity_reference

@@ -1,0 +1,18 @@
+uuid: 5a3eedbf-c61b-402b-b781-595ed9ff9022
+langcode: en
+status: true
+dependencies:
+  config:
+    - message.template.content_has_been_published
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: false
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: message.content_has_been_published
+target_entity_type_id: message
+target_bundle: content_has_been_published
+default_langcode: site_default
+language_alterable: false

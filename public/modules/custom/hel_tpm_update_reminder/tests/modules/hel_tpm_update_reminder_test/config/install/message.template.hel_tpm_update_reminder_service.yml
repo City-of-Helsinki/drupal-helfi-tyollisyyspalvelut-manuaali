@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.plain_text_format
+template: hel_tpm_update_reminder_service
+label: hel_tpm_update_reminder_service
+description: 'Service update reminder'
+text:
+  -
+    value: "Validate service [message:field_node:entity:title]\r\n"
+    format: plain_text_format
+settings:
+  'token options':
+    clear: false
+    'token replace': true
+  purge_override: false
+  purge_methods: {  }

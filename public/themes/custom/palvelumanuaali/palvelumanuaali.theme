@@ -6,6 +6,7 @@
  */
 
 use Drupal\content_moderation\Entity\ContentModerationState;
+use Drupal\views_infinite_scroll\Plugin\views\pager\InfiniteScroll;
 
 /**
  * Implements hook_preprocess_html().
@@ -87,6 +88,21 @@ function palvelumanuaali_preprocess_field(&$variables) {
       }
     }
   }
+  if ($variables['field_name'] == 'field_short_description' && $variables['element']['#bundle'] == 'quick_link') {
+    $variables['attributes']['class'] = [];
+    $variables['attributes']['class'][] = 'font-size--small';
+  }
+  if ($variables['field_name'] == 'field_title' && $variables['element']['#bundle'] == 'quick_link') {
+    $variables['attributes']['class'] = [];
+    $variables['attributes']['class'][] = 'font-color--blue';
+    $variables['attributes']['class'][] = 'font-spacing--spaced';
+    $variables['attributes']['class'][] = 'font-weight--bold';
+  }
+  if ($variables['field_name'] == 'field_paragraph' && $variables['element']['#bundle'] == 'basic_page')  {
+    foreach ($variables['items'] as $key => $item) {
+      $variables['items'][$key]['attributes']->setAttribute('class', 'margin-bottom-double-space');
+    }
+  }
 }
 
 function _palvelumanuaali_preprocess_view_card_liftup(&$variables) {
@@ -151,6 +167,7 @@ function palvelumanuaali_preprocess_fieldset(&$variables) {
   if (empty($element['#field_name'])) {
     return;
   }
+
   if ($element['#field_name'] == 'field_statements') {
     $variables['legend']['attributes']['class'] = [];
     $variables['legend']['attributes']['class'][] = 'field-group--title';
@@ -268,6 +285,30 @@ function palvelumanuaali_preprocess_details(&$variables) {
   if ($node = \Drupal::request()->attributes->get('node')) {
      $variables['nid'] = $node->id();
   }
+}
+
+
+/**
+ * Implements hook_preprocess_views_view().
+ */
+function palvelumanuaali_preprocess_views_view(&$vars) {
+  $view = $vars['view'];
+  if ($view->getDisplay()->isPagerEnabled() && !empty($vars['rows'])) {
+    $pager = $view->getPager();
+    if ($pager && $pager instanceof InfiniteScroll) {
+      if (!isset($vars['rows']['#theme_wrappers'])) {
+        $vars['rows']['#theme_wrappers'] = [];
+      }
+      $vars['rows']['#theme_wrappers']['container']['#attributes']['class'][] = 'view-content';
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_eva_display_entity_view().
+ */
+function palvelumanuaali_preprocess_eva_display_entity_view(&$vars) {
+  palvelumanuaali_preprocess_views_view($vars);
 }
 
 /**
@@ -397,6 +438,7 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id) {
     'node_service_form',
     'node_service_edit_form',
     'node_landing_page_edit_form',
+    'node_landing_page_form',
     'node_basic_page_form',
     'node_basic_page_edit_form'
   ];
@@ -406,6 +448,7 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id) {
     $form['language']['#type'] = 'container';
     $form['matomo']['#type'] = 'container';
   }
+
   if (in_array($form_id, $forms)) {
     if ($form_id == 'node_service_edit_form' || $form_id == 'node_service_form' ) {
       $node = $form_state->getFormObject()->getEntity();
@@ -420,6 +463,15 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id) {
         $form['field_service_time_and_location']['#disabled'] = TRUE;
         $form['field_service_languages']['#disabled'] = TRUE;
       }
+    }
+
+    if ($form_id == 'node_basic_page_form' || $form_id == 'node_basic_page_edit_form' ) {
+      $form['field_paragraph']['#attributes']['class'][] = 'hide-title';
+    }
+    if ($form_id == 'node_landing_page_form' || $form_id == 'node_landing_page_edit_form' ) {
+      $form['field_paragraph']['#attributes']['class'][] = 'hide-title';
+      $form['field_quick_links']['#attributes']['class'][] = 'hide-title';
+
     }
 
     // combinations of these will be used to adjust the details block

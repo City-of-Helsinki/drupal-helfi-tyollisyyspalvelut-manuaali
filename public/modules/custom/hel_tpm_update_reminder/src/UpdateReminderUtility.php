@@ -32,17 +32,17 @@ class UpdateReminderUtility {
   /**
    * State API key for update reminder last run timestamp.
    */
-  private const LAST_RUN_KEY = 'hel_tpm_update_reminder.last_run';
+  public const LAST_RUN_KEY = 'hel_tpm_update_reminder.last_run';
 
   /**
    * Base State API key for node's last checked timestamp.
    */
-  private const CHECKED_TIMESTAMP_BASE_KEY = 'hel_tpm_update_reminder.checked_timestamp.node.';
+  public const CHECKED_TIMESTAMP_BASE_KEY = 'hel_tpm_update_reminder.checked_timestamp.node.';
 
   /**
    * Base State API key for node's messages sent counter.
    */
-  private const MESSAGES_SENT_BASE_KEY = 'hel_tpm_update_reminder.messages_sent.node.';
+  public const MESSAGES_SENT_BASE_KEY = 'hel_tpm_update_reminder.messages_sent.node.';
 
   /**
    * Get the last run timestamp.
