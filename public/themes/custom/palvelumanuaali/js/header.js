@@ -13,4 +13,15 @@
 
       }
   };
+  Drupal.behaviors.pagerItem = {
+    attach: function (context, settings) {
+        let pageItem = $(".pager__item a");
+        const scrollToBtn = document.getElemenstByClassName('pager__item');
+        scrollToBtn.addEventListener('click', () => {
+          scrollToBtn.scrollIntoView({
+            behavior: 'smooth',
+          });
+        });
+      }
+  };
 })(jQuery, Drupal, this);

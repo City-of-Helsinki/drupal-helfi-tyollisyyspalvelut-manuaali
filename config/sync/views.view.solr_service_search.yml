@@ -22,7 +22,7 @@ dependencies:
     - better_exposed_filters
     - hel_tpm_search
     - search_api
-    - views_infinite_scroll
+    - views_load_more
 id: solr_service_search
 label: 'Solr service search'
 module: views
@@ -953,15 +953,12 @@ display:
     position: 1
     display_options:
       pager:
-        type: infinite_scroll
+        type: load_more
         options:
           offset: 0
           items_per_page: 8
           total_pages: null
           id: 0
-          tags:
-            next: ''
-            previous: ''
           expose:
             items_per_page: false
             items_per_page_label: 'Items per page'
@@ -970,10 +967,14 @@ display:
             items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
-          views_infinite_scroll:
-            button_text: 'Näytä lisää'
-            automatically_load_content: false
-            initially_load_all_pages: false
+          more_button_text: 'Load more'
+          end_text: ''
+          advanced:
+            content_selector: ''
+            pager_selector: ''
+          effects:
+            type: fadeIn
+            speed: slow
       exposed_form:
         type: bef
         options:
