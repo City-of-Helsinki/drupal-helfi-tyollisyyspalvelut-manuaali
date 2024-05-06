@@ -1,9 +1,35 @@
+.tabledrag-toggle-weight-wrapper {
+  display: none;
+}
+
+.hide-title {
+  th {
+    display: none;
+  }
+  .paragraph-type-title,
+  .paragraph-type {
+    display: none;
+  }
+}
+
 .node-basic-page-form {
   >.form-background--regular-padding {
       @include large {
         padding: 48px 56px;
       }
     }
+}
+
+.service .block--main-block >.node-form,
+.group-form {
+  #edit-group-left-column {
+    max-width: unset;
+    grid-column: 1/3;
+    @include xl {
+      grid-column: 1/2;
+      grid-row:2;
+    }
+  }
 }
 
 .block--main-block >.node-form,
@@ -31,14 +57,6 @@
   @include xl {
     grid-template-columns: 7fr 3fr;
     grid-column-gap: 24px;
-  }
-  #edit-group-left-column {
-    max-width: unset;
-    grid-column: 1/3;
-    @include xl {
-      grid-column: 1/2;
-      grid-row:2;
-    }
   }
   .field-group-details {
     display: none !important;
@@ -342,4 +360,167 @@ details>.form-wrapper:last-child {
 
 .horizontal-tabs-panes .horizontal-tabs-pane {
   padding: 0;
+}
+
+.paragraph-type-top  input[data-drupal-selector*="top-links-remove-button"],
+.close-icon-button,
+.field--widget-hel-tpm-editorial-paragraphs-alt-custom input[data-drupal-selector*="-actions-remove-button"] {
+  @include close-button;
+}
+
+
+
+.field--widget-hel-tpm-editorial-paragraphs-alt-custom {
+  .paragraphs-tabs-wrapper {
+    >.form-item {
+      color: transparent;
+    }
+  }
+  input.form-autocomplete {
+    background-image: unset;
+  }
+  .paragraphs-add-suffix {
+    color: transparent;
+  }
+  .paragraphs-subform {
+    margin-bottom: $space-double;
+  }
+  .field-paragraph-values,
+  .field-quick-links-values {
+    .field-link-values tbody tr::after,
+    .field-service-reference-values tbody tr::after  {
+      border-bottom: 0;
+    }
+  }
+  .paragraph-type--url-and-file .form-item {
+    flex: 1;
+  }
+  .field-link-values {
+    border-collapse: separate;
+    border-spacing: 0 $space;
+    margin: 0;
+    input[data-drupal-selector*="-actions-remove-button"] {
+      margin-top: 32px;
+      background-size: 18px;
+    }
+  }
+  .field-service-reference-values {
+    border-collapse: separate;
+    border-spacing: 0 $space;
+    margin: 0;
+    .table__cell,
+    .table__cell > .ajax-new-content {
+      display: inline-flex;
+    }
+    input[data-drupal-selector*="-actions-remove-button"] {
+      background-size: 18px;
+    }
+  }
+  .form-fieldset {
+    padding: 0;
+  }
+  .draggable {
+    .handle {
+      width: 48px;
+      height: 48px;
+      padding: 0;
+      background-position: center;
+      margin-top: 0;
+      height: 100%;
+    }
+    .tabledrag-handle {
+      overflow: visible;
+      height: 48px;
+      position: absolute;
+      height: 100%;
+      display: block;
+    }
+    .field-multiple-drag {
+      position: relative;
+      width: 48px;
+    }
+  }
+  .paragraphs-description .paragraphs-plugin-wrapper,
+  .paragraphs-description .paragraphs-content-wrapper {
+    height: 24px;
+    line-height: 24px;
+  }
+
+  .details-file-field {
+    tbody tr {
+      padding-left: 0;
+    }
+    a.tabledrag-handle {
+      position: relative;
+      height: unset;
+      width: 48px;
+      margin-right: 0;
+      .handle {
+        margin: auto;
+      }
+    }
+  }
+}
+
+// TODO: add these as a class to element if possible
+.paragraph-alt-custom.paragraph-top {
+  grid-template-rows: 48px;
+  .paragraph-info,
+  .paragraph-summary {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+  .paragraphs-description .summary-content {
+    color:clr(text);
+  }
+  .paragraphs-actions {
+    height: 24px;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+}
+.tabledrag-changed-warning,
+.tabledrag-changed {
+  display: none;
+}
+
+
+//// TODO: separate to dialog file
+.ui-widget-content.ui-dialog {
+  border-radius: 8px;
+  padding: $space-one-and-half $space-one-and-half $space-one-and-half $space-two-and-half;
+  border: 0;
+  .ui-dialog-titlebar {
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+  }
+  .paragraphs-add-dialog {
+    padding: 0;
+  }
+  .ui-dialog-titlebar-close {
+    @include close-button;
+    position: absolute;
+    top: 12px;
+    right: 0;
+  }
+}
+
+.node-edit-form,
+.node-form {
+  .select--white-rounded .select2,
+  .select--white-rounded .form-select,
+  .form-select {
+    background: clr(background-dropdown);
+  }
+  .field-service-time-and-location-values {
+    .select--white-rounded {
+      .form-item__select {
+        background-color: clr(text-inverse);
+      }
+      .select2 {
+        background-color: clr(text-inverse);
+      }
+    }
+  }
 }

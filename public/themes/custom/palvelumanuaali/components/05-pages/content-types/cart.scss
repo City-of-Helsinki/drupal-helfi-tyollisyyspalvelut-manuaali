@@ -17,8 +17,6 @@
       font-size: 15px;
     }
     .total-number {
-      display: inline-block;
-      width: min-content;
       background-color: clr(text-inverse);
       padding: 4px 8px;
       color: clr(background-section);
@@ -74,7 +72,55 @@
 
 
 
+.view-cart.view-display-id-page_1 {
+  .view-empty {
+    display: grid;
+    text-align: center;
+    margin: auto;
+    min-height: 500px;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+  }
+  .select2-container {
+    &::after {
+      background-position: top 50% right 16px;
+    }
+  }
+  .select2-selection--single .select2-selection__rendered {
+    background: transparent !important;
+    font-size: 14px !important;
+    line-height: 24px !important;
+    padding: 0 !important;
+    margin-right: $space-double;
+  }
+  .select2-selection--single {
+    height: 24px;
+  }
+  .view-filters {
+    margin-bottom: $space;
+    align-content: end;
+    .form-item-select {
+      float: unset;
+      display: inline-flex;
+      align-items: center;
+      label {
+        margin-bottom: 0;
+        @extend .font-size--select-label;
+        @extend .font-weight--bold;
+        @extend .margin--right-one-space;
+      }
+    }
+  }
+  .view-filters .form--inline {
+    margin: 0;
+  }
+}
+
 .cart-page {
+  .select2-search--dropdown {
+    display: none;
+  }
   #block-hel-tpm-url-shortener-form {
     margin-top: $space-double;
     margin-left: $space-two-and-half;

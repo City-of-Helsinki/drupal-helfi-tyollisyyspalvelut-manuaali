@@ -4,17 +4,13 @@ namespace Drupal\hel_tpm_general\Drush\Commands\sql;
 
 use Consolidation\AnnotatedCommand\CommandData;
 use Consolidation\AnnotatedCommand\Hooks\HookManager;
-use Consolidation\OutputFormatters\StructuredData\RowsOfFields;
+use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Password\PasswordInterface;
-use Drupal\Core\Utility\Token;
 use Drush\Attributes as CLI;
 use Drush\Commands\DrushCommands;
 use Drush\Drupal\Commands\sql\SanitizeCommands;
 use Drush\Sql\SqlBase;
-use Drush\Utils\StringUtils;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * A Drush commandfile.
@@ -29,7 +25,7 @@ final class UsernameSanitizeCommands extends DrushCommands {
    * Constructs a HelTpmGeneralCommands object.
    */
   public function __construct(
-    protected \Drupal\Core\Database\Connection $database,
+    protected Connection $database,
     protected EntityTypeManagerInterface $entityTypeManager
   ) {
     parent::__construct();
@@ -51,17 +47,32 @@ final class UsernameSanitizeCommands extends DrushCommands {
         $sql = SqlBase::create($commandData->input()->getOptions());
         $db_driver = $sql->scheme();
         if ($db_driver == 'pgsql') {
-          $username_map = ['%uid' => "' || uid || '", '%mail' => "' || replace(mail, '@', '_') || '", '%name' => "' || replace(name, ' ', '_') || '"];
-          $new_username =  "'" . str_replace(array_keys($username_map), array_values($username_map), $options['sanitize-name']) . "'";
-        } elseif ($db_driver == 'mssql') {
-          $username_map = ['%uid' => "' + uid + '", '%mail' => "' + replace(mail, '@', '_') + '", '%name' => "' + replace(name, ' ', '_') + '"];
-          $new_username =  "'" . str_replace(array_keys($username_map), array_values($username_map), $options['sanitize-name']) . "'";
-        } else {
-          $username_map = ['%uid' => "', uid, '", '%mail' => "', replace(mail, '@', '_'), '", '%name' => "', replace(name, ' ', '_'), '"];
-          $new_username =  "concat('" . str_replace(array_keys($username_map), array_values($username_map), $options['sanitize-name']) . "')";
+          $username_map = [
+            '%uid' => "' || uid || '",
+            '%mail' => "' || replace(mail, '@', '_') || '",
+            '%name' => "' || replace(name, ' ', '_') || '",
+          ];
+          $new_username = "'" . str_replace(array_keys($username_map), array_values($username_map), $options['sanitize-name']) . "'";
+        }
+        elseif ($db_driver == 'mssql') {
+          $username_map = [
+            '%uid' => "' + uid + '",
+            '%mail' => "' + replace(mail, '@', '_') + '",
+            '%name' => "' + replace(name, ' ', '_') + '",
+          ];
+          $new_username = "'" . str_replace(array_keys($username_map), array_values($username_map), $options['sanitize-name']) . "'";
+        }
+        else {
+          $username_map = [
+            '%uid' => "', uid, '",
+            '%mail' => "', replace(mail, '@', '_'), '",
+            '%name' => "', replace(name, ' ', '_'), '",
+          ];
+          $new_username = "concat('" . str_replace(array_keys($username_map), array_values($username_map), $options['sanitize-name']) . "')";
         }
         $query->expression('name', $new_username);
-      } else {
+      }
+      else {
         $query->fields(['name' => $options['sanitize-name']]);
       }
       $messages[] = dt('User names sanitized.');
@@ -92,16 +103,20 @@ final class UsernameSanitizeCommands extends DrushCommands {
     }
   }
 
+  /**
+   * {@inheritdoc}
+   */
   #[CLI\Hook(type: HookManager::OPTION_HOOK, target: SanitizeCommands::SANITIZE)]
   #[CLI\Option(name: 'sanitize-name', description: 'The pattern for test user names in the sanitization operation, or <info>no</info> to keep user names unchanged. May contain replacement patterns <info>%uid</info>, <info>%mail</info> or <info>%name</info>.')]
   #[CLI\Option(name: 'ignored-roles', description: 'A comma delimited list of roles. Users with at least one of the roles will be exempt from sanitization.')]
-  public function options($options = ['sanitize-name' => 'user+%uid', 'ignored-roles' => null]): void
-  {
+  public function options($options = ['sanitize-name' => 'user+%uid', 'ignored-roles' => NULL]): void {
   }
 
+  /**
+   * {@inheritdoc}
+   */
   #[CLI\Hook(type: HookManager::ON_EVENT, target: 'sql-sanitize-confirms')]
-  public function messages(&$messages, InputInterface $input): void
-  {
+  public function messages(&$messages, InputInterface $input): void {
     $options = $input->getOptions();
     if ($this->isEnabled($options['sanitize-name'])) {
       $messages[] = dt('Sanitize user names.');
@@ -114,4 +129,5 @@ final class UsernameSanitizeCommands extends DrushCommands {
   protected function isEnabled(?string $value): bool {
     return $value != 'no' && $value != '0';
   }
+
 }

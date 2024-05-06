@@ -1,11 +1,11 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types = 1);
 
 namespace Drupal\hel_tpm_general\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\Core\Field\FormatterBase;
 use Drupal\options\Plugin\Field\FieldFormatter\OptionsDefaultFormatter;
-use Drupal\range\Plugin\Field\FieldFormatter\RangeIntegerFormatter;
 
 /**
  * Plugin implementation of the 'Age group field' formatter.
@@ -35,7 +35,7 @@ final class AgeGroupFieldFormatter extends OptionsDefaultFormatter {
     $element[0] = $entity->field_age->view([
       'type' => 'range_integer',
       'label' => 'hidden',
-      'settings' => ['field_prefix_suffix' => 1]
+      'settings' => ['field_prefix_suffix' => 1],
     ]);
     return $element;
   }

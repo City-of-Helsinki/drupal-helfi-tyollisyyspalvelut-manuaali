@@ -1,5 +1,9 @@
-.views-field-field-quick-links ul,
-.field--name-field-quick-link-row >.field__items {
+$main-width-large: calc(100vw - (#{$sidebar-md-width} + 256px));
+$main-width-large-with-gutters: calc(($main-width-large));
+$main-width-large-gutter: calc(($main-width-large-with-gutters) * (-0.1666));
+$main-width-xl: calc(100vw - (#{$sidebar-width} ));
+
+.views-field-field-quick-links ul{
   display: grid;
   grid-template-columns: 1fr;
   margin: 0;
@@ -31,19 +35,8 @@
     font-size: 18px;
   }
    >.field__items {
-    display: grid;
-    grid-template-columns: 1fr;
     margin: 0;
-    column-gap: 24px;
-    row-gap: 24px;
-    list-style: none;
     padding: 0;
-    @include xl {
-      grid-template-columns: 1fr 1fr;
-    }
-    @include xxl {
-      grid-template-columns: 1fr 1fr 1fr;
-    }
     li {
       position: relative;
       margin-bottom: 2em;
@@ -57,6 +50,21 @@
     }
   }
 }
+
+.basic-page {
+  .quick-link-row {
+    @include xl {
+      width: $main-width-large-with-gutters;
+      margin-left: $main-width-large-gutter;
+    }
+    @include xxl {
+      width: $main-width-xl;
+      margin-left: -252px;
+      max-width: 1464px;
+    }
+  }
+}
+
 
 .quick-link {
   display: grid;
@@ -82,10 +90,6 @@
     span {
       display: block;
     }
-  }
-  .field--name-field-title {
-    font-weight: 600;
-    color: $blue100;
   }
   .field--name-field-link {
     a {

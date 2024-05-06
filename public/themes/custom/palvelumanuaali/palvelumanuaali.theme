@@ -88,6 +88,21 @@ function palvelumanuaali_preprocess_field(&$variables) {
       }
     }
   }
+  if ($variables['field_name'] == 'field_short_description' && $variables['element']['#bundle'] == 'quick_link') {
+    $variables['attributes']['class'] = [];
+    $variables['attributes']['class'][] = 'font-size--small';
+  }
+  if ($variables['field_name'] == 'field_title' && $variables['element']['#bundle'] == 'quick_link') {
+    $variables['attributes']['class'] = [];
+    $variables['attributes']['class'][] = 'font-color--blue';
+    $variables['attributes']['class'][] = 'font-spacing--spaced';
+    $variables['attributes']['class'][] = 'font-weight--bold';
+  }
+  if ($variables['field_name'] == 'field_paragraph' && $variables['element']['#bundle'] == 'basic_page')  {
+    foreach ($variables['items'] as $key => $item) {
+      $variables['items'][$key]['attributes']->setAttribute('class', 'margin-bottom-double-space');
+    }
+  }
 }
 
 function _palvelumanuaali_preprocess_view_card_liftup(&$variables) {
@@ -152,6 +167,7 @@ function palvelumanuaali_preprocess_fieldset(&$variables) {
   if (empty($element['#field_name'])) {
     return;
   }
+
   if ($element['#field_name'] == 'field_statements') {
     $variables['legend']['attributes']['class'] = [];
     $variables['legend']['attributes']['class'][] = 'field-group--title';
@@ -447,6 +463,16 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id) {
       }
     }
 
+    if ($form_id == 'node_basic_page_form' || $form_id == 'node_basic_page_edit_form' ) {
+      $form['field_paragraph']['#attributes']['class'][] = 'hide-title';
+    }
+
+    if ($form_id == 'node_landing_page_form' || $form_id == 'node_landing_page_edit_form' ) {
+      $form['field_paragraph']['#attributes']['class'][] = 'hide-title';
+      $form['field_quick_links']['#attributes']['class'][] = 'hide-title'; 
+
+    }
+
     // combinations of these will be used to adjust the details block
     $form['revision_information']['#access'] = FALSE;
     $form['meta']['published']['#access'] = FALSE;
@@ -461,4 +487,14 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id) {
     $form['actions']['delete']['#access'] = FALSE;
     $form['actions']['cancel']['#access'] = FALSE;
   }
+}
+
+/**
+ * Implements hook_preprocess_input().
+ */
+function palvelumanuaali_preprocess_input__submit(&$variables) {
+   if(!($variables['element']['#form_id'] == 'node_basic_page_edit_form' || $variables['element']['#form_id'] == 'node_basic_page_form')) {
+     return;
+   }
+
 }
