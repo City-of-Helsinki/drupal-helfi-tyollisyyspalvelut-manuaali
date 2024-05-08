@@ -278,8 +278,6 @@
     @extend .view-result-number;
   }
 
-
-
   .bef-exposed-form {
     fieldset {
       width: 100%;
@@ -287,6 +285,11 @@
   }
   .form-item-checkbox {
     @extend .checkbox-pill;
+    padding: 0;
+    label {
+      padding: 8px 24px;
+      max-width: fit-content;
+    }
   }
   .form-checkboxes {
     @extend .col-xl-10;
