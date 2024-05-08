@@ -16,7 +16,7 @@
   Drupal.behaviors.pagerItem = {
     attach: function (context, settings) {
         let pageItem = $(".pager__item a");
-        const scrollToBtn = document.getElemenstByClassName('pager__item');
+        const scrollToBtn = document.getElemenstByClassName('pager__item')['0'];
         scrollToBtn.addEventListener('click', () => {
           scrollToBtn.scrollIntoView({
             behavior: 'smooth',
