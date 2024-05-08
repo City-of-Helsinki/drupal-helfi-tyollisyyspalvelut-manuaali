@@ -843,7 +843,7 @@ display:
         options:
           view_modes:
             'entity:node':
-              service: taxonomy_card
+              service: view_card_lift
       query:
         type: search_api_query
         options:
@@ -973,7 +973,7 @@ display:
             content_selector: ''
             pager_selector: ''
           effects:
-            type: fadeIn
+            type: ''
             speed: slow
       exposed_form:
         type: bef
