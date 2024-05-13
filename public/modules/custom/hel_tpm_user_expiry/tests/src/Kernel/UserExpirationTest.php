@@ -289,6 +289,13 @@ final class UserExpirationTest extends EntityKernelTestBase {
     $this->assertEquals('0', $blockedUser->get('status')->value);
   }
 
+  /**
+   * Test re-activated accounts stay active for configured period of time.
+   *
+   * @return void
+   *   Void.
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
   public function testReActivatedUserStaysActive() {
     $user = $this->createLastAccessUser(2, '-220 days', 0);
     $this->assertEquals('0', $user->get('status')->value);

@@ -77,12 +77,12 @@ function hel_tpm_user_expiry_user_update(EntityInterface $entity): void {
 
 /**
  * Force update user last access.
-
+ *
  * @param \Drupal\user\UserInterface $user
  *   User entity.
  *
  * @return void
- *  void
+ *   void
  */
 function _hel_tpm_user_expiry_update_user_last_access(UserInterface $user) {
   \Drupal::database()->update('users_field_data')
