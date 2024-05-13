@@ -8,6 +8,7 @@
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -250,6 +251,15 @@ function hel_tpm_group_views_data_alter(array &$data) {
       'field' => 'nid',
       'id' => 'group_services_missing_references',
       'zero is null' => TRUE,
+    ],
+  ];
+
+  $data['node_field_data']['moderation_state_filter_exclude_archived'] = [
+    'title' => t('Moderation state excluding archived by default'),
+    'filter' => [
+      'id' => 'moderation_state_filter_exclude_archived',
+      'field' => 'moderation_state',
+      'allow empty' => TRUE
     ],
   ];
 }
