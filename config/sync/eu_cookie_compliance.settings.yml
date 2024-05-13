@@ -11,20 +11,20 @@ eu_only_js: false
 popup_position: false
 fixed_top_position: false
 popup_info:
-  value: "<h3>Käytämme evästeitä</h3>\r\n\r\n<p>Käytämme sivustollamme evästeitä sivuston perustoimintojen ja suorituskyvyn varmistamiseksi. Lisäksi käytämme kohdennusevästeitä käyttäjäkokemuksen parantamiseksi, analytiikkaan ja yksilöidyn sisällön näyttämiseen. Evästeasetuksista voit lukea lisätietoja käytetyistä evästeistä, hyväksyä tai estää niiden käytön.</p>\r\n"
+  value: '<h3>Käytämme evästeitä</h3><p>Sivustollamme on käytössä toiminnan kannalta välttämättömät evästeet sekä anonyymit tilastointievästeet. Tutustu sivuston evästeasetuksiin <a href="/evasteet">täällä</a>.</p>'
   format: filtered_html
 mobile_popup_info:
   value: ''
   format: filtered_html
 popup_info_template: new
-popup_agree_button_message: 'Hyväksy kaikki evästeet'
+popup_agree_button_message: Sulje
 popup_more_info_button_message: 'More info'
 mobile_breakpoint: 768
 popup_agreed_enabled: false
 popup_hide_agreed: false
 disagree_button_label: 'Hylkää kaikki'
 popup_agreed:
-  value: "<p>Thank you for accepting cookies</p>\r\n\r\n<p>You can now hide this message or find out more about cookies.</p>\r\n"
+  value: '<p>Thank you for accepting cookies</p><p>You can now hide this message or find out more about cookies.</p>'
   format: filtered_html
 popup_find_more_button_message: 'More info'
 popup_hide_button_message: Piilossa
@@ -54,13 +54,13 @@ reload_routes_list: ''
 cookie_name: ''
 exclude_uid_1: false
 better_support_for_screen_readers: false
-method: categories
+method: default
 disabled_javascripts: ''
 automatic_cookies_removal: true
-allowed_cookies: "essential_cookies:notificationMessagesClosed\r\nstatistics:_pk_id.*\r\nstatistics:_pk_ses.*"
+allowed_cookies: ''
 consent_storage_method: do_not_store
 withdraw_message:
-  value: "<p>We use cookies on this site to enhance your user experience</p>\r\n\r\n<p>You have given your consent for us to set cookies.</p>\r\n"
+  value: '<p>We use cookies on this site to enhance your user experience</p><p>You have given your consent for us to set cookies.</p>'
   format: filtered_html
 withdraw_tab_button_label: 'Privacy settings'
 withdraw_action_button_label: 'Hylkää valinnat'
