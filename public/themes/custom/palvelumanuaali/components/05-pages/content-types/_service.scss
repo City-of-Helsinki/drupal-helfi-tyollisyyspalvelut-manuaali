@@ -102,10 +102,22 @@
     .horizontal-tabs {
       .horizontal-tabs-list {
         display: flex;
-        @include large {
-          position: sticky;
-          top: 50px;
-          z-index: 200;
+        position: sticky;
+        top: 0;
+        z-index: 200;
+      }
+    }
+    &.toolbar-fixed.toolbar-horizontal {
+      .horizontal-tabs {
+        .horizontal-tabs-list {
+          top: 75px;
+        }
+      }
+    }
+    &.toolbar-fixed.toolbar-vertical {
+      .horizontal-tabs {
+        .horizontal-tabs-list {
+          top: 40px;
         }
       }
     }
