@@ -59,6 +59,7 @@ class ModerationStateExcludeArchived extends ModerationStateFilter {
         'service_moderation-draft' => "service_moderation-draft",
         'service_moderation-ready_to_publish' => "service_moderation-ready_to_publish",
         'service_moderation-published' => "service_moderation-published",
+        'service_moderation-outdated' => "service_moderation-outdated",
       ];
     }
     parent::opSimple();
