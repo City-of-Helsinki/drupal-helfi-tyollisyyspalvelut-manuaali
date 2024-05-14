@@ -44,6 +44,7 @@
       }
       .flag {
         a {
+
           background: clr(text-inverse);
           border-radius: 50%;
           &:hover {
@@ -102,6 +103,23 @@
     .horizontal-tabs {
       .horizontal-tabs-list {
         display: flex;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+    }
+    &.toolbar-fixed.toolbar-horizontal {
+      .horizontal-tabs {
+        .horizontal-tabs-list {
+          top: 75px;
+        }
+      }
+    }
+    &.toolbar-fixed.toolbar-vertical {
+      .horizontal-tabs {
+        .horizontal-tabs-list {
+          top: 40px;
+        }
       }
     }
   }
@@ -112,7 +130,7 @@
       display: none;
       top: -71px;
       left: 0;
-      background-color: transparent;
+      background-color: clr(background);
       border: 0;
       align-items: end;
       .horizontal-tab-button {
