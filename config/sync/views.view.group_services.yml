@@ -210,8 +210,8 @@ display:
           element_wrapper_class: ''
           element_default_classes: true
           empty: ''
-          hide_empty: false
-          empty_zero: false
+          hide_empty: true
+          empty_zero: true
           hide_alter_empty: true
           click_sort_column: target_id
           type: entity_reference_label
@@ -955,7 +955,7 @@ display:
           columns:
             title: title
             name_1: name_1
-            name: name
+            field_responsible_updatee: field_responsible_updatee
             langcode: langcode
             moderation_state: moderation_state
             hel_tpm_editorial_service_has_unpublished_changes: hel_tpm_editorial_service_has_unpublished_changes
@@ -978,12 +978,12 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
-            name:
-              sortable: true
+            field_responsible_updatee:
+              sortable: false
               default_sort_order: asc
               align: ''
               separator: ''
-              empty_column: false
+              empty_column: true
               responsive: ''
             langcode:
               sortable: true
