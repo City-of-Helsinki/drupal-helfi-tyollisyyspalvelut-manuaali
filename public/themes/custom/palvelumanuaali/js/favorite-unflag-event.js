@@ -6,7 +6,7 @@
       const cart = '.view-cart';
       const popupWrapper = '.unflag-popup-wrapper';
       // Default 8s
-      const popupTimeout = 8000;
+      const popupTimeout = 800000;
 
       if ($('.view-id-cart').length <= 0) {
         return;

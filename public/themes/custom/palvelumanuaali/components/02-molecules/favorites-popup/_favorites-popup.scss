@@ -1,10 +1,12 @@
 .unflag-popup-wrapper {
   position: fixed;
   bottom: 1rem;
-  left: 50%;
   z-index: 999;
+  width: 100%;
   .popup {
     position: relative;
+    max-width: 600px;
+    margin: auto;
     padding: 1.5rem 3rem;
     background-color: $blue05;
     border-radius: 8px;
