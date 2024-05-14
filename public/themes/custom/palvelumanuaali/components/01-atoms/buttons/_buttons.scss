@@ -165,6 +165,7 @@ $button-colors: (
   @include xxl {
     padding: $space-three-fourths $space-double;
     height: 48px;
+    line-height: 24px;
     box-sizing: border-box;
 
   }
@@ -813,5 +814,21 @@ button {
     @extend .background-default;
     background-color: clr(background-border);
     border-radius: 50%;
+  }
+}
+
+.close-icon-button {
+  color: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-color: transparent;
+  border: 0;
+  border-radius: 0;
+  background-image: url("/themes/custom/palvelumanuaali/images/icons/close.svg");
+  padding: 0;
+  background-size: contain;
+  &:hover {
+    background-color: transparent;
+    color: transparent;
   }
 }
