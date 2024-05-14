@@ -5,7 +5,7 @@
     attach: function (context, settings) {
       const cart = '.view-cart';
       const popupWrapper = '.unflag-popup-wrapper';
-      const popupTimeout = 20000;
+      const popupTimeout = 200000;
 
       if ($('.view-id-cart').length <= 0) {
         return;
@@ -54,12 +54,14 @@
         // HTML structure for the popup
         let popupHTML = `
           <div class="popup unflag-confirm-popup ${popupId}" id="${popupId}">
-            <span class="close">&times;</span>
-            <p>${message}</p>
-            <button class="ok-btn">OK</button>
-            <div class="flag-cart action-unflag">
-              <a class="use-ajax cancel-btn" href="${cancelUrl}" >Cancel</a>
-             </div>
+            <a href="#" class="close-button"></a>
+            <div class="popup-title">${message}</div>
+            <div class="actions">
+              <div class="flag-cart action-unflag popup-action">
+                <a class="use-ajax cancel-btn" href="${cancelUrl}" >${Drupal.t("Cancel changes")}</a>
+               </div>
+              <button class="ok-btn button popup-action button--round-corners font-size--small">${Drupal.t("Confirm")}</button>
+            </div>
           </div>`;
 
         $(popupHTML).appendTo(popupWrapper, context);
@@ -68,7 +70,9 @@
         $('.ok-btn').click(function () {
           $(this).closest('.popup').remove();
         });
-
+        $('.close-button').click(function () {
+          $(this).closest('.popup').remove();
+        })
         $('.cancel-btn').click(function () {
           $(this).closest('.popup').remove();
         })
