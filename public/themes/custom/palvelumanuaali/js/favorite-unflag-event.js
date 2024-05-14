@@ -5,7 +5,8 @@
     attach: function (context, settings) {
       const cart = '.view-cart';
       const popupWrapper = '.unflag-popup-wrapper';
-      const popupTimeout = 200000;
+      // Default 8s
+      const popupTimeout = 8000;
 
       if ($('.view-id-cart').length <= 0) {
         return;
@@ -67,23 +68,26 @@
         $(popupHTML).appendTo(popupWrapper, context);
 
         // Event handlers for buttons
-        $('.ok-btn').click(function () {
-          $(this).closest('.popup').remove();
+        $('.ok-btn, .close-button, .cancel-btn').click(function () {
+          hidePopup($(this).closest('.popup'));
         });
-        $('.close-button').click(function () {
-          $(this).closest('.popup').remove();
-        })
-        $('.cancel-btn').click(function () {
-          $(this).closest('.popup').remove();
-        })
 
         setTimeout(function() {
           $(".popup").each(function () {
             if ($(this).attr('id') === popupId) {
-              $(this).remove();
+              hidePopup(this);
             }
           })
         }, popupTimeout);
+      }
+
+      /**
+       * Helper method to hide popup.
+       *
+       * @param popup
+       */
+      function hidePopup(popup) {
+        $(popup).fadeOut(500);
       }
 
       /**
