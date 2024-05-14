@@ -71,7 +71,24 @@ function hel_tpm_user_expiry_user_update(EntityInterface $entity): void {
   if ($entity->original->isBlocked() && $entity->isActive()) {
     // Clear user expiry notification state when blocked user is set to active.
     _hel_tpm_user_expiry_delete_notified_state($entity->id());
+    _hel_tpm_user_expiry_update_user_last_access($entity);
   }
+}
+
+/**
+ * Force update user last access.
+ *
+ * @param \Drupal\user\UserInterface $user
+ *   User entity.
+ *
+ * @return void
+ *   void
+ */
+function _hel_tpm_user_expiry_update_user_last_access(UserInterface $user) {
+  \Drupal::database()->update('users_field_data')
+    ->fields(['access' => \Drupal::time()->getRequestTime()])
+    ->condition('uid', $user->id())
+    ->execute();
 }
 
 /**

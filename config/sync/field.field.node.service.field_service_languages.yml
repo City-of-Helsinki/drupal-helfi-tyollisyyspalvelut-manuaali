@@ -8,13 +8,17 @@ dependencies:
     - paragraphs.paragraphs_type.service_language
   module:
     - entity_reference_revisions
+    - require_on_publish
+third_party_settings:
+  require_on_publish:
+    require_on_publish: true
 id: node.service.field_service_languages
 field_name: field_service_languages
 entity_type: node
 bundle: service
 label: 'Palvelun kieli'
 description: ''
-required: true
+required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
@@ -57,6 +61,9 @@ settings:
         enabled: false
       quick_link:
         weight: 28
+        enabled: false
+      quick_link_row:
+        weight: 29
         enabled: false
       service_language:
         weight: 29
