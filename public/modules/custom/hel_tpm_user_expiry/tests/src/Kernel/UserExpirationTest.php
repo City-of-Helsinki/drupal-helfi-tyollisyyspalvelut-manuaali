@@ -290,6 +290,48 @@ final class UserExpirationTest extends EntityKernelTestBase {
   }
 
   /**
+   * Test re-activated accounts stay active for configured period of time.
+   *
+   * @return void
+   *   Void.
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  public function testReActivatedUserStaysActive() {
+    $user = $this->createLastAccessUser(2, '-220 days', 0);
+    $this->assertEquals('0', $user->get('status')->value);
+
+    $user->set('status', 1);
+    $user->save();
+    $user = $this->reloadEntity($user);
+
+    $this->assertEquals(\Drupal::time()->getRequestTime(), $user->get('access')->value, 'Access time not updated');
+
+    // Confirm re-activated user isn't queued.
+    hel_tpm_user_expiry_cron();
+    $this->assertEquals(0, $this->queue->numberOfItems());
+    $this->resetCronLastRun();
+
+    // Set last access to
+    $user->set('access', strtotime('-166 days'));
+    $user->save();
+
+    $this->cron->run();
+    $user = $this->reloadEntity($user);
+    // Ensure user is active after the first cron run.
+    $this->assertEquals('1', $user->get('status')->value);
+
+    $this->cronRunHelper('-2 weeks', [$user]);
+    $user = $this->reloadEntity($user);
+    // Ensure user is still active after two more weeks.
+    $this->assertEquals('1', $user->get('status')->value);
+
+    $this->cronRunHelper('-2 days', [$user]);
+    $user = $this->reloadEntity($user);
+    // Ensure user is blocked after two more days.
+    $this->assertEquals('0', $user->get('status')->value);
+  }
+
+  /**
    * Creates a user with given inactivity period.
    *
    * @param int $uid

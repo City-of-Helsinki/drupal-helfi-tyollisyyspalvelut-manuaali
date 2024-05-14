@@ -214,7 +214,7 @@
           $(this).addClass('autocomplete-open');
           Drupal.behaviors.hel_tpm_search_autocomplete.createAutocomplete(this, form);
         })
-        .keyup(_.debounce(function() {
+        .keyup(Drupal.debounce(function() {
           Drupal.behaviors.hel_tpm_search_autocomplete.createAutocomplete(this, form);
         }, 200));
     }
