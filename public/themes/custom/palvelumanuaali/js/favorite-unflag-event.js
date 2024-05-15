@@ -41,7 +41,7 @@
        * Create a popup to notify user when item is unflagged.
        * User can cancel the unflag action from cancel button.
        *
-       * @param message
+       * @param card
        * @param cancelUrl
        * @param triggeringElement
        */
