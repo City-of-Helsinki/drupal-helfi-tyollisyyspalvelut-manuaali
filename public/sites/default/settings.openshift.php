@@ -82,3 +82,7 @@ if (getenv('SMTP_HOST')) {
   $config['symfony_mailer.mailer_transport.smtp']['configuration']['port'] = 25;
 }
 $config['user.settings']['password_reset_timeout'] = 604800;
+
+// Enable css and js preprocessing.
+$config['system.performance']['css']['preprocess'] = TRUE;
+$config['system.performance']['js']['preprocess'] = TRUE;
