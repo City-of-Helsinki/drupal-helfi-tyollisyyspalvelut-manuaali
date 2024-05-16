@@ -412,6 +412,7 @@ display:
           required: true
           flag: cart
           user_scope: current
+      use_ajax: true
       header:
         area_entity_print_views:
           id: area_entity_print_views
@@ -990,7 +991,9 @@ display:
           plugin_id: result
           empty: false
           content: '<strong class="margin--right-one-space font-weight--bold font-size--select-label">Suosikkeja:</strong> <span class="total-number padding--view-summary font-color--light-blue d--inline-block background-color--white width--min-content border-radius--eight">@total</span>'
-      display_extenders: {  }
+      display_extenders:
+        ajax_history:
+          enable_history: true
       path: suosikit
       menu:
         type: none

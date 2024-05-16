@@ -39,6 +39,38 @@
     width: 100%;
   }
 }
+.view-cart {
+  .views-row.removed {
+    background-color: #eee;
+//    opacity: 0;
+ //   display: none;
+//    animation-name: hide-favorite;
+    animation-duration: 1s;
+
+    .card__content {
+      opacity: 0.5;
+    }
+    .card__body {
+//      display: none;
+    }
+    .card__date {
+//      display: none;
+    }
+  }
+}
+
+@keyframes hide-favorite {
+  from {
+    opacity: 1;
+    display: block;
+  }
+  to {
+    opacity: 0;
+    display: none;
+  }
+}
+
+
 
 .view-cart.view-display-id-page_1 {
   .view-empty {
