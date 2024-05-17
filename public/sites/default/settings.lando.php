@@ -26,3 +26,5 @@ $settings['simple_environment_indicator'] = '#00bdbd Lando';
 $config['system.performance']['css']['preprocess'] = FALSE;
 $config['system.performance']['js']['preprocess'] = FALSE;
 
+
+include_once $app_root . '/' . $site_path . '/settings.redis.php';

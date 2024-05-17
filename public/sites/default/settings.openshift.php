@@ -86,3 +86,6 @@ $config['user.settings']['password_reset_timeout'] = 604800;
 // Enable css and js preprocessing.
 $config['system.performance']['css']['preprocess'] = TRUE;
 $config['system.performance']['js']['preprocess'] = TRUE;
+
+// Enable redis settings.
+include_once $app_root . '/' . $site_path . '/settings.redis.php';
