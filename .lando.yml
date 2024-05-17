@@ -29,7 +29,7 @@ services:
         ENVIRONMENT: "local"
         PHP_IDE_CONFIG: "serverName=appserver"
         SIMPLETEST_BASE_URL: "http://helfi-manuska.lndo.site"
-        SIMPLETEST_DB: "mysql://drupal8:drupal8@database/drupal8"
+        SIMPLETEST_DB: "mysql://drupal10:drupal10@database/drupal10"
         MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless"]}}, "http://chrome:9515"]'
         DRUSH_OPTIONS_URI: "https://helfi-manuska.lndo.site"
         TFA_KEY: ''
