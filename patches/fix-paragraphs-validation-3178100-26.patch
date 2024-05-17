@@ -1,0 +1,186 @@
+diff --git a/src/Plugin/Validation/Constraint/RequireOnPublishValidator.php b/src/Plugin/Validation/Constraint/RequireOnPublishValidator.php
+index ccd2b357cf221dac79fa4b31fbadac275db9ec0b..f720f67861b01aa2bef33e78d69040d94ede3117 100644
+--- a/src/Plugin/Validation/Constraint/RequireOnPublishValidator.php
++++ b/src/Plugin/Validation/Constraint/RequireOnPublishValidator.php
+@@ -2,12 +2,19 @@
+ 
+ namespace Drupal\require_on_publish\Plugin\Validation\Constraint;
+ 
++use Drupal\content_moderation\ModerationInformationInterface;
++use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
+ use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
++use Drupal\Core\Entity\ContentEntityBase;
++use Drupal\Core\Entity\EntityTypeInterface;
++use Drupal\Core\Entity\EntityTypeManagerInterface;
+ use Drupal\Core\Extension\ModuleHandlerInterface;
+ use Drupal\Core\Messenger\MessengerInterface;
++use Drupal\Core\Routing\RouteMatchInterface;
+ use Drupal\Core\StringTranslation\StringTranslationTrait;
+ use Drupal\field\FieldConfigInterface;
+ use Symfony\Component\DependencyInjection\ContainerInterface;
++use Symfony\Component\HttpFoundation\ParameterBag;
+ use Symfony\Component\HttpFoundation\RequestStack;
+ use Symfony\Component\Validator\Constraint;
+ use Symfony\Component\Validator\ConstraintValidator;
+@@ -40,6 +47,27 @@ class RequireOnPublishValidator extends ConstraintValidator implements Container
+    */
+   protected $messenger;
+ 
++  /**
++   * The parametrized route.
++   *
++   * @var \Drupal\Core\Routing\RouteMatchInterface
++   */
++  protected $routeMatch;
++
++  /**
++   * The entity type manager.
++   *
++   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
++   */
++  protected $entityTypeManager;
++
++  /**
++   * The moderation information service.
++   *
++   * @var \Drupal\content_moderation\ModerationInformationInterface
++   */
++  protected $moderationInformation;
++
+   /**
+    * Constructs a RequireOnPublishValidator object.
+    *
+@@ -49,11 +77,20 @@ class RequireOnPublishValidator extends ConstraintValidator implements Container
+    *   The request stack object.
+    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
+    *   The messenger service.
++   * @param \Drupal\Core\Routing\RouteMatchInterface $routeMatch
++   *   The route match service.
++   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
++   *   The entity type manager.
++   * @param \Drupal\content_moderation\ModerationInformationInterface $moderation_information
++   *   The moderation information service.
+    */
+-  public function __construct(ModuleHandlerInterface $module_handler, RequestStack $request_stack, MessengerInterface $messenger) {
++  public function __construct(ModuleHandlerInterface $module_handler, RequestStack $request_stack, MessengerInterface $messenger, RouteMatchInterface $routeMatch, EntityTypeManagerInterface $entityTypeManager, ModerationInformationInterface $moderation_information) {
+     $this->moduleHandler = $module_handler;
+     $this->messenger = $messenger;
+     $this->request = $request_stack->getCurrentRequest();
++    $this->routeMatch = $routeMatch;
++    $this->entityTypeManager = $entityTypeManager;
++    $this->moderationInformation = $moderation_information;
+   }
+ 
+   /**
+@@ -63,7 +100,10 @@ class RequireOnPublishValidator extends ConstraintValidator implements Container
+     return new static(
+       $container->get('module_handler'),
+       $container->get('request_stack'),
+-      $container->get('messenger')
++      $container->get('messenger'),
++      $container->get('current_route_match'),
++      $container->get('entity_type.manager'),
++      $container->get('content_moderation.moderation_information')
+     );
+   }
+ 
+@@ -81,8 +121,13 @@ class RequireOnPublishValidator extends ConstraintValidator implements Container
+     // its parent entity.
+     if ($this->moduleHandler->moduleExists('paragraphs') && $entity->getEntityTypeId() == 'paragraph') {
+       if ($this->request) {
+-        $status = $this->request->request->all()['status'] ?? ['value' => 0];
+-        $is_published = $status['value'];
++        if ($this->request->request->get('form_id') && $this->entityIsPublishable($this->routeMatch->getParameters()) && $this->moduleHandler->moduleExists('content_moderation') && isset($this->request->request->all('moderation_state')[0]['state'])) {
++          $is_published = $this->extractPublishedFromRequest() ?? $is_published;
++        }
++        else {
++          $status = $this->request->request->all()['status'] ?? ['value' => 0];
++          $is_published = $status['value'];
++        }
+       }
+       else {
+         $is_published = $entity->getParentEntity()->isPublished();
+@@ -127,4 +172,83 @@ class RequireOnPublishValidator extends ConstraintValidator implements Container
+     }
+   }
+ 
++  /**
++   * Checks whether an object is publishable or not.
++   *
++   * Extract the Entity or EntityBundle from the request parameters and check
++   * whether an object is publishable.
++   *
++   * @param \Symfony\Component\HttpFoundation\ParameterBag $parameters
++   *   The parameter bag to process.
++   *
++   * @return bool
++   *   Whether the entity can be published or not.
++   *
++   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
++   */
++  protected function entityIsPublishable(ParameterBag $parameters) {
++    foreach ($parameters as $parameter) {
++      if ($parameter instanceof ContentEntityBase) {
++        $entityType = $parameter->getEntityType();
++        if (!$entityType) {
++          return FALSE;
++        }
++        return _require_on_publish_entity_is_publishable($entityType->getClass());
++      }
++
++      if ($parameter instanceof ConfigEntityBundleBase) {
++        $entityType = $parameter->getEntityType();
++        if (!$entityType instanceof EntityTypeInterface) {
++          return FALSE;
++        }
++
++        /** @var string $entityTypeBundle */
++        $entityTypeBundle = $entityType->getBundleOf();
++        $entityDefinition = $this->entityTypeManager->getDefinition($entityTypeBundle);
++        if ($entityDefinition) {
++          return _require_on_publish_entity_is_publishable($entityDefinition->getClass());
++        }
++      }
++    }
++    return FALSE;
++  }
++
++  /**
++   * Get moderate state from the request and check if it's published.
++   *
++   * @return mixed
++   *   Whether the entity is published or not.
++   */
++  protected function extractPublishedFromRequest() {
++    // Extract entity from the request.
++    // @see HtmlEntityFormController::getFormArgument()
++    $form_arg = $this->routeMatch->getRouteObject()->getDefault('_entity_form');
++    if (isset($form_arg)) {
++      // Get form object.
++      // @see HtmlEntityFormController::getFormObject()
++      $form_arg .= '.default';
++      [$entity_type_id, $operation] = explode('.', $form_arg);
++    }
++    else {
++      // In case of empty form_arg (e.g. on translations/add pages), we use
++      // entity_type_id from route object.
++      $entity_type_id = $this->routeMatch->getRouteObject()->getDefault('entity_type_id');
++      $operation = 'default';
++    }
++    if (!is_null($entity_type_id) && $entity_type_id !== '' && $operation !== '') {
++      $form_object = $this->entityTypeManager->getFormObject($entity_type_id, $operation);
++      $entity = $form_object->getEntityFromRouteMatch($this->routeMatch, $entity_type_id);
++      if ($this->moderationInformation->isModeratedEntity($entity)) {
++        /** @var \Drupal\workflows\Entity\Workflow $workflow */
++        $workflow = $this->moderationInformation->getWorkflowForEntityTypeAndBundle($entity->getEntityType()->id(), $entity->bundle());
++        $moderation_state = $this->request->request->all('moderation_state');
++        if (isset($moderation_state[0]['state'])) {
++          return $workflow->getTypePlugin()->getState($moderation_state[0]['state'])->isPublishedState();
++        }
++      }
++      return FALSE;
++    }
++    return FALSE;
++  }
++
+ }
