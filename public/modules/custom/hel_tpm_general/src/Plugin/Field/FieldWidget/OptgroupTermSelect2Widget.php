@@ -14,7 +14,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Plugin implementation of the 'optgroup_term_select2' widget.
  *
  * @FieldWidget(
- *   id = "optgroup_term_select",
+ *   id = "optgroup_term_select2",
  *   label = @Translation("Optgroup Term Select2"),
  *   field_types = {
  *     "entity_reference"
