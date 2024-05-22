@@ -959,14 +959,10 @@ content:
         maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
         maxlength_js_enforce: false
   field_service_set:
-    type: select2_entity_reference
+    type: optgroup_term_select
     weight: 5
     region: content
-    settings:
-      width: 100%
-      autocomplete: false
-      match_operator: CONTAINS
-      match_limit: 10
+    settings: {  }
     third_party_settings: {  }
   field_service_suits_info:
     type: text_textarea
