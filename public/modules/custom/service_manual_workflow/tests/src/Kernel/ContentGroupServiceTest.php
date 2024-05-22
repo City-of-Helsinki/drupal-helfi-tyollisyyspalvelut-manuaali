@@ -73,6 +73,13 @@ class ContentGroupServiceTest extends GroupKernelTestBase {
   protected $groupRole;
 
   /**
+   * Content group service.
+   *
+   * @var \Drupal\service_manual_workflow\ContentGroupService
+   */
+  private mixed $contentGroupService;
+
+  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {

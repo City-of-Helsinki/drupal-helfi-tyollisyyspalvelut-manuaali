@@ -27,6 +27,20 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class ServiceHasUnpublishedChanges extends FieldPluginBase {
 
   /**
+   * Entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  private EntityTypeManagerInterface $entityTypeManager;
+
+  /**
+   * Moderation information interface.
+   *
+   * @var \Drupal\content_moderation\ModerationInformationInterface
+   */
+  private ModerationInformationInterface $moderationInformation;
+
+  /**
    * {@inheritdoc}
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, ModerationInformationInterface $moderation_information) {

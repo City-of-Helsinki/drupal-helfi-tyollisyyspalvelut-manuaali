@@ -149,7 +149,7 @@
         "drupal/real_aes": "^2.5",
         "drupal/recently_read": "^1.x-dev",
         "drupal/redirect": "^1.7",
-        "drupal/redis": "^1.5",
+        "drupal/redis": "^1.7",
         "drupal/remove_http_headers": "^2",
         "drupal/require_on_publish": "^1.x-dev",
         "drupal/search_api": "^1.23",
@@ -209,6 +209,9 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
+        "platform": {
+            "php": "8.2"
+        },
         "discard-changes": true,
         "sort-packages": true,
         "process-timeout":0,
@@ -297,6 +300,9 @@
             "drupal/ggroup": {
                 "https://www.drupal.org/project/ggroup/issues/3395476": "https://www.drupal.org/files/issues/2023-11-27/ggroup-role-mapper-support-3395476-5.patch"
             },
+            "drupal/ginvite": {
+                "https://www.drupal.org/project/ginvite/issues/3447823#comment-15599560": "https://www.drupal.org/files/issues/2024-05-17/3447823-add-autoacceptinvitation-to-2.patch"
+            },
             "drupal/file_download_link": {
               "https://www.drupal.org/project/file_download_link/issues/3318657": "https://www.drupal.org/files/issues/2022-11-02/3318657-02.patch"
             },
@@ -308,7 +314,7 @@
                 "https://www.drupal.org/project/nodeaccess/issues/3357718#comment-15266389": "https://www.drupal.org/files/issues/2023-10-11/3357718-undefined-key-rid-11.patch"
             },
             "drupal/require_on_publish" : {
-                "https://www.drupal.org/project/require_on_publish/issues/3178100#comment-15264450": "https://www.drupal.org/files/issues/2023-10-10/fix-paragraphs-validation-3178100-22.patch",
+                "https://www.drupal.org/project/require_on_publish/issues/3178100#comment-15264450": "patches/fix-paragraphs-validation-3178100-26.patch",
                 "https://www.drupal.org/project/require_on_publish/issues/3302902#comment-14679167": "https://www.drupal.org/files/issues/2022-08-16/3302902.patch",
                 "Use ready_to_publish state with paragraphs": "patches/require_on_publish-paragraph-fix-for-ready_to_publish.patch"
             },
@@ -327,12 +333,6 @@
             "drupal/eu_cookie_compliance": {
                 "Categories block": "patches/eu-cookie-compliance-categories-1.24.patch",
                 "Remove uglify and min JS": "patches/remove-uglify-and-min-js.patch"
-            },
-            "drupal/flag_lists": {
-                "https://www.drupal.org/project/flag_lists/issues/3395071#comment-15278458": "https://www.drupal.org/files/issues/2023-10-19/unflagging-event-error-3395071-2.patch"
-            },
-            "drupal/symfony_mailer": {
-                "https://www.drupal.org/project/symfony_mailer/issues/3405108": "https://www.drupal.org/files/issues/2023-12-04/symfony-mailer-camelcase-headers-3405108-6.patch"
             },
             "drupal/selective_better_exposed_filters": {
                 "Add support for field recursion": "patches/selective-filter-recursive.patch"
