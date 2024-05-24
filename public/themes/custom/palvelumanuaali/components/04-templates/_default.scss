@@ -20,7 +20,9 @@ body {
 }
 
 .layout-container {
+  position: relative;
   @include large {
+    position: inherit;
     height: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -79,11 +81,11 @@ body {
 }
 
 .main-sidebar {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: $space-double;
-  background-color: clr(sidebar-color);
+  // display: flex;
+  // flex-direction: column;
+  // margin-bottom: $space-double;
   @include large {
+    background-color: clr(sidebar-color);
     height: 100vh;
     top: 0;
     position: sticky;

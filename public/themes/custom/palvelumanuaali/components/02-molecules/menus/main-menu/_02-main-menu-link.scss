@@ -4,7 +4,6 @@
   }
 }
 .main-menu {
-
   >.main-menu__item--with-sub {
     padding-bottom: 20px;
     @include large {
@@ -14,23 +13,24 @@
 
       }
     }
-    @include xxl {
-
-    }
   }
 }
 
 /* A */
 .main-menu__link {
-  color: clr(background-section);
+  color: clr(footer-color);
   display: block;
-  padding: 0 $space-triple $space-one-and-half $space-three-and-half;
+  padding: 0 $space-triple $space $space-one-and-half;
   text-decoration: none;
   font-weight: 700;
   text-transform: uppercase;
-  font-size: 9px;
-  line-height: 16px;
+  font-size: $small-font;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px; /* 200% */
   letter-spacing: 1px;
+  text-transform: uppercase;
 
   &--with-sub {
     width: 80%;
@@ -39,7 +39,7 @@
   @include large {
     border-bottom: none;
     display: inline-block;
-    padding: 0 $space 12px $space-one-and-half;
+    padding: 0 $space 12px $space-two-and-half;
     position: relative;
     width: auto;
     font-size: 10px;
@@ -49,9 +49,15 @@
     }
   }
   @include xxl {
-    padding: 0 $space 36px $space-double;
+    padding: 0 $space 36px $space-two-and-half;
     font-size: 12px;
     line-height: 24px;
+  }
+}
+
+.main-menu__item--sub {
+  &:hover, &:focus, &:focus-within {
+
   }
 }
 
@@ -61,30 +67,32 @@
 
 /* A (Nested) */
 .main-menu__link--sub {
-  color: clr(accent);
-  padding-left: $space-triple;
-  padding-bottom: 20px;
-  margin-left: $space-double;
+  color: clr(text);
+  padding: $space-three-fourths $space-two-and-half;
   text-transform: unset;
+  font-size: 15px;
+  font-style: normal;
   font-weight: 600;
-  font-size: 12px;
-  line-height: 20px;
+  line-height: 24px;
   letter-spacing: unset;
+  width: calc(100% + 2rem);
+  margin-left: -16px;
+  &:focus, &:hover {
+    color: clr(alt-header-color);
+    background-color: clr(background-dropdown);
+    background-image: url('/themes/custom/palvelumanuaali/images/icons/arrow-right-2.svg');
+    background-repeat: no-repeat;
+    background-position: calc(100% - 24px) center;
+  }
   @include large {
     display: block;
-    padding: 0 $space-one-third 12px $space-one-and-half;
-    margin-left: $space-one-and-half;
+    padding: $space-three-fourths $space-double $space-three-fourths $space-two-and-half;
+    margin-left: 0;
   }
   @include xxl {
-    padding: 0 $space-one-third $space-one-and-half $space-one-and-half;
-    margin-left: $space-double;
     font-size: 15px;
     line-height: 24px;
   }
-}
-
-.main-menu--sub-2 {
-
 }
 
 .main-menu__link--sub-2 {
