@@ -320,7 +320,10 @@
       let checked = false;
       let $group = $('<div class="select-group"></div>');
       let $group_id =  this.$element.attr('name') + '_' + optgroup_index;
-      let $parent_element = '<label id="' + $group_id + '" class="group--parent-label select--children">' + $optgroup.attr("label") + '</label>';
+      let $parent_element = document.createElement('label');
+      $($parent_element).addClass('group--parent-label');
+      $($parent_element).addClass('select--children');
+      $($parent_element).html($optgroup.attr('label'));
 
       $optgroup.children('option').each(function(option_index, option) {
         //checked = $(option).attr('selected') === 'selected';
@@ -335,8 +338,8 @@
 
       if (checked === true) {
         $($parent_element).addClass('checked');
-        console.log($parent_element);
       }
+
       $group.prepend($parent_element);
       _this.$menuItems.append($group);
     },
@@ -423,6 +426,7 @@
       var _this = this;
       $('.select-group .select--children').click( function(e){
         let parent = $(this).parent();
+        let form = $(this).closest('form');
         let checked = !$(this).hasClass('checked');
 
         $(this).toggleClass('checked');
@@ -433,7 +437,7 @@
           $('option[value=' + val + ']').attr('selected', checked);
         });
 
-        $(_this).parent('input.form-submit').click();
+        $('input.form-submit', form).click();
 
         e.preventDefault();
         e.stopPropagation();
