@@ -24,7 +24,7 @@
       default_row_class ? 'views-row',
     ]
   %}
-  <div{{ row.attributes.addClass(row_classes) }}>
+  <div tabindex="1" {{ row.attributes.addClass(row_classes) }}>
     {{- row.content -}}
   </div>
 {% endfor %}
