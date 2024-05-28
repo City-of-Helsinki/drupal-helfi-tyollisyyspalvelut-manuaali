@@ -149,13 +149,8 @@
       flex: unset;
       gap: 8px;
       @include xl {
-        float: right;
-        display: grid;
-        margin-left: auto;
-        margin-top: $space-two-and-half;
-      }
-      @include xl {
-        margin-bottom: -32px;
+        flex-direction: row;
+        gap: 0;
       }
       > label {
         align-self: flex-end;

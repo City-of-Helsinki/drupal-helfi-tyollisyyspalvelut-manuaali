@@ -206,14 +206,10 @@
 
 .search-page {
   #block-palvelumanuaali-page-title {
-    grid-row: 1;
     text-align: center;
-    @include xl {
-      grid-column: 2;
-    }
   }
   .main-content {
-    .region-content {
+    .search-form {
         display: grid;
       @include xl {
         grid-template-columns: 1fr 10fr 1fr;
@@ -221,22 +217,24 @@
       @media (min-width:1640px) {
         grid-template-columns: 2fr 8fr 2fr;
       }
-    }
-  }
-  #block-system-breadcrumb-block {
-    @include xl {
-      grid-column-start: 2;
+
+      .text-search-wrapper{
+        @include xl {
+            grid-column: 2/3;
+            grid-row: 1;
+        }
+      }
+      .filters-wrapper {
+        @include xl {
+            grid-column: 2/3;
+            grid-row: 2;
+        }
+      }
     }
   }
 
   #block-system-main-block {
     padding: $space-one-and-half;
-    @include xl {
-      grid-column-start: 2;
-    }
-
-    .views-element-container {
-    }
   }
 
   #block-hel-tpm-url-shortener-form {
