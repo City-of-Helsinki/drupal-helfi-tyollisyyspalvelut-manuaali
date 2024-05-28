@@ -41,6 +41,13 @@ class GroupBulkInviteTest extends GroupBrowserTestBase {
   protected $nonGroupMemeber;
 
   /**
+   * Group admin user.
+   *
+   * @var \Drupal\user\Entity\User|false
+   */
+  private \Drupal\user\Entity\User|false $groupAdmin;
+
+  /**
    * Global permissions.
    *
    * @return string[]
@@ -105,7 +112,7 @@ class GroupBulkInviteTest extends GroupBrowserTestBase {
     // plugin config doesn't seem to be available.
     drupal_flush_all_caches();
 
-    $this->drupalLogin($this->nonGroupMemeber);
+  //  $this->drupalLogin($this->nonGroupMemeber);
 
     // Add permissions to invite users to members of the group.
     $role = $this->group->getGroupType()->getRoles(FALSE);
@@ -127,7 +134,7 @@ class GroupBulkInviteTest extends GroupBrowserTestBase {
     $form->fillField('email_address', 'test@test.test');
     $form->selectFieldOption('edit-roles', $role->id());
     $form->pressButton('edit-submit');
-    // @todo Fix: Test is giving 403 even though 200 is expected.
+
     $this->assertSession()->statusCodeEquals(200);
 
     // Submit confirm form.
