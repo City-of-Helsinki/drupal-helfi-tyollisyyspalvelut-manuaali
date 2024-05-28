@@ -3,8 +3,12 @@
 namespace Drupal\hel_tpm_search\Plugin\better_exposed_filters\filter;
 
 use Drupal\better_exposed_filters\Plugin\better_exposed_filters\filter\FilterWidgetBase;
+use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\selective_better_exposed_filters\Plugin\better_exposed_filters\filter\SelectiveFilterBase;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Default widget implementation.
@@ -14,13 +18,39 @@ use Drupal\selective_better_exposed_filters\Plugin\better_exposed_filters\filter
  *   label = @Translation("Multiselect Dropdown"),
  * )
  */
-class DropdownMultiselect extends FilterWidgetBase {
+class DropdownMultiselect extends FilterWidgetBase implements ContainerFactoryPluginInterface {
+
+  /**
+   * Entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entityTypeManager) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition);
+    $this->entityTypeManager = $entityTypeManager;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $container->get('entity_type.manager'),
+    );
+  }
 
   /**
    * {@inheritdoc}
    */
   public function defaultConfiguration() {
-    return parent::defaultConfiguration() + SelectiveFilterBase::defaultConfiguration();
+    $configuration = parent::defaultConfiguration() + SelectiveFilterBase::defaultConfiguration();
+    $configuration['term_optgroup'] = FALSE;
+    return $configuration;
   }
 
   /**
@@ -31,6 +61,11 @@ class DropdownMultiselect extends FilterWidgetBase {
     $filter = $this->handler;
     $form = parent::buildConfigurationForm($form, $form_state);
     $form += SelectiveFilterBase::buildConfigurationForm($filter, $this->configuration);
+    $form['term_optgroup'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Render terms in optgroup'),
+      '#default_value' => !empty($this->configuration['term_optgroup']),
+    ];
     return $form;
   }
   /**
@@ -59,7 +94,12 @@ class DropdownMultiselect extends FilterWidgetBase {
       $form[$field_id]['#multiple'] = TRUE;
     }
 
+    if ($this->configuration['term_optgroup']) {
+      $this->createOptGroups($form[$field_id]);
+    }
+
     $form[$field_id]['#attributes']['class'][] = 'dropdownMultiselect';
+
     $form['#attached']['library'][] = 'hel_tpm_search/dropdown_multiselect';
 
     /** @var \Drupal\views\Plugin\views\filter\FilterPluginBase $filter */
@@ -67,5 +107,30 @@ class DropdownMultiselect extends FilterWidgetBase {
     SelectiveFilterBase::exposedFormAlter($this->view, $filter, $this->configuration, $form, $form_state);
   }
 
-
+  /**
+   * Create optgroup from taxonomy terms.
+   *
+   * @param $field
+   *  Select field.
+   *
+   * @return array|void
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   */
+  private function createOptGroups(&$field) {
+    if ($field['#type'] !== 'select') {
+      return;
+    }
+    $optgroup = [];
+    $options = $field['#options'];
+    $terms = $this->entityTypeManager->getStorage('taxonomy_term')->loadMultiple(array_keys($options));
+    foreach ($terms as $term) {
+      $parent = $term->parent->entity;
+      if (empty($parent)) {
+        continue;
+      }
+      $optgroup[$parent->label()][$term->id()] = $term->label();
+    }
+    $field['#options'] = $optgroup;
+  }
 }

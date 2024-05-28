@@ -42,7 +42,6 @@
     if ( array1.length != array2.length ){
       return false;
     }
-
     array1.sort();
     array2.sort();
 
@@ -67,6 +66,7 @@
 
       this.setUpBodyClickListener();
       this.setUpLabelsClickListener();
+      this.setUpGroupParentLabelClickListener();
 
       this.hideOriginalElement();
     },
@@ -317,16 +317,28 @@
 
     constructMenuItemsGroup: function($optgroup, optgroup_index) {
       var _this = this;
+      let checked = false;
+      let $group = $('<div class="select-group"></div>');
+      let $group_id =  this.$element.attr('name') + '_' + optgroup_index;
+      let $parent_element = '<label id="' + $group_id + '" class="group--parent-label select--children">' + $optgroup.attr("label") + '</label>';
 
       $optgroup.children('option').each(function(option_index, option) {
+        //checked = $(option).attr('selected') === 'selected';
         var $item = _this.constructMenuItem($(option), optgroup_index + '_' + option_index);
+        checked = $('input', $item).is(':checked')
         var cls = _this.settings['menuItemTitleClass'];
         if (option_index !== 0) {
           cls += 'sr';
         }
-        $item.addClass(cls).attr('data-group-title', $optgroup.attr('label'));
-        _this.$menuItems.append($item);
+        $group.append($item);
       });
+
+      if (checked === true) {
+        $($parent_element).addClass('checked');
+        console.log($parent_element);
+      }
+      $group.prepend($parent_element);
+      _this.$menuItems.append($group);
     },
 
     constructMenuItem: function($option, option_index) {
@@ -403,6 +415,27 @@
       // Stop click events from inside the $button or $menu from
       // bubbling up to the body and closing the menu!
       this.$container.on('click.multiselect', function(e){
+        e.stopPropagation();
+      });
+    },
+
+    setUpGroupParentLabelClickListener: function() {
+      var _this = this;
+      $('.select-group .select--children').click( function(e){
+        let parent = $(this).parent();
+        let checked = !$(this).hasClass('checked');
+
+        $(this).toggleClass('checked');
+        $('.multi-select-menuitem input', parent).each(function (i, element) {
+          let val = $(element).attr('value');
+          $(element).attr('checked', checked);
+          $(element).prop('checked', checked);
+          $('option[value=' + val + ']').attr('selected', checked);
+        });
+
+        $(_this).parent('input.form-submit').click();
+
+        e.preventDefault();
         e.stopPropagation();
       });
     },
