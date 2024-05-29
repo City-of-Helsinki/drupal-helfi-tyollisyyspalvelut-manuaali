@@ -352,7 +352,7 @@
           $('option[value=' + val + ']').attr('selected', checked);
         });
 
-        $(form).trigger('submit');
+        $("input[data-bef-auto-submit-click]", form).trigger('click');
       });
 
       $group.prepend($parent_element);
