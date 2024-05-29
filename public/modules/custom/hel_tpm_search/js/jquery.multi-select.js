@@ -66,7 +66,7 @@
 
       this.setUpBodyClickListener();
       this.setUpLabelsClickListener();
-      this.setUpGroupParentLabelClickListener();
+  //    this.setUpGroupParentLabelClickListener();
 
       this.hideOriginalElement();
     },
@@ -340,6 +340,21 @@
         $($parent_element).addClass('checked');
       }
 
+      $($parent_element).on('click', function() {
+        let parent = $(this).parent();
+        let form = $(this).closest('form');
+        let checked = !$(this).hasClass('checked');
+
+        $('.multi-select-menuitem input', parent).each(function (i, element) {
+          let val = $(element).attr('value');
+          $(element).attr('checked', checked);
+          $(element).prop('checked', checked);
+          $('option[value=' + val + ']').attr('selected', checked);
+        });
+
+        $(form).trigger('submit');
+      });
+
       $group.prepend($parent_element);
       _this.$menuItems.append($group);
     },
@@ -422,6 +437,7 @@
       });
     },
 
+    /*
     setUpGroupParentLabelClickListener: function() {
       var _this = this;
       $('.select-group .select--children').click( function(e){
@@ -442,7 +458,7 @@
         e.preventDefault();
         e.stopPropagation();
       });
-    },
+    },*/
 
     setUpLabelsClickListener: function() {
       var _this = this;
