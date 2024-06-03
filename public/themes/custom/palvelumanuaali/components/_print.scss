@@ -1,0 +1,256 @@
+/* Color overrides for printing. */
+$printColors: (
+  text: $black,
+  text-inverse: $white,
+  background: $blue10,
+  background-section: $blue100,
+  background-dropdown: $white,
+  background-border: $blue20,
+  form-border: $blue40,
+  primary: $blue,
+  secondary: $purple,
+  accent: $black,
+  accent-high: $black,
+  highlight: $gray-lighter,
+  highlight-high: $gray-lightest,
+  muted: $white,
+  alt-header-color: $black,
+  gray: $gray,
+  light-border: $gray,
+);
+:root {
+  @media print {
+    @each $name, $color in $printColors {
+      --c-#{$name}: #{$color};
+    }
+  }
+}
+
+/* Printing styles. */
+@media print {
+  /* Hide unwanted elements. */
+  #page-header,
+  nav.menu--main,
+  #block-views-block-notifications-block-1,
+  #block-system-breadcrumb-bloc,
+  #block-system-main-block .link-wrapper:first-child,
+  #block-palvelumanuaali-local-tasks,
+  .right-column > .footer {
+    display: none !important;
+  }
+
+  /* Adjust font-sizes for printing. */
+  body {
+    font-size: 12px !important;
+    line-height: 18px !important;
+  }
+  .page-heading {
+    font-size: 16px !important;
+    line-height: 21px !important;
+    margin-bottom: 1em !important;
+  }
+  .service .field--name-field-description {
+    font-size: 13px !important;
+    line-height: 19px !important;
+  }
+  h3, .h3,
+  .card__heading {
+    font-size: 15px !important;
+    line-height: 18px !important;
+  }
+  h3, .h3 {
+    margin-top: 2rem !important;
+  }
+  h4, .h4,
+  h5, .h5 {
+    font-size: 14px !important;
+    line-height: 17px !important;
+    margin-top: 2rem !important;
+  }
+  .service .field .field__label {
+    font-size: 14px !important;
+    line-height: 17px !important;
+  }
+  .card h4,
+  .card h5 {
+    margin-top: 0 !important;
+  }
+  .field--name-field-service-implement h5 {
+    margin-top: 0.2rem !important;
+  }
+  .service .field .field__label {
+    font-size: 14px !important;
+    line-height: 17px !important;
+    font-weight: normal !important;
+  }
+  .font-size--default,
+  .blue-padded-round-corners-card,
+  .service-page .field--name-field-other-preferences,
+  .service-page .field--name-field-obligatoryness,
+  .service-page .field--name-field-statements,
+  .service-page .field--name-field-service-suits-job-search {
+    font-size: 14px !important;
+    line-height: 17px !important;
+  }
+  .small-font,
+  .font-size--small,
+  .organizing-group,
+  .date,
+  .content-sidebar .field,
+  .field__item a,
+  .service .service-price,
+  .content-sidebar p {
+    font-size: inherit !important;
+    font-weight: inherit !important;
+    text-transform: inherit !important;
+    letter-spacing: inherit !important;
+  }
+
+  /* Use the larger logo and align it to left. */
+  .logo__image{
+    &--hidden-mobile {
+      display: block !important;
+    }
+  }
+  .logo-small__image {
+    &--hidden-lg {
+      display: none !important;
+    }
+  }
+  .sidebar__branding {
+    margin: inherit !important;
+  }
+
+  /* Remove background colors. */
+  body {
+    background-color: unset !important;
+  }
+
+  /* Adjust page layout (e.g. margins). */
+  .main-content {
+    > .region-content {
+      display: block;
+      margin: 0 4rem !important;
+      padding: 0 !important;
+    }
+  }
+  #block-system-main-block {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  #service-page-full {
+    display: block !important;;
+    width: inherit !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    .content-column {
+      padding: 0 !important;
+    }
+  }
+  .right-column {
+    padding-bottom: 0 !important;
+    > .main {
+      margin-bottom: 0 !important;
+    }
+  }
+  .service-group,
+  .field--name-field-service-execution {
+    margin-bottom: 1.5em !important;
+  }
+  .service .content-sidebar {
+    margin-top: 1em !important;
+    .contact-info-wrapper>div:last-child,
+    .additional-info-wrapper>div:last-child {
+      margin-bottom: 0 !important;
+    }
+  }
+  .field--name-field-other-services {
+    width: inherit !important;
+  }
+  .field-group-tabs-wrapper {
+    margin-bottom: 3rem !important;
+  }
+  .field--name-field-accessibility .field__label {
+    margin-bottom: 1rem !important;
+  }
+  .main-sidebar {
+    margin-bottom: 0 !important;
+  }
+  .service-header-wrapper {
+    gap: 0.5rem !important;
+  }
+  .field--name-field-contact-info .field__label {
+    margin-bottom: 0.5rem !important;
+  }
+  .service .content-column>.field {
+    margin-bottom: 2rem !important;
+  }
+
+  /* Hide horizontal tabs. */
+  .service-page.logged-in .horizontal-tabs-list {
+    display: none !important;
+  }
+
+  /* Avoid page breaks inside some elements. */
+  .card,
+  .field__items,
+  .field--name-field-municipality-guidance,
+  .blue-padded-round-corners-card,
+  .service-page .field--name-field-other-preferences,
+  .service-page .field--name-field-obligatoryness,
+  .service-page .field--name-field-statements,
+  .service-page .field--name-field-service-suits-job-search {
+    break-inside: avoid !important;
+  }
+  .field__items {
+    .field__item {
+      display: inline !important;
+    }
+  }
+
+  /* Long link urls are truncated and some links use text, which doesn't work well with printed content. Thus, the
+  href content is also shown. */
+  .url-and-file,
+  .field--name-field-internal-links {
+    .field__item {
+      a {
+        &::after {
+          content: " (" attr(href) ")" !important;
+        }
+      }
+    }
+  }
+
+  /* Hide internal links download icon. */
+  .field--name-field-internal-files {
+    .icon--absolute-right-regular {
+      display: none !important;
+    }
+  }
+
+  /* Change card links to have vertical border. */
+  .card {
+    &.grid__item {
+      padding-bottom: 0 !important;
+      border-bottom: none !important;
+      border-left: 6px #325df4 solid !important;
+      border-radius: 0 !important;
+    }
+    .card__link {
+      .card__content {
+        margin-top: 1rem !important;
+      }
+      button {
+        display: none !important;
+      }
+    }
+  }
+
+  /* Open accordions and hide the open-close button. */
+  .accordion--default .accordion-button::after {
+    background-image: none !important;
+  }
+  .collapse:not(.show) {
+    display: block !important;
+  }
+}
