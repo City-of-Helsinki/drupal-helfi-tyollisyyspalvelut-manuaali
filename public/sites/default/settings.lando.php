@@ -22,3 +22,9 @@ $settings['hash_salt'] = json_encode($databases);
 $settings['file_private_path'] = getenv('LANDO_MOUNT') . '/private';
 $settings['simple_environment_indicator'] = '#00bdbd Lando';
 
+// Enable css and js preprocessing.
+$config['system.performance']['css']['preprocess'] = FALSE;
+$config['system.performance']['js']['preprocess'] = FALSE;
+
+
+include_once $app_root . '/' . $site_path . '/settings.redis.php';

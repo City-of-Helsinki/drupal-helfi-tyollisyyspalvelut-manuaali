@@ -8,7 +8,7 @@
       // Default 8s
       const popupTimeout = 800000;
 
-      if ($('.view-id-cart').length <= 0) {
+      if ($('.view-id-cart', context).length <= 0) {
         return;
       }
 
@@ -118,7 +118,7 @@
        * @returns {*|boolean}
        */
       function getXhrData(xhr) {
-        if (xhr.responseJSON.length <= 0) {
+        if (xhr.responseJSON[0].data.length <= 0) {
           return false;
         }
         return xhr.responseJSON[0].data;

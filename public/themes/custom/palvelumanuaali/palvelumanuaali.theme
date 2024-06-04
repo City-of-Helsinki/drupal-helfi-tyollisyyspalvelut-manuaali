@@ -442,7 +442,10 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id) {
     'node_basic_page_form',
     'node_basic_page_edit_form'
   ];
-
+  
+  if ($form['#id'] == 'views-exposed-form-solr-service-search-page-1') {
+    $form['#attributes']['class'][] = 'width--full';
+  }
 
   if ($form_id == 'user_form') {
     $form['language']['#type'] = 'container';
@@ -487,5 +490,7 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id) {
     $form['moderation_state']['widget'][0]['state']['#title'] = t('Change to:');
     $form['actions']['delete']['#access'] = FALSE;
     $form['actions']['cancel']['#access'] = FALSE;
+
+
   }
 }

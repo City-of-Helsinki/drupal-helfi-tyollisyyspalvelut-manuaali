@@ -41,6 +41,13 @@ class ServiceStateChangedNotificationSubscriberTest extends GroupKernelTestBase 
     'ggroup_role_mapper',
   ];
 
+  private $spUser;
+  private $spGroup;
+  private $orgGroup;
+  private $orgUser;
+
+  private $orgUser2;
+
   /**
    * {@inheritdoc}
    */
