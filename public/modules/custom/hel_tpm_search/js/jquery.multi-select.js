@@ -437,29 +437,6 @@
       });
     },
 
-    /*
-    setUpGroupParentLabelClickListener: function() {
-      var _this = this;
-      $('.select-group .select--children').click( function(e){
-        let parent = $(this).parent();
-        let form = $(this).closest('form');
-        let checked = !$(this).hasClass('checked');
-
-        $(this).toggleClass('checked');
-        $('.multi-select-menuitem input', parent).each(function (i, element) {
-          let val = $(element).attr('value');
-          $(element).attr('checked', checked);
-          $(element).prop('checked', checked);
-          $('option[value=' + val + ']').attr('selected', checked);
-        });
-
-        $('input.form-submit', form).click();
-
-        e.preventDefault();
-        e.stopPropagation();
-      });
-    },*/
-
     setUpLabelsClickListener: function() {
       var _this = this;
       this.$labels.on('click.multiselect', function(e) {
