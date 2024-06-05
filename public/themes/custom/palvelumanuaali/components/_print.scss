@@ -185,9 +185,14 @@ $printColors: (
   .service .content-column>.field {
     margin-bottom: 2rem !important;
   }
+  .service .field--name-field-service-language {
+    margin-bottom: 0 !important;
+  }
 
   /* Hide horizontal tabs. */
-  .service-page.logged-in .horizontal-tabs-list {
+  .horizontal-tabs-list,
+  #edit-group-customer-view summary,
+  #edit-group-work-instructions summary {
     display: none !important;
   }
 
