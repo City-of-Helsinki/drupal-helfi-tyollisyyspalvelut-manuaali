@@ -7,6 +7,11 @@
   100% { transform: translateX(-100%); }
 }
 
+body:not(.logged-in) {
+  .menu--account {
+    display: none;
+  }
+}
 
 .header {
   width: calc(100% + 32px);
@@ -50,12 +55,6 @@
   }
 
   &__primary {
-    // position: fixed;
-    // bottom: 0;
-    // display: none;
-    // flex-flow: row nowrap;
-    // justify-content: space-around;
-    // align-items: center;
     padding: 0;
     z-index: 200;
     background-color: clr(background);
@@ -153,6 +152,9 @@
     &.slide-out {
       animation: slide-out 0.5s forwards;
       -webkit-animation: slide-out 0.5s forwards;
+      .main-nav {
+        display: none;
+      }
     }
     .block--header-search-block,
     .block-language-blocklanguage-interface,
@@ -198,8 +200,6 @@
     }
 
     .menu--main {
-      // width: calc(100% + 2rem);
-      // margin-left: -1rem;
       display: block;
       @include large {
         display: none;
