@@ -827,10 +827,14 @@ content:
       match_limit: 10
     third_party_settings: {  }
   field_responsible_updatee:
-    type: options_select
+    type: select2_entity_reference
     weight: 15
     region: content
-    settings: {  }
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
     third_party_settings: {  }
   field_service_benefits:
     type: text_textarea
@@ -933,10 +937,14 @@ content:
       match_limit: 10
     third_party_settings: {  }
   field_service_provider_updatee:
-    type: options_select
+    type: select2_entity_reference
     weight: 13
     region: content
-    settings: {  }
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
     third_party_settings: {  }
   field_service_req_speacialist:
     type: text_textarea
