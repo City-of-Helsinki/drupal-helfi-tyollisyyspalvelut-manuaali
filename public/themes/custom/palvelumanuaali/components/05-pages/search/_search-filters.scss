@@ -175,11 +175,16 @@
       /* Select element for search sort. */
       .form-item__dropdown {
         align-self: flex-end;
-        border: 2px solid $blue40;
+        // border: 2px solid $blue40;
         grid-row: 1 / 2;
         .select2-container--palvelumanuaali {
-          box-shadow: unset;
+          box-shadow: inset 0px 0px 0px 2px clr(form-border);
           padding: 0;
+          // border: 2px solid clr(background-section);
+          &:active,
+          &:hover {
+            box-shadow: inset 0px 0px 0px 2px clr(background-section);
+          }
           .select2-selection--single {
             @extend .multi-select-button;
             height: unset;
@@ -194,6 +199,9 @@
           .select2-selection__arrow {
             display: none;
           }
+        }
+        .select2-container--open {
+          box-shadow: inset 0px 0px 0px 2px clr(background-section);
         }
       }
     }
