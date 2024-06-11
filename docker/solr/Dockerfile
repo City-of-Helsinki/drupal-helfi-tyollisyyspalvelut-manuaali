@@ -1,4 +1,4 @@
-FROM solr:8.6
+FROM solr:8.11
 USER root
 
 RUN mkdir /solr-conf
