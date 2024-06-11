@@ -113,7 +113,8 @@
   }
 }
 
-.owner-and-updatee-view-block {
+.owner-and-updatee-view-block,
+.group-page {
   .select--details-select {
     @extend .select--white-rounded;
     background: clr(text-inverse);
@@ -125,8 +126,13 @@
     .active .multi-select-button {
       background-color: clr(background-section);
     }
-    .multi-select-button {
+    .multi-select-button,
+    .form-select {
       background-color: unset;
+      z-index: 100;
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 }
