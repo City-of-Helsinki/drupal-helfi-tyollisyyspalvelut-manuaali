@@ -282,6 +282,31 @@
     fieldset {
       width: 100%;
     }
+    .bef-nested {
+      position: relative;
+      ul > li {
+        display: inline-block;
+      }
+      ul > li > ul  {
+        position: absolute;
+        margin-top: 1rem;
+        left: 0;
+        display: none;
+      }
+
+      ul:has( li>div.highlight ) {
+        display: block;
+      }
+
+      .form-item-checkbox {
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+        &.highlight ~ ul  {
+          display: block;
+        }
+      }
+    }
+
   }
   .form-item-checkbox {
     @extend .checkbox-pill;
@@ -311,6 +336,16 @@
     }
     .form-item-checkbox {
       margin: 0;
+    }
+    .nesting-level-1 .form-item-checkbox {
+      background-color: $blue20;
+      color: $blue150;
+      &.highlight {
+        background: clr(background-section);
+      }
+      label {
+        padding: 5px 24px;
+      }
     }
   }
   .pager {
