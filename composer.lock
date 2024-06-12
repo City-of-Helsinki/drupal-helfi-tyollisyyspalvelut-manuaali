@@ -5624,28 +5624,32 @@
         },
         {
             "name": "drupal/geoblock",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/geoblock.git",
-                "reference": "1.0.0"
+                "reference": "1.1.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/geoblock-1.0.0.zip",
-                "reference": "1.0.0",
-                "shasum": "0c24677a8c1d5e16be416419ab8f702e1b262ee1"
+                "url": "https://ftp.drupal.org/files/projects/geoblock-1.1.0.zip",
+                "reference": "1.1.0",
+                "shasum": "bc4a8b3c22d1f8269a959f8ffb9bf7b9548a6c67"
             },
             "require": {
-                "drupal/core": "^9.3 || ^10",
+                "drupal/core": "^10.1 || ^11",
                 "league/iso3166": "^4.0",
-                "php": ">=7.4"
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "drupal/core-dev": "^10.1",
+                "drupal/core-recommended": "^10.1"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "1.0.0",
-                    "datestamp": "1656691632",
+                    "version": "1.1.0",
+                    "datestamp": "1718051489",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
