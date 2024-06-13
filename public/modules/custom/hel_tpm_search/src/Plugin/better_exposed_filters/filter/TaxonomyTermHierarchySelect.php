@@ -55,7 +55,6 @@ class TaxonomyTermHierarchySelect extends RadioButtons {
 
     parent::exposedFormAlter($form, $form_state);
 
-
     $form[$field_id]['#attributes']['class'][] = 'hierarchy-select-buttons';
     $form['#attached']['library'][] = 'hel_tpm_search/taxonomy_hierarchy_select';
   }
