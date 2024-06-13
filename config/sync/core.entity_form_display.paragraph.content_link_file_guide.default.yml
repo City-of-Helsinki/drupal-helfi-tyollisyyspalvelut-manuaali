@@ -11,6 +11,7 @@ dependencies:
     - paragraphs.paragraphs_type.content_link_file_guide
   module:
     - file
+    - ief_popup
     - inline_entity_form
     - maxlength
     - paragraphs
@@ -67,7 +68,10 @@ content:
       collapsible: true
       collapsed: true
       revision: true
-    third_party_settings: {  }
+      removed_reference: optional
+    third_party_settings:
+      ief_popup:
+        ief_popup_enabled: '1'
 hidden:
   created: true
   field_description_plain: true
