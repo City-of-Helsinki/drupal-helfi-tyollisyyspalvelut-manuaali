@@ -39,6 +39,7 @@
           let lastSelection = $(this).closest('.form-checkboxes').find('input');
           lastSelection.prop("checked", false);
           lastSelection.parent().removeClass('highlight');
+          $('.select-all').removeClass('highlight');
         });
       }
 
