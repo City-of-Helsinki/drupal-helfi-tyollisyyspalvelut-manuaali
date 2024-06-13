@@ -79,6 +79,11 @@
     @include xxl {
       font-size: $small-caption;
     }
+    &:focus {
+      ~svg {
+          transform: rotateX(180deg);
+      }
+    }
   }
   svg {
     padding: 0;
@@ -86,6 +91,18 @@
     width: 22px;
     background: unset;
   }
+  .active .multi-select-button {
+    background-color: clr(background-section);
+  }
+  .multi-select-button,
+  .form-select {
+    background-color: unset;
+    z-index: 100;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
 }
 
 .select--search-background {
@@ -217,6 +234,11 @@
       }
     }
   }
+}
+
+.select2-selection--single:has(.select2-selection__rendered) {
+  // background-color: clr(background-section);
+  .select2-selection__rendered {}
 }
 
 .select2-selection__choice,
