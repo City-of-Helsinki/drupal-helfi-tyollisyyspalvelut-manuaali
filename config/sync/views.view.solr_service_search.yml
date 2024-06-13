@@ -23,6 +23,7 @@ dependencies:
     - better_exposed_filters
     - hel_tpm_search
     - search_api
+    - views_load_more
 id: solr_service_search
 label: 'Solr service search'
 module: views
@@ -834,12 +835,16 @@ display:
           2: OR
       style:
         type: default
+        options:
+          row_class: taxonomy-card
+          default_row_class: true
+          uses_fields: false
       row:
         type: search_api
         options:
           view_modes:
             'entity:node':
-              service: view_card_lift
+              service: taxonomy_card
       query:
         type: search_api_query
         options:
@@ -949,17 +954,12 @@ display:
     position: 1
     display_options:
       pager:
-        type: full
+        type: load_more
         options:
           offset: 0
           items_per_page: 8
           total_pages: null
           id: 0
-          tags:
-            next: ''
-            previous: ''
-            first: ''
-            last: ''
           expose:
             items_per_page: false
             items_per_page_label: 'Items per page'
@@ -968,7 +968,14 @@ display:
             items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
-          quantity: 6
+          more_button_text: 'Load more'
+          end_text: ''
+          advanced:
+            content_selector: ''
+            pager_selector: ''
+          effects:
+            type: ''
+            speed: slow
       exposed_form:
         type: bef
         options:
@@ -1027,6 +1034,7 @@ display:
                 options_show_only_used_filtered: 0
                 options_hide_when_empty: 0
                 options_show_items_count: 0
+                term_optgroup: 1
               field_life_situations:
                 plugin_id: bef_dropdown_multiselet
                 advanced:
@@ -1039,6 +1047,7 @@ display:
                 options_show_only_used_filtered: 0
                 options_hide_when_empty: 0
                 options_show_items_count: 0
+                term_optgroup: 0
               field_language_1:
                 plugin_id: bef_dropdown_multiselet
                 advanced:
@@ -1051,6 +1060,7 @@ display:
                 options_show_only_used_filtered: 1
                 options_hide_when_empty: 0
                 options_show_items_count: 0
+                term_optgroup: 0
               field_free_service:
                 plugin_id: bef_dropdown_multiselet
                 advanced:
@@ -1063,6 +1073,7 @@ display:
                 options_show_only_used_filtered: false
                 options_hide_when_empty: false
                 options_show_items_count: false
+                term_optgroup: 0
               age_groups_filter:
                 plugin_id: bef_dropdown_multiselet
                 advanced:
@@ -1075,6 +1086,7 @@ display:
                 options_show_only_used_filtered: false
                 options_hide_when_empty: false
                 options_show_items_count: false
+                term_optgroup: 0
               field_accessibility:
                 plugin_id: bef_dropdown_multiselet
                 advanced:
@@ -1087,6 +1099,7 @@ display:
                 options_show_only_used_filtered: 0
                 options_hide_when_empty: 0
                 options_show_items_count: 0
+                term_optgroup: 0
               field_implementation_extra_info:
                 plugin_id: bef_dropdown_multiselet
                 advanced:
@@ -1099,6 +1112,7 @@ display:
                 options_show_only_used_filtered: 0
                 options_hide_when_empty: 0
                 options_show_items_count: 0
+                term_optgroup: 0
               field_target_group_municipality:
                 plugin_id: bef_dropdown_multiselet
                 advanced:
@@ -1111,6 +1125,7 @@ display:
                 options_show_only_used_filtered: 0
                 options_hide_when_empty: 0
                 options_show_items_count: 0
+                term_optgroup: 0
       empty:
         area:
           id: area

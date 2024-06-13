@@ -302,6 +302,23 @@
         margin-bottom: 0;
       }
     }
+
+    .archiving-guides {
+      @include xl {
+        margin-bottom: $space-triple;
+      }
+      margin-bottom: $space-double;
+    }
+
+    .sharing-options {
+      .btn {
+        padding: 0;
+        &:focus-visible {
+          outline: 2px solid clr(accent-high);
+          border-radius: 0;
+        }
+      }
+    }
   }
 
   .field--name-field-internal-files,

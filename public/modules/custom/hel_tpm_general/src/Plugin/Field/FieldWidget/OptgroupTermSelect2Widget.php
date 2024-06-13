@@ -93,9 +93,10 @@ class OptgroupTermSelect2Widget extends OptionsWidgetBase implements ContainerFa
    * {@inheritdoc}
    */
   protected function getEmptyLabel() {
+    $require_on_publish = $this->fieldDefinition->getThirdPartySetting('require_on_publish', 'require_on_publish', FALSE);
     if ($this->multiple) {
       // Multiple select: add a 'none' option for non-required fields.
-      if (!$this->required) {
+      if (!$this->required && !$require_on_publish) {
         return $this->t('- None -');
       }
     }
@@ -103,7 +104,7 @@ class OptgroupTermSelect2Widget extends OptionsWidgetBase implements ContainerFa
       // Single select: add a 'none' option for non-required fields,
       // and a 'select a value' option for required fields that do not come
       // with a value selected.
-      if (!$this->required) {
+      if (!$this->required && !$require_on_publish) {
         return $this->t('- None -');
       }
       if (!$this->has_value) {
