@@ -122,12 +122,23 @@
       {{ content.field_contact_info }}
       {{ content.field_responsible_updatee }}
       {% if content.field_related_archive['0']['#markup'] == 'yes' %}
-        {% include "@atoms/text/headings/_heading.twig" with {
-          "heading_level": 4,
-          "heading": 'Archiving guides:'|t,
-          "heading_modifiers": 'semibold',
-        } %}
-         <a class="small-font" href="/node/275">{{ 'Archiving guide'|t }}</a>
+        <div class="archiving-guides">
+          {% include "@atoms/text/headings/_heading.twig" with {
+            "heading_level": 4,
+            "heading": 'Archiving guides:'|t,
+            "heading_modifiers": 'semibold',
+          } %}
+          <a class="small-font" href="/node/275">{{ 'Archiving guide'|t }}</a>
+        </div>
       {% endif %}
+     <div class="sharing-options">
+       <button onclick="window.print();" class="btn" title="{{ 'Print'|t }}" aria-label="{{ 'Print'|t }}">
+         {% include "@atoms/images/icons/_icon.twig" with {
+           icon_base_class: 'icon',
+           icon_name: 'print',
+           icon_modifiers: ['small'],
+         } %}
+       </button>
+     </div>
    {% endblock %}
  {% endembed %}
