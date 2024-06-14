@@ -8,6 +8,7 @@ Drupal.behaviors.mainMenu = {
       let menu = $('#block-system-menu-block-main--2 .main-nav');
       let header = $('.header__primary');
       let additionalMenu = $('.header__primary .additional-links-menu-nav');
+      let body = $('body');
 
     if (typeof menu !== 'undefined' || menu == null) {
       const expandMenu = menu[0].getElementsByClassName('expand-sub');
@@ -20,11 +21,13 @@ Drupal.behaviors.mainMenu = {
         if (additionalMenu[0]) {
           additionalMenu[0].classList.toggle('additional-links-menu-nav--open');
         }
+        body[0].classList.toggle('no-scroll');
         menu[0].classList.toggle('main-nav--open');
         header[0].classList.toggle('header__primary-mobile');
         header.removeClass('slide-out');
         header[0].classList.toggle('slide-in');
         e.preventDefault();
+
       });
 
 
@@ -39,6 +42,7 @@ Drupal.behaviors.mainMenu = {
         menu[0].classList.toggle('main-nav--open');
         header[0].classList.toggle('slide-in');
         header[0].classList.toggle('slide-out');
+        body[0].classList.toggle('no-scroll');
         setTimeout(function() { header[0].classList.toggle('header__primary-mobile'); }, 1000);
         e.preventDefault();
       });

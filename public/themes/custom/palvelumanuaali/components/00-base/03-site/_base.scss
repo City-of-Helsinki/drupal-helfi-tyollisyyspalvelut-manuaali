@@ -7,6 +7,12 @@ body {
   color: clr(text);
 
   @include body-copy;
+  &.no-scroll {
+    overflow: hidden;
+    @include large {
+      overflow: inherit;
+    }
+  }
 }
 
 .main {
