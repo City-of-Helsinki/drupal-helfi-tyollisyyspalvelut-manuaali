@@ -290,18 +290,28 @@
     }
     .bef-nested {
       position: relative;
+      width: 100%;
       ul > li {
         display: inline-block;
       }
       ul > li > ul  {
         position: absolute;
-        margin-top: 1rem;
         left: 0;
+        top: -8 * $space;
         display: none;
+        width: 100%;
+        height: 100%;
+        @include xl {
+          top: -4.5 * $space;
+        }
       }
 
       ul:has( li>div.highlight ) {
-        display: block;
+        display: flex;
+        margin-bottom: calc($space * 8);
+        @include xl {
+            margin-bottom: $space-four-and-half;
+        }
       }
 
       .form-item-checkbox {
@@ -322,15 +332,14 @@
       max-width: fit-content;
     }
   }
-  .form-checkboxes {
+  .nesting-level-0 {
     @extend .col-xl-10;
     display: inline-flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 16px;
-    margin-bottom: $space-three-and-half;
     @include xl {
-      margin: $space-two-and-half auto $space-one-and-half auto;
+      margin: $space-two-and-half auto 0 auto;
       display: flex;
       flex-direction: row;
       justify-content: center;
@@ -346,12 +355,21 @@
     .nesting-level-1 .form-item-checkbox {
       background-color: $blue20;
       color: $blue150;
+      margin-bottom: $space-one-half;
       &.highlight {
         background: clr(background-section);
       }
       label {
         padding: 5px 24px;
       }
+    }
+    .nesting-level-1 {
+      width: 100%;
+      height: 100%;
+      margin-top: height;
+      transform: translateY(100%);
+      margin-top: $space;
+      display: flex;
     }
   }
   .pager {
