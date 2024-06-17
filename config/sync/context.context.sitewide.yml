@@ -31,7 +31,7 @@ reactions:
         weight: '-4'
         custom_id: system_menu_block_main
         theme: palvelumanuaali
-        css_class: ''
+        css_class: hide-mobile
         unique: 0
         context_id: sitewide
         context_mapping: {  }
@@ -73,6 +73,24 @@ reactions:
         context_mapping: {  }
         views_label: ''
         items_per_page: '3'
+        third_party_settings: {  }
+      7200a5d7-41db-412e-b4f8-9e6ece2a364c:
+        uuid: 7200a5d7-41db-412e-b4f8-9e6ece2a364c
+        id: 'system_menu_block:main'
+        label: 'Main navigation'
+        provider: system
+        label_display: '0'
+        region: header
+        weight: '0'
+        custom_id: system_menu_block_main
+        theme: palvelumanuaali
+        css_class: hide-desktop
+        unique: 1
+        context_id: sitewide
+        context_mapping: {  }
+        level: '1'
+        depth: '0'
+        expand_all_items: 0
         third_party_settings: {  }
     include_default_blocks: 1
     saved: false

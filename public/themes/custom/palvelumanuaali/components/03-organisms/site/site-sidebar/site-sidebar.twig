@@ -5,6 +5,8 @@
 {% set sidebar__logo_small_src = directory ? '/' ~ directory ~ '/images/icons/logo-small.svg' : 'logo-small.svg' %}
 <div {{ bem('branding', [], sidebar__base_class) }}>
   {% block sidebar__branding %}
-    {% include "@organisms/site/site-sidebar/_site-sidebar-branding.twig" %}
+    {% include "@organisms/site/site-sidebar/_site-sidebar-branding.twig" with {
+      large: "yes",
+    }%}
   {% endblock %}
 </div>

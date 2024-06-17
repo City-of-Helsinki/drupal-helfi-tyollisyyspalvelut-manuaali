@@ -7,6 +7,12 @@ body {
   color: clr(text);
 
   @include body-copy;
+  &.no-scroll {
+    overflow: hidden;
+    @include large {
+      overflow: inherit;
+    }
+  }
 }
 
 .main {
@@ -32,12 +38,23 @@ body {
   word-wrap: normal;
 }
 
-.hide-mobile {
-  display: none;
-  @include large {
-    display: block;
+.hide {
+  &-mobile {
+    display: none;
+    @include large {
+      display: block;
+    }
   }
+  &-desktop {
+    display: block;
+    @include large {
+      display: none;
+    }
+  }
+
 }
+
+
 
 .hide-lg {
   @include large {
@@ -286,6 +303,33 @@ footer.footer{
   }
   &--right-one-and-half {
     margin-right: $space-one-and-half;
+  }
+  &--mobile-only {
+    &--bottom-one-and-half {
+      margin-bottom: $space-one-and-half;
+      @include large {
+        margin-bottom: 0;
+      }
+    }
+    &--bottom-fourteen {
+      margin-bottom: 14px;
+      @include large {
+        margin-bottom: 0;
+      }
+    }
+    &--top-one-space {
+      margin-top: 6px;
+      @include large {
+        margin-top: 0;
+      }
+    }
+  }
+  &--desktop {
+    &--top-three-fourths {
+      @include large {
+        margin-top: $space-three-fourths;
+      }
+    }
   }
 }
 
