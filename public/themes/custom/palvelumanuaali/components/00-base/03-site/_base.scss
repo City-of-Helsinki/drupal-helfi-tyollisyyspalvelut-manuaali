@@ -9,8 +9,12 @@ body {
   @include body-copy;
   &.no-scroll {
     overflow: hidden;
+    height: 100%;
+    margin: 0;
     @include large {
       overflow: inherit;
+      height: inherit;
+      margin: inherit;
     }
   }
 }
@@ -476,5 +480,14 @@ footer.footer{
 .fd--no-border {
   .form-item__dropdown {
     border: unset;
+  }
+}
+
+.overflow {
+  &--mobile-scroll {
+    overflow: scroll;
+    @include large {
+      overflow: auto;
+    }
   }
 }
