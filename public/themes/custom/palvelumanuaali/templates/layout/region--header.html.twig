@@ -17,7 +17,7 @@
  # Otherwise, set the path relative to the Component Library. #}
 {% set sidebar__logo_src = directory ? '/' ~ directory ~ '/images/logo.svg' : 'logo.svg' %}
 {% set sidebar__logo_small_src = directory ? '/' ~ directory ~ '/images/icons/logo-small.svg' : 'logo-small.svg' %}
-{% set link_url = logo_link__url|default(front_page) %}
+{% set link_url = url('<front>') %}
 
 {% extends "@organisms/site/site-header/site-header.twig" %}
 
@@ -27,7 +27,7 @@
 {% block header__breadcrumbs %}
   {% include "@organisms/site/site-sidebar/_site-sidebar-branding.twig" with {
     small: "yes",
-    link_url: front_page,
+    logo_link__url: link_url,
   } %}
   {{ drupal_block('user_login_block') }}
   {{ drupal_block('system_menu_block:account') }}
