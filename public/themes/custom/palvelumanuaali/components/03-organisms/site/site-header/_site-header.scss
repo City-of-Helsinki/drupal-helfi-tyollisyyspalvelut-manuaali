@@ -156,10 +156,19 @@ body:not(.logged-in) {
         display: none;
       }
     }
-    .block--header-search-block,
+    .block--header-search-block {
+      z-index: 30;
+      @include large {
+        z-index: unset;
+      }
+    }
+
     .block-language-blocklanguage-interface,
     .menu--favorites {
-      z-index: 100;
+      z-index: 40;
+      @include large {
+        z-index: unset;
+      }
     }
     @include large {
       display: block;
