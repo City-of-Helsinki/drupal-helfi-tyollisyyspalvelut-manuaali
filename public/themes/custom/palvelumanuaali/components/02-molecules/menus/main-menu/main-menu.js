@@ -4,8 +4,8 @@ Drupal.behaviors.mainMenu = {
       attach: function (context, settings) {
 
       let toggleExpand = $('.header__inner >.toggle-expand');
-      let toggleInnerExpand = $('#block-system-menu-block-main--2 .toggle-expand');
-      let menu = $('#block-system-menu-block-main--2 .main-nav');
+      let toggleInnerExpand = $('.header-main-nav .toggle-expand');
+      let menu = $('.header-main-nav .main-nav');
       let header = $('.header__primary');
       let additionalMenu = $('.header__primary .additional-links-menu-nav');
       let body = $('body');
