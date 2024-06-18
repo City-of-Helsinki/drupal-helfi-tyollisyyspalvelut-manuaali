@@ -482,3 +482,12 @@ footer.footer{
     border: unset;
   }
 }
+
+.overflow {
+  &--mobile-scroll {
+    overflow: scroll;
+    @include large {
+      overflow: auto;
+    }
+  }
+}
