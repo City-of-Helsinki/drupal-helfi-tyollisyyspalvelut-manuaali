@@ -9,8 +9,12 @@ body {
   @include body-copy;
   &.no-scroll {
     overflow: hidden;
+    height: 100%;
+    margin: 0;
     @include large {
       overflow: inherit;
+      height: inherit;
+      margin: inherit;
     }
   }
 }

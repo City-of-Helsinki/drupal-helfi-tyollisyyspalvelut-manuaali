@@ -11,7 +11,11 @@ body:not(.logged-in) {
   .menu--account {
     display: none;
   }
+  .header__primary-mobile {
+    margin-top: 0;
+  }
 }
+
 
 .header {
   width: calc(100% + 32px);
@@ -136,15 +140,24 @@ body:not(.logged-in) {
 
   }
   &__primary-mobile {
+    margin-top: 40px;
     display: block;
     height: 100%;
-    position: absolute;
+    position: fixed;
+    inset:0;
+    overflow-y: scroll;
     background: white;
     z-index: 300;
     padding: 0 $space;
     margin-left: 0;
     transform:translateX(-100%);
     width:  100%;
+    @include large {
+      margin-top: inherit;
+      position: inherit;
+      inset: unset;
+      overflow-y: auto;
+    }
     &.slide-in {
       animation: slide-in 0.5s forwards;
       -webkit-animation: slide-in 0.5s forwards;
