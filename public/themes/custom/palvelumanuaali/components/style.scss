@@ -22,9 +22,6 @@ $container-max-widths: (
 @import '../../../../../vendor/twbs/bootstrap/scss/bootstrap-grid.scss';
 @import '../../../../libraries/bootstrap-dist/css/bootstrap.min.css';
 
-
-
-
 // Components
 @import '00-base/*/*.scss';
 @import '01-atoms/**/*.scss';
@@ -35,7 +32,8 @@ $container-max-widths: (
 @import '05-pages/search/**/*.scss';
 @import '05-pages/edit-form-overrides/**/*.scss';
 
-
+// Printing
+@import '_print.scss';
 
 @font-face {
   font-family: "icons";

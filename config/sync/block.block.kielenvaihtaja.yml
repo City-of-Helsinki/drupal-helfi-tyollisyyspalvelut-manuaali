@@ -3,9 +3,13 @@ langcode: fi
 status: true
 dependencies:
   module:
+    - block_class
     - language
   theme:
     - palvelumanuaali
+third_party_settings:
+  block_class:
+    classes: 'margin--mobile-only--bottom-fourteen margin--mobile-only--top-one-space margin--desktop--top-three-fourths'
 id: kielenvaihtaja
 theme: palvelumanuaali
 region: header

@@ -31,23 +31,23 @@
 
 /* SVG icon */
 .toggle-expand__icon {
-  height: 3rem;
-  width: 3rem;
+  height: 24px;
+  width: 24px;
   margin: 0 auto;
 }
 
 .toggle-expand-close__icon {
-  height: 3rem;
-  width: 3rem;
+  height: 24px;
+  width: 24px;
   margin: 0 auto;
 }
 
 
 
 .toggle-expand__open {
-  display: inline-block;
+  display: grid;
   text-align: center;
-
+  height: 24px;
   .toggle-expand--open & {
     display: none;
   }
@@ -58,6 +58,6 @@
   text-align: center;
 
   .toggle-expand--open & {
-    display: inline-block;
+    display: grid;
   }
 }

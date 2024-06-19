@@ -42,7 +42,6 @@
     if ( array1.length != array2.length ){
       return false;
     }
-
     array1.sort();
     array2.sort();
 
@@ -67,6 +66,7 @@
 
       this.setUpBodyClickListener();
       this.setUpLabelsClickListener();
+  //    this.setUpGroupParentLabelClickListener();
 
       this.hideOriginalElement();
     },
@@ -317,16 +317,46 @@
 
     constructMenuItemsGroup: function($optgroup, optgroup_index) {
       var _this = this;
+      let checked = false;
+      let $group = $('<div class="select-group"></div>');
+      let $group_id =  this.$element.attr('name') + '_' + optgroup_index;
+      let $parent_element = document.createElement('label');
+      $($parent_element).addClass('group--parent-label');
+      $($parent_element).addClass('select--children');
+      $($parent_element).html($optgroup.attr('label'));
 
       $optgroup.children('option').each(function(option_index, option) {
+        //checked = $(option).attr('selected') === 'selected';
         var $item = _this.constructMenuItem($(option), optgroup_index + '_' + option_index);
+        checked = $('input', $item).is(':checked')
         var cls = _this.settings['menuItemTitleClass'];
         if (option_index !== 0) {
           cls += 'sr';
         }
-        $item.addClass(cls).attr('data-group-title', $optgroup.attr('label'));
-        _this.$menuItems.append($item);
+        $group.append($item);
       });
+
+      if (checked === true) {
+        $($parent_element).addClass('checked');
+      }
+
+      $($parent_element).on('click', function() {
+        let parent = $(this).parent();
+        let form = $(this).closest('form');
+        let checked = !$(this).hasClass('checked');
+
+        $('.multi-select-menuitem input', parent).each(function (i, element) {
+          let val = $(element).attr('value');
+          $(element).attr('checked', checked);
+          $(element).prop('checked', checked);
+          $('option[value=' + val + ']').attr('selected', checked);
+        });
+
+        $("input[data-bef-auto-submit-click]", form).trigger('click');
+      });
+
+      $group.prepend($parent_element);
+      _this.$menuItems.append($group);
     },
 
     constructMenuItem: function($option, option_index) {
