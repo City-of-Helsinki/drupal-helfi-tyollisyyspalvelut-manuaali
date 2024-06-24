@@ -1,0 +1,24 @@
+{#
+/**
+ * @file
+ * Override template for tests.
+ *
+ * The original hel_tpm_forms template uses theme which is not used with tests.
+ *
+ * Available variables:
+ * - content: The content of this block.
+ *
+ * @see template_preprocess_block()
+ */
+#}
+
+<div class='nav page-controls'>
+  <div class='button-wrapper'>
+    <button class='button btn-prev' type="button" id="prevBtn">
+      {{'Previous'|t}}
+    </button>
+    <button class='button btn-next' type="button" id="nextBtn">
+      <span id="nextBtnText" class='text-wrapper'>{{'Next'|t}}</span>
+    </button>
+  </div>
+</div>
