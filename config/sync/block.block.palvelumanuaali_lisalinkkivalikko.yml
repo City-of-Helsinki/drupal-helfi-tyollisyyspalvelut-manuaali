@@ -1,0 +1,37 @@
+uuid: 80b93976-1d5d-4552-a271-5de02f72c354
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.additional-links-menu
+  module:
+    - system
+    - user
+  theme:
+    - palvelumanuaali
+id: palvelumanuaali_lisalinkkivalikko
+theme: palvelumanuaali
+region: header
+weight: 3
+provider: null
+plugin: 'system_menu_block:additional-links-menu'
+settings:
+  id: 'system_menu_block:additional-links-menu'
+  label: Lisälinkkivalikko
+  label_display: '0'
+  provider: system
+  level: 1
+  depth: 0
+  expand_all_items: false
+visibility:
+  user_role:
+    id: user_role
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      root: root
+      admin: admin
+      editor: editor
+      specialist: specialist
+      specialist_editor: specialist_editor
