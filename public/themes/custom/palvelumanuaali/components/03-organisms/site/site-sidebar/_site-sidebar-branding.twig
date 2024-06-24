@@ -1,20 +1,23 @@
 {% set link_base_class = 'logo-link' %}
 {% set link_url = logo_link__url|default(front_page) %}
-
 {% extends "@atoms/links/link/link.twig" %}
   {% block link_content %}
-    {% include "@atoms/images/image/responsive-image.twig" with {
-      output_image_tag: true,
-      image_src: sidebar__logo_src,
-      responsive_image_modifiers: 'hidden-mobile',
-      image_alt: 'Logo',
-      responsive_image_blockname: 'logo',
-    } %}
-    {% include "@atoms/images/image/responsive-image.twig" with {
-      output_image_tag: true,
-      image_src: sidebar__logo_small_src,
-      responsive_image_modifiers: 'hidden-lg',
-      image_alt: 'Logo',
-      responsive_image_blockname: 'logo-small',
-    } %}
+    {% if large %}
+      {% include "@atoms/images/image/responsive-image.twig" with {
+        output_image_tag: true,
+        image_src: sidebar__logo_src,
+        responsive_image_modifiers: 'hidden-mobile',
+        image_alt: 'Logo',
+        responsive_image_blockname: 'logo',
+      } %}
+    {% endif %}
+    {% if small %}
+      {% include "@atoms/images/image/responsive-image.twig" with {
+        output_image_tag: true,
+        image_src: sidebar__logo_small_src,
+        responsive_image_modifiers: 'hidden-lg',
+        image_alt: 'Logo',
+        responsive_image_blockname: 'logo-small',
+      } %}
+    {% endif %}
   {% endblock %}
