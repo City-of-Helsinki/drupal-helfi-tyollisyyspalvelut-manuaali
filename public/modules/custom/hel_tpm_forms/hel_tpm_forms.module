@@ -168,11 +168,12 @@ function hel_tpm_forms_validate_service_form_helper(array &$form, FormStateInter
     _hel_tpm_forms_validate_target_group_description($target_group, $form_state);
   }
 
-  if ($languages = $form_state->getValue('field_service_languages')) {
-    _hel_tpm_forms_validate_paragraph_language_selection($languages, $form_state, 'field_service_languages');
+  if ($require_fields) {
+    if ($languages = $form_state->getValue('field_service_languages')) {
+      _hel_tpm_forms_validate_paragraph_language_selection($form, $form_state, $languages,'field_service_languages');
+    }
+    _hel_tpm_forms_validate_required_paragraph_long_texts_with_editor($form, $form_state);
   }
-
-  _hel_tpm_forms_validate_required_paragraph_long_texts_with_editor($form, $form_state);
 }
 
 /**
@@ -188,7 +189,10 @@ function hel_tpm_forms_validate_service_form_helper(array &$form, FormStateInter
  */
 function _hel_tpm_forms_validate_required_paragraph_long_texts_with_editor(array &$form, FormStateInterface &$form_state): void {
   $fields = ['field_service_execution', 'field_attendance'];
+  $entity = $form_state->getBuildInfo()['callback_object']->getEntity();
+  $entity_fields = $entity->getFields();
   foreach ($fields as $field) {
+    $field_config = $entity_fields[$field]->getFieldDefinition();
     $paragraph = $form_state->getValue($field);
     foreach ($paragraph as $key => $row) {
       $val = reset($row);
@@ -197,7 +201,7 @@ function _hel_tpm_forms_validate_required_paragraph_long_texts_with_editor(array
       }
       $form_state->setErrorByName(
         $field,
-        t("@field_label is required on publish.", ['@field_label' => $form_state->getCompleteForm()[$field]['widget']['#title']])
+        t("@field_label field is required when publishing.", ['@field_label' => sprintf("%s:", $field_config->getLabel())])
       );
     }
   }
@@ -214,7 +218,7 @@ function _hel_tpm_forms_validate_required_paragraph_long_texts_with_editor(array
  * @return void
  *   -
  */
-function _hel_tpm_forms_validate_paragraph_language_selection($languages, FormStateInterface &$form_state, $field): void {
+function _hel_tpm_forms_validate_paragraph_language_selection($form, FormStateInterface &$form_state, array $languages, $field): void {
   $lang = [];
   $build_info = $form_state->getBuildInfo();
   $entity = $build_info['callback_object']->getEntity();
@@ -234,7 +238,7 @@ function _hel_tpm_forms_validate_paragraph_language_selection($languages, FormSt
     $field_key = 'field_service_languages';
     $form_state->setErrorByName(
       $field_key,
-      t("@field_label is required on publish.", ['@field_label' => $form_state->getCompleteForm()[$field]['widget']['#title']])
+      t("@field_label field is required when publishing..", ['@field_label' => sprintf("%s:", $form[$field]['widget']['#title'])])
     );
     return;
   }
