@@ -170,7 +170,7 @@ function hel_tpm_forms_validate_service_form_helper(array &$form, FormStateInter
 
   if ($require_fields) {
     if ($languages = $form_state->getValue('field_service_languages')) {
-      _hel_tpm_forms_validate_paragraph_language_selection($form, $form_state, $languages,'field_service_languages');
+      _hel_tpm_forms_validate_paragraph_language_selection($form, $form_state, $languages, 'field_service_languages');
     }
     _hel_tpm_forms_validate_required_paragraph_long_texts_with_editor($form, $form_state);
   }
@@ -185,7 +185,7 @@ function hel_tpm_forms_validate_service_form_helper(array &$form, FormStateInter
  *   Form state interface.
  *
  * @return void
- *  -
+ *   -
  */
 function _hel_tpm_forms_validate_required_paragraph_long_texts_with_editor(array &$form, FormStateInterface &$form_state): void {
   $fields = ['field_service_execution', 'field_attendance'];
@@ -210,15 +210,19 @@ function _hel_tpm_forms_validate_required_paragraph_long_texts_with_editor(array
 /**
  * Language field validation.
  *
- * @param array $languages
- *   Array of selected languages.
+ * @param array $form
+ *   Form array.
  * @param \Drupal\Core\Form\FormStateInterface $form_state
  *   Form state interface.
+ * @param array $languages
+ *   Array of selected languages.
+ * @param string $field
+ *   Validated field key.
  *
  * @return void
  *   -
  */
-function _hel_tpm_forms_validate_paragraph_language_selection($form, FormStateInterface &$form_state, array $languages, $field): void {
+function _hel_tpm_forms_validate_paragraph_language_selection(array $form, FormStateInterface &$form_state, array $languages, $field): void {
   $lang = [];
   $build_info = $form_state->getBuildInfo();
   $entity = $build_info['callback_object']->getEntity();
@@ -314,13 +318,13 @@ function _hel_tpm_forms_validate_age_groups($target_group, &$form_state) {
 /**
  * Helper validator for target group description.
  *
- * @param $target_group
+ * @param array $target_group
  *   Target group paragraph values.
- * @param $form_state
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
  *   Form state object.
  *
  * @return void
- *  -
+ *   -
  */
 function _hel_tpm_forms_validate_target_group_description($target_group, &$form_state) {
   $subform = $target_group[0]['subform'];
