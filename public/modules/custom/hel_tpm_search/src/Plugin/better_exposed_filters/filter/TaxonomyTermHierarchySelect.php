@@ -2,6 +2,7 @@
 
 namespace Drupal\hel_tpm_search\Plugin\better_exposed_filters\filter;
 
+use Drupal\better_exposed_filters\BetterExposedFiltersHelper;
 use Drupal\better_exposed_filters\Plugin\better_exposed_filters\filter\FilterWidgetBase;
 use Drupal\better_exposed_filters\Plugin\better_exposed_filters\filter\RadioButtons;
 use Drupal\Core\Form\FormStateInterface;
@@ -59,5 +60,45 @@ class TaxonomyTermHierarchySelect extends RadioButtons {
     $form['#attached']['library'][] = 'hel_tpm_search/taxonomy_hierarchy_select';
   }
 
+  /**
+   * Override FilterWidgetBase:processSortedOptions
+   * to allow taxonomies be sorted by hand.
+   *
+   * @param array $element
+   *   The form element.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state.
+   *
+   * @return array
+   *   The altered element.
+   */
+  public function processSortedOptions(array $element, FormStateInterface $form_state) {
+    $options = &$element['#options'];
+
+    // Ensure "- Any -" value does not get sorted.
+    $any_option = FALSE;
+    if (empty($element['#required']) && $element['#required'] !== FALSE) {
+      // We use array_slice to preserve they keys needed to determine the value
+      // when using a filter (e.g. taxonomy terms).
+      $any_option = array_slice($options, 0, 1, TRUE);
+      // Array_slice does not modify the existing array, we need to remove the
+      // option manually.
+      unset($options[key($any_option)]);
+    }
+
+    // Not all option arrays will have simple data types. We perform a custom
+    // sort in case users want to sort more complex fields (e.g taxonomy terms).
+    // Skip sorting nested fields because it interferes with taxonomy sort.
+    if (empty($element['#nested'])) {
+      $options = BetterExposedFiltersHelper::sortOptions($options);
+    }
+
+    // Restore the "- Any -" value at the first position.
+    if ($any_option) {
+      $options = $any_option + $options;
+    }
+
+    return $element;
+  }
 
 }
