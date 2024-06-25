@@ -524,8 +524,15 @@ $button-colors: (
   }
 }
 
+.service-page {
   .flag.action-flag,
   .flag.action-unflag {
+    z-index: inherit;
+  }
+}
+
+.flag.action-flag,
+.flag.action-unflag {
     position: absolute;
     right: 48px;
     z-index: 120;

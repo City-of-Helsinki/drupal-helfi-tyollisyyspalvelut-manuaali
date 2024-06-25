@@ -1,0 +1,24 @@
+name: 'Tests for hel_tpm_forms'
+type: module
+description: 'Provides configurations for form tests.'
+package: Testing
+core_version_requirement: ^9 || ^10
+dependencies:
+  - drupal:user
+  - drupal:system
+  - drupal:field
+  - drupal:text
+  - drupal:filter
+  - drupal:options
+  - drupal:content_moderation
+  - drupal:workflows
+  - drupal:node
+  - drupal:taxonomy
+  - flexible_permissions:flexible_permissions
+  - entity_reference_revisions:entity_reference_revisions
+  - paragraphs:paragraphs
+  - range:range
+  - require_on_publish:require_on_publish
+  - select2:select2
+  - maxlength:maxlength
+  - hel_tpm_forms:hel_tpm_forms
