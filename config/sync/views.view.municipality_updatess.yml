@@ -3,6 +3,8 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - group.content_type.group_content_type_a689b6d6f98cc
+    - group.content_type.organisation-group_membership
     - user.role.specialist_editor
   module:
     - entity_reference_revisions
@@ -144,7 +146,6 @@ display:
           default_argument_type: fixed
           default_argument_options:
             argument: ''
-          default_argument_skip_url: false
           summary_options:
             base_path: ''
             count: true
