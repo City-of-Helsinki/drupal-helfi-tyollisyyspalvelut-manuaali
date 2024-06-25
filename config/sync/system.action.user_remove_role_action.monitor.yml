@@ -1,0 +1,14 @@
+uuid: 0bfdc077-b581-4950-8565-f16d3dc0abac
+langcode: fi
+status: true
+dependencies:
+  config:
+    - user.role.monitor
+  module:
+    - user
+id: user_remove_role_action.monitor
+label: 'Poista Monitor rooli valitulta käyttäjältä tai käyttäjiltä  '
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: monitor
