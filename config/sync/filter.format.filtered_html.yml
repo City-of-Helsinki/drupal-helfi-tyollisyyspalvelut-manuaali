@@ -21,17 +21,17 @@ filters:
       allowed_html: '<br> <p> <h3 id> <a hreflang href> <ul type> <ol type start> <strong> <em> <blockquote> <li> <dl class> <dt> <dd>'
       filter_html_help: true
       filter_html_nofollow: false
-  filter_htmlcorrector:
-    id: filter_htmlcorrector
-    provider: filter
-    status: true
-    weight: 10
-    settings: {  }
   filter_html_image_secure:
     id: filter_html_image_secure
     provider: filter
     status: true
     weight: 9
+    settings: {  }
+  filter_htmlcorrector:
+    id: filter_htmlcorrector
+    provider: filter
+    status: true
+    weight: 10
     settings: {  }
   filter_url:
     id: filter_url
