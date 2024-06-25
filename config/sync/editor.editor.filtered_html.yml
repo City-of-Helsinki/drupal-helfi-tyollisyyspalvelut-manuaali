@@ -31,14 +31,16 @@ settings:
       enabled_headings:
         - heading3
     ckeditor5_list:
-      reversed: false
-      startIndex: true
+      properties:
+        reversed: false
+        startIndex: true
+      multiBlock: true
     ckeditor5_sourceEditing:
       allowed_tags:
         - '<h3 id>'
         - '<a hreflang href>'
         - '<ul type>'
-        - '<ol type start>'
+        - '<ol type>'
     editor_advanced_link_link:
       enabled_attributes: {  }
 image_upload:

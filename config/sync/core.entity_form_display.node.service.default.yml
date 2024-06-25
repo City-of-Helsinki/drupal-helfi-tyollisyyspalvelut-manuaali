@@ -55,6 +55,7 @@ dependencies:
     - hel_tpm_general
     - hel_tpm_group
     - hel_tpm_service_dates
+    - ief_popup
     - inline_entity_form
     - link
     - markup
@@ -628,7 +629,9 @@ content:
       collapsed: false
       revision: false
       removed_reference: optional
-    third_party_settings: {  }
+    third_party_settings:
+      ief_popup:
+        ief_popup_enabled: '1'
   field_contact_info_external:
     type: inline_entity_form_complex
     weight: 8
@@ -646,7 +649,9 @@ content:
       collapsed: false
       revision: false
       removed_reference: optional
-    third_party_settings: {  }
+    third_party_settings:
+      ief_popup:
+        ief_popup_enabled: '1'
   field_description:
     type: string_textarea
     weight: 4
@@ -751,31 +756,35 @@ content:
       label_plural: 'kuntakohtaiset ohjeet'
       allow_new: '1'
       match_operator: CONTAINS
+      removed_reference: optional
       revision: 0
       collapsible: 0
       collapsed: 0
       allow_existing: 0
       allow_duplicate: 0
-      removed_reference: optional
-    third_party_settings: {  }
+    third_party_settings:
+      ief_popup:
+        ief_popup_enabled: '1'
   field_municipality_specific:
     type: municipality_specific_ief_widget
     weight: 14
     region: content
     settings:
       form_mode: default
-      override_labels: true
+      override_labels: '1'
       label_singular: 'kuntakohtainen poikkeustilanne'
       label_plural: 'kuntakohtaiset poikkeustilanteet'
-      allow_new: true
-      allow_existing: false
+      allow_new: '1'
       match_operator: CONTAINS
-      allow_duplicate: false
-      collapsible: false
-      collapsed: false
-      revision: false
       removed_reference: optional
-    third_party_settings: {  }
+      revision: 0
+      collapsible: 0
+      collapsed: 0
+      allow_existing: 0
+      allow_duplicate: 0
+    third_party_settings:
+      ief_popup:
+        ief_popup_enabled: '1'
   field_obligatoryness:
     type: options_buttons
     weight: 9
@@ -827,10 +836,14 @@ content:
       match_limit: 10
     third_party_settings: {  }
   field_responsible_updatee:
-    type: options_select
+    type: select2_entity_reference
     weight: 15
     region: content
-    settings: {  }
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
     third_party_settings: {  }
   field_service_benefits:
     type: text_textarea
@@ -933,10 +946,14 @@ content:
       match_limit: 10
     third_party_settings: {  }
   field_service_provider_updatee:
-    type: options_select
+    type: select2_entity_reference
     weight: 13
     region: content
-    settings: {  }
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
     third_party_settings: {  }
   field_service_req_speacialist:
     type: text_textarea

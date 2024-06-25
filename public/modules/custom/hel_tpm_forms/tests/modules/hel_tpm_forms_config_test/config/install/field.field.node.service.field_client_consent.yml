@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_client_consent
+    - node.type.service
+third_party_settings: {  }
+id: node.service.field_client_consent
+field_name: field_client_consent
+entity_type: node
+bundle: service
+label: 'Participation requires customer consent.'
+description: "Choose whether the customer's consent is required to participate in the service. If consent is required, add instructions."
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: Yes
+  off_label: No
+field_type: boolean

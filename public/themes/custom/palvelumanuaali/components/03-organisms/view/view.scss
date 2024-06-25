@@ -70,6 +70,7 @@
   }
   >.view-filters {
         grid-area: filter;
+        grid-gap: $space;
         >.views-exposed-form >.form--inline {
           margin-top: 0;
           margin-bottom: $space-one-half;
@@ -111,27 +112,116 @@
   >.view-content  {
         grid-area: view;
   }
+  .js-form-item-moderation-state {
+    @include large {
+      margin-right: $space;
+    }
+  }
 }
 
+.owner-and-updatee-view-block,
+.group-page {
+  .select--details-select {
+    @extend .select--white-rounded;
+    background: clr(text-inverse);
+    border-radius: 8px;
+    .form-select {
+      height: 48px;
+      text-align: left;
+    }
+  }
+}
 
-.view-group-responsibility-services,
-.view-group-members,
-.view-group-nodes,
-.view-group-services,
-.view-group-service-locations,
-.view-subgroups,
-.view-group-subgroup-services {
+.group-page {
+  .form--inline {
+    .form-item-langcode {
+      label {
+        display: block !important;
+      }
+    }
+  }
+
+  .select2-results__options {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .select2-results__option,
+  .select2-results__option--highlighted[aria-selected] {
+    display: block;
+    font-size: 0.875rem;
+    padding: 0.6rem $space-two-and-half 0.6rem $space-triple;
+    white-space: nowrap;
+    color: clr(text);
+    font-weight: 400;
+    &:hover,
+    &:focus {
+      background: clr(background);
+      font-weight: 400;
+      color: clr(text);
+    }
+  }
+  .select2-results__option[aria-selected="true"] {
+    font-weight: 400;
+    color: clr(text);
+    &::before {
+      left: 18px;
+      width: 12px;
+      height: 12px;
+      font-size: 9px;
+    }
+  }
+  .select2-search {
+    display: none;
+  }
+  .select2-dropdown {
+    border-radius: 8px;
+    font-size: $small-caption;
+    &--above {
+      top: -8px;
+    }
+    &--below {
+      top: 8px;
+    }
+  }
+  .views-exposed-form  {
+    .form-item-select {
+      @include large {
+        max-width: 330px;
+      }
+    }
+  }
+  .select--white-rounded,
+  .select--details-select {
+    select,
+    .multi-select-button {
+      padding:  12px 12px 12px 16px;
+      height: unset;
+      background-color: transparent;
+      z-index: 30;
+    }
+    .select2 {
+      padding: 0;
+      .select2-selection {
+        height: 48px;
+        padding: 12px 48px 12px 24px;
+      }
+    }
+    .select2-selection--single  {
+      .select2-selection__rendered{
+        font-size: 14px;
+        padding-left: 0;
+        background-color: transparent;
+      }
+    }
+
+  }
   .form--inline {
     position: relative;
     margin-left: auto;
     gap: 0;
     column-gap: 1rem;
     .form-item__select {
-      height: 41px;
       text-align: left;
-      &.icon  {
-        height: 31px;
-      }
     }
     .form-item-filter {
       display: flex;
@@ -167,17 +257,7 @@
       }
     }
   }
-  .form-item-langcode,
-  .form-item-moderation-state {
-    .select--details-select {
-      @extend .select--white-rounded;
-      .active .multi-select-button {
-        background-color: clr(background-section);
-      }
-    }
-  }
 }
-
 
 .view-group-services {
   .view-header {
