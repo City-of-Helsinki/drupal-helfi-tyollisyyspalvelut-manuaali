@@ -1124,7 +1124,7 @@ display:
             general:
               autosubmit: true
               autosubmit_exclude_textfield: false
-              autosubmit_textfield_delay: 500
+              autosubmit_textfield_delay: 1000
               autosubmit_hide: false
               input_required: false
               allow_secondary: false
@@ -1133,17 +1133,10 @@ display:
               reset_button_always_show: false
             filter:
               status:
-                plugin_id: default
+                plugin_id: bef_select2
                 advanced:
                   sort_options: false
-                  rewrite:
-                    filter_rewrite_values: ''
-                  collapsible: false
-                  is_secondary: false
-              moderation_state:
-                plugin_id: default
-                advanced:
-                  sort_options: false
+                  placeholder_text: '- None -'
                   rewrite:
                     filter_rewrite_values: ''
                   collapsible: false
@@ -1156,12 +1149,33 @@ display:
                     filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: false
+                options_show_only_used: false
+                options_show_only_used_filtered: false
+                options_hide_when_empty: false
+                options_show_items_count: false
+                term_optgroup: 0
+              moderation_state_filter_exclude_archived:
+                plugin_id: default
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+                options_show_only_used: false
+                options_show_only_used_filtered: false
+                options_hide_when_empty: false
+                options_show_items_count: false
               title:
                 plugin_id: default
                 advanced:
                   placeholder_text: ''
                   collapsible: false
                   is_secondary: false
+                options_show_only_used: false
+                options_show_only_used_filtered: false
+                options_hide_when_empty: false
+                options_show_items_count: false
       defaults:
         exposed_form: false
       display_extenders: {  }

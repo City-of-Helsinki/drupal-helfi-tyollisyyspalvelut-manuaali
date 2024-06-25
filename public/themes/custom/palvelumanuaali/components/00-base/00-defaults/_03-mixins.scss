@@ -123,6 +123,12 @@ $outer-container-break: $small;
   .form-item--radio-button,
   .form-item-checkbox{
     margin-right: 0;
+    padding: $space $space-double $space-one-and-half $space;
+    /* Primary/Blue 5 */
+    background: #F7F9FD;
+    /* Primary/Blue 100 */
+    border: 2px solid clr(form-border);
+    border-radius: 8px;
     &:last-child() {
       margin-bottom:0;
     }
@@ -136,15 +142,6 @@ $outer-container-break: $small;
       width: 468px;
     }
 
-    padding: $space $space-double $space-one-and-half $space;
-
-    /* Primary/Blue 5 */
-
-    background: #F7F9FD;
-
-    /* Primary/Blue 100 */
-    border: 2px solid clr(form-border);
-    border-radius: 8px;
     &.selected {
       border: 2px solid clr(background-section);
     }
@@ -160,5 +157,4 @@ $outer-container-break: $small;
         color: clr(background-section);
     }
   }
-
 }
