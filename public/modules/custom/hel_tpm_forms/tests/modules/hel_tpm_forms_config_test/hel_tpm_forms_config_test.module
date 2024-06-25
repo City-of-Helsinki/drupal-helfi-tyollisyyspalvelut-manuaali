@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * @file
+ * Adds configurations for hel_tpm_forms related tests.
+ */
+
+/**
+ * Implements hook_theme().
+ *
+ * Bypassing the default hel_tpm_navigation template file to remove the theme
+ * dependency.
+ */
+function hel_tpm_forms_config_test_theme($existing, $type, $theme, $path) {
+  return [
+    'hel_tpm_navigation' => [
+      'template' => 'hel_tpm_navigation',
+      'variables' => [
+        'content' => NULL,
+      ],
+    ],
+  ];
+}
