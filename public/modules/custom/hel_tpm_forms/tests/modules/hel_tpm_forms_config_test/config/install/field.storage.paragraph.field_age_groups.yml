@@ -1,0 +1,24 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - paragraphs
+third_party_settings: {  }
+id: paragraph.field_age_groups
+field_name: field_age_groups
+entity_type: paragraph
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: no_age_restriction
+      label: 'For all people of working age'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
