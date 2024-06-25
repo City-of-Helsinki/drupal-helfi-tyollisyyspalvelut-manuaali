@@ -950,10 +950,8 @@ display:
           columns:
             title: title
             label: label
-            name: name
             name_1: name_1
-            field_service_provider_updatee: field_service_provider_updatee
-            field_responsible_updatee: field_responsible_updatee
+            name: name
             langcode: langcode
             moderation_state: moderation_state
             hel_tpm_editorial_service_has_unpublished_changes: hel_tpm_editorial_service_has_unpublished_changes
@@ -975,13 +973,6 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
-            name:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
             name_1:
               sortable: true
               default_sort_order: asc
@@ -989,14 +980,7 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
-            field_service_provider_updatee:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            field_responsible_updatee:
+            name:
               sortable: true
               default_sort_order: asc
               align: ''
@@ -1037,7 +1021,7 @@ display:
               empty_column: false
               responsive: ''
           override: true
-          sticky: false
+          sticky: true
           summary: ''
           empty_table: false
           caption: ''
