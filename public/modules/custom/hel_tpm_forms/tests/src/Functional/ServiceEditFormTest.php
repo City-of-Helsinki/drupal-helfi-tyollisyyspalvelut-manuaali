@@ -34,6 +34,7 @@ class ServiceEditFormTest extends BrowserTestBase {
     'require_on_publish',
     'select2',
     'maxlength',
+    'inline_entity_form',
     'hel_tpm_forms',
     'hel_tpm_forms_config_test',
   ];
@@ -89,6 +90,14 @@ class ServiceEditFormTest extends BrowserTestBase {
       ])
       ->setComponent('field_service_provider_updatee', [
         'type' => 'options_select',
+        'settings' => [],
+      ])
+      ->setComponent('field_service_execution', [
+        'type' => 'inline_entity_form_simple',
+        'settings' => [],
+      ])
+      ->setComponent('field_attendance', [
+        'type' => 'inline_entity_form_simple',
         'settings' => [],
       ])
       ->save();
