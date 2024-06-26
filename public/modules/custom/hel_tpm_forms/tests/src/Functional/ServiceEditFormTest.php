@@ -4,6 +4,9 @@ declare(strict_types = 1);
 
 namespace Drupal\Tests\hel_tpm_forms\Functional;
 
+use Drupal\taxonomy\Entity\Term;
+use Drupal\taxonomy\Entity\Vocabulary;
+use Drupal\taxonomy\VocabularyInterface;
 use Drupal\Tests\BrowserTestBase;
 
 /**
@@ -80,6 +83,10 @@ class ServiceEditFormTest extends BrowserTestBase {
     /** @var \Drupal\Core\Entity\EntityDisplayRepositoryInterface $displayRepository */
     $displayRepository = \Drupal::service('entity_display.repository');
     $displayRepository->getFormDisplay('node', 'service')
+      ->setComponent('field_service_languages', [
+        'type' => 'entity_reference_paragraphs',
+        'settings' => [],
+      ])
       ->setComponent('field_field_client_consent_descr', [
         'type' => 'text_textarea',
         'settings' => [],
@@ -202,6 +209,60 @@ class ServiceEditFormTest extends BrowserTestBase {
     }
   }
 
+  /**
+   * Tests filling the required language selection paragraph fields.
+   */
+  public function testRequiredParagraphLanguageSelection() {
+    // Add content to language selection related drop-downs.
+    $this->addTerms(Vocabulary::load('service_languages'), [
+      'foo',
+      'bar',
+    ]);
+    $this->addTerms(Vocabulary::load('language_level'), [
+      'a',
+      'b',
+      'c',
+    ]);
 
+    $page = $this->getSession()->getPage();
+    $this->drupalGet('node/1/edit');
+    $page->selectFieldOption('moderation_state[0][state]', 'ready_to_publish');
+
+    // Not filling required language fields should not pass validation.
+    $this->submitForm([], 'Save');
+    $this->assertSession()->pageTextContains('Language: field is required');
+
+    // Filling required language fields should pass validation.
+    $page->selectFieldOption('edit-field-service-languages-0-subform-field-language', 'bar');
+    $page->selectFieldOption('edit-field-service-languages-0-subform-field-level', 'b');
+    $page->pressButton('Add Language and skills level');
+    // Remove the new empty language selection paragraph.
+    $page->pressButton('edit-field-service-languages-1-top-links-remove-button');
+    $this->submitForm([], 'Save');
+    $this->assertSession()->pageTextNotContains('Language: field is required');
+  }
+
+  /**
+   * Adds terms to taxonomy.
+   *
+   * @param \Drupal\taxonomy\VocabularyInterface $vocabulary
+   *   The taxonomy.
+   * @param array $termNames
+   *   Term names.
+   *
+   * @return void
+   *   -
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  private function addTerms(VocabularyInterface $vocabulary, array $termNames): void {
+    foreach ($termNames as $termName) {
+      $term = Term::create([
+        'name' => $termName,
+        'vid' => $vocabulary->id(),
+      ]);
+      $term->save();
+    }
+  }
 
 }
