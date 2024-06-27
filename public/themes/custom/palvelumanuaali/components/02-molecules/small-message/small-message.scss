@@ -22,6 +22,8 @@
 
 .logged-in {
   .small-message-wrapper--service {
-    top: 100px;
+    @include large {
+      top: 100px;
+    }
   }
 }
