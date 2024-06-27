@@ -183,11 +183,27 @@ $printColors: (
   .field--name-field-contact-info .field__label {
     margin-bottom: 0.5rem !important;
   }
-  .service .content-column>.field {
-    margin-bottom: 2rem !important;
-  }
-  .service .field--name-field-service-language {
-    margin-bottom: 0 !important;
+  .service {
+    .content-column>.field {
+      margin-bottom: 2rem !important;
+    }
+
+    .service-language {
+      .field--name-field-service-language {
+        margin-bottom: 0 !important;
+      }
+
+      .field--name-field-level {
+        display: inline !important;
+        /* Hide the modal link. */
+        .language-level a {
+          pointer-events: none !important;
+          cursor: default !important;
+          text-decoration: none !important;
+          color: clr(text) !important;
+        }
+      }
+    }
   }
 
   /* Hide horizontal tabs. */
