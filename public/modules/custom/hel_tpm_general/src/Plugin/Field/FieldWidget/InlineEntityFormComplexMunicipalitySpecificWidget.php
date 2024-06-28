@@ -3,16 +3,9 @@
 namespace Drupal\hel_tpm_general\Plugin\Field\FieldWidget;
 
 use Drupal\Component\Utility\NestedArray;
-use Drupal\Core\Entity\EntityDisplayRepositoryInterface;
-use Drupal\Core\Entity\EntityReferenceSelection\SelectionPluginManagerInterface;
-use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Extension\ModuleHandlerInterface;
-use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\inline_entity_form\Plugin\Field\FieldWidget\InlineEntityFormComplex;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Defines the 'hel_tpm_general_inline_entity_form_complex_improved' widget.
@@ -32,38 +25,6 @@ class InlineEntityFormComplexMunicipalitySpecificWidget extends InlineEntityForm
   /**
    * {@inheritdoc}
    */
-  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, array $third_party_settings, EntityTypeBundleInfoInterface $entity_type_bundle_info, EntityTypeManagerInterface $entity_type_manager, EntityDisplayRepositoryInterface $entity_display_repository, ModuleHandlerInterface $module_handler, SelectionPluginManagerInterface $selection_manager) {
-    parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $third_party_settings, $entity_type_bundle_info, $entity_type_manager, $entity_display_repository, $module_handler, $selection_manager);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static(
-      $plugin_id,
-      $plugin_definition,
-      $configuration['field_definition'],
-      $configuration['settings'],
-      $configuration['third_party_settings'],
-      $container->get('entity_type.bundle.info'),
-      $container->get('entity_type.manager'),
-      $container->get('entity_display.repository'),
-      $container->get('module_handler'),
-      $container->get('plugin.manager.entity_reference_selection')
-    );
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function defaultSettings() {
-    return parent::defaultSettings();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
     $element = parent::formElement($items, $delta, $element, $form, $form_state);
     $this->relabelEntities($element['entities']);
@@ -72,14 +33,19 @@ class InlineEntityFormComplexMunicipalitySpecificWidget extends InlineEntityForm
   }
 
   /**
-   * @param $element
-   * @param $items
-   * @param $form
+   * Alter entity removal button to delete entity without confirmation.
+   *
+   * @param array $element
+   *   Field element array.
+   * @param \Drupal\Core\Field\FieldItemListInterface $items
+   *   Form item list interface.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state interface.
    *
    * @return void
-   * ["field_municipality_guidance","form","entities",1,"form"]
- */
-  protected function alterEntityRemove(&$element, $items, $form, $form_state) {
+   *   Void.
+   */
+  protected function alterEntityRemove(array &$element, FieldItemListInterface $items, FormStateInterface $form_state) {
     // Build a parents array for this element's values in the form.
     $widget_state = $form_state->get(['inline_entity_form', $element['#ief_id']]);
 
@@ -92,7 +58,7 @@ class InlineEntityFormComplexMunicipalitySpecificWidget extends InlineEntityForm
       $parents = [
         $items->getName(),
         'form',
-        'entities', $delta, 'form'
+        'entities', $delta, 'form',
       ];
 
       $element['entities'][$i]['actions']['ief_entity_remove'] = [
@@ -157,9 +123,13 @@ class InlineEntityFormComplexMunicipalitySpecificWidget extends InlineEntityForm
 
     $form_state->setRebuild();
 
-    $widget_state = $form_state->get(['inline_entity_form', $element['#ief_id']]);
+    $widget_state = $form_state->get([
+      'inline_entity_form',
+      $element['#ief_id'],
+    ]);
 
-    // The entity hasn't been saved yet, or is being deleted, so remove the reference.
+    // The entity hasn't been saved yet, or is being deleted,
+    // so remove the reference.
     unset($widget_state['entities'][$delta]);
 
     // If the entity has been saved, delete it if either the widget is set to
@@ -173,4 +143,5 @@ class InlineEntityFormComplexMunicipalitySpecificWidget extends InlineEntityForm
     }
     $form_state->set(['inline_entity_form', $element['#ief_id']], $widget_state);
   }
+
 }
