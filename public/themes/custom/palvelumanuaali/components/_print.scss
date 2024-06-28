@@ -164,6 +164,15 @@ $printColors: (
     .additional-info-wrapper>div:last-child {
       margin-bottom: 0 !important;
     }
+    .field--name-field-contact-info {
+      display: block !important;
+    }
+    .field--name-field-contact-info-external,
+    .field--name-field-contact-info {
+      > .field__item {
+        margin-bottom: 0 !important;
+      }
+    }
   }
   .field--name-field-other-services {
     width: inherit !important;
@@ -215,7 +224,6 @@ $printColors: (
 
   /* Avoid page breaks inside some elements. */
   .card,
-  .field__items,
   .field--name-field-municipality-guidance,
   .blue-padded-round-corners-card,
   .service-page .field--name-field-other-preferences,
@@ -227,6 +235,26 @@ $printColors: (
   .field__items {
     .field__item {
       display: inline !important;
+    }
+  }
+
+  /* Adjust ordered list numbers as printed pages don't often show background colors. */
+  .content-column ol>li,
+  article ol>li {
+    &::before {
+      background-color: unset !important;
+      color: clr(text) !important;
+      border: 1px solid clr(text) !important;
+      font-size: inherit !important;
+    }
+  }
+
+  /* Use normal bulleted list styles as printed pages don't often show background colors. */
+  .content-column ul,
+  article ul {
+    list-style: inherit !important;
+    > li::before {
+      display: none !important;
     }
   }
 
@@ -243,11 +271,27 @@ $printColors: (
     }
   }
 
-  /* Hide internal links download icon. */
+  /* Hide file download icons. */
+  .field--name-field-file,
   .field--name-field-internal-files {
+    a.file-download,
+    span.file a {
+      padding-top: 5px !important;
+    }
     .icon--absolute-right-regular {
       display: none !important;
     }
+  }
+
+  /* Instead of blue background, show blue borders. */
+  .card--bg-blue {
+    background-color: unset !important;
+    border: 8px solid var(--c-background) !important;
+  }
+
+  /* Instead of blue border, print with border color which is same as text color. */
+  .card--border-left-light-blue {
+    border-left: 4px solid clr(text);
   }
 
   /* Change card links to have vertical border. */
@@ -266,6 +310,22 @@ $printColors: (
         display: none !important;
       }
     }
+
+    /* Remove extra margins from the "time and place" cards. */
+    .service-time-and-place {
+      article,
+      div.field--name-field-service-language {
+        margin-bottom: 20px !important;
+      }
+      div.field--name-field-service-language {
+        .languages-wrapper .field__item {
+          margin-bottom: 0 !important;
+        }
+      }
+      .field--name-field-dates {
+        margin-bottom: inherit !important;
+      }
+    }
   }
 
   /* Open accordions and hide the open-close button. */
@@ -274,5 +334,32 @@ $printColors: (
   }
   .collapse:not(.show) {
     display: block !important;
+  }
+  .ckeditor-accordion-container {
+    dl {
+      border-radius: 8px !important;
+      border: 2px solid var(--c-light-border) !important;
+      dt {
+        margin-top: 0 !important;
+        border: none !important;
+        a.ckeditor-accordion-toggler {
+          pointer-events: none !important;
+          cursor: default !important;
+          span.ckeditor-accordion-toggle {
+            display: none !important;
+          }
+        }
+        a {
+          background-color: unset !important;
+        }
+      }
+      dd {
+        background-color: unset !important;
+        border: none !important;
+        &:not(.active) {
+          display: block !important;
+        }
+      }
+    }
   }
 }
