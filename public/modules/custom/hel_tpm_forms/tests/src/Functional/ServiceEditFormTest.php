@@ -1,9 +1,12 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\Tests\hel_tpm_forms\Functional;
 
+use Drupal\taxonomy\Entity\Term;
+use Drupal\taxonomy\Entity\Vocabulary;
+use Drupal\taxonomy\VocabularyInterface;
 use Drupal\Tests\BrowserTestBase;
 
 /**
@@ -34,6 +37,7 @@ class ServiceEditFormTest extends BrowserTestBase {
     'require_on_publish',
     'select2',
     'maxlength',
+    'inline_entity_form',
     'hel_tpm_forms',
     'hel_tpm_forms_config_test',
   ];
@@ -79,6 +83,10 @@ class ServiceEditFormTest extends BrowserTestBase {
     /** @var \Drupal\Core\Entity\EntityDisplayRepositoryInterface $displayRepository */
     $displayRepository = \Drupal::service('entity_display.repository');
     $displayRepository->getFormDisplay('node', 'service')
+      ->setComponent('field_service_languages', [
+        'type' => 'entity_reference_paragraphs',
+        'settings' => [],
+      ])
       ->setComponent('field_field_client_consent_descr', [
         'type' => 'text_textarea',
         'settings' => [],
@@ -89,6 +97,14 @@ class ServiceEditFormTest extends BrowserTestBase {
       ])
       ->setComponent('field_service_provider_updatee', [
         'type' => 'options_select',
+        'settings' => [],
+      ])
+      ->setComponent('field_service_execution', [
+        'type' => 'inline_entity_form_simple',
+        'settings' => [],
+      ])
+      ->setComponent('field_attendance', [
+        'type' => 'inline_entity_form_simple',
         'settings' => [],
       ])
       ->save();
@@ -163,6 +179,90 @@ class ServiceEditFormTest extends BrowserTestBase {
     // Ensure the current service provider is selected.
     $this->drupalGet('node/1/edit');
     $this->assertTrue($this->assertSession()->optionExists($fieldName, 'Test user')->isSelected());
+  }
+
+  /**
+   * Tests filling the required long-text paragraph fields.
+   */
+  public function testRequiredParagraphTextFields() {
+    $page = $this->getSession()->getPage();
+    $this->drupalGet('node/1/edit');
+    $page->selectFieldOption('moderation_state[0][state]', 'ready_to_publish');
+
+    $requiredParagraphTextFields = [
+      'field_service_execution' => 'Method of organizing',
+      'field_attendance' => 'Participation in the service',
+    ];
+
+    // Not filling required paragraph text fields should not pass validation.
+    $this->submitForm([], 'Save');
+    foreach ($requiredParagraphTextFields as $fieldName => $fieldLabel) {
+      $this->assertSession()->pageTextContains($fieldLabel . ': field is required');
+    }
+
+    // Filling required paragraph text fields should pass validation.
+    $page->fillField('edit-field-service-execution-0-inline-entity-form-field-description-0-value', 'foo');
+    $page->fillField('edit-field-attendance-0-inline-entity-form-field-description-0-value', 'bar');
+    $this->submitForm([], 'Save');
+    foreach ($requiredParagraphTextFields as $fieldName => $fieldLabel) {
+      $this->assertSession()->pageTextNotContains($fieldLabel . ': field is required');
+    }
+  }
+
+  /**
+   * Tests filling the required language selection paragraph fields.
+   */
+  public function testRequiredParagraphLanguageSelection() {
+    // Add content to language selection related drop-downs.
+    $this->addTerms(Vocabulary::load('service_languages'), [
+      'foo',
+      'bar',
+    ]);
+    $this->addTerms(Vocabulary::load('language_level'), [
+      'a',
+      'b',
+      'c',
+    ]);
+
+    $page = $this->getSession()->getPage();
+    $this->drupalGet('node/1/edit');
+    $page->selectFieldOption('moderation_state[0][state]', 'ready_to_publish');
+
+    // Not filling required language fields should not pass validation.
+    $this->submitForm([], 'Save');
+    $this->assertSession()->pageTextContains('Language: field is required');
+
+    // Filling required language fields should pass validation.
+    $page->selectFieldOption('edit-field-service-languages-0-subform-field-language', 'bar');
+    $page->selectFieldOption('edit-field-service-languages-0-subform-field-level', 'b');
+    $page->pressButton('Add Language and skills level');
+    // Remove the new empty language selection paragraph.
+    $page->pressButton('edit-field-service-languages-1-top-links-remove-button');
+    $this->submitForm([], 'Save');
+    $this->assertSession()->pageTextNotContains('Language: field is required');
+  }
+
+  /**
+   * Adds terms to taxonomy.
+   *
+   * @param \Drupal\taxonomy\VocabularyInterface $vocabulary
+   *   The taxonomy.
+   * @param array $termNames
+   *   Term names.
+   *
+   * @return void
+   *   -
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  private function addTerms(VocabularyInterface $vocabulary, array $termNames): void {
+    foreach ($termNames as $termName) {
+      $term = Term::create([
+        'name' => $termName,
+        'vid' => $vocabulary->id(),
+      ]);
+      $term->save();
+    }
   }
 
 }
