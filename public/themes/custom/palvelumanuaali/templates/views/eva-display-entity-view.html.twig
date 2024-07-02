@@ -62,7 +62,11 @@
   {{ attachment_before }}
 
   {{ rows }}
-  {{ empty }}
+  {% if empty %}
+    <div class="view-empty">
+      {{ empty }}
+    </div>
+  {% endif %}
   {{ pager }}
 
   {{ attachment_after }}

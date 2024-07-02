@@ -181,7 +181,20 @@ display:
       cache:
         type: search_api_tag
         options: {  }
-      empty: {  }
+      empty:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text
+          empty: true
+          content:
+            value: 'Valituilla ehdoilla ei löydy palveluita.'
+            format: plain_text_format
+          tokenize: false
       sorts:
         title:
           id: title
