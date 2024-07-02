@@ -446,10 +446,12 @@
     .nesting-level-1 {
       width: 100%;
       height: 100%;
-      margin-top: height;
       transform: translateY(100%);
-      margin-top: $space;
+      margin-top: (2*$space);
       display: flex;
+      @include xl {
+        text-align: center;
+      }
     }
   }
   .pager {
