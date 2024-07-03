@@ -10,7 +10,7 @@ use Drupal\Core\Block\BlockBase;
  * @Block(
  *   id = "hel_tpm_url_shortener_form",
  *   admin_label = @Translation("Url Shortener"),
- *   category = @Translation("Hel TPM Url shortener")
+ *   category = "hel tpm url shortener"
  * )
  */
 class ShortenUrlLinkBlock extends BlockBase {

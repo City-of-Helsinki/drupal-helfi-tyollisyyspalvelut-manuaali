@@ -13,7 +13,7 @@ use Drupal\node\NodeInterface;
  * @Block(
  *   id = "hel_sharer_block",
  *   admin_label = @Translation("Sharer block"),
- *   category = @Translation("Sharer"),
+ *   category = "sharer",
  * )
  */
 class SharerBlock extends BlockBase {

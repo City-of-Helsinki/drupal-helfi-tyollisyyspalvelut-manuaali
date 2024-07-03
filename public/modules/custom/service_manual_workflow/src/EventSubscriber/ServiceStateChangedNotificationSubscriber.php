@@ -267,18 +267,13 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
       return [];
     }
 
-    // No accounts with publish permissions found from current group.
-    // Check if group is subgroup and get one user
-    // with admin permissions to notify.
-    $super_groups = $this->groupHierarchyManager->getGroupSupergroups($group->id());
-
-    if (empty($super_groups)) {
-      return [];
+    if ($entity->field_responsible_municipality->isEmpty()) {
+      return $this->entityTypeManager->getStorage('user')->loadByProperties(['mail' => 'palvelumanuaali@hel.fi']);
     }
 
-    // Get entity administration only from
-    // 1 group if there happens to be multiple.
-    return $this->getEntityGroupAdministration($entity, reset($super_groups));
+    $municipality = $entity->field_responsible_municipality->entity;
+
+    return $this->getEntityGroupAdministration($entity, $municipality);
   }
 
   /**
