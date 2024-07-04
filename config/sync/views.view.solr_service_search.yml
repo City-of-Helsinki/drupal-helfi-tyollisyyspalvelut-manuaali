@@ -857,14 +857,16 @@ display:
       use_ajax: true
       header: {  }
       footer: {  }
-      display_extenders: {  }
+      display_extenders:
+        ajax_history:
+          enable_history: true
+          exclude_args: ''
     cache_metadata:
       max-age: -1
       contexts:
         - 'languages:language_interface'
         - url
         - url.query_args
-        - user
         - 'user.node_grants:view'
       tags:
         - 'config:search_api.index.service_search_solr_index'
@@ -1199,7 +1201,10 @@ display:
           empty: false
           content: '<strong>Hakutuloksia:</strong> <span class="total-number">@total</span>'
       footer: {  }
-      display_extenders: {  }
+      display_extenders:
+        ajax_history:
+          enable_history: true
+          exclude_args: ''
       path: search
     cache_metadata:
       max-age: -1
@@ -1209,7 +1214,6 @@ display:
         - url.query_args
         - 'url.query_args:sort_by'
         - 'url.query_args:sort_order'
-        - user
         - 'user.node_grants:view'
       tags:
         - 'config:search_api.index.service_search_solr_index'
