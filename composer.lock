@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c92babfcb7476e7d86536f6db8812885",
+    "content-hash": "72e054d4770f0f4f08e09a20b4bf7c25",
     "packages": [
         {
             "name": "ajgl/breakpoint-twig-extension",
@@ -10019,29 +10019,26 @@
         },
         {
             "name": "drupal/views_ajax_history",
-            "version": "1.7.0",
+            "version": "dev-1.x",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/views_ajax_history.git",
-                "reference": "8.x-1.7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/views_ajax_history-8.x-1.7.zip",
-                "reference": "8.x-1.7",
-                "shasum": "bedc26b91131968660ebf68c7c050821b9434e10"
+                "reference": "3719703356da6da087d90f5f5053fd7fd5b45c40"
             },
             "require": {
-                "drupal/core": "^8.8 || ^9 || ^10"
+                "drupal/core": "^8.8 || ^9 || ^10 || ^11"
             },
             "type": "drupal-module",
             "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
                 "drupal": {
-                    "version": "8.x-1.7",
-                    "datestamp": "1671526718",
+                    "version": "8.x-1.7+6-dev",
+                    "datestamp": "1718272328",
                     "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
+                        "status": "not-covered",
+                        "message": "Dev releases are not covered by Drupal security advisories."
                     }
                 }
             },
@@ -22438,6 +22435,7 @@
         "drupal/search_api_autocomplete": 20,
         "drupal/symfony_mailer": 20,
         "drupal/themable_forms": 10,
+        "drupal/views_ajax_history": 20,
         "drupal/views_field_view": 10
     },
     "prefer-stable": true,
