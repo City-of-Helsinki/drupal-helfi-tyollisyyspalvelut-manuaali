@@ -67,7 +67,7 @@ class ServiceStateChangedNotificationSubscriberTest extends GroupKernelTestBase 
     ]);
 
     $current_user = $this->getCurrentUser();
-    $current_user->set('mail', 'palvelumanuaali@hel.fi');
+    $current_user->set('mail', \Drupal::config('system.site')->get('mail'));
     $current_user->save();
 
     // Create service provider group.
