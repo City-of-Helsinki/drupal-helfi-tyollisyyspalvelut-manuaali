@@ -144,7 +144,7 @@ class ServiceStateChangedNotificationSubscriberTest extends GroupKernelTestBase 
     $this->assertNotEquals($user->getEmail(), $mails[0]['to']);
 
     // Confirm mail is sent to site administration.
-    $this->assertEquals('palvelumanuaali@hel.fi', $mails[0]['to']);
+    $this->assertEquals(\Drupal::config('system.site')->get('mail'), $mails[0]['to']);
   }
 
   /**
@@ -213,7 +213,7 @@ class ServiceStateChangedNotificationSubscriberTest extends GroupKernelTestBase 
     // Validate ready to publish notification
     // has been sent to group administration.
     $this->assertEquals('message_notify_group_ready_to_publish_notificat', $mails[0]['id']);
-    $this->assertEquals('palvelumanuaali@hel.fi', $mails[0]['to']);
+    $this->assertEquals(\Drupal::config('system.site')->get('mail'), $mails[0]['to']);
 
     // Swap current user to org user.
     $this->drupalSetCurrentUser($this->orgUser);
