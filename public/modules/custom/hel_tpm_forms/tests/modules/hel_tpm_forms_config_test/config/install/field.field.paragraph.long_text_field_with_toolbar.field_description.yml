@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_description
+    - paragraphs.paragraphs_type.long_text_field_with_toolbar
+  module:
+    - require_on_publish
+    - text
+third_party_settings:
+  require_on_publish:
+    require_on_publish: true
+id: paragraph.long_text_field_with_toolbar.field_description
+field_name: field_description
+entity_type: paragraph
+bundle: long_text_field_with_toolbar
+label: 'Content:'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long
