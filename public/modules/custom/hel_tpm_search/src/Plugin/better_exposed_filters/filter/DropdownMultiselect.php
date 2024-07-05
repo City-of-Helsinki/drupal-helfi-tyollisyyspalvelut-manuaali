@@ -124,13 +124,21 @@ class DropdownMultiselect extends FilterWidgetBase implements ContainerFactoryPl
     $optgroup = [];
     $options = $field['#options'];
     $terms = $this->entityTypeManager->getStorage('taxonomy_term')->loadMultiple(array_keys($options));
+    // Add parents first so that the parent term order is preserved.
+    foreach ($terms as $term) {
+      if (empty($term->parent->entity)) {
+        $optgroup[$term->label()] = [];
+      }
+    }
+    // Add terms to parents preserving the term order.
     foreach ($terms as $term) {
       $parent = $term->parent->entity;
-      if (empty($parent)) {
-        continue;
+      if (!empty($parent)) {
+        $optgroup[$parent->label()][$term->id()] = $term->label();
       }
-      $optgroup[$parent->label()][$term->id()] = $term->label();
     }
+    // Remove empty parents.
+    $optgroup = array_filter($optgroup);
     $field['#options'] = $optgroup;
   }
 }
