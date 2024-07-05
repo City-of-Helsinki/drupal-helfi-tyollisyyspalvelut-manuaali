@@ -6,6 +6,7 @@ use Drupal\better_exposed_filters\Plugin\better_exposed_filters\filter\FilterWid
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\selective_better_exposed_filters\Plugin\better_exposed_filters\filter\SelectiveFilterBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -27,9 +28,10 @@ class DropdownMultiselect extends FilterWidgetBase implements ContainerFactoryPl
    */
   protected $entityTypeManager;
 
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entityTypeManager) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entityTypeManager, LanguageManagerInterface $languageManager) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->entityTypeManager = $entityTypeManager;
+    $this->languageManager = $languageManager;
   }
 
   /**
@@ -41,6 +43,7 @@ class DropdownMultiselect extends FilterWidgetBase implements ContainerFactoryPl
       $plugin_id,
       $plugin_definition,
       $container->get('entity_type.manager'),
+      $container->get('language_manager')
     );
   }
 
@@ -124,11 +127,21 @@ class DropdownMultiselect extends FilterWidgetBase implements ContainerFactoryPl
     $optgroup = [];
     $options = $field['#options'];
     $terms = $this->entityTypeManager->getStorage('taxonomy_term')->loadMultiple(array_keys($options));
+    $language = $this->languageManager->getCurrentLanguage()->getId();
     foreach ($terms as $term) {
+
+      // Load term in currnet language.
+      if ($term->hasTranslation($language)) {
+        $term = $term->getTranslation($language);
+      }
       $parent = $term->parent->entity;
       if (empty($parent)) {
         continue;
       }
+      if ($parent->hasTranslation($language)) {
+        $parent = $parent->getTranslation($language);
+      }
+
       $optgroup[$parent->label()][$term->id()] = $term->label();
     }
     $field['#options'] = $optgroup;
