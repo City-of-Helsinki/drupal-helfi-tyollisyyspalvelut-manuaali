@@ -28,7 +28,7 @@ class InlineEntityFormComplexMunicipalitySpecificWidget extends InlineEntityForm
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
     $element = parent::formElement($items, $delta, $element, $form, $form_state);
     $this->relabelEntities($element['entities']);
-    $this->alterEntityRemove($element, $items, $form, $form_state);
+    $this->alterEntityRemove($element, $items, $form_state);
     return $element;
   }
 
