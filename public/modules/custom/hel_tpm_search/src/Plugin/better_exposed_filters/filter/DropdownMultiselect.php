@@ -3,7 +3,6 @@
 namespace Drupal\hel_tpm_search\Plugin\better_exposed_filters\filter;
 
 use Drupal\better_exposed_filters\Plugin\better_exposed_filters\filter\FilterWidgetBase;
-use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
@@ -68,6 +67,7 @@ class DropdownMultiselect extends FilterWidgetBase implements ContainerFactoryPl
     ];
     return $form;
   }
+
   /**
    * Add multiselect support for dropdown filter.
    *
@@ -110,27 +110,38 @@ class DropdownMultiselect extends FilterWidgetBase implements ContainerFactoryPl
   /**
    * Create optgroup from taxonomy terms.
    *
-   * @param $field
-   *  Select field.
+   * @param array $field
+   *   Select field.
    *
-   * @return array|void
+   * @return void
+   *   -
+   *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  private function createOptGroups(&$field) {
+  private function createOptGroups(array &$field) {
     if ($field['#type'] !== 'select') {
       return;
     }
     $optgroup = [];
     $options = $field['#options'];
     $terms = $this->entityTypeManager->getStorage('taxonomy_term')->loadMultiple(array_keys($options));
+    // Add parents first so that the parent term order is preserved.
+    foreach ($terms as $term) {
+      if (empty($term->parent->entity)) {
+        $optgroup[$term->label()] = [];
+      }
+    }
+    // Add terms to parents preserving the term order.
     foreach ($terms as $term) {
       $parent = $term->parent->entity;
-      if (empty($parent)) {
-        continue;
+      if (!empty($parent)) {
+        $optgroup[$parent->label()][$term->id()] = $term->label();
       }
-      $optgroup[$parent->label()][$term->id()] = $term->label();
     }
+    // Remove empty parents.
+    $optgroup = array_filter($optgroup);
     $field['#options'] = $optgroup;
   }
+
 }
