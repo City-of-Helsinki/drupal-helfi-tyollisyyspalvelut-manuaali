@@ -16,7 +16,7 @@ display:
       empty:
         area:
           content:
-            value: "<p>No results were found for the search.</p>\r\n"
+            value: '<p>No results were found for the search.</p>'
             format: filtered_html
   default:
     display_options:
@@ -30,6 +30,13 @@ display:
         field_free_service:
           group_info:
             label: 'Service is chargeable'
+            group_items:
+              1:
+                title: 'Paid service'
+              2:
+                title: 'Free of charge'
+          expose:
+            description: ''
         field_accessibility:
           expose:
             label: Accessibility
@@ -42,3 +49,6 @@ display:
         field_target_group_municipality:
           expose:
             label: 'Municipality of residence'
+        field_language_1:
+          expose:
+            label: 'Service language'
