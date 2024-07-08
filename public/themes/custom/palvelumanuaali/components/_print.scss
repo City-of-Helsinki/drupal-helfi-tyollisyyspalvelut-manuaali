@@ -37,52 +37,52 @@ $printColors: (
   #block-palvelumanuaali-local-tasks,
   .content-sidebar .sharing-options,
   .right-column > .footer {
-    display: none !important;
+    display: none;
   }
 
   /* Adjust font-sizes for printing. */
   body {
-    font-size: 12px !important;
-    line-height: 18px !important;
+    font-size: 12px;
+    line-height: 18px;
   }
   .page-heading {
-    font-size: 16px !important;
-    line-height: 21px !important;
-    margin-bottom: 1em !important;
+    font-size: 16px;
+    line-height: 21px;
+    margin-bottom: 1em;
   }
   .service .field--name-field-description {
-    font-size: 13px !important;
-    line-height: 19px !important;
+    font-size: 13px;
+    line-height: 19px;
   }
   h3, .h3,
   .card__heading {
-    font-size: 15px !important;
-    line-height: 18px !important;
+    font-size: 15px;
+    line-height: 18px;
   }
   h3, .h3 {
-    margin-top: 2rem !important;
+    margin-top: 2rem;
   }
   h4, .h4,
   h5, .h5 {
-    font-size: 14px !important;
-    line-height: 17px !important;
-    margin-top: 2rem !important;
+    font-size: 14px;
+    line-height: 17px;
+    margin-top: 2rem;
   }
   .service .field .field__label {
-    font-size: 14px !important;
-    line-height: 17px !important;
+    font-size: 14px;
+    line-height: 17px;
   }
   .card h4,
   .card h5 {
-    margin-top: 0 !important;
+    margin-top: 0;
   }
   .field--name-field-service-implement h5 {
-    margin-top: 0.2rem !important;
+    margin-top: 0.2rem;
   }
   .service .field .field__label {
-    font-size: 14px !important;
-    line-height: 17px !important;
-    font-weight: normal !important;
+    font-size: 14px;
+    line-height: 17px;
+    font-weight: normal;
   }
   .font-size--default,
   .blue-padded-round-corners-card,
@@ -90,8 +90,8 @@ $printColors: (
   .service-page .field--name-field-obligatoryness,
   .service-page .field--name-field-statements,
   .service-page .field--name-field-service-suits-job-search {
-    font-size: 14px !important;
-    line-height: 17px !important;
+    font-size: 14px;
+    line-height: 17px;
   }
   .small-font,
   .font-size--small,
@@ -101,93 +101,118 @@ $printColors: (
   .field__item a,
   .service .service-price,
   .content-sidebar p {
-    font-size: inherit !important;
-    font-weight: inherit !important;
-    text-transform: inherit !important;
-    letter-spacing: inherit !important;
+    font-size: inherit;
+    font-weight: inherit;
+    text-transform: inherit;
+    letter-spacing: inherit;
   }
 
   /* Use the larger logo and align it to left. */
   .logo__image{
     &--hidden-mobile {
-      display: block !important;
+      display: block;
     }
   }
   .logo-small__image {
     &--hidden-lg {
-      display: none !important;
+      display: none;
     }
   }
   .sidebar__branding {
-    margin: inherit !important;
+    margin: inherit;
   }
 
   /* Remove background colors. */
   body {
-    background-color: unset !important;
+    background-color: unset;
   }
 
   /* Adjust page layout (e.g. margins). */
   .main-content {
     > .region-content {
       display: block;
-      margin: 0 4rem !important;
-      padding: 0 !important;
+      margin: 0 4rem;
+      padding: 0;
     }
   }
   #block-system-main-block {
-    margin: 0 !important;
-    padding: 0 !important;
+    margin: 0;
+    padding: 0;
   }
   #service-page-full {
-    display: block !important;;
-    width: inherit !important;
-    margin: 0 !important;
-    padding: 0 !important;
+    display: block;
+    width: inherit;
+    margin: 0;
+    padding: 0;
     .content-column {
-      padding: 0 !important;
+      padding: 0;
     }
   }
   .right-column {
-    padding-bottom: 0 !important;
+    padding-bottom: 0;
     > .main {
-      margin-bottom: 0 !important;
+      margin-bottom: 0;
     }
   }
   .service-group,
   .field--name-field-service-execution {
-    margin-bottom: 1.5em !important;
+    margin-bottom: 1.5em;
   }
   .service .content-sidebar {
-    margin-top: 1em !important;
+    margin-top: 1em;
     .contact-info-wrapper>div:last-child,
     .additional-info-wrapper>div:last-child {
-      margin-bottom: 0 !important;
+      margin-bottom: 0;
+    }
+    .field--name-field-contact-info {
+      display: block;
+    }
+    .field--name-field-contact-info-external,
+    .field--name-field-contact-info {
+      > .field__item {
+        margin-bottom: 0;
+      }
     }
   }
   .field--name-field-other-services {
-    width: inherit !important;
+    width: inherit;
   }
   .field-group-tabs-wrapper {
-    margin-bottom: 3rem !important;
+    margin-bottom: 3rem;
   }
   .field--name-field-accessibility .field__label {
-    margin-bottom: 1rem !important;
+    margin-bottom: 1rem;
   }
   .main-sidebar {
-    margin-bottom: 0 !important;
+    margin-bottom: 0;
   }
   .service-header-wrapper {
-    gap: 0.5rem !important;
+    gap: 0.5rem;
   }
   .field--name-field-contact-info .field__label {
-    margin-bottom: 0.5rem !important;
+    margin-bottom: 0.5rem;
   }
-  .service .content-column>.field {
-    margin-bottom: 2rem !important;
-  }
-  .service .field--name-field-service-language {
-    margin-bottom: 0 !important;
+  .service {
+    .content-column>.field {
+      margin-bottom: 2rem;
+    }
+
+    .service-language {
+      .field--name-field-service-language {
+        margin-bottom: 0;
+      }
+
+      .field--name-field-level {
+        display: inline;
+        /* Hide the modal link. */
+        .language-level a {
+          pointer-events: none;
+          cursor: default;
+          text-decoration: none;
+          color: clr(text);
+        }
+      }
+    }
   }
 
   /* Hide horizontal tabs. */
@@ -199,18 +224,37 @@ $printColors: (
 
   /* Avoid page breaks inside some elements. */
   .card,
-  .field__items,
   .field--name-field-municipality-guidance,
   .blue-padded-round-corners-card,
   .service-page .field--name-field-other-preferences,
   .service-page .field--name-field-obligatoryness,
   .service-page .field--name-field-statements,
   .service-page .field--name-field-service-suits-job-search {
-    break-inside: avoid !important;
+    break-inside: avoid;
   }
   .field__items {
     .field__item {
-      display: inline !important;
+      display: inline;
+    }
+  }
+
+  /* Adjust ordered list numbers as printed pages don't often show background colors. */
+  .content-column ol>li,
+  article ol>li {
+    &::before {
+      background-color: unset;
+      color: clr(text);
+      border: 1px solid clr(text);
+      font-size: inherit;
+    }
+  }
+
+  /* Use normal bulleted list styles as printed pages don't often show background colors. */
+  .content-column ul,
+  article ul {
+    list-style: inherit;
+    > li::before {
+      display: none;
     }
   }
 
@@ -221,42 +265,106 @@ $printColors: (
     .field__item {
       a {
         &::after {
-          content: " (" attr(href) ")" !important;
+          content: " (" attr(href) ")";
         }
       }
     }
   }
 
-  /* Hide internal links download icon. */
+  /* Hide file download icons. */
+  .field--name-field-file,
   .field--name-field-internal-files {
     .icon--absolute-right-regular {
-      display: none !important;
+      display: none;
     }
+    .field__items .field__item {
+      background-color: unset;
+    }
+  }
+
+  /* Instead of blue background, show blue borders. */
+  .card--bg-blue {
+    background-color: unset;
+    border: 8px solid var(--c-background);
+  }
+
+  /* Instead of blue border, print with border color which is same as text color. */
+  .card--border-left-light-blue {
+    border-left: 4px solid clr(text);
   }
 
   /* Change card links to have vertical border. */
   .card {
     &.grid__item {
-      padding-bottom: 0 !important;
-      border-bottom: none !important;
-      border-left: 6px #325df4 solid !important;
-      border-radius: 0 !important;
+      padding-bottom: 0;
+      border-bottom: none;
+      border-left: 6px #325df4 solid;
+      border-radius: 0;
     }
     .card__link {
       .card__content {
-        margin-top: 1rem !important;
+        margin-top: 1rem;
       }
       button {
-        display: none !important;
+        display: none;
+      }
+    }
+
+    /* Remove extra margins from the "time and place" cards. */
+    .service-time-and-place {
+      article,
+      div.field--name-field-service-language {
+        margin-bottom: 20px;
+      }
+      div.field--name-field-service-language {
+        .languages-wrapper .field__item {
+          margin-bottom: 0;
+        }
+      }
+      .field--name-field-dates {
+        margin-bottom: inherit;
       }
     }
   }
 
   /* Open accordions and hide the open-close button. */
   .accordion--default .accordion-button::after {
-    background-image: none !important;
+    background-image: none;
   }
   .collapse:not(.show) {
-    display: block !important;
+    display: block;
+  }
+  .ckeditor-accordion-container {
+    dl {
+      dt {
+        margin-top: 0;
+        a.ckeditor-accordion-toggler {
+          pointer-events: none;
+          cursor: default;
+          span.ckeditor-accordion-toggle {
+            display: none;
+          }
+        }
+      }
+      dd {
+        &:not(.active) {
+          display: block;
+        }
+      }
+    }
+    dl.styled {
+      border-radius: 8px;
+      border: 2px solid var(--c-light-border) !important;
+      dt {
+        border: none;
+        a.ckeditor-accordion-toggler {
+          background-color: unset;
+        }
+      }
+      dd {
+        background-color: unset;
+        border: none;
+      }
+    }
   }
 }
