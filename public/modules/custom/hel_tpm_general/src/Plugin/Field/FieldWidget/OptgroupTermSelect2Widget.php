@@ -100,7 +100,8 @@ class OptgroupTermSelect2Widget extends OptionsWidgetBase implements ContainerFa
         unset($selected_options[$key]);
       }
     }
-    return $selected_options;
+
+    return array_values($selected_options);
   }
 
   /**
