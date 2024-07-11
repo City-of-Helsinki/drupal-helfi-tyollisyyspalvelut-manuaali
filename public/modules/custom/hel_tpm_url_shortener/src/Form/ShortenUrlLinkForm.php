@@ -2,6 +2,8 @@
 
 namespace Drupal\hel_tpm_url_shortener\Form;
 
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\InvokeCommand;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 
@@ -26,16 +28,37 @@ class ShortenUrlLinkForm extends FormBase {
       '#type' => 'container',
       '#attributes' => ['id' => 'shorten-link'],
     ];
-    $form['wrapper']['submit'] = [
+
+    $element['current_path'] = [
+      '#type' => 'hidden',
+      '#attributes' => ['class' => ['current-path']],
+      '#attached' => [
+        'library' => [
+          'hel_tpm_url_shortener/url_shortener'
+        ]
+      ],
+    ];
+    $element['submit'] = [
       '#type' => 'submit',
       '#value' => t('Create Link'),
-      '#attributes' => ['tabindex' => 3],
+      '#attributes' => [
+        'tabindex' => 3,
+        'class' => ['create-link'],
+      ],
       '#ajax' => [
         'callback' => '::submitAjaxCall',
         'wrapper' => 'shorten-link',
         'event' => 'click',
       ],
     ];
+
+    $element['clipboard'] = [
+      '#type' => 'button',
+      '#value' => $this->t('Copy'),
+      '#attributes' => ['class' => ['clipboard-button', 'visually-hidden']],
+    ];
+
+    $form['wrapper'] += $element;
 
     return $form;
   }
@@ -66,14 +89,29 @@ class ShortenUrlLinkForm extends FormBase {
   public function submitAjaxCall(array &$form, FormStateInterface $form_state) {
     $short_link_generator = \Drupal::service('hel_tpm_url_shortener.short_url_service');
 
-    $url = $short_link_generator->generateShortLink();
+    $path = $form_state->getValue('current_path');
+
+    $url = $short_link_generator->generateShortLink($path);
 
     if (empty($url)) {
       return $form['wrapper'];
     }
 
-    $form['wrapper']['submit']['#access'] = FALSE;
-    $form['wrapper']['link']['#markup'] = $url->getShortUrl();
+    $form['wrapper']['submit']['#attributes']['class'][] = 'visually-hidden';
+
+    // Remove hidden class from clipboard element.
+    $clipboard_classes = array_flip($form['wrapper']['clipboard']['#attributes']['class']);
+    unset($form['wrapper']['clipboard']['#attributes']['class'][$clipboard_classes['visually-hidden']]);
+
+    $form['wrapper']['link'] = [
+      'type' => '#markup',
+      '#prefix' => '<div class="short-link-result"',
+      '#suffix' => '</div>',
+      '#markup' => sprintf(
+        '<span class="short-link">%s</span><div class="clipboard-status"></div>', $url->getShortUrl()
+      )
+    ];
+
 
     return $form['wrapper'];
   }

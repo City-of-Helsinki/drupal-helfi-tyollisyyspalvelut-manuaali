@@ -1,0 +1,20 @@
+uuid: df42d756-d8ba-49e9-85da-a4e62d1a5ab2
+langcode: fi
+status: true
+dependencies:
+  module:
+    - hel_tpm_url_shortener
+  theme:
+    - palvelumanuaali
+id: palvelumanuaali_urlshortener
+theme: palvelumanuaali
+region: content
+weight: 6
+provider: null
+plugin: hel_tpm_url_shortener_form
+settings:
+  id: hel_tpm_url_shortener_form
+  label: 'Url Shortener'
+  label_display: '0'
+  provider: hel_tpm_url_shortener
+visibility: {  }

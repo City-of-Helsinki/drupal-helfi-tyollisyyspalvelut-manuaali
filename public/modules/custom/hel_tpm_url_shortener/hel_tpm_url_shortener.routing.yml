@@ -5,3 +5,5 @@ hel_tpm_url_shortener.settings_form:
     _form: 'Drupal\hel_tpm_url_shortener\Form\SettingsForm'
   requirements:
     _permission: 'administer hel_tpm_url_shortener configuration'
+hel_tpm_url_shortener.shortener_ajax:
+  path: '/ajax/url-shortener/{long_path}'
