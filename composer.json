@@ -202,9 +202,6 @@
         "zaporylie/composer-drupal-optimizations": "^1.2"
     },
     "conflict": {
-        "drupal/core-recommended": ">=10.2",
-        "drupal/core-composer-scaffold": ">=10.2",
-        "drupal/core-dev": ">=10.2",
         "drupal/drupal": "*"
     },
     "minimum-stability": "dev",
@@ -224,7 +221,8 @@
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "oomphinc/composer-installers-extender": true,
             "drupal/console-extend-plugin": true,
-            "phpstan/extension-installer": true
+            "phpstan/extension-installer": true,
+            "php-http/discovery": true
         }
     },
     "autoload": {
@@ -276,13 +274,12 @@
         "patches": {
             "drupal/core": {
                 "https://www.drupal.org/project/drupal/issues/2800875#comment-14070351": "https://www.drupal.org/files/issues/2021-04-23/2800875-70_0.patch",
-                "https://www.drupal.org/project/drupal/issues/1038316#comment-14308196": "https://www.drupal.org/files/issues/2021-12-01/1038316-242.patch",
                 "https://www.drupal.org/project/drupal/issues/3135409#comment-14746356": "https://www.drupal.org/files/issues/2022-10-17/3135409-17.patch",
-                "https://www.drupal.org/project/drupal/issues/2689459#comment-14837484": "https://www.drupal.org/files/issues/2022-12-20/2689459-161.patch",
-                "https://www.drupal.org/project/drupal/issues/2810355#comment-15173661": "https://www.drupal.org/files/issues/2023-07-31/2810355-121.patch",
+                "https://www.drupal.org/project/drupal/issues/2689459#comment-15456866": "https://www.drupal.org/files/issues/2024-02-21/2689459-188.patch",
                 "https://www.drupal.org/project/drupal/issues/1452100#comment-15199266": "https://www.drupal.org/files/issues/2023-08-21/1452100-150.patch",
                 "https://www.drupal.org/project/drupal/issues/3347343#comment-15227444": "https://www.drupal.org/files/issues/2023-09-12/3347343-92--MR-4053-1bc7bda7.diff",
-                "https://www.drupal.org/project/drupal/issues/3338260#comment-14900238": "https://www.drupal.org/files/issues/2023-02-01/skip_changing_affected_flag_3338260-2.patch"
+                "https://www.drupal.org/project/drupal/issues/3338260#comment-14900238": "https://www.drupal.org/files/issues/2023-02-01/skip_changing_affected_flag_3338260-2.patch",
+                "Unable to change non-translatable field value on translatable content with content moderation enabled (https://www.drupal.org/project/drupal/issues/2955321)": "https://www.drupal.org/files/issues/2024-04-16/2955321-77.patch"
             },
             "drupal/message": {
                 "https://www.drupal.org/files/issues/2018-06-24/allow_token_contexts-3.patch": "https://www.drupal.org/files/issues/2018-06-24/allow_token_contexts-3.patch"

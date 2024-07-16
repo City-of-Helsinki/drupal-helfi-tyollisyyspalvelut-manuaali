@@ -3,9 +3,9 @@
 namespace Drupal\hel_tpm_search\Plugin\better_exposed_filters\filter;
 
 use Drupal\better_exposed_filters\Plugin\better_exposed_filters\filter\FilterWidgetBase;
-use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\selective_better_exposed_filters\Plugin\better_exposed_filters\filter\SelectiveFilterBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -27,9 +27,17 @@ class DropdownMultiselect extends FilterWidgetBase implements ContainerFactoryPl
    */
   protected $entityTypeManager;
 
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entityTypeManager) {
+  /**
+   * Language manager.
+   *
+   * @var \Drupal\Core\Language\LanguageManagerInterface
+   */
+  protected LanguageManagerInterface $languageManager;
+
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entityTypeManager, LanguageManagerInterface $languageManager) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->entityTypeManager = $entityTypeManager;
+    $this->languageManager = $languageManager;
   }
 
   /**
@@ -41,6 +49,7 @@ class DropdownMultiselect extends FilterWidgetBase implements ContainerFactoryPl
       $plugin_id,
       $plugin_definition,
       $container->get('entity_type.manager'),
+      $container->get('language_manager')
     );
   }
 
@@ -68,6 +77,7 @@ class DropdownMultiselect extends FilterWidgetBase implements ContainerFactoryPl
     ];
     return $form;
   }
+
   /**
    * Add multiselect support for dropdown filter.
    *
@@ -110,27 +120,44 @@ class DropdownMultiselect extends FilterWidgetBase implements ContainerFactoryPl
   /**
    * Create optgroup from taxonomy terms.
    *
-   * @param $field
-   *  Select field.
+   * @param array $field
+   *   Select field.
    *
-   * @return array|void
+   * @return void
+   *   -
+   *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  private function createOptGroups(&$field) {
+  private function createOptGroups(array &$field) {
     if ($field['#type'] !== 'select') {
       return;
     }
     $optgroup = [];
     $options = $field['#options'];
     $terms = $this->entityTypeManager->getStorage('taxonomy_term')->loadMultiple(array_keys($options));
+    $language = $this->languageManager->getCurrentLanguage()->getId();
     foreach ($terms as $term) {
+
+      // Load term in currnet language.
+      if ($term->hasTranslation($language)) {
+        $term = $term->getTranslation($language);
+      }
+      // Get parent
       $parent = $term->parent->entity;
       if (empty($parent)) {
         continue;
       }
+      // Check if parent has translation and load if there is one.
+      if ($parent->hasTranslation($language)) {
+        $parent = $parent->getTranslation($language);
+      }
+
       $optgroup[$parent->label()][$term->id()] = $term->label();
     }
+    // Remove empty parents.
+    $optgroup = array_filter($optgroup);
     $field['#options'] = $optgroup;
   }
+
 }

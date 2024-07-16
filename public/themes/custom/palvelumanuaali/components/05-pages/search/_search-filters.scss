@@ -170,11 +170,14 @@
       /* Select element for search sort. */
       .form-item__dropdown {
         align-self: flex-end;
-        border: 2px solid $blue40;
         grid-row: 1 / 2;
         .select2-container--palvelumanuaali {
-          box-shadow: unset;
+          box-shadow: inset 0px 0px 0px 2px clr(form-border);
           padding: 0;
+          &:active,
+          &:hover {
+            box-shadow: inset 0px 0px 0px 2px clr(background-section);
+          }
           .select2-selection--single {
             @extend .multi-select-button;
             height: unset;
@@ -190,9 +193,13 @@
             display: none;
           }
         }
+        .select2-container--open {
+          box-shadow: inset 0px 0px 0px 2px clr(background-section);
+        }
       }
     }
   }
+
 }
 
 .search-page {
@@ -254,8 +261,10 @@
   }
   .select--white-rounded {
     select,
-    .select2 {
+    .select2,
+    .multi-select-button {
       z-index: 0;
+        padding: 8px 12px 8px 16px;
     }
   }
 }
