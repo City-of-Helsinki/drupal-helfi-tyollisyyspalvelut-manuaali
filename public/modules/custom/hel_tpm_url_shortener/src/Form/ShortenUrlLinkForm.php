@@ -26,7 +26,7 @@ class ShortenUrlLinkForm extends FormBase {
 
     $form['wrapper'] = [
       '#type' => 'container',
-      '#attributes' => ['id' => 'shorten-link'],
+      '#attributes' => ['id' => 'shorten-link', 'class' => ['shorten-link']],
     ];
 
     $element['current_path'] = [
@@ -40,10 +40,11 @@ class ShortenUrlLinkForm extends FormBase {
     ];
     $element['submit'] = [
       '#type' => 'submit',
-      '#value' => t('Create Link'),
+      '#value' => $this->t('Create Short Link'),
       '#attributes' => [
         'tabindex' => 3,
         'class' => ['create-link'],
+        'title' => $this->t('Create Short Link'),
       ],
       '#ajax' => [
         'callback' => '::submitAjaxCall',
@@ -54,8 +55,11 @@ class ShortenUrlLinkForm extends FormBase {
 
     $element['clipboard'] = [
       '#type' => 'button',
-      '#value' => $this->t('Copy'),
-      '#attributes' => ['class' => ['clipboard-button', 'visually-hidden']],
+      '#value' => $this->t('Copy to clipboard'),
+      '#attributes' => [
+        'class' => ['clipboard-button', 'visually-hidden'],
+        'title' => $this->t('Copy to clipboard'),
+      ],
     ];
 
     $form['wrapper'] += $element;
@@ -108,9 +112,11 @@ class ShortenUrlLinkForm extends FormBase {
       '#prefix' => '<div class="short-link-result"',
       '#suffix' => '</div>',
       '#markup' => sprintf(
-        '<span class="short-link">%s</span>
-        <div class="clipboard-status hidden popup"><div class="popup-title"></div></div>', $url->getShortUrl()
+        '<div class="short-link">%s</div>', $url->getShortUrl()
       )
+    ];
+    $form['wrapper']['clipboard-status'] = [
+      '#markup' => '<div class="clipboard-status hidden popup"><div class="popup-title"></div></div>'
     ];
 
 

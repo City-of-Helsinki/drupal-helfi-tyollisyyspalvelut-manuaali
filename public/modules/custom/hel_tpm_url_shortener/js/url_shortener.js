@@ -28,9 +28,10 @@
        */
       copyToClipboard: function (parent) {
         let context = this;
+        let createLinkButton = $('.create-link', parent);
         let clipboardButton = $('.clipboard-button', parent);
         let shortLinkResult = $('.short-link-result', parent);
-        let clipboardStatus = $('.clipboard-status', shortLinkResult);
+        let shortLink = $('.short-link', parent);
 
         $(once('clipboard-button', clipboardButton)).click(function (event) {
           event.preventDefault();
@@ -40,7 +41,9 @@
             .then(() => {
               // On success hide copy clipboard to button and create message.
               clipboardButton.addClass('visually-hidden');
-              shortLinkResult.addClass('copied');
+              createLinkButton.removeClass('visually-hidden');
+              shortLinkResult.addClass('visually-hidden');
+
               context.showPopup('Copied to clipboard.');
             })
             .catch((e) => {
