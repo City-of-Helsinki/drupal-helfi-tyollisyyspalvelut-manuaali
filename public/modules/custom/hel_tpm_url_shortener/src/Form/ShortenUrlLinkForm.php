@@ -108,7 +108,8 @@ class ShortenUrlLinkForm extends FormBase {
       '#prefix' => '<div class="short-link-result"',
       '#suffix' => '</div>',
       '#markup' => sprintf(
-        '<span class="short-link">%s</span><div class="clipboard-status"></div>', $url->getShortUrl()
+        '<span class="short-link">%s</span>
+        <div class="clipboard-status hidden popup"><div class="popup-title"></div></div>', $url->getShortUrl()
       )
     ];
 

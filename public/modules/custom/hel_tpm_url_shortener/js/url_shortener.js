@@ -27,6 +27,7 @@
        * @param parent
        */
       copyToClipboard: function (parent) {
+        let context = this;
         let clipboardButton = $('.clipboard-button', parent);
         let shortLinkResult = $('.short-link-result', parent);
         let clipboardStatus = $('.clipboard-status', shortLinkResult);
@@ -40,12 +41,26 @@
               // On success hide copy clipboard to button and create message.
               clipboardButton.addClass('visually-hidden');
               shortLinkResult.addClass('copied');
-              clipboardStatus.html(Drupal.t('Copied to clipboard.'));
+              context.showPopup('Copied to clipboard.');
             })
             .catch((e) => {
-              clipboardStatus.html(Drupal.t('Copy to clipboard failed.'));
+              context.showPopup('Copy to clipboard failed.');
             });
         });
+      },
+
+      /**
+       * Show popup function.
+       *
+       * @param message
+       *  Message text.
+       */
+      showPopup: function(message) {
+        let clipBoardStatus = $('.clipboard-status');
+        let popupTitle = $('.popup-title', clipBoardStatus);
+        popupTitle.html(Drupal.t(message));
+        clipBoardStatus.removeClass('hidden');
+        clipBoardStatus.delay(3000).fadeOut(300, function() {});
       }
     }
   // Argument passed from InvokeCommand.
