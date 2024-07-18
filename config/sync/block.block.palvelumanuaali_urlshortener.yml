@@ -3,7 +3,10 @@ langcode: fi
 status: true
 dependencies:
   module:
+    - block_class
+    - context
     - hel_tpm_url_shortener
+    - user
   theme:
     - palvelumanuaali
 id: palvelumanuaali_urlshortener
@@ -17,4 +20,16 @@ settings:
   label: 'Url Shortener'
   label_display: '0'
   provider: hel_tpm_url_shortener
-visibility: {  }
+visibility:
+  user_role:
+    id: user_role
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      authenticated: authenticated
+  view_inclusion:
+    id: view_inclusion
+    negate: false
+    view_inclusion:
+      view-solr_service_search-page_1: view-solr_service_search-page_1
