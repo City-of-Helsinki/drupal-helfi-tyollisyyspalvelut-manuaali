@@ -3,16 +3,35 @@
     attach: function (context, settings) {
       // Handles clicking of unchecked taxonomy checkbox
       $(document).ready(function () {
-        let nestingLevel = ".hierarchy-select-buttons .form-checkboxes ul.nesting-level-1";
+        let nestingLevel = ".hierarchy-select-buttons .form-checkboxes ul";
         let allInput = "<li><div class='form-item form-item-checkbox select-all'>" +
           "<label>" +  Drupal.t("Show all") + "</label>" +
           "</div></li>";
         $(once("nesting-all", nestingLevel)).prepend(allInput);
-
+        handleShowAll();
       })
+
       handleFirstLevelSelection();
       handleSecondLevelSelection();
-      handleSelectAllSelection();
+      handleSecondLevelShowAll();
+
+      /**
+       * First show all selection.
+       */
+      function handleShowAll() {
+        let buttons = $('.hierarchy-select-buttons');
+        let showAllButton = $('ul.nesting-level-0 > li > .select-all', buttons);
+        let checkedInput = $('input:checked', buttons);
+        if (checkedInput.length <= 0) {
+          showAllButton.addClass('highlight');
+        }
+        showAllButton.off().click(function () {
+          checkedInput.prop('checked', false);
+          $('.highlight', buttons).removeClass('highlight');
+          $(this).addClass('highlight');
+          buttons.closest('form').find('.form-submit').click();
+        });
+      }
 
       /**
        * First selection level.
@@ -64,9 +83,12 @@
         });
       }
 
-      function handleSelectAllSelection() {
+      /**
+       * Second level select all selection.
+       */
+      function handleSecondLevelShowAll() {
         // Reset previous selection when clicking select all.
-        $('.hierarchy-select-buttons .select-all').click(function() {
+        $('.hierarchy-select-buttons .nesting-level-1 .select-all').click(function() {
           let currentSelection = $(this).closest('.nesting-level-1').find('input:checked');
           if(!$(this).hasClass('highlight') && currentSelection.length > 0) {
             $(currentSelection).click();
