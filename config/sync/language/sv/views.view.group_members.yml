@@ -6,22 +6,32 @@ display:
           expose:
             label: 'Filtrera:'
             placeholder: 'Filtrera efter sökterm '
-      title: Medlemskap
       fields:
-        name:
-          label: Användare
-        group_roles:
-          label: Roll
-        dropbutton:
-          label: Funktioner
         status:
           label: Status
           settings:
             format_custom_false: Spärrad
             format_custom_true: Aktiv
+        name:
+          label: Användare
+          separator: ', '
+        group_roles:
+          label: Roll
+          separator: ', '
+        view_group_content:
+          text: Näytä
+        edit_group_content:
+          text: Muokkaa
+        delete_group_content:
+          text: 'Poista jäsen'
+        dropbutton:
+          label: Funktioner
+      title: Medlemskap
       pager:
         options:
           tags:
+            next: ››
+            previous: ‹‹
             first: '« Första'
             last: 'Sista »'
           expose:
@@ -45,3 +55,4 @@ display:
     display_options:
       menu:
         title: Medlemskap
+label: 'Ryhmien jäsenyydet'

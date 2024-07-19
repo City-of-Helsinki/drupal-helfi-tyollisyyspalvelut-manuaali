@@ -1,0 +1,14 @@
+uuid: 1f75ab21-9b4f-4a97-addd-a92ebc9bda08
+langcode: fi
+status: true
+dependencies:
+  config:
+    - user.role.monitor
+  module:
+    - user
+id: user_add_role_action.monitor
+label: 'Lisää Monitor rooli valitulle käyttäjälle tai käyttäjille '
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: monitor
