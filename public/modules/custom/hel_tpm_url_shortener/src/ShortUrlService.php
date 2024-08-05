@@ -3,6 +3,7 @@
 namespace Drupal\hel_tpm_url_shortener;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Routing\RouteProvider;
 use Drupal\Core\Url;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -51,40 +52,19 @@ class ShortUrlService {
   /**
    * Generate short url.
    *
-   * @return \Drupal\Core\Entity\EntityInterface|false|null
+   * @return \Drupal\Core\Entity\EntityInterface|false
    *   Returns shortenrredirect entity if link can be generated.
    *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  public function generateShortLink() {
-    $request = $this->requestStack->getCurrentRequest();
-    $request->query->remove('ajax_form');
-    $request->query->remove('_wrapper_format');
-    // @DCG place your code here.
-    $route = Url::fromUserInput($request->getPathInfo())->getRouteName();
-    if (empty($route)) {
-      return NULL;
-    }
+  public function generateShortLink($redirect_path) {
+    $url = Url::fromUserInput($redirect_path);
 
-    $params = [];
-    $query_params = $request->query->all();
-    if (!empty($query_params)) {
-      $params = array_merge($params, $query_params);
-    }
-
-    foreach ($this->entityTypes as $entity_type) {
-      if ($request->attributes->has($entity_type)) {
-        $entity = $request->attributes->get($entity_type);
-        $params[$entity->getEntityTypeId()] = $entity->id();
-      }
-    }
-
-    $url = Url::fromRoute($route, $params);
-
-    if ($url->isExternal()) {
-      return NULL;
+    // Don't generate url to unrouted url
+    if ($url->isExternal() || !$url->isRouted() || !$url->access()) {
+      return FALSE;
     }
 
     $hash = md5($url->toString());

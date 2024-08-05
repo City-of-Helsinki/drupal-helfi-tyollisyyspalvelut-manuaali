@@ -67,6 +67,19 @@ class Shortenerredirect extends ContentEntityBase implements ShortenerredirectIn
   }
 
   /**
+   * Set last usage.
+   *
+   * @param $timestamp
+   *  Unix timestamp.
+   *
+   * @return void
+   *  Void.
+   */
+  public function setLastUsage($timestamp) {
+    $this->set('last_usage', $timestamp);
+  }
+
+  /**
    * Short url getter.
    *
    * @return string
@@ -140,6 +153,10 @@ class Shortenerredirect extends ContentEntityBase implements ShortenerredirectIn
     $fields['changed'] = BaseFieldDefinition::create('changed')
       ->setLabel(t('Changed'))
       ->setDescription(t('The time that the shortenerredirect was last edited.'));
+
+    $fields['last_usage'] = BaseFieldDefinition::create('timestamp')
+      ->setLabel(t('Last usage'))
+      ->setDescription(t('The last time short link has been used'));
 
     return $fields;
   }
