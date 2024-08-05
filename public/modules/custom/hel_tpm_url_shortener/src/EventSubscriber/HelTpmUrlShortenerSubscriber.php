@@ -45,6 +45,9 @@ class HelTpmUrlShortenerSubscriber implements EventSubscriberInterface {
     }
     $link = $storage->load(reset($result));
     $source = $link->getRedirectSource();
+    // Set last usage time to link.
+    $link->setLastUsage(\Drupal::time()->getRequestTime());
+    $link->save();
     $response = new RedirectResponse($source);
     $response->send();
 
