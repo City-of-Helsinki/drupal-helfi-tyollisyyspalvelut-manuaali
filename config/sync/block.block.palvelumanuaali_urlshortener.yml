@@ -1,0 +1,35 @@
+uuid: df42d756-d8ba-49e9-85da-a4e62d1a5ab2
+langcode: fi
+status: true
+dependencies:
+  module:
+    - block_class
+    - context
+    - hel_tpm_url_shortener
+    - user
+  theme:
+    - palvelumanuaali
+id: palvelumanuaali_urlshortener
+theme: palvelumanuaali
+region: content
+weight: 6
+provider: null
+plugin: hel_tpm_url_shortener_form
+settings:
+  id: hel_tpm_url_shortener_form
+  label: 'Url Shortener'
+  label_display: '0'
+  provider: hel_tpm_url_shortener
+visibility:
+  user_role:
+    id: user_role
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      authenticated: authenticated
+  view_inclusion:
+    id: view_inclusion
+    negate: false
+    view_inclusion:
+      view-solr_service_search-page_1: view-solr_service_search-page_1

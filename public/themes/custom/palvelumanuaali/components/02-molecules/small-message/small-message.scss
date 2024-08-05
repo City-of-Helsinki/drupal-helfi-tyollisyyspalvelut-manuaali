@@ -21,9 +21,14 @@
 }
 
 .logged-in {
-  .small-message-wrapper--service {
+  &.toolbar-fixed .small-message-wrapper--service {
     @include large {
       top: 100px;
+    }
+  }
+  .small-message-wrapper--service {
+    @include large {
+      top: 68px;
     }
   }
 }
