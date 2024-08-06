@@ -3,6 +3,7 @@
 namespace Drupal\hel_tpm_search\Plugin\better_exposed_filters\filter;
 
 use Drupal\better_exposed_filters\Plugin\better_exposed_filters\filter\FilterWidgetBase;
+use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
@@ -136,28 +137,41 @@ class DropdownMultiselect extends FilterWidgetBase implements ContainerFactoryPl
     $optgroup = [];
     $options = $field['#options'];
     $terms = $this->entityTypeManager->getStorage('taxonomy_term')->loadMultiple(array_keys($options));
-    $language = $this->languageManager->getCurrentLanguage()->getId();
+    // Add parents first so that the parent term order is preserved.
     foreach ($terms as $term) {
-
-      // Load term in currnet language.
-      if ($term->hasTranslation($language)) {
-        $term = $term->getTranslation($language);
+      /** @var \Drupal\taxonomy\Entity\Term $term */
+      if (empty($term->parent->entity)) {
+        $optgroup[$this->getTranslatedLabel($term)] = [];
       }
-      // Get parent
+    }
+    // Add terms to parents preserving the term order.
+    foreach ($terms as $term) {
+      /** @var \Drupal\taxonomy\Entity\Term $term */
       $parent = $term->parent->entity;
-      if (empty($parent)) {
-        continue;
+      if (!empty($parent)) {
+        $optgroup[$this->getTranslatedLabel($parent)][$term->id()] = $this->getTranslatedLabel($term);
       }
-      // Check if parent has translation and load if there is one.
-      if ($parent->hasTranslation($language)) {
-        $parent = $parent->getTranslation($language);
-      }
-
-      $optgroup[$parent->label()][$term->id()] = $term->label();
     }
     // Remove empty parents.
     $optgroup = array_filter($optgroup);
     $field['#options'] = $optgroup;
+  }
+
+  /**
+   * Get translated label if it exists and original label otherwise.
+   *
+   * @param \Drupal\Core\Entity\ContentEntityBase $entity
+   *   The entity.
+   *
+   * @return \Drupal\Core\StringTranslation\TranslatableMarkup|mixed|string|null
+   *   The label.
+   */
+  private function getTranslatedLabel(ContentEntityBase $entity) {
+    $language = $this->languageManager->getCurrentLanguage()->getId();
+    if ($entity->hasTranslation($language)) {
+      $entity = $entity->getTranslation($language);
+    }
+    return $entity->label();
   }
 
 }
