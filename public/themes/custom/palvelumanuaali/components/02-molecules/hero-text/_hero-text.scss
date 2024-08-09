@@ -1,28 +1,38 @@
 .hero-text {
-  display: flex;
-
+  /* Using the bootstrap breakpoint. */
+  @media (min-width: 992px) {
+    display: flex;
+  }
 }
 
 .hero-text__content {
   order: 1;
+  @extend .col-12;
   &--half {
     @extend .col-lg-6;
-  }
-  &--padding-top {
-    @include xl {
-      padding-top: 56px;
-    }
   }
 }
 
 .hero-text__image {
   order: 2;
-
+  @extend .col-12;
+  &--half {
+    @extend .col-lg-5;
+    @extend .offset-lg-1
+  }
   &--one-third {
     @extend .col-lg-4;
-
     margin-left: auto;
     margin-right: auto;
+  }
+}
+
+.hero-text__content,
+.hero-text__image {
+  &--padding-top {
+    @include xl {
+      padding-top: 56px;
+    }
   }
 }
 
