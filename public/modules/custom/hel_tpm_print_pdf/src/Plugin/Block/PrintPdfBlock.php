@@ -10,7 +10,7 @@ use Drupal\Core\Block\BlockBase;
  * @Block(
  *   id = "hel_print_pdf_block",
  *   admin_label = @Translation("Print pdf block"),
- *   category = @Translation("Print pdf"),
+ *   category = "print pdf",
  * )
  */
 class PrintPdfBlock extends BlockBase {

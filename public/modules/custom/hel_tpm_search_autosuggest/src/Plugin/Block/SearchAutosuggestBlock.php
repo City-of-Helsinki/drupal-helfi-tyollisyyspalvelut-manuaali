@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @Block(
  *   id = "hel_tpm_search_autosuggest_block",
  *   admin_label = @Translation("HEL TPM Search autosuggest"),
- *   category = @Translation("Hel TPM Search Autosuggest")
+ *   category = "hel tpm search autosuggest"
  * )
  */
 class SearchAutosuggestBlock extends BlockBase {

@@ -9,7 +9,8 @@ services:
       '@current_route_match',
       '@current_user',
       '@message_notify.sender',
-      '@ggroup.group_hierarchy_manager'
+      '@ggroup.group_hierarchy_manager',
+      '@config.factory'
     ]
     tags:
       - { name: event_subscriber }

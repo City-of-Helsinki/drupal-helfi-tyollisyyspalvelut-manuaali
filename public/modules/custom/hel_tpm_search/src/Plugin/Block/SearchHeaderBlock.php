@@ -10,7 +10,7 @@ use Drupal\Core\Block\BlockBase;
  * @Block(
  *   id = "search_header",
  *   admin_label = @Translation("Search header"),
- *   category = @Translation("Search header"),
+ *   category = "search header",
  * )
  */
 class SearchHeaderBlock extends BlockBase {
