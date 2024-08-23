@@ -17,7 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @Block(
  *   id = "hel_tpm_general_group_content_create_links",
  *   admin_label = @Translation("Group Content Create Links"),
- *   category = @Translation("Custom")
+ *   category = "custom"
  * )
  */
 class GroupContentCreateLinksBlock extends BlockBase implements ContainerFactoryPluginInterface {

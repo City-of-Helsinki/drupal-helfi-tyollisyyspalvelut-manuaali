@@ -2,6 +2,8 @@
 
 namespace Drupal\service_manual_workflow\EventSubscriber;
 
+use Drupal\Core\Config\ConfigFactory;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManager;
@@ -91,6 +93,11 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
   const MESSAGE_TEMPLATE = 'group_ready_to_publish_notificat';
 
   /**
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
+  private ConfigFactoryInterface $configFactory;
+
+  /**
    * Constructs event subscriber.
    *
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
@@ -109,8 +116,10 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
    *   Message notifier object.
    * @param \Drupal\ggroup\GroupHierarchyManagerInterface $groupHierarchyManager
    *   Group hierarchy manager.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
+   *   Config factory interface.
    */
-  public function __construct(MessengerInterface $messenger, EntityTypeManager $entityTypeManager, ContentGroupService $contentGroupService, GroupStateTransitionValidation $stateTransitionValidation, RouteMatchInterface $routeMatch, AccountProxyInterface $currentUser, MessageNotifier $messageSender, GroupHierarchyManagerInterface $groupHierarchyManager) {
+  public function __construct(MessengerInterface $messenger, EntityTypeManager $entityTypeManager, ContentGroupService $contentGroupService, GroupStateTransitionValidation $stateTransitionValidation, RouteMatchInterface $routeMatch, AccountProxyInterface $currentUser, MessageNotifier $messageSender, GroupHierarchyManagerInterface $groupHierarchyManager, ConfigFactoryInterface $configFactory) {
     $this->messenger = $messenger;
     $this->entityTypeManager = $entityTypeManager;
     $this->contentGroupService = $contentGroupService;
@@ -119,6 +128,7 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
     $this->currentUser = $currentUser;
     $this->messageSender = $messageSender;
     $this->groupHierarchyManager = $groupHierarchyManager;
+    $this->configFactory = $configFactory;
   }
 
   /**
@@ -267,18 +277,13 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
       return [];
     }
 
-    // No accounts with publish permissions found from current group.
-    // Check if group is subgroup and get one user
-    // with admin permissions to notify.
-    $super_groups = $this->groupHierarchyManager->getGroupSupergroups($group->id());
-
-    if (empty($super_groups)) {
-      return [];
+    if ($entity->field_responsible_municipality->isEmpty()) {
+      return $this->entityTypeManager->getStorage('user')->loadByProperties(['mail' => $this->configFactory->get('system.site')->get('mail')]);
     }
 
-    // Get entity administration only from
-    // 1 group if there happens to be multiple.
-    return $this->getEntityGroupAdministration($entity, reset($super_groups));
+    $municipality = $entity->field_responsible_municipality->entity;
+
+    return $this->getEntityGroupAdministration($entity, $municipality);
   }
 
   /**
