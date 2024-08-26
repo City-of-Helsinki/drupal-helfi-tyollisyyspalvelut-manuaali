@@ -16,7 +16,7 @@ Drupal.behaviors.loginForm = {
       // Mobile Menu Show/Hide.
       toggleLogin[0].addEventListener('click', (e) => {
         body[0].classList.toggle('no-scroll');
-        sidebarLogin.removeClass('slide-out');
+        sidebarLogin.removeClass('slide-out-right');
         sidebarLogin[0].classList.toggle('slide-in');
         e.preventDefault();
 
@@ -25,9 +25,9 @@ Drupal.behaviors.loginForm = {
       // Mobile Menu Show/Hide.
       toggleInnerLogin[0].addEventListener('click', (e) => {
         sidebarLogin[0].classList.toggle('slide-in');
-        sidebarLogin[0].classList.toggle('slide-out');
+        sidebarLogin[0].classList.toggle('slide-out-right');
         body[0].classList.toggle('no-scroll');
-        setTimeout(function() { sidebarLogin.removeClass('slide-out'); }, 1000);
+        setTimeout(function() { sidebarLogin.removeClass('slide-out-right'); }, 1000);
         e.preventDefault();
       });
     }

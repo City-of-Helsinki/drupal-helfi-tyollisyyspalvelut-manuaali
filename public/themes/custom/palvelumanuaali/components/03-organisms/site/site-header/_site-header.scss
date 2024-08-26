@@ -2,9 +2,15 @@
   100% { transform: translateX(0%); }
 }
 
+
 @keyframes slide-out {
   0% { transform: translateX(0%); }
   100% { transform: translateX(-100%); }
+}
+
+@keyframes slide-out-right {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(100%); }
 }
 
 body:not(.logged-in) {
@@ -15,8 +21,6 @@ body:not(.logged-in) {
     margin-top: 0;
   }
 }
-
-
 
 .slide-in-menu {
   margin-top: 40px;
@@ -61,7 +65,7 @@ body:not(.logged-in) {
   z-index: 300;
   padding: 0 $space;
   margin-left: 0;
-  transform:translateX(-100%);
+  transform:translateX(100%);
   width:  100%;
   @include large {
     margin-top: inherit;
@@ -78,9 +82,9 @@ body:not(.logged-in) {
     animation: slide-in 0.5s forwards;
     -webkit-animation: slide-in 0.5s forwards;
   }
-  &.slide-out {
-    animation: slide-out 0.5s forwards;
-    -webkit-animation: slide-out 0.5s forwards;
+  &.slide-out-right {
+    animation: slide-out-right 0.5s forwards;
+    -webkit-animation: slide-out-right 0.5s forwards;
     .main-nav {
       display: none;
     }
