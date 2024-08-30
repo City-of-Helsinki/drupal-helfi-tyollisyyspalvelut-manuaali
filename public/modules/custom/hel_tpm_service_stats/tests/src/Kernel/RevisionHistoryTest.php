@@ -112,7 +112,7 @@ final class RevisionHistoryTest extends GroupKernelTestBase {
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  public function testServiceRevisionRow() {
+  public function testServicePublishedRow() {
     $user = $this->createUser([], NULL, TRUE);
     $node = $this->createNode([
       'type' => 'service',
