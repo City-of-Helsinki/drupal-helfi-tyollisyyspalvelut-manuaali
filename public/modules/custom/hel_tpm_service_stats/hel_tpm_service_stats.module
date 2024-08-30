@@ -1,0 +1,25 @@
+<?php
+
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_menu_local_tasks_alter().
+ */
+function hel_tpm_service_stats_menu_local_tasks_alter(&$data, $route_name, \Drupal\Core\Cache\RefinableCacheableDependencyInterface &$cacheability) {
+  $tabs = [
+    'views_view:view.service_publish_stats.page_2' => 'entity.node.edit_form'
+  ];
+
+  foreach ($tabs as $tab => $local_task) {
+    if (empty($data['tabs'][0][$tab])) {
+      continue;
+    }
+    $tab = &$data['tabs'][0][$tab];
+    // Inherit access from given local task.
+    if (empty($data['tabs'][0][$local_task])) {
+      $tab['#access'] = AccessResult::forbidden();
+    }
+    $tab['#access'] = $data['tabs'][0][$local_task]['#access'];
+  }
+}

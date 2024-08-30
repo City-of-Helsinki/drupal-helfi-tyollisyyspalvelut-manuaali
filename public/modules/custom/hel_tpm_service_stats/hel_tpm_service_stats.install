@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Hel tpm Service statistics module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function hel_tpm_service_stats_install() {
+  $service_revision_history = \Drupal::service('hel_tpm_service_stats.revision_history');
+  $published_revisions = $service_revision_history->getPublishedRevisions();
+  foreach ($published_revisions as $revision) {
+    $previous_revision = $service_revision_history->getPreviousRevision($revision);
+    if (!$previous_revision) {
+      continue;
+    }
+    $service_revision_history->createServicePublishedRow($revision, $previous_revision);
+  }
+}

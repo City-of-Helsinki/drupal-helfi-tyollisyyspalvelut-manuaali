@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - hel_tpm_service_stats
+id: service_published_row_delete_action
+label: 'Delete service published rows'
+type: service_published_row
+plugin: entity:delete_action:service_published_row
+configuration: {  }
