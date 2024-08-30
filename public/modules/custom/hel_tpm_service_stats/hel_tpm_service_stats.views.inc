@@ -2,6 +2,7 @@
 
 /**
  * @file
+ * Hel_tpm_service_stats views file.
  */
 
 /**
