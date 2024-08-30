@@ -8,7 +8,7 @@ use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 
 /**
- * @todo Add class description.
+ * Revision history service.
  */
 final class RevisionHistoryService {
 
@@ -23,15 +23,15 @@ final class RevisionHistoryService {
   /**
    * Create published date node.
    *
-   * @param $published_revision
+   * @param \stdClass $published_revision
    *   Published revision.
-   * @param $previous_revision
+   * @param \stdClass $previous_revision
    *   Previsous revision.
    *
    * @return void
-   *  Void.
+   *   Void.
    */
-  function createServicePublishedRow($published_revision, $previous_revision) {
+  public function createServicePublishedRow($published_revision, $previous_revision) {
     $publish_storage = $this->entityTypeManager->getStorage('service_published_row');
     $node_storage = $this->entityTypeManager->getStorage('node');
     $node_revision = $node_storage->loadRevision($published_revision->content_entity_revision_id);
@@ -49,14 +49,17 @@ final class RevisionHistoryService {
       'publish_date' => $node_revision->getRevisionCreationTime(),
       'previous_vid' => $previous_revision->content_entity_revision_id,
       'previous_date' => $previous_revision_node->getRevisionCreationTime(),
-      'previous_state' => $previous_revision->moderation_state
+      'previous_state' => $previous_revision->moderation_state,
     ])->save();
   }
 
   /**
    * Get database row for given revision id.
    *
-   * @param $revision_id
+   * @param int $revision_id
+   *   Revision id of published revision.
+   * @param string $langcode
+   *   Revision langcode.
    *
    * @return array
    *   Content moderation state revision row.
@@ -92,21 +95,21 @@ final class RevisionHistoryService {
   /**
    * Get previous revisions for current published row.
    *
-   * @param $row
-   *  Published revision database row.
+   * @param \stdClass $row
+   *   Published revision database row.
    *
    * @return object|null
-   *  Last revision with previous status.
+   *   Last revision with previous status.
    *
    * @throws \Exception
    */
   public function getPreviousRevision($row) :? object {
     $query = $this->connection->select('content_moderation_state_field_revision', 'cm')
-        ->fields('cm')
-        ->condition('cm.content_entity_id', $row->content_entity_id)
-        ->condition('cm.content_entity_revision_id', $row->content_entity_revision_id, "<")
-        ->condition('cm.langcode', $row->langcode)
-        ->orderBy('cm.revision_id', 'DESC');
+      ->fields('cm')
+      ->condition('cm.content_entity_id', $row->content_entity_id)
+      ->condition('cm.content_entity_revision_id', $row->content_entity_revision_id, "<")
+      ->condition('cm.langcode', $row->langcode)
+      ->orderBy('cm.revision_id', 'DESC');
 
     $previous_query = clone $query;
     $previous_status = $previous_query->range(0, 1)
@@ -128,4 +131,5 @@ final class RevisionHistoryService {
 
     return $prev_rev;
   }
+
 }

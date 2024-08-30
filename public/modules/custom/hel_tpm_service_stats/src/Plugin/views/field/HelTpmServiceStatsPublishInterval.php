@@ -6,7 +6,7 @@ use Drupal\views\Plugin\views\field\FieldPluginBase;
 use Drupal\views\ResultRow;
 
 /**
- * A handler to provide service publish intervals
+ * A handler to provide service publish intervals.
  *
  * @ingroup views_field_handlers
  *
@@ -14,10 +14,16 @@ use Drupal\views\ResultRow;
  */
 class HelTpmServiceStatsPublishInterval extends FieldPluginBase {
 
+  /**
+   * {@inheritdoc}
+   */
   public function render(ResultRow $values) {
     return $values->_entity->publish_interval->getValue()[0]['value'];
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function query() {
     // Do nothing.
   }

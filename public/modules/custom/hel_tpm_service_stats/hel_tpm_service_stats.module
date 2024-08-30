@@ -1,14 +1,19 @@
 <?php
 
+/**
+ * @file
+ * Module file hel_tpm_service_stats.
+ */
+
 use Drupal\Core\Access\AccessResult;
-use Drupal\Core\Url;
+use Drupal\Core\Cache\RefinableCacheableDependencyInterface;
 
 /**
  * Implements hook_menu_local_tasks_alter().
  */
-function hel_tpm_service_stats_menu_local_tasks_alter(&$data, $route_name, \Drupal\Core\Cache\RefinableCacheableDependencyInterface &$cacheability) {
+function hel_tpm_service_stats_menu_local_tasks_alter(&$data, $route_name, RefinableCacheableDependencyInterface &$cacheability) {
   $tabs = [
-    'views_view:view.service_publish_stats.page_2' => 'entity.node.edit_form'
+    'views_view:view.service_publish_stats.page_2' => 'entity.node.edit_form',
   ];
 
   foreach ($tabs as $tab => $local_task) {

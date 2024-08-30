@@ -127,6 +127,7 @@ final class ServicePublishedRow extends ContentEntityBase implements ServicePubl
    * Getter for publish_date.
    *
    * @return string
+   *   Publish date timestamp.
    */
   public function getPublishDate(): string {
     return $this->publish_date->value;
@@ -136,8 +137,10 @@ final class ServicePublishedRow extends ContentEntityBase implements ServicePubl
    * Getter for previous_date.
    *
    * @return string
+   *   Previous date timestamp.
    */
   public function getPreviousDate(): string {
     return $this->previous_date->value;
   }
+
 }

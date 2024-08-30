@@ -21,6 +21,9 @@ use Drupal\Core\TypedData\ComputedItemListTrait;
 class PublishIntervalField extends FieldItemList implements FieldItemListInterface {
   use ComputedItemListTrait;
 
+  /**
+   * {@inheritdoc}
+   */
   protected function computeValue() {
     $entity = $this->getEntity();
     $interval = ($entity->getPublishDate() - $entity->getPreviousDate()) / 84000;

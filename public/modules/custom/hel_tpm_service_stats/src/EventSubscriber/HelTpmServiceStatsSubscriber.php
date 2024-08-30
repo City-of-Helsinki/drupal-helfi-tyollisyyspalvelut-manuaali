@@ -4,16 +4,12 @@ declare(strict_types=1);
 
 namespace Drupal\hel_tpm_service_stats\EventSubscriber;
 
-use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\hel_tpm_service_stats\RevisionHistoryService;
 use Drupal\service_manual_workflow\Event\ServiceModerationEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\RequestEvent;
-use Symfony\Component\HttpKernel\Event\ResponseEvent;
-use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
- * @todo Add description for this subscriber.
+ * Service stats subscriber.
  */
 final class HelTpmServiceStatsSubscriber implements EventSubscriberInterface {
 
@@ -21,7 +17,7 @@ final class HelTpmServiceStatsSubscriber implements EventSubscriberInterface {
    * Constructs a HelTpmServiceStatsSubscriber object.
    */
   public function __construct(
-    private readonly RevisionHistoryService $helTpmServiceStatsRevisionHistory
+    private readonly RevisionHistoryService $helTpmServiceStatsRevisionHistory,
   ) {}
 
   /**

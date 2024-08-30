@@ -8,7 +8,7 @@ use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\Tests\hel_tpm_service_stats\Traits\HelTpmServiceStatsWorkflowTestTrait;
 
 /**
- * Test description.
+ * Tests for hel_tpm_service_stats.
  *
  * @group hel_tpm_service_stats
  */
@@ -42,6 +42,11 @@ final class RevisionHistoryTest extends GroupKernelTestBase {
     'service_manual_workflow_service_language_test',
   ];
 
+  /**
+   * Revision history service.
+   *
+   * @var mixed
+   */
   private $revisionHistoryService;
 
   /**
@@ -106,7 +111,7 @@ final class RevisionHistoryTest extends GroupKernelTestBase {
    * Test service revision row.
    *
    * @return void
-   *  -
+   *   -
    *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
@@ -146,4 +151,5 @@ final class RevisionHistoryTest extends GroupKernelTestBase {
 
     $this->assertEquals(3, $revision->publish_interval->getValue()[0]['value']);
   }
+
 }

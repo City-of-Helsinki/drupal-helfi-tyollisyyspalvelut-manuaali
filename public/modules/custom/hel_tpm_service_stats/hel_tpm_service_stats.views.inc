@@ -1,6 +1,10 @@
 <?php
 
 /**
+ * @file
+ */
+
+/**
  * Implements hook_views_data_alter().
  */
 function hel_tpm_service_stats_views_data_alter(array &$data) {
