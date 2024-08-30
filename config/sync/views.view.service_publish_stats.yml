@@ -1,4 +1,4 @@
-uuid: d2532e8c-6d43-45c9-9489-f565e6158f7f
+uuid: 0b18e515-e88e-4700-8cd0-d4102646a31b
 langcode: fi
 status: true
 dependencies:
@@ -11,6 +11,8 @@ dependencies:
     - hel_tpm_service_stats
     - node
     - user
+_core:
+  default_config_hash: xHaIqUcdAY-lEryO9bngm9AcMgDK9Ysvss8C769RBr0
 id: service_publish_stats
 label: 'Service publish stats'
 module: views
@@ -21,7 +23,7 @@ base_field: id
 display:
   default:
     id: default
-    display_title: Default
+    display_title: Oletus
     display_plugin: default
     position: 0
     display_options:
@@ -385,11 +387,11 @@ display:
           admin_label: ''
           entity_type: service_published_row
           plugin_id: hel_tpm_service_stats_publish_interval
-          label: 'Time between changed states'
+          label: 'Days between changed states'
           exclude: false
           alter:
-            alter_text: false
-            text: ''
+            alter_text: true
+            text: '{{ publish_interval }} days'
             make_link: false
             path: ''
             absolute: false

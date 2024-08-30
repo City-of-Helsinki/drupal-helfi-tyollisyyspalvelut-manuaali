@@ -26,6 +26,18 @@ entity_types:
   contact_info:
     enable: 0
     limit_per_bundle: {  }
+  service_published_row:
+    enable: 1
+    limit_per_bundle:
+      service_published_row: service_published_row
+    bundles:
+      service_published_row:
+        nid: nid
+        langcode: langcode
+        publish_vid: publish_vid
+        previous_vid: previous_vid
+        previous_state: previous_state
+        publish_interval: publish_interval
   shortenerredirect:
     enable: 0
     limit_per_bundle: {  }

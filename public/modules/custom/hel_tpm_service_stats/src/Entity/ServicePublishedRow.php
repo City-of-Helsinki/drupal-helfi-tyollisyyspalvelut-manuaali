@@ -113,8 +113,8 @@ final class ServicePublishedRow extends ContentEntityBase implements ServicePubl
     $fields['previous_state'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Previous state'));
 
-    $fields['publish_interval'] = BaseFieldDefinition::create('string')
-      ->setLabel(t('Time between changed states'))
+    $fields['publish_interval'] = BaseFieldDefinition::create('integer')
+      ->setLabel(t('Days between changed states'))
       ->setComputed(TRUE)
       ->setClass('\Drupal\hel_tpm_service_stats\Plugin\Field\PublishIntervalField')
       ->setDisplayConfigurable('view', TRUE)

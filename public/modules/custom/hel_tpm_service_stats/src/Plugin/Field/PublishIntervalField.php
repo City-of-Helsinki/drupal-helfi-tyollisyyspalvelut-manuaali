@@ -24,7 +24,7 @@ class PublishIntervalField extends FieldItemList implements FieldItemListInterfa
   protected function computeValue() {
     $entity = $this->getEntity();
     $interval = ($entity->getPublishDate() - $entity->getPreviousDate()) / 84000;
-    $this->list[0] = $this->createItem(0, $this->t('@interval days', ['@interval' => (int) $interval]));
+    $this->list[0] = $this->createItem(0, (int) $interval);
   }
 
 }
