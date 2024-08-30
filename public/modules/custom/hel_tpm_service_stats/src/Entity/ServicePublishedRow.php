@@ -26,13 +26,7 @@ use Drupal\user\EntityOwnerTrait;
  *     plural = "@count service published rows",
  *   ),
  *   handlers = {
- *     "list_builder" = "Drupal\hel_tpm_service_stats\ServicePublishedRowListBuilder",
  *     "views_data" = "Drupal\views\EntityViewsData",
- *     "form" = {
- *     },
- *     "route_provider" = {
- *       "html" = "Drupal\hel_tpm_service_stats\Routing\ServicePublishedRowHtmlRouteProvider",
- *     },
  *   },
  *   base_table = "service_published_row",
  *   admin_permission = "administer service_published_row",
@@ -41,10 +35,7 @@ use Drupal\user\EntityOwnerTrait;
  *     "label" = "id",
  *     "uuid" = "uuid",
  *     "owner" = "uid",
- *   },
- *   links = {
- *   },
- *   field_ui_base_route = "entity.service_published_row.settings",
+ *   }
  * )
  */
 final class ServicePublishedRow extends ContentEntityBase implements ServicePublishedRowInterface {
@@ -132,10 +123,20 @@ final class ServicePublishedRow extends ContentEntityBase implements ServicePubl
     return $fields;
   }
 
+  /**
+   * Getter for publish_date.
+   *
+   * @return string
+   */
   public function getPublishDate(): string {
     return $this->publish_date->value;
   }
 
+  /**
+   * Getter for previous_date.
+   *
+   * @return string
+   */
   public function getPreviousDate(): string {
     return $this->previous_date->value;
   }
