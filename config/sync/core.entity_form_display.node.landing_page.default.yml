@@ -3,6 +3,7 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - field.field.node.landing_page.field_hero_image
     - field.field.node.landing_page.field_hero_label
     - field.field.node.landing_page.field_hero_text
     - field.field.node.landing_page.field_paragraph
@@ -11,6 +12,7 @@ dependencies:
   module:
     - field_group
     - hel_tpm_editorial
+    - media_library
     - text
 third_party_settings:
   field_group:
@@ -19,6 +21,7 @@ third_party_settings:
         - title
         - field_hero_label
         - field_hero_text
+        - field_hero_image
         - field_paragraph
         - field_quick_links
       label: ''
@@ -54,6 +57,13 @@ targetEntityType: node
 bundle: landing_page
 mode: default
 content:
+  field_hero_image:
+    type: media_library_widget
+    weight: 4
+    region: content
+    settings:
+      media_types: {  }
+    third_party_settings: {  }
   field_hero_label:
     type: string_textfield
     weight: 2
@@ -72,7 +82,7 @@ content:
     third_party_settings: {  }
   field_paragraph:
     type: hel_tpm_editorial_paragraphs_alt_custom
-    weight: 4
+    weight: 5
     region: content
     settings:
       title: Paragraafi
@@ -92,7 +102,7 @@ content:
     third_party_settings: {  }
   field_quick_links:
     type: hel_tpm_editorial_paragraphs_alt_custom
-    weight: 5
+    weight: 6
     region: content
     settings:
       title: Pikalinkki

@@ -3,9 +3,10 @@
 namespace Drupal\hel_tpm_search\Plugin\better_exposed_filters\filter;
 
 use Drupal\better_exposed_filters\Plugin\better_exposed_filters\filter\FilterWidgetBase;
-use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\selective_better_exposed_filters\Plugin\better_exposed_filters\filter\SelectiveFilterBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -27,9 +28,17 @@ class DropdownMultiselect extends FilterWidgetBase implements ContainerFactoryPl
    */
   protected $entityTypeManager;
 
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entityTypeManager) {
+  /**
+   * Language manager.
+   *
+   * @var \Drupal\Core\Language\LanguageManagerInterface
+   */
+  protected LanguageManagerInterface $languageManager;
+
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entityTypeManager, LanguageManagerInterface $languageManager) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->entityTypeManager = $entityTypeManager;
+    $this->languageManager = $languageManager;
   }
 
   /**
@@ -41,6 +50,7 @@ class DropdownMultiselect extends FilterWidgetBase implements ContainerFactoryPl
       $plugin_id,
       $plugin_definition,
       $container->get('entity_type.manager'),
+      $container->get('language_manager')
     );
   }
 
@@ -68,6 +78,7 @@ class DropdownMultiselect extends FilterWidgetBase implements ContainerFactoryPl
     ];
     return $form;
   }
+
   /**
    * Add multiselect support for dropdown filter.
    *
@@ -110,27 +121,57 @@ class DropdownMultiselect extends FilterWidgetBase implements ContainerFactoryPl
   /**
    * Create optgroup from taxonomy terms.
    *
-   * @param $field
-   *  Select field.
+   * @param array $field
+   *   Select field.
    *
-   * @return array|void
+   * @return void
+   *   -
+   *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  private function createOptGroups(&$field) {
+  private function createOptGroups(array &$field) {
     if ($field['#type'] !== 'select') {
       return;
     }
     $optgroup = [];
     $options = $field['#options'];
     $terms = $this->entityTypeManager->getStorage('taxonomy_term')->loadMultiple(array_keys($options));
+    // Add parents first so that the parent term order is preserved.
     foreach ($terms as $term) {
-      $parent = $term->parent->entity;
-      if (empty($parent)) {
-        continue;
+      /** @var \Drupal\taxonomy\Entity\Term $term */
+      if (empty($term->parent->entity)) {
+        $optgroup[$this->getTranslatedLabel($term)] = [];
       }
-      $optgroup[$parent->label()][$term->id()] = $term->label();
     }
+    // Add terms to parents preserving the term order.
+    foreach ($terms as $term) {
+      /** @var \Drupal\taxonomy\Entity\Term $term */
+      $parent = $term->parent->entity;
+      if (!empty($parent)) {
+        $optgroup[$this->getTranslatedLabel($parent)][$term->id()] = $this->getTranslatedLabel($term);
+      }
+    }
+    // Remove empty parents.
+    $optgroup = array_filter($optgroup);
     $field['#options'] = $optgroup;
   }
+
+  /**
+   * Get translated label if it exists and original label otherwise.
+   *
+   * @param \Drupal\Core\Entity\ContentEntityBase $entity
+   *   The entity.
+   *
+   * @return \Drupal\Core\StringTranslation\TranslatableMarkup|mixed|string|null
+   *   The label.
+   */
+  private function getTranslatedLabel(ContentEntityBase $entity) {
+    $language = $this->languageManager->getCurrentLanguage()->getId();
+    if ($entity->hasTranslation($language)) {
+      $entity = $entity->getTranslation($language);
+    }
+    return $entity->label();
+  }
+
 }

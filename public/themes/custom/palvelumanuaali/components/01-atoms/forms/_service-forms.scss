@@ -444,15 +444,19 @@
 
   .field--name-field-internal-links,
   .field--name-field-link {
+    tr.table__row {
+      display: table-row;
+      vertical-align: middle;
+    }
     .table__cell,
     .table__cell .ajax-new-content {
-      display: flex;
-      flex-wrap: wrap;
+      display: table-cell;
       padding-left: 0;
       &.field-multiple-drag {
         display: none;
       }
       .form-item {
+        display: inline-block;
         &:nth-child(1) {
           max-width: 55%;
         }
@@ -460,11 +464,10 @@
           max-width: 40%;
         }
       }
+      > input {
+        margin-top: 30px;
+      }
     }
-  }
-
-  .field--name-field-internal-files,
-  .field--name-field-file {
     > div .details-content-wrapper {
       display: flex;
       flex-wrap: grid;
@@ -478,7 +481,6 @@
     .form-item__description {
       display: none;
     }
-
   }
 
   .field--name-field-service-location input {
