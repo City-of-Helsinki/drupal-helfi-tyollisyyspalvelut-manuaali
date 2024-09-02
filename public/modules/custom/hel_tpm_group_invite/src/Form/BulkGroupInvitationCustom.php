@@ -43,7 +43,7 @@ class BulkGroupInvitationCustom extends BulkGroupInvitation {
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  protected function getGroupRoleOptions(GroupInterface $group) {
+  protected function getGroupRoleOptions(GroupInterface $group): array {
     $roles = [];
     $bl = ['service_provider-organization_ad'];
 
@@ -68,13 +68,13 @@ class BulkGroupInvitationCustom extends BulkGroupInvitation {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    // Prepare params to store them in tempstore.
-    $this->group->getGroupType();
     $group_type = $this->group->getGroupType();
-    $group_type->getPlugin('group_invitation');
+    $relation_type_id = $this->entityTypeManager->getStorage('group_content_type')->getRelationshipTypeId($group_type->id(), 'group_invitation');
+    // Prepare params to store them in tempstore.
+    $params = [];
     $params['gid'] = $this->group->id();
-    $params['plugin'] = $this->group->getGroupType()->getPlugin('group_invitation')->getRelationTypeId();
-    $params['emails'] = $this->getSubmittedEmails($form_state);
+    $params['plugin'] = $relation_type_id;
+    $params['invitees'] = $this->getSubmittedInvitees($form_state);
     $params['roles'] = $this->getRoles($form_state);
 
     $tempstore = $this->tempStoreFactory->get('ginvite_bulk_invitation');
@@ -114,16 +114,16 @@ class BulkGroupInvitationCustom extends BulkGroupInvitation {
   }
 
   /**
-   * Get array of submited emails.
+   * Get array of submitted invitees.
    *
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   The current state of the form.
    *
    * @return array
-   *   List of emails to invite .
+   *   List of invitees.
    */
-  private function getSubmittedEmails(FormStateInterface $form_state) {
-    return array_map('trim', array_unique(explode("\r\n", trim($form_state->getValue('email_address')))));
+  private function getSubmittedInvitees(FormStateInterface $form_state) {
+    return array_map('trim', array_unique(explode("\r\n", trim($form_state->getValue('invitees')))));
   }
 
 }
