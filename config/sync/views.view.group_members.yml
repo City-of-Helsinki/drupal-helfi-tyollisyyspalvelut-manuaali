@@ -696,7 +696,7 @@ display:
           required: true
           group_content_plugins:
             group_membership: group_membership
-      use_ajax: true
+      use_ajax: false
       header: {  }
       footer: {  }
       display_extenders: {  }
@@ -717,7 +717,10 @@ display:
     display_plugin: page
     position: 1
     display_options:
-      display_extenders: {  }
+      display_extenders:
+        ajax_history:
+          enable_history: false
+          exclude_args: ''
       path: group/%group/members
       menu:
         type: tab
