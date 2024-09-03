@@ -2,9 +2,15 @@
   100% { transform: translateX(0%); }
 }
 
+
 @keyframes slide-out {
   0% { transform: translateX(0%); }
   100% { transform: translateX(-100%); }
+}
+
+@keyframes slide-out-right {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(100%); }
 }
 
 body:not(.logged-in) {
@@ -15,6 +21,96 @@ body:not(.logged-in) {
     margin-top: 0;
   }
 }
+
+.slide-in-menu {
+  margin-top: 40px;
+  display: block;
+  height: 100%;
+  position: fixed;
+  inset:0;
+  overflow-y: scroll;
+  background: white;
+  z-index: 300;
+  padding: 0 $space;
+  margin-left: 0;
+  transform:translateX(-100%);
+  width:  100%;
+  @include large {
+    margin-top: inherit;
+    position: inherit;
+    inset: unset;
+    overflow-y: auto;
+  }
+  &.slide-in {
+    animation: slide-in 0.5s forwards;
+    -webkit-animation: slide-in 0.5s forwards;
+  }
+  &.slide-out {
+    animation: slide-out 0.5s forwards;
+    -webkit-animation: slide-out 0.5s forwards;
+    .main-nav {
+      display: none;
+    }
+  }
+}
+
+.slide-in-loginform {
+  padding-top: 40px;
+  display: block;
+  height: 100%;
+  position: fixed;
+  inset:0;
+  overflow-y: scroll;
+  background-color: clr(background-dropdown);
+  z-index: 300;
+  padding: 0 $space;
+  margin-left: 0;
+  transform:translateX(100%);
+  width:  100%;
+  @include large {
+    margin-top: inherit;
+    position: inherit;
+    inset: unset;
+    overflow-y: auto;
+    display: none;
+  }
+  > .btn {
+    margin-left: calc(-1 * $space);
+    margin-top: $space-one-half;
+  }
+  &.slide-in {
+    animation: slide-in 0.5s forwards;
+    -webkit-animation: slide-in 0.5s forwards;
+  }
+  &.slide-out-right {
+    animation: slide-out-right 0.5s forwards;
+    -webkit-animation: slide-out-right 0.5s forwards;
+    .main-nav {
+      display: none;
+    }
+  }
+  .form-submit {
+    width: 100%;
+  }
+  .login-text {
+    font-weight: 600;
+    margin-top: -34px;
+    text-align: center;
+  }
+  > ul {
+    padding-left: 0;
+    text-align: center;
+    padding-top: $space-double;
+    a {
+      text-decoration: none;
+      font-weight: 600;
+    }
+  }
+  .user-login-form {
+    margin-top: $space-two-and-half;
+  }
+}
+
 
 
 .header {
@@ -273,6 +369,9 @@ body:not(.logged-in) {
      .btn-menu {
        padding: 0;
      }
+     .btn-menu-close {
+       outline: unset;
+     }
      .link {
        width: 44px;
        height: 44px;
@@ -284,8 +383,8 @@ body:not(.logged-in) {
        height: 44px;
        width: 44px;
        padding: 10px;
-       top: unset;
-       right: unset;
+       top: 0;
+       right: 6px;
      }
    }
    .menu--account {
@@ -527,7 +626,67 @@ body:not(.logged-in) {
   }
 }
 
-#block-kirjautuminen {
+.block-user-login-block {
+  .form-item {
+    position: relative;
+    &:focus-within {
+      &::before {
+        color: clr(alt-header-color)!important;
+      }
+    }
+    .form-item__description {
+      display: none;
+    }
+    label {
+      text-align: left;
+      font-weight: 700;
+      font-size: 12px;
+      line-height: 24px;
+      letter-spacing: 1px;
+      color: clr(alt-header-color);
+      text-transform: uppercase;
+      padding-top: 0;
+      padding-bottom: 4px;
+      @include large  {
+        margin-bottom: 0;
+      }
+    }
+    input {
+      border-radius: 8px;
+      padding-left: 51px;
+      background: clr(sidebar-color);
+      &:focus {
+        box-shadow: inset 0px 0px 0px 2px clr(background-section);
+        outline: none;
+      }
+    }
+    &:first-child {
+      &::before {
+        @include icons;
+        content: "\EA02";
+        position: absolute;
+        left: 18px;
+        bottom: 15px;
+        color: clr(gray);
+      }
+
+    }
+    &:nth-child(2) {
+      &::before {
+        @include icons;
+        content: "\EA04";
+        position: absolute;
+        left: 18px;
+        bottom: 15px;
+        color: clr(gray);
+      }
+      &:focus {
+        &::before {
+          color: clr(alt-header-color);
+        }
+      }
+    }
+  }
   .dropdown-menu {
     border-radius: 8px;
     box-shadow: 0px 8px 16px rgba(30, 64, 182, 0.2);
@@ -536,66 +695,6 @@ body:not(.logged-in) {
     top:24px !important;
     @include large {
       width: 336px;
-    }
-    .form-item {
-      position: relative;
-      &:focus-within {
-        &::before {
-          color: clr(alt-header-color)!important;
-        }
-      }
-      .form-item__description {
-        display: none;
-      }
-      label {
-        text-align: left;
-        font-weight: 700;
-        font-size: 12px;
-        line-height: 24px;
-        letter-spacing: 1px;
-        color: clr(alt-header-color);
-        text-transform: uppercase;
-        padding-top: 0;
-        padding-bottom: 4px;
-        @include large  {
-          margin-bottom: 0;
-        }
-      }
-      input {
-        border-radius: 8px;
-        padding-left: 51px;
-        background: clr(sidebar-color);
-        &:focus {
-          box-shadow: inset 0px 0px 0px 2px clr(background-section);
-          outline: none;
-        }
-      }
-      &:first-child {
-        &::before {
-          @include icons;
-          content: "\EA02";
-          position: absolute;
-          left: 18px;
-          bottom: 15px;
-          color: clr(gray);
-        }
-
-      }
-      &:nth-child(2) {
-        &::before {
-          @include icons;
-          content: "\EA04";
-          position: absolute;
-          left: 18px;
-          bottom: 15px;
-          color: clr(gray);
-        }
-        &:focus {
-          &::before {
-            color: clr(alt-header-color);
-          }
-        }
-      }
     }
     .form-actions{
       display: flex;
