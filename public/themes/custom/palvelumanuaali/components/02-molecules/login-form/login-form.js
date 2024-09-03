@@ -3,13 +3,13 @@
 Drupal.behaviors.loginForm = {
       attach: function (context, settings) {
 
-      let loginBlock = $('.header__secondary .block-user-login-block');
-      let header = $('.header__primary');
-      let additionalMenu = $('.header__primary .additional-links-menu-nav');
       let body = $('body');
-      let toggleLogin = $('.header__secondary .block-user >.btn-menu');
-      let toggleInnerLogin = $('.header__secondary .slide-in-loginform .btn-menu-close');
+      let loginBlock = $('.header__secondary .block-user-login-block');
+      let toggleLogin = $('>.btn-menu', loginBlock);
+      let header = $('.header__primary');
+      let additionalMenu = $('.additional-links-menu-nav', header);
       let sidebarLogin = $('.header__secondary .slide-in-loginform');
+      let toggleInnerLogin = $('.btn-menu-close', sidebarLogin);
 
     if (typeof loginBlock !== 'undefined' || menu == null) {
 
