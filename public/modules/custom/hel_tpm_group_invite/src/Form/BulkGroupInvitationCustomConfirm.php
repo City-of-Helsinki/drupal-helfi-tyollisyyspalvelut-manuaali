@@ -28,14 +28,24 @@ class BulkGroupInvitationCustomConfirm extends BulkGroupInvitationConfirm {
       'finished' => 'Drupal\hel_tpm_group_invite\Form\BulkGroupInvitationCustomConfirm::batchFinished',
     ];
     $roles = $this->tempstore['roles'];
-    foreach ($this->tempstore['emails'] as $email) {
+
+    foreach ($this->tempstore['invitees'] as $invitee) {
+      if (filter_var($invitee, FILTER_VALIDATE_EMAIL)) {
+        $inviteeEmail = $invitee;
+      }
+      else {
+        $user = user_load_by_name($invitee);
+        $inviteeEmail = $user->getEmail();
+      }
+
       $values = [
         'type' => $this->tempstore['plugin'],
         'gid' => $this->tempstore['gid'],
-        'invitee_mail' => $email,
+        'invitee_mail' => $inviteeEmail,
         'entity_id' => 0,
         'group_roles' => $roles,
       ];
+
       $batch['operations'][] = [
         __CLASS__ . '::batchCreateInvite',
         [$values],
@@ -54,7 +64,7 @@ class BulkGroupInvitationCustomConfirm extends BulkGroupInvitationConfirm {
    *   Batch context.
    *
    * @return void
-   *   Return nothing.
+   *   -
    *
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
@@ -76,7 +86,7 @@ class BulkGroupInvitationCustomConfirm extends BulkGroupInvitationConfirm {
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  public static function createMembership($values) {
+  public static function createMembership(array $values) {
     $entity_type_manager = \Drupal::entityTypeManager();
     $group = $entity_type_manager->getStorage('group')->load($values['gid']);
     $account = $entity_type_manager->getStorage('user')->loadByProperties(['mail' => $values['invitee_mail']]);
