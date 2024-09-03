@@ -15,18 +15,16 @@ Drupal.behaviors.loginForm = {
 
       // Mobile Menu Show/Hide.
       toggleLogin[0].addEventListener('click', (e) => {
-        body[0].classList.toggle('no-scroll');
-        sidebarLogin.removeClass('slide-out-right');
-        sidebarLogin[0].classList.toggle('slide-in');
+        body.toggleClass('no-scroll');
+        sidebarLogin.toggleClass('slide-in');
         e.preventDefault();
-
       });
 
       // Mobile Menu Show/Hide.
       toggleInnerLogin[0].addEventListener('click', (e) => {
-        sidebarLogin[0].classList.toggle('slide-in');
-        sidebarLogin[0].classList.toggle('slide-out-right');
-        body[0].classList.toggle('no-scroll');
+        sidebarLogin.toggleClass('slide-in');
+        sidebarLogin.toggleClass('slide-out-right');
+        body.toggleClass('no-scroll');
         setTimeout(function() { sidebarLogin.removeClass('slide-out-right'); }, 1000);
         e.preventDefault();
       });
