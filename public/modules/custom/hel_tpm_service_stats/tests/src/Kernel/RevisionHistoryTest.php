@@ -156,8 +156,17 @@ final class RevisionHistoryTest extends GroupKernelTestBase {
     $this->assertEquals(3, $revision->publish_interval->getValue()[0]['value']);
   }
 
+  /**
+   * Test translations.
+   *
+   * @return void
+   *   Void.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
   public function testServiceTranslationHistory() {
-
     $user = $this->createUser([], NULL, TRUE);
     $node = $this->createNode([
       'type' => 'service',
