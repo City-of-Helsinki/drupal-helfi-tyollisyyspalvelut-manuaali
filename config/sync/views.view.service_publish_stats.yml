@@ -39,7 +39,7 @@ display:
           entity_type: service_published_row
           entity_field: nid
           plugin_id: field
-          label: 'Solmun ID'
+          label: Palvelu
           exclude: false
           alter:
             alter_text: false
@@ -85,7 +85,8 @@ display:
           settings:
             link: true
           group_column: target_id
-          group_columns: {  }
+          group_columns:
+            language: language
           group_rows: true
           delta_limit: 0
           delta_offset: 0
@@ -104,7 +105,7 @@ display:
           entity_type: service_published_row
           entity_field: previous_state
           plugin_id: field
-          label: 'Previous state'
+          label: 'Edellinen tila'
           exclude: false
           alter:
             alter_text: false
@@ -147,8 +148,7 @@ display:
           hide_alter_empty: true
           click_sort_column: value
           type: string
-          settings:
-            link_to_entity: false
+          settings: {  }
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -169,7 +169,7 @@ display:
           entity_type: service_published_row
           entity_field: publish_date
           plugin_id: field
-          label: 'Publish date'
+          label: Julkaisupäivä
           exclude: false
           alter:
             alter_text: false
@@ -246,7 +246,7 @@ display:
           entity_type: service_published_row
           entity_field: previous_date
           plugin_id: field
-          label: 'Previous state date'
+          label: 'Edellisen tilan pvm'
           exclude: false
           alter:
             alter_text: false
@@ -387,7 +387,7 @@ display:
           admin_label: ''
           entity_type: service_published_row
           plugin_id: hel_tpm_service_stats_publish_interval
-          label: 'Days between changed states'
+          label: 'Päivät julkaisuun'
           exclude: false
           alter:
             alter_text: true
@@ -706,8 +706,8 @@ display:
       path: node/%node/publish-stats
       menu:
         type: tab
-        title: 'Publish stats'
-        description: 'Service publish stats'
+        title: Julkaisutiedot
+        description: 'Palvelun julkaisutiedot'
         weight: 0
         expanded: false
         menu_name: main
