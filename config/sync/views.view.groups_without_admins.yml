@@ -5,6 +5,7 @@ dependencies:
   module:
     - group
     - hel_tpm_group
+    - user
 id: groups_without_admins
 label: 'Ryhmät ilman ylläpitäjiä'
 module: views
@@ -185,8 +186,9 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       access:
-        type: none
-        options: {  }
+        type: perm
+        options:
+          perm: 'administer group'
       cache:
         type: tag
         options: {  }
@@ -298,7 +300,8 @@ display:
       relationships: {  }
       header: {  }
       footer: {  }
-      display_extenders: {  }
+      display_extenders:
+        ajax_history: {  }
     cache_metadata:
       max-age: -1
       contexts:
@@ -306,6 +309,7 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
+        - user.permissions
       tags: {  }
   page_1:
     id: page_1
@@ -332,4 +336,5 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
+        - user.permissions
       tags: {  }
