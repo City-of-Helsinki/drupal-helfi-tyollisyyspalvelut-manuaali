@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\hel_tpm_service_stats\Kernel;
 
+use Drupal\language\Entity\ConfigurableLanguage;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\Tests\hel_tpm_service_stats\Traits\HelTpmServiceStatsWorkflowTestTrait;
 
@@ -29,6 +30,8 @@ final class RevisionHistoryTest extends GroupKernelTestBase {
     'gnode',
     'service_manual_workflow',
     'content_moderation',
+    'content_translation',
+    'language',
     'gcontent_moderation',
     'message_notify',
     'group',
@@ -67,6 +70,7 @@ final class RevisionHistoryTest extends GroupKernelTestBase {
       'content_moderation',
     ]);
     $this->revisionHistoryService = \Drupal::service('hel_tpm_service_stats.revision_history');
+    ConfigurableLanguage::createFromLangcode('fi')->save();
   }
 
   /**
@@ -152,4 +156,51 @@ final class RevisionHistoryTest extends GroupKernelTestBase {
     $this->assertEquals(3, $revision->publish_interval->getValue()[0]['value']);
   }
 
+  public function testServiceTranslationHistory() {
+
+    $user = $this->createUser([], NULL, TRUE);
+    $node = $this->createNode([
+      'type' => 'service',
+      'moderation_state' => 'draft',
+    ]);
+    $service_row_storage = $this->entityTypeManager->getStorage('service_published_row');
+
+    $this->setCurrentUser($user);
+    $this->setNodeModerationState($node, 'ready_to_publish');
+
+    $published_revisions = $this->revisionHistoryService->getPublishedRevisions();
+    $this->assertEmpty($published_revisions);
+
+    $this->setNodeModerationState($node, 'published');
+    $published_revisions = $this->revisionHistoryService->getPublishedRevisions();
+
+    $this->assertCount(1, $published_revisions);
+    $this->assertEquals(3, $published_revisions[0]->revision_id);
+    $this->assertEquals('published', $published_revisions[0]->moderation_state);
+
+    $previous_rev = $this->revisionHistoryService->getPreviousRevision($published_revisions[0]);
+    $revision = $service_row_storage->load($previous_rev->id);
+    $this->assertEquals(0, $revision->publish_interval->getValue()[0]['value']);
+
+    $this->setNodeModerationState($node, 'ready_to_publish');
+    $node->setRevisionCreationTime(strtotime('now +3 days'));
+    $this->setNodeModerationState($node, 'published');
+
+    $revision = $service_row_storage->loadByProperties(['publish_vid' => $node->getRevisionId()]);
+    $revision = reset($revision);
+
+    $this->assertEquals(3, $revision->publish_interval->getValue()[0]['value']);
+
+    $translation = $node->addTranslation('fi');
+    $translation->setTitle('Test Translation');
+    $this->setNodeModerationState($translation, 'ready_to_publish');
+    $this->setNodeModerationState($translation, 'published');
+    $published_revisions = $this->revisionHistoryService->getPublishedRevisions();
+
+    $this->assertEquals('fi', $published_revisions[4]->langcode);
+    $previous_rev = $this->revisionHistoryService->getPreviousRevision($published_revisions[4]);
+
+    $this->assertEquals('ready_to_publish', $previous_rev->moderation_state);
+    $this->assertEquals('fi', $previous_rev->langcode);
+  }
 }
