@@ -1,0 +1,61 @@
+label: 'Service publish stats'
+display:
+  default:
+    display_title: Default
+    display_options:
+      title: 'Service publish stats'
+      fields:
+        nid:
+          label: 'Solmun ID'
+          separator: ', '
+        previous_state:
+          label: 'Previous state'
+          separator: ', '
+        publish_date:
+          label: 'Publish date'
+          separator: ', '
+        previous_date:
+          label: 'Previous state date'
+          separator: ', '
+        langcode:
+          label: Kielikoodi
+          separator: ', '
+        publish_interval:
+          label: 'Days between changed states'
+          alter:
+            text: '{{ publish_interval }} days'
+      pager:
+        options:
+          tags:
+            next: ››
+            previous: ‹‹
+          expose:
+            items_per_page_label: 'Items per page'
+            items_per_page_options_all_label: '- All -'
+            offset_label: Offset
+      exposed_form:
+        options:
+          submit_button: Apply
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      arguments:
+        nid:
+          exception:
+            title: All
+  page_1:
+    display_title: 'Group service stats'
+    display_options:
+      arguments:
+        gid:
+          exception:
+            title: All
+      menu:
+        title: 'Publish stats'
+  page_2:
+    display_title: 'Service Node stats'
+    display_options:
+      menu:
+        title: 'Publish stats'
+        description: 'Service publish stats'
