@@ -27,7 +27,7 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: 'Service publish stats'
+      title: 'Palvelun julkaisutiedot'
       fields:
         nid:
           id: nid
@@ -621,6 +621,7 @@ display:
     display_plugin: page
     position: 1
     display_options:
+      title: 'Palveluiden julkaisutiedot'
       arguments:
         gid:
           id: gid
@@ -659,6 +660,7 @@ display:
           break_phrase: false
           not: false
       defaults:
+        title: false
         arguments: false
       display_description: ''
       display_extenders:
@@ -666,7 +668,7 @@ display:
       path: group/%group/publish-pipeline-stats
       menu:
         type: tab
-        title: 'Publish stats'
+        title: Julkaisutiedot
         description: ''
         weight: 41
         expanded: false
