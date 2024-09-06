@@ -358,6 +358,12 @@
              }
            }
          }
+         &[aria-expanded="true"] {
+           &::after {
+             transform: rotate(180deg);
+            background-position: top 9px right 16px;
+           }
+         }
        }
     }
   }
