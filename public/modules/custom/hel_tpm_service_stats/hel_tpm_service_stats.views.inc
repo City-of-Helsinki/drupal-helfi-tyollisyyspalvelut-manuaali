@@ -17,4 +17,10 @@ function hel_tpm_service_stats_views_data_alter(array &$data) {
       'id' => 'hel_tpm_service_stats_publish_interval',
     ],
   ];
+  $data['node']['time_since_last_state_change'] = [
+    'title' => t('Days since last state change'),
+    'field' => [
+      'id' => 'hel_tpm_service_stats_time_since_last_state_change'
+    ]
+  ];
 }

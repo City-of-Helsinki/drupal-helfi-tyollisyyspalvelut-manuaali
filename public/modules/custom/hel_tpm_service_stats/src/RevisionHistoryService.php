@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Drupal\hel_tpm_service_stats;
 
+use Drupal\content_moderation\ModerationInformationInterface;
 use Drupal\Core\Database\Connection;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 
 /**
@@ -18,6 +20,8 @@ final class RevisionHistoryService {
   public function __construct(
     private readonly EntityTypeManagerInterface $entityTypeManager,
     private readonly Connection $connection,
+    private readonly ModerationInformationInterface $moderationInformation
+
   ) {}
 
   /**
@@ -132,4 +136,47 @@ final class RevisionHistoryService {
     return $prev_rev;
   }
 
+  /**
+   * @param \Drupal\Core\Entity\EntityInterface $entity
+   *
+   * @return int
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   */
+  public function getTimeSinceLastStateChange(EntityInterface $entity): int {
+    $storage = $this->entityTypeManager->getStorage($entity->getEntityTypeId());
+    $current_state = $this->moderationInformation->getOriginalState($entity);
+    $state = $current_state->id();
+
+    if (!$this->moderationInformation->isModeratedEntity($entity)) {
+      return 0;
+    }
+
+    $revisions = $this->connection->select('content_moderation_state_field_revision', 'cm')
+      ->fields('cm')
+      ->condition('cm.content_entity_id', $entity->id())
+      ->condition('cm.content_entity_revision_id', $entity->getRevisionId(), "<")
+      ->condition('cm.langcode', $entity->language()->getId())
+      ->orderBy('cm.revision_id', 'DESC')
+      ->execute()->fetchAll();
+
+    foreach ($revisions as $revision) {
+      if ($revision->moderation_state === $state) {
+        $last_revision = $revision;
+        continue;
+      }
+      break;
+    }
+
+    $last_revision = $storage->loadRevision($last_revision->content_entity_revision_id);
+
+    // If there is no later revisions use current.
+    if (empty($last_revision)) {
+      $last_revision = $entity;
+    }
+
+    $elapsed_time = \Drupal::time()->getRequestTime() - $last_revision->getRevisionCreationTime();
+
+    return  intval($elapsed_time / 84000);
+  }
 }
