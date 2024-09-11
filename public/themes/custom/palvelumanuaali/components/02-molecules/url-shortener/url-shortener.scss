@@ -16,8 +16,9 @@
   .shorten-link {
     @include large {
       position: fixed;
-      left: 94%;
-      bottom: 20%;
+      left: 92%;
+      bottom: 15%;
+      z-index: 1;
     }
   }
   input.clipboard-button,
@@ -38,9 +39,9 @@
     background-image: url('/themes/custom/palvelumanuaali/images/icons/chain.svg');
   }
   input.clipboard-button {
-    background-image: url('/themes/custom/palvelumanuaali/images/icons/switch-file.svg');
-    background-size: 26px;
-    background-position: 8px;
+    background-image: url('/themes/custom/palvelumanuaali/images/icons/chain.svg');
+    // background-size: 26px;
+    // background-position: 8px;
   }
   .short-link {
 

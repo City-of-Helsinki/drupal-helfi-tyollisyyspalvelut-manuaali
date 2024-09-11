@@ -62,7 +62,7 @@
         let clipBoardStatus = $('.clipboard-status');
         let popupTitle = $('.popup-title', clipBoardStatus);
         popupTitle.html(Drupal.t(message));
-        clipBoardStatus.removeClass('hidden');
+        clipBoardStatus.fadeTo(300, 1, function() {});
         clipBoardStatus.delay(3000).fadeOut(300, function() {});
       }
     }
