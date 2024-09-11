@@ -1,4 +1,9 @@
 .hel-tpm-url-shortener-shorten-url-link {
+  >form {
+    @include xxl {
+      float: right;
+    }
+  }
   .short-link-result {
     display: block;
     width: 310px;
@@ -16,9 +21,12 @@
   .shorten-link {
     @include large {
       position: fixed;
-      left: 92%;
+      left: 93%;
       bottom: 15%;
       z-index: 1;
+    }
+    @include xxl {
+      left: unset;
     }
   }
   input.clipboard-button,
