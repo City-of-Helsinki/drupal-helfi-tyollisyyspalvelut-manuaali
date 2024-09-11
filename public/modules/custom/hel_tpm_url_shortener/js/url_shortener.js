@@ -44,10 +44,10 @@
               createLinkButton.removeClass('visually-hidden');
               shortLinkResult.addClass('visually-hidden');
 
-              context.showPopup('Copied to clipboard.');
+              context.showPopup(Drupal.t('Copied to clipboard.'));
             })
             .catch((e) => {
-              context.showPopup('Copy to clipboard failed.');
+              context.showPopup(Drupal.t('Copy to clipboard failed.'));
             });
         });
       },
