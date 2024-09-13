@@ -1,10 +1,11 @@
-langcode: en
+langcode: fi
 status: true
 dependencies:
   config:
     - user.role.admin
     - user.role.root
     - user.role.specialist_editor
+    - views.view.service_rtb_publish_stats
   module:
     - group
     - hel_tpm_service_stats
@@ -20,11 +21,11 @@ base_field: id
 display:
   default:
     id: default
-    display_title: Default
+    display_title: Oletus
     display_plugin: default
     position: 0
     display_options:
-      title: 'Service publish stats'
+      title: 'Palvelun julkaisutiedot'
       fields:
         nid:
           id: nid
@@ -36,7 +37,7 @@ display:
           entity_type: service_published_row
           entity_field: nid
           plugin_id: field
-          label: 'Solmun ID'
+          label: Palvelu
           exclude: false
           alter:
             alter_text: false
@@ -82,7 +83,8 @@ display:
           settings:
             link: true
           group_column: target_id
-          group_columns: {  }
+          group_columns:
+            language: language
           group_rows: true
           delta_limit: 0
           delta_offset: 0
@@ -101,7 +103,7 @@ display:
           entity_type: service_published_row
           entity_field: previous_state
           plugin_id: field
-          label: 'Previous state'
+          label: 'Edellinen tila'
           exclude: false
           alter:
             alter_text: false
@@ -144,8 +146,7 @@ display:
           hide_alter_empty: true
           click_sort_column: value
           type: string
-          settings:
-            link_to_entity: false
+          settings: {  }
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -166,7 +167,7 @@ display:
           entity_type: service_published_row
           entity_field: publish_date
           plugin_id: field
-          label: 'Publish date'
+          label: Julkaisupäivä
           exclude: false
           alter:
             alter_text: false
@@ -243,7 +244,7 @@ display:
           entity_type: service_published_row
           entity_field: previous_date
           plugin_id: field
-          label: 'Previous state date'
+          label: 'Edellisen tilan pvm'
           exclude: false
           alter:
             alter_text: false
@@ -384,7 +385,7 @@ display:
           admin_label: ''
           entity_type: service_published_row
           plugin_id: hel_tpm_service_stats_publish_interval
-          label: 'Days between changed states'
+          label: 'Päivät julkaisuun'
           exclude: false
           alter:
             alter_text: true
@@ -599,7 +600,18 @@ display:
             'group_node:landing_page': '0'
             'group_node:service_location': '0'
       group_by: true
-      header: {  }
+      header:
+        view:
+          id: view
+          table: views
+          field: view
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: view
+          empty: false
+          view_to_insert: 'service_rtb_publish_stats:block_1'
+          inherit_arguments: true
       footer: {  }
       display_extenders: {  }
     cache_metadata:
@@ -618,6 +630,7 @@ display:
     display_plugin: page
     position: 1
     display_options:
+      title: 'Palveluiden julkaisutiedot'
       arguments:
         gid:
           id: gid
@@ -656,14 +669,28 @@ display:
           break_phrase: false
           not: false
       defaults:
+        title: false
         arguments: false
+        header: false
       display_description: ''
+      header:
+        view:
+          id: view
+          table: views
+          field: view
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: view
+          empty: false
+          view_to_insert: 'service_rtb_publish_stats:block_2'
+          inherit_arguments: true
       display_extenders:
         ajax_history: {  }
       path: group/%group/publish-pipeline-stats
       menu:
         type: tab
-        title: 'Publish stats'
+        title: Julkaisutiedot
         description: ''
         weight: 41
         expanded: false
@@ -703,8 +730,8 @@ display:
       path: node/%node/publish-stats
       menu:
         type: tab
-        title: 'Publish stats'
-        description: 'Service publish stats'
+        title: Julkaisutiedot
+        description: 'Palvelun julkaisutiedot'
         weight: 0
         expanded: false
         menu_name: main

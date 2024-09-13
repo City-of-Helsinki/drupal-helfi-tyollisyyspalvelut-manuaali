@@ -76,6 +76,7 @@ final class RevisionHistoryService {
       ->condition('cm.content_entity_revision_id', $revision_id)
       ->condition('cm.langcode', $langcode)
       ->condition('cm.moderation_state', 'published')
+      ->condition('cm.revision_translation_affected', 1)
       ->execute();
     return $publish_revisions->fetchAll();
   }
@@ -92,6 +93,7 @@ final class RevisionHistoryService {
     $publish_revisions = $this->connection->select('content_moderation_state_field_revision', 'cm')
       ->fields('cm')
       ->condition('cm.moderation_state', 'published')
+      ->condition('cm.revision_translation_affected', 1)
       ->execute();
     return $publish_revisions->fetchAll();
   }
@@ -113,6 +115,7 @@ final class RevisionHistoryService {
       ->condition('cm.content_entity_id', $row->content_entity_id)
       ->condition('cm.content_entity_revision_id', $row->content_entity_revision_id, "<")
       ->condition('cm.langcode', $row->langcode)
+      ->condition('cm.revision_translation_affected', 1)
       ->orderBy('cm.revision_id', 'DESC');
 
     $previous_query = clone $query;
@@ -143,20 +146,36 @@ final class RevisionHistoryService {
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public function getTimeSinceLastStateChange(EntityInterface $entity): int {
+  public function getTimeSinceLastStateChange(EntityInterface $entity, string $langcode = NULL): int {
     $storage = $this->entityTypeManager->getStorage($entity->getEntityTypeId());
-    $current_state = $this->moderationInformation->getOriginalState($entity);
-    $state = $current_state->id();
+
+    // Force loading of latest revision of node.
+    // This is kind of hacky way to do this but it needs to be done since
+    // Views / drupal prefer loading published revision instead of latest.
+    $entity = $storage->loadRevision($storage->getLatestRevisionId($entity->id()));
+
+    if ($langcode) {
+      $entity = $entity->getTranslation($langcode);
+    }
 
     if (!$this->moderationInformation->isModeratedEntity($entity)) {
       return 0;
     }
 
+    $current_state = $entity->moderation_state->getValue();
+
+    if (empty($current_state)) {
+      return 0;
+    }
+
+    $state = $current_state[0]['value'];
+
     $revisions = $this->connection->select('content_moderation_state_field_revision', 'cm')
       ->fields('cm')
       ->condition('cm.content_entity_id', $entity->id())
-      ->condition('cm.content_entity_revision_id', $entity->getRevisionId(), "<")
+      ->condition('cm.content_entity_revision_id', $entity->getRevisionId(), "<=")
       ->condition('cm.langcode', $entity->language()->getId())
+      ->condition('cm.revision_translation_affected', 1)
       ->orderBy('cm.revision_id', 'DESC')
       ->execute()->fetchAll();
 

@@ -70,9 +70,10 @@ final class TimeSinceLastStateChange extends FieldPluginBase {
    */
   public function render(ResultRow $values): array {
     $entity = $values->_entity;
+    $langcode = $values->node_field_data_langcode;
     return [
       '#markup' => $this->t('@days days', [
-        '@days' => $this->revision_history_service->getTimeSinceLastStateChange($entity)
+        '@days' => $this->revision_history_service->getTimeSinceLastStateChange($entity, $langcode)
       ])
     ];
   }
