@@ -1,4 +1,9 @@
 .hel-tpm-url-shortener-shorten-url-link {
+  @include large {
+    position: sticky;
+    top: 93%;
+    z-index: 1;
+  }
   >form {
     @include xxl {
       float: right;
@@ -20,10 +25,10 @@
   }
   .shorten-link {
     @include large {
-      position: fixed;
       left: 93%;
       bottom: 5%;
       z-index: 1;
+      float: right;
     }
     @include xxl {
       left: unset;
@@ -42,6 +47,10 @@
     border-radius: 20px;
     background-position: center center;
     background-repeat: no-repeat;
+
+    @include large {
+      margin-right: -3rem;
+    }
   }
   input.create-link {
     background-image: url('/themes/custom/palvelumanuaali/images/icons/chain.svg');
