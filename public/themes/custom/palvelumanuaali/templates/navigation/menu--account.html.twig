@@ -29,9 +29,28 @@
     icon_modifiers: ['small','margin-left'],
   } %} #}
 </button>
+
 <div class='dropdown-menu hide-mobile'>
   {{ drupal_view('user_info', 'block_1') }}
   {% include "@molecules/menus/_menu.twig" with {
      menu_class: 'dropdown-menu-inner',
+  } %}
+</div>
+
+<button id="accountMenuButton2" class="btn btn-menu hide-desktop" type="button" aria-haspopup="true" aria-expanded="false" title="{{'User account menu'|t}}">
+  {# leaving these here for possible further development #}
+  {# {{ drupal_view('user_info', 'block_1') }} #}
+  <span class='login-button background-default'></span>
+  {# leaving these here for possible further development #}
+  {# {% include "@atoms/images/icons/_icon.twig" with {
+    icon_base_class: 'icon',
+    icon_name: 'arrow-sm-down',
+    icon_modifiers: ['small','margin-left'],
+  } %} #}
+</button>
+<div class='dropdown-mobile-menu hide-desktop'>
+  {{ drupal_view('user_info', 'block_1') }}
+  {% include "@molecules/menus/_menu.twig" with {
+     menu_class: '',
   } %}
 </div>
