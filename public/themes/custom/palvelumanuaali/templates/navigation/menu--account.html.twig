@@ -18,7 +18,7 @@
  *   - in_active_trail: TRUE if the link is in the active trail.
  */
 #}
-<button id="accountMenuButton" class="btn btn-menu" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="{{'User account menu'|t}}">
+<button id="accountMenuButton" class="btn btn-menu hide-mobile" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="{{'User account menu'|t}}">
   {# leaving these here for possible further development #}
   {# {{ drupal_view('user_info', 'block_1') }} #}
   <span class='login-button background-default'></span>
@@ -29,7 +29,7 @@
     icon_modifiers: ['small','margin-left'],
   } %} #}
 </button>
-<div class='dropdown-menu'>
+<div class='dropdown-menu hide-mobile'>
   {{ drupal_view('user_info', 'block_1') }}
   {% include "@molecules/menus/_menu.twig" with {
      menu_class: 'dropdown-menu-inner',
