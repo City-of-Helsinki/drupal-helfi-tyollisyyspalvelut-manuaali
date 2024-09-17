@@ -327,3 +327,38 @@
     transform: rotateX(180deg);
   }
 }
+
+.node-service-edit-form,
+.node-service-form,
+.node-basic-page-form,
+.node-basic-page-edit-form,
+.node-landing-page-form,
+.node-landing-page-edit-form,
+.node-edit-form {
+  .select--white-rounded {
+    .select2 {
+      .select2-selection {
+         padding:  7px 12px 12px 16px;
+         height: 100%;
+         &__choice__remove {
+           margin-top: 0;
+         }
+         &__placeholder {
+            margin-top: 5px;
+            height: 24px;
+          >.select2-selection__choice {
+            margin-top: 0;
+          }
+         }
+         &--single {
+           >.select2-selection__rendered {
+             margin-top: 5px;
+             >.select2-selection__placeholder {
+               margin-top: 0;
+             }
+           }
+         }
+       }
+    }
+  }
+}
