@@ -4,11 +4,12 @@ status: true
 dependencies:
   module:
     - group
+    - system
 label: 'Group links'
 name: group_links
 group: 'Front page'
 description: ''
-requireAllConditions: false
+requireAllConditions: true
 disabled: false
 conditions:
   'entity_bundle:group':
@@ -20,6 +21,12 @@ conditions:
     bundles:
       organisation: organisation
       service_provider: service_provider
+  request_path:
+    id: request_path
+    negate: true
+    uuid: 7c532545-260c-4c02-9c1a-d40dcc8f1911
+    context_mapping: {  }
+    pages: '/group/*/content/create/group_node*'
 reactions:
   blocks:
     id: blocks
