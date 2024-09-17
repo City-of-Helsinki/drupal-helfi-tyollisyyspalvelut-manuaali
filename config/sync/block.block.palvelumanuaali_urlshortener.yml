@@ -3,7 +3,6 @@ langcode: fi
 status: true
 dependencies:
   module:
-    - block_class
     - context
     - hel_tpm_url_shortener
     - user
@@ -12,7 +11,7 @@ dependencies:
 id: palvelumanuaali_urlshortener
 theme: palvelumanuaali
 region: content
-weight: 6
+weight: -7
 provider: null
 plugin: hel_tpm_url_shortener_form
 settings:
