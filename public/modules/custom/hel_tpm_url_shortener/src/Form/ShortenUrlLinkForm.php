@@ -116,7 +116,7 @@ class ShortenUrlLinkForm extends FormBase {
       )
     ];
     $form['wrapper']['clipboard-status'] = [
-      '#markup' => '<div class="clipboard-status hidden popup"><div class="popup-title"></div></div>'
+      '#markup' => '<div class="clipboard-status popup pill--small-message-base pill--small-message-url pill--small-message--add pill--padding-small-text small-font font-primary-blue font-weight-bold"><div class="popup-title"></div></div>'
     ];
 
 
