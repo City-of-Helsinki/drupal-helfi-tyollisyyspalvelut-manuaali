@@ -206,10 +206,59 @@ final class RevisionHistoryTest extends GroupKernelTestBase {
     $this->setNodeModerationState($translation, 'published');
     $published_revisions = $this->revisionHistoryService->getPublishedRevisions();
 
-    $this->assertEquals('fi', $published_revisions[4]->langcode);
-    $previous_rev = $this->revisionHistoryService->getPreviousRevision($published_revisions[4]);
+    $revision = end($published_revisions);
+    $this->assertEquals('fi', $revision->langcode);
+    $previous_rev = $this->revisionHistoryService->getPreviousRevision($revision);
 
     $this->assertEquals('ready_to_publish', $previous_rev->moderation_state);
     $this->assertEquals('fi', $previous_rev->langcode);
   }
+
+  /**
+   *
+   */
+  public function testTimeSinceLastStateChange() {
+    $user = $this->createUser([], NULL, TRUE);
+    $node = $this->createNode([
+      'type' => 'service',
+      'moderation_state' => 'draft',
+      'created' => strtotime("-10 days"),
+      'changed' => strtotime("-10 days"),
+      'revision_timestamp' => strtotime('-10 days'),
+    ]);
+    $node = $this->reloadEntity($node);
+
+    $translation = $node->addTranslation('fi');
+    $translation->setTitle('Test Translation');
+    $translation->setUnpublished();
+    $translation->setRevisionCreationTime(strtotime('-9 days'));
+
+    $this->setNodeModerationState($translation, 'draft');
+
+    $this->assertEquals(10, $this->revisionHistoryService->getTimeSinceLastStateChange($node));
+    $this->assertEquals(9, $this->revisionHistoryService->getTimeSinceLastStateChange($translation));
+
+    $node->setRevisionCreationTime(strtotime('-3 days'));
+    $this->setNodeModerationState($node, 'ready_to_publish');
+
+    $this->assertEquals(3, $this->revisionHistoryService->getTimeSinceLastStateChange($node));
+
+    $node->setPublished(TRUE);
+    $node->setRevisionCreationTime(strtotime('now'));
+    $this->setNodeModerationState($node, 'published');
+
+    $this->assertEquals(0, $this->revisionHistoryService->getTimeSinceLastStateChange($node));
+
+    $this->assertEquals('draft', $node->getTranslation('fi')->moderation_state->getValue()[0]['value']);
+
+    $translation->setRevisionCreationTime(strtotime('-3 days'));
+    $this->setNodeModerationState($translation, 'ready_to_publish');
+
+    $this->assertEquals('published', $node->moderation_state->getValue()[0]['value']);
+    $this->assertEquals('ready_to_publish', $node->getTranslation('fi')->moderation_state->getValue()[0]['value']);
+
+    $this->assertEquals(3, $this->revisionHistoryService->getTimeSinceLastStateChange($translation));
+
+  }
+
 }

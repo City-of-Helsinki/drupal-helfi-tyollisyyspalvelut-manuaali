@@ -4,12 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\hel_tpm_service_stats\Plugin\views\field;
 
-use Drupal\Component\Render\MarkupInterface;
-use Drupal\content_moderation\ModerationInformationInterface;
-use Drupal\Core\Database\Connection;
-use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Entity\RevisionableStorageInterface;
 use Drupal\hel_tpm_service_stats\RevisionHistoryService;
 use Drupal\views\Plugin\views\field\FieldPluginBase;
 use Drupal\views\ResultRow;
@@ -70,11 +64,15 @@ final class TimeSinceLastStateChange extends FieldPluginBase {
    */
   public function render(ResultRow $values): array {
     $entity = $values->_entity;
-    $langcode = $values->node_field_data_langcode;
+    $langcode = $values->node_field_revision_langcode;
+    if ($entity->isTranslatable() && $entity->language()->getId() != $values->node_field_revision_langcode) {
+      $entity = $entity->getTranslation($values->node_field_revision_langcode);
+    }
     return [
       '#markup' => $this->t('@days days', [
-        '@days' => $this->revision_history_service->getTimeSinceLastStateChange($entity, $langcode)
-      ])
+        '@days' => $this->revision_history_service->getTimeSinceLastStateChange($entity),
+      ]),
     ];
   }
+
 }

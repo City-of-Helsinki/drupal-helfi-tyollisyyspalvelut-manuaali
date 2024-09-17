@@ -20,8 +20,7 @@ final class RevisionHistoryService {
   public function __construct(
     private readonly EntityTypeManagerInterface $entityTypeManager,
     private readonly Connection $connection,
-    private readonly ModerationInformationInterface $moderationInformation
-
+    private readonly ModerationInformationInterface $moderationInformation,
   ) {}
 
   /**
@@ -140,23 +139,19 @@ final class RevisionHistoryService {
   }
 
   /**
+   * Get time since last service state change.
+   *
    * @param \Drupal\Core\Entity\EntityInterface $entity
+   *   Selected entity.
    *
    * @return int
+   *   Last state change in days.
+   *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public function getTimeSinceLastStateChange(EntityInterface $entity, string $langcode = NULL): int {
+  public function getTimeSinceLastStateChange(EntityInterface $entity): int {
     $storage = $this->entityTypeManager->getStorage($entity->getEntityTypeId());
-
-    // Force loading of latest revision of node.
-    // This is kind of hacky way to do this but it needs to be done since
-    // Views / drupal prefer loading published revision instead of latest.
-    $entity = $storage->loadRevision($storage->getLatestRevisionId($entity->id()));
-
-    if ($langcode) {
-      $entity = $entity->getTranslation($langcode);
-    }
 
     if (!$this->moderationInformation->isModeratedEntity($entity)) {
       return 0;
@@ -194,8 +189,12 @@ final class RevisionHistoryService {
       $last_revision = $entity;
     }
 
+    // Make sure loaded entity is in proper language.
+    $last_revision = $last_revision->getTranslation($entity->language()->getId());
+
     $elapsed_time = \Drupal::time()->getRequestTime() - $last_revision->getRevisionCreationTime();
 
-    return  intval($elapsed_time / 84000);
+    return intval($elapsed_time / 84000);
   }
+
 }
