@@ -60,6 +60,10 @@ function hel_tpm_group_entity_type_alter(array &$entity_types): void {
   if (isset($entity_types['group_content'])) {
     $entity_types['group_content']->setFormClass('delete', 'Drupal\hel_tpm_group\Entity\Form\GroupCheckMemberDeleteForm');
   }
+
+  if (isset($entity_types['group'])) {
+    $entity_types['group']->addConstraint('GroupUniqueTitle', []);
+  }
 }
 
 /**
@@ -262,6 +266,18 @@ function hel_tpm_group_views_data_alter(array &$data) {
       'allow empty' => TRUE
     ],
   ];
+}
+
+/**
+ * Implements hook_page_attachments_alter().
+ */
+function hel_tpm_group_page_attachments_alter(array &$attachments): void {
+  $route_match = \Drupal::routeMatch();
+  if ($group = $route_match->getParameter('group')) {
+    if ($group instanceof GroupInterface && !$group->isPublished()) {
+      \Drupal::messenger()->addStatus(t('The group is not published.'));
+    }
+  }
 }
 
 /**

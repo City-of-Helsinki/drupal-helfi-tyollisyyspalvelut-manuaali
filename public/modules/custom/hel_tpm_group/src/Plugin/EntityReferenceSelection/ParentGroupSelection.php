@@ -6,7 +6,6 @@ use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Entity\Plugin\EntityReferenceSelection\DefaultSelection;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
@@ -26,7 +25,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   weight = 0
  * )
  */
-class ParentGroupSelection extends DefaultSelection {
+class ParentGroupSelection extends GroupSelection {
 
   use GroupSelectionTrait;
 
@@ -75,15 +74,6 @@ class ParentGroupSelection extends DefaultSelection {
   /**
    * {@inheritdoc}
    */
-  public function defaultConfiguration() {
-    return [
-      'filter_users_without_publish' => FALSE,
-    ] + parent::defaultConfiguration();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
     $form = parent::buildConfigurationForm($form, $form_state);
     $config = $this->getConfiguration();
@@ -107,10 +97,7 @@ class ParentGroupSelection extends DefaultSelection {
     }
 
     $include_supergroups = empty($configuration['include_supergroup']) ? FALSE : $configuration['include_supergroup'];
-
     $groups = $this->getGroups($entity, $include_supergroups);
-
-    // Append uids to query condition.
     if (!empty($groups)) {
       $query->condition('id', $groups, 'IN');
     }
