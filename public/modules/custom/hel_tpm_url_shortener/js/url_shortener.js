@@ -44,10 +44,10 @@
               createLinkButton.removeClass('visually-hidden');
               shortLinkResult.addClass('visually-hidden');
 
-              context.showPopup('Copied to clipboard.');
+              context.showPopup(Drupal.t('Copied to clipboard.'));
             })
             .catch((e) => {
-              context.showPopup('Copy to clipboard failed.');
+              context.showPopup(Drupal.t('Copy to clipboard failed.'));
             });
         });
       },
@@ -62,7 +62,7 @@
         let clipBoardStatus = $('.clipboard-status');
         let popupTitle = $('.popup-title', clipBoardStatus);
         popupTitle.html(Drupal.t(message));
-        clipBoardStatus.removeClass('hidden');
+        clipBoardStatus.fadeTo(300, 1, function() {});
         clipBoardStatus.delay(3000).fadeOut(300, function() {});
       }
     }

@@ -56,6 +56,18 @@
     .form-wrapper {
       margin-bottom: 3px;
     }
+      .select--white-rounded {
+        .select2 {
+          .select2-selection--single {
+             >.select2-selection__rendered {
+              margin-top: 5px;
+              .select2-selection__placeholder {
+                  margin-top: 0;
+              }
+            }
+          }
+        }
+      }
   }
 
   //add basic theming for sidebar horizontal-tabs
