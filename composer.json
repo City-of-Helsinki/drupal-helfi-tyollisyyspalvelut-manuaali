@@ -78,8 +78,8 @@
         "drupal/components": "^3",
         "drupal/conditional_fields": "^4.x-dev",
         "drupal/context": "^5",
-        "drupal/core-composer-scaffold": "^10",
-        "drupal/core-recommended": "^10",
+        "drupal/core-composer-scaffold": "^10.3",
+        "drupal/core-recommended": "^10.3",
         "drupal/csv_serialization": "^4.0",
         "drupal/date_recur": "^3.2",
         "drupal/date_recur_modular": "^3.0",
@@ -195,7 +195,7 @@
     },
     "require-dev": {
         "citrussolutions/gulp-workflow": "^2.0",
-        "drupal/core-dev": "^10",
+        "drupal/core-dev": "^10.3",
         "phpspec/prophecy-phpunit": "^2.0",
         "vincentlanglet/twig-cs-fixer": "*",
         "weitzman/drupal-test-traits": "^2.2",
@@ -273,11 +273,10 @@
         },
         "patches": {
             "drupal/core": {
-                "https://www.drupal.org/project/drupal/issues/2800875#comment-14070351": "https://www.drupal.org/files/issues/2021-04-23/2800875-70_0.patch",
                 "https://www.drupal.org/project/drupal/issues/3135409#comment-14746356": "https://www.drupal.org/files/issues/2022-10-17/3135409-17.patch",
-                "https://www.drupal.org/project/drupal/issues/2689459#comment-15456866": "https://www.drupal.org/files/issues/2024-02-21/2689459-188.patch",
-                "https://www.drupal.org/project/drupal/issues/1452100#comment-15199266": "https://www.drupal.org/files/issues/2023-08-21/1452100-150.patch",
-                "https://www.drupal.org/project/drupal/issues/3347343#comment-15227444": "https://www.drupal.org/files/issues/2023-09-12/3347343-92--MR-4053-1bc7bda7.diff",
+                "If you don't want to translate your URL alias, the original URL alias won't work with your translations (https://www.drupal.org/project/drupal/issues/2689459#comment-15656505)": "https://www.drupal.org/files/issues/2024-06-26/2689459_d10.3.0.patch",
+                "Private file download returns access denied, when file attached to revision other than current (https://www.drupal.org/project/drupal/issues/1452100#comment-15657651)": "https://www.drupal.org/files/issues/2024-06-26/1452100-156.patch",
+                "Add Views EntityReference filter to support better UX for exposed filters (uttps://www.drupal.org/project/drupal/issues/3347343#comment-15657983)": "patches/9036.patch",
                 "https://www.drupal.org/project/drupal/issues/3338260#comment-14900238": "https://www.drupal.org/files/issues/2023-02-01/skip_changing_affected_flag_3338260-2.patch",
                 "Unable to change non-translatable field value on translatable content with content moderation enabled (https://www.drupal.org/project/drupal/issues/2955321)": "https://www.drupal.org/files/issues/2024-04-16/2955321-77.patch"
             },
