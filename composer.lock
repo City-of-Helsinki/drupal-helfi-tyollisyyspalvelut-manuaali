@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b9d23531f4d99e898f34af9a0000d7a6",
+    "content-hash": "acbe70fa135a00db3b62c76be0ca4858",
     "packages": [
         {
             "name": "ajgl/breakpoint-twig-extension",
@@ -7436,20 +7436,20 @@
         },
         {
             "name": "drupal/message_ui",
-            "version": "1.2.0",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/message_ui.git",
-                "reference": "8.x-1.2"
+                "reference": "8.x-1.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/message_ui-8.x-1.2.zip",
-                "reference": "8.x-1.2",
-                "shasum": "9c1e4f4ba48b65a01b38684d7c06144b51bd19a7"
+                "url": "https://ftp.drupal.org/files/projects/message_ui-8.x-1.3.zip",
+                "reference": "8.x-1.3",
+                "shasum": "e49de5508e96d64346889276b9064cbd0315c5d3"
             },
             "require": {
-                "drupal/core": "^9 || ^10",
+                "drupal/core": "^9 || ^10 || ^11",
                 "drupal/message": "^1"
             },
             "require-dev": {
@@ -7459,8 +7459,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-1.2",
-                    "datestamp": "1706548354",
+                    "version": "8.x-1.3",
+                    "datestamp": "1726519224",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -8504,20 +8504,20 @@
         },
         {
             "name": "drupal/redis",
-            "version": "1.7.0",
+            "version": "1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/redis.git",
-                "reference": "8.x-1.7"
+                "reference": "8.x-1.8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/redis-8.x-1.7.zip",
-                "reference": "8.x-1.7",
-                "shasum": "602043bdad62ff047321121edcfde8abf3638c7c"
+                "url": "https://ftp.drupal.org/files/projects/redis-8.x-1.8.zip",
+                "reference": "8.x-1.8",
+                "shasum": "6de73086d29de3b041594bae97c74401cbf05c3d"
             },
             "require": {
-                "drupal/core": "^9.3 || ^10"
+                "drupal/core": "^9.3 || ^10 || ^11"
             },
             "suggest": {
                 "ext-redis": "Required to use the PhpRedis as redis driver (^4.0|^5.0).",
@@ -8527,8 +8527,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-1.7",
-                    "datestamp": "1686175620",
+                    "version": "8.x-1.8",
+                    "datestamp": "1723934771",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -8546,7 +8546,7 @@
             ],
             "authors": [
                 {
-                    "name": "Berdir",
+                    "name": "berdir",
                     "homepage": "https://www.drupal.org/user/214652"
                 },
                 {
@@ -22514,7 +22514,6 @@
         "drupal/group_roles_management": 20,
         "drupal/inline_entity_form": 5,
         "drupal/maxlength": 5,
-        "drupal/message_ui": 10,
         "drupal/notification_message": 20,
         "drupal/recently_read": 20,
         "drupal/require_on_publish": 20,
