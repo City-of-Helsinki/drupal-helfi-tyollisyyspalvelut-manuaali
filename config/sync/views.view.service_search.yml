@@ -8,17 +8,12 @@ dependencies:
     - taxonomy.vocabulary.municipality
     - taxonomy.vocabulary.service_accessiblity
     - taxonomy.vocabulary.service_implementation_type
-    - taxonomy.vocabulary.service_languages
     - taxonomy.vocabulary.service_set
   content:
-    - 'taxonomy_term:municipality:1315f155-2880-405f-8d24-3b61950a4d9c'
-    - 'taxonomy_term:municipality:4b92c72e-6acc-4ec9-a822-46ac7fa38186'
-    - 'taxonomy_term:municipality:74379661-26d5-45bc-9f3a-fb5ea3168827'
-    - 'taxonomy_term:municipality:8903e8f4-8fc5-40b0-bb35-df7a5618220a'
-    - 'taxonomy_term:municipality:8ab185fa-ecc4-41d3-97fe-f971e5175689'
-    - 'taxonomy_term:municipality:aad5d08a-76a5-49a7-848c-14bb1fd306e3'
-    - 'taxonomy_term:municipality:b5d15121-db50-40a4-9303-49af45ada070'
-    - 'taxonomy_term:municipality:be7273a7-1a38-4b8e-bf52-d215e3f2b3ea'
+    - 'taxonomy_term:language_level:31e8af7e-7013-4679-90c0-97349a98923d'
+    - 'taxonomy_term:language_level:96f4d82e-1a40-410c-ae56-962c87bc6c1a'
+    - 'taxonomy_term:service_implementation_type:ea95fa2c-ecd7-4d5c-a478-d3bfe5db82a0'
+    - 'taxonomy_term:service_set:ec0ce5df-5f00-49c2-bd48-4e4e87bf1e8a'
   module:
     - better_exposed_filters
     - entity_print_views
@@ -172,6 +167,7 @@ display:
             offset: false
             offset_label: Offset
           quantity: 5
+          pagination_heading_level: h4
       exposed_form:
         type: bef
         options:
@@ -904,6 +900,7 @@ display:
             offset: false
             offset_label: Offset
           quantity: 9
+          pagination_heading_level: h4
       exposed_form:
         type: bef
         options:
