@@ -4,25 +4,23 @@ Drupal.behaviors.userMenu = {
       attach: function (context, settings) {
 
       let body = $('body');
-      let loginBlock = $('.menu--account');
+      let loggedUserBlock = $('.menu--account');
       let toggleLogin = $('.logged-in-open');
-      // let header = $('.header__primary');
-      // let accountMobileMenu = $('.additional-links-menu-nav', loginBlock);
-      let dropdownMobileMenu = $('.dropdown-mobile-menu',loginBlock);
-      let toggleInnerLogin = $('.btn-menu-close', dropdownMobileMenu);
+      let userMenublock = $('.dropdown-mobile-menu',loggedUserBlock);
+      let toggleInnerLogin = $('.btn-menu-close', userMenublock);
 
-    if (typeof loginBlock !== 'undefined' ) {
+    if (typeof loggedUserBlock !== 'undefined' ) {
       // Mobile Menu Show/Hide.
       toggleLogin.on('click', function() {
         body.toggleClass('no-scroll');
-        dropdownMobileMenu.toggleClass('slide-in');
+        userMenublock.toggleClass('slide-in');
       });
       // Mobile Menu Show/Hide.
       toggleInnerLogin.on('click', function() {
-        dropdownMobileMenu.toggleClass('slide-in');
-        dropdownMobileMenu.toggleClass('slide-out-right');
+        userMenublock.toggleClass('slide-in');
+        userMenublock.toggleClass('slide-out-right');
         body.toggleClass('no-scroll');
-        setTimeout(function() { dropdownMobileMenu.removeClass('slide-out-right'); }, 1000);
+        setTimeout(function() { userMenublock.removeClass('slide-out-right'); }, 1000);
       });
     }
   },
