@@ -1,7 +1,7 @@
 import { join } from 'path';
 import { render, Twig } from 'twig-testing-library';
 
-import { setupTwig, namespaces } from '../../../.storybook/setupTwig';
+import { setupTwig, namespaces } from '../../../config/emulsify-core/storybook/setupTwig';
 
 setupTwig(Twig);
 
@@ -15,24 +15,24 @@ describe('place-holder', () => {
 
     expect(container).toMatchInlineSnapshot(`
       <div>
-        
+
 
         <section
           class="place-holder"
         >
-          
-        
+
+
           <div
             class="place-holder__content"
           >
-            
+
           Place holder
-        
+
           </div>
-          
+
 
         </section>
-        
+
 
       </div>
     `);

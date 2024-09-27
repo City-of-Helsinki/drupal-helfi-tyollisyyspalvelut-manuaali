@@ -2,7 +2,7 @@ import { join } from 'path';
 import { render, Twig } from 'twig-testing-library';
 
 import loadYaml from '../../../../node_modules/@emulsify/core/scripts/loadYaml';
-import { namespaces, setupTwig } from '../../../../.storybook/setupTwig';
+import { namespaces, setupTwig } from '../../../../config/emulsify-core/storybook/setupTwig';
 
 setupTwig(Twig);
 
