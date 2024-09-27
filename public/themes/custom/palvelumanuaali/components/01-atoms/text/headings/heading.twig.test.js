@@ -1,7 +1,7 @@
 import { join } from 'path';
 import { render, Twig } from 'twig-testing-library';
 
-import loadYaml from '../../../../util/loadYaml';
+import loadYaml from '../../../../node_modules/@emulsify/core/scripts/loadYaml';
 import { setupTwig, namespaces } from '../../../../.storybook/setupTwig';
 
 setupTwig(Twig);
@@ -16,17 +16,17 @@ describe('heading', () => {
 
     expect(container).toMatchInlineSnapshot(`
       <div>
-        
+
 
 
         <h
           class="h"
         >
-          
-            
-        
+
+
+
         </h>
-        
+
 
       </div>
     `);

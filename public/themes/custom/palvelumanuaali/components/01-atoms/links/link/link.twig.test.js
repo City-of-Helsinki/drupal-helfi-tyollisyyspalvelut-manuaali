@@ -1,7 +1,7 @@
 import { join } from 'path';
 import { render, Twig } from 'twig-testing-library';
 
-import loadYaml from '../../../../util/loadYaml';
+import loadYaml from '../../../../node_modules/@emulsify/core/scripts/loadYaml';
 import { setupTwig } from '../../../../.storybook/setupTwig';
 
 setupTwig(Twig);
@@ -15,7 +15,7 @@ describe('link', () => {
 
     expect(container).toMatchInlineSnapshot(`
       <div>
-        
+
 
 
         <a
@@ -23,11 +23,11 @@ describe('link', () => {
           href="https://github.com/palvelumanuaali-ds/palvelumanuaali-design-system"
           target="_blank"
         >
-          
+
             This is my link text
-        
+
         </a>
-        
+
 
       </div>
     `);

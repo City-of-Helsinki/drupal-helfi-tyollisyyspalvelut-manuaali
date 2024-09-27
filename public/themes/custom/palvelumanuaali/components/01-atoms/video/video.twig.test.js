@@ -1,7 +1,7 @@
 import { join } from 'path';
 import { render, Twig } from 'twig-testing-library';
 
-import loadYaml from '../../../util/loadYaml';
+import loadYaml from '../../../node_modules/@emulsify/core/scripts/loadYaml';
 import { setupTwig } from '../../../.storybook/setupTwig';
 
 setupTwig(Twig);
@@ -15,14 +15,14 @@ describe('video', () => {
 
     expect(container).toMatchInlineSnapshot(`
       <div>
-        
+
 
 
         <div
           class="video"
         >
-          
-            
+
+
           <iframe
             allowfullscreen="allowfullscreen"
             frameborder="0"
@@ -31,10 +31,10 @@ describe('video', () => {
             title="palvelumanuaali Video"
             width="854"
           />
-          
-        
+
+
         </div>
-        
+
 
       </div>
     `);
@@ -48,14 +48,14 @@ describe('video', () => {
 
     expect(container).toMatchInlineSnapshot(`
       <div>
-        
+
 
 
         <div
           class="video video--full"
         >
-          
-            
+
+
           <iframe
             allowfullscreen="allowfullscreen"
             frameborder="0"
@@ -64,10 +64,10 @@ describe('video', () => {
             title="palvelumanuaali Video"
             width="854"
           />
-          
-        
+
+
         </div>
-        
+
 
       </div>
     `);
