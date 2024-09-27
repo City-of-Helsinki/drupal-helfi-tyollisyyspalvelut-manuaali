@@ -15,7 +15,6 @@
   "scripts": {
     "a11y": "npm run storybook-build && node_modules/@emulsify/core/scripts/a11y.js -r",
     "build": "webpack --config config/emulsify-core/webpack/webpack.prod.js",
-    "build-dev": "webpack --config node_modules/@emulsify/core/config/webpack/webpack.dev.js",
     "coverage": "npm run test && open-cli .coverage/lcov-report/index.html",
     "develop": "concurrently --raw \"npm run webpack\" \"npm run storybook\"",
     "format": "npm run lint-fix; npm run prettier-fix",
@@ -28,7 +27,6 @@
     "storybook": "storybook dev -c node_modules/@emulsify/core/.storybook --ci -p 6006",
     "storybook-build": "npm run build && storybook build -c node_modules/@emulsify/core/.storybook -o .out",
     "storybook-deploy": "storybook-to-ghpages -o .out",
-    "style-dictionary:build": "node ./tokens/tokensTransform.js",
     "test": "jest --coverage  --config ./config/jest.config.js",
     "twatch": "jest --no-coverage --watch --verbose",
     "webpack": "webpack --watch --config config/emulsify-core/webpack/webpack.dev.js"
