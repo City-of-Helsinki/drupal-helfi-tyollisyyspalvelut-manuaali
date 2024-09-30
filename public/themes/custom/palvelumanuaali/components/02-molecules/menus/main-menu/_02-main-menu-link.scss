@@ -25,9 +25,7 @@
   padding: 0 $space-triple $space $space-one-and-half;
   text-decoration: none;
   font-weight: 700;
-  text-transform: uppercase;
-  font-size: $small-font;
-  font-size: 12px;
+
   font-style: normal;
   font-weight: 700;
   line-height: 24px; /* 200% */
@@ -36,6 +34,8 @@
 
   &--with-sub {
     width: 80%;
+    font-size: $small-font;
+    text-transform: uppercase;
   }
 
   @include large {
@@ -44,10 +44,12 @@
     padding: 0 $space 12px $space-two-and-half;
     position: relative;
     width: auto;
-    font-size: 10px;
-    line-height: 20px;
-    &--sub::after {
-      display: none;
+    &--sub {
+      font-size: 10px;
+      line-height: 20px;
+      &::after {
+        display: none;
+      }
     }
   }
   @include xxl {
@@ -72,10 +74,8 @@
   color: clr(text);
   padding: $space-three-fourths $space-two-and-half;
   text-transform: unset;
-  font-size: 15px;
   font-style: normal;
   font-weight: 600;
-  line-height: 24px;
   letter-spacing: unset;
   width: calc(100% + 2rem);
   margin-left: -16px;
@@ -90,10 +90,6 @@
     display: block;
     padding: $space-three-fourths $space-double $space-three-fourths $space-two-and-half;
     margin-left: 0;
-  }
-  @include xxl {
-    font-size: 15px;
-    line-height: 24px;
   }
 }
 
