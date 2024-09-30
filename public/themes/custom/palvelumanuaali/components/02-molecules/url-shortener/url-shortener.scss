@@ -1,4 +1,14 @@
 .hel-tpm-url-shortener-shorten-url-link {
+  @include large {
+    position: sticky;
+    top: 93%;
+    z-index: 1;
+  }
+  >form {
+    @include xxl {
+      float: right;
+    }
+  }
   .short-link-result {
     display: block;
     width: 310px;
@@ -15,9 +25,13 @@
   }
   .shorten-link {
     @include large {
-      position: fixed;
-      left: 94%;
-      bottom: 20%;
+      left: 93%;
+      bottom: 5%;
+      z-index: 1;
+      float: right;
+    }
+    @include xxl {
+      left: unset;
     }
   }
   input.clipboard-button,
@@ -33,16 +47,15 @@
     border-radius: 20px;
     background-position: center center;
     background-repeat: no-repeat;
+
+    @include large {
+      margin-right: -3rem;
+    }
   }
   input.create-link {
     background-image: url('../../assets/images/icons/chain.svg');
   }
   input.clipboard-button {
-    background-image: url('../../assets/images/icons/switch-file.svg');
-    background-size: 26px;
-    background-position: 8px;
-  }
-  .short-link {
-
+    background-image: url('../../assets/images/icons/chain.svg');
   }
 }

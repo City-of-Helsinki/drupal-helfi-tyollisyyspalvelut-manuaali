@@ -15,7 +15,7 @@ third_party_settings:
 id: searchheader
 theme: palvelumanuaali
 region: content
-weight: -5
+weight: -4
 provider: null
 plugin: search_header
 settings:
@@ -24,6 +24,10 @@ settings:
   label_display: '0'
   provider: hel_tpm_search
 visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: "/haku*\r\n/search*\r\n/sök*"
   user_status:
     id: user_status
     negate: false
@@ -35,7 +39,3 @@ visibility:
       own_page_true: '0'
       field_value: '0'
     user_fields: uid
-  request_path:
-    id: request_path
-    negate: false
-    pages: "/haku*\r\n/search*\r\n/sök*"
