@@ -272,10 +272,10 @@ $button-colors: (
 //theming
 
 .button {
+  @include button-round-corners;
   @include button-base;
   @include button-color-blue;
   @include button-medium;
-  @include button-round-corners;
   &--alt {
     @include button-color-secondary;
     @include button-large;
@@ -390,32 +390,6 @@ $button-colors: (
     padding-right: $space-quadruple;
   }
 }
-
-/*
-#shorten-link {
-  @include button-base;
-  @include button-medium;
-  @include button-round-corners;
-  @include button-no-color;
-
-  border: 2px solid clr(background-section);
-  padding-right: $space-double;
-  .button {
-    border: unset;
-    background: unset;
-    padding: 0;
-    color: clr(background-section);
-    font-weight: bold;
-  }
-  &::after {
-    @include icons;
-
-    content: "\EA0B";
-    color: clr(background-section);
-    margin-left: $space;
-    font-weight: bold;
-  }
-}*/
 
 #block-hel-print-pdf-block {
     @include button-base;
