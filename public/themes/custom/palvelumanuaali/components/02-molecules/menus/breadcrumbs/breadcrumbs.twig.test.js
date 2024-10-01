@@ -1,8 +1,8 @@
 import { join } from 'path';
 import { render, Twig } from 'twig-testing-library';
 
-import loadYaml from '../../../../util/loadYaml';
-import { setupTwig } from '../../../../.storybook/setupTwig';
+import loadYaml from '../../../../node_modules/@emulsify/core/scripts/loadYaml';
+import { setupTwig } from '../../../../config/emulsify-core/storybook/setupTwig';
 
 setupTwig(Twig);
 
@@ -15,74 +15,74 @@ describe('breadcrumbs', () => {
 
     expect(container).toMatchInlineSnapshot(`
       <div>
-        
 
-        
+
+
         <nav
           aria-labelledby="system-breadcrumb"
           role="navigation"
         >
-          
-          
+
+
           <h2
             class="visually-hidden"
             id="system-breadcrumb"
           >
             Breadcrumb
           </h2>
-          
-          
+
+
           <ol
             class="breadcrumb"
           >
-            
-                
+
+
             <li
               class="breadcrumb__item"
             >
-              
-                        
+
+
               <a
                 class="breadcrumb__link"
                 href="#"
               >
                 Home
               </a>
-              
-                    
+
+
             </li>
-            
-                
+
+
             <li
               class="breadcrumb__item"
             >
-              
-                        
+
+
               <a
                 class="breadcrumb__link"
                 href="#"
               >
                 Parent Page
               </a>
-              
-                    
+
+
             </li>
-            
-                
+
+
             <li
               class="breadcrumb__item"
             >
-              
+
                         Current Page
-                    
+
             </li>
-            
-              
+
+
           </ol>
-          
-        
+
+
         </nav>
-        
+
 
       </div>
     `);

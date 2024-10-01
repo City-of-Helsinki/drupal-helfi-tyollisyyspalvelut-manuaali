@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5f0e85d4a03f92c6eb6e34d46827e81a",
+    "content-hash": "4a6f4fc25e76b17056a447403a8b5873",
     "packages": [
         {
             "name": "ajgl/breakpoint-twig-extension",
@@ -4053,32 +4053,37 @@
             }
         },
         {
-            "name": "drupal/emulsify_drupal",
-            "version": "4.9.1",
+            "name": "drupal/emulsify",
+            "version": "5.3.0",
             "source": {
                 "type": "git",
-                "url": "https://git.drupalcode.org/project/emulsify_drupal.git",
-                "reference": "4.9.1"
+                "url": "https://git.drupalcode.org/project/emulsify.git",
+                "reference": "5.3.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/emulsify_drupal-4.9.1.zip",
-                "reference": "4.9.1",
-                "shasum": "c5a1b6892ade68f5a3444a6d4cf7f1c861092739"
+                "url": "https://ftp.drupal.org/files/projects/emulsify-5.3.0.zip",
+                "reference": "5.3.0",
+                "shasum": "4f01ab25e685d1892d14c9eb6cba9de2a2dcca16"
             },
             "require": {
                 "drupal/components": "^3.0@beta",
-                "drupal/core": "^9 || ^10",
-                "drupal/emulsify_twig": "^5.0"
+                "drupal/core": "^10 || ^11",
+                "drupal/emulsify_tools": "^1.0"
             },
             "type": "drupal-theme",
             "extra": {
                 "drupal": {
-                    "version": "4.9.1",
-                    "datestamp": "1719321181",
+                    "version": "5.3.0",
+                    "datestamp": "1725910793",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
+                    }
+                },
+                "drush": {
+                    "services": {
+                        "drush.services.yml": "^10 || ^11"
                     }
                 }
             },
@@ -4088,42 +4093,88 @@
             ],
             "authors": [
                 {
-                    "name": "Brian Lewis",
-                    "homepage": "https://www.drupal.org/user/609802",
-                    "email": "brian@fourkitchens.com"
-                },
-                {
-                    "name": "Chris Martin",
-                    "homepage": "https://www.drupal.org/user/1460062",
-                    "email": "chris.martin@fourkitchens.com"
-                },
-                {
-                    "name": "Evan Willhite",
-                    "homepage": "https://www.drupal.org/user/2532054",
-                    "email": "evan@fourkitchens.com"
-                },
-                {
                     "name": "Randy Oest",
-                    "homepage": "https://www.drupal.org/user/3210801",
+                    "homepage": "https://www.drupal.org/user/609802",
                     "email": "randy@fourkitchens.com"
+                },
+                {
+                    "name": "Callin Mullaney",
+                    "homepage": "https://www.drupal.org/user/1460062",
+                    "email": "callin@fourkitchens.com"
+                },
+                {
+                    "name": "callinmullaney",
+                    "homepage": "https://www.drupal.org/user/2532054"
+                },
+                {
+                    "name": "ccjjmartin",
+                    "homepage": "https://www.drupal.org/user/3210801"
                 },
                 {
                     "name": "evanmwillhite",
                     "homepage": "https://www.drupal.org/user/562168"
                 },
                 {
-                    "name": "fk_bender",
-                    "homepage": "https://www.drupal.org/user/3539842"
-                },
-                {
                     "name": "generalredneck",
                     "homepage": "https://www.drupal.org/user/368854"
                 }
             ],
-            "description": "Storybook development + Webpack Build + Drupal 8 theme",
+            "description": "The official Drupal 10 base theme for Emulsify that generates custom themes with Storybook development + Webpack Build",
             "homepage": "http://emulsify.info",
             "support": {
-                "source": "https://git.drupalcode.org/project/emulsify_drupal"
+                "source": "https://git.drupalcode.org/project/emulsify"
+            }
+        },
+        {
+            "name": "drupal/emulsify_tools",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/emulsify_tools.git",
+                "reference": "1.0.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/emulsify_tools-1.0.1.zip",
+                "reference": "1.0.1",
+                "shasum": "62fee8eb6ee3f00e0103ee53ebf48d7549365aa4"
+            },
+            "require": {
+                "drupal/core": "^10 || ^11"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "1.0.1",
+                    "datestamp": "1717784843",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Project has not opted into security advisory coverage!"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-only"
+            ],
+            "authors": [
+                {
+                    "name": "amazingrando",
+                    "homepage": "https://www.drupal.org/user/609802"
+                },
+                {
+                    "name": "callinmullaney",
+                    "homepage": "https://www.drupal.org/user/2532054"
+                },
+                {
+                    "name": "codechefmarc",
+                    "homepage": "https://www.drupal.org/user/2952573"
+                }
+            ],
+            "description": "Provides Twig functions and subtheme generation for use with Emulsify",
+            "homepage": "http://emulsify.info",
+            "support": {
+                "source": "https://git.drupalcode.org/project/emulsify_tools"
             }
         },
         {
