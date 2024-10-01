@@ -34,7 +34,6 @@
 
   &--with-sub {
     width: 80%;
-    font-size: $small-font;
     text-transform: uppercase;
   }
 
@@ -49,6 +48,9 @@
       &::after {
         display: none;
       }
+    }
+    &--with-sub {
+      font-size: $small-font;
     }
   }
   @include xxl {
