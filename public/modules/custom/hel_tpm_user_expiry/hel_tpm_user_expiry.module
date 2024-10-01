@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\hel_tpm_user_expiry\SettingsUtility;
 use Drupal\user\Entity\User;
 use Drupal\user\UserInterface;
 
@@ -22,6 +23,12 @@ function hel_tpm_user_expiry_cron() {
 function _hel_tpm_user_expiry_notification_cron() {
   $run_time_limit = strtotime('12 hours', 0);
   $last_run = Drupal::state()->get('hel_tpm_user_expiry.last_run');
+
+  // Stop cron run and do not add users to expiry queue if user expiry is
+  // disabled from settings.
+  if (!SettingsUtility::getUserExpirationStatus()) {
+    return;
+  }
 
   // Run this cron once every 24 hours.
   if ($last_run && (Drupal::time()->getRequestTime() - $last_run) < $run_time_limit) {
