@@ -1,8 +1,8 @@
 import { join } from 'path';
 import { render, Twig } from 'twig-testing-library';
 
-import loadYaml from '../../../../util/loadYaml';
-import { setupTwig, namespaces } from '../../../../.storybook/setupTwig';
+import loadYaml from '../../../../node_modules/@emulsify/core/scripts/loadYaml';
+import { setupTwig, namespaces } from '../../../../config/emulsify-core/storybook/setupTwig';
 
 setupTwig(Twig);
 
@@ -16,32 +16,32 @@ describe('select', () => {
 
     expect(container).toMatchInlineSnapshot(`
       <div>
-                          
+
         <option>
           Choose an Option
         </option>
-        
-                        
+
+
         <option>
           Option 1
         </option>
-        
-                        
+
+
         <option>
           Option 2
         </option>
-        
-                        
+
+
         <option>
           Option 3
         </option>
-        
-                        
+
+
         <option>
           Option 4
         </option>
-        
-              
+
+
       </div>
     `);
   });

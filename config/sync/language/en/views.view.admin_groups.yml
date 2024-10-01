@@ -5,6 +5,15 @@ display:
         label:
           expose:
             label: Name
+        status:
+          expose:
+            label: Published
       empty:
         area_text_custom:
           content: 'No content available.'
+      fields:
+        status:
+          label: Status
+          settings:
+            format_custom_false: Unpublished
+            format_custom_true: Published

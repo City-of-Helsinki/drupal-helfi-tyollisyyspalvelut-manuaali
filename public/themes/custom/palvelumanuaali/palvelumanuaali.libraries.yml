@@ -1,7 +1,8 @@
 global:
+  version: VERSION
   css:
     theme:
-      dist/css/style.css: {}
+      dist/css/style.css: { minified: true }
   js:
     ../../../libraries/bootstrap-dist/js/bootstrap.bundle.min.js: {}
     js/breadcrumbs.js: {}
@@ -44,7 +45,6 @@ analytics:
 
 search-filters:
   js:
-    #dist/js/05-pages/search/search-page-filters.js: {}
     components/05-pages/search/search-page-filters.js: {}
   dependencies:
     - core/drupal
