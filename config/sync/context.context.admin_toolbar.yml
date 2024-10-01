@@ -1,0 +1,28 @@
+uuid: d0b96ab2-0222-4d34-aa2a-7e8cb1bacb93
+langcode: fi
+status: true
+dependencies:
+  module:
+    - user
+label: Admin-toolbar
+name: admin_toolbar
+group: null
+description: ''
+requireAllConditions: false
+disabled: false
+conditions:
+  user_role:
+    id: user_role
+    negate: false
+    uuid: 68edcf8b-2df8-474d-9fe8-3c4a124b3366
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      root: root
+      admin: admin
+reactions:
+  body_class:
+    id: body_class
+    body_class: admin-toolbar-enabled
+    saved: false
+weight: 0
