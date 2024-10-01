@@ -6,6 +6,7 @@ dependencies:
     - user.role.admin
     - user.role.root
     - user.role.specialist_editor
+    - views.view.service_rtb_publish_stats
   module:
     - group
     - hel_tpm_service_stats
@@ -461,8 +462,12 @@ display:
         options:
           group_permission: 'administer members'
       cache:
-        type: tag
-        options: {  }
+        type: time
+        options:
+          results_lifespan: 21600
+          results_lifespan_custom: 86400
+          output_lifespan: 21600
+          output_lifespan_custom: 86400
       empty: {  }
       sorts:
         publish_date:
@@ -602,7 +607,18 @@ display:
             'group_node:landing_page': '0'
             'group_node:service_location': '0'
       group_by: true
-      header: {  }
+      header:
+        view:
+          id: view
+          table: views
+          field: view
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: view
+          empty: false
+          view_to_insert: 'service_rtb_publish_stats:block_1'
+          inherit_arguments: true
       footer: {  }
       display_extenders: {  }
     cache_metadata:
@@ -662,7 +678,20 @@ display:
       defaults:
         title: false
         arguments: false
+        header: false
       display_description: ''
+      header:
+        view:
+          id: view
+          table: views
+          field: view
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: view
+          empty: false
+          view_to_insert: 'service_rtb_publish_stats:block_2'
+          inherit_arguments: true
       display_extenders:
         ajax_history: {  }
       path: group/%group/publish-pipeline-stats
