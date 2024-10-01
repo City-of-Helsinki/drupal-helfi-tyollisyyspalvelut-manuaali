@@ -1,7 +1,7 @@
 import { join } from 'path';
 import { render, Twig } from 'twig-testing-library';
 
-import { setupTwig } from '../../../.storybook/setupTwig';
+import { setupTwig } from '../../../config/emulsify-core/storybook/setupTwig';
 
 setupTwig(Twig);
 
