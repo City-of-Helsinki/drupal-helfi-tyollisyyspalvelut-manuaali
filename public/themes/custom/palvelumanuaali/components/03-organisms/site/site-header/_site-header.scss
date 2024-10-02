@@ -132,6 +132,8 @@ body:not(.logged-in) {
 
   &__inner {
     width: 100%;
+    position: relative;
+    z-index: 105;
     >.toggle-expand {
       position: absolute;
       top: 0;
@@ -151,6 +153,7 @@ body:not(.logged-in) {
     }
     @include large {
       max-width: 100%;
+      z-index: 0;
       width: 100%;
     }
   }
