@@ -1,8 +1,10 @@
 .hel-tpm-url-shortener-shorten-url-link {
+  order: 1;
   @include large {
     position: sticky;
     top: 93%;
     z-index: 1;
+    order: unset;
   }
   >form {
     @include xxl {
@@ -29,9 +31,14 @@
       bottom: 5%;
       z-index: 1;
       float: right;
+      position: relative;
+      left: unset;
     }
     @include xxl {
-      left: unset;
+
+    }
+    .clipboard-status {
+      margin-left: $space * 1.5;
     }
   }
   input.clipboard-button,
@@ -53,9 +60,9 @@
     }
   }
   input.create-link {
-    background-image: url('/themes/custom/palvelumanuaali/images/icons/chain.svg');
+    background-image: url('../../assets/images/icons/chain.svg');
   }
   input.clipboard-button {
-    background-image: url('/themes/custom/palvelumanuaali/images/icons/chain.svg');
+    background-image: url('../../assets/images/icons/chain.svg');
   }
 }

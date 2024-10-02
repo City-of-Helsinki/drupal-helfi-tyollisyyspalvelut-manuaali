@@ -1,8 +1,8 @@
 import { join } from 'path';
 import { render, Twig } from 'twig-testing-library';
 
-import loadYaml from '../../../../util/loadYaml';
-import { setupTwig, namespaces } from '../../../../.storybook/setupTwig';
+import loadYaml from '../../../../node_modules/@emulsify/core/scripts/loadYaml';
+import { setupTwig, namespaces } from '../../../../config/emulsify-core/storybook/setupTwig';
 
 setupTwig(Twig);
 
@@ -16,17 +16,17 @@ describe('radio', () => {
 
     expect(container).toMatchInlineSnapshot(`
       <div>
-                  
+
         <li
           class="form-item--radio__item"
         >
-          
-        
+
+
           <label
             for="radio0"
           >
-            
-          
+
+
             <input
               checked="checked"
               class="radio"
@@ -35,23 +35,23 @@ describe('radio', () => {
               type="radio"
             />
              Option 1
-        
+
           </label>
-          
+
 
         </li>
-        
-                
+
+
         <li
           class="form-item--radio__item"
         >
-          
-        
+
+
           <label
             for="radio1"
           >
-            
-          
+
+
             <input
               class="radio"
               id="radio1"
@@ -59,23 +59,23 @@ describe('radio', () => {
               type="radio"
             />
              Option 2
-        
+
           </label>
-          
+
 
         </li>
-        
-                
+
+
         <li
           class="form-item--radio__item"
         >
-          
-        
+
+
           <label
             for="radio2"
           >
-            
-          
+
+
             <input
               class="radio"
               id="radio2"
@@ -83,23 +83,23 @@ describe('radio', () => {
               type="radio"
             />
              Option 3
-        
+
           </label>
-          
+
 
         </li>
-        
-                
+
+
         <li
           class="form-item--radio__item"
         >
-          
-        
+
+
           <label
             for="radio3"
           >
-            
-          
+
+
             <input
               class="radio"
               id="radio3"
@@ -107,13 +107,13 @@ describe('radio', () => {
               type="radio"
             />
              Option 4
-        
+
           </label>
-          
+
 
         </li>
-        
-          
+
+
       </div>
     `);
   });
