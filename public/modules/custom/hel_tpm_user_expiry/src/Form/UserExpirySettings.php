@@ -28,7 +28,7 @@ class UserExpirySettings extends FormBase {
       '#type' => 'checkbox',
       '#title' => $this->t('Enable user expiration'),
       '#default_value' => SettingsUtility::getUserExpirationStatus(),
-      '#description' => t("Normally this should be checked. Unchecking this will prevent user expire cron job to add more users to expiry queue. The value is stored using the State API."),
+      '#description' => t("Unchecking this will prevent user expire cron job to add more users to expiry queue. The value is stored using the State API, so configuration updates will not affect it."),
     ];
     $form['actions']['#type'] = 'actions';
     $form['actions']['submit'] = [
