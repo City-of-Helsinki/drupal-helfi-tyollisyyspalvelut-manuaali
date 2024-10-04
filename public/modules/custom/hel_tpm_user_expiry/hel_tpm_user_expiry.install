@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * Remove anonymous users from groups.
+ */
+function hel_tpm_user_expiry_update_10001(&$sandbox) {
+  $database = \Drupal::database();
+  $storage = \Drupal::entityTypeManager()->getStorage('user');
+  $membership_loader = \Drupal::service('group.membership_loader');
+
+  $query = $database->select('users_field_data', 'u')
+    ->fields('u', ['uid'])
+    ->condition('u.status', 0)
+    ->condition('u.name', 'anonymous-%', 'LIKE')
+    ->execute()->fetchAllAssoc('uid');
+
+  $users = $storage->loadMultiple(array_keys($query));
+  foreach ($users as $user) {
+    $memberships = $membership_loader->loadByUser($user);
+    foreach ($memberships as $membership) {
+      $group = $membership->getGroupRelationship();
+      $group->delete();
+    }
+  }
+}
