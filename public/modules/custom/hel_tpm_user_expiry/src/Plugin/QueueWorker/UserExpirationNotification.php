@@ -4,11 +4,16 @@ declare(strict_types = 1);
 
 namespace Drupal\hel_tpm_user_expiry\Plugin\QueueWorker;
 
+use Drupal;
 use Drupal\Core\Logger\LoggerChannelTrait;
 use Drupal\Core\Password\PasswordGeneratorInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueWorkerBase;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Session\UserSession;
 use Drupal\Core\State\State;
+use Drupal\group\Entity\GroupMembershipInterface;
+use Drupal\group\GroupMembershipLoaderInterface;
 use Drupal\message\Entity\Message;
 use Drupal\message_notify\MessageNotifier;
 use Drupal\user\Entity\User;
@@ -80,6 +85,11 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
   private $uid;
 
   /**
+   * @var \Drupal\group\GroupMembershipLoaderInterface
+   */
+  private GroupMembershipLoaderInterface $groupMembershipLoader;
+
+  /**
    * Constructor.
    *
    * @param array $configuration
@@ -93,12 +103,13 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
    * @param \Drupal\Core\Password\PasswordGeneratorInterface $password_generator
    *   Password generator service.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, MessageNotifier $message_notifier, PasswordGeneratorInterface $password_generator, State $state) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, MessageNotifier $message_notifier, PasswordGeneratorInterface $password_generator, State $state, GroupMembershipLoaderInterface $group_membership_loader) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->logger = $this->getLogger('hel_tpm_user_expiry');
     $this->messageNotifier = $message_notifier;
     $this->passwordGenerator = $password_generator;
     $this->state = $state;
+    $this->groupMembershipLoader = $group_membership_loader;
   }
 
   /**
@@ -112,6 +123,7 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
       $container->get('message_notify.sender'),
       $container->get('password_generator'),
       $container->get('state'),
+      $container->get('group.membership_loader')
     );
   }
 
@@ -297,6 +309,9 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
     }
     $user->save();
 
+    // After anonymization remove user group memberships.
+    $this->removeGroupMemberships($user);
+
     // Store anonymized user IDs using State API.
     if (is_array($anonymized_users = $this->state->get('hel_tpm_user_expiry.anonymized_users'))) {
       $anonymized_users[] = $user->id();
@@ -308,6 +323,24 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
 
     $this->logger->info('Anonymized inactive and blocked user %user.', ['%user' => $user->id()]);
     return TRUE;
+  }
+
+  /**
+   * Remove group memberships from user.
+   *
+   * @param \Drupal\Core\Session\AccountInterface $user
+   *  User account interface.
+   *
+   * @return void
+   *  Void.
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  private function removeGroupMemberships(AccountInterface $user) {
+    $memberships = $this->groupMembershipLoader->loadByUser($user);
+    foreach ($memberships as $membership) {
+      $group = $membership->getGroupRelationship();
+      $group->delete();
+    }
   }
 
   /**
