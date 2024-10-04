@@ -300,7 +300,6 @@ final class UserExpirationTest extends GroupKernelTestBase {
       'user_id_1' => $this->createLastAccessUser(1, '-220 days'),
     ];
 
-    $this->group->addMember($users['user_id_1']);
     $this->group->addMember($users['inactive']);
 
     $this->cron->run();
@@ -322,8 +321,6 @@ final class UserExpirationTest extends GroupKernelTestBase {
       $this->assertNotEquals($oldValue, $users['inactive']->get($key)->value);
     }
 
-    // Ensure inactive user is removed from groups.
-    $group = $this->group->getMember($users['inactive']);
     $this->assertEmpty($this->group->getMember($users['inactive']));
 
     // Ensure values are not anonymized for user without enough inactivation
