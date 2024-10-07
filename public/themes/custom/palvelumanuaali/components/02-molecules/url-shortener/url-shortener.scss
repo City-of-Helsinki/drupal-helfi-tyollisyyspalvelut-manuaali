@@ -1,8 +1,11 @@
 .hel-tpm-url-shortener-shorten-url-link {
+  order: 1;
+  @include large {
     position: sticky;
     top: 93%;
     z-index: 1;
-
+    order: unset;
+  }
   >form {
     @include xxl {
       float: right;
@@ -28,8 +31,10 @@
       bottom: 5%;
       z-index: 1;
       float: right;
-    @include xxl {
+      position: relative;
       left: unset;
+    .clipboard-status {
+      margin-left: $space * 1.5;
     }
   }
   input.clipboard-button,

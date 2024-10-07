@@ -8,6 +8,7 @@
 {% endif %}
 {% if menu_level > 0 %}
   {% set item_modifiers = item_modifiers|merge(['sub', 'sub-' ~ menu_level]) %}
+  {% set item_additional_classes = ['font-size--default'] %}
 {% endif %}
 {% if item.below %}
   {% set item_modifiers = item_modifiers|merge(['with-sub']) %}
@@ -31,6 +32,7 @@
       link_url: item.url,
       link_base_class: item_base_class|default(menu_class ~ '__link'),
       link_modifiers: item_modifiers,
+      link_additional_classes: item_additional_classes,
     } %}
     {% if item.below %}
       <span class="expand-sub"></span>
