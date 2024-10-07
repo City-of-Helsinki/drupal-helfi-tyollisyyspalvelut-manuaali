@@ -20,23 +20,19 @@
     border-radius: 8px;
     padding: 0.4em 0.5em;
     margin: auto;
+    position: absolute;
+    left: 65px;
     @include large {
-      position: absolute;
       left: -315px;
     }
   }
   .shorten-link {
-    @include large {
       left: 93%;
       bottom: 5%;
       z-index: 1;
       float: right;
       position: relative;
       left: unset;
-    }
-    @include xxl {
-
-    }
     .clipboard-status {
       margin-left: $space * 1.5;
     }
