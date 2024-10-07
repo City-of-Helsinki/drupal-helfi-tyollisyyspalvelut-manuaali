@@ -18,6 +18,7 @@
  *   - in_active_trail: TRUE if the link is in the active trail.
  */
 #}
+{{ attach_library('palvelumanuaali/user-menu') }}
 <button id="accountMenuButton" class="btn btn-menu btn--hide-on-mobile" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="{{'User account menu'|t}}">
   {# leaving these here for possible further development #}
   {# {{ drupal_view('user_info', 'block_1') }} #}
@@ -56,4 +57,3 @@
      menu_class: '',
   } %}
 </div>
-{{ attach_library('palvelumanuaali/user-menu') }}

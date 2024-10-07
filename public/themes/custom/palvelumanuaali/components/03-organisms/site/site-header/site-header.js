@@ -9,20 +9,39 @@ Drupal.behaviors.userMenu = {
       let userMenublock = $('.dropdown-mobile-menu',loggedUserBlock);
       let toggleInnerLogin = $('.btn-menu-close', userMenublock);
 
-    if (typeof loggedUserBlock !== 'undefined' ) {
-      // Mobile Menu Show/Hide.
-      toggleLogin.on('click', function() {
-        body.toggleClass('no-scroll');
-        userMenublock.toggleClass('slide-in');
+      if (typeof loggedUserBlock !== 'undefined' ) {
+        // Mobile Menu Show/Hide.
+        toggleLogin.on('click', function() {
+          body.toggleClass('no-scroll');
+          userMenublock.toggleClass('slide-in');
+        });
+        // Mobile Menu Show/Hide.
+        toggleInnerLogin.on('click', function() {
+          userMenublock.toggleClass('slide-in');
+          userMenublock.toggleClass('slide-out-right');
+          body.toggleClass('no-scroll');
+          setTimeout(function() { userMenublock.removeClass('slide-out-right'); }, 1000);
       });
-      // Mobile Menu Show/Hide.
-      toggleInnerLogin.on('click', function() {
-        userMenublock.toggleClass('slide-in');
-        userMenublock.toggleClass('slide-out-right');
-        body.toggleClass('no-scroll');
-        setTimeout(function() { userMenublock.removeClass('slide-out-right'); }, 1000);
-      });
-    }
+      }
+    $(context).ajaxStop(function () {
+      let loggedUserBlock = $('.menu--account');
+      let userMenublock = $('.dropdown-mobile-menu',loggedUserBlock);
+
+      if (typeof loggedUserBlock !== 'undefined' ) {
+        // Mobile Menu Show/Hide.
+        toggleLogin.on('click', function() {
+          body.toggleClass('no-scroll');
+          userMenublock.toggleClass('slide-in');
+        });
+        // Mobile Menu Show/Hide.
+        toggleInnerLogin.on('click', function() {
+          userMenublock.toggleClass('slide-in');
+          userMenublock.toggleClass('slide-out-right');
+          body.toggleClass('no-scroll');
+          setTimeout(function() { userMenublock.removeClass('slide-out-right'); }, 1000);
+        });
+      }
+    });
   },
 };
 })(jQuery, Drupal, this);

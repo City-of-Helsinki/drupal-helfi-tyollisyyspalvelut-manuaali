@@ -1,9 +1,8 @@
 .hel-tpm-url-shortener-shorten-url-link {
-  @include large {
     position: sticky;
     top: 93%;
     z-index: 1;
-  }
+
   >form {
     @include xxl {
       float: right;
@@ -18,18 +17,17 @@
     border-radius: 8px;
     padding: 0.4em 0.5em;
     margin: auto;
+    position: absolute;
+    left: 65px;
     @include large {
-      position: absolute;
       left: -315px;
     }
   }
   .shorten-link {
-    @include large {
       left: 93%;
       bottom: 5%;
       z-index: 1;
       float: right;
-    }
     @include xxl {
       left: unset;
     }
