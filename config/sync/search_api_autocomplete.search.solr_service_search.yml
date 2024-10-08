@@ -7,7 +7,6 @@ dependencies:
     - views.view.solr_service_search
   module:
     - views
-    - search_api_autocomplete
 id: solr_service_search
 label: 'Solr service search'
 index_id: service_search_solr_index
@@ -22,6 +21,7 @@ suggester_settings:
     view_modes:
       'entity:node':
         service: ''
+    suggest_keys: false
   server:
     fields:
       - title_1
