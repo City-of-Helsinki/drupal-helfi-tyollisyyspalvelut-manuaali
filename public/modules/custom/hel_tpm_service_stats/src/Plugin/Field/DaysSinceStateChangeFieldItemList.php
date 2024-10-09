@@ -7,9 +7,9 @@ use Drupal\Core\TypedData\ComputedItemListTrait;
 
 /**
  * Item list for a computed field that displays
- * how long service has been in rtb state.
+ * how long service has been in current state.
  */
-class DaysInRtbFieldItemList extends FieldItemList implements FieldItemListInterface {
+class DaysSinceStateChangeFieldItemList extends FieldItemList implements FieldItemListInterface {
   use ComputedItemListTrait;
 
   /**
