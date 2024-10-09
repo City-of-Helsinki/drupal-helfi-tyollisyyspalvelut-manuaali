@@ -132,6 +132,8 @@ body:not(.logged-in) {
 
   &__inner {
     width: 100%;
+    position: relative;
+    z-index: 105;
     >.toggle-expand {
       position: absolute;
       top: 0;
@@ -151,6 +153,7 @@ body:not(.logged-in) {
     }
     @include large {
       max-width: 100%;
+      z-index: 0;
       width: 100%;
     }
   }
@@ -500,15 +503,20 @@ body:not(.logged-in) {
   display: flex;
   align-items: start;
   z-index: 10;
-  #accountMenuButton {
-    display: flex;
-    align-items: center;
-    border: 0;
+  .btn--hide-on-mobile {
+    display: none;
+    @include large {
+      display: block;
+      span {
+        display: block;
+      }
+    }
   }
-  .view-user-info{
+  .view-user-info {
     .view-content {
       display: flex;
       align-items: center;
+      margin-bottom: $space-two-and-half;
       &::before {
         content: "";
         width: 32px;
@@ -516,20 +524,27 @@ body:not(.logged-in) {
         background-repeat: no-repeat;
         display: block;
         margin-right: 14px;
-        background-color: clr(background-section);
-        background-image: url("../../assets/images/icons/user-white.svg");
+        background-color: clr(background-border);
+        background-image: url("../../assets/images/icons/user-blue.svg");
         background-position: center;
         background-size: 16px;
         border-radius: 50%;
+        @include large {
+          background-color: clr(background-section);
+          background-image: url("../../assets/images/icons/user-white.svg");
+        }
       }
-      margin-bottom: $space-one-and-half;
     }
     .views-row {
       text-align: left;
       .views-field-name {
+        text-align: center;
+        @include large {
+          text-align: left;
+        }
         a {
           font-weight: 600;
-          font-size: 9px;
+          font-size: 16px;
           color: clr(text);
           text-decoration: none;
           @include large {
@@ -542,8 +557,12 @@ body:not(.logged-in) {
       }
       .views-field-mail {
         color: clr(text);
+        text-align: center;
+        @include large {
+          text-align: left;
+        }
         span {
-            font-size: 9px;
+            font-size: 14px;
             @include large {
               font-size: 12px;
           }
@@ -830,5 +849,101 @@ body:not(.logged-in) {
     }
     @include xxl {
       max-width: none;
+    }
+}
+
+.admin-toolbar-enabled {
+  .dropdown-mobile-menu {
+      margin-top: 40px;
+  }
+}
+
+.dropdown-mobile-menu {
+    display: block;
+    height: 100%;
+    position: fixed;
+    inset: 0;
+    overflow-y: scroll;
+    background: #fff;
+    z-index: 300;
+    padding: 0 1rem;
+    margin-left: 0;
+    transform:translateX(100%);
+    width: 100%;
+    @include large {
+      display: none !important;
+    }
+    &.slide-in {
+      animation: slide-in 0.5s forwards;
+      -webkit-animation: slide-in 0.5s forwards;
+    }
+    &.slide-out-right {
+      animation: slide-out-right 0.5s forwards;
+      -webkit-animation: slide-out-right 0.5s forwards;
+    }
+    .btn-menu-close {
+      margin-top: 12px;
+    }
+    .views-element-container {
+      margin-top: $space;
+    }
+    .views-row {
+      margin: auto;
+    }
+    .view-content::before {
+      position: absolute;
+      right: 0;
+      top: 16px;
+    }
+    .menu {
+      padding-left: $space-one-and-half;
+    }
+    .menu__item {
+      text-align: left;
+      margin-bottom: $space;
+      &:first-child {
+        .menu__link {
+          &::before {
+            background-image: url("../../assets/images/icons/cogwheel.svg");
+            content: "";
+            width: 20px;
+            height: 20px;
+            background-repeat: no-repeat;
+            display: block;
+            margin-right: 20px;
+            background-size: cover;
+          }
+        }
+      }
+      &:nth-child(2) {
+        .menu__link {
+          &::before {
+            background-image: url("../../assets/images/icons/door.svg");
+            content: "";
+            width: 20px;
+            height: 20px;
+            background-repeat: no-repeat;
+            display: block;
+            margin-right: 20px;
+            background-size: cover;
+          }
+        }
+      }
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+    .menu__link {
+      font-size: 15px;
+      line-height: 24px;
+      font-weight: 600;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: max-content;
+      color: clr(text);
+      &:hover {
+        text-decoration: underline;
+      }
     }
 }
