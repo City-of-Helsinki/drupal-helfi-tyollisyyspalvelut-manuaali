@@ -433,6 +433,7 @@ display:
         type: mini
         options:
           offset: 0
+          pagination_heading_level: h4
           items_per_page: 50
           total_pages: null
           id: 0
@@ -496,7 +497,7 @@ display:
           admin_label: ''
           entity_type: service_published_row
           entity_field: nid
-          plugin_id: numeric
+          plugin_id: entity_target_id
           default_action: 'access denied'
           exception:
             value: all
@@ -523,6 +524,7 @@ display:
           validate_options: {  }
           break_phrase: false
           not: false
+          target_entity_type_id: node
       filters:
         previous_state:
           id: previous_state
