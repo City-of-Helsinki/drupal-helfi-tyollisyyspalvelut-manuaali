@@ -9,6 +9,7 @@
  * Implements hook_install().
  */
 function hel_tpm_service_stats_install() {
+  module_set_weight('hel_tpm_service_stats', [1000]);
   $service_revision_history = \Drupal::service('hel_tpm_service_stats.revision_history');
   $published_revisions = $service_revision_history->getPublishedRevisions();
   foreach ($published_revisions as $revision) {
@@ -18,6 +19,9 @@ function hel_tpm_service_stats_install() {
     }
     $service_revision_history->createServicePublishedRow($revision, $previous_revision);
   }
+
+  hel_tpm_service_stats_update_10002();
+  hel_tpm_service_stats_update_10003();
 }
 
 /**
@@ -34,5 +38,27 @@ function hel_tpm_service_stats_update_10001(&$sandbox) {
       continue;
     }
     $service_revision_history->createServicePublishedRow($revision, $previous_revision);
+  }
+}
+
+/**
+ * Create field_days_since_last_state_chan and set default values.
+ */
+function hel_tpm_service_stats_update_10002() {
+  _hel_tpm_general_ensure_entity_fields('node', 'service', ['field_days_since_last_state_chan']);
+}
+/**
+ * Implements hook_update_N().
+ */
+function hel_tpm_service_stats_update_10003() {
+  $storage = Drupal::service('entity_type.manager')->getStorage('node');
+  $nodes = $storage->loadByProperties(['type' => 'service']);
+  foreach ($nodes as $node) {
+    $node->set('field_days_since_last_state_chan', 0);
+    $changed = $node->getChangedTime();
+    // Add one second to prevent drupal from updating changed time.
+    $changed++;
+    $node->setChangedTime($changed);
+    $node->save();
   }
 }
