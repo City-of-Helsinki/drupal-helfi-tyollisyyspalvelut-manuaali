@@ -1,0 +1,16 @@
+diff --git a/block_class.install b/block_class.install
+index 3008c844c5575096b935f9595fe8a8ec4ed81305..7d48c2d59fdff3d2fc488e6c4c558beff0b86af9 100644
+--- a/block_class.install
++++ b/block_class.install
+@@ -442,6 +442,11 @@ function block_class_update_20017() {
+   $config = \Drupal::configFactory()->getEditable('block_class.settings');
+ 
+   $block_classes_stored = $config->get('block_classes_stored');
++  // Classes may have already been converted.
++  if (!is_string($block_classes_stored)) {
++    return;
++  }
++
+   $block_classes_stored = Json::decode($block_classes_stored);
+ 
+   if (empty($block_classes_stored)) {
