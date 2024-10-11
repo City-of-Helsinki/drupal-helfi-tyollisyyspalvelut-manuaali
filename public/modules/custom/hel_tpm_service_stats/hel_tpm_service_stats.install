@@ -5,6 +5,8 @@
  * Install, update and uninstall functions for the Service statistics module.
  */
 
+use Drupal\hel_tpm_general\PreventMailUtility;
+
 /**
  * Implements hook_install().
  */
@@ -47,18 +49,60 @@ function hel_tpm_service_stats_update_10001(&$sandbox) {
 function hel_tpm_service_stats_update_10002() {
   _hel_tpm_general_ensure_entity_fields('node', 'service', ['field_days_since_last_state_chan']);
 }
+
 /**
- * Implements hook_update_N().
+ * Populate default value for field_days_since_last_chan.
  */
+
 function hel_tpm_service_stats_update_10003() {
+  // Temporarily block sending mails.
   $storage = Drupal::service('entity_type.manager')->getStorage('node');
   $nodes = $storage->loadByProperties(['type' => 'service']);
+
   foreach ($nodes as $node) {
-    $node->set('field_days_since_last_state_chan', 0);
-    $changed = $node->getChangedTime();
-    // Add one second to prevent drupal from updating changed time.
-    $changed++;
-    $node->setChangedTime($changed);
-    $node->save();
+    $languages = $node->getTranslationLanguages();
+    $revision_ids = $storage->revisionIds($node);
+    $revision_ids = array_reverse($revision_ids);
+
+    foreach ($revision_ids as $revision_id) {
+      $revision = $storage->loadRevision($revision_id);
+
+      foreach ($languages as $langcode => $language) {
+
+        if ($revision->hasTranslation($langcode) && $revision->getTranslation($langcode)->isRevisionTranslationAffected()) {
+          $revision = $revision->getTranslation($langcode);
+          _hel_tpm_service_stats_create_field_revision($revision);
+          if ($revision->wasDefaultRevision()) {
+            break;
+          }
+        }
+      }
+    }
   }
+}
+
+function _hel_tpm_service_stats_create_field_revision($revision) {
+  $database = Drupal::database();
+  $field_table = 'node__field_days_since_last_state_chan';
+  $field_revision_table = 'node_revision__field_days_since_last_state_chan';
+  $table = [
+    'bundle' => $revision->bundle(),
+    'deleted' => 0,
+    'entity_id' => $revision->id(),
+    'revision_id' => $revision->getRevisionId(),
+    'langcode' => $revision->language()->getId(),
+    'delta' => 0,
+    'field_days_since_last_state_chan_value' => 0
+  ];
+
+  if ($revision->isDefaultRevision()) {
+    $database->insert($field_table)
+      ->fields(array_keys($table))
+      ->values(array_values($table))
+      ->execute();
+  }
+  $database->insert($field_revision_table)
+    ->fields(array_keys($table))
+    ->values(array_values($table))
+    ->execute();
 }
