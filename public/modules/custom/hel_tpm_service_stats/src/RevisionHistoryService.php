@@ -198,7 +198,7 @@ final class RevisionHistoryService {
 
     $elapsed_time = \Drupal::time()->getRequestTime() - $last_revision->getRevisionCreationTime();
 
-    return intval($elapsed_time / 84000);
+    return intval($elapsed_time / 86400);
   }
 
 }
