@@ -19,6 +19,8 @@ function hel_tpm_user_expiry_tokens($type, $tokens, array $data, array $options,
     return;
   }
 
+  $replacements = [];
+
   foreach ($tokens as $name => $token) {
     if ($name === 'one-time-login-expiry') {
       // Create token from password_reset_timeout config.
