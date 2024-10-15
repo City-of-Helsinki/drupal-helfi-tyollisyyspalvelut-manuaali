@@ -9,6 +9,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Test\AssertMailTrait;
 use Drupal\hel_tpm_user_expiry\SettingsUtility;
 use Drupal\KernelTests\Core\Entity\EntityKernelTestBase;
+use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\Tests\user\Traits\UserCreationTrait;
 use Drupal\user\UserInterface;
 
@@ -17,7 +18,7 @@ use Drupal\user\UserInterface;
  *
  * @group hel_tpm_user_expiry
  */
-final class UserExpirationTest extends EntityKernelTestBase {
+final class UserExpirationTest extends GroupKernelTestBase {
 
   use UserCreationTrait;
 
@@ -38,6 +39,7 @@ final class UserExpirationTest extends EntityKernelTestBase {
     'field',
     'filter',
     'system',
+    'group'
   ];
 
   /**
@@ -62,13 +64,21 @@ final class UserExpirationTest extends EntityKernelTestBase {
   protected $queue;
 
   /**
+   * Group entity.
+   *
+   * @var \Drupal\group\Entity\Group
+   */
+  protected $group;
+
+  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
     $this->installEntitySchema('user');
     $this->installEntitySchema('message');
-    $this->installConfig(['field', 'system']);
+    $this->installConfig(['field', 'system', 'user']);
+    $this->installSchema('user', ['users_data']);
     $this->installConfig([
       'hel_tpm_user_expiry_messages_test',
     ]);
@@ -76,6 +86,27 @@ final class UserExpirationTest extends EntityKernelTestBase {
     $this->connection = Database::getConnection();
     $this->queue = $this->container->get('queue')
       ->get('hel_tpm_user_expiry_user_expiration_notification');
+
+    $this->groupRoleStorage = $this->entityTypeManager->getStorage('group_role');
+    $this->group = $this->createGroup(['type' => $this->createGroupType(['id' => 'default'])->id()]);
+    $this->deleteCreatedUsers();
+  }
+
+  /**
+   * Delete users created in GroupKernelTestBase.
+   *
+   * @return void
+   *  -
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  private function deleteCreatedUsers(): void {
+    $user_storage = $this->entityTypeManager->getStorage('user');
+    $users = $user_storage->loadMultiple([1, 2]);
+    foreach ($users as $user) {
+      $user->delete();
+    }
   }
 
   /**
@@ -269,6 +300,8 @@ final class UserExpirationTest extends EntityKernelTestBase {
       'user_id_1' => $this->createLastAccessUser(1, '-220 days'),
     ];
 
+    $this->group->addMember($users['inactive']);
+
     $this->cron->run();
     $this->cronRunHelper('-2 weeks', $users);
     $this->cronRunHelper('-2 days', $users);
@@ -282,10 +315,13 @@ final class UserExpirationTest extends EntityKernelTestBase {
     $users['active'] = $this->reloadEntity($users['active']);
     $users['user_id_1'] = $this->reloadEntity($users['user_id_1']);
 
+
     // Ensure values are anonymized for user with enough inactivation time.
     foreach ($inactiveOldValues as $key => $oldValue) {
       $this->assertNotEquals($oldValue, $users['inactive']->get($key)->value);
     }
+
+    $this->assertEmpty($this->group->getMember($users['inactive']));
 
     // Ensure values are not anonymized for user without enough inactivation
     // time.
