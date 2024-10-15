@@ -108,7 +108,7 @@ class ShortenUrlLinkForm extends FormBase {
     unset($form['wrapper']['clipboard']['#attributes']['class'][$clipboard_classes['visually-hidden']]);
 
     $form['wrapper']['link'] = [
-      'type' => '#markup',
+      '#type' => '#markup',
       '#prefix' => '<div class="short-link-result"',
       '#suffix' => '</div>',
       '#markup' => sprintf(
