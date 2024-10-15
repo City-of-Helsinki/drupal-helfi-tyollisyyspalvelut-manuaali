@@ -1,0 +1,25 @@
+label: 'Overview'
+display:
+  default:
+    display_options:
+      title: 'Overview'
+      fields:
+        label:
+          label: Title
+        status:
+          label: Status
+          settings:
+            format_custom_false: Unpublished
+            format_custom_true: Published
+      pager:
+        options:
+          tags:
+            first: '« First'
+            last: 'Last »'
+      exposed_form:
+        options:
+          submit_button: Apply
+  page_1:
+    display_options:
+      menu:
+        title: 'Overview'

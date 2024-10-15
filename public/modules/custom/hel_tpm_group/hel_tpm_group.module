@@ -225,6 +225,7 @@ function hel_tpm_group_entity_postsave(EntityInterface $entity, $op) {
  * Implements hook_views_data_alter().
  */
 function hel_tpm_group_views_data_alter(array &$data) {
+  // Filters.
   $data['group_relationship_field_data']['group_label_filter'] = [
     'title' => t('Parent group with label'),
     'filter' => [
@@ -257,13 +258,28 @@ function hel_tpm_group_views_data_alter(array &$data) {
       'zero is null' => TRUE,
     ],
   ];
-
   $data['node_field_data']['moderation_state_filter_exclude_archived'] = [
     'title' => t('Moderation state excluding archived by default'),
     'filter' => [
       'id' => 'moderation_state_filter_exclude_archived',
       'field' => 'moderation_state',
       'allow empty' => TRUE
+    ],
+  ];
+
+  // Fields.
+  $data['groups']['active_member_count'] = [
+    'title' => t('Number of active members'),
+    'field' => [
+      'title' => t('Number of active members'),
+      'id' => 'hel_tpm_group_active_member_count',
+    ],
+  ];
+  $data['groups']['blocked_member_count'] = [
+    'title' => t('Number of blocked members'),
+    'field' => [
+      'title' => t('Number of blocked members'),
+      'id' => 'hel_tpm_group_blocked_member_count',
     ],
   ];
 }
