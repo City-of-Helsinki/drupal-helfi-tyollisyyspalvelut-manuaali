@@ -27,7 +27,7 @@ translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
-  handler: 'default:group'
+  handler: hel_tpm_group_group_selection
   handler_settings:
     target_bundles:
       organisation: organisation
@@ -37,4 +37,5 @@ settings:
       direction: ASC
     auto_create: false
     auto_create_bundle: organisation
+    published_filter: published
 field_type: entity_reference

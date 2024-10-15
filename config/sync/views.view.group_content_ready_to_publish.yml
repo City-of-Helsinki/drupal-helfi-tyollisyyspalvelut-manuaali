@@ -1,6 +1,6 @@
 uuid: 74880077-53be-4471-bddd-2b0bd6785de8
 langcode: fi
-status: true
+status: false
 dependencies:
   config:
     - node.type.service
@@ -311,7 +311,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: numeric
+          plugin_id: entity_target_id
           default_action: default
           exception:
             value: all
@@ -337,6 +337,7 @@ display:
           validate_options: {  }
           break_phrase: false
           not: false
+          target_entity_type_id: group
       filters:
         type:
           id: type
@@ -359,7 +360,7 @@ display:
           group_type: group
           admin_label: ''
           entity_type: node
-          plugin_id: latest_moderation_state_filter
+          plugin_id: moderation_state_filter
           operator: in
           value:
             service_moderation-ready_to_publish: service_moderation-ready_to_publish
@@ -380,6 +381,45 @@ display:
             remember_roles:
               authenticated: authenticated
             reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        latest_translation_affected_revision:
+          id: latest_translation_affected_revision
+          table: node_revision
+          field: latest_translation_affected_revision
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          plugin_id: latest_translation_affected_revision
+          operator: '='
+          value: ''
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
           is_grouped: false
           group_info:
             label: ''

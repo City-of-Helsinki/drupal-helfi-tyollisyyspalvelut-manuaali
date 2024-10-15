@@ -1,6 +1,6 @@
 {% set footer__base_class = 'footer' %}
 
-<footer {{ bem(footer__base_class) }}>
+<footer id="footer-region" {{ bem(footer__base_class) }}>
   <div {{ bem('inner', [], footer__base_class) }}>
     <div {{ bem('branding', [], footer__base_class) }}>
     {% embed "@atoms/links/link/link.twig" %}

@@ -108,7 +108,7 @@ class ShortenUrlLinkForm extends FormBase {
     unset($form['wrapper']['clipboard']['#attributes']['class'][$clipboard_classes['visually-hidden']]);
 
     $form['wrapper']['link'] = [
-      'type' => '#markup',
+      '#type' => '#markup',
       '#prefix' => '<div class="short-link-result"',
       '#suffix' => '</div>',
       '#markup' => sprintf(
@@ -116,7 +116,7 @@ class ShortenUrlLinkForm extends FormBase {
       )
     ];
     $form['wrapper']['clipboard-status'] = [
-      '#markup' => '<div class="clipboard-status hidden popup"><div class="popup-title"></div></div>'
+      '#markup' => '<div class="clipboard-status popup pill--small-message-base pill--small-message-url pill--small-message--add pill--padding-small-text small-font font-primary-blue font-weight-bold"><div class="popup-title"></div></div>'
     ];
 
 

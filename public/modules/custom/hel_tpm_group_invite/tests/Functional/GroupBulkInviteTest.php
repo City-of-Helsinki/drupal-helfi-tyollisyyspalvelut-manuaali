@@ -120,7 +120,7 @@ class GroupBulkInviteTest extends GroupBrowserTestBase {
 
     // Load invite members form.
     $this->drupalGet('/group/' . $this->group->id() . '/invite-members');
-    $this->assertSession()->fieldExists('email_address');
+    $this->assertSession()->fieldExists('invitees');
     $this->assertSession()->fieldExists('edit-roles');
     // Validate that roles selection is required.
     $this->assertSession()->elementAttributeContains('css', 'fieldset#edit-roles--wrapper', 'required', 'required');
@@ -131,7 +131,7 @@ class GroupBulkInviteTest extends GroupBrowserTestBase {
 
     // Fill form and submit.
     $form = $this->getSession()->getPage();
-    $form->fillField('email_address', 'test@test.test');
+    $form->fillField('invitees', 'test@test.test');
     $form->selectFieldOption('edit-roles', $role->id());
     $form->pressButton('edit-submit');
 

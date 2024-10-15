@@ -29,8 +29,7 @@ Drupal.behaviors.mainMenu = {
         e.preventDefault();
 
       });
-
-
+      
       // Mobile Menu Show/Hide.
       toggleInnerExpand[0].addEventListener('click', (e) => {
         if (toggleInnerExpand[0]) {
@@ -63,6 +62,9 @@ Drupal.behaviors.mainMenu = {
         });
       });
     }
+
+
   },
+
 };
 })(jQuery, Drupal, this);

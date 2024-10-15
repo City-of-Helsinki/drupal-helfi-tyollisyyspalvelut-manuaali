@@ -1,4 +1,16 @@
 .hel-tpm-url-shortener-shorten-url-link {
+  order: 1;
+  @include large {
+    position: sticky;
+    top: 93%;
+    z-index: 1;
+    order: unset;
+  }
+  >form {
+    @include xxl {
+      float: right;
+    }
+  }
   .short-link-result {
     display: block;
     width: 310px;
@@ -8,16 +20,21 @@
     border-radius: 8px;
     padding: 0.4em 0.5em;
     margin: auto;
+    position: absolute;
+    left: 65px;
     @include large {
-      position: absolute;
       left: -315px;
     }
   }
   .shorten-link {
-    @include large {
-      position: fixed;
-      left: 94%;
-      bottom: 20%;
+      left: 93%;
+      bottom: 5%;
+      z-index: 1;
+      float: right;
+      position: relative;
+      left: unset;
+    .clipboard-status {
+      margin-left: $space * 1.5;
     }
   }
   input.clipboard-button,
@@ -33,16 +50,15 @@
     border-radius: 20px;
     background-position: center center;
     background-repeat: no-repeat;
+
+    @include large {
+      margin-right: -3rem;
+    }
   }
   input.create-link {
-    background-image: url('/themes/custom/palvelumanuaali/images/icons/chain.svg');
+    background-image: url('../../assets/images/icons/chain.svg');
   }
   input.clipboard-button {
-    background-image: url('/themes/custom/palvelumanuaali/images/icons/switch-file.svg');
-    background-size: 26px;
-    background-position: 8px;
-  }
-  .short-link {
-
+    background-image: url('../../assets/images/icons/chain.svg');
   }
 }

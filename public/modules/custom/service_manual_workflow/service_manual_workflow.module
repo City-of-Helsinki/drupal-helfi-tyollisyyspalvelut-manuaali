@@ -195,8 +195,7 @@ function service_manual_workflow_entity_update(EntityInterface $entity) {
   if (empty($entity->original)) {
     return;
   }
-  $previous_entity = _service_manual_workflow_entity_previous_revision($entity);
-  $original_state = $previous_entity->moderation_state->value;
+  $original_state = _service_manual_workflow_entity_previous_revision($entity);
   $state = $entity->moderation_state->value;
   $transition = sprintf('service_manual_workflow.%s.to.%s', $original_state, $state);
   $event = new ServiceModerationEvent($entity, \Drupal::currentUser());
@@ -216,11 +215,11 @@ function service_manual_workflow_entity_update(EntityInterface $entity) {
  * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
  */
 function _service_manual_workflow_entity_previous_revision(EntityInterface $entity) {
-  $storage = \Drupal::entityTypeManager()->getStorage('content_moderation_state');
-  $revision = $query = \Drupal::database()->select('content_moderation_state_field_revision', 'cr')
-    ->fields('cr', ['revision_id'])
+  $revision = \Drupal::database()->select('content_moderation_state_field_revision', 'cr')
+    ->fields('cr', ['moderation_state'])
     ->condition('cr.id', $entity->id())
     ->condition('cr.revision_id', $entity->revision_id->value, '<')
+    ->condition('cr.langcode', $entity->language()->getId())
     ->orderBy('cr.revision_id', 'DESC')
     ->range(0, 1)
     ->execute()
@@ -228,8 +227,8 @@ function _service_manual_workflow_entity_previous_revision(EntityInterface $enti
 
   // If no previous revision is found. Return original version.
   if (empty($revision)) {
-    return $entity->original;
+    return $entity->original->moderation_state->value;
   }
 
-  return $storage->loadRevision($revision['revision_id']);
+  return $revision['moderation_state'];
 }

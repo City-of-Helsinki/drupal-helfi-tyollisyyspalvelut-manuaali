@@ -7,9 +7,9 @@ namespace Drupal\Tests\hel_tpm_user_expiry\Kernel;
 use Drupal\Core\Database\Database;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Test\AssertMailTrait;
+use Drupal\hel_tpm_user_expiry\SettingsUtility;
 use Drupal\KernelTests\Core\Entity\EntityKernelTestBase;
 use Drupal\Tests\user\Traits\UserCreationTrait;
-use Drupal\user\Entity\User;
 use Drupal\user\UserInterface;
 
 /**
@@ -178,6 +178,56 @@ final class UserExpirationTest extends EntityKernelTestBase {
     $this->cronRunHelper('-30 days', [$user]);
     // Ensure no further mails are sent.
     $this->assertCount(3, $this->drupalGetMails());
+  }
+
+  /**
+   * Test disabled user expiration.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  public function testDisabledUserExpiration() {
+    $user = $this->createLastAccessUser(2, '-220 days');
+
+    SettingsUtility::disableUserExpiration();
+
+    // Ensure running cron and changing user timestamp has no effect as user
+    // expiration is disabled from settings.
+    $this->cron->run();
+    $this->cronRunHelper('-2 weeks', [$user]);
+    $this->cronRunHelper('-2 days', [$user]);
+    $this->cronRunHelper('-1 year', [$user]);
+    $user = $this->reloadEntity($user);
+    $this->assertEquals('1', $user->get('status')->value);
+
+    // Ensure no mail is sent as the user expiration is disabled.
+    $this->assertCount(0, $this->drupalGetMails());
+  }
+
+  /**
+   * Test disabling and enabling user expiration.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  public function testDisablingAndEnabling() {
+    $user = $this->createLastAccessUser(2, '-220 days');
+
+    SettingsUtility::disableUserExpiration();
+
+    // Run cron and ensure no mail is sent as user expiration is disabled from
+    // settings.
+    $this->cron->run();
+    $this->assertCount(0, $this->drupalGetMails());
+
+    SettingsUtility::enableUserExpiration();
+
+    // Ensure expiration works after re-enabling it.
+    $this->cron->run();
+    $this->assertCount(1, $this->drupalGetMails());
+    $this->cronRunHelper('-1 days', [$user]);
+    $this->cronRunHelper('-2 days', [$user]);
+    $this->assertCount(1, $this->drupalGetMails());
+    $this->cronRunHelper('-2 weeks', [$user]);
+    $this->assertCount(2, $this->drupalGetMails());
   }
 
   /**

@@ -1,0 +1,16 @@
+diff --git a/src/Service/BlockClassHelperService.php b/src/Service/BlockClassHelperService.php
+index d8dbf80..58a7a1f 100644
+--- a/src/Service/BlockClassHelperService.php
++++ b/src/Service/BlockClassHelperService.php
+@@ -195,6 +195,11 @@ class BlockClassHelperService {
+       // Get the current classes stored.
+       $block_classes_stored = $config->get('block_classes_stored');
+ 
++      // If block classes are returned as JSON string decode it to array.
++      if (is_string($block_classes_stored)) {
++        $block_classes_stored = Json::decode($block_classes_stored);
++      }
++
+       // Get the current class and export to array.
+       $current_block_classes = explode(' ', $block_classes ?? '');
+ 

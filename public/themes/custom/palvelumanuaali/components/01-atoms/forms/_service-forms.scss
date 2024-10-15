@@ -10,7 +10,7 @@
   }
 
   .paragraph-type-top,
-  .filter-wrapper[data-drupal-selector*="format"] {
+  .js-filter-wrapper[data-drupal-selector*="format"] {
     display: none;
   }
 
@@ -56,6 +56,18 @@
     .form-wrapper {
       margin-bottom: 3px;
     }
+      .select--white-rounded {
+        .select2 {
+          .select2-selection--single {
+             >.select2-selection__rendered {
+              margin-top: 5px;
+              .select2-selection__placeholder {
+                  margin-top: 0;
+              }
+            }
+          }
+        }
+      }
   }
 
   //add basic theming for sidebar horizontal-tabs
@@ -359,7 +371,7 @@
 
         input[data-drupal-selector*="inline-entity-form-field-links-add-more-add-more-button-link"] {
           @include round-icon-button;
-          background-image: url("/themes/custom/palvelumanuaali/images/icons/plus.svg");
+          background-image: url("../../assets/images/icons/plus.svg");
         }
       }
     }
@@ -484,7 +496,7 @@
   }
 
   .field--name-field-service-location input {
-    background-image: url("/themes/custom/palvelumanuaali/images/icons/magnifier.svg");
+    background-image: url("../../assets/images/icons/magnifier.svg");
     background-position: top 12px right 16px;
     max-width: 560px;
   }
