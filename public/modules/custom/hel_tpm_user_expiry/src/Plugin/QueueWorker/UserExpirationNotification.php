@@ -338,8 +338,7 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
   private function removeGroupMemberships(AccountInterface $user) {
     $memberships = $this->groupMembershipLoader->loadByUser($user);
     foreach ($memberships as $membership) {
-      $group = $membership->getGroupRelationship();
-      $group->delete();
+      $membership->getGroupRelationship()->delete();
     }
   }
 
