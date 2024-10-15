@@ -1,0 +1,21 @@
+uuid: 1b61cb00-17f8-434f-ab16-96a5e666b806
+langcode: fi
+status: true
+dependencies:
+  module:
+    - hel_tpm_service_stats
+    - node
+id: node.field_days_since_last_state_chan
+field_name: field_days_since_last_state_chan
+entity_type: node
+type: hel_tpm_service_stats_days_since_state_change
+settings:
+  unsigned: false
+  size: normal
+module: hel_tpm_service_stats
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

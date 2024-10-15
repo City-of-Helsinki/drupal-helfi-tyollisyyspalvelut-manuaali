@@ -7,6 +7,8 @@
 
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Cache\RefinableCacheableDependencyInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
 
 /**
  * Implements hook_menu_local_tasks_alter().
@@ -15,7 +17,6 @@ function hel_tpm_service_stats_menu_local_tasks_alter(&$data, $route_name, Refin
   $tabs = [
     'views_view:view.service_publish_stats.page_2' => 'entity.node.edit_form',
   ];
-
   foreach ($tabs as $tab => $local_task) {
     if (empty($data['tabs'][0][$tab])) {
       continue;
@@ -27,4 +28,26 @@ function hel_tpm_service_stats_menu_local_tasks_alter(&$data, $route_name, Refin
     }
     $tab['#access'] = $data['tabs'][0][$local_task]['#access'];
   }
+}
+
+/**
+ * Implements hook_field_formatter_info_alter().
+ */
+function hel_tpm_service_stats_field_formatter_info_alter(array &$info) {
+  $info['number_integer']['field_types'][] = 'hel_tpm_service_stats_days_since_state_change';
+}
+
+/**
+ * Implements hook_field_widget_info_alter().
+ */
+function hel_tpm_service_stats_field_widget_info_alter(array &$info) {
+  $info['number']['field_types'][] = 'hel_tpm_service_stats_days_since_state_change';
+}
+
+/**
+ * Implements hook_query_TAG_alter().
+ */
+function hel_tpm_service_stats_query_ready_to_publish_alter(Drupal\Core\Database\Query\AlterableInterface $query) {
+  $query->addJoin('LEFT', 'content_moderation_state_field_data', 'md', 'md.content_entity_revision_id = base_table.vid');
+  $query->condition('md.moderation_state', 'ready_to_publish', '=');
 }
