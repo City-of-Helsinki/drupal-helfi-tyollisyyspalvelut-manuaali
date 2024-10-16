@@ -112,7 +112,7 @@
       .multi-select-button {
         position: relative;
         &:before {
-          background-image: url('/themes/custom/palvelumanuaali/images/icons/arrow-sm-down.svg');
+          background-image: url('../../assets/images/icons/arrow-sm-down.svg');
           background-repeat: no-repeat;
           position: absolute;
           width: 100%;
@@ -135,7 +135,7 @@
       .multi-select-button {
         background-color: transparent;
         &:before {
-          background-image: url('/themes/custom/palvelumanuaali/images/icons/arrow-sm-down-white.svg');
+          background-image: url('../../assets/images/icons/arrow-sm-down-white.svg');
         }
       }
     }
@@ -304,7 +304,7 @@
 
 .select2-container .selection .select2-selection {
   &::after {
-    background-image: url('/themes/custom/palvelumanuaali/images/icons/arrow-sm-down.svg');
+    background-image: url('../../assets/images/icons/arrow-sm-down.svg');
     background-repeat: no-repeat;
     position: absolute;
     width: 48px;
@@ -325,5 +325,46 @@
   box-shadow: inset 0px 0px 0px 2px clr(background-section);
   &::after {
     transform: rotateX(180deg);
+  }
+}
+
+.node-service-edit-form,
+.node-service-form,
+.node-basic-page-form,
+.node-basic-page-edit-form,
+.node-landing-page-form,
+.node-landing-page-edit-form,
+.node-edit-form {
+  .select--white-rounded {
+    .select2 {
+      .select2-selection {
+         padding:  7px 12px 12px 16px;
+         height: 100%;
+         &__choice__remove {
+           margin-top: 0;
+         }
+         &__placeholder {
+            margin-top: 5px;
+            height: 24px;
+          >.select2-selection__choice {
+            margin-top: 0;
+          }
+         }
+         &--single {
+           >.select2-selection__rendered {
+             margin-top: 5px;
+             >.select2-selection__placeholder {
+               margin-top: 0;
+             }
+           }
+         }
+         &[aria-expanded="true"] {
+           &::after {
+             transform: rotate(180deg);
+            background-position: top 9px right 16px;
+           }
+         }
+       }
+    }
   }
 }

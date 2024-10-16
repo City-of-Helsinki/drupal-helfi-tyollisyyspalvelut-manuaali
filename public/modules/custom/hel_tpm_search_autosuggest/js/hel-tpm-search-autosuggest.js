@@ -174,7 +174,7 @@
 
       $(document).ready(function() {
         if ($(selectedMultiselect).length) {
-            $('.control-wrapper input[id^="edit-reset--"]').show();
+          $('.control-wrapper input[id^="edit-reset--"]').show();
         } else {
           $('.control-wrapper input[id^="edit-reset--"]').hide();
         }

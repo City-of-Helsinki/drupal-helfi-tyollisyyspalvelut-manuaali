@@ -11,6 +11,10 @@ $card-font-small-heading: 15px;
     background-color: clr(sidebar-color);
     border-radius: 8px 8px 4px 4px;
     border-bottom: 4px $blue100 solid;
+    &:hover {
+      box-shadow: 0px 8px 16px 0px rgba(30, 64, 182, 0.20);
+      transition-duration: 100ms;
+    }
   }
   &.padded {
     padding-bottom: 40px;
@@ -55,8 +59,8 @@ $card-font-small-heading: 15px;
   height: 100%;
   &:hover {
     text-decoration: none;
-    button {
-      background-color: clr(highlight-high);
+    .button--arrow {
+      background-color: clr(alt-header-color);
     }
   }
 }

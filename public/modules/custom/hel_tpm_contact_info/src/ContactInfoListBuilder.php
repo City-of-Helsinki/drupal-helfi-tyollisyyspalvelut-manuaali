@@ -68,6 +68,7 @@ class ContactInfoListBuilder extends EntityListBuilder {
     $total = $this->getStorage()
       ->getQuery()
       ->count()
+      ->accessCheck(TRUE)
       ->execute();
 
     $build['summary']['#markup'] = $this->t('Total contact infos: @total', ['@total' => $total]);

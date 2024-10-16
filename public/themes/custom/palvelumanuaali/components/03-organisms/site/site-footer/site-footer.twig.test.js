@@ -1,7 +1,7 @@
 import { join } from 'path';
 import { render, Twig } from 'twig-testing-library';
 
-import { setupTwig, namespaces } from '../../../../.storybook/setupTwig';
+import { setupTwig, namespaces } from '../../../../config/emulsify-core/storybook/setupTwig';
 
 setupTwig(Twig);
 
@@ -15,55 +15,55 @@ describe('site-footer', () => {
 
     expect(container).toMatchInlineSnapshot(`
       <div>
-        
+
 
         <footer
           class="footer"
         >
-          
-        
+
+
           <div
             class="footer__inner"
           >
-            
-          
+
+
             <div
               class="footer__social"
             >
-              
-                    
+
+
 
 
               <ul
                 class="social-menu"
               >
-                
-              
+
+
               </ul>
-              
-                
+
+
             </div>
-            
-          
+
+
             <div
               class="footer__menu"
             >
-              
-                    
 
 
 
 
-          
-                
+
+
+
+
             </div>
-            
-        
+
+
           </div>
-          
+
 
         </footer>
-        
+
 
       </div>
     `);

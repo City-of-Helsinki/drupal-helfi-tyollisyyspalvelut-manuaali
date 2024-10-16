@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\hel_tpm_user_expiry\SettingsUtility;
 use Drupal\user\Entity\User;
 use Drupal\user\UserInterface;
 
@@ -14,6 +15,48 @@ use Drupal\user\UserInterface;
  */
 function hel_tpm_user_expiry_cron() {
   _hel_tpm_user_expiry_notification_cron();
+  _hel_tpm_user_expiry_block_unactivated_users();
+}
+
+/**
+ * Helper cron function to block all unactivated users.
+ */
+function _hel_tpm_user_expiry_block_unactivated_users() {
+  $cron_last_run = 'hel_tpm_user_expiry.block_unactivated_users_last_run';
+  $run_time_limit = strtotime('12 hours', 0);
+  $last_run = \Drupal::state()->get($cron_last_run);
+
+  // Run this cron once every 24 hours.
+  if ($last_run && (\Drupal::time()->getRequestTime() - $last_run) < $run_time_limit) {
+    return;
+  }
+
+  $storage = \Drupal::service('entity_type.manager')->getStorage('user');
+  $user_settings = \Drupal::config('user.settings');
+  $limit = \Drupal::time()->getRequestTime() - $user_settings->get('password_reset_timeout');;
+
+  $uids = \Drupal::database()->select('users_field_data', 'ufd')
+    ->fields('ufd', ['uid'])
+    ->condition('uid', 0, '<>')
+    ->condition('uid', 1, '<>')
+    ->condition('status', 1)
+    ->condition('created', $limit, '<=')
+    ->condition('access', 0)
+    ->execute()->fetchAllAssoc('uid');
+
+  if (empty($uids)) {
+    return;
+  }
+
+  // Block all users which haven't activated their
+  // account within password reset timeout.
+  foreach (array_keys($uids) as $uid) {
+    $user = $storage->load($uid);
+    $user->block();
+    $user->save();
+  }
+
+  \Drupal::state()->set($cron_last_run, Drupal::time()->getRequestTime());
 }
 
 /**
@@ -22,6 +65,12 @@ function hel_tpm_user_expiry_cron() {
 function _hel_tpm_user_expiry_notification_cron() {
   $run_time_limit = strtotime('12 hours', 0);
   $last_run = Drupal::state()->get('hel_tpm_user_expiry.last_run');
+
+  // Stop cron run and do not add users to expiry queue if user expiry is
+  // disabled from settings.
+  if (!SettingsUtility::getUserExpirationStatus()) {
+    return;
+  }
 
   // Run this cron once every 24 hours.
   if ($last_run && (Drupal::time()->getRequestTime() - $last_run) < $run_time_limit) {

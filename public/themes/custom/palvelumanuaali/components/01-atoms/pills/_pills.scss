@@ -170,6 +170,19 @@ $pill-colors: (
     display: none;
     transition-timing-function: linear;
   }
+  &--small-message-base {
+    border-radius: 4px;
+    background: var(--Primary-Blue-5, #F7F9FD);
+    box-shadow: 0px 4px 8px 0px rgba(30, 64, 182, 0.24);
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: max-content;
+    transition-timing-function: linear;
+  }
+  &--small-message-url {
+    margin-bottom: 0;
+    bottom: -40px;
+  }
   &--small-message-taxonomy {
     position: absolute;
     right: 0;

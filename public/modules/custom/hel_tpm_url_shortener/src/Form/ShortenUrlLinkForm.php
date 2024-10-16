@@ -2,6 +2,8 @@
 
 namespace Drupal\hel_tpm_url_shortener\Form;
 
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\InvokeCommand;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 
@@ -24,18 +26,43 @@ class ShortenUrlLinkForm extends FormBase {
 
     $form['wrapper'] = [
       '#type' => 'container',
-      '#attributes' => ['id' => 'shorten-link'],
+      '#attributes' => ['id' => 'shorten-link', 'class' => ['shorten-link']],
     ];
-    $form['wrapper']['submit'] = [
+
+    $element['current_path'] = [
+      '#type' => 'hidden',
+      '#attributes' => ['class' => ['current-path']],
+      '#attached' => [
+        'library' => [
+          'hel_tpm_url_shortener/url_shortener'
+        ]
+      ],
+    ];
+    $element['submit'] = [
       '#type' => 'submit',
-      '#value' => t('Create Link'),
-      '#attributes' => ['tabindex' => 3],
+      '#value' => $this->t('Create Short Link'),
+      '#attributes' => [
+        'tabindex' => 3,
+        'class' => ['create-link'],
+        'title' => $this->t('Create Short Link'),
+      ],
       '#ajax' => [
         'callback' => '::submitAjaxCall',
         'wrapper' => 'shorten-link',
         'event' => 'click',
       ],
     ];
+
+    $element['clipboard'] = [
+      '#type' => 'button',
+      '#value' => $this->t('Copy to clipboard'),
+      '#attributes' => [
+        'class' => ['clipboard-button', 'visually-hidden'],
+        'title' => $this->t('Copy to clipboard'),
+      ],
+    ];
+
+    $form['wrapper'] += $element;
 
     return $form;
   }
@@ -66,14 +93,32 @@ class ShortenUrlLinkForm extends FormBase {
   public function submitAjaxCall(array &$form, FormStateInterface $form_state) {
     $short_link_generator = \Drupal::service('hel_tpm_url_shortener.short_url_service');
 
-    $url = $short_link_generator->generateShortLink();
+    $path = $form_state->getValue('current_path');
+
+    $url = $short_link_generator->generateShortLink($path);
 
     if (empty($url)) {
       return $form['wrapper'];
     }
 
-    $form['wrapper']['submit']['#access'] = FALSE;
-    $form['wrapper']['link']['#markup'] = $url->getShortUrl();
+    $form['wrapper']['submit']['#attributes']['class'][] = 'visually-hidden';
+
+    // Remove hidden class from clipboard element.
+    $clipboard_classes = array_flip($form['wrapper']['clipboard']['#attributes']['class']);
+    unset($form['wrapper']['clipboard']['#attributes']['class'][$clipboard_classes['visually-hidden']]);
+
+    $form['wrapper']['link'] = [
+      '#type' => '#markup',
+      '#prefix' => '<div class="short-link-result"',
+      '#suffix' => '</div>',
+      '#markup' => sprintf(
+        '<div class="short-link">%s</div>', $url->getShortUrl()
+      )
+    ];
+    $form['wrapper']['clipboard-status'] = [
+      '#markup' => '<div class="clipboard-status popup pill--small-message-base pill--small-message-url pill--small-message--add pill--padding-small-text small-font font-primary-blue font-weight-bold"><div class="popup-title"></div></div>'
+    ];
+
 
     return $form['wrapper'];
   }

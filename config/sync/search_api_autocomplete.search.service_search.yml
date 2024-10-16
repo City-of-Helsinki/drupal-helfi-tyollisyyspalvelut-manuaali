@@ -7,7 +7,6 @@ dependencies:
     - views.view.service_search
   module:
     - views
-    - search_api_autocomplete
 id: service_search
 label: 'Service search'
 index_id: service_search_index
@@ -18,12 +17,10 @@ suggester_settings:
     highlight:
       enabled: false
       field: ''
+    suggest_keys: false
     view_modes:
       'entity:node':
         service: ''
-  server:
-    fields:
-      - title
 suggester_weights:
   live_results: 0
   server: 0
