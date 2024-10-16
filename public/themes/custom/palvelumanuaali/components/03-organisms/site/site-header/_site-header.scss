@@ -17,10 +17,15 @@ body:not(.logged-in) {
   .menu--account {
     display: none;
   }
+
+}
+
+body:not(.admin-toolbar-enabled) {
   .header__primary-mobile {
     margin-top: 0;
   }
 }
+
 
 .slide-in-menu {
   margin-top: 40px;
