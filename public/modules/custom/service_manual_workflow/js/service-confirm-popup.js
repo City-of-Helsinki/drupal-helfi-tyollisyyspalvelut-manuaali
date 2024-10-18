@@ -17,13 +17,15 @@
       if ($('#edit-title-0-value').val() != '') {
         title = $('#edit-title-0-value').val();
       }
+
+      // If message is undefined treat button as ordinary submit.
       if (message === undefined) {
         $('#edit-submit').click();
         return;
       }
 
       if (message.length > 0) {
-        this.confirmPopup(title, message);
+        once('serviceConfirmPopup', this.confirmPopup(title, message));
       }
     },
 
