@@ -10,17 +10,13 @@ use Drupal\group\Access\GroupAccessResult;
 use Drupal\group\Entity\GroupRelationshipInterface;
 use Drupal\group\Plugin\Group\RelationHandlerDefault\AccessControl as BaseAccessControl;
 
-class LeaveGroupAccessControl extends BaseAccessControl  {
+/**
+ * Access controller to prevent user from leaving group without permission.
+ */
+class LeaveGroupAccessControl extends BaseAccessControl {
 
   /**
-   * Prevent user from leaving group without 'leave group' permssion.
-   *
-   * @param \Drupal\group\Entity\GroupRelationshipInterface $group_relationship
-   * @param $operation
-   * @param \Drupal\Core\Session\AccountInterface $account
-   * @param $return_as_object
-   *
-   * @return bool|\Drupal\Core\Access\AccessResult|\Drupal\Core\Access\AccessResultAllowed|\Drupal\Core\Access\AccessResultForbidden|\Drupal\Core\Access\AccessResultInterface|\Drupal\Core\Access\AccessResultNeutral
+   * {@inheritdoc}
    */
   public function relationshipAccess(GroupRelationshipInterface $group_relationship, $operation, AccountInterface $account, $return_as_object = FALSE) {
     $result = parent::relationshipAccess($group_relationship, $operation, $account, $return_as_object);
@@ -37,7 +33,7 @@ class LeaveGroupAccessControl extends BaseAccessControl  {
     }
 
     $permissions = [
-      $this->permissionProvider->getPermission($operation, 'relationship', 'own')
+      $this->permissionProvider->getPermission($operation, 'relationship', 'own'),
     ];
 
     $permissions = array_filter($permissions);
