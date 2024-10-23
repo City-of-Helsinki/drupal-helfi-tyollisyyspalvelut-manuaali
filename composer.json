@@ -278,7 +278,8 @@
                 "Private file download returns access denied, when file attached to revision other than current (https://www.drupal.org/project/drupal/issues/1452100#comment-15657651)": "https://www.drupal.org/files/issues/2024-06-26/1452100-156.patch",
                 "Add Views EntityReference filter to support better UX for exposed filters (uttps://www.drupal.org/project/drupal/issues/3347343#comment-15657983)": "patches/9036.patch",
                 "https://www.drupal.org/project/drupal/issues/3338260#comment-14900238": "https://www.drupal.org/files/issues/2023-02-01/skip_changing_affected_flag_3338260-2.patch",
-                "Unable to change non-translatable field value on translatable content with content moderation enabled (https://www.drupal.org/project/drupal/issues/2955321)": "https://www.drupal.org/files/issues/2024-04-16/2955321-77.patch"
+                "Unable to change non-translatable field value on translatable content with content moderation enabled (https://www.drupal.org/project/drupal/issues/2955321)": "https://www.drupal.org/files/issues/2024-04-16/2955321-77.patch",
+                "One time login link expiration (https://www.drupal.org/project/drupal/issues/3097238#comment-15374828)": "https://www.drupal.org/files/issues/2024-06-21/3097238-initial-reset-harden-35.patch"
             },
             "drupal/message": {
                 "https://www.drupal.org/files/issues/2018-06-24/allow_token_contexts-3.patch": "https://www.drupal.org/files/issues/2018-06-24/allow_token_contexts-3.patch"
@@ -295,7 +296,7 @@
                 "https://www.drupal.org/project/group/issues/2942657#comment-15285989": "https://www.drupal.org/files/issues/2023-10-23/2942657-31.patch"
             },
             "drupal/ggroup": {
-                "https://www.drupal.org/project/ggroup/issues/3395476": "https://www.drupal.org/files/issues/2023-11-27/ggroup-role-mapper-support-3395476-5.patch"
+                "https://www.drupal.org/project/ggroup/issues/3395476": "patches/ggroup-role-mapper-support-3395476.patch"
             },
             "drupal/file_download_link": {
               "https://www.drupal.org/project/file_download_link/issues/3318657": "https://www.drupal.org/files/issues/2022-11-02/3318657-02.patch"
@@ -335,6 +336,10 @@
             },
             "drupal/entity_reference_revisions": {
                 "https://www.drupal.org/project/entity_reference_revisions/issues/3150084#comment-15398765": "https://www.drupal.org/files/issues/2024-01-15/3150084-35.patch"
+            },
+            "drupal/block_class": {
+                "Failsafe conversion of block_classes_stored (https://www.drupal.org/project/block_class/issues/3467450)": "patches/block-class-array-merge-error.patch",
+                "String to array merge error": "patches/block-class-presave-string-to-array.patch"
             }
         }
     }

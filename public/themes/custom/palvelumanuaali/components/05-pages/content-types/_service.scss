@@ -107,23 +107,24 @@
         position: sticky;
         top: 0;
         z-index: 100;
+        padding-top: $space-double;
       }
     }
     .link-wrapper {
       @include large {
-        top: 0;
+        margin-bottom: -23px;
+        top: -23px;
       }
     }
     &.toolbar-fixed.toolbar-horizontal {
       .horizontal-tabs {
         .horizontal-tabs-list {
           top: 38px;
-          padding-top: $space-double;
         }
       }
       .link-wrapper {
         @include large {
-          top: -21px;
+          margin-bottom: unset;
         }
       }
     }

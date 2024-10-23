@@ -182,6 +182,10 @@ final class RevisionHistoryService {
       break;
     }
 
+    if (empty($last_revision)) {
+      return 0;
+    }
+
     $last_revision = $storage->loadRevision($last_revision->content_entity_revision_id);
 
     // If there is no later revisions use current.
@@ -194,7 +198,7 @@ final class RevisionHistoryService {
 
     $elapsed_time = \Drupal::time()->getRequestTime() - $last_revision->getRevisionCreationTime();
 
-    return intval($elapsed_time / 84000);
+    return intval($elapsed_time / 86400);
   }
 
 }
