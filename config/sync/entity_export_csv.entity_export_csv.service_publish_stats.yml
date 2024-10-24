@@ -80,3 +80,15 @@ fields:
         property_separator: '|'
         property_separate_column: 0
         format: ''
+  group:
+    enable: true
+    order: 0
+    exporter: entity_reference_export
+    form:
+      options:
+        header: label
+        property:
+          target_id: target_id
+        property_separator: '|'
+        property_separate_column: 0
+        format: entity_reference_label
