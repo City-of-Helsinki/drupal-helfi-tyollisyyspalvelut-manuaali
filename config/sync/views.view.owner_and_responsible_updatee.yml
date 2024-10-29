@@ -976,6 +976,7 @@ display:
             'group_node:basic_page': '0'
             'group_node:landing_page': '0'
             'group_node:service_location': '0'
+      use_ajax: true
       group_by: false
       header: {  }
       footer: {  }
@@ -1562,7 +1563,7 @@ display:
           text_input_required_format: filtered_html
           bef:
             general:
-              autosubmit: false
+              autosubmit: true
               autosubmit_exclude_textfield: false
               autosubmit_textfield_delay: 500
               autosubmit_hide: false
@@ -1597,7 +1598,10 @@ display:
       defaults:
         exposed_form: false
         fields: false
-      display_extenders: {  }
+      display_extenders:
+        ajax_history:
+          enable_history: false
+          exclude_args: ''
     cache_metadata:
       max-age: -1
       contexts:
