@@ -160,17 +160,17 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-        publish_date:
-          id: publish_date
+        previous_date:
+          id: previous_date
           table: service_published_row
-          field: publish_date
+          field: previous_date
           relationship: none
           group_type: group
           admin_label: ''
           entity_type: service_published_row
-          entity_field: publish_date
+          entity_field: previous_date
           plugin_id: field
-          label: Julkaisupäivä
+          label: 'Edellisen tilan pvm'
           exclude: false
           alter:
             alter_text: false
@@ -237,17 +237,17 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-        previous_date:
-          id: previous_date
+        publish_date:
+          id: publish_date
           table: service_published_row
-          field: previous_date
+          field: publish_date
           relationship: none
           group_type: group
           admin_label: ''
           entity_type: service_published_row
-          entity_field: previous_date
+          entity_field: publish_date
           plugin_id: field
-          label: 'Edellisen tilan pvm'
+          label: Julkaisupäivä
           exclude: false
           alter:
             alter_text: false
