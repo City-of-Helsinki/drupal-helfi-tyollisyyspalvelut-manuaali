@@ -165,29 +165,85 @@ function hel_tpm_forms_validate_service_form_helper(array &$form, FormStateInter
   if (($target_group = $form_state->getValue('field_target_group')) && $require_fields) {
     _hel_tpm_forms_validate_age_groups($target_group, $form_state);
     _hel_tpm_forms_validate_municipality($target_group, $form_state);
+    _hel_tpm_forms_validate_target_group_description($target_group, $form_state);
   }
 
-  if ($languages = $form_state->getValue('field_service_languages')) {
-    _hel_tpm_forms_validate_paragraph_language_selection($languages, $form_state);
+  if ($require_fields) {
+    if ($languages = $form_state->getValue('field_service_languages')) {
+      _hel_tpm_forms_validate_paragraph_language_selection($form, $form_state, $languages, 'field_service_languages');
+    }
+    _hel_tpm_forms_validate_required_paragraph_long_texts_with_editor($form, $form_state);
   }
 }
 
 /**
- * Language field validation.
+ * Validate required paragraph content.
  *
- * @param array $languages
- *   Array of selected languages.
+ * @param array $form
+ *   Form array.
  * @param \Drupal\Core\Form\FormStateInterface $form_state
  *   Form state interface.
  *
  * @return void
  *   -
  */
-function _hel_tpm_forms_validate_paragraph_language_selection($languages, FormStateInterface &$form_state) {
+function _hel_tpm_forms_validate_required_paragraph_long_texts_with_editor(array &$form, FormStateInterface &$form_state): void {
+  $fields = ['field_service_execution', 'field_attendance'];
+  $entity = $form_state->getBuildInfo()['callback_object']->getEntity();
+  $entity_fields = $entity->getFields();
+  foreach ($fields as $field) {
+    $field_config = $entity_fields[$field]->getFieldDefinition();
+    $paragraph = $form_state->getValue($field);
+    foreach ($paragraph as $key => $row) {
+      $val = reset($row);
+      if (!empty($val['field_description'][0]['value'])) {
+        continue;
+      }
+      $form_state->setErrorByName(
+        $field,
+        t("@field_label field is required when publishing.", ['@field_label' => sprintf("%s:", $field_config->getLabel())])
+      );
+    }
+  }
+}
+
+/**
+ * Language field validation.
+ *
+ * @param array $form
+ *   Form array.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   Form state interface.
+ * @param array $languages
+ *   Array of selected languages.
+ * @param string $field
+ *   Validated field key.
+ *
+ * @return void
+ *   -
+ */
+function _hel_tpm_forms_validate_paragraph_language_selection(array $form, FormStateInterface &$form_state, array $languages, $field): void {
   $lang = [];
   $build_info = $form_state->getBuildInfo();
   $entity = $build_info['callback_object']->getEntity();
   if (!$entity->isDefaultTranslation()) {
+    return;
+  }
+
+  $is_empty = TRUE;
+  foreach ($languages as $k => $language) {
+    if (!empty($language['subform']['field_language'])) {
+      $is_empty = FALSE;
+    }
+    break;
+  }
+
+  if ($is_empty) {
+    $field_key = 'field_service_languages';
+    $form_state->setErrorByName(
+      $field_key,
+      t("@field_label field is required when publishing..", ['@field_label' => sprintf("%s:", $form[$field]['widget']['#title'])])
+    );
     return;
   }
 
@@ -255,6 +311,28 @@ function _hel_tpm_forms_validate_age_groups($target_group, &$form_state) {
     $form_state->setErrorByName(
       "field_target_group][0][subform][field_age][0",
       t('Setting the age range is mandatory, unless an age group is selected.')
+    );
+  }
+}
+
+/**
+ * Helper validator for target group description.
+ *
+ * @param array $target_group
+ *   Target group paragraph values.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   Form state object.
+ *
+ * @return void
+ *   -
+ */
+function _hel_tpm_forms_validate_target_group_description($target_group, &$form_state) {
+  $subform = $target_group[0]['subform'];
+  $value = $subform['field_description']['0']['value'];
+  if ((empty($value))) {
+    $form_state->setErrorByName(
+      'field_target_group][0][subform][field_description',
+      t("Target group description is required.")
     );
   }
 }

@@ -1,12 +1,15 @@
 global:
+  version: VERSION
   css:
     theme:
-      dist/css/style.css: {}
+      dist/css/style.css: { minified: true }
   js:
     ../../../libraries/bootstrap-dist/js/bootstrap.bundle.min.js: {}
     js/breadcrumbs.js: {}
     js/header.js: {}
+    js/favorite-unflag-event.js: {}
     dist/js/02-molecules/small-message/small-message.js: {}
+    dist/js/03-organisms/view/view.js: {}
   dependencies:
     - core/popperjs
     - core/jquery
@@ -20,6 +23,19 @@ main-menu:
   dependencies:
     - core/drupal
 
+login-form:
+  js:
+    dist/js/02-molecules/login-form/login-form.js: {}
+  dependencies:
+    - core/drupal
+
+user-menu:
+  js:
+    dist/js/03-organisms/site/site-header/site-header.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+
 analytics:
   js:
     js/matomo.js: {}
@@ -30,7 +46,6 @@ analytics:
 
 search-filters:
   js:
-    #dist/js/05-pages/search/search-page-filters.js: {}
     components/05-pages/search/search-page-filters.js: {}
   dependencies:
     - core/drupal

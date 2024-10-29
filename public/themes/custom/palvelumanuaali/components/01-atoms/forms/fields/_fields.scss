@@ -212,7 +212,7 @@
 
     input[data-drupal-selector*="inline-entity-form-field-links-add-more-add-more-button-link"] {
       @include round-icon-button;
-      background-image: url("/themes/custom/palvelumanuaali/images/icons/plus.svg");
+      background-image: url("../../assets/images/icons/plus.svg");
     }
   }
 }
@@ -224,15 +224,17 @@
   .field--name-field-internal-links,
   .field--name-field-link {
     margin-bottom: $space-double;
-    .table__cell > input,
-    .table__cell >.ajax-new-content > input {
-      @include close-button;
+    .table__cell {
+      > input,
+      > .ajax-new-content > input {
+        @include close-button;
 
-      display: block;
-      height: 48px;
-      width: 36px;
-      background-size: 16px;
-      margin-top: auto;
+        display: block;
+        height: 48px;
+        width: 36px;
+        background-size: 16px;
+        margin-top: 30px;
+      }
     }
   }
   .field--type-file {
@@ -302,7 +304,6 @@
       padding: $space 0 $space $space-three-and-half;
       margin-bottom: $space-one-half;
       position: relative;
-      z-index: 200;
     }
   }
 }

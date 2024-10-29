@@ -439,6 +439,7 @@ display:
         type: full
         options:
           offset: 0
+          pagination_heading_level: h4
           items_per_page: 50
           total_pages: null
           id: 0
@@ -470,9 +471,9 @@ display:
           text_input_required_format: filtered_html
           bef:
             general:
-              autosubmit: false
+              autosubmit: true
               autosubmit_exclude_textfield: false
-              autosubmit_textfield_delay: 500
+              autosubmit_textfield_delay: 1000
               autosubmit_hide: false
               input_required: false
               allow_secondary: false
@@ -480,12 +481,16 @@ display:
               secondary_open: false
               reset_button_always_show: false
             filter:
-              field_name_value:
+              mail:
                 plugin_id: default
                 advanced:
                   placeholder_text: ''
                   collapsible: false
                   is_secondary: false
+                options_show_only_used: false
+                options_show_only_used_filtered: false
+                options_hide_when_empty: false
+                options_show_items_count: false
       access:
         type: group_permission
         options:
@@ -527,7 +532,6 @@ display:
           default_argument_type: fixed
           default_argument_options:
             argument: ''
-          default_argument_skip_url: false
           summary_options:
             base_path: ''
             count: true
@@ -693,6 +697,7 @@ display:
           required: true
           group_content_plugins:
             group_membership: group_membership
+      use_ajax: false
       header: {  }
       footer: {  }
       display_extenders: {  }
@@ -713,7 +718,10 @@ display:
     display_plugin: page
     position: 1
     display_options:
-      display_extenders: {  }
+      display_extenders:
+        ajax_history:
+          enable_history: false
+          exclude_args: ''
       path: group/%group/members
       menu:
         type: tab

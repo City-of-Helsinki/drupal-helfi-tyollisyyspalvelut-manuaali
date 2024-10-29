@@ -2,6 +2,9 @@ uuid: 2caa0634-d3d3-4430-9b0a-00608cb3f245
 langcode: fi
 status: true
 dependencies:
+  config:
+    - group.content_type.group_content_type_a689b6d6f98cc
+    - group.content_type.organisation-group_membership
   module:
     - group
     - user
@@ -129,7 +132,6 @@ display:
           title: ''
           default_argument_type: current_user
           default_argument_options: {  }
-          default_argument_skip_url: false
           summary_options:
             base_path: ''
             count: true

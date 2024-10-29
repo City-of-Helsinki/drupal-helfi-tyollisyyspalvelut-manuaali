@@ -68,6 +68,7 @@ third_party_settings:
     term_modifiers:
       slop: 5
       fuzzy: 2
+      fuzzy_analyzer: true
     advanced:
       index_prefix: ''
       collection: ''
@@ -98,7 +99,7 @@ field_settings:
     label: 'Ryhmät » Ryhmän sisältö » Isäntäryhmä » Group » Organisaatio'
     datasource_id: 'entity:node'
     property_path: 'entitygroupfield:entity:gid:entity:label'
-    type: text
+    type: 'solr_text_custom:ngram'
     boost: 1.2
     dependencies:
       module:
@@ -149,7 +150,7 @@ field_settings:
     label: 'Lyhyt kuvaus'
     datasource_id: 'entity:node'
     property_path: field_description
-    type: text
+    type: 'solr_text_custom:ngram'
     boost: 2.0
     dependencies:
       config:
@@ -237,7 +238,7 @@ field_settings:
     label: 'Palvelun tuottaja » Group » Organisaatio'
     datasource_id: 'entity:node'
     property_path: 'field_service_producer:entity:label'
-    type: text
+    type: 'solr_text_custom:ngram'
     boost: 1.2
     dependencies:
       config:
@@ -275,7 +276,7 @@ field_settings:
     label: 'Service time and location » Paragraph » Valitse paikka: » Sisältö » Address » The locality (i.e. city)'
     datasource_id: 'entity:node'
     property_path: 'field_service_time_and_location:entity:field_service_location:entity:field_address:locality'
-    type: string
+    type: 'solr_text_custom:ngram'
     dependencies:
       config:
         - field.storage.node.field_address
@@ -294,7 +295,7 @@ field_settings:
   rendered_item:
     label: 'Rendered HTML output'
     property_path: rendered_item
-    type: text
+    type: 'solr_text_custom:ngram'
     boost: 1.5
     configuration:
       roles:
@@ -316,7 +317,7 @@ field_settings:
     label: Title
     datasource_id: 'entity:node'
     property_path: title
-    type: text
+    type: 'solr_text_custom:ngramstring'
     boost: 5.0
     dependencies:
       module:
@@ -378,6 +379,7 @@ processor_settings:
     weights:
       preprocess_index: -45
     fields:
+      field_service_set: taxonomy_term-parent
       field_target_group_municipality: taxonomy_term-parent
   html_filter:
     weights:
@@ -405,8 +407,16 @@ processor_settings:
     weights:
       preprocess_index: -10
       preprocess_query: -10
-    all_fields: false
-    fields: {  }
+    all_fields: true
+    fields:
+      - entitygroupfield_labels
+      - field_age_groups
+      - field_description
+      - field_service_producer_labels
+      - locality
+      - rendered_item
+      - title
+      - title_1
     ignorable: "['¿¡!?,.:;]"
     ignorable_classes:
       - Pc
@@ -427,6 +437,6 @@ tracker_settings:
     indexing_order: fifo
 options:
   cron_limit: 50
-  index_directly: false
+  index_directly: true
   track_changes_in_references: true
 server: solr_search

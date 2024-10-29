@@ -11,6 +11,7 @@ dependencies:
     - user.role.specialist_editor
     - workflows.workflow.service_moderation
   module:
+    - better_exposed_filters
     - content_moderation
     - gnode
     - group
@@ -548,6 +549,7 @@ display:
         type: full
         options:
           offset: 0
+          pagination_heading_level: h4
           items_per_page: 50
           total_pages: null
           id: 0
@@ -1546,7 +1548,54 @@ display:
             type: '0'
             status: '0'
             changed: '0'
+      exposed_form:
+        type: bef
+        options:
+          submit_button: Käytä
+          reset_button: false
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+          text_input_required: 'Valitse mikä tahansa suodatin ja klikkaa Suorita nähdäksesi tulokset'
+          text_input_required_format: filtered_html
+          bef:
+            general:
+              autosubmit: false
+              autosubmit_exclude_textfield: false
+              autosubmit_textfield_delay: 500
+              autosubmit_hide: false
+              input_required: false
+              allow_secondary: false
+              secondary_label: Lisävaihtoehdot
+              secondary_open: false
+              reset_button_always_show: false
+            filter:
+              moderation_state:
+                plugin_id: default
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+                options_show_only_used: false
+                options_show_only_used_filtered: false
+                options_hide_when_empty: false
+                options_show_items_count: false
+              title:
+                plugin_id: default
+                advanced:
+                  placeholder_text: ''
+                  collapsible: false
+                  is_secondary: false
+                options_show_only_used: false
+                options_show_only_used_filtered: false
+                options_hide_when_empty: false
+                options_show_items_count: false
       defaults:
+        exposed_form: false
         fields: false
       display_extenders: {  }
     cache_metadata:

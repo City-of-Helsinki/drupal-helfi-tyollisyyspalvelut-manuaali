@@ -30,6 +30,13 @@ class SetServiceOutdatedOperationForm extends ConfirmFormBase {
   protected $serviceOutdatedAccess;
 
   /**
+   * Node interface.
+   *
+   * @var \Drupal\node\NodeInterface|mixed
+   */
+  private mixed $node;
+
+  /**
    * {@inheritdoc}
    */
   public function __construct(EntityTypeManager $entity_type_manager, ServiceOutdatedAccess $service_outdated_access) {

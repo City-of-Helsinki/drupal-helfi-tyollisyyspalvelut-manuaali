@@ -16,19 +16,15 @@ display:
           label: Operations
         name_1:
           label: 'Responsible editor (service provider)'
-        name:
+        field_responsible_updatee:
           label: 'Responsible editor (municipality)'
       exposed_form:
         options:
           submit_button: Apply
-          text_input_required_format: ''
       filters:
         status:
           group_info:
             label: Status
-        moderation_state:
-          expose:
-            label: 'Service status'
         langcode:
           expose:
             label: Language
@@ -36,6 +32,9 @@ display:
           expose:
             label: 'Filter:'
             placeholder: 'Filter by search term '
+        moderation_state_filter_exclude_archived:
+          expose:
+            label: 'Service status'
   page_1:
     display_options:
       menu:

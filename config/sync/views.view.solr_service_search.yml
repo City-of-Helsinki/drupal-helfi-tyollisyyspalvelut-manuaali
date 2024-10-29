@@ -15,7 +15,6 @@ dependencies:
     - 'taxonomy_term:municipality:0d144a4b-d279-4a85-9f36-4b6eb84b1281'
     - 'taxonomy_term:municipality:3718c3d5-6275-4038-a11a-41a19ec16cb5'
     - 'taxonomy_term:municipality:3da41814-536a-46e5-abad-648400d7d9fe'
-    - 'taxonomy_term:municipality:5a237076-439b-4f6e-8fad-2585f9722753'
     - 'taxonomy_term:municipality:72ac1850-9c40-4cf3-9ede-352383bb125a'
     - 'taxonomy_term:municipality:d00e8633-8287-41e3-b6b4-a5a7695265c2'
     - 'taxonomy_term:municipality:d8aee90f-d5eb-45ea-956a-8518601779ff'
@@ -23,6 +22,7 @@ dependencies:
     - better_exposed_filters
     - hel_tpm_search
     - search_api
+    - views_load_more
 id: solr_service_search
 label: 'Solr service search'
 module: views
@@ -95,6 +95,7 @@ display:
         type: mini
         options:
           offset: 0
+          pagination_heading_level: h4
           items_per_page: 10
           total_pages: null
           id: 0
@@ -245,7 +246,7 @@ display:
         type: none
         options: {  }
       cache:
-        type: none
+        type: search_api_none
         options: {  }
       empty: {  }
       sorts: {  }
@@ -834,12 +835,16 @@ display:
           2: OR
       style:
         type: default
+        options:
+          row_class: taxonomy-card
+          default_row_class: true
+          uses_fields: false
       row:
         type: search_api
         options:
           view_modes:
             'entity:node':
-              service: view_card_lift
+              service: taxonomy_card
       query:
         type: search_api_query
         options:
@@ -852,14 +857,16 @@ display:
       use_ajax: true
       header: {  }
       footer: {  }
-      display_extenders: {  }
+      display_extenders:
+        ajax_history:
+          enable_history: true
+          exclude_args: ''
     cache_metadata:
       max-age: -1
       contexts:
         - 'languages:language_interface'
         - url
         - url.query_args
-        - user
         - 'user.node_grants:view'
       tags:
         - 'config:search_api.index.service_search_solr_index'
@@ -949,17 +956,12 @@ display:
     position: 1
     display_options:
       pager:
-        type: full
+        type: load_more
         options:
           offset: 0
           items_per_page: 8
           total_pages: null
           id: 0
-          tags:
-            next: ''
-            previous: ''
-            first: ''
-            last: ''
           expose:
             items_per_page: false
             items_per_page_label: 'Items per page'
@@ -968,7 +970,14 @@ display:
             items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
-          quantity: 6
+          more_button_text: 'Load more'
+          end_text: ''
+          advanced:
+            content_selector: ''
+            pager_selector: ''
+          effects:
+            type: ''
+            speed: slow
       exposed_form:
         type: bef
         options:
@@ -1027,6 +1036,7 @@ display:
                 options_show_only_used_filtered: 0
                 options_hide_when_empty: 0
                 options_show_items_count: 0
+                term_optgroup: 1
               field_life_situations:
                 plugin_id: bef_dropdown_multiselet
                 advanced:
@@ -1039,6 +1049,7 @@ display:
                 options_show_only_used_filtered: 0
                 options_hide_when_empty: 0
                 options_show_items_count: 0
+                term_optgroup: 0
               field_language_1:
                 plugin_id: bef_dropdown_multiselet
                 advanced:
@@ -1051,6 +1062,7 @@ display:
                 options_show_only_used_filtered: 1
                 options_hide_when_empty: 0
                 options_show_items_count: 0
+                term_optgroup: 0
               field_free_service:
                 plugin_id: bef_dropdown_multiselet
                 advanced:
@@ -1063,6 +1075,7 @@ display:
                 options_show_only_used_filtered: false
                 options_hide_when_empty: false
                 options_show_items_count: false
+                term_optgroup: 0
               age_groups_filter:
                 plugin_id: bef_dropdown_multiselet
                 advanced:
@@ -1075,6 +1088,7 @@ display:
                 options_show_only_used_filtered: false
                 options_hide_when_empty: false
                 options_show_items_count: false
+                term_optgroup: 0
               field_accessibility:
                 plugin_id: bef_dropdown_multiselet
                 advanced:
@@ -1087,6 +1101,7 @@ display:
                 options_show_only_used_filtered: 0
                 options_hide_when_empty: 0
                 options_show_items_count: 0
+                term_optgroup: 0
               field_implementation_extra_info:
                 plugin_id: bef_dropdown_multiselet
                 advanced:
@@ -1099,6 +1114,7 @@ display:
                 options_show_only_used_filtered: 0
                 options_hide_when_empty: 0
                 options_show_items_count: 0
+                term_optgroup: 0
               field_target_group_municipality:
                 plugin_id: bef_dropdown_multiselet
                 advanced:
@@ -1111,6 +1127,7 @@ display:
                 options_show_only_used_filtered: 0
                 options_hide_when_empty: 0
                 options_show_items_count: 0
+                term_optgroup: 0
       empty:
         area:
           id: area
@@ -1184,7 +1201,10 @@ display:
           empty: false
           content: '<strong>Hakutuloksia:</strong> <span class="total-number">@total</span>'
       footer: {  }
-      display_extenders: {  }
+      display_extenders:
+        ajax_history:
+          enable_history: true
+          exclude_args: ''
       path: search
     cache_metadata:
       max-age: -1
@@ -1194,7 +1214,6 @@ display:
         - url.query_args
         - 'url.query_args:sort_by'
         - 'url.query_args:sort_order'
-        - user
         - 'user.node_grants:view'
       tags:
         - 'config:search_api.index.service_search_solr_index'

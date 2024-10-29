@@ -73,7 +73,7 @@
 
 
 {% include "@molecules/card/card.twig" with {
-  card__extra_classes: ["grid__item padded"],
+  card__extra_classes: ["grid__item padded", "card--default-hover"],
   card__heading: content.field_title,
   card__body: content.field_description_plain,
   card__button__url: content.field_link[0]["#url"],

@@ -8,6 +8,7 @@
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -58,6 +59,10 @@ function _hel_tpm_group_create_missing_updatees_queue_items() {
 function hel_tpm_group_entity_type_alter(array &$entity_types): void {
   if (isset($entity_types['group_content'])) {
     $entity_types['group_content']->setFormClass('delete', 'Drupal\hel_tpm_group\Entity\Form\GroupCheckMemberDeleteForm');
+  }
+
+  if (isset($entity_types['group'])) {
+    $entity_types['group']->addConstraint('GroupUniqueTitle', []);
   }
 }
 
@@ -252,6 +257,27 @@ function hel_tpm_group_views_data_alter(array &$data) {
       'zero is null' => TRUE,
     ],
   ];
+
+  $data['node_field_data']['moderation_state_filter_exclude_archived'] = [
+    'title' => t('Moderation state excluding archived by default'),
+    'filter' => [
+      'id' => 'moderation_state_filter_exclude_archived',
+      'field' => 'moderation_state',
+      'allow empty' => TRUE
+    ],
+  ];
+}
+
+/**
+ * Implements hook_page_attachments_alter().
+ */
+function hel_tpm_group_page_attachments_alter(array &$attachments): void {
+  $route_match = \Drupal::routeMatch();
+  if ($group = $route_match->getParameter('group')) {
+    if ($group instanceof GroupInterface && !$group->isPublished()) {
+      \Drupal::messenger()->addStatus(t('The group is not published.'));
+    }
+  }
 }
 
 /**

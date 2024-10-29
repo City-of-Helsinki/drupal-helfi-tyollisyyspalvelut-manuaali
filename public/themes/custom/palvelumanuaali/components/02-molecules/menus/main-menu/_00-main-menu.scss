@@ -1,7 +1,7 @@
 /* Menu media */
 $main-menu-medium: $medium;
 
-#block-system-menu-block-main {
+.sidebar-main-nav {
   position: unset;
   @include large {
     position: relative;
@@ -9,7 +9,7 @@ $main-menu-medium: $medium;
 }
 /* Nav */
 .main-nav {
-  display: none;
+  // display: none;
   @include large {
     display: block;
   }
@@ -45,10 +45,6 @@ $main-menu-medium: $medium;
 .main-menu--sub {
   border-bottom: none;
   width: 100%;
-
-  &:hover {
-
-  }
 
   /* See main-menu.js */
   &-open {

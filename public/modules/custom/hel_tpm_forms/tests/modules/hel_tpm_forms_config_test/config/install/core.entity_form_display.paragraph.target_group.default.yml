@@ -1,0 +1,77 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.target_group.field_age
+    - field.field.paragraph.target_group.field_age_groups
+    - field.field.paragraph.target_group.field_description
+    - field.field.paragraph.target_group.field_municipality
+    - field.field.paragraph.target_group.field_municipality_irrelevant
+    - field.field.paragraph.target_group.field_target_group_municipality
+    - paragraphs.paragraphs_type.target_group
+  module:
+    - maxlength
+    - range
+    - select2
+    - text
+id: paragraph.target_group.default
+targetEntityType: paragraph
+bundle: target_group
+mode: default
+content:
+  field_age:
+    type: range
+    weight: 1
+    region: content
+    settings:
+      label:
+        from: Ikävuodesta
+        to: Ikävuoteen
+      placeholder:
+        from: ''
+        to: ''
+    third_party_settings: {  }
+  field_age_groups:
+    type: options_buttons
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_description:
+    type: text_textarea
+    weight: 4
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings:
+      maxlength:
+        maxlength_js: null
+        maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
+        maxlength_js_enforce: false
+  field_municipality_irrelevant:
+    type: boolean_checkbox
+    weight: 2
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  field_target_group_municipality:
+    type: select2_entity_reference
+    weight: 3
+    region: content
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
+    third_party_settings: {  }
+  translation:
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  created: true
+  field_municipality: true
+  status: true

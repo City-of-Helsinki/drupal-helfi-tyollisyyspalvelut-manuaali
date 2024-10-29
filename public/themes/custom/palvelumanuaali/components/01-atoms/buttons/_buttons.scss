@@ -165,6 +165,7 @@ $button-colors: (
   @include xxl {
     padding: $space-three-fourths $space-double;
     height: 48px;
+    line-height: 24px;
     box-sizing: border-box;
 
   }
@@ -224,7 +225,7 @@ $button-colors: (
 //button symbol variations
 @mixin arrow-right-background {
   &::after {
-    background-image: url("/themes/custom/palvelumanuaali/images/icons/arrow-right-2.svg");
+    background-image: url("../../assets/images/icons/arrow-right-2.svg");
     content: "";
     display: block;
     background-repeat: no-repeat;
@@ -237,7 +238,7 @@ $button-colors: (
 //button symbol variations
 @mixin  questionmark-left-background {
   &::before {
-    background-image: url("/themes/custom/palvelumanuaali/images/icons/c-question.svg");
+    background-image: url("../../assets/images/icons/c-question.svg");
     content: "";
     display: block;
     background-repeat: no-repeat;
@@ -271,10 +272,10 @@ $button-colors: (
 //theming
 
 .button {
+  @include button-round-corners;
   @include button-base;
   @include button-color-blue;
   @include button-medium;
-  @include button-round-corners;
   &--alt {
     @include button-color-secondary;
     @include button-large;
@@ -337,7 +338,7 @@ $button-colors: (
     line-height: 24px;
     &::after {
       content: "";
-      background-image: url("/themes/custom/palvelumanuaali/images/icons/arrow-sm-down.svg");
+      background-image: url("../../assets/images/icons/arrow-sm-down.svg");
       background-repeat: no-repeat;
       background-position-y: center;
       width: 24px;
@@ -382,30 +383,11 @@ $button-colors: (
     padding-left: $space-double;
     padding-right: $space-double;
   }
-}
-
-#shorten-link {
-  @include button-base;
-  @include button-medium;
-  @include button-round-corners;
-  @include button-no-color;
-
-  border: 2px solid clr(background-section);
-  padding-right: $space-double;
-  .button {
-    border: unset;
-    background: unset;
-    padding: 0;
-    color: clr(background-section);
-    font-weight: bold;
+  &--line-height-24 {
+    line-height: 24px;
   }
-  &::after {
-    @include icons;
-
-    content: "\EA0B";
-    color: clr(background-section);
-    margin-left: $space;
-    font-weight: bold;
+  &--padding-right-quadruple {
+    padding-right: $space-quadruple;
   }
 }
 
@@ -444,7 +426,10 @@ $button-colors: (
   font-size: 14px;
   line-height: 24px;
   font-weight: 700;
-  display: flex;
+
+  @include large {
+      display: flex;
+  }
   .login-text {
     line-height: 24px;
     margin-right: $space;
@@ -456,12 +441,18 @@ $button-colors: (
 }
 
 #languageSwitcherButton {
-  padding: 0;
-  font-size: 9px;
-  margin-left: 10px;
-  text-transform: uppercase;
+  width: 44px;
+  height: 44px;
+  margin-left: 0;
+  position: relative;
   border: 0;
+  display: grid;
+  padding: 10px; // TODO: as classes?
   @include large {
+    width: unset;
+    position: unset;
+    display: flex;
+    text-transform: uppercase;
     margin-left: unset;
     padding: 0 .75rem 0 .75rem;
     font-size: 15px;
@@ -472,10 +463,17 @@ $button-colors: (
     margin-right: $space;
     height: 24px;
     width: 24px;
-    vertical-align: top;
+    vertical-align: middle;
+    @include large {
+      vertical-align: top;
+    }
   }
   .language-code {
     line-height: 24px;
+    color: transparent;
+    @include large {
+      color: clr(text);
+    }
   }
 }
 
@@ -494,11 +492,25 @@ $button-colors: (
   right: 0;
 }
 
+.search-page {
   .flag.action-flag,
   .flag.action-unflag {
+    z-index: 40;
+  }
+}
+
+.service-page {
+  .flag.action-flag,
+  .flag.action-unflag {
+    z-index: inherit;
+  }
+}
+
+.flag.action-flag,
+.flag.action-unflag {
     position: absolute;
     right: 48px;
-    z-index: 120;
+    z-index: 80;
     font-size: 0;
     border: 0;
     display: block;
@@ -644,7 +656,7 @@ there is possibility to add classes button--blue-bordered,
     gap: 15px;
     &:hover {
       box-shadow: 0px 8px 16px 0px rgba(30, 64, 182, 0.20);
-      transition-delay: 100ms;
+      transition-duration: 100ms;
       @include xl {
         transform: translateX(-3px);
       }
@@ -688,7 +700,7 @@ there is possibility to add classes button--blue-bordered,
       content: "";
       width: 24px;
       height: 24px;
-      background-image: url("/themes/custom/palvelumanuaali/images/icons/plus.svg");
+      background-image: url("../../assets/images/icons/plus.svg");
       background-repeat: no-repeat;
       background-position-y: center;
       display: block;
@@ -711,7 +723,7 @@ there is possibility to add classes button--blue-bordered,
     content: "";
     width: 24px;
     height: 24px;
-    background-image: url("/themes/custom/palvelumanuaali/images/icons/plus.svg");
+    background-image: url("../../assets/images/icons/plus.svg");
     background-repeat: no-repeat;
     background-position-y: center;
     display: block;
@@ -722,10 +734,20 @@ there is possibility to add classes button--blue-bordered,
 }
 
 
+
 .node-form,
 .node-edit-form {
-  .field-add-more-submit,
-    .paragraphs-icon-button {
+  .field-add-more-submit {
+    @include button-medium;
+    @include button-round-corners;
+    @include border-2-blue;
+    @include button-no-color-with-round-border;
+  }
+}
+
+.node-form,
+.node-edit-form {
+  .paragraphs-icon-button {
       @include button-medium;
       @include button-no-color;
       @include button-round-corners;
@@ -740,7 +762,7 @@ there is possibility to add classes button--blue-bordered,
 
     width: 100%;
     box-sizing: border-box;
-    background-image: url("/themes/custom/palvelumanuaali/images/icons/plus.svg");
+    background-image: url("../../assets/images/icons/plus.svg");
     background-repeat: no-repeat;
     background-position-y: center;
     line-height: 24px;
@@ -776,7 +798,7 @@ input[data-drupal-selector="edit-field-contact-info-external-actions-ief-add"]{
   width: 48px;
   height: 48px;
   background-color: clr(text-inverse);
-  background-image: url("/themes/custom/palvelumanuaali/images/icons/user-blue.svg");
+  background-image: url("../../assets/images/icons/user-blue.svg");
   border-radius: 50%;
   &:hover {
     background-color: clr(background-border);
@@ -786,7 +808,7 @@ input[data-drupal-selector="edit-field-contact-info-external-actions-ief-add"]{
 button {
   &.shwpd {
     @extend .background-default;
-    background-image: url("/themes/custom/palvelumanuaali/images/icons/eye.svg");
+    background-image: url("../../assets/images/icons/eye.svg");
     background-size: 16px;
     background-position: center;
     width: 32px;
@@ -797,5 +819,21 @@ button {
     @extend .background-default;
     background-color: clr(background-border);
     border-radius: 50%;
+  }
+}
+
+.close-icon-button {
+  color: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-color: transparent;
+  border: 0;
+  border-radius: 0;
+  background-image: url("../../assets/images/icons/close.svg");
+  padding: 0;
+  background-size: contain;
+  &:hover {
+    background-color: transparent;
+    color: transparent;
   }
 }

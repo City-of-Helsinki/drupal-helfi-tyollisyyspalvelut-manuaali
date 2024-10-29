@@ -12,8 +12,23 @@
  * @see template_preprocess_region()
  */
 #}
+{% set sidebar__base_class = 'sidebar' %}
+{# If `directory` is defined, set the path relative for Drupal.
+ # Otherwise, set the path relative to the Component Library. #}
+{% set sidebar__logo_src = directory ? '/' ~ directory ~ '/assets/images/icons/logo.svg' : 'logo.svg' %}
+{% set sidebar__logo_small_src = directory ? '/' ~ directory ~ '/assets/images/icons/logo-small.svg' : 'logo-small.svg' %}
+{% set link_url = url('<front>') %}
+
 {% extends "@organisms/site/site-header/site-header.twig" %}
 
 {% block header__menu %}
   {{ content }}
+{% endblock %}
+{% block header__breadcrumbs %}
+  {% include "@organisms/site/site-sidebar/_site-sidebar-branding.twig" with {
+    small: "yes",
+    logo_link__url: link_url,
+  } %}
+  {{ drupal_block('user_login_block') }}
+  {{ drupal_block('system_menu_block:account') }}
 {% endblock %}

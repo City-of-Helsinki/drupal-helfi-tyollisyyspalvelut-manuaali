@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_municipality_irrelevant
+    - paragraphs.paragraphs_type.target_group
+id: paragraph.target_group.field_municipality_irrelevant
+field_name: field_municipality_irrelevant
+entity_type: paragraph
+bundle: target_group
+label: "Municipality doesn't matter"
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: On
+  off_label: Off
+field_type: boolean

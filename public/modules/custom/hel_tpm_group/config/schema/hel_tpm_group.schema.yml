@@ -20,6 +20,14 @@ entity_reference_selection.hel_tpm_group_editor_user_selection:
       type: integer
       label: "Include subgroup members"
 
+entity_reference_selection.hel_tpm_group_group_selection:
+  type: entity_reference_selection.default
+  label: 'Group selection handler settings'
+  mapping:
+    published_filter:
+      type: string
+      label: 'Filter by publishing status'
+
 # Schema definition for views group label filter.
 views.filter.group_label_filter:
   type: views.filter.many_to_one
@@ -28,3 +36,7 @@ views.filter.group_label_filter:
 views.filter.group_without_admin_filter:
   type: views.filter.in_operator
   label: 'Groups without admin'
+
+views.filter.moderation_state_filter_exclude_archived:
+  type: views.filter.in_operator
+  label: 'Moderation state filter exclude archived'

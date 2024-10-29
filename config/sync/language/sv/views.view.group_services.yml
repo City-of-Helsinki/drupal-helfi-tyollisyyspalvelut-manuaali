@@ -16,12 +16,9 @@ display:
           label: Operationer
         name_1:
           label: 'Ansvarig person hos tjänsteleverantören'
-        name:
+        field_responsible_updatee:
           label: 'Kommunens ansvarsuppdaterare'
       filters:
-        moderation_state:
-          expose:
-            label: 'Tjänstens status '
         langcode:
           expose:
             label: Språk
@@ -32,9 +29,9 @@ display:
         status:
           group_info:
             label: Publiceringsstatus
-      exposed_form:
-        options:
-          text_input_required_format: ''
+        moderation_state_filter_exclude_archived:
+          expose:
+            label: 'Tjänstens status'
   page_1:
     display_options:
       menu:

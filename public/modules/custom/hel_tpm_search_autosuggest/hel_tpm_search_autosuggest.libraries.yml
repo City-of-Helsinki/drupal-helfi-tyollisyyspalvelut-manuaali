@@ -1,6 +1,6 @@
 # Custom module library for general purposes.
 hel_tpm_search_autosuggest:
-  version: 1
+  version: 1.42
   js:
     js/hel-tpm-search-autosuggest.js: {}
   css:
@@ -9,4 +9,5 @@ hel_tpm_search_autosuggest:
   dependencies:
     - core/jquery
     - core/drupal
+    - core/drupal.debounce
     - core/drupalSettings

@@ -1,6 +1,129 @@
+@keyframes slide-in {
+  100% { transform: translateX(0%); }
+}
+
+
+@keyframes slide-out {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes slide-out-right {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(100%); }
+}
+
+body:not(.logged-in) {
+  .menu--account {
+    display: none;
+  }
+
+}
+
+body:not(.admin-toolbar-enabled) {
+  .header__primary-mobile {
+    margin-top: 0;
+  }
+}
+
+
+.slide-in-menu {
+  margin-top: 40px;
+  display: block;
+  height: 100%;
+  position: fixed;
+  inset:0;
+  overflow-y: scroll;
+  background: white;
+  z-index: 300;
+  padding: 0 $space;
+  margin-left: 0;
+  transform:translateX(-100%);
+  width:  100%;
+  max-width: 100vw;
+  @include large {
+    margin-top: inherit;
+    position: inherit;
+    inset: unset;
+    overflow-y: auto;
+  }
+  &.slide-in {
+    animation: slide-in 0.5s forwards;
+    -webkit-animation: slide-in 0.5s forwards;
+  }
+  &.slide-out {
+    animation: slide-out 0.5s forwards;
+    -webkit-animation: slide-out 0.5s forwards;
+    .main-nav {
+      display: none;
+    }
+  }
+}
+
+.slide-in-loginform {
+  padding-top: 40px;
+  display: block;
+  height: 100%;
+  position: fixed;
+  inset:0;
+  overflow-y: scroll;
+  background-color: clr(background-dropdown);
+  z-index: 300;
+  padding: 0 $space;
+  margin-left: 0;
+  transform:translateX(100%);
+  width:  100%;
+  max-width: 100vw;
+  @include large {
+    margin-top: inherit;
+    position: inherit;
+    inset: unset;
+    overflow-y: auto;
+    display: none;
+  }
+  > .btn {
+    margin-left: calc(-1 * $space);
+    margin-top: $space-one-half;
+  }
+  &.slide-in {
+    animation: slide-in 0.5s forwards;
+    -webkit-animation: slide-in 0.5s forwards;
+  }
+  &.slide-out-right {
+    animation: slide-out-right 0.5s forwards;
+    -webkit-animation: slide-out-right 0.5s forwards;
+    .main-nav {
+      display: none;
+    }
+  }
+  .form-submit {
+    width: 100%;
+  }
+  .login-text {
+    font-weight: 600;
+    margin-top: -34px;
+    text-align: center;
+  }
+  > ul {
+    padding-left: 0;
+    text-align: center;
+    padding-top: $space-double;
+    a {
+      text-decoration: none;
+      font-weight: 600;
+    }
+  }
+  .user-login-form {
+    margin-top: $space-two-and-half;
+  }
+}
+
+
 
 .header {
-
+  width: calc(100% + 32px);
+  margin-left: -16px;
+  position: relative;
   @include large {
     z-index: 200;
     width: 100%;
@@ -15,30 +138,163 @@
   }
 
   &__inner {
+    width: 100%;
+    position: relative;
+    z-index: 105;
+    >.toggle-expand {
+      position: absolute;
+      top: 0;
+      padding: 0;
+      padding: 10px;
+      width: 44px;
+      height: 44px;
+      margin-top: 6px;
+      margin-left: 6px;
+    }
     @include wrapper;
-    max-width: 100%;
     display: flex;
     flex-flow: column nowrap;
-
+    min-height: 70px;
     @include xs {
       padding: 0;
+    }
+    @include large {
+      max-width: 100%;
+      z-index: 0;
+      width: 100%;
     }
   }
 
   &__primary {
-    position: fixed;
-    bottom: 0;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-around;
-    align-items: center;
     padding: 0;
     z-index: 200;
     background-color: clr(background);
     width: 100%;
     margin-left: -15px;
     padding-top: $space-one-half;
+    display: none;
     @include large {
+      display: block;
+      width: 100%;
+      position: relative;
+      bottom: unset;
+      padding: $space-double $space-double $space-one-and-half $space-double;
+      margin-left: unset;
+      min-height: 122px;
+      &.filters-open {
+        @include xl {
+          padding-bottom: $space-four-and-half;
+        }
+      }
+      .menu--favorites {
+        display: none;
+        @include large {
+          display: flex;
+          flex-direction: row;
+          font-size: 12px;
+        }
+        @include xl {
+          font-size: 15px;
+        }
+      }
+      .block-language-blocklanguage-interface {
+        display: none;
+        @include large {
+          display: flex;
+          flex-direction: row;
+          font-size: 12px;
+        }
+        @include xl {
+          font-size: 15px;
+        }
+      }
+    }
+    .block--header-search-block{
+      width: 100%;
+      float: right;
+      margin-bottom: $space-one-half;// TODO: to large?
+      display: none;
+      @include large  {
+        display: block;
+        >form {
+            text-align: center;
+        }
+      }
+      .text-search-wrapper {
+        margin-left: auto;
+        margin-right: auto;
+        display: inline-block;
+
+        .form-actions {
+          top: 0;
+          height: 48px;
+        }
+      }
+    }
+    .menu--main { display: none;}
+    #block-kirjautuminen,
+    #block-kayttajavalikko  {
+      @include large {
+        display: block;
+      }
+    }
+
+    .menu--additional-links-menu {
+      @include large {
+        display: none;
+      }
+    }
+
+  }
+  &__primary-mobile {
+    margin-top: 40px;
+    display: block;
+    height: 100%;
+    position: fixed;
+    inset:0;
+    overflow-y: scroll;
+    background: white;
+    z-index: 300;
+    padding: 0 $space;
+    margin-left: 0;
+    transform:translateX(-100%);
+    width:  100%;
+    @include large {
+      margin-top: inherit;
+      position: inherit;
+      inset: unset;
+      overflow-y: auto;
+    }
+    &.slide-in {
+      animation: slide-in 0.5s forwards;
+      -webkit-animation: slide-in 0.5s forwards;
+    }
+    &.slide-out {
+      animation: slide-out 0.5s forwards;
+      -webkit-animation: slide-out 0.5s forwards;
+      .main-nav {
+        display: none;
+      }
+    }
+    .block--header-search-block {
+      z-index: 30;
+      @include large {
+        z-index: unset;
+      }
+    }
+
+    .block-language-blocklanguage-interface,
+    .menu--favorites {
+      z-index: 40;
+      @include large {
+        z-index: unset;
+      }
+    }
+    @include large {
+      display: block;
+      background: transparent;
+      z-index: unset;
+      .menu--favorites {display: block}
       position: relative;
       bottom: unset;
       padding: $space-double $space-double $space-one-and-half $space-double;
@@ -50,7 +306,58 @@
         }
       }
     }
+    .menu--account {
+      display: none;
+    }
+    .search-form {
+      display: flex;
+    }
+    .block--header-search-block{
+      width: 100%;
+      float: right;
+      margin-bottom: $space-one-half;// TODO: to large?
+      .text-search-wrapper {
+        margin-left: auto;
+        margin-right: auto;
+        display: inline-block;
 
+        .form-actions {
+          top: 0;
+          height: 48px;
+        }
+      }
+    }
+
+    .menu--main {
+      display: block;
+      @include large {
+        display: none;
+      }
+    }
+    .main-nav {
+      display: block;
+      width: 100%;
+      width: calc(100% + 2rem);
+      margin-left: -1rem;
+    }
+    .toggle-expand {
+      position: absolute;
+      top: 0;
+      margin-left: -10px;
+      padding: 0;
+      padding: 10px;
+      width: 44px;
+      height: 44px;
+      margin-top: 6px;
+    }
+
+    .block--header-search-block{
+      display: block;
+    }
+    #block-kirjautuminen {
+      display: none;
+    }
+    .menu--favorites {display: block}
   }
 
   &__branding {
@@ -60,25 +367,77 @@
     background: clr(sidebar-color);
     border-top-right-radius: 47px;
   }
+ &__secondary {
+   .block-user-login-block {
+     position: absolute;
+     top: 6px;
+     right: 6px;
 
+     @include large {
+       display: none;
+     }
+     .btn-menu {
+       padding: 0;
+     }
+     .btn-menu-close {
+       outline: unset;
+     }
+     .link {
+       width: 44px;
+       height: 44px;
+       display: block;
+       overflow: hidden;
+       color: transparent;
+     }
+     .icon {
+       height: 44px;
+       width: 44px;
+       padding: 10px;
+       top: 0;
+       right: 6px;
+     }
+   }
+   .menu--account {
+     h2 {
+       display: none;
+     }
+     display: block;
+     position: absolute;
+     top: 0;
+     right: 6px;
+     @include large {
+       display: none;
+     }
+   }
+   .login-button {
+     display: block;
+     @include large {
+       display: none;
+     }
+   }
+ }
 }
 
 .header {
-  #block-suosikit,
-  #block-kielenvaihtaja,
+  .navigation.menu--favorites,
+  .block-language-blocklanguage-interface,
   #block-kirjautuminen,
-  #block-kayttajavalikko  {
+  .menu--account  {
     @include large {
       position: absolute;
     }
   }
-  #block-kielenvaihtaja {
-    @include large {left:38px; z-index: 100;}
+  .block-language-blocklanguage-interface {
+    display: inline-block;
+    float: right;
+    margin-right: 20px;
+    @include large {display: block; left:38px; z-index: 100; margin-right: unset;}
     @include xl {left:65px;}
   }
-  #block-suosikit {
-
-    @include large {left:160px; z-index: 100;}
+  .menu--favorites {
+    display: inline-block;
+    float: right;
+    @include large {display: block; left:160px; z-index: 100;}
     @include xl {left:213px;}
   }
   #block-kirjautuminen {
@@ -86,6 +445,9 @@
     @include xl {right:50px;}
   }
   #block-kayttajavalikko {
+    position: absolute;
+    top: 0;
+    right: 0;
     @include large {right:20px; top: 25px; z-index: 100;}
     @include xl {right:50px;}
   }
@@ -103,8 +465,6 @@
   }
 }
 
-#block-suosikit,
-#block-kielenvaihtaja,
 #block-kirjautuminen {
   display: flex;
   align-items: start;
@@ -120,9 +480,8 @@
   }
 }
 
-#block-suosikit {
+.navigation.menu--favorites {
   .content .menu {
-
     @include large {
       display: flex;
       align-items: center;
@@ -130,11 +489,15 @@
     }
   }
   a {
-    font-weight: 600;
+    color: transparent;
+    @include xl {
+      font-weight: 600;
+      color: clr(text);
+    }
   }
 }
 
-#block-kielenvaihtaja {
+.block-language-blocklanguage-interface {
   .content {
     @include large {
       display: flex;
@@ -143,18 +506,24 @@
   }
 }
 
-#block-kayttajavalikko {
+.menu--account {
   display: flex;
   align-items: start;
-  #accountMenuButton {
-    display: flex;
-    align-items: center;
-    border: 0;
+  z-index: 10;
+  .btn--hide-on-mobile {
+    display: none;
+    @include large {
+      display: block;
+      span {
+        display: block;
+      }
+    }
   }
-  .view-user-info{
+  .view-user-info {
     .view-content {
       display: flex;
       align-items: center;
+      margin-bottom: $space-two-and-half;
       &::before {
         content: "";
         width: 32px;
@@ -162,20 +531,27 @@
         background-repeat: no-repeat;
         display: block;
         margin-right: 14px;
-        background-color: clr(background-section);
-        background-image: url("/themes/custom/palvelumanuaali/images/icons/user-white.svg");
+        background-color: clr(background-border);
+        background-image: url("../../assets/images/icons/user-blue.svg");
         background-position: center;
         background-size: 16px;
         border-radius: 50%;
+        @include large {
+          background-color: clr(background-section);
+          background-image: url("../../assets/images/icons/user-white.svg");
+        }
       }
-      margin-bottom: $space-one-and-half;
     }
     .views-row {
       text-align: left;
       .views-field-name {
+        text-align: center;
+        @include large {
+          text-align: left;
+        }
         a {
           font-weight: 600;
-          font-size: 9px;
+          font-size: 16px;
           color: clr(text);
           text-decoration: none;
           @include large {
@@ -188,8 +564,12 @@
       }
       .views-field-mail {
         color: clr(text);
+        text-align: center;
+        @include large {
+          text-align: left;
+        }
         span {
-            font-size: 9px;
+            font-size: 14px;
             @include large {
               font-size: 12px;
           }
@@ -211,7 +591,7 @@
     &:first-child {
       .dropdown-menu-inner__link {
         &::before {
-          background-image: url("/themes/custom/palvelumanuaali/images/icons/cogwheel.svg");
+          background-image: url("../../assets/images/icons/cogwheel.svg");
           content: "";
           width: 20px;
           height: 20px;
@@ -225,7 +605,7 @@
     &:nth-child(2) {
       .dropdown-menu-inner__link {
         &::before {
-          background-image: url("/themes/custom/palvelumanuaali/images/icons/door.svg");
+          background-image: url("../../assets/images/icons/door.svg");
           content: "";
           width: 20px;
           height: 20px;
@@ -260,7 +640,7 @@
       max-width: 100%;
       input {
         width: 100%;
-        border: 2px solid #AFCEFD;
+        border: 2px solid $blue40;
         box-sizing: border-box;
         border-radius: 8px;
         background-image: unset !important;
@@ -272,7 +652,67 @@
   }
 }
 
-#block-kirjautuminen {
+.block-user-login-block {
+  .form-item {
+    position: relative;
+    &:focus-within {
+      &::before {
+        color: clr(alt-header-color)!important;
+      }
+    }
+    .form-item__description {
+      display: none;
+    }
+    label {
+      text-align: left;
+      font-weight: 700;
+      font-size: 12px;
+      line-height: 24px;
+      letter-spacing: 1px;
+      color: clr(alt-header-color);
+      text-transform: uppercase;
+      padding-top: 0;
+      padding-bottom: 4px;
+      @include large  {
+        margin-bottom: 0;
+      }
+    }
+    input {
+      border-radius: 8px;
+      padding-left: 51px;
+      background: clr(sidebar-color);
+      &:focus {
+        box-shadow: inset 0px 0px 0px 2px clr(background-section);
+        outline: none;
+      }
+    }
+    &:first-child {
+      &::before {
+        @include icons;
+        content: "\EA02";
+        position: absolute;
+        left: 18px;
+        bottom: 15px;
+        color: clr(gray);
+      }
+
+    }
+    &:nth-child(2) {
+      &::before {
+        @include icons;
+        content: "\EA04";
+        position: absolute;
+        left: 18px;
+        bottom: 15px;
+        color: clr(gray);
+      }
+      &:focus {
+        &::before {
+          color: clr(alt-header-color);
+        }
+      }
+    }
+  }
   .dropdown-menu {
     border-radius: 8px;
     box-shadow: 0px 8px 16px rgba(30, 64, 182, 0.2);
@@ -281,63 +721,6 @@
     top:24px !important;
     @include large {
       width: 336px;
-    }
-    .form-item {
-      position: relative;
-      &:focus-within {
-        &::before {
-          color: clr(alt-header-color)!important;
-        }
-      }
-      label {
-        text-align: left;
-        font-weight: 700;
-        font-size: 12px;
-        line-height: 24px;
-        letter-spacing: 1px;
-        color: clr(alt-header-color);
-        text-transform: uppercase;
-        padding-top: 0;
-        padding-bottom: 4px;
-        @include large  {
-          margin-bottom: 0;
-        }
-      }
-      input {
-        border-radius: 8px;
-        padding-left: 51px;
-        background: clr(sidebar-color);
-        &:focus {
-          box-shadow: inset 0px 0px 0px 2px clr(background-section);
-          outline: none;
-        }
-      }
-      &:first-child {
-        &::before {
-          @include icons;
-          content: "\EA02";
-          position: absolute;
-          left: 18px;
-          bottom: 15px;
-          color: clr(gray);
-        }
-
-      }
-      &:nth-child(2) {
-        &::before {
-          @include icons;
-          content: "\EA04";
-          position: absolute;
-          left: 18px;
-          bottom: 15px;
-          color: clr(gray);
-        }
-        &:focus {
-          &::before {
-            color: clr(alt-header-color);
-          }
-        }
-      }
     }
     .form-actions{
       display: flex;
@@ -471,7 +854,103 @@
     @include large {
       max-width: 300px;
     }
-    @include xl {
+    @include xxl {
       max-width: none;
+    }
+}
+
+.admin-toolbar-enabled {
+  .dropdown-mobile-menu {
+      margin-top: 40px;
+  }
+}
+
+.dropdown-mobile-menu {
+    display: block;
+    height: 100%;
+    position: fixed;
+    inset: 0;
+    overflow-y: scroll;
+    background: #fff;
+    z-index: 300;
+    padding: 0 1rem;
+    margin-left: 0;
+    transform:translateX(100%);
+    width: 100%;
+    @include large {
+      display: none !important;
+    }
+    &.slide-in {
+      animation: slide-in 0.5s forwards;
+      -webkit-animation: slide-in 0.5s forwards;
+    }
+    &.slide-out-right {
+      animation: slide-out-right 0.5s forwards;
+      -webkit-animation: slide-out-right 0.5s forwards;
+    }
+    .btn-menu-close {
+      margin-top: 12px;
+    }
+    .views-element-container {
+      margin-top: $space;
+    }
+    .views-row {
+      margin: auto;
+    }
+    .view-content::before {
+      position: absolute;
+      right: 0;
+      top: 16px;
+    }
+    .menu {
+      padding-left: $space-one-and-half;
+    }
+    .menu__item {
+      text-align: left;
+      margin-bottom: $space;
+      &:first-child {
+        .menu__link {
+          &::before {
+            background-image: url("../../assets/images/icons/cogwheel.svg");
+            content: "";
+            width: 20px;
+            height: 20px;
+            background-repeat: no-repeat;
+            display: block;
+            margin-right: 20px;
+            background-size: cover;
+          }
+        }
+      }
+      &:nth-child(2) {
+        .menu__link {
+          &::before {
+            background-image: url("../../assets/images/icons/door.svg");
+            content: "";
+            width: 20px;
+            height: 20px;
+            background-repeat: no-repeat;
+            display: block;
+            margin-right: 20px;
+            background-size: cover;
+          }
+        }
+      }
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+    .menu__link {
+      font-size: 15px;
+      line-height: 24px;
+      font-weight: 600;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: max-content;
+      color: clr(text);
+      &:hover {
+        text-decoration: underline;
+      }
     }
 }

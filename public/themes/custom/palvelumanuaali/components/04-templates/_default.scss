@@ -20,7 +20,9 @@ body {
 }
 
 .layout-container {
+  position: relative;
   @include large {
+    position: inherit;
     height: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -55,6 +57,15 @@ body {
   }
 }
 
+
+.search-page {
+  .main {
+    margin-bottom: 5em;
+    @include xxl {
+      margin: auto;
+    }
+  }
+}
 .main {
   display: block;
   position: relative;
@@ -79,11 +90,8 @@ body {
 }
 
 .main-sidebar {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: $space-double;
-  background-color: clr(sidebar-color);
   @include large {
+    background-color: clr(sidebar-color);
     height: 100vh;
     top: 0;
     position: sticky;

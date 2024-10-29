@@ -9,8 +9,8 @@ use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Site\Settings;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
-use Drupal\menu_link_content\Entity\MenuLinkContent;
 use Drupal\hel_tpm_general\PreventMailUtility;
+use Drupal\menu_link_content\Entity\MenuLinkContent;
 use Drupal\node\Entity\Node;
 
 /**
@@ -624,21 +624,21 @@ function hel_tpm_general_update_10108(&$sandbox) {
  * Create My account menu link and translations.
  */
 function hel_tpm_general_update_10109(&$sandbox) {
- $menu_link = MenuLinkContent::create([
-   'title' => 'Oma käyttäjätilini',
-   'link' => ['uri' => 'internal:/user/edit'],
-   'menu_name' => 'account',
-   'expanded' => TRUE,
-   'weight' => -10
- ]);
- $menu_link->save();
- $translation = $menu_link->addTranslation('en');
- $translation->set('title', 'My account');
- $translation->save();
+  $menu_link = MenuLinkContent::create([
+    'title' => 'Oma käyttäjätilini',
+    'link' => ['uri' => 'internal:/user/edit'],
+    'menu_name' => 'account',
+    'expanded' => TRUE,
+    'weight' => -10,
+  ]);
+  $menu_link->save();
+  $translation = $menu_link->addTranslation('en');
+  $translation->set('title', 'My account');
+  $translation->save();
 
- $translation = $menu_link->addTranslation('sv');
- $translation->set('title', 'Mitt konto');
- $translation->save();
+  $translation = $menu_link->addTranslation('sv');
+  $translation->set('title', 'Mitt konto');
+  $translation->save();
 }
 
 /**
@@ -649,13 +649,13 @@ function hel_tpm_general_update_10110(&$sandbox) {
   $node_field_refs = $database->select('node_revision__field_service_languages', 'nrf')
     ->fields('nrf', [
       'entity_id',
-      'field_service_languages_target_id'
+      'field_service_languages_target_id',
     ])
     ->execute()
     ->fetchAllAssoc('field_service_languages_target_id');
   $paragraph_tables = [
     'paragraphs_item_field_data',
-    'paragraphs_item_revision_field_data'
+    'paragraphs_item_revision_field_data',
   ];
   foreach ($node_field_refs as $row) {
     foreach ($paragraph_tables as $table) {
@@ -675,10 +675,12 @@ function hel_tpm_general_update_10110(&$sandbox) {
 /**
  * Helper function to migrate service language paragraphs to node field.
  *
- * @param \stdClass $revision_row
+ * @param array $field_revisions
+ *   Array of field reviesion.
  *
  * @return void
- *  -
+ *   Void
+ *
  * @throws \Exception
  */
 function _hel_tpm_general_migrate_service_languages($field_revisions) {
@@ -749,38 +751,6 @@ function _hel_tpm_general_migrate_service_languages($field_revisions) {
 function _hel_tpm_general_migrate_paragraph_field($paragraph, $paragraph_field, &$node, $internal_file_field) {
   $files = $paragraph->{$paragraph_field}->getValue();
   $node->set($internal_file_field, $files);
-}
-
-/**
- * Helper function to ensure entity type bundle fields.
- *
- * @param string $entity_type
- *   Entity type id.
- * @param string $bundle
- *   Entity bundle id.
- * @param array $fields
- *   Fields you want to ensure.
- *
- * @return void
- *   -
- *
- * @throws \Drupal\Core\Entity\EntityStorageException
- */
-function _hel_tpm_general_ensure_entity_fields(string $entity_type, string $bundle, array $fields) : void {
-  $config_dir = Settings::get('config_sync_directory');
-  $config_directory = new FileStorage($config_dir);
-  foreach ($fields as $field) {
-    $field_storage_name = 'field.storage.' . $entity_type . '.' . $field;
-    $config_record = $config_directory->read($field_storage_name);
-    if (!FieldStorageConfig::loadByName($config_record['entity_type'], $config_record['field_name'])) {
-      FieldStorageConfig::create($config_record)->save();
-    }
-    $field_config_name = 'field.field.' . $entity_type . '.' . $bundle . '.' . $field;
-    $config_record = $config_directory->read($field_config_name);
-    if (!FieldConfig::loadByName($config_record['entity_type'], $config_record['bundle'], $config_record['field_name'])) {
-      FieldConfig::create($config_record)->save();
-    }
-  }
 }
 
 /**
@@ -876,9 +846,11 @@ function _hel_tpm_general_move_paragraph_inner_to_field(Node $node, string $lang
 /**
  * Helper function to build language array for revisions.
  *
- * @param $stp_revisions
+ * @param array $stp_revisions
+ *   Array of revision.
  *
  * @return array
+ *   Array of languages.
  */
 function _hel_tpm_general_build_language_collection($stp_revisions) {
   $languages = [];
@@ -898,13 +870,14 @@ function _hel_tpm_general_build_language_collection($stp_revisions) {
   return $languages;
 }
 
-
 /**
  * Helper function to check if revision id is default revision.
  *
- * @param $row
+ * @param int $revision_id
+ *   Revision id.
  *
  * @return bool
+ *   Return true if given revision id is default revision.
  */
 function _hel_tpm_general_is_default($revision_id) {
   $default = \Drupal::database()->select('node_field_data', 'n')
@@ -913,5 +886,5 @@ function _hel_tpm_general_is_default($revision_id) {
     ->countQuery()
     ->execute()
     ->fetchField();
-  return !((int)$default === 0);
+  return !((int) $default === 0);
 }

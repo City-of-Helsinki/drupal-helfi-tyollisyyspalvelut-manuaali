@@ -1,3 +1,5 @@
+@use "sass:color";
+
 // These styles only affect the colors "Usage" page in the component library
 .cl-colors {
   padding: 1rem;
@@ -28,7 +30,7 @@
   $text-primary: accent-high,
   $text-secondary: muted
 ) {
-  @if (lightness($color) > 50) {
+  @if (color.channel($color, 'lightness', $space: hsl) > 50) {
     @return clr($text-primary);
   } @else {
     @return clr($text-secondary);

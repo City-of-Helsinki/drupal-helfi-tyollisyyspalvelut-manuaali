@@ -17,6 +17,9 @@
   }
   .error {
     @include field-error;
+    &.form-number {
+      padding: 12px 16px 12px 16px;
+    }
   }
   > label {
     display: flex;
@@ -25,7 +28,7 @@
 
 select.error ~ .select2-container {
   @include field-error;
-  padding: 12px 12px 12px 16px;
+  padding: 0;
 }
 
 .form-item__label {
@@ -60,7 +63,6 @@ select.error ~ .select2-container {
   &:focus {
     border-color: clr(accent-high);
   }
-
   &::placeholder {
     color: clr(gray);
   }

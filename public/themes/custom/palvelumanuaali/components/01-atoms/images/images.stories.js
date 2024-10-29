@@ -5,7 +5,7 @@ import iconTwig from './icons/icons.twig';
 import imageData from './image/image.yml';
 import figureData from './image/figure.yml';
 
-const svgIcons = require.context('../../../images/icons/', true, /\.svg$/);
+const svgIcons = require.context('../../../assets/images/icons/', true, /\.svg$/);
 
 /**
  * Storybook Definition.

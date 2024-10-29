@@ -19,9 +19,6 @@ display:
         name:
           label: 'Kommunens ansvarsuppdaterare'
       filters:
-        moderation_state:
-          expose:
-            label: 'Tjänstens status '
         type_1:
           expose:
             label: 'Grupptyp '
@@ -32,6 +29,9 @@ display:
           expose:
             label: 'Filtrera:'
             placeholder: 'Filtrera efter sökterm'
+        moderation_state_filter_exclude_archived:
+          expose:
+            label: 'Tjänstens status'
   page_1:
     display_options:
       menu:

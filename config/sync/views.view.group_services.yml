@@ -3,6 +3,7 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - field.storage.node.field_responsible_updatee
     - node.type.service
     - workflows.workflow.service_moderation
   module:
@@ -12,6 +13,7 @@ dependencies:
     - group
     - hel_tpm_editorial
     - hel_tpm_general
+    - hel_tpm_group
     - node
     - user
 _core:
@@ -162,15 +164,13 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-        name:
-          id: name
-          table: users_field_data
-          field: name
-          relationship: field_responsible_updatee
+        field_responsible_updatee:
+          id: field_responsible_updatee
+          table: node__field_responsible_updatee
+          field: field_responsible_updatee
+          relationship: none
           group_type: group
           admin_label: ''
-          entity_type: user
-          entity_field: name
           plugin_id: field
           label: 'Kunnan vastuupäivittäjä'
           exclude: false
@@ -205,19 +205,19 @@ display:
           element_class: ''
           element_label_type: ''
           element_label_class: ''
-          element_label_colon: false
+          element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
           empty: ''
-          hide_empty: false
-          empty_zero: false
+          hide_empty: true
+          empty_zero: true
           hide_alter_empty: true
-          click_sort_column: value
-          type: user_name
+          click_sort_column: target_id
+          type: entity_reference_label
           settings:
-            link_to_entity: false
-          group_column: value
+            link: true
+          group_column: target_id
           group_columns: {  }
           group_rows: true
           delta_limit: 0
@@ -589,6 +589,7 @@ display:
         type: full
         options:
           offset: 0
+          pagination_heading_level: h4
           items_per_page: 50
           total_pages: null
           id: 0
@@ -681,7 +682,6 @@ display:
           default_argument_type: fixed
           default_argument_options:
             argument: ''
-          default_argument_skip_url: false
           summary_options:
             base_path: ''
             count: true
@@ -750,56 +750,6 @@ display:
                 title: Julkaisematon
                 operator: '='
                 value: '0'
-        moderation_state:
-          id: moderation_state
-          table: node_field_data
-          field: moderation_state
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          plugin_id: moderation_state_filter
-          operator: in
-          value:
-            service_moderation-draft: service_moderation-draft
-            service_moderation-ready_to_publish: service_moderation-ready_to_publish
-            service_moderation-published: service_moderation-published
-            service_moderation-outdated: service_moderation-outdated
-          group: 1
-          exposed: true
-          expose:
-            operator_id: moderation_state_op
-            label: Muokkaustila
-            description: ''
-            use_operator: false
-            operator: moderation_state_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: moderation_state
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              root: '0'
-              admin: '0'
-              editor: '0'
-              specialist: '0'
-              specialist_editor: '0'
-            reduce: true
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
         type_1:
           id: type_1
           table: node_field_data
@@ -892,6 +842,58 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
+        moderation_state_filter_exclude_archived:
+          id: moderation_state_filter_exclude_archived
+          table: node_field_data
+          field: moderation_state_filter_exclude_archived
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          plugin_id: moderation_state_filter_exclude_archived
+          operator: in
+          value:
+            all_exclude_archived: all_exclude_archived
+            service_moderation-draft: service_moderation-draft
+            service_moderation-ready_to_publish: service_moderation-ready_to_publish
+            service_moderation-published: service_moderation-published
+            service_moderation-outdated: service_moderation-outdated
+            service_moderation-archived: service_moderation-archived
+          group: 1
+          exposed: true
+          expose:
+            operator_id: moderation_state_filter_exclude_archived_op
+            label: Muokkaustila
+            description: ''
+            use_operator: false
+            operator: moderation_state_filter_exclude_archived_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: moderation_state
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+              specialist_editor: '0'
+            reduce: true
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
         title:
           id: title
           table: node_field_data
@@ -953,7 +955,7 @@ display:
           columns:
             title: title
             name_1: name_1
-            name: name
+            field_responsible_updatee: field_responsible_updatee
             langcode: langcode
             moderation_state: moderation_state
             hel_tpm_editorial_service_has_unpublished_changes: hel_tpm_editorial_service_has_unpublished_changes
@@ -976,12 +978,12 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
-            name:
-              sortable: true
+            field_responsible_updatee:
+              sortable: false
               default_sort_order: asc
               align: ''
               separator: ''
-              empty_column: false
+              empty_column: true
               responsive: ''
             langcode:
               sortable: true
@@ -1099,6 +1101,7 @@ display:
         - user.group_permissions
         - 'user.node_grants:view'
       tags:
+        - 'config:field.storage.node.field_responsible_updatee'
         - 'config:workflow_list'
   page_1:
     id: page_1
@@ -1122,7 +1125,7 @@ display:
             general:
               autosubmit: true
               autosubmit_exclude_textfield: false
-              autosubmit_textfield_delay: 500
+              autosubmit_textfield_delay: 1000
               autosubmit_hide: false
               input_required: false
               allow_secondary: false
@@ -1131,17 +1134,10 @@ display:
               reset_button_always_show: false
             filter:
               status:
-                plugin_id: default
+                plugin_id: bef_select2
                 advanced:
                   sort_options: false
-                  rewrite:
-                    filter_rewrite_values: ''
-                  collapsible: false
-                  is_secondary: false
-              moderation_state:
-                plugin_id: default
-                advanced:
-                  sort_options: false
+                  placeholder_text: '- None -'
                   rewrite:
                     filter_rewrite_values: ''
                   collapsible: false
@@ -1154,12 +1150,33 @@ display:
                     filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: false
+                options_show_only_used: false
+                options_show_only_used_filtered: false
+                options_hide_when_empty: false
+                options_show_items_count: false
+                term_optgroup: 0
+              moderation_state_filter_exclude_archived:
+                plugin_id: default
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+                options_show_only_used: false
+                options_show_only_used_filtered: false
+                options_hide_when_empty: false
+                options_show_items_count: false
               title:
                 plugin_id: default
                 advanced:
                   placeholder_text: ''
                   collapsible: false
                   is_secondary: false
+                options_show_only_used: false
+                options_show_only_used_filtered: false
+                options_hide_when_empty: false
+                options_show_items_count: false
       defaults:
         exposed_form: false
       display_extenders: {  }
@@ -1184,4 +1201,5 @@ display:
         - user.group_permissions
         - 'user.node_grants:view'
       tags:
+        - 'config:field.storage.node.field_responsible_updatee'
         - 'config:workflow_list'

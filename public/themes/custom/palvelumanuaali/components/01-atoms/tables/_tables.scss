@@ -1,4 +1,7 @@
 
+table.sticky-header thead {
+  z-index: 100;
+}
 
 .table {
   margin: 1em 0;
@@ -219,7 +222,7 @@
   border: unset;
   width: 24px;
   height: 24px;
-  background-image: url('/themes/custom/palvelumanuaali/images/icons/arrow-sm-down-light-blue.svg');
+  background-image: url('../../assets/images/icons/arrow-sm-down-light-blue.svg');
   top: 0;
   right: unset;
   margin-top: 0;
@@ -321,7 +324,7 @@ table > :not(caption) > * > * {
       margin: 0;
       padding: 0;
       background-size: contain;
-      background-image: url("/themes/custom/palvelumanuaali/images/icons/union.svg");
+      background-image: url("../../assets/images/icons/union.svg");
       background-repeat: no-repeat;
       background-position: center;
       width: 4px;
@@ -347,7 +350,7 @@ table > :not(caption) > * > * {
     @include button-color-blue;
     width: 100%;
     box-sizing: border-box;
-    background-image: url("/themes/custom/palvelumanuaali/images/icons/plus.svg");
+    background-image: url("../../assets/images/icons/plus.svg");
     background-repeat: no-repeat;
     background-position-y: center;
     line-height: 24px;
@@ -370,7 +373,7 @@ table {
     list-style: none;
   }
   thead {
-    border-bottom: 2px solid $blue20-1;
+    border-bottom: 2px solid $blue20;
     tr {
       position: relative;
     }
@@ -382,6 +385,8 @@ table {
       line-height: 24px;
       font-weight: 700;
       position: relative;
+      background: white;
+      border-radius: 8px;
       &::after {
          content : "";
          position: absolute;
@@ -389,7 +394,7 @@ table {
          top: 8px;
          height: calc(100% - 16px);
          width: 2px;
-         border-right: 2px solid $blue20-1;
+         border-right: 2px solid $blue20;
       }
       a {
         color: clr(text);
@@ -405,7 +410,7 @@ table {
           width: 24px;
           background-repeat: no-repeat;
           background-position: center;
-          background-image: url('/themes/custom/palvelumanuaali/images/icons/arrow-sm-down-light-blue.svg');
+          background-image: url('../../assets/images/icons/arrow-sm-down-light-blue.svg');
 
         }
 
@@ -433,7 +438,7 @@ table {
         }
         a {
           &::after {
-            background-image: url('/themes/custom/palvelumanuaali/images/icons/arrow-sm-down.svg');
+            background-image: url('../../assets/images/icons/arrow-sm-down.svg');
           }
         }
       }
@@ -470,6 +475,9 @@ table {
         padding: $space $space $space $space-one-and-half;
         line-height: 24px;
         font-size: 14px;
+        .highlight-wrapper {
+          color: red;
+        }
         a {
           font-size: 14px;
           color: clr(alt-header-color);
@@ -554,7 +562,7 @@ table {
       margin: 0;
       padding:0;
       background-size: contain;
-      background-image: url("/themes/custom/palvelumanuaali/images/icons/union.svg");
+      background-image: url("../../assets/images/icons/union.svg");
       background-repeat: no-repeat;
       background-position: center;
       width: 4px;
@@ -621,7 +629,7 @@ table {
         margin: 0;
         padding: 0;
         background-size: contain;
-        background-image: url("/themes/custom/palvelumanuaali/images/icons/union.svg");
+        background-image: url("../../assets/images/icons/union.svg");
         background-repeat: no-repeat;
         background-position: center;
         width: 4px;

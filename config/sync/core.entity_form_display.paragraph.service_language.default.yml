@@ -14,10 +14,14 @@ bundle: service_language
 mode: default
 content:
   field_language:
-    type: options_select
+    type: select2_entity_reference
     weight: 1
     region: content
-    settings: {  }
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
     third_party_settings: {  }
   field_level:
     type: select2_entity_reference
@@ -28,6 +32,11 @@ content:
       autocomplete: false
       match_operator: CONTAINS
       match_limit: 10
+    third_party_settings: {  }
+  translation:
+    weight: 10
+    region: content
+    settings: {  }
     third_party_settings: {  }
 hidden:
   created: true

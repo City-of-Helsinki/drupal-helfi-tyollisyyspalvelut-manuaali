@@ -19,7 +19,7 @@
     width: 24px;
     height: 24px;
 
-    background-image:url("/themes/custom/palvelumanuaali/images/icons/info.svg");
+    background-image:url("../../assets/images/icons/info.svg");
     margin-right: $space-one-and-half;
     padding-right: $space-one-and-half;
     background-size: cover;
@@ -28,7 +28,7 @@
 }
 
 .service-page {
-  #block-system-main-block {
+  .block--main-block {
     @include large {
       display: flex;
       flex-wrap: wrap;
@@ -37,13 +37,19 @@
       width: 100%;
       margin-bottom: $space;
       position: relative;
+      display: flex;
+      position: sticky;
+      justify-content: end;
+      overflow: visible;
+      z-index: 101;
       min-height: 50px;
       @include large {
         margin-bottom: $space-one-half;
-        display: flex;
+
       }
       .flag {
         a {
+
           background: clr(text-inverse);
           border-radius: 50%;
           &:hover {
@@ -57,18 +63,10 @@
     }
     #view-mode-switcher-link {
         margin-right: $space;
-        @include xl {
-          position: absolute;
-          left: 0;
-        }
     }
     .service{
-      margin-top: $space;
       max-width: 100%;
       width: 100%;
-      @include large {
-        margin-top: 0;
-      }
     }
   }
 
@@ -82,7 +80,7 @@
       width: 24px;
       height: 24px;
 
-      background-image:url("/themes/custom/palvelumanuaali/images/icons/info.svg");
+      background-image:url("../../assets/images/icons/info.svg");
       margin-right: $space-one-and-half;
       padding-right: $space-one-and-half;
       background-size: cover;
@@ -100,6 +98,150 @@
        margin-left: $space-triple;
        padding-left: $space-one-half;
      }
+  }
+
+  &.logged-in {
+    .horizontal-tabs {
+      .horizontal-tabs-list {
+        display: flex;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        padding-top: $space-double;
+      }
+    }
+    .link-wrapper {
+      @include large {
+        margin-bottom: -23px;
+        top: -23px;
+      }
+    }
+    &.toolbar-fixed.toolbar-horizontal {
+      .horizontal-tabs {
+        .horizontal-tabs-list {
+          top: 38px;
+        }
+      }
+      .link-wrapper {
+        @include large {
+          margin-bottom: unset;
+        }
+      }
+    }
+    &.toolbar-fixed.toolbar-horizontal.toolbar-tray-open {
+      .horizontal-tabs {
+        .horizontal-tabs-list {
+          top: 75px;
+          padding-top: $space-double;
+        }
+      }
+      .link-wrapper {
+        @include large {
+          top: 15px;
+        }
+      }
+    }
+    &.toolbar-fixed.toolbar-vertical {
+      .horizontal-tabs {
+        .horizontal-tabs-list {
+          padding-top: $space-double;
+          top: 40px;
+        }
+      }
+      .link-wrapper {
+        top: -21px;
+        @include large {
+          top: 0;
+        }
+      }
+    }
+  }
+  //needs to be split to a separate file
+  .horizontal-tabs {
+    position: unset;
+    .horizontal-tabs-list {
+      display: none;
+      top: -71px;
+      left: 0;
+      background-color: clr(background);
+      border: 0;
+      align-items: end;
+      &::after {
+        border-top: $space-double solid clr(text-inverse);
+        border-top-right-radius: 16px;
+        content: "";
+        display: block;
+        position: absolute;
+        bottom:-32px;
+        width: 100%;
+        height: $space-double;
+      }
+      .horizontal-tab-button {
+        border-right: 0;
+        padding: 0;
+        border-radius: 16px 16px 0 0;
+        &::before {
+          display: none;
+        }
+        strong {
+          display: flex;
+          flex-wrap: wrap;
+          font-weight: 600;
+          &::before {
+            content: "";
+            display: block;
+            margin-right: $space;
+            width: 24px;
+            height: 24px;
+          }
+        }
+        &:first-child {
+          margin-right: 4px;
+          strong::before {
+            background-image: url("../../assets/images/icons/contact-list.svg");
+          }
+        }
+        &:nth-child(2) {
+          strong::before {
+            background-image: url("../../assets/images/icons/checklist2.svg");
+          }
+        }
+        a {
+          padding: 14px 56px 18px 48px;
+          border-bottom: 2px solid clr(background-border);
+          font-size: 18px;
+          color: clr(text);
+          background-color: clr(text-inverse);
+          border-radius: 16px 16px 0 0;
+          line-height: 24px;
+          &:hover {
+            background-color: clr(background-border);
+          }
+        }
+        &.selected {
+          a {
+            padding: 18px 56px 22px 48px;
+            border-bottom: 0;
+            color: clr(text-inverse);
+            background: clr(footer-color);
+            &:hover {
+              background-color: clr(footer-color);
+            }
+          }
+          &:first-child {
+            margin-right: 4px;
+            strong::before {
+              background-image: url("../../assets/images/icons/contact-list-selected.svg");
+            }
+          }
+          &:nth-child(2) {
+            strong::before {
+              background-image: url("../../assets/images/icons/checklist2-selected.svg");
+            }
+          }
+        }
+      }
+    }
   }
 }
 
@@ -131,6 +273,14 @@
   }
 }
 
+
+.logged-in {
+  .service {
+  //needs permission check for tab
+  border-top-left-radius: 0;
+  }
+}
+
 .service {
   background: clr(sidebar-color);
   border-radius: 16px;
@@ -144,7 +294,6 @@
    padding-bottom: 37px;
   }
   .field {
-    // margin-bottom: $space-double;
     .field__label {
       font-weight: 600;
       font-size: 16px;
@@ -193,6 +342,23 @@
     .field--name-entitygroupfield {
       .field__item {
         margin-bottom: 0;
+      }
+    }
+
+    .archiving-guides {
+      @include xl {
+        margin-bottom: $space-triple;
+      }
+      margin-bottom: $space-double;
+    }
+
+    .sharing-options {
+      .btn {
+        padding: 0;
+        &:focus-visible {
+          outline: 2px solid clr(accent-high);
+          border-radius: 0;
+        }
       }
     }
   }

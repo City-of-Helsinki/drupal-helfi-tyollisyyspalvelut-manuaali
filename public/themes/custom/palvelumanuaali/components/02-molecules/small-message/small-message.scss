@@ -11,4 +11,24 @@
     position: absolute;
     right: 0;
   }
+  &--service {
+    width: 102px;
+    height: 48px;
+    position: absolute;
+    right: 0;
+    top: 2px;
+  }
+}
+
+.logged-in {
+  &.toolbar-fixed .small-message-wrapper--service {
+    @include large {
+      top: 100px;
+    }
+  }
+  .small-message-wrapper--service {
+    @include large {
+      top: 68px;
+    }
+  }
 }

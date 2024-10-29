@@ -28,7 +28,6 @@
   'field_accessibility'
 ] %}
 {{ attach_library('palvelumanuaali/search-filters') }}
-
 <div class="form--inline clearfix search-form">
   <div class="text-search-wrapper">
     {{ form['search_wrapper'] }}
@@ -55,6 +54,7 @@
         </div>
       {% endif %}
     </div>
-    {{ form|without(fieldsMain, fieldsSecondary, 'search_wrapper', 'actions') }}
+    {{ form|without(fieldsMain, fieldsSecondary, 'search_wrapper', 'actions', 'sort_bef_combine' ) }}
     </div>
 </div>
+{{form['sort_bef_combine']}}
