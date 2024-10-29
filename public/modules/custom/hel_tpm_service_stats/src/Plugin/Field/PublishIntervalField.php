@@ -7,15 +7,15 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\TypedData\ComputedItemListTrait;
 
 /**
- * Plugin implementation of the 'total_price' field type.
+ * Plugin implementation of the 'hel_tpm_serviec_stats_publish_interval' field type.
  *
  * @FieldType(
  *   id = "hel_tpm_service_stats_publish_interval",
  *   label = @Translation("Publish interval"),
  *   description = @Translation("Service publish interval"),
  *   category = @Translation("Custom"),
- *   default_widget = "string_text",
- *   default_formatter = "basic_string"
+ *   default_widget = "",
+ *   default_formatter = "number_integer"
  * )
  */
 class PublishIntervalField extends FieldItemList implements FieldItemListInterface {
@@ -26,7 +26,7 @@ class PublishIntervalField extends FieldItemList implements FieldItemListInterfa
    */
   protected function computeValue() {
     $entity = $this->getEntity();
-    $interval = ($entity->getPublishDate() - $entity->getPreviousDate()) / 84000;
+    $interval = ($entity->getPublishDate() - $entity->getPreviousDate()) / 86400;
     $this->list[0] = $this->createItem(0, (int) $interval);
   }
 
