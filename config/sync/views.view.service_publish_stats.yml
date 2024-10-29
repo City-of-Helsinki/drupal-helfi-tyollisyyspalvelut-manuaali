@@ -1247,20 +1247,10 @@ display:
         filter_groups: false
         header: false
       display_description: ''
-      header:
-        view:
-          id: view
-          table: views
-          field: view
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: view
-          empty: false
-          view_to_insert: 'service_rtb_publish_stats:block_2'
-          inherit_arguments: true
+      header: {  }
       display_extenders:
         ajax_history: {  }
+      block_description: 'Vastuupalveluiden julkaisutiedot'
     cache_metadata:
       max-age: -1
       contexts:
