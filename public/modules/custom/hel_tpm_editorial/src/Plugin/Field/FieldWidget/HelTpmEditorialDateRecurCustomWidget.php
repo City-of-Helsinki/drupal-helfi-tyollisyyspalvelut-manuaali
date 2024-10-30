@@ -555,8 +555,10 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
       $form_state->setError($element, t('Start date and end date must be provided.'));
     }
 
-    if ($start->getTimestamp() > $end->getTimestamp()) {
-      $form_state->setError($element['start'], t('Start date must be greater than end date.'));
+    if ($start && $end) {
+      if ($start->getTimestamp() > $end->getTimestamp()) {
+        $form_state->setError($element['start'], t('Start date must be greater than end date.'));
+      }
     }
 
     // Recreate datetime object with exactly the same date and time but
