@@ -5,7 +5,6 @@ dependencies:
   config:
     - field.storage.node.field_responsible_updatee
     - node.type.service
-    - workflows.workflow.service_moderation
   module:
     - better_exposed_filters
     - content_moderation
@@ -852,13 +851,7 @@ display:
           entity_type: node
           plugin_id: moderation_state_filter_exclude_archived
           operator: in
-          value:
-            all_exclude_archived: all_exclude_archived
-            service_moderation-draft: service_moderation-draft
-            service_moderation-ready_to_publish: service_moderation-ready_to_publish
-            service_moderation-published: service_moderation-published
-            service_moderation-outdated: service_moderation-outdated
-            service_moderation-archived: service_moderation-archived
+          value: {  }
           group: 1
           exposed: true
           expose:
@@ -881,7 +874,7 @@ display:
               editor: '0'
               specialist: '0'
               specialist_editor: '0'
-            reduce: true
+            reduce: false
           is_grouped: false
           group_info:
             label: ''
