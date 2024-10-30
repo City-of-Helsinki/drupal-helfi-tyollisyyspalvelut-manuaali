@@ -32,6 +32,11 @@ class ServiceMissingUpdatees {
   private EntityTypeManager $entityTypeManager;
 
   /**
+   * @var \Drupal\Core\Database\Connection
+   */
+  private Connection $database;
+
+  /**
    * Constructor.
    *
    * @param \Drupal\Core\Entity\EntityTypeManager $entityTypeManager

@@ -546,13 +546,19 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
     $timeZone = self::TIME_ZONE;
 
     if ($start && !$timeZone) {
-      $form_state->setError($element['start'], \t('Time zone must be set if start date is set.'));
+      $form_state->setError($element['start'], t('Time zone must be set if start date is set.'));
     }
     if ($end && !$timeZone) {
-      $form_state->setError($element['end'], \t('Time zone must be set if end date is set.'));
+      $form_state->setError($element['end'], t('Time zone must be set if end date is set.'));
     }
     if (($start instanceof DrupalDateTime || $end instanceof DrupalDateTime) && (!$start instanceof DrupalDateTime || !$end instanceof DrupalDateTime)) {
-      $form_state->setError($element, \t('Start date and end date must be provided.'));
+      $form_state->setError($element, t('Start date and end date must be provided.'));
+    }
+
+    if ($start && $end) {
+      if ($start->getTimestamp() > $end->getTimestamp()) {
+        $form_state->setError($element['start'], t('Start date must be greater than end date.'));
+      }
     }
 
     // Recreate datetime object with exactly the same date and time but

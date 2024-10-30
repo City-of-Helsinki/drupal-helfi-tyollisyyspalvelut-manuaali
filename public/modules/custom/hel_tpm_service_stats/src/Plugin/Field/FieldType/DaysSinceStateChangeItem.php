@@ -41,6 +41,9 @@ final class DaysSinceStateChangeItem extends IntegerItem {
    */
   public function isEmpty(): bool {
     $this->ensureCalculated();
+    if ((string) $this->value === 0) {
+      return FALSE;
+    }
     return parent::isEmpty();
   }
 
