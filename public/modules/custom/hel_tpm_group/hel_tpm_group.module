@@ -292,6 +292,12 @@ function hel_tpm_group_menu_local_tasks_alter(&$data, $route_name) {
       unset($data['tabs'][0]['group.version_history']);
     }
 
+    // Remove the 'All entities' tab as its content is already shown at other
+    // group pages. It were only visible for the super admin group roles.
+    if (isset($data['tabs'][0]['group.content'])) {
+      unset($data['tabs'][0]['group.content']);
+    }
+
     // Remove revision tab if group's revisions are turned off.
     $config = \Drupal::service('config.factory')->get($entity->getEntityTypeId() . '.type.' . $entity->bundle());
     if (!$config->get('new_revision')) {
