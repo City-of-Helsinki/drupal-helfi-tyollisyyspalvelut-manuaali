@@ -1,6 +1,6 @@
 uuid: 53d4a083-94ad-4667-a208-70dbf7e46cbc
 langcode: fi
-status: false
+status: true
 dependencies:
   module:
     - gnode
@@ -23,7 +23,7 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: Solmut
+      title: 'Ryhmän sisällöt'
       fields:
         title:
           id: title
@@ -1031,7 +1031,8 @@ display:
           group_content_plugins: {  }
       header: {  }
       footer: {  }
-      display_extenders: {  }
+      display_extenders:
+        ajax_history: {  }
     cache_metadata:
       max-age: -1
       contexts:
@@ -1049,14 +1050,14 @@ display:
     display_plugin: page
     position: 1
     display_options:
-      display_extenders: {  }
+      display_extenders:
+        ajax_history: {  }
       path: group/%group/nodes
       menu:
         type: tab
-        title: Solmut
+        title: Sisällöt
         description: ''
         weight: 25
-        enabled: true
         expanded: false
         menu_name: main
         parent: ''
