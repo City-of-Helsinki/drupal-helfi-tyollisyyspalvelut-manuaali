@@ -13,6 +13,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\field\FieldConfigInterface;
+use Drupal\node\NodeInterface;
 use Drupal\service_manual_workflow\Event\ServiceModerationEvent;
 
 /**
@@ -21,6 +22,30 @@ use Drupal\service_manual_workflow\Event\ServiceModerationEvent;
 function service_manual_workflow_cron() {
   _service_manual_workflow_queue_services_for_archival();
 }
+
+/**
+ * Implements hook_ENTITY_presave().
+ *
+ * @param \Drupal\Core\Entity\EntityInterface $entity
+ *
+ * @throws \Exception
+ */
+function service_manual_workflow_node_presave(EntityInterface $entity) {
+  $default_language = \Drupal::languageManager()->getDefaultLanguage()->getId();
+  $active_langcode = $entity->language()->getId();
+
+  if ($entity instanceof NodeInterface && $entity->isTranslatable() && !$entity->isNew() && ($active_langcode !== $default_language)) {
+    $translations = $entity->getTranslationLanguages();
+    foreach ($translations as $translation_langcode => $translation_language) {
+      // Prevent secondary languages from disrupting other translations.
+      if ($translation_langcode !== $active_langcode) {
+        $translation = $entity->getTranslation($translation_language->getId());
+        $translation->setRevisionTranslationAffected(FALSE);
+      }
+    }
+  }
+}
+
 
 /**
  * Helper function to queue service items.
