@@ -283,6 +283,22 @@ function hel_tpm_group_views_data_alter(array &$data) {
       'id' => 'hel_tpm_group_blocked_member_count',
     ],
   ];
+
+  $data['groups']['group_services_count'] = [
+    'title' => t('Number of group services'),
+    'field' => [
+      'title' => t('Number of group services'),
+      'id' => 'hel_tpm_group_service_count',
+    ],
+  ];
+
+  $data['groups']['group_services_count_excl_archived'] = [
+    'title' => t('Number of group services excluding archived'),
+    'field' => [
+      'title' => t('Number of group services excluding archived'),
+      'id' => 'hel_tpm_group_service_count_excl_archived',
+    ],
+  ];
 }
 
 /**
