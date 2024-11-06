@@ -281,6 +281,34 @@ function hel_tpm_group_page_attachments_alter(array &$attachments): void {
 }
 
 /**
+ * Implements hook_menu_local_tasks_alter().
+ */
+function hel_tpm_group_menu_local_tasks_alter(&$data, $route_name) {
+  $entity = \Drupal::routeMatch()->getParameter('group');
+  if ($entity instanceof GroupInterface) {
+    // Remove the duplicate revision tab. Local task 'group.version_history'
+    // will be replaced by 'entity.version_history:group.version_history'.
+    if (isset($data['tabs'][0]['group.version_history'])) {
+      unset($data['tabs'][0]['group.version_history']);
+    }
+
+    // Remove the 'All entities' tab as its content is already shown at other
+    // group pages. It were only visible for the super admin group roles.
+    if (isset($data['tabs'][0]['group.content'])) {
+      unset($data['tabs'][0]['group.content']);
+    }
+
+    // Remove revision tab if group's revisions are turned off.
+    $config = \Drupal::service('config.factory')->get($entity->getEntityTypeId() . '.type.' . $entity->bundle());
+    if (!$config->get('new_revision')) {
+      if (isset($data['tabs'][0]['entity.version_history:group.version_history'])) {
+        unset($data['tabs'][0]['entity.version_history:group.version_history']);
+      }
+    }
+  }
+}
+
+/**
  * Helper function to get valid site roles for selection.
  *
  * @return array
