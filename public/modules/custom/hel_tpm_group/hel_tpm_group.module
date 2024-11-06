@@ -266,6 +266,38 @@ function hel_tpm_group_views_data_alter(array &$data) {
       'allow empty' => TRUE
     ],
   ];
+  $data['groups']['group_active_members_count_filter'] = [
+    'title' => t('Active members count'),
+    'filter' => [
+      'id' => 'group_active_members_count_filter',
+      'title' => t('Active members count'),
+      'help' => 'List groups with or without active members.',
+    ],
+  ];
+  $data['groups']['group_blocked_members_count_filter'] = [
+    'title' => t('Blocked members count'),
+    'filter' => [
+      'id' => 'group_blocked_members_count_filter',
+      'title' => t('Blocked members count'),
+      'help' => 'List groups with or without blocked members.',
+    ],
+  ];
+  $data['groups']['group_services_count_excl_archived_filter'] = [
+    'title' => t('Services count excluding archived'),
+    'filter' => [
+      'id' => 'group_services_count_excl_archived_filter',
+      'title' => t('Services count excluding archived'),
+      'help' => 'List groups with or without services excluding archived.',
+    ],
+  ];
+  $data['groups']['group_archived_services_count_filter'] = [
+    'title' => t('Archived services count'),
+    'filter' => [
+      'id' => 'group_archived_services_count_filter',
+      'title' => t('Archived services count'),
+      'help' => 'List groups with or without archived services.',
+    ],
+  ];
 
   // Fields.
   $data['groups']['active_member_count'] = [
@@ -275,7 +307,6 @@ function hel_tpm_group_views_data_alter(array &$data) {
       'id' => 'hel_tpm_group_active_member_count',
     ],
   ];
-
   $data['groups']['blocked_member_count'] = [
     'title' => t('Number of blocked members'),
     'field' => [
@@ -283,20 +314,18 @@ function hel_tpm_group_views_data_alter(array &$data) {
       'id' => 'hel_tpm_group_blocked_member_count',
     ],
   ];
-
-  $data['groups']['group_services_count'] = [
-    'title' => t('Number of group services'),
-    'field' => [
-      'title' => t('Number of group services'),
-      'id' => 'hel_tpm_group_service_count',
-    ],
-  ];
-
-  $data['groups']['group_services_count_excl_archived'] = [
+  $data['groups']['services_count_excl_archived'] = [
     'title' => t('Number of group services excluding archived'),
     'field' => [
       'title' => t('Number of group services excluding archived'),
       'id' => 'hel_tpm_group_service_count_excl_archived',
+    ],
+  ];
+  $data['groups']['archived_service_count'] = [
+    'title' => t('Number of archived group services'),
+    'field' => [
+      'title' => t('Number of archived group services'),
+      'id' => 'hel_tpm_group_archived_service_count',
     ],
   ];
 }

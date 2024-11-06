@@ -17,6 +17,10 @@ display:
           label: 'Active members'
         blocked_member_count:
           label: 'Blocked members'
+        services_count_excl_archived:
+          label: 'Services excluding archived'
+        archived_service_count:
+          label: 'Archived services'
       exposed_form:
         options:
           submit_button: Apply
@@ -31,6 +35,18 @@ display:
         type:
           expose:
             label: Type
+        group_active_members_count_filter:
+          expose:
+            label: 'Active members'
+        group_blocked_members_count_filter:
+          expose:
+            label: 'Blocked members'
+        group_services_count_excl_archived_filter:
+          expose:
+            label: 'Services excluding archived'
+        group_archived_services_count_filter:
+          expose:
+            label: 'Archived services'
   page_1:
     display_options:
       menu:

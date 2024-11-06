@@ -7,20 +7,20 @@ use Drupal\views\ResultRow;
 use Drupal\views\Views;
 
 /**
- * Provides the number of group services.
+ * Provides the number of archived group services.
  *
  * @ingroup views_field_handlers
  *
- * @ViewsField("hel_tpm_group_service_count")
+ * @ViewsField("hel_tpm_group_archived_service_count")
  */
-class GroupServiceCount extends FieldPluginBase {
+class GroupArchivedServiceCount extends FieldPluginBase {
 
   /**
    * {@inheritdoc}
    */
   public function query() {
     $this->ensureMyTable();
-    $this->field_alias = $this->query->addField('group_services', 'service_count');
+    $this->field_alias = $this->query->addField('group_archived_services', 'service_count');
   }
 
   /**
@@ -29,7 +29,7 @@ class GroupServiceCount extends FieldPluginBase {
   public function ensureMyTable() {
     if (!isset($this->tableAlias)) {
       $configuration = [
-        'table formula' => $this->groupServicesTableFormula(),
+        'table formula' => $this->groupArchivedServicesTableFormula(),
         'field' => 'group_id',
         'left_table' => 'groups_field_data',
         'left_field' => 'id',
@@ -37,7 +37,7 @@ class GroupServiceCount extends FieldPluginBase {
       ];
       /** @var \Drupal\views\Plugin\views\join\JoinPluginBase $join */
       $join = Views::pluginManager('join')->createInstance('standard', $configuration);
-      $this->tableAlias = $this->query->addRelationship('group_services', $join, 'groups_field_data');
+      $this->tableAlias = $this->query->addRelationship('group_archived_services', $join, 'groups_field_data');
     }
     return $this->tableAlias;
   }
@@ -54,17 +54,18 @@ class GroupServiceCount extends FieldPluginBase {
   }
 
   /**
-   * Get table formula for group service count.
+   * Get table formula for archived group service count.
    *
    * @return mixed
    *   Select query.
    */
-  private function groupServicesTableFormula(): mixed {
+  private function groupArchivedServicesTableFormula(): mixed {
     /** @var \Drupal\Core\Database\Query\SelectInterface $select */
     $select = $this->view->query->getConnection()->select('group_relationship_field_data', 'grfd');
     $select->addField('grfd', 'gid', 'group_id');
     $select->condition('grfd.plugin_id', 'group_node:service');
-    //$select->addJoin('INNER', 'users_field_data', 'ufd', 'ufd.uid = grfd.entity_id');
+    $select->addJoin('INNER', 'content_moderation_state_field_data', 'cmsfd', 'cmsfd.content_entity_id = grfd.entity_id');
+    $select->condition('cmsfd.moderation_state', 'archived', '=');
     $select->addExpression("COUNT(entity_id)", 'service_count');
     $select->groupBy('group_id');
     return $select;
