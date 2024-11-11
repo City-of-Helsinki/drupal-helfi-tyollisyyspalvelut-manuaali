@@ -123,7 +123,7 @@ class ViewsModerationStateExcludeArchivedTest extends ViewsKernelTestBase {
     $this->assertWithFilters([
       $node_archived,
     ], [
-      'moderation_state' => 'service_moderation-archived',
+      'moderation_state_filter_exclude_archived' => 'service_moderation-archived',
     ]);
 
   }

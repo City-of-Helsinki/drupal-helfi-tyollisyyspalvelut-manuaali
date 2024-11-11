@@ -40,3 +40,19 @@ views.filter.group_without_admin_filter:
 views.filter.moderation_state_filter_exclude_archived:
   type: views.filter.in_operator
   label: 'Moderation state filter exclude archived'
+
+views.filter.group_active_members_count_filter:
+  type: views.filter.in_operator
+  label: 'Group active members count'
+
+views.filter.group_blocked_members_count_filter:
+  type: views.filter.in_operator
+  label: 'Group blocked members count'
+
+views.filter.group_services_count_excl_archived_filter:
+  type: views.filter.in_operator
+  label: 'Group services count excluding archived'
+
+views.filter.group_archived_services_count_filter:
+  type: views.filter.in_operator
+  label: 'Group archived services count'
