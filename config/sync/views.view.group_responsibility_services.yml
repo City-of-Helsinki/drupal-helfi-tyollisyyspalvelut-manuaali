@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - node.type.service
+    - views.view.service_rtb_publish_stats
   module:
     - better_exposed_filters
     - content_moderation
@@ -1089,7 +1090,18 @@ display:
           plugin_id: standard
           required: false
       use_ajax: true
-      header: {  }
+      header:
+        view:
+          id: view
+          table: views
+          field: view
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: view
+          empty: false
+          view_to_insert: 'service_rtb_publish_stats:block_3'
+          inherit_arguments: true
       footer: {  }
       display_extenders: {  }
     cache_metadata:
