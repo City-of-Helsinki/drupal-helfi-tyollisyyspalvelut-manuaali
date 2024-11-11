@@ -14,6 +14,7 @@ use Drupal\Core\Form\FormStateInterface;
  *
  * @ViewsFilter("moderation_state_filter_exclude_archived")
  */
+#[ViewsFilter("moderation_state_filter_exclude_archived")]
 class ModerationStateExcludeArchived extends ModerationStateFilter {
 
   /**
@@ -32,7 +33,7 @@ class ModerationStateExcludeArchived extends ModerationStateFilter {
    * {@inheritdoc}
    */
   public function acceptExposedInput($input) {
-    if ($input['moderation_state'] === 'all_exclude_archived') {
+    if ($input[$this->getExposedIdentifier()] === 'all_exclude_archived') {
       return TRUE;
     }
     else {
@@ -45,16 +46,16 @@ class ModerationStateExcludeArchived extends ModerationStateFilter {
    */
   public function buildExposedForm(&$form, FormStateInterface $form_state): void {
     parent::buildExposedForm($form, $form_state);
-    $form['moderation_state']['#default_value'] = 'all_exclude_archived';
+    $form[$this->getExposedIdentifier()]['#default_value'] = 'all_exclude_archived';
     // Remove the 'All' option.
-    unset($form['moderation_state']['#options']['All']);
+    unset($form[$this->getExposedIdentifier()]['#options']['All']);
   }
 
   /**
    * {@inheritdoc}
    */
   protected function opSimple() {
-    if (!empty($this->value['all_exclude_archived'])) {
+    if (empty($this->value)) {
       $this->value = [
         'service_moderation-draft' => "service_moderation-draft",
         'service_moderation-ready_to_publish' => "service_moderation-ready_to_publish",
@@ -73,7 +74,9 @@ class ModerationStateExcludeArchived extends ModerationStateFilter {
     if (!$form_state->get('exposed')) {
       return;
     }
-    $identifier = $this->options['expose']['identifier'];
+    $form['value']['#default_value'] = 'all_exclude_archived';
+    unset($form['value']['#options']['all']);
+    $identifier = $this->getExposedIdentifier();
     $userInput = $form_state->getUserInput();
     if (!empty($identifier) && !empty($userInput) && $userInput[$identifier] == 'All') {
       // Replace previously set default input value.
@@ -82,4 +85,7 @@ class ModerationStateExcludeArchived extends ModerationStateFilter {
     }
   }
 
+  protected function getExposedIdentifier(): string {
+    return $this->options['expose']['identifier'];
+  }
 }
