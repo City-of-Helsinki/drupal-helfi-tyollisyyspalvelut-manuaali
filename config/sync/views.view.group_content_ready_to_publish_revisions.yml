@@ -9,11 +9,11 @@ dependencies:
     - user.role.specialist_editor
     - workflows.workflow.service_moderation
   module:
+    - content_moderation
     - eva
     - group
     - hel_tpm_editorial
     - node
-    - service_manual_workflow
     - user
 id: group_content_ready_to_publish_revisions
 label: 'Group content ready to publish (revisions)'
@@ -40,7 +40,7 @@ display:
           entity_type: node
           entity_field: title
           plugin_id: field
-          label: ''
+          label: Palvelu
           exclude: false
           alter:
             alter_text: false
@@ -103,7 +103,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: hel_tpm_editorial_service_has_unpublished_changes
-          label: ''
+          label: 'Uusia muutoksia'
           exclude: false
           alter:
             alter_text: false
@@ -161,7 +161,7 @@ display:
           admin_label: ''
           entity_type: node
           plugin_id: entity_link_edit
-          label: ''
+          label: Toiminnot
           exclude: false
           alter:
             alter_text: false
@@ -202,7 +202,7 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          text: edit
+          text: muokkaa
           output_url_as_text: false
           absolute: false
       pager:
@@ -481,11 +481,38 @@ display:
     display_plugin: entity_view
     position: 1
     display_options:
+      title: ''
       display_extenders:
         ajax_history: {  }
       entity_type: group
       bundles:
         - organisation
+      show_title: false
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - route
+        - url
+        - 'user.node_grants:view'
+        - user.roles
+      tags:
+        - 'config:workflow_list'
+  entity_view_2:
+    id: entity_view_2
+    display_title: 'EVA with title'
+    display_plugin: entity_view
+    position: 1
+    display_options:
+      title: 'Julkaisua odottavat palvelut'
+      display_description: ''
+      display_extenders:
+        ajax_history: {  }
+      entity_type: group
+      bundles:
+        - organisation
+      show_title: true
     cache_metadata:
       max-age: -1
       contexts:
