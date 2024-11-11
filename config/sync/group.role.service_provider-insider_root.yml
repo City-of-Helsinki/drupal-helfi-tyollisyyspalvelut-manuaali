@@ -1,15 +1,15 @@
-uuid: fcaabd96-852c-4a9c-99ae-6eaefcd64e15
+uuid: 5989018f-6c42-4857-b0b3-bb9e6cbb65e4
 langcode: fi
 status: true
 dependencies:
   config:
     - group.type.service_provider
     - user.role.root
-id: service_provider-super_admin
-label: 'Super admin'
-weight: -10
+id: service_provider-insider_root
+label: 'Insider super admin'
+weight: -7
 admin: true
-scope: outsider
+scope: insider
 global_role: root
 group_type: service_provider
 permissions: {  }

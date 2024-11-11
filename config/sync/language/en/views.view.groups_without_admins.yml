@@ -5,7 +5,7 @@ display:
       title: 'Groups without admins'
       fields:
         label:
-          label: Title
+          label: Name
         status:
           label: Status
           settings:
@@ -19,6 +19,10 @@ display:
       exposed_form:
         options:
           submit_button: Apply
+      filters:
+        status:
+          expose:
+            label: Published
   page_1:
     display_options:
       menu:

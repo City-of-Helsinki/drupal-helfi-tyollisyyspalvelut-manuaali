@@ -1,13 +1,14 @@
-uuid: 5099af7e-34f4-4927-9e6d-0c9630cd30f9
+uuid: fcf8f188-7dd3-4942-a277-e54697b80c1e
 langcode: fi
 status: true
 dependencies:
   module:
+    - better_exposed_filters
     - group
+    - hel_tpm_group
     - user
-    - views_field_view
-id: admin_groups
-label: 'Admin groups'
+id: group_overview
+label: Yhteenveto
 module: views
 description: ''
 tag: ''
@@ -20,74 +21,8 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: 'Admin groups'
+      title: Yhteenveto
       fields:
-        id:
-          id: id
-          table: groups_field_data
-          field: id
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: group
-          entity_field: id
-          plugin_id: field
-          label: ''
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: number_integer
-          settings:
-            thousand_separator: ''
-            prefix_suffix: false
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
         label:
           id: label
           table: groups_field_data
@@ -285,120 +220,16 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-        view:
-          id: view
-          table: views
-          field: view
-          relationship: none
-          group_type: '0'
-          admin_label: ''
-          plugin_id: view
-          label: Subgroups
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          view: group_relation_helper
-          display: default
-          arguments: '{{ raw_fields.id }}'
-        view_1:
-          id: view_1
-          table: views
-          field: view
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: view
-          label: 'Parent groups'
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          view: group_relation_helper
-          display: embed_1
-          arguments: '{{ raw_fields.id }}'
-        operations:
-          id: operations
+        active_member_count:
+          id: active_member_count
           table: groups
-          field: operations
+          field: active_member_count
           relationship: none
           group_type: group
           admin_label: ''
           entity_type: group
-          plugin_id: entity_operations
-          label: Toimenpidelinkit
+          plugin_id: hel_tpm_group_active_member_count
+          label: 'Aktiiviset jäsentilit'
           exclude: false
           alter:
             alter_text: false
@@ -439,39 +270,190 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          destination: false
+        blocked_member_count:
+          id: blocked_member_count
+          table: groups
+          field: blocked_member_count
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: group
+          plugin_id: hel_tpm_group_blocked_member_count
+          label: 'Suljetut jäsentilit'
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+        services_count_excl_archived:
+          id: services_count_excl_archived
+          table: groups
+          field: services_count_excl_archived
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: group
+          plugin_id: hel_tpm_group_service_count_excl_archived
+          label: 'Palvelut (pl. arkistoidut)'
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+        archived_service_count:
+          id: archived_service_count
+          table: groups
+          field: archived_service_count
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: group
+          plugin_id: hel_tpm_group_archived_service_count
+          label: 'Arkistoidut palvelut'
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
       pager:
-        type: full
+        type: none
         options:
           offset: 0
-          pagination_heading_level: h4
-          items_per_page: 50
-          total_pages: null
-          id: 0
-          tags:
-            next: ››
-            previous: ‹‹
-            first: '« Ensimmäinen'
-            last: 'Viimeinen »'
-          expose:
-            items_per_page: false
-            items_per_page_label: 'Items per page'
-            items_per_page_options: '5, 10, 25, 50'
-            items_per_page_options_all: false
-            items_per_page_options_all_label: '- All -'
-            offset: false
-            offset_label: Offset
-          quantity: 9
       exposed_form:
-        type: basic
+        type: bef
         options:
-          submit_button: Apply
+          submit_button: Suodata
           reset_button: false
           reset_button_label: Reset
           exposed_sorts_label: 'Sort by'
           expose_sort_order: true
           sort_asc_label: Asc
           sort_desc_label: Desc
+          text_input_required: 'Valitse mikä tahansa suodatin ja klikkaa Suorita nähdäksesi tulokset'
+          text_input_required_format: null
+          bef:
+            general:
+              autosubmit: false
+              autosubmit_exclude_textfield: false
+              autosubmit_textfield_delay: 500
+              autosubmit_hide: false
+              input_required: false
+              allow_secondary: false
+              secondary_label: Lisävaihtoehdot
+              secondary_open: false
+              reset_button_always_show: false
+            sort:
+              plugin_id: default
+            filter:
+              status:
+                plugin_id: default
+              group_without_admin_filter:
+                plugin_id: default
       access:
         type: perm
         options:
@@ -479,18 +461,7 @@ display:
       cache:
         type: tag
         options: {  }
-      empty:
-        area_text_custom:
-          id: area_text_custom
-          table: views
-          field: area_text_custom
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: text_custom
-          empty: true
-          content: 'Ei sisältöä.'
-          tokenize: false
+      empty: {  }
       sorts: {  }
       arguments: {  }
       filters:
@@ -600,7 +571,7 @@ display:
           entity_field: status
           plugin_id: boolean
           operator: '='
-          value: All
+          value: '1'
           group: 1
           exposed: true
           expose:
@@ -612,6 +583,54 @@ display:
             operator_limit_selection: false
             operator_list: {  }
             identifier: status
+            required: true
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+              specialist_editor: '0'
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        group_active_members_count_filter:
+          id: group_active_members_count_filter
+          table: groups
+          field: group_active_members_count_filter
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: group
+          plugin_id: group_active_members_count_filter
+          operator: in
+          value:
+            all: all
+            'yes': 'yes'
+            'no': 'no'
+          group: 1
+          exposed: true
+          expose:
+            operator_id: group_active_members_count_filter_op
+            label: 'Aktiiviset jäsentilit'
+            description: ''
+            use_operator: false
+            operator: group_active_members_count_filter_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: group_active_members_count_filter
             required: false
             remember: false
             multiple: false
@@ -623,6 +642,154 @@ display:
               editor: '0'
               specialist: '0'
               specialist_editor: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        group_blocked_members_count_filter:
+          id: group_blocked_members_count_filter
+          table: groups
+          field: group_blocked_members_count_filter
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: group
+          plugin_id: group_blocked_members_count_filter
+          operator: in
+          value:
+            all: all
+            'yes': 'yes'
+            'no': 'no'
+          group: 1
+          exposed: true
+          expose:
+            operator_id: group_blocked_members_count_filter_op
+            label: 'Suljetut jäsentilit'
+            description: ''
+            use_operator: false
+            operator: group_blocked_members_count_filter_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: group_blocked_members_count_filter
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+              specialist_editor: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        group_services_count_excl_archived_filter:
+          id: group_services_count_excl_archived_filter
+          table: groups
+          field: group_services_count_excl_archived_filter
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: group
+          plugin_id: group_services_count_excl_archived_filter
+          operator: in
+          value:
+            all: all
+            'yes': 'yes'
+            'no': 'no'
+          group: 1
+          exposed: true
+          expose:
+            operator_id: group_services_count_excl_archived_filter_op
+            label: 'Palvelut (pl. arkistoidut)'
+            description: ''
+            use_operator: false
+            operator: group_services_count_excl_archived_filter_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: group_services_count_excl_archived_filter
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+              specialist_editor: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        group_archived_services_count_filter:
+          id: group_archived_services_count_filter
+          table: groups
+          field: group_archived_services_count_filter
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: group
+          plugin_id: group_archived_services_count_filter
+          operator: in
+          value:
+            all: all
+            'yes': 'yes'
+            'no': 'no'
+          group: 1
+          exposed: true
+          expose:
+            operator_id: group_archived_services_count_filter_op
+            label: 'Arkistoidut palvelut'
+            description: ''
+            use_operator: false
+            operator: group_archived_services_count_filter_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: group_archived_services_count_filter
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+              specialist_editor: '0'
+            reduce: false
           is_grouped: false
           group_info:
             label: ''
@@ -646,21 +813,15 @@ display:
           row_class: ''
           default_row_class: true
           columns:
-            id: id
             label: label
             type: type
-            view: view
-            view_1: view_1
-            operations: operations
+            status: status
+            active_member_count: active_member_count
+            blocked_member_count: blocked_member_count
+            services_count_excl_archived: services_count_excl_archived
+            archived_service_count: archived_service_count
           default: label
           info:
-            id:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
             label:
               sortable: true
               default_sort_order: asc
@@ -675,17 +836,37 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
-            view:
+            status:
+              sortable: false
+              default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
               responsive: ''
-            view_1:
+            active_member_count:
+              sortable: true
+              default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
               responsive: ''
-            operations:
+            blocked_member_count:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            services_count_excl_archived:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            archived_service_count:
+              sortable: true
+              default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
@@ -706,11 +887,13 @@ display:
           distinct: false
           replica: false
           query_tags: {  }
+          contextual_filters_or: false
       relationships: {  }
       group_by: false
       header: {  }
       footer: {  }
-      display_extenders: {  }
+      display_extenders:
+        ajax_history: {  }
     cache_metadata:
       max-age: -1
       contexts:
@@ -726,22 +909,30 @@ display:
     display_plugin: page
     position: 1
     display_options:
-      display_extenders: {  }
-      path: admin/group
+      exposed_form:
+        type: basic
+        options:
+          submit_button: Suodata
+          reset_button: false
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      defaults:
+        exposed_form: false
+      display_extenders:
+        ajax_history: {  }
+      path: admin/group/overview
       menu:
-        type: 'default tab'
-        title: Groups
+        type: tab
+        title: Yhteenveto
         description: ''
-        weight: 0
+        weight: 7
         expanded: false
         menu_name: main
         parent: ''
         context: '0'
-      tab_options:
-        type: none
-        title: ''
-        description: ''
-        weight: 0
     cache_metadata:
       max-age: -1
       contexts:
