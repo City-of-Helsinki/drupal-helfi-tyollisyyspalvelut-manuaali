@@ -25,7 +25,7 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: 'Organisaation valmiina julkaistava sisältö'
+      title: 'Organisaation julkaisua odottavat palvelut'
       fields:
         rendered_entity:
           id: rendered_entity
@@ -306,17 +306,15 @@ display:
         - url
         - user
         - user.roles
-      tags:
-        - 'config:core.entity_view_display.group.organisation.default'
-        - 'config:core.entity_view_display.group.organisation.token'
-        - 'config:core.entity_view_display.group.service_provider.default'
+      tags: {  }
   block_1:
     id: block_1
     display_title: Block
     display_plugin: block
     position: 1
     display_options:
-      display_extenders: {  }
+      display_extenders:
+        ajax_history: {  }
       block_description: 'Organisaatioiden valmiiksi julkaistavana oleva sisältö'
       block_hide_empty: true
     cache_metadata:
@@ -326,7 +324,4 @@ display:
         - url
         - user
         - user.roles
-      tags:
-        - 'config:core.entity_view_display.group.organisation.default'
-        - 'config:core.entity_view_display.group.organisation.token'
-        - 'config:core.entity_view_display.group.service_provider.default'
+      tags: {  }
