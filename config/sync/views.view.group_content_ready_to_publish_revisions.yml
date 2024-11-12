@@ -3,17 +3,18 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - field.storage.node.field_days_since_last_state_chan
     - node.type.service
     - user.role.admin
     - user.role.root
     - user.role.specialist_editor
     - workflows.workflow.service_moderation
   module:
+    - content_moderation
     - eva
     - group
     - hel_tpm_editorial
     - node
-    - service_manual_workflow
     - user
 id: group_content_ready_to_publish_revisions
 label: 'Group content ready to publish (revisions)'
@@ -40,7 +41,7 @@ display:
           entity_type: node
           entity_field: title
           plugin_id: field
-          label: ''
+          label: Palvelu
           exclude: false
           alter:
             alter_text: false
@@ -103,7 +104,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: hel_tpm_editorial_service_has_unpublished_changes
-          label: ''
+          label: 'Uusia muutoksia'
           exclude: false
           alter:
             alter_text: false
@@ -152,16 +153,15 @@ display:
           entity_type: group_content
           entity_field: gid
           plugin_id: field
-        edit_node:
-          id: edit_node
-          table: node
-          field: edit_node
-          relationship: nid
+        field_days_since_last_state_chan__revision_id:
+          id: field_days_since_last_state_chan__revision_id
+          table: node_revision__field_days_since_last_state_chan
+          field: field_days_since_last_state_chan__revision_id
+          relationship: none
           group_type: group
           admin_label: ''
-          entity_type: node
-          plugin_id: entity_link_edit
-          label: ''
+          plugin_id: field
+          label: 'Päivää nykyisessä julkaisutilassa'
           exclude: false
           alter:
             alter_text: false
@@ -202,7 +202,72 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          text: edit
+          click_sort_column: value
+          type: number_integer
+          settings:
+            thousand_separator: ''
+            prefix_suffix: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        edit_node:
+          id: edit_node
+          table: node
+          field: edit_node
+          relationship: nid
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          plugin_id: entity_link_edit
+          label: Toiminnot
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          text: muokkaa
           output_url_as_text: false
           absolute: false
       pager:
@@ -474,6 +539,7 @@ display:
         - 'user.node_grants:view'
         - user.roles
       tags:
+        - 'config:field.storage.node.field_days_since_last_state_chan'
         - 'config:workflow_list'
   entity_view_1:
     id: entity_view_1
@@ -481,11 +547,13 @@ display:
     display_plugin: entity_view
     position: 1
     display_options:
+      title: ''
       display_extenders:
         ajax_history: {  }
       entity_type: group
       bundles:
         - organisation
+      show_title: false
     cache_metadata:
       max-age: -1
       contexts:
@@ -496,4 +564,30 @@ display:
         - 'user.node_grants:view'
         - user.roles
       tags:
+        - 'config:workflow_list'
+  entity_view_2:
+    id: entity_view_2
+    display_title: 'EVA with title'
+    display_plugin: entity_view
+    position: 1
+    display_options:
+      title: 'Julkaisua odottavat palvelut'
+      display_description: ''
+      display_extenders:
+        ajax_history: {  }
+      entity_type: group
+      bundles:
+        - organisation
+      show_title: true
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - route
+        - url
+        - 'user.node_grants:view'
+        - user.roles
+      tags:
+        - 'config:field.storage.node.field_days_since_last_state_chan'
         - 'config:workflow_list'

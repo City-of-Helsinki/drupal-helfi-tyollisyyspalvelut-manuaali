@@ -5,6 +5,8 @@ dependencies:
   config:
     - field.storage.node.field_responsible_updatee
     - node.type.service
+    - views.view.service_rtb_publish_stats
+    - workflows.workflow.service_moderation
   module:
     - better_exposed_filters
     - content_moderation
@@ -1081,7 +1083,31 @@ display:
           admin_label: ''
           plugin_id: hel_tpm_general_add_service_button
           empty: false
-      footer: {  }
+      footer:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text
+          empty: false
+          content:
+            value: '<h3>Julkaisua odottavat palvelut</h3>'
+            format: filtered_html
+          tokenize: false
+        view:
+          id: view
+          table: views
+          field: view
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: view
+          empty: false
+          view_to_insert: 'service_rtb_publish_stats:block_2'
+          inherit_arguments: true
       display_extenders: {  }
     cache_metadata:
       max-age: -1
