@@ -546,27 +546,9 @@ display:
           entity_field: uid
           plugin_id: field
       pager:
-        type: full
+        type: none
         options:
           offset: 0
-          pagination_heading_level: h4
-          items_per_page: 50
-          total_pages: null
-          id: 0
-          tags:
-            next: ››
-            previous: ‹‹
-            first: '« First'
-            last: 'Last »'
-          expose:
-            items_per_page: false
-            items_per_page_label: 'Items per page'
-            items_per_page_options: '5, 10, 25, 50'
-            items_per_page_options_all: false
-            items_per_page_options_all_label: '- All -'
-            offset: false
-            offset_label: Offset
-          quantity: 9
       exposed_form:
         type: basic
         options:
@@ -972,6 +954,7 @@ display:
             'group_node:basic_page': '0'
             'group_node:landing_page': '0'
             'group_node:service_location': '0'
+      use_ajax: true
       group_by: false
       header: {  }
       footer: {  }
@@ -1558,7 +1541,7 @@ display:
           text_input_required_format: filtered_html
           bef:
             general:
-              autosubmit: false
+              autosubmit: true
               autosubmit_exclude_textfield: false
               autosubmit_textfield_delay: 500
               autosubmit_hide: false
@@ -1594,7 +1577,9 @@ display:
         exposed_form: false
         fields: false
       display_extenders:
-        ajax_history: {  }
+        ajax_history:
+          enable_history: false
+          exclude_args: ''
     cache_metadata:
       max-age: -1
       contexts:
