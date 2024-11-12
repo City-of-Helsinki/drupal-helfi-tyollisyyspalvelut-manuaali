@@ -31,10 +31,9 @@ function service_manual_workflow_cron() {
  * @throws \Exception
  */
 function service_manual_workflow_node_presave(EntityInterface $entity) {
-  $default_language = \Drupal::languageManager()->getDefaultLanguage()->getId();
-  $active_langcode = $entity->language()->getId();
 
-  if ($entity instanceof NodeInterface && $entity->isTranslatable() && !$entity->isNew() && ($active_langcode !== $default_language)) {
+  if ($entity instanceof NodeInterface && $entity->isTranslatable() && !$entity->isNew() && !$entity->isDefaultTranslation()) {
+    $active_langcode = $entity->language()->getId();
     $translations = $entity->getTranslationLanguages();
     foreach ($translations as $translation_langcode => $translation_language) {
       // Prevent secondary languages from disrupting other translations.
