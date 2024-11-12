@@ -17,18 +17,13 @@
     position: absolute;
     right: 0;
     top: 2px;
+    top: 18px;
+    right: 18px;
   }
 }
 
 .logged-in {
-  &.toolbar-fixed .small-message-wrapper--service {
-    @include large {
-      top: 100px;
-    }
-  }
   .small-message-wrapper--service {
-    @include large {
-      top: 68px;
-    }
+    top: 33px;
   }
 }
