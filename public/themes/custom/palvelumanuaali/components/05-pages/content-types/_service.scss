@@ -199,28 +199,39 @@
           margin-right: 4px;
           strong::before {
             background-image: url("../../assets/images/icons/contact-list.svg");
+            display: none;
+            @include medium {
+              display: block;
+            }
           }
         }
         &:nth-child(2) {
           strong::before {
             background-image: url("../../assets/images/icons/checklist2.svg");
+            display: none;
+            @include medium {
+              display: block;
+            }
           }
         }
         a {
-          padding: 14px 56px 18px 48px;
+          padding: 14px 32px 18px 32px;
           border-bottom: 2px solid clr(background-border);
-          font-size: 18px;
+          font-size: 14px;
           color: clr(text);
           background-color: clr(text-inverse);
           border-radius: 16px 16px 0 0;
           line-height: 24px;
+          @include medium {
+            font-size: 18px;
+            padding: 14px 56px 18px 48px;
+          }
           &:hover {
             background-color: clr(background-border);
           }
         }
         &.selected {
           a {
-            padding: 18px 56px 22px 48px;
             border-bottom: 0;
             color: clr(text-inverse);
             background: clr(footer-color);
