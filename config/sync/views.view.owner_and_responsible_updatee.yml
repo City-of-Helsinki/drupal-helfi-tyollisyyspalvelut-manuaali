@@ -9,7 +9,6 @@ dependencies:
     - user.role.editor
     - user.role.root
     - user.role.specialist_editor
-    - workflows.workflow.service_moderation
   module:
     - better_exposed_filters
     - content_moderation
@@ -17,6 +16,7 @@ dependencies:
     - group
     - hel_tpm_editorial
     - hel_tpm_general
+    - hel_tpm_group
     - node
     - user
 _core:
@@ -592,32 +592,28 @@ display:
       sorts: {  }
       arguments: {  }
       filters:
-        moderation_state:
-          id: moderation_state
+        moderation_state_filter_exclude_archived:
+          id: moderation_state_filter_exclude_archived
           table: node_field_data
-          field: moderation_state
+          field: moderation_state_filter_exclude_archived
           relationship: none
           group_type: group
           admin_label: ''
           entity_type: node
-          plugin_id: moderation_state_filter
+          plugin_id: moderation_state_filter_exclude_archived
           operator: in
-          value:
-            service_moderation-draft: service_moderation-draft
-            service_moderation-ready_to_publish: service_moderation-ready_to_publish
-            service_moderation-published: service_moderation-published
-            service_moderation-outdated: service_moderation-outdated
+          value: {  }
           group: 1
           exposed: true
           expose:
-            operator_id: moderation_state_op
-            label: Muokkaustila
+            operator_id: moderation_state_filter_exclude_archived_op
+            label: Julkaisutila
             description: ''
             use_operator: false
-            operator: moderation_state_op
+            operator: moderation_state_filter_exclude_archived_op
             operator_limit_selection: false
             operator_list: {  }
-            identifier: moderation_state
+            identifier: moderation_state_excluding_archived
             required: false
             remember: false
             multiple: false
@@ -629,7 +625,7 @@ display:
               editor: '0'
               specialist: '0'
               specialist_editor: '0'
-            reduce: true
+            reduce: false
           is_grouped: false
           group_info:
             label: ''
@@ -1572,7 +1568,7 @@ display:
               secondary_open: false
               reset_button_always_show: false
             filter:
-              moderation_state:
+              moderation_state_filter_exclude_archived:
                 plugin_id: default
                 advanced:
                   sort_options: false
@@ -1597,7 +1593,8 @@ display:
       defaults:
         exposed_form: false
         fields: false
-      display_extenders: {  }
+      display_extenders:
+        ajax_history: {  }
     cache_metadata:
       max-age: -1
       contexts:
