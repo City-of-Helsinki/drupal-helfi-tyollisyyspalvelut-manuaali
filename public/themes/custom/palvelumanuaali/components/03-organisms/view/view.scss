@@ -410,6 +410,7 @@
            overflow: scroll;
            @include xl {
              display: block;
+             overflow: auto;
            }
         }
       }
@@ -437,6 +438,7 @@
     padding-bottom: 0.8rem;
     margin-bottom: $space-double;
     @include xl {
+      overflow: auto;
       margin: $space-two-and-half auto 0 auto;
       display: flex;
       justify-content: center;
