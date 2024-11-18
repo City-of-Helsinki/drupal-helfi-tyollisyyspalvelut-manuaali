@@ -1,0 +1,15 @@
+uuid: 5989018f-6c42-4857-b0b3-bb9e6cbb65e4
+langcode: fi
+status: true
+dependencies:
+  config:
+    - group.type.service_provider
+    - user.role.root
+id: service_provider-insider_root
+label: 'Insider super admin'
+weight: -7
+admin: true
+scope: insider
+global_role: root
+group_type: service_provider
+permissions: {  }

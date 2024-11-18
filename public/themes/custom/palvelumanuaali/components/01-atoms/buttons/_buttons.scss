@@ -506,8 +506,12 @@ $button-colors: (
   }
 }
 
-.flag.action-flag,
-.flag.action-unflag {
+.flag {
+  .ajax-progress {
+    display: none;
+  }
+  &.action-flag,
+  &.action-unflag {
     position: absolute;
     right: 48px;
     z-index: 80;
@@ -515,12 +519,17 @@ $button-colors: (
     border: 0;
     display: block;
     a {
-      width: 48px;
+      width: 46px;
       overflow: hidden;
-      height: 48px;
+      height: 46px;
       font-size: 0;
       padding: 0;
       position: absolute;
+      border: 2px solid $blue40;
+      border-radius: 50%;
+      &:hover {
+        border: 2px solid $blue100;
+      }
       &::after {
         width: 24px;
         height: 24px;
@@ -528,23 +537,19 @@ $button-colors: (
         left: 0;
         font-size: 0;
         margin-left: 0;
+        background-size: 24px 20px;
       }
     }
   }
-  .flag {
-    .ajax-progress {
-      display: none;
-    }
-  }
-  .flag.action-unflag {
+  &.action-unflag {
     a {
       &::after {
-          transition-delay: 150ms;
+        transition-delay: 150ms;
           @extend .icon--favorite-filled;
+        }
       }
-    }
   }
-  .flag.action-flag {
+  &.action-flag {
     a {
       &::after {
           transition-delay: 150ms;
@@ -552,7 +557,18 @@ $button-colors: (
       }
     }
   }
+}
 
+
+.service-page {
+  .flag-cart a {
+    border: 2px solid $blue40;
+    border-radius: 50%;
+    &:hover {
+      border: 2px solid $blue100;
+    }
+  }
+}
 
 .flag-cart {
   @include button-no-color;
@@ -577,8 +593,8 @@ $button-colors: (
     a {
       &.action-unflag {
         &::after {
-            @include icons;
-            content: "\EA0F";
+          @include icons;
+          content: "\EA0F";
         }
       }
     }

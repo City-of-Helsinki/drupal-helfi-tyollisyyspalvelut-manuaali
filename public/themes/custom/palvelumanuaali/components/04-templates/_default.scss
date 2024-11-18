@@ -156,6 +156,14 @@ body {
 }
 
 
+.taxonomy-view-page {
+  .block--main-block {
+    overflow-x: hidden;
+    @include xl {
+       overflow-x: auto;
+    }
+  }
+}
 .taxonomy-view-page,
 .edit-create-form {
   .main-content {
