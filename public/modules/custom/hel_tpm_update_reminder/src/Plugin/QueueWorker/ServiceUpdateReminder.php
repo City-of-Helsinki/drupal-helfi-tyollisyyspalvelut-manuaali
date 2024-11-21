@@ -225,6 +225,8 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
     $message->set('field_node', $service);
     $message->set('field_user', $account);
     $message->save();
+    // Prevent sending all the mails at once.
+    sleep(1);
     return $this->messageNotifier->send($message);
   }
 
