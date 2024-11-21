@@ -556,9 +556,10 @@ final class ServiceUpdateReminderTest extends EntityKernelTestBase {
    *   An array containing captured email messages.
    */
   protected function getReminderMails(): array {
-    return $this->getMails([
-      'id' => 'message_notify_hel_tpm_update_reminder_service',
-    ]);
+    return array_merge(
+      $this->getMails(['id' => 'message_notify_hel_tpm_update_reminder_service']),
+      $this->getMails(['id' => 'message_notify_hel_tpm_update_reminder_service2'])
+    );
   }
 
   /**

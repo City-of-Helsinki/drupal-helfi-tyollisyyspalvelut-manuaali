@@ -147,7 +147,16 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
     }
     $account = $service->get('field_service_provider_updatee')->entity;
 
-    $isReminded = $this->sendMessage('hel_tpm_update_reminder_service', $account, $service);
+    $template = match ($messageNumber) {
+      1 => 'hel_tpm_update_reminder_service',
+      2 => 'hel_tpm_update_reminder_service2',
+      default => FALSE,
+    };
+    if (empty($template)) {
+      return FALSE;
+    }
+
+    $isReminded = $this->sendMessage($template, $account, $service);
     if ($isReminded === TRUE) {
       UpdateReminderUtility::setMessagesSentState($this->serviceId, $messageNumber);
     }

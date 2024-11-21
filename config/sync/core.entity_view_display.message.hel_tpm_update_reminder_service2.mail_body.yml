@@ -1,0 +1,27 @@
+uuid: 7013c901-8b41-4c0a-acb9-7ebb6d16e9a1
+langcode: fi
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.message.mail_body
+    - field.field.message.hel_tpm_update_reminder_service2.field_node
+    - field.field.message.hel_tpm_update_reminder_service2.field_user
+    - message.template.hel_tpm_update_reminder_service2
+  module:
+    - user
+id: message.hel_tpm_update_reminder_service2.mail_body
+targetEntityType: message
+bundle: hel_tpm_update_reminder_service2
+mode: mail_body
+content:
+  partial_1:
+    weight: 0
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  field_node: true
+  field_user: true
+  partial_0: true
+  search_api_excerpt: true
