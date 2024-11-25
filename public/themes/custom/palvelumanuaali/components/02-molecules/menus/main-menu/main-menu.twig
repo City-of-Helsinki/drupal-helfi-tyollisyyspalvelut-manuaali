@@ -47,7 +47,7 @@
     {% set menu_class = "main-menu" %}
     {% set items = menu_items %}
 
-    {% macro menu_links(items, attributes, menu_level, menu_class, menu_modifiers, menu_blockname, item_base_class, item_modifiers, item_blockname, directory, icon_name, icon_base_class) %}
+    {% macro menu_links(items, attributes, menu_level, menu_class, menu_modifiers, menu_blockname, menu_additional_class, item_base_class, item_modifiers, item_blockname, directory, icon_name, icon_base_class) %}
       {% import _self as menus %}
       {% if items %}
         {# Set classes #}
@@ -68,7 +68,7 @@
 
     {% import _self as menus %}
 
-    {{ menus.menu_links(items, attributes, 0, menu_class, menu_modifiers, menu_blockname, item_base_class, item_modifiers, item_blockname, directory, icon_name, icon_base_class) }}
+    {{ menus.menu_links(items, attributes, 0, menu_class, menu_modifiers, menu_blockname, ['d--flex--dsk', 'position--d--unst'], item_base_class, item_modifiers, item_blockname, directory, icon_name, icon_base_class) }}
 
 </div>
 </nav>

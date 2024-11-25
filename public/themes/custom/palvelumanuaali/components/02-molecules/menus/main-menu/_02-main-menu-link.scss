@@ -1,7 +1,9 @@
+
+
 .main-nav {
   &--open {
-    @media only screen and (max-width: $large) {
-      padding-top: $space-double;
+    @media only screen and (max-width: $xl) {
+      padding-top: $space-quadruple;
     }
   }
 }
@@ -9,7 +11,7 @@
   >.main-menu__item--with-sub {
     padding-bottom: 20px;
     @include large {
-      padding-bottom: $space-one-and-half;
+      padding-bottom: 0;
       &:last-child {
         padding-bottom: 0;
 
@@ -31,17 +33,25 @@
   line-height: 24px; /* 200% */
   letter-spacing: 1px;
   text-transform: uppercase;
-
+  @extend .header-text-dsk;
   &--with-sub {
     width: 80%;
     text-transform: uppercase;
   }
+  &--active {
+    @include xl {
+      text-decoration-line: underline;
+      text-decoration-color: $blue100;
+      text-decoration-thickness: 4px;
+      text-underline-offset: 5px;
+    }
+  }
 
-  @include large {
+  @include xl {
+
     border-bottom: none;
     display: inline-block;
-    padding: 0 $space 12px $space-two-and-half;
-    position: relative;
+    padding: 30px $space 30px $space-two-and-half;
     width: auto;
     &--sub {
       line-height: 20px;
@@ -54,7 +64,6 @@
     }
   }
   @include xxl {
-    padding: 0 $space 36px $space-two-and-half;
     line-height: 24px;
   }
 }
@@ -79,6 +88,7 @@
   letter-spacing: unset;
   width: calc(100% + 2rem);
   margin-left: -16px;
+  @extend .header-text-dsk;
   &:focus, &:hover {
     color: clr(alt-header-color);
     background-color: clr(background-dropdown);
@@ -87,12 +97,30 @@
     background-position: calc(100% - 24px) center;
   }
   @include large {
+    width: auto;
     display: block;
-    padding: $space-three-fourths $space-double $space-three-fourths $space-two-and-half;
+    padding: $space-double $space-double $space-double $space-two-and-half;
     margin-left: 0;
+    &:focus, &:hover {
+      color: clr(alt-header-color);
+      background-color: clr(background-dropdown);
+      background-image: unset;
+      background-repeat: no-repeat;
+      background-position: calc(100% - 24px) center;
+    }
   }
 }
 
 .main-menu__link--sub-2 {
   padding-left: $space-quadruple;
+}
+.header-text-dsk {
+  @include large {
+    text-transform: unset;
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: unset;
+    font-size: 15px;
+    color: clr(text);
+  }
 }

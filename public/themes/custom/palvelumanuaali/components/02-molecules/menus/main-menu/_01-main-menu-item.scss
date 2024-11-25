@@ -2,8 +2,6 @@
 .main-menu__item {
   display: flex;
   flex-wrap: wrap;
-  position: relative;
-
   @include medium {
     border-top: none;
 
@@ -12,7 +10,7 @@
       transition: all 0.2s;
 
       & > .main-menu--sub {
-        display: block;
+        // display: block;
       }
     }
   }
