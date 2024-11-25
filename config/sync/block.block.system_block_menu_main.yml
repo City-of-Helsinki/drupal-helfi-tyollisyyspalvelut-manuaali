@@ -1,9 +1,9 @@
-uuid: de506e01-a04b-41b6-b753-caf86392c625
+uuid: 8ac7e5a7-ec28-4a57-850a-986996756751
 langcode: fi
 status: true
 dependencies:
   config:
-    - system.menu.favorites
+    - system.menu.main
   module:
     - block_class
     - system
@@ -11,16 +11,16 @@ dependencies:
     - palvelumanuaali
 third_party_settings:
   block_class:
-    classes: 'margin--mobile-only--bottom-fourteen margin--mobile-only--top-one-space position--relative'
-id: suosikit
+    classes: 'header-main-nav margin--dxl--lra'
+id: system_block_menu_main
 theme: palvelumanuaali
 region: header
-weight: -11
+weight: -14
 provider: null
-plugin: 'system_menu_block:favorites'
+plugin: 'system_menu_block:main'
 settings:
-  id: 'system_menu_block:favorites'
-  label: Suosikit
+  id: 'system_menu_block:main'
+  label: Päävalikko
   label_display: '0'
   provider: system
   level: 1
