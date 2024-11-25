@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\hel_tpm_update_reminder;
 
@@ -15,19 +15,19 @@ class UpdateReminderUtility {
   public const RUN_LIMIT_HOURS = 24;
 
   /**
-   * First limit in days for service reminders.
+   * First reminder limit in days.
    */
-  public const SERVICE_LIMIT_1 = 120;
+  public const LIMIT_1 = 120;
 
   /**
-   * Second limit in days for service reminders.
+   * Second reminder limit in days, counted from the first limit.
    */
-  public const SERVICE_LIMIT_2 = 135;
+  public const LIMIT_2 = 15;
 
   /**
-   * Third limit in days for service reminders.
+   * Third reminder limit in days, counted from the second limit.
    */
-  public const SERVICE_LIMIT_3 = 150;
+  public const LIMIT_3 = 15;
 
   /**
    * State API key for update reminder last run timestamp.
@@ -40,6 +40,11 @@ class UpdateReminderUtility {
   public const CHECKED_TIMESTAMP_BASE_KEY = 'hel_tpm_update_reminder.checked_timestamp.node.';
 
   /**
+   * Base State API key for node's last reminder timestamp.
+   */
+  public const REMINDED_BASE_KEY = 'hel_tpm_update_reminder.reminded_timestamp.node.';
+
+  /**
    * Base State API key for node's messages sent counter.
    */
   public const MESSAGES_SENT_BASE_KEY = 'hel_tpm_update_reminder.messages_sent.node.';
@@ -50,7 +55,7 @@ class UpdateReminderUtility {
    * @return int|null
    *   The timestamp for last run.
    */
-  public static function getLastRun(): ?int {
+  public static function getLastRunTimestamp(): ?int {
     return \Drupal::state()->get(self::LAST_RUN_KEY, NULL);
   }
 
@@ -60,18 +65,18 @@ class UpdateReminderUtility {
    * @return void
    *   Void.
    */
-  public static function updateLastRun(): void {
+  public static function updateLastRunTimestamp(): void {
     \Drupal::state()->set(self::LAST_RUN_KEY, \Drupal::time()->getRequestTime());
   }
 
   /**
-   * Check whether the update reminder should be run according to last run.
+   * Check whether the update reminder should run by checking the last run time.
    *
    * @return bool
    *   TRUE if update reminder should be run, FALSE otherwise.
    */
   public static function shouldRun(): bool {
-    if (empty($lastRun = self::getLastRun())) {
+    if (empty($lastRun = self::getLastRunTimestamp())) {
       return TRUE;
     }
     $runTimeLimit = strtotime(self::RUN_LIMIT_HOURS . ' hours', 0);
@@ -82,7 +87,7 @@ class UpdateReminderUtility {
   }
 
   /**
-   * Get the checked content timestamp for node.
+   * Get the timestamp the node is last checked.
    *
    * @param int $nid
    *   The node id.
@@ -90,7 +95,7 @@ class UpdateReminderUtility {
    * @return int|null
    *   The checked content timestamp if existing, NULL otherwise.
    */
-  public static function getChecked(int $nid): ?int {
+  public static function getCheckedTimestamp(int $nid): ?int {
     return \Drupal::state()->get(self::CHECKED_TIMESTAMP_BASE_KEY . $nid, NULL);
   }
 
@@ -103,25 +108,51 @@ class UpdateReminderUtility {
    * @return void
    *   Void.
    */
-  public static function setChecked(int $nid): void {
+  public static function setCheckedTimestamp(int $nid): void {
     \Drupal::state()->set(self::CHECKED_TIMESTAMP_BASE_KEY . $nid, \Drupal::time()->getRequestTime());
   }
 
   /**
-   * Get the sent messages state for node.
+   * Get the reminder message timestamp for node.
+   *
+   * @param int $nid
+   *   The node id.
+   *
+   * @return int|null
+   *   The reminder message timestamp if existing, NULL otherwise.
+   */
+  public static function getRemindedTimestamp(int $nid): ?int {
+    return \Drupal::state()->get(self::REMINDED_BASE_KEY . $nid, NULL);
+  }
+
+  /**
+   * Set the reminder message timestamp for node to current time.
+   *
+   * @param int $nid
+   *   The node id.
+   *
+   * @return void
+   *   Void.
+   */
+  public static function setRemindedTimestamp(int $nid): void {
+    \Drupal::state()->set(self::REMINDED_BASE_KEY . $nid, \Drupal::time()->getRequestTime());
+  }
+
+  /**
+   * Get the sent messages number for node.
    *
    * @param int $nid
    *   The node id.
    *
    * @return int
-   *   The sent messages.
+   *   The number of sent messages.
    */
   public static function getMessagesSent(int $nid): int {
     return \Drupal::state()->get(self::MESSAGES_SENT_BASE_KEY . $nid, 0);
   }
 
   /**
-   * Set the sent messages state for node.
+   * Set the sent messages number for node.
    *
    * @param int $nid
    *   The node id.
@@ -136,7 +167,28 @@ class UpdateReminderUtility {
   }
 
   /**
-   * Marks node content as checked.
+   * Set the sent message state for node.
+   *
+   * The message number is updated and the reminded timestamp is set to current
+   * timestamp.
+   *
+   * @param int $nid
+   *   The node id.
+   * @param int $messageNumber
+   *   The updated sent messages.
+   *
+   * @return void
+   *   Void.
+   */
+  public static function setMessagesSentState(int $nid, int $messageNumber): void {
+    self::setMessagesSent($nid, $messageNumber);
+    self::setRemindedTimestamp($nid);
+  }
+
+  /**
+   * Clear the sent message state for node.
+   *
+   * The message number and reminded timestamp states are removed.
    *
    * @param int $nid
    *   The node id.
@@ -144,41 +196,57 @@ class UpdateReminderUtility {
    * @return void
    *   Void.
    */
-  public static function markAsChecked(int $nid): void {
+  public static function clearMessagesSent(int $nid): void {
     if (!empty(\Drupal::state()->get(self::MESSAGES_SENT_BASE_KEY . $nid))) {
-      self::setMessagesSent($nid, 0);
+      \Drupal::state()->delete(self::MESSAGES_SENT_BASE_KEY . $nid);
     }
-    self::setChecked($nid);
+    if (!empty(\Drupal::state()->get(self::REMINDED_BASE_KEY . $nid))) {
+      \Drupal::state()->delete(self::REMINDED_BASE_KEY . $nid);
+    }
   }
 
   /**
-   * Get the first limit for service reminders as timestamp.
+   * Mark node as checked, e.g. after a state transition.
+   *
+   * @param int $nid
+   *   The node id.
+   *
+   * @return void
+   *   Void.
+   */
+  public static function checkNode(int $nid): void {
+    self::clearMessagesSent($nid);
+    self::setCheckedTimestamp($nid);
+  }
+
+  /**
+   * Get the first limit as timestamp.
    *
    * @return int|false
    *   A timestamp on success, FALSE otherwise.
    */
-  public static function getFirstServiceLimit(): int|false {
-    return strtotime('-' . self::SERVICE_LIMIT_1 . ' days');
+  public static function getFirstLimitTimestamp(): int|false {
+    return strtotime('-' . self::LIMIT_1 . ' days');
   }
 
   /**
-   * Get the second limit for service reminders as timestamp.
+   * Get the second limit as timestamp.
    *
    * @return int|false
    *   A timestamp on success, FALSE otherwise.
    */
-  public static function getSecondServiceLimit(): int|false {
-    return strtotime('-' . self::SERVICE_LIMIT_2 . ' days');
+  public static function getSecondLimitTimestamp(): int|false {
+    return strtotime('-' . self::LIMIT_2 . ' days');
   }
 
   /**
-   * Get the third limit for service reminders as timestamp.
+   * Get the third limit as timestamp.
    *
    * @return int|false
    *   A timestamp on success, FALSE otherwise.
    */
-  public static function getThirdServiceLimit(): int|false {
-    return strtotime('-' . self::SERVICE_LIMIT_3 . ' days');
+  public static function getThirdLimitTimestamp(): int|false {
+    return strtotime('-' . self::LIMIT_3 . ' days');
   }
 
 }

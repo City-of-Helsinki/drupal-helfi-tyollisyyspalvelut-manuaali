@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\hel_tpm_update_reminder\EventSubscriber;
 
@@ -18,17 +18,17 @@ class ServiceStateChangedSubscriber implements EventSubscriberInterface {
    */
   public static function getSubscribedEvents() {
     return [
-      'service_manual_workflow.draft.to.ready_to_publish' => ['markContentChecked'],
-      'service_manual_workflow.draft.to.published' => ['markContentChecked'],
-      'service_manual_workflow.ready_to_publish.to.ready_to_publish' => ['markContentChecked'],
-      'service_manual_workflow.ready_to_publish.to.published' => ['markContentChecked'],
-      'service_manual_workflow.published.to.ready_to_publish' => ['markContentChecked'],
-      'service_manual_workflow.published.to.published' => ['markContentChecked'],
+      'service_manual_workflow.draft.to.ready_to_publish' => ['markNodeChecked'],
+      'service_manual_workflow.draft.to.published' => ['markNodeChecked'],
+      'service_manual_workflow.ready_to_publish.to.ready_to_publish' => ['markNodeChecked'],
+      'service_manual_workflow.ready_to_publish.to.published' => ['markNodeChecked'],
+      'service_manual_workflow.published.to.ready_to_publish' => ['markNodeChecked'],
+      'service_manual_workflow.published.to.published' => ['markNodeChecked'],
     ];
   }
 
   /**
-   * Mark service content checked after transition.
+   * Mark node checked after transition.
    *
    * @param \Drupal\service_manual_workflow\Event\ServiceModerationEvent $event
    *   Service moderation event.
@@ -36,7 +36,7 @@ class ServiceStateChangedSubscriber implements EventSubscriberInterface {
    * @return void
    *   Void.
    */
-  public function markContentChecked(ServiceModerationEvent $event): void {
+  public function markNodeChecked(ServiceModerationEvent $event): void {
     $state = $event->getModerationState();
     if (empty($entityTypeId = $state->content_entity_type_id?->value) ||
         empty($entityId = $state->content_entity_id?->value)) {
@@ -44,7 +44,7 @@ class ServiceStateChangedSubscriber implements EventSubscriberInterface {
     }
 
     if ($entityTypeId === 'node') {
-      UpdateReminderUtility::markAsChecked((int) $entityId);
+      UpdateReminderUtility::checkNode((int) $entityId);
     }
   }
 
