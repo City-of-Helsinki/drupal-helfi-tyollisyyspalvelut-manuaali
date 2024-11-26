@@ -241,6 +241,12 @@ $card-font-small-heading: 15px;
       z-index: 1;
     }
   }
+  @include medium {
+    width: calc(50% - 16px);
+    flex-basis: calc(50% - 16px);
+    flex-grow: 1;
+    max-width: calc(50% - 11px);
+  }
   @include xl {
     width: calc(33% - 16px);
     flex-basis: calc(33% - 16px);
@@ -618,10 +624,12 @@ $card-font-small-heading: 15px;
   }
   .card__caption {
     @extend .small-uppercase-card-caption;
+    color: clr(accent-pink);
     max-width: 90%;
   }
   .card__heading {
     @extend .card-heading;
+    max-width: 90%;
   }
   .card__content {
     margin: $space;
@@ -633,9 +641,8 @@ $card-font-small-heading: 15px;
     }
   }
   .card__body {
-    display: none;
+    display: block;
     @include xl {
-      display: block;
       margin-top: $space;
       margin-bottom: $space-one-and-half;
     }
@@ -652,21 +659,18 @@ $card-font-small-heading: 15px;
     }
   }
   .icon-wrapper {
-    display: none;
-
-    @include xl {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-    }
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
     >.icon {
       position: relative;
       margin: 0;
       min-width: 24px;
     }
     .field__item {
-      font-size: 14px;
-      color: clr(text);
+      @extend .small-font;
+      color: clr(footer-color);
+      font-weight: 600;
     }
     .field--name-field-service-languages .field__items {
       overflow: hidden;
