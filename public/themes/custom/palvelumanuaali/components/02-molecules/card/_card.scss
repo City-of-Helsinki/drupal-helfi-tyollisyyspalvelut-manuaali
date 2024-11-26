@@ -629,6 +629,7 @@ $card-font-small-heading: 15px;
   }
   .card__heading {
     @extend .card-heading;
+    max-width: calc(100% - 35px);
   }
   .card__content {
     margin: $space;
