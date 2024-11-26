@@ -43,7 +43,7 @@ function _hel_tpm_update_reminder_service_reminders(): void {
   $reminder_service_ids = \Drupal::entityQuery('node')
     ->condition('type', 'service')
     ->condition('status', NodeInterface::PUBLISHED)
-    ->condition('changed', UpdateReminderUtility::getFirstServiceLimit(), '<')
+    ->condition('changed', UpdateReminderUtility::getFirstLimitTimestamp(), '<')
     ->accessCheck(FALSE);
   if (!empty($published_moderation_nids)) {
     $reminder_service_ids->condition('nid', $published_moderation_nids, 'IN');
@@ -52,13 +52,14 @@ function _hel_tpm_update_reminder_service_reminders(): void {
 
   $queue = Drupal::queue('hel_tpm_update_reminder_service');
   foreach ($reminder_service_ids as $nid) {
-    $checked = UpdateReminderUtility::getChecked($nid);
-    if (!empty($checked) && $checked < UpdateReminderUtility::getFirstServiceLimit()) {
-      $queue->createItem((int) $nid);
+    if (!empty($checked = UpdateReminderUtility::getCheckedTimestamp($nid))) {
+      if ($checked < UpdateReminderUtility::getFirstLimitTimestamp()) {
+        $queue->createItem((int) $nid);
+      }
     }
   }
 
-  UpdateReminderUtility::updateLastRun();
+  UpdateReminderUtility::updateLastRunTimestamp();
 }
 
 /**
