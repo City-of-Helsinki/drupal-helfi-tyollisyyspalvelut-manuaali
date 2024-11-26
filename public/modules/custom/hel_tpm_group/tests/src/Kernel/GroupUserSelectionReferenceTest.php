@@ -10,6 +10,7 @@ use Drupal\group\Entity\GroupInterface;
 use Drupal\group\PermissionScopeInterface;
 use Drupal\node\Entity\Node;
 use Drupal\node\Entity\NodeType;
+use Drupal\Tests\field\Traits\EntityReferenceFieldCreationTrait;
 use Drupal\Tests\field\Traits\EntityReferenceTestTrait;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\user\Entity\User;
@@ -24,7 +25,7 @@ use Drupal\user\RoleInterface;
  */
 class GroupUserSelectionReferenceTest extends GroupKernelTestBase {
 
-  use EntityReferenceTestTrait;
+  use EntityReferenceFieldCreationTrait;
 
   /**
    * Modules to enable.
