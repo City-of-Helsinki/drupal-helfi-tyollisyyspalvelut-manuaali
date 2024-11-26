@@ -688,7 +688,7 @@ display:
             'group_node:landing_page': '0'
             'group_node:service_location': '0'
       use_ajax: true
-      group_by: true
+      group_by: false
       header: {  }
       footer: {  }
       display_extenders: {  }
@@ -709,7 +709,8 @@ display:
     display_plugin: block
     position: 1
     display_options:
-      display_extenders: {  }
+      display_extenders:
+        ajax_history: {  }
       block_description: 'Group produced services'
       block_hide_empty: true
     cache_metadata:
