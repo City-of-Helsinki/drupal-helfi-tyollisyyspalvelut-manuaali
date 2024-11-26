@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\hel_tpm_update_reminder\Plugin\QueueWorker;
 
@@ -100,21 +100,29 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
     }
     $this->serviceId = $data;
 
-    if (empty($changed = UpdateReminderUtility::getChecked($this->serviceId))) {
+    // Do nothing if node is not checked, e.g. there has been no state
+    // transitions as defined in event subscriber ServiceStateChangedSubscriber.
+    if (empty($checked = UpdateReminderUtility::getCheckedTimestamp($this->serviceId))) {
+      return;
+    }
+    // Only continue processing node if checked timestamp is smaller (older)
+    // than the first reminder limit.
+    if ($checked >= UpdateReminderUtility::getFirstLimitTimestamp()) {
       return;
     }
     $sent = UpdateReminderUtility::getMessagesSent($this->serviceId);
+    $reminded = UpdateReminderUtility::getRemindedTimestamp($this->serviceId);
 
     match (TRUE) {
-      ($sent === 0) && ($changed < UpdateReminderUtility::getFirstServiceLimit()) => $this->remind(1),
-      ($sent === 1) && ($changed < UpdateReminderUtility::getSecondServiceLimit()) => $this->remind(2),
-      ($sent === 2) && ($changed < UpdateReminderUtility::getThirdServiceLimit()) => $this->outdate(),
+      ($sent === 0) => $this->remind(1),
+      ($sent === 1) && isset($reminded) && ($reminded < UpdateReminderUtility::getSecondLimitTimestamp()) => $this->remind(2),
+      ($sent === 2) && isset($reminded) && ($reminded < UpdateReminderUtility::getThirdLimitTimestamp()) => $this->outdate(),
       default => FALSE,
     };
   }
 
   /**
-   * Reminds service provider update user and updates message counter.
+   * Remind service provider update user and updates related node state.
    *
    * @param int $messageNumber
    *   The sequence number of the reminder going to be sent.
@@ -139,15 +147,24 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
     }
     $account = $service->get('field_service_provider_updatee')->entity;
 
-    $reminded = $this->sendMessage('hel_tpm_update_reminder_service', $account, $service);
-    if ($reminded === TRUE) {
-      UpdateReminderUtility::setMessagesSent($this->serviceId, $messageNumber);
+    $template = match ($messageNumber) {
+      1 => 'hel_tpm_update_reminder_service',
+      2 => 'hel_tpm_update_reminder_service2',
+      default => FALSE,
+    };
+    if (empty($template)) {
+      return FALSE;
     }
-    return $reminded;
+
+    $isReminded = $this->sendMessage($template, $account, $service);
+    if ($isReminded === TRUE) {
+      UpdateReminderUtility::setMessagesSentState($this->serviceId, $messageNumber);
+    }
+    return $isReminded;
   }
 
   /**
-   * Marks service as outdated, informs users and updates message counter.
+   * Mark service as outdated, informs users and updates related node state.
    *
    * @return bool
    *   Denoting success or failure.
@@ -183,7 +200,7 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
         '%service_title' => $service->getTitle(),
         '%service_id' => $this->serviceId,
       ]);
-      UpdateReminderUtility::setMessagesSent($this->serviceId, 3);
+      UpdateReminderUtility::setMessagesSentState($this->serviceId, 3);
       return TRUE;
     }
 
@@ -217,6 +234,8 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
     $message->set('field_node', $service);
     $message->set('field_user', $account);
     $message->save();
+    // Prevent sending all the mails at once.
+    sleep(1);
     return $this->messageNotifier->send($message);
   }
 

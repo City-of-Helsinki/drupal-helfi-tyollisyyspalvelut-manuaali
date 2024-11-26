@@ -1,0 +1,29 @@
+uuid: 1dfa4e1c-eea7-40f5-996d-4dc9588fa7dd
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.message.field_user
+    - message.template.hel_tpm_update_reminder_service2
+id: message.hel_tpm_update_reminder_service2.field_user
+field_name: field_user
+entity_type: message
+bundle: hel_tpm_update_reminder_service2
+label: User
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:user'
+  handler_settings:
+    target_bundles: null
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    filter:
+      type: _none
+    include_anonymous: false
+field_type: entity_reference
