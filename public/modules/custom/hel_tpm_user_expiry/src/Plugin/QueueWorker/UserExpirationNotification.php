@@ -12,6 +12,7 @@ use Drupal\Core\Queue\QueueWorkerBase;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Session\UserSession;
 use Drupal\Core\State\State;
+use Drupal\group\Entity\GroupMembership;
 use Drupal\group\Entity\GroupMembershipInterface;
 use Drupal\group\GroupMembershipLoaderInterface;
 use Drupal\message\Entity\Message;
@@ -103,13 +104,12 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
    * @param \Drupal\Core\Password\PasswordGeneratorInterface $password_generator
    *   Password generator service.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, MessageNotifier $message_notifier, PasswordGeneratorInterface $password_generator, State $state, GroupMembershipLoaderInterface $group_membership_loader) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, MessageNotifier $message_notifier, PasswordGeneratorInterface $password_generator, State $state) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->logger = $this->getLogger('hel_tpm_user_expiry');
     $this->messageNotifier = $message_notifier;
     $this->passwordGenerator = $password_generator;
     $this->state = $state;
-    $this->groupMembershipLoader = $group_membership_loader;
   }
 
   /**
@@ -122,8 +122,7 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
       $plugin_definition,
       $container->get('message_notify.sender'),
       $container->get('password_generator'),
-      $container->get('state'),
-      $container->get('group.membership_loader')
+      $container->get('state')
     );
   }
 
@@ -336,9 +335,9 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
   private function removeGroupMemberships(AccountInterface $user) {
-    $memberships = $this->groupMembershipLoader->loadByUser($user);
+    $memberships = GroupMembership::loadByUser($user);
     foreach ($memberships as $membership) {
-      $membership->getGroupRelationship()->delete();
+      $membership->delete();
     }
   }
 
