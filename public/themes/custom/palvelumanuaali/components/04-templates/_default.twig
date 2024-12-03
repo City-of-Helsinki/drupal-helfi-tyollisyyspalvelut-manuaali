@@ -15,6 +15,9 @@
     {% block page_header %}
       {% include "@organisms/site/site-header/site-header.twig" %}
     {% endblock %}
+    {% block page_lowerheader %}
+        <div {{ bem('lowerheader', [], header__base_class) }}></div>
+    {% endblock %}
     {% block page_system %}
     {% endblock %}
     <div {{ bem(main_base_class, main_modifiers, main_blockname, main_extra_class) }}>

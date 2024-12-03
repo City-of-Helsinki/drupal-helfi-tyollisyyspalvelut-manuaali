@@ -48,11 +48,16 @@
   }
 
   @include xl {
-
     border-bottom: none;
     display: inline-block;
     padding: 30px $space 30px $space-two-and-half;
     width: auto;
+    &:hover {
+      text-decoration-line: underline;
+      text-decoration-color: $blue100;
+      text-decoration-thickness: 4px;
+      text-underline-offset: 5px;
+    }
     &--sub {
       line-height: 20px;
       &::after {

@@ -47,3 +47,23 @@
     }
   }
 }
+
+.main-menu > .main-menu__item {
+  >.main-menu--sub {
+    @include xl {
+      display: none;
+    }
+  }
+  &--active {
+    >.main-menu--sub {
+      @include xl {
+        display: flex;
+      }
+      > li:first-child {
+        @include xl {
+          margin-left: 240px;
+        }
+      }
+    }
+  }
+}

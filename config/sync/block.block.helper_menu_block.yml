@@ -1,4 +1,4 @@
-uuid: 8ac7e5a7-ec28-4a57-850a-986996756751
+uuid: d3863df2-9c34-4e9c-a48a-25adab035674
 langcode: fi
 status: true
 dependencies:
@@ -9,21 +9,18 @@ dependencies:
     - system
   theme:
     - palvelumanuaali
-third_party_settings:
-  block_class:
-    classes: 'header-main-nav margin--dxl--ra'
-id: system_block_menu_main
+id: helper_menu_block
 theme: palvelumanuaali
-region: header
-weight: -14
+region: lowerheader
+weight: 0
 provider: null
 plugin: 'system_menu_block:main'
 settings:
   id: 'system_menu_block:main'
-  label: Päävalikko
+  label: 'Menu helper block'
   label_display: '0'
   provider: system
-  level: 1
-  depth: 2
-  expand_all_items: true
+  level: 2
+  depth: 1
+  expand_all_items: false
 visibility: {  }

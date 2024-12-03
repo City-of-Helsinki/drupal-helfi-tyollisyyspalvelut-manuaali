@@ -54,7 +54,11 @@
       {{ page.header }}
     {% endif %}
   {% endblock %}
-
+  {% block page_lowerheader %}
+    {% if page.lowerheader %}
+      {{ page.lowerheader }}
+    {% endif %}
+  {% endblock %}
   {% block page_system %}
     {{ page.breadcrumb }}
     {{ page.highlighted }}
