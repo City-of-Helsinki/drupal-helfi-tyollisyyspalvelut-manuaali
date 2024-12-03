@@ -1,10 +1,11 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\hel_tpm_group;
 
 use Drupal\Core\Database\Connection;
+use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 
 /**
@@ -27,7 +28,8 @@ final class GroupsWithoutAdmins {
    */
   public function __construct(
     private readonly EntityTypeManagerInterface $entityTypeManager,
-    private readonly Connection $database
+    private readonly Connection $database,
+    private readonly EntityTypeInterface $entityType,
   ) {}
 
   /**
@@ -61,7 +63,7 @@ final class GroupsWithoutAdmins {
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   private function groupHasAdminUsers($gid, $roles) {
-    $storage = \Drupal::entityTypeManager()->getStorage('group_content');
+    $storage = $this->entityTypeManager->getStorage('group_content');
 
     $query = $storage->getQuery()
       ->accessCheck(FALSE)
