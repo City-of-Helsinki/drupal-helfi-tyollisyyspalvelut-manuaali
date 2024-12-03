@@ -263,7 +263,6 @@
             "pre-commit": [
                 "scripts/git/pre-commit/lint-check"
             ],
-            "commit-msg": "grep -q '[A-Z]+-[0-9]+.*' $1",
             "config": {
                 "stop-on-failure": [
                     "pre-commit"
