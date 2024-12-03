@@ -91,7 +91,6 @@ class ParagraphsAltCustomWidget extends ParagraphsWidget {
     $element_subform = &$widget_element['subform'];
     $element_subform['#attributes']['class'][] = 'child-div--spaced';
 
-
     return $widget_element;
   }
 

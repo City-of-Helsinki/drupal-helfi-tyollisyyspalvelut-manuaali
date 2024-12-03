@@ -2,12 +2,10 @@
 
 namespace Drupal\hel_tpm_editorial\Plugin\views\field;
 
-use Drupal\content_moderation\Entity\ContentModerationState;
-use Drupal\content_moderation\ModerationInformationInterface;
 use Drupal\Core\Database\Connection;
-use Drupal\Core\Database\Database;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Url;
+use Drupal\content_moderation\ModerationInformationInterface;
 use Drupal\node\NodeInterface;
 use Drupal\views\Plugin\views\field\FieldPluginBase;
 use Drupal\views\ResultRow;
@@ -42,6 +40,11 @@ class ServiceHasUnpublishedChanges extends FieldPluginBase {
    */
   private ModerationInformationInterface $moderationInformation;
 
+  /**
+   * Database connection interface.
+   *
+   * @var \Drupal\Core\Database\Connection
+   */
   private Connection $database;
 
   /**
@@ -53,7 +56,8 @@ class ServiceHasUnpublishedChanges extends FieldPluginBase {
     $plugin_definition,
     EntityTypeManagerInterface $entity_type_manager,
     ModerationInformationInterface $moderation_information,
-    Connection $database) {
+    Connection $database,
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->entityTypeManager = $entity_type_manager;
     $this->moderationInformation = $moderation_information;
@@ -99,7 +103,8 @@ class ServiceHasUnpublishedChanges extends FieldPluginBase {
 
     if (!$entity->isLatestTranslationAffectedRevision()) {
       $latest_translation_affected = $this->getLatestTranslationAffectedRevision($entity);
-      if ($entity->get('moderation_state')->value !== $latest_translation_affected->get('moderation_state')->value) {;
+      if ($entity->get('moderation_state')->value !== $latest_translation_affected->get('moderation_state')->value) {
+        ;
         $moderation_state = $this->getLatestRevisionModerationState($entity);
         return [
           '#theme' => 'service_has_changes_field',
@@ -129,6 +134,18 @@ class ServiceHasUnpublishedChanges extends FieldPluginBase {
     return $this->getStateLabel($rev);
   }
 
+  /**
+   * Get latest translation affected revision row.
+   *
+   * @param \Drupal\node\NodeInterface $node
+   *   Node interface.
+   *
+   * @return \Drupal\Core\Entity\EntityInterface|null
+   *   Entity revision or null.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   */
   protected function getLatestTranslationAffectedRevision(NodeInterface $node) {
     $database = $this->database;
     $vid = $database->select('node_field_revision', 'n')

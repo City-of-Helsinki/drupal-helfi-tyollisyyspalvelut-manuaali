@@ -3,7 +3,7 @@ recipe: drupal10
 config:
   via: nginx
   webroot: public
-  php: "8.2"
+  php: "8.3"
   database: mysql
   composer_version: 2
 proxy:
@@ -22,6 +22,7 @@ services:
     xdebug: true
     build:
       - "/app/vendor/bin/phpcs --config-set installed_paths /app/coder/vendor/drupal/coder/coder_sniffer"
+      - "cghooks update"
     config:
       php: .lando.php.ini
     overrides:
@@ -79,10 +80,13 @@ tooling:
     cmd: /app/vendor/bin/phplint
   phpcs:
     service: appserver
-    cmd: /app/vendor/bin/phpcs --standard=Drupal --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md,yml
+    cmd: /app/vendor/bin/phpcs --standard=Drupal --ignore=node_modules,bower_components,vendor --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md,yml
+  phpcsp:
+    service: appserver
+    cmd: /app/vendor/bin/phpcs --standard=DrupalPractice --ignore=node_modules,bower_components,vendor --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md,yml
   phpcbf:
     service: appserver
-    cmd: /app/vendor/bin/phpcbf --standard=Drupal --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md,yml
+    cmd: /app/vendor/bin/phpcbf --standard=Drupal --ignore=node_modules,bower_components,vendor --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md,yml
   phpunit:
     service: appserver
     cmd: /app/vendor/bin/phpunit
