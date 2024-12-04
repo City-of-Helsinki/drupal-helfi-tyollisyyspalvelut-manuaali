@@ -10,12 +10,12 @@ use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\date_recur\DateRecurPartGrid;
 use Drupal\date_recur\DateRecurRuleInterface;
 use Drupal\date_recur\Exception\DateRecurHelperArgumentException;
 use Drupal\date_recur\Plugin\Field\FieldType\DateRecurItem;
 use Drupal\date_recur_modular\DateRecurModularWidgetFieldsTrait;
 use Drupal\date_recur_modular\DateRecurModularWidgetOptions;
-use Drupal\date_recur\DateRecurPartGrid;
 use Drupal\date_recur_modular\Plugin\Field\FieldWidget\DateRecurModularAlphaWidget;
 
 /**

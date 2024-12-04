@@ -118,12 +118,8 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
       $plugin_definition,
       $container->get('message_notify.sender'),
       $container->get('password_generator'),
-<<<<<<< HEAD
       $container->get('state'),
       $container->get('entity_type.manager')
-=======
-      $container->get('state')
->>>>>>> develop
     );
   }
 
