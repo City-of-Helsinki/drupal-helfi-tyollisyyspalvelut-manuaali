@@ -1,16 +1,15 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\Tests\hel_tpm_user_expiry\Kernel;
 
 use Drupal\Core\Database\Database;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Test\AssertMailTrait;
-use Drupal\hel_tpm_user_expiry\SettingsUtility;
-use Drupal\KernelTests\Core\Entity\EntityKernelTestBase;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\Tests\user\Traits\UserCreationTrait;
+use Drupal\hel_tpm_user_expiry\SettingsUtility;
 use Drupal\user\UserInterface;
 
 /**
@@ -39,7 +38,7 @@ final class UserExpirationTest extends GroupKernelTestBase {
     'field',
     'filter',
     'system',
-    'group'
+    'group',
   ];
 
   /**
@@ -96,7 +95,8 @@ final class UserExpirationTest extends GroupKernelTestBase {
    * Delete users created in GroupKernelTestBase.
    *
    * @return void
-   *  -
+   *   -
+   *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    * @throws \Drupal\Core\Entity\EntityStorageException
@@ -315,7 +315,6 @@ final class UserExpirationTest extends GroupKernelTestBase {
     $users['active'] = $this->reloadEntity($users['active']);
     $users['user_id_1'] = $this->reloadEntity($users['user_id_1']);
 
-
     // Ensure values are anonymized for user with enough inactivation time.
     foreach ($inactiveOldValues as $key => $oldValue) {
       $this->assertNotEquals($oldValue, $users['inactive']->get($key)->value);
@@ -380,6 +379,7 @@ final class UserExpirationTest extends GroupKernelTestBase {
    *
    * @return void
    *   Void.
+   *
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function testReActivatedUserStaysActive() {
@@ -397,7 +397,7 @@ final class UserExpirationTest extends GroupKernelTestBase {
     $this->assertEquals(0, $this->queue->numberOfItems());
     $this->resetCronLastRun();
 
-    // Set last access to
+    // Set last access to.
     $user->set('access', strtotime('-166 days'));
     $user->save();
 
@@ -424,6 +424,8 @@ final class UserExpirationTest extends GroupKernelTestBase {
    *   The user id.
    * @param string $lastAccess
    *   The strtotime format of user's last access.
+   * @param int $status
+   *   The user status.
    *
    * @return \Drupal\user\UserInterface
    *   The user entity.
