@@ -93,3 +93,6 @@ tooling:
   behat:
     service: appserver
     cmd: /app/vendor/bin/behat --config=/app/tests/behat-lando.yml
+  cghooks:
+    service: appserver
+    cmd: cghooks

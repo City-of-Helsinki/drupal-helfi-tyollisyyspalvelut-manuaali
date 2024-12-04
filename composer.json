@@ -261,7 +261,8 @@
         },
         "hooks": {
             "pre-commit": [
-                "scripts/git/pre-commit/lint-check"
+                "scripts/git/pre-commit/custom-module-lint-check",
+                "scripts/git/pre-commit/custom-theme-lint-check"
             ],
             "config": {
                 "stop-on-failure": [
