@@ -201,8 +201,9 @@ final class RevisionHistoryService {
     $last_revision = $last_revision->getTranslation($entity->language()->getId());
 
     $elapsed_time = $this->time->getRequestTime() - $last_revision->getRevisionCreationTime();
+    $days = $elapsed_time / 86400;
 
-    return intval($elapsed_time / 86400);
+    return intval(round($days));
   }
 
 }
