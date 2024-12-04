@@ -82,6 +82,13 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
   private $uid;
 
   /**
+   * Entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  private EntityTypeManagerInterface $entityTypeManager;
+
+  /**
    * Constructor.
    *
    * @param array $configuration

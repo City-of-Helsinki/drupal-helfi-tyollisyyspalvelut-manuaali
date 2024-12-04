@@ -92,16 +92,13 @@ class HelTpmGroupSubscriber implements EventSubscriberInterface {
    *   Message notifier.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   Entity type manager.
-   * @param \Drupal\Core\Entity\EntityTypeInterface $entityType
-   *   Entity type interface.
    */
-  public function __construct(MessengerInterface $messenger, GroupMembershipLoader $membership_loader, MessageNotifier $message_notifier, EntityTypeManagerInterface $entityTypeManager, EntityTypeInterface $entityType) {
+  public function __construct(MessengerInterface $messenger, GroupMembershipLoader $membership_loader, MessageNotifier $message_notifier, EntityTypeManagerInterface $entityTypeManager) {
     $this->messenger = $messenger;
     $this->membershipLoader = $membership_loader;
     $this->messageNotifier = $message_notifier;
     $this->logger = $this->getLogger('hel_tpm_group');
     $this->entityTypeManager = $entityTypeManager;
-    $this->entityType = $entityType;
   }
 
   /**

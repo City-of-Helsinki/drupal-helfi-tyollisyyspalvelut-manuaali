@@ -70,6 +70,13 @@ final class UserExpirationTest extends GroupKernelTestBase {
   protected $group;
 
   /**
+   * Group role storage.
+   *
+   * @var \Drupal\Core\Entity\EntityStorageInterface|mixed|object
+   */
+  protected $groupRoleStorage;
+
+  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {
