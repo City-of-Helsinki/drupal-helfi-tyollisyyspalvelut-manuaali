@@ -28,8 +28,7 @@ final class GroupsWithoutAdmins {
    */
   public function __construct(
     private readonly EntityTypeManagerInterface $entityTypeManager,
-    private readonly Connection $database,
-    private readonly EntityTypeInterface $entityType,
+    private readonly Connection $database
   ) {}
 
   /**
