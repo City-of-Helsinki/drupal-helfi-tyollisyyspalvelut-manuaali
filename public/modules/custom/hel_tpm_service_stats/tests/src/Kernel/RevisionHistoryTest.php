@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\hel_tpm_service_stats\Kernel;
 
-use Drupal\language\Entity\ConfigurableLanguage;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\Tests\hel_tpm_service_stats\Traits\HelTpmServiceStatsWorkflowTestTrait;
+use Drupal\language\Entity\ConfigurableLanguage;
 
 /**
  * Tests for hel_tpm_service_stats.
@@ -215,10 +215,10 @@ final class RevisionHistoryTest extends GroupKernelTestBase {
   }
 
   /**
-   *
+   * Test time since last state change.
    */
   public function testTimeSinceLastStateChange() {
-    $user = $this->createUser([], NULL, TRUE);
+    $this->createUser([], NULL, TRUE);
     $node = $this->createNode([
       'type' => 'service',
       'moderation_state' => 'draft',
