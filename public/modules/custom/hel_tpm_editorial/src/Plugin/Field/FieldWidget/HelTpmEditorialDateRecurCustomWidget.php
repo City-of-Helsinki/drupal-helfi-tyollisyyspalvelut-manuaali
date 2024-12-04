@@ -15,6 +15,7 @@ use Drupal\date_recur\Exception\DateRecurHelperArgumentException;
 use Drupal\date_recur\Plugin\Field\FieldType\DateRecurItem;
 use Drupal\date_recur_modular\DateRecurModularWidgetFieldsTrait;
 use Drupal\date_recur_modular\DateRecurModularWidgetOptions;
+use Drupal\date_recur\DateRecurPartGrid;
 use Drupal\date_recur_modular\Plugin\Field\FieldWidget\DateRecurModularAlphaWidget;
 
 /**
@@ -64,7 +65,7 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
    *
    * @var \Drupal\date_recur\DateRecurPartGrid
    */
-  protected $partGrid;
+  protected DateRecurPartGrid $partGrid;
 
   /**
    * {@inheritdoc}
@@ -445,13 +446,13 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
         '#type' => 'submit',
         '#value' => $this->t('Remove'),
         '#validate' => [],
-        '#submit' => [[static::class, 'submitRemove']],
+        '#submit' => [[static::class, 'deleteSubmit']],
         '#limit_validation_errors' => [],
         '#attributes' => [
           'class' => ['remove-field-delta--' . $delta],
         ],
         '#ajax' => [
-          'callback' => [static::class, 'removeAjaxContentRefresh'],
+          'callback' => [static::class, 'deleteAjax'],
           'wrapper' => $wrapper_id,
           'effect' => 'fade',
         ],
@@ -592,7 +593,7 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
    * @return array
    *   The element.
    */
-  public static function afterBuildModularWidget(array $element, FormStateInterface $form_state) {
+  public static function afterBuildModularWidget(array $element, FormStateInterface $form_state): array {
     // Wait until ID is created, and after
     // \Drupal\Core\Render\Element\Checkboxes::processCheckboxes is run so
     // states are not replicated to children.
