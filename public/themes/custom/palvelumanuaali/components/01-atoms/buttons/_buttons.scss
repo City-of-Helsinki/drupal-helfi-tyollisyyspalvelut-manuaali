@@ -448,7 +448,7 @@ $button-colors: (
   border: 0;
   display: grid;
   padding: 10px; // TODO: as classes?
-  @include large {
+  @include xl {
     width: unset;
     position: unset;
     display: flex;
@@ -464,15 +464,20 @@ $button-colors: (
     height: 24px;
     width: 24px;
     vertical-align: middle;
-    @include large {
+    @include xl {
       vertical-align: top;
     }
   }
   .language-code {
     line-height: 24px;
     color: transparent;
-    @include large {
+    @include xl {
       color: clr(text);
+    }
+  }
+  .icon--dropdown  {
+    @media only screen and (max-width: $xl) {
+        display: none;
     }
   }
 }
@@ -818,6 +823,12 @@ input[data-drupal-selector="edit-field-contact-info-external-actions-ief-add"]{
   border-radius: 50%;
   &:hover {
     background-color: clr(background-border);
+  }
+  @include xl {
+    background-color: clr(background-border);
+    &:hover {
+      border: 2px solid $blue100;
+    }
   }
 }
 

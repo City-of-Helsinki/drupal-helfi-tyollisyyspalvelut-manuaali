@@ -28,7 +28,7 @@ body:not(.admin-toolbar-enabled) {
 
 
 .slide-in-menu {
-  margin-top: 40px;
+  margin-top: $space-two-and-half;
   display: block;
   height: 100%;
   position: fixed;
@@ -61,7 +61,7 @@ body:not(.admin-toolbar-enabled) {
 }
 
 .slide-in-loginform {
-  padding-top: 40px;
+  padding-top: $space-two-and-half;
   display: block;
   height: 100%;
   position: fixed;
@@ -74,7 +74,7 @@ body:not(.admin-toolbar-enabled) {
   transform:translateX(100%);
   width:  100%;
   max-width: 100vw;
-  @include large {
+  @include xl {
     margin-top: inherit;
     position: inherit;
     inset: unset;
@@ -122,7 +122,7 @@ body:not(.admin-toolbar-enabled) {
 
 .header {
   width: calc(100% + 32px);
-  margin-left: -16px;
+  margin-left: calc(-1 * $space);
   position: relative;
   @include large {
     z-index: 200;
@@ -149,7 +149,7 @@ body:not(.admin-toolbar-enabled) {
       width: 44px;
       height: 44px;
       margin-top: 6px;
-      margin-left: 6px;
+      margin-left: 23px;
     }
     @include wrapper;
     display: flex;
@@ -166,28 +166,44 @@ body:not(.admin-toolbar-enabled) {
   }
 
   &__primary {
-    padding: 0;
-    z-index: 200;
     background-color: clr(background);
-    width: 100%;
-    margin-left: -15px;
-    padding-top: $space-one-half;
-    display: none;
-    @include large {
-      display: block;
+    margin-top: 40px;
+    display: block;
+    height: 100%;
+    position: fixed;
+    inset:0;
+    overflow-y: scroll;
+    background: white;
+    z-index: 300;
+    padding: 0 $space;
+    margin-left: 0;
+    transform:translateX(-100%);
+    width:  100%;
+    max-width: 100vw;
+
+    > a {
+        display: inherit;
+    }
+    .logo-link {
+      @include large {
+        display: inherit;
+      }
+    }
+    @include xl {
+      display: flex;
+      background-color: clr(text-inverse);
       width: 100%;
       position: relative;
       bottom: unset;
-      padding: $space-double $space-double $space-one-and-half $space-double;
+      padding: 0 $space-double 0 $space-double;
       margin-left: unset;
-      min-height: 122px;
-      &.filters-open {
-        @include xl {
-          padding-bottom: $space-four-and-half;
-        }
-      }
+      transform: unset;
+      margin-top: 0;
+      inset: unset;
+      overflow-y: visible;
       .menu--favorites {
         display: none;
+
         @include large {
           display: flex;
           flex-direction: row;
@@ -195,6 +211,10 @@ body:not(.admin-toolbar-enabled) {
         }
         @include xl {
           font-size: 15px;
+        }
+        .content {
+          padding-top: 30px;
+          padding-bottom: 30px;
         }
       }
       .block-language-blocklanguage-interface {
@@ -206,6 +226,10 @@ body:not(.admin-toolbar-enabled) {
         }
         @include xl {
           font-size: 15px;
+        }
+        .content {
+          padding-top: 30px;
+          padding-bottom: 30px;
         }
       }
     }
@@ -231,16 +255,16 @@ body:not(.admin-toolbar-enabled) {
         }
       }
     }
-    .menu--main { display: none;}
+
     #block-kirjautuminen,
     #block-kayttajavalikko  {
-      @include large {
+      @include xl {
         display: block;
       }
     }
 
     .menu--additional-links-menu {
-      @include large {
+      @include xl {
         display: none;
       }
     }
@@ -260,11 +284,22 @@ body:not(.admin-toolbar-enabled) {
     transform:translateX(-100%);
     width:  100%;
     max-width: 100vw;
-    @include large {
-      margin-top: inherit;
-      position: inherit;
+    min-height: 104px;
+    @include xl {
+      z-index: unset;
+      min-height: unset;
+      display: flex;
+      background-color: clr(text-inverse);
+      width: 100%;
+      position: relative;
+      bottom: unset;
+      padding: 0 $space-double 0 $space-double;
+      margin-left: unset;
+      transform: unset;
+      margin-top: 0;
       inset: unset;
-      overflow-y: auto;
+      overflow-y: visible;
+      .menu--favorites {display: block}
     }
     &.slide-in {
       animation: slide-in 0.5s forwards;
@@ -291,22 +326,6 @@ body:not(.admin-toolbar-enabled) {
         z-index: unset;
       }
     }
-    @include large {
-      display: block;
-      background: transparent;
-      z-index: unset;
-      .menu--favorites {display: block}
-      position: relative;
-      bottom: unset;
-      padding: $space-double $space-double $space-one-and-half $space-double;
-      margin-left: unset;
-      min-height: 104px;
-      &.filters-open {
-        @include xl {
-          padding-bottom: $space-four-and-half;
-        }
-      }
-    }
     .menu--account {
       display: none;
     }
@@ -331,9 +350,9 @@ body:not(.admin-toolbar-enabled) {
 
     .menu--main {
       display: block;
-      @include large {
-        display: none;
-      }
+       @include xl {
+         display: flex;
+       }
     }
     .main-nav {
       display: block;
@@ -374,7 +393,7 @@ body:not(.admin-toolbar-enabled) {
      top: 6px;
      right: 6px;
 
-     @include large {
+     @include xl {
        display: none;
      }
      .btn-menu {
@@ -406,7 +425,7 @@ body:not(.admin-toolbar-enabled) {
      position: absolute;
      top: 0;
      right: 6px;
-     @include large {
+     @include xl {
        display: none;
      }
    }
@@ -420,37 +439,46 @@ body:not(.admin-toolbar-enabled) {
 }
 
 .header {
-  .navigation.menu--favorites,
-  .block-language-blocklanguage-interface,
   #block-kirjautuminen,
   .menu--account  {
-    @include large {
-      position: absolute;
+    @include xl {
+      align-content: center;
     }
   }
   .block-language-blocklanguage-interface {
     display: inline-block;
     float: right;
     margin-right: 20px;
-    @include large {display: block; left:38px; z-index: 100; margin-right: unset;}
-    @include xl {left:65px;}
+    position: absolute;
+    top: 0;
+    right: 0;
+     @include xl {
+       position: relative;
+       top: unset;
+       right: unset
+     }
   }
   .menu--favorites {
     display: inline-block;
     float: right;
-    @include large {display: block; left:160px; z-index: 100;}
-    @include xl {left:213px;}
+    position: absolute;
+    top: 0;
+    right: 37px;
+    width: 44px;
+     @include xl {
+       position: relative;
+       top: unset;
+       right: unset;
+       width: unset;
+       margin-right: $space;
+     }
   }
   #block-kirjautuminen {
     @include large {right:20px; z-index: 100;}
     @include xl {right:50px;}
   }
   #block-kayttajavalikko {
-    position: absolute;
-    top: 0;
-    right: 0;
-    @include large {right:20px; top: 25px; z-index: 100;}
-    @include xl {right:50px;}
+    align-content: center;
   }
 
   #block-views-exposed-filter-block-service-search-special-search-filters,
@@ -483,7 +511,7 @@ body:not(.admin-toolbar-enabled) {
 
 .navigation.menu--favorites {
   .content .menu {
-    @include large {
+    @include xl {
       display: flex;
       align-items: center;
       height: 24px;
@@ -954,4 +982,12 @@ body:not(.admin-toolbar-enabled) {
         text-decoration: underline;
       }
     }
+}
+
+.region-lowerheader {
+  .menu-helper-block {
+    @include xl {
+      height: 84px;
+    }
+  }
 }

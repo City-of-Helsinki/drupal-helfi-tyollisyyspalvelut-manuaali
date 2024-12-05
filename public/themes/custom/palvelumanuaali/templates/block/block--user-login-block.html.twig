@@ -35,7 +35,7 @@
   ]
 %}
   <nav{{ attributes.addClass(classes) }}>
-    <button id="loginlinkButton-mobile" class="btn btn-menu hide-lg" type="button">
+    <button id="loginlinkButton-mobile" class="btn btn-menu hide-dxl" type="button">
         {% include "@atoms/images/icons/_icon.twig" with {
           icon_base_class: 'icon',
           icon_name: 'padlock-blue',
@@ -46,7 +46,7 @@
         </span>
     </button>
     <div class='slide-in-loginform slide-in-menu-end hide-desktop'>
-      <button id="loginlinkButton-mobile" class="btn btn-menu-close hide-lg" type="button">
+      <button id="loginlinkButton-mobile" class="btn btn-menu-close hide-dxl" type="button">
         {% include "@atoms/images/icons/_icon.twig" with {
           icon_base_class: "icon",
           icon_blockname: "toggle-expand-close",
@@ -63,7 +63,7 @@
         {{ content }}
       {% endblock %}
     </div>
-    <button id="loginDropdownButton-mobile" class="btn btn-menu hide-mobile" type="button" data-bs-toggle="dropdown"  data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
+    <button id="loginDropdownButton-mobile" class="btn btn-menu hide-tblt" type="button" data-bs-toggle="dropdown"  data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
       <span class="login-text">{{'Log in'|t}}</span>
       {% include "@atoms/images/icons/_icon.twig" with {
         icon_base_class: 'icon',
