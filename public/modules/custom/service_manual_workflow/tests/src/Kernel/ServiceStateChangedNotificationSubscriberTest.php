@@ -41,11 +41,39 @@ class ServiceStateChangedNotificationSubscriberTest extends GroupKernelTestBase 
     'ggroup_role_mapper',
   ];
 
+  /**
+   * Service provider user.
+   *
+   * @var \Drupal\Core\Entity\EntityInterface|\Drupal\user\Entity\User
+   */
   private $spUser;
+
+  /**
+   * Service provider group.
+   *
+   * @var \Drupal\group\Entity\GroupInterface
+   */
   private $spGroup;
+
+  /**
+   * Organisation group.
+   *
+   * @var \Drupal\group\Entity\GroupInterface
+   */
   private $orgGroup;
+
+  /**
+   * Ogranisation user.
+   *
+   * @var \Drupal\Core\Entity\EntityInterface|\Drupal\user\Entity\User
+   */
   private $orgUser;
 
+  /**
+   * Organisation user 2.
+   *
+   * @var \Drupal\Core\Entity\EntityInterface|\Drupal\user\Entity\User
+   */
   private $orgUser2;
 
   /**
@@ -148,11 +176,10 @@ class ServiceStateChangedNotificationSubscriberTest extends GroupKernelTestBase 
   }
 
   /**
-   * Test service ready to publish notification
-   * when responsible municipality is set.
+   * Test ready to publish notification when responsible municipality is set.
    *
    * @return void
-   *  Void.
+   *   Void.
    *
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
@@ -220,7 +247,6 @@ class ServiceStateChangedNotificationSubscriberTest extends GroupKernelTestBase 
     // Publish service node.
     $spNode->set('moderation_state', 'published');
     $spNode->save();
-
 
     $mails = $this->drupalGetMails();
     // Validate service publish notification is sent.

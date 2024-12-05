@@ -58,7 +58,6 @@ function hel_tpm_group_update_9001() {
  * Delete orphaned group_content entities.
  */
 function hel_tpm_group_update_9002(&$sandbox) {
-  $storage = \Drupal::service('entity_type.manager')->getStorage('group_content');
   $database = \Drupal::database();
   $orphans = $database
     ->select('group_content_field_data', 'g')

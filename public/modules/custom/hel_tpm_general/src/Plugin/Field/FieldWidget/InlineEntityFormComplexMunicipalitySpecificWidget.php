@@ -36,7 +36,7 @@ class InlineEntityFormComplexMunicipalitySpecificWidget extends InlineEntityForm
    *   Array of entities.
    */
   protected function relabelEntities(array &$entities) {
-    foreach ($entities as $key => &$row) {
+    foreach ($entities as &$row) {
       if (empty($row['#entity'])) {
         continue;
       }

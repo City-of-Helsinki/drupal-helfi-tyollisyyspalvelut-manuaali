@@ -1,8 +1,9 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Drupal\Tests\hel_tpm_group\Kernel;
 
-use Drupal\KernelTests\KernelTestBase;
 use Drupal\Tests\content_moderation\Traits\ContentModerationTestTrait;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
@@ -161,4 +162,5 @@ final class GroupsWithoutAdminTest extends GroupKernelTestBase {
 
     return $spNode;
   }
+
 }

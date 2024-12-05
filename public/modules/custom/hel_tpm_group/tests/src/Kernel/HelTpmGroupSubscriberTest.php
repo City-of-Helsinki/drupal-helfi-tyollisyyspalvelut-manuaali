@@ -2,12 +2,12 @@
 
 namespace Drupal\Tests\hel_tpm_group\Kernel;
 
+use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\group\Entity\GroupRelationshipInterface;
 use Drupal\group\Entity\GroupRoleInterface;
 use Drupal\group\PermissionScopeInterface;
 use Drupal\hel_tpm_group\Event\GroupMembershipChanged;
 use Drupal\hel_tpm_group\Event\GroupSiteWideRoleChanged;
-use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 
 /**
  * Test description.

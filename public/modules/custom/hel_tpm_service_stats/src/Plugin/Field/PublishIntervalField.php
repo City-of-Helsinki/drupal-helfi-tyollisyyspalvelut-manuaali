@@ -7,7 +7,7 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\TypedData\ComputedItemListTrait;
 
 /**
- * Plugin implementation of the 'hel_tpm_serviec_stats_publish_interval' field type.
+ * Field type plugin of the 'hel_tpm_service_stats_publish_interval'.
  *
  * @FieldType(
  *   id = "hel_tpm_service_stats_publish_interval",

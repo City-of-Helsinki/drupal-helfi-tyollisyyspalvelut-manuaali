@@ -1,15 +1,11 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\Tests\hel_tpm_general\FunctionalJavascript;
 
-use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\inline_entity_form\Plugin\Field\FieldWidget\InlineEntityFormBase;
-use Drupal\Tests\inline_entity_form\FunctionalJavascript\InlineEntityFormTestBase;
 use Drupal\Tests\TestFileCreationTrait;
-use Drupal\Tests\user\Traits\UserCreationTrait;
+use Drupal\Tests\inline_entity_form\FunctionalJavascript\InlineEntityFormTestBase;
 
 /**
  * Test Inline entity form complex municipality specific widget functionality.
@@ -20,10 +16,16 @@ class InlineEntityFormComplexMunicipalitySpecificWidgetTest extends InlineEntity
   use TestFileCreationTrait {
     getTestFiles as drupalGetTestFiles;
   }
+
+  /**
+   * Installed modules.
+   *
+   * @var string[]
+   */
   protected static $modules = [
     'hel_tpm_general_inline_entity_form_complex_test',
     'field',
-    'field_ui'
+    'field_ui',
   ];
 
   /**
@@ -40,6 +42,9 @@ class InlineEntityFormComplexMunicipalitySpecificWidgetTest extends InlineEntity
    */
   protected $entityFormDisplayStorage;
 
+  /**
+   * {@inheritdoc}
+   */
   protected function setUp(): void {
     parent::setUp();
 
@@ -70,9 +75,6 @@ class InlineEntityFormComplexMunicipalitySpecificWidgetTest extends InlineEntity
    */
   public function testEntityRemoving() {
     // Get the xpath selectors for the fields in this test.
-    $inner_title_field_xpath = $this->getXpathForNthInputByLabelText('Title', 2);
-    $first_name_field_xpath = $this->getXpathForNthInputByLabelText('First name', 1);
-    $last_name_field_xpath = $this->getXpathForNthInputByLabelText('Last name', 1);
     $first_delete_checkbox_xpath = $this->getXpathForNthInputByLabelText('Delete this node from the system.', 1);
 
     $assert_session = $this->assertSession();
@@ -138,4 +140,5 @@ class InlineEntityFormComplexMunicipalitySpecificWidgetTest extends InlineEntity
     $node = $this->drupalGetNodeByTitle('Some reference 3');
     $this->assertNotEmpty($node, 'Reference node not deleted');
   }
+
 }

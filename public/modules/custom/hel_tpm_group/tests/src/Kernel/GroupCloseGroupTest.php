@@ -1,19 +1,18 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\Tests\hel_tpm_group\Kernel;
 
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
-use Drupal\group\Entity\Group;
-use Drupal\language\Entity\ConfigurableLanguage;
-use Drupal\system\Entity\Action;
 use Drupal\Tests\content_moderation\Traits\ContentModerationTestTrait;
 use Drupal\Tests\field\Traits\EntityReferenceFieldCreationTrait;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\Tests\hel_tpm_group\Traits\GroupInitTrait;
 use Drupal\Tests\service_manual_workflow\Traits\ServiceManualWorkflowTestTrait;
+use Drupal\language\Entity\ConfigurableLanguage;
+use Drupal\system\Entity\Action;
 
 /**
  * Tests field reference for group user selection.
@@ -60,6 +59,8 @@ class GroupCloseGroupTest extends GroupKernelTestBase {
   ];
 
   /**
+   * Messenger service.
+   *
    * @var mixed
    */
   private mixed $messenger;
@@ -84,7 +85,7 @@ class GroupCloseGroupTest extends GroupKernelTestBase {
       'group',
       'workflows',
       'hel_tpm_group',
-      'service_manual_workflow_service_test'
+      'service_manual_workflow_service_test',
     ];
     $this->installConfig($module_configs);
 
@@ -158,7 +159,8 @@ class GroupCloseGroupTest extends GroupKernelTestBase {
    * Validate that user can't close group with subgroups.
    *
    * @return void
-   *  -
+   *   -
+   *
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function testGroupClosingValidation() {
@@ -174,7 +176,8 @@ class GroupCloseGroupTest extends GroupKernelTestBase {
     $messages = $this->messenger->messagesByType(MessengerInterface::TYPE_ERROR);
     $this->assertEquals(
       new TranslatableMarkup('Skipped @group because it has subgroup(s)', [
-        '@group' => $this->orgGroup->label()]
+        '@group' => $this->orgGroup->label(),
+      ]
       ), $messages[0]);
 
     $group = $this->reloadEntity($this->orgGroup);

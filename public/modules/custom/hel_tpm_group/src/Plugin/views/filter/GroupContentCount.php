@@ -65,8 +65,8 @@ abstract class GroupContentCount extends InOperator {
    */
   protected function generateOptions(): array {
     return [
-      'yes' => t('Yes'),
-      'no' => t('No'),
+      'yes' => $this->t('Yes'),
+      'no' => $this->t('No'),
     ];
   }
 

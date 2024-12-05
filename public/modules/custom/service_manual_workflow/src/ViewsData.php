@@ -2,10 +2,10 @@
 
 namespace Drupal\service_manual_workflow;
 
-use Drupal\content_moderation\ModerationInformationInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\content_moderation\ModerationInformationInterface;
 
 /**
  * {@inheritdoc}
@@ -52,7 +52,7 @@ class ViewsData {
     foreach ($entity_types_with_moderation as $entity_type) {
       $revision_table = $entity_type->getRevisionDataTable() ?: $entity_type->getRevisionTable();
       $data[$revision_table]['latest_moderation_state'] = [
-        'title' => t('Latest Moderation state'),
+        'title' => $this->t('Latest Moderation state'),
         'join' => [],
         'field' => [
           'id' => 'latest_moderation_state_field',
@@ -65,7 +65,7 @@ class ViewsData {
         'sort' => ['id' => 'moderation_state_sort'],
       ];
       $data[$revision_table]['moderation_state'] = [
-        'title' => t('Moderation state'),
+        'title' => $this->t('Moderation state'),
         'field' => [
           'id' => 'moderation_state_field',
           'default_formatter' => 'content_moderation_state',

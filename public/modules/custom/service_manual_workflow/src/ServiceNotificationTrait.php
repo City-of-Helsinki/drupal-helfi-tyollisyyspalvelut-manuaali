@@ -79,7 +79,7 @@ trait ServiceNotificationTrait {
     $accounts = [];
     $grid = $group->getGroupType()->id() . '-administrator';
 
-    foreach ($group->getMembers() as $key => $member) {
+    foreach ($group->getMembers() as $member) {
       $relationship = $member->getGroupRelationship();
       $roles = $relationship->getRoles();
       // If user has no roles in group or it isn't administrator role

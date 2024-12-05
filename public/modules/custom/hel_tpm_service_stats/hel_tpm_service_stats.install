@@ -5,8 +5,6 @@
  * Install, update and uninstall functions for the Service statistics module.
  */
 
-use Drupal\hel_tpm_general\PreventMailUtility;
-
 /**
  * Implements hook_install().
  */
@@ -53,7 +51,6 @@ function hel_tpm_service_stats_update_10002() {
 /**
  * Populate default value for field_days_since_last_chan.
  */
-
 function hel_tpm_service_stats_update_10003() {
   // Temporarily block sending mails.
   $storage = Drupal::service('entity_type.manager')->getStorage('node');
@@ -81,6 +78,9 @@ function hel_tpm_service_stats_update_10003() {
   }
 }
 
+/**
+ * Helper to create field revisions.
+ */
 function _hel_tpm_service_stats_create_field_revision($revision) {
   $database = Drupal::database();
   $field_table = 'node__field_days_since_last_state_chan';
@@ -92,7 +92,7 @@ function _hel_tpm_service_stats_create_field_revision($revision) {
     'revision_id' => $revision->getRevisionId(),
     'langcode' => $revision->language()->getId(),
     'delta' => 0,
-    'field_days_since_last_state_chan_value' => 0
+    'field_days_since_last_state_chan_value' => 0,
   ];
 
   if ($revision->isDefaultRevision()) {

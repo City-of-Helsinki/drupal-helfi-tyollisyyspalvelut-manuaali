@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\hel_tpm_group\Plugin\views\filter;
 
@@ -22,9 +22,9 @@ class GroupLabel extends ManyToOne {
   /**
    * {@inheritdoc}
    */
-  public function init(ViewExecutable $view, DisplayPluginBase $display, array &$options = NULL): void {
+  public function init(ViewExecutable $view, DisplayPluginBase $display, ?array &$options = NULL): void {
     parent::init($view, $display, $options);
-    $this->valueTitle = t('Group');
+    $this->valueTitle = $this->t('Group');
     $this->definition['options callback'] = [$this, 'generateOptions'];
   }
 

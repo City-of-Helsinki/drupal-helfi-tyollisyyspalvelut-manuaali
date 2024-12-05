@@ -5,14 +5,14 @@
  * Module file for hel_tpm_general.
  */
 
+use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Site\Settings;
-use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\field\Entity\FieldConfig;
-use Drupal\Core\Config\FileStorage;
+use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\hel_tpm_general\PreventMailUtility;
 
 /**
@@ -166,7 +166,7 @@ function _hel_tpm_general_generate_username(EntityInterface $entity) {
  * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
  * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
  */
-function _hel_tpm_general_username_exists(string $username, int $entity_id = NULL) {
+function _hel_tpm_general_username_exists(string $username, ?int $entity_id = NULL) {
   $storage = \Drupal::entityTypeManager()->getStorage('user');
   $query = $storage->getQuery()
     ->accessCheck(FALSE)
@@ -214,26 +214,26 @@ function _hel_tpm_general_create_switcher_links(EntityInterface $entity, string 
 
   $route = $routes[$view_mode];
 
+  // phpcs:ignore Drupal.Semantics.FunctionT.NotLiteralString
   return Link::createFromRoute(t($route['label']), $route['route'], ['node' => $entity->id()]);
 
 }
 
-
 /**
-* Helper function to ensure entity type bundle fields.
+ * Helper function to ensure entity type bundle fields.
  *
  * @param string $entity_type
-*   Entity type id.
+ *   Entity type id.
  * @param string $bundle
-*   Entity bundle id.
+ *   Entity bundle id.
  * @param array $fields
-  *   Fields you want to ensure.
+ *   Fields you want to ensure.
  *
  * @return void
-  *   -
+ *   -
  *
  * @throws \Drupal\Core\Entity\EntityStorageException
-  */
+ */
 function _hel_tpm_general_ensure_entity_fields(string $entity_type, string $bundle, array $fields) : void {
   $config_dir = Settings::get('config_sync_directory');
   $config_directory = new FileStorage($config_dir);

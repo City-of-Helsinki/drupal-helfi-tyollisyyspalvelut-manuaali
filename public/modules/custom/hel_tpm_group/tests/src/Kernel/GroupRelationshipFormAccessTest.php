@@ -4,10 +4,10 @@ namespace Drupal\Tests\hel_tpm_group\Kernel;
 
 use Drupal\Core\Routing\RouteObjectInterface;
 use Drupal\Core\Url;
-use Drupal\group\Entity\GroupInterface;
-use Drupal\group\PermissionScopeInterface;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\Tests\group\Traits\NodeTypeCreationTrait;
+use Drupal\group\Entity\GroupInterface;
+use Drupal\group\PermissionScopeInterface;
 use Drupal\user\RoleInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;

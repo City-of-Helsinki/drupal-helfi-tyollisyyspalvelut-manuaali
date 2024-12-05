@@ -3,8 +3,8 @@
 namespace Drupal\service_manual_workflow\Event;
 
 use Drupal\Component\EventDispatcher\Event;
-use Drupal\content_moderation\Entity\ContentModerationStateInterface;
 use Drupal\Core\Session\AccountProxyInterface;
+use Drupal\content_moderation\Entity\ContentModerationStateInterface;
 
 /**
  * Event that is fired when a user logs in.

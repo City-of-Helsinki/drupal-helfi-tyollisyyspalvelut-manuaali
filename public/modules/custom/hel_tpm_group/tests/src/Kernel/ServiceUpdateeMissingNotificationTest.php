@@ -1,15 +1,16 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Drupal\Tests\hel_tpm_group\Kernel;
 
 use Drupal\Core\Test\AssertMailTrait;
-use Drupal\hel_tpm_group\Plugin\QueueWorker\ServiceMissingUpdateesQueue;
 use Drupal\Tests\content_moderation\Traits\ContentModerationTestTrait;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
 use Drupal\Tests\service_manual_workflow\Traits\ServiceManualWorkflowTestTrait;
 use Drupal\Tests\user\Traits\UserCreationTrait;
+use Drupal\hel_tpm_group\Plugin\QueueWorker\ServiceMissingUpdateesQueue;
 
 /**
  * Provides tests for missing service updatees.
@@ -32,6 +33,8 @@ class ServiceUpdateeMissingNotificationTest extends GroupKernelTestBase {
   protected $missingUpdateeServices;
 
   /**
+   * Service missing updatees queue.
+   *
    * @var mixed|object|null
    */
   protected $queue;
@@ -114,7 +117,7 @@ class ServiceUpdateeMissingNotificationTest extends GroupKernelTestBase {
 
     $users = ServiceMissingUpdateesQueue::getUsersToNotify($this->orgGroup);
     $this->assertNotEmpty($users[$this->orgUser->id()], 'Expected user missing.');
-    $this->assertTrue(empty($users[$this->orgUser3->id()]),'Disabled user in users to sent message.');
+    $this->assertTrue(empty($users[$this->orgUser3->id()]), 'Disabled user in users to sent message.');
     $this->assertCount(1, $users);
   }
 

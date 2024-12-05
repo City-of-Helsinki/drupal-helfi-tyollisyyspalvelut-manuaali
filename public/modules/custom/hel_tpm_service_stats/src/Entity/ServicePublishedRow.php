@@ -151,7 +151,11 @@ final class ServicePublishedRow extends ContentEntityBase implements ServicePubl
     return $this->previous_date->value;
   }
 
+  /**
+   * Getter for publish vid.
+   */
   public function getPublishVid(): int {
     return (int) $this->publish_vid->value;
   }
+
 }

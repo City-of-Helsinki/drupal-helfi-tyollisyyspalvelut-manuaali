@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\hel_tpm_forms\Functional;
 
+use Drupal\Tests\BrowserTestBase;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\taxonomy\Entity\Vocabulary;
 use Drupal\taxonomy\VocabularyInterface;
-use Drupal\Tests\BrowserTestBase;
 
 /**
  * Tests service edit forms.
@@ -196,7 +196,7 @@ class ServiceEditFormTest extends BrowserTestBase {
 
     // Not filling required paragraph text fields should not pass validation.
     $this->submitForm([], 'Save');
-    foreach ($requiredParagraphTextFields as $fieldName => $fieldLabel) {
+    foreach ($requiredParagraphTextFields as $fieldLabel) {
       $this->assertSession()->pageTextContains($fieldLabel . ': field is required');
     }
 
@@ -204,7 +204,7 @@ class ServiceEditFormTest extends BrowserTestBase {
     $page->fillField('edit-field-service-execution-0-inline-entity-form-field-description-0-value', 'foo');
     $page->fillField('edit-field-attendance-0-inline-entity-form-field-description-0-value', 'bar');
     $this->submitForm([], 'Save');
-    foreach ($requiredParagraphTextFields as $fieldName => $fieldLabel) {
+    foreach ($requiredParagraphTextFields as $fieldLabel) {
       $this->assertSession()->pageTextNotContains($fieldLabel . ': field is required');
     }
   }

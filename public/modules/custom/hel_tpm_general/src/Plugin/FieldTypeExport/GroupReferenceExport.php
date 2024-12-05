@@ -42,7 +42,7 @@ class GroupReferenceExport extends EntityReferenceExport {
     }
 
     $result = [];
-    foreach ($group_relationships as $delta => $group_relationship) {
+    foreach ($group_relationships as $group_relationship) {
       $result[] = $group_relationship->getGroup()->label();
     }
     return implode('|', $result);

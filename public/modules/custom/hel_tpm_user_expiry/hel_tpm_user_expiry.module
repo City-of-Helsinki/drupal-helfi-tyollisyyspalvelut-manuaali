@@ -33,7 +33,8 @@ function _hel_tpm_user_expiry_block_unactivated_users() {
 
   $storage = \Drupal::service('entity_type.manager')->getStorage('user');
   $user_settings = \Drupal::config('user.settings');
-  $limit = \Drupal::time()->getRequestTime() - $user_settings->get('password_reset_timeout');;
+  $limit = \Drupal::time()->getRequestTime() - $user_settings->get('password_reset_timeout');
+  ;
 
   $uids = \Drupal::database()->select('users_field_data', 'ufd')
     ->fields('ufd', ['uid'])

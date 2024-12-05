@@ -20,7 +20,7 @@ function hel_tpm_search_views_query_alter(ViewExecutable $view, QueryPluginBase 
     if (!empty($exposed_input['field_municipality'])) {
       return;
     }
-    foreach ($query->getWhere() as $key => &$condition) {
+    foreach ($query->getWhere() as &$condition) {
       if (empty($condition['conditions'])) {
         continue;
       }

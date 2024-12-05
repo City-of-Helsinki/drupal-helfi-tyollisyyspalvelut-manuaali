@@ -2,26 +2,24 @@
 
 namespace Drupal\hel_tpm_service_stats\Plugin\views\relationship;
 
-use Drupal\views\Plugin\views\relationship\RelationshipPluginBase;
 use Drupal\views\Plugin\ViewsHandlerManager;
+use Drupal\views\Plugin\views\relationship\RelationshipPluginBase;
 use Drupal\views\Views;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * A relationship handlers which reverse entity references
- * content moderation entity to content entity.
+ * Reverse entity reference from content moderation entity to content entity.
  *
  * @ingroup views_relationship_handlers
  *
  * @ViewsRelationship("content_moderation_content_entity")
  */
-class ContentModerationContenEntity extends RelationshipPluginBase {
-  public ViewsHandlerManager $handler_manager;
+class ContentModerationContentEntity extends RelationshipPluginBase {
 
   /**
    * The alias for the left table.
    */
-  public string $first_alias;
+  public string $firstAlias;
 
   /**
    * Constructs an EntityReverse object.
@@ -79,12 +77,12 @@ class ContentModerationContenEntity extends RelationshipPluginBase {
 
     $first_join = $this->joinManager->createInstance('standard', $first);
 
-    $this->first_alias = $this->query->addTable($this->definition['field table'], $this->relationship, $first_join);
+    $this->firstAlias = $this->query->addTable($this->definition['field table'], $this->relationship, $first_join);
 
     // Second, relate the field table to the entity specified using
     // the entity id on the field table and the entity's id field.
     $second = [
-      'left_table' => $this->first_alias,
+      'left_table' => $this->firstAlias,
       'left_field' => 'entity_id',
       'table' => $this->definition['base'],
       'field' => $this->definition['base field'],

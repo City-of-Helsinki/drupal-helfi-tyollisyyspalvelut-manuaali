@@ -2,7 +2,6 @@
 
 namespace Drupal\service_manual_workflow\EventSubscriber;
 
-use Drupal\Core\Config\ConfigFactory;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityInterface;
@@ -93,6 +92,8 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
   const MESSAGE_TEMPLATE = 'group_ready_to_publish_notificat';
 
   /**
+   * Config factory.
+   *
    * @var \Drupal\Core\Config\ConfigFactoryInterface
    */
   private ConfigFactoryInterface $configFactory;

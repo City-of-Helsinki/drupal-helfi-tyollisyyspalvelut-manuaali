@@ -2,11 +2,11 @@
 
 namespace Drupal\Tests\service_manual_workflow\Kernel;
 
-use Drupal\group\PermissionScopeInterface;
 use Drupal\Tests\content_moderation\Traits\ContentModerationTestTrait;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
 use Drupal\Tests\node\Traits\NodeCreationTrait;
+use Drupal\group\PermissionScopeInterface;
 use Drupal\user\RoleInterface;
 use Prophecy\PhpUnit\ProphecyTrait;
 

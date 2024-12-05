@@ -194,7 +194,7 @@ function _hel_tpm_forms_validate_required_paragraph_long_texts_with_editor(array
   foreach ($fields as $field) {
     $field_config = $entity_fields[$field]->getFieldDefinition();
     $paragraph = $form_state->getValue($field);
-    foreach ($paragraph as $key => $row) {
+    foreach ($paragraph as $row) {
       $val = reset($row);
       if (!empty($val['field_description'][0]['value'])) {
         continue;
@@ -231,7 +231,7 @@ function _hel_tpm_forms_validate_paragraph_language_selection(array $form, FormS
   }
 
   $is_empty = TRUE;
-  foreach ($languages as $k => $language) {
+  foreach ($languages as $language) {
     if (!empty($language['subform']['field_language'])) {
       $is_empty = FALSE;
     }
@@ -251,7 +251,7 @@ function _hel_tpm_forms_validate_paragraph_language_selection(array $form, FormS
     if (empty($paragraph['subform'])) {
       continue;
     }
-    foreach ($paragraph['subform']['field_language'] as $delta_field => $value) {
+    foreach ($paragraph['subform']['field_language'] as $value) {
       if (!empty($lang[$value['target_id']])) {
         $field_key = sprintf('field_service_languages][%s][subform][field_language', $delta);
         $form_state->setErrorByName(

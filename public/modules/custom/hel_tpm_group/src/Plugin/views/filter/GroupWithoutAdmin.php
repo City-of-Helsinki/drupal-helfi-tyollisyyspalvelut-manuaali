@@ -56,9 +56,9 @@ class GroupWithoutAdmin extends InOperator {
   /**
    * {@inheritdoc}
    */
-  public function init(ViewExecutable $view, DisplayPluginBase $display, array &$options = NULL): void {
+  public function init(ViewExecutable $view, DisplayPluginBase $display, ?array &$options = NULL): void {
     parent::init($view, $display, $options);
-    $this->valueTitle = t('Groups without admin');
+    $this->valueTitle = $this->t('Groups without admin');
     $this->definition['options callback'] = [$this, 'generateOptions'];
   }
 
@@ -69,7 +69,7 @@ class GroupWithoutAdmin extends InOperator {
    *   Filter options.
    */
   protected function generateOptions(): array {
-    return ['all' => t('Show all')];
+    return ['all' => $this->t('Show all')];
   }
 
   /**

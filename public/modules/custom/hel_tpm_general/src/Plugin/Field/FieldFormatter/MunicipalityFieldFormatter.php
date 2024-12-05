@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\hel_tpm_general\Plugin\Field\FieldFormatter;
 
@@ -17,13 +17,6 @@ use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceLabelFormatter;
  * )
  */
 final class MunicipalityFieldFormatter extends EntityReferenceLabelFormatter {
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function defaultSettings(): array {
-    return parent::defaultSettings();
-  }
 
   /**
    * {@inheritdoc}
