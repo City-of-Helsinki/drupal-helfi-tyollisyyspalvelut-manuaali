@@ -20,17 +20,26 @@ display:
         created:
           label: 'Member for'
           settings:
-            future_format: '@interval'
-            past_format: '@interval'
+            future_format: '(@interval hence)'
+            past_format: '(@interval ago)'
         access:
           label: 'Last access'
           settings:
-            future_format: '@interval hence'
-            past_format: '@interval ago'
+            future_format: '(@interval hence)'
+            past_format: '(@interval ago)'
         operations:
           label: Operations
-        mail:
-          separator: ', '
+        mail: {  }
+        created_1:
+          label: Created
+        changed:
+          label: 'Last modified'
+        changed_1:
+          settings:
+            future_format: '(@interval hence)'
+            past_format: '(@interval ago)'
+        access_1:
+          label: 'Last access'
       pager:
         options:
           tags:
@@ -38,17 +47,10 @@ display:
             previous: '‹ Previous'
             first: '« First'
             last: 'Last »'
-          expose:
-            items_per_page_label: 'Items per page'
-            items_per_page_options_all_label: '- All -'
-            offset_label: Offset
+          expose: {  }
       exposed_form:
         options:
           submit_button: Filter
-          reset_button_label: Reset
-          exposed_sorts_label: 'Sort by'
-          sort_asc_label: Asc
-          sort_desc_label: Desc
       empty:
         area_text_custom:
           content: 'No people available.'
@@ -72,7 +74,6 @@ display:
             label: Permission
       use_more_text: more
   page_1:
-    display_title: Page
     display_options:
       menu:
         title: List
