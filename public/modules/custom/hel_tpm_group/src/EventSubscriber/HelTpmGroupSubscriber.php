@@ -166,7 +166,7 @@ class HelTpmGroupSubscriber implements EventSubscriberInterface {
       return;
     }
 
-    if (empty($this->membershipLoader->loadByUser($user)) && !$this->isUserAdmin($user)) {
+    if (empty($this->membershipLoader->loadByUser($user)) && !$this->isUserAdmin($user) && $user->isActive()) {
       // User is not a member of any group and not considered to be admin user.
       // Deactivate the user.
       $user->set('status', 0);
