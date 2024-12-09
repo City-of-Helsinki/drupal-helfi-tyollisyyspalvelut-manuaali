@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\hel_tpm_group\Plugin\Action;
 
-use Drupal\content_moderation\ModerationInformationInterface;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Action\Attribute\Action;
@@ -14,10 +13,10 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\content_moderation\ModerationInformationInterface;
 use Drupal\group\Entity\GroupInterface;
 use Drupal\group\Plugin\Group\Relation\GroupRelationTypeManagerInterface;
 use Drupal\node\NodeInterface;
-use Elastica\Exception\Bulk\Response\ActionException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -39,7 +38,7 @@ class CloseGroup extends ConfigurableActionBase implements ContainerFactoryPlugi
     $plugin_definition,
     private readonly EntityTypeManagerInterface $entityTypeManager,
     private readonly GroupRelationTypeManagerInterface $groupRelationTypeManager,
-    private readonly ModerationInformationInterface $moderationInformation
+    private readonly ModerationInformationInterface $moderationInformation,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
   }
@@ -73,13 +72,9 @@ class CloseGroup extends ConfigurableActionBase implements ContainerFactoryPlugi
       '#markup' => $this->t('
        You are about to close selected group. 
        This will remove all users from group, archive all group content and remove references to responsibility services.'
-      )
+      ),
     ];
     return $form;
-  }
-
-  public function validateConfigurationForm(array &$form, FormStateInterface $form_state) {
-    parent::validateConfigurationForm($form, $form_state);
   }
 
   /**
@@ -90,7 +85,7 @@ class CloseGroup extends ConfigurableActionBase implements ContainerFactoryPlugi
   /**
    * {@inheritdoc}
    */
-  public function access($entity, AccountInterface $account = NULL, $return_as_object = FALSE): AccessResultInterface|bool {
+  public function access($entity, ?AccountInterface $account = NULL, $return_as_object = FALSE): AccessResultInterface|bool {
     $access = AccessResult::forbidden();
 
     /** @var \Drupal\Core\Entity\ContentEntityInterface $entity */
@@ -105,11 +100,10 @@ class CloseGroup extends ConfigurableActionBase implements ContainerFactoryPlugi
     return $return_as_object ? $access : $access->isAllowed();
   }
 
-
   /**
    * {@inheritdoc}
    */
-  public function execute(GroupInterface $group = NULL): void {
+  public function execute(?GroupInterface $group = NULL): void {
     if (!$this->canCloseGroup($group)) {
       return;
     }
@@ -130,7 +124,7 @@ class CloseGroup extends ConfigurableActionBase implements ContainerFactoryPlugi
    * Validate group can be closed.
    *
    * @param \Drupal\group\Entity\GroupInterface $group
-   *  Group entity interface.
+   *   Group entity interface.
    *
    * @return bool
    *   bool.
@@ -163,10 +157,11 @@ class CloseGroup extends ConfigurableActionBase implements ContainerFactoryPlugi
    * Remove all users from archived group.
    *
    * @param \Drupal\group\Entity\GroupInterface $group
-   *  Group interface.
+   *   Group interface.
    *
    * @return void
-   *  -
+   *   -
+   *
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
   protected function removeUsersFromGroup(GroupInterface $group): void {
@@ -183,10 +178,10 @@ class CloseGroup extends ConfigurableActionBase implements ContainerFactoryPlugi
    * Archive moderated group content.
    *
    * @param \Drupal\group\Entity\GroupInterface $group
-   *  Group interface.
+   *   Group interface.
    *
    * @return void
-   *  -
+   *   -
    */
   protected function archiveGroupContentEntities(GroupInterface $group): void {
     $content = $this->getGroupContent($group, 'node');
@@ -212,6 +207,9 @@ class CloseGroup extends ConfigurableActionBase implements ContainerFactoryPlugi
     }
   }
 
+  /**
+   * Archive content method.
+   */
   protected function archiveContent(NodeInterface $node): void {
     $node->setUnpublished();
     if ($this->moderationInformation->isModeratedEntity($node)) {
@@ -224,10 +222,11 @@ class CloseGroup extends ConfigurableActionBase implements ContainerFactoryPlugi
    * Remove all responsibility references for group.
    *
    * @param \Drupal\group\Entity\GroupInterface $group
-   *  Group interface.
+   *   Group interface.
    *
    * @return void
-   *  -
+   *   -
+   *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    * @throws \Drupal\Core\Entity\EntityStorageException
@@ -248,7 +247,7 @@ class CloseGroup extends ConfigurableActionBase implements ContainerFactoryPlugi
 
     $fields = [
       'field_responsible_municipality',
-      'field_service_producer'
+      'field_service_producer',
     ];
 
     foreach ($nids as $nid) {
@@ -264,14 +263,14 @@ class CloseGroup extends ConfigurableActionBase implements ContainerFactoryPlugi
    * Remove field reference from node field.
    *
    * @param \Drupal\node\NodeInterface $node
-   *  Node interface.
+   *   Node interface.
    * @param string $field
-   *  Field name.
+   *   Field name.
    * @param int $entity_id
-   *  Id of the entity which reference we want to remove.
+   *   Id of the entity which reference we want to remove.
    *
    * @return void
-   *  -
+   *   -
    */
   protected function removeFieldReference(NodeInterface &$node, string $field, $entity_id) {
     $value = $node->get($field)->getValue();
@@ -290,9 +289,9 @@ class CloseGroup extends ConfigurableActionBase implements ContainerFactoryPlugi
    * Get group content entities.
    *
    * @param \Drupal\group\Entity\GroupInterface $group
-   *  Group interface.
+   *   Group interface.
    * @param string $entity_type
-   *  Entity type parameter.
+   *   Entity type parameter.
    *
    * @return array
    *   Array of content entities.
@@ -305,4 +304,5 @@ class CloseGroup extends ConfigurableActionBase implements ContainerFactoryPlugi
     }
     return $content;
   }
+
 }

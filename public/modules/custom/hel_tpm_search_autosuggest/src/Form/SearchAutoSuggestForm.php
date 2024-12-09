@@ -2,14 +2,54 @@
 
 namespace Drupal\hel_tpm_search_autosuggest\Form;
 
+use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Url;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Provides a Hel TPM Search Autosuggest form.
  */
-class SearchAutoSuggestForm extends FormBase {
+class SearchAutoSuggestForm extends FormBase implements ContainerInjectionInterface {
+
+  /**
+   * Langauge manager service.
+   *
+   * @var \Drupal\Core\Language\LanguageManagerInterface
+   */
+  private LanguageManagerInterface $languageManager;
+
+  /**
+   * Request stack service.
+   */
+  private RequestStack $request;
+
+  /**
+   * Constructior.
+   *
+   * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
+   *   Language manager interface.
+   * @param \Symfony\Component\HttpFoundation\Request $current_request
+   *   Current request.
+   */
+  public function __construct(LanguageManagerInterface $language_manager, Request $current_request) {
+    $this->languageManager = $language_manager;
+    $this->currentRequest = $current_request;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('language_manager'),
+      $container->get('request_stack')->getCurrentRequest()
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -22,18 +62,18 @@ class SearchAutoSuggestForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
+    $language = $this->languageManager->getCurrentLanguage()->getId();
     $form['#action'] = sprintf('/%s/search', $language);
     $form['search'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Search'),
       '#id' => 'hel_tpm_search_form',
       '#attributes' => [
-        'placeholder' => t('Search from all services'),
+        'placeholder' => $this->t('Search from all services'),
         'autocomplete' => 'off',
       ],
       '#required' => TRUE,
-      '#default_value' => \Drupal::request()->query->get('search_api_fulltext'),
+      '#default_value' => $this->currentRequest->query->get('search_api_fulltext'),
     ];
     $form['submit'] = [
       '#type' => 'submit',

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\hel_tpm_editorial\Plugin\Field\FieldWidget;
 
@@ -10,12 +10,12 @@ use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\date_recur\DateRecurPartGrid;
 use Drupal\date_recur\DateRecurRuleInterface;
 use Drupal\date_recur\Exception\DateRecurHelperArgumentException;
 use Drupal\date_recur\Plugin\Field\FieldType\DateRecurItem;
 use Drupal\date_recur_modular\DateRecurModularWidgetFieldsTrait;
 use Drupal\date_recur_modular\DateRecurModularWidgetOptions;
-use Drupal\date_recur\DateRecurPartGrid;
 use Drupal\date_recur_modular\Plugin\Field\FieldWidget\DateRecurModularAlphaWidget;
 
 /**
@@ -205,6 +205,7 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
     $element['weekdays']['#attributes']['class'][] = 'weekdays';
 
     foreach ($element['weekdays']['#options'] as $key => &$value) {
+      // phpcs:ignore Drupal.Semantics.FunctionT.NotLiteralString
       $value = $this->t($key);
     }
 
@@ -411,7 +412,7 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
         $elements['add_more'] = [
           '#type' => 'submit',
           '#name' => strtr($id_prefix, '-', '_') . '_add_more',
-          '#value' => t('Add another date'),
+          '#value' => $this->t('Add another date'),
           '#attributes' => ['class' => ['field-add-more-submit']],
           '#limit_validation_errors' => [array_merge($parents, [$field_name])],
           '#submit' => [[static::class, 'addMoreSubmit']],
@@ -625,7 +626,7 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
     $grid = $this->partGrid;
 
     $returnValues = [];
-    foreach ($values as $delta => $value) {
+    foreach ($values as $value) {
       // Call to parent invalidates and empties individual values.
       if (empty($value)) {
         continue;

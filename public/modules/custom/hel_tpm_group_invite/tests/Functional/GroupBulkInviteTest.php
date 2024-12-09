@@ -3,8 +3,9 @@
 namespace Drupal\hel_tpm_group_invite\Functional;
 
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\group\PermissionScopeInterface;
 use Drupal\Tests\group\Functional\GroupBrowserTestBase;
+use Drupal\group\PermissionScopeInterface;
+use Drupal\user\Entity\User;
 use Drupal\user\RoleInterface;
 
 /**
@@ -45,7 +46,7 @@ class GroupBulkInviteTest extends GroupBrowserTestBase {
    *
    * @var \Drupal\user\Entity\User|false
    */
-  private \Drupal\user\Entity\User|false $groupAdmin;
+  private User|false $groupAdmin;
 
   /**
    * Global permissions.
@@ -112,8 +113,7 @@ class GroupBulkInviteTest extends GroupBrowserTestBase {
     // plugin config doesn't seem to be available.
     drupal_flush_all_caches();
 
-  //  $this->drupalLogin($this->nonGroupMemeber);
-
+    // $this->drupalLogin($this->nonGroupMemeber);
     // Add permissions to invite users to members of the group.
     $role = $this->group->getGroupType()->getRoles(FALSE);
     $role = reset($role);

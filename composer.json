@@ -195,6 +195,7 @@
         "weitzman/logintrait": "^1.2"
     },
     "require-dev": {
+        "brainmaestro/composer-git-hooks": "*",
         "citrussolutions/gulp-workflow": "^2.0",
         "drupal/core-dev": "^10.3",
         "phpspec/prophecy-phpunit": "^2.0",
@@ -244,16 +245,29 @@
             "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
         ],
         "post-install-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
+            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
+            "cghooks update"
         ],
         "post-update-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
+            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
+            "cghooks update"
         ]
     },
     "extra": {
         "drupal-scaffold": {
             "locations": {
                 "web-root": "public/"
+            }
+        },
+        "hooks": {
+            "pre-commit": [
+                "scripts/git/pre-commit/custom-module-lint-check",
+                "scripts/git/pre-commit/custom-theme-lint-check"
+            ],
+            "config": {
+                "stop-on-failure": [
+                    "pre-commit"
+                ]
             }
         },
         "installer-paths": {

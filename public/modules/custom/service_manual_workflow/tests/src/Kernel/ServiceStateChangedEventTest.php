@@ -3,9 +3,9 @@
 namespace Drupal\Tests\service_manual_workflow\Kernel;
 
 use Drupal\Core\Test\AssertMailTrait;
-use Drupal\language\Entity\ConfigurableLanguage;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\Tests\service_manual_workflow\Traits\ServiceManualWorkflowTestTrait;
+use Drupal\language\Entity\ConfigurableLanguage;
 
 /**
  * Tests if a specific module is enabled.
@@ -34,6 +34,11 @@ class ServiceStateChangedEventTest extends GroupKernelTestBase {
    */
   private $orgUser;
 
+  /**
+   * Installed modules.
+   *
+   * @var string[]
+   */
   protected static $modules = [
     'content_moderation',
     'content_translation',
@@ -70,7 +75,7 @@ class ServiceStateChangedEventTest extends GroupKernelTestBase {
     $this->installConfig([
       'service_manual_workflow_service_test',
       'service_manual_workflow_notification_test_config',
-      'content_moderation'
+      'content_moderation',
     ]);
 
     $current_user = $this->getCurrentUser();
@@ -84,7 +89,6 @@ class ServiceStateChangedEventTest extends GroupKernelTestBase {
     $this->orgGroup->addMember($this->orgUser, ['group_roles' => ['organisation-administrator']]);
 
     ConfigurableLanguage::createFromLangcode('fi')->save();
-
 
   }
 
@@ -121,4 +125,5 @@ class ServiceStateChangedEventTest extends GroupKernelTestBase {
     $translation->save();
 
   }
+
 }

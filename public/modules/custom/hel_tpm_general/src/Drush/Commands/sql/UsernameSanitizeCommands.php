@@ -26,7 +26,7 @@ final class UsernameSanitizeCommands extends DrushCommands {
    */
   public function __construct(
     protected Connection $database,
-    protected EntityTypeManagerInterface $entityTypeManager
+    protected EntityTypeManagerInterface $entityTypeManager,
   ) {
     parent::__construct();
   }
