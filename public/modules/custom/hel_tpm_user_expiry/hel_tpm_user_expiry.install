@@ -38,7 +38,7 @@ function hel_tpm_user_expiry_update_10002(&$sandbox) {
     ->accessCheck(FALSE)
     ->condition('name', 'anonymous-%', 'NOT LIKE')
     ->condition('status', 0)
-    ->condition('changed', strtotime('-30 days'), "<")
+    ->condition('changed', strtotime('-210 days'), "<")
     ->condition('uid', 0, "!=")
     ->execute();
 
