@@ -60,13 +60,6 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
   protected $messageNotifier;
 
   /**
-   * Password generator service.
-   *
-   * @var \Drupal\Core\Password\PasswordGeneratorInterface
-   */
-  protected $passwordGenerator;
-
-  /**
    * The state store.
    *
    * @var \Drupal\Core\State\State
@@ -105,8 +98,6 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
    *   Plugin definition array.
    * @param \Drupal\message_notify\MessageNotifier $message_notifier
    *   Message notifier service.
-   * @param \Drupal\Core\Password\PasswordGeneratorInterface $password_generator
-   *   Password generator service.
    * @param \Drupal\Core\State\State $state
    *   State service.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
@@ -114,12 +105,11 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
    * @param \Drupal\hel_tpm_user_expiry\Anonymizer $anonymizer
    *   User anonymizer service.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, MessageNotifier $message_notifier, PasswordGeneratorInterface $password_generator, State $state, EntityTypeManagerInterface $entity_type_manager, Anonymizer $anonymizer) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, MessageNotifier $message_notifier, State $state, EntityTypeManagerInterface $entity_type_manager, Anonymizer $anonymizer) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->logger = $this->getLogger('hel_tpm_user_expiry');
     $this->messageNotifier = $message_notifier;
     $this->state = $state;
-    $this->passwordGenerator = $password_generator;
     $this->anonymizer = $anonymizer;
     $this->entityTypeManager = $entity_type_manager;
   }
@@ -133,7 +123,6 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
       $plugin_id,
       $plugin_definition,
       $container->get('message_notify.sender'),
-      $container->get('password_generator'),
       $container->get('state'),
       $container->get('entity_type.manager'),
       $container->get('hel_tpm_user_expiry.anonymizer')
@@ -148,7 +137,7 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
     $notified = $this->getNotified();
     $count = (int) $notified['count'];
     $timestamp = $notified['timestamp'];
-    $user = User::load($this->getUid());
+    $user = $this->entityTypeManager->getStorage('user')->load($this->getUid());
 
     // If user has been notified less than 2 times and last notification
     // has been sent in more.
