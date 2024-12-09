@@ -22,7 +22,7 @@ services:
     xdebug: true
     build:
       - "/app/vendor/bin/phpcs --config-set installed_paths /app/coder/vendor/drupal/coder/coder_sniffer"
-      - "cghooks update"
+      - "/app/vendor/bin/cghooks update"
     config:
       php: .lando.php.ini
     overrides:
