@@ -3,6 +3,8 @@
 namespace Drupal\hel_tpm_group\EventSubscriber;
 
 use Drupal\Component\EventDispatcher\Event;
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Logger\LoggerChannelTrait;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -66,6 +68,20 @@ class HelTpmGroupSubscriber implements EventSubscriberInterface {
   ];
 
   /**
+   * Entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  private EntityTypeManagerInterface $entityTypeManager;
+
+  /**
+   * Entity type interface.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeInterface
+   */
+  private EntityTypeInterface $entityType;
+
+  /**
    * Constructs event subscriber.
    *
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
@@ -74,12 +90,15 @@ class HelTpmGroupSubscriber implements EventSubscriberInterface {
    *   The group membership loader.
    * @param \Drupal\message_notify\MessageNotifier $message_notifier
    *   Message notifier.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
+   *   Entity type manager.
    */
-  public function __construct(MessengerInterface $messenger, GroupMembershipLoader $membership_loader, MessageNotifier $message_notifier) {
+  public function __construct(MessengerInterface $messenger, GroupMembershipLoader $membership_loader, MessageNotifier $message_notifier, EntityTypeManagerInterface $entityTypeManager) {
     $this->messenger = $messenger;
     $this->membershipLoader = $membership_loader;
     $this->messageNotifier = $message_notifier;
     $this->logger = $this->getLogger('hel_tpm_group');
+    $this->entityTypeManager = $entityTypeManager;
   }
 
   /**
@@ -115,10 +134,9 @@ class HelTpmGroupSubscriber implements EventSubscriberInterface {
    */
   protected function getMembersByRole(GroupRoleInterface $group_role) {
     $members = [];
-    $group_membership_loader = \Drupal::service('group.membership_loader');
 
     foreach ($this->getGroups($group_role->getGroupTypeId()) as $group) {
-      $memberships = $group_membership_loader->loadByGroup($group, [$group_role->getOriginalId()]);
+      $memberships = $this->membershipLoader->loadByGroup($group, [$group_role->getOriginalId()]);
       foreach ($memberships as $membership) {
         $members[] = $membership->getUser();
       }
@@ -293,7 +311,7 @@ class HelTpmGroupSubscriber implements EventSubscriberInterface {
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   protected function getGroups($type) {
-    return \Drupal::entityTypeManager()->getStorage('group')->loadByProperties(['type' => $type]);
+    return $this->entityTypeManager->getStorage('group')->loadByProperties(['type' => $type]);
   }
 
   /**

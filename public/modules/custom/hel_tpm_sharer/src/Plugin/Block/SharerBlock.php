@@ -4,8 +4,11 @@ namespace Drupal\hel_tpm_sharer\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Link;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Url;
 use Drupal\node\NodeInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a sharer block.
@@ -16,14 +19,41 @@ use Drupal\node\NodeInterface;
  *   category = "sharer",
  * )
  */
-class SharerBlock extends BlockBase {
+class SharerBlock extends BlockBase implements ContainerFactoryPluginInterface {
+
+  /**
+   * Route match interface.
+   *
+   * @var \Drupal\Core\Routing\RouteMatchInterface
+   */
+  private RouteMatchInterface $routeMatch;
+
+  /**
+   * {@inheritdoc}
+   */
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, RouteMatchInterface $route_match) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition);
+    $this->routeMatch = $route_match;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $container->get('current_route_match')
+    );
+  }
 
   /**
    * {@inheritdoc}
    */
   public function build() {
     $output = [];
-    $entity = \Drupal::routeMatch()->getParameter('node');
+    $entity = $this->routeMatch->getParameter('node');
     if ($entity instanceof NodeInterface) {
       $vars = [
         ':title' => $entity->getTitle(),

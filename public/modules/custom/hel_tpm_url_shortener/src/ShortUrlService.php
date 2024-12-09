@@ -3,7 +3,6 @@
 namespace Drupal\hel_tpm_url_shortener;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Routing\RouteProvider;
 use Drupal\Core\Url;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -62,7 +61,7 @@ class ShortUrlService {
   public function generateShortLink($redirect_path) {
     $url = Url::fromUserInput($redirect_path);
 
-    // Don't generate url to unrouted url
+    // Don't generate url to unrouted url.
     if ($url->isExternal() || !$url->isRouted() || !$url->access()) {
       return FALSE;
     }

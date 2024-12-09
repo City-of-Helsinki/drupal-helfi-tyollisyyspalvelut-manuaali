@@ -5,13 +5,13 @@
  * Primary module hooks for Service manual workflow module.
  */
 
-use Drupal\content_moderation\Entity\ContentModerationStateInterface;
 use Drupal\Core\Access\AccessResultForbidden;
 use Drupal\Core\Database\Query\AlterableInterface;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Drupal\content_moderation\Entity\ContentModerationStateInterface;
 use Drupal\field\FieldConfigInterface;
 use Drupal\node\NodeInterface;
 use Drupal\service_manual_workflow\Event\ServiceModerationEvent;
@@ -25,10 +25,6 @@ function service_manual_workflow_cron() {
 
 /**
  * Implements hook_ENTITY_presave().
- *
- * @param \Drupal\Core\Entity\EntityInterface $entity
- *
- * @throws \Exception
  */
 function service_manual_workflow_node_presave(EntityInterface $entity) {
 
@@ -44,7 +40,6 @@ function service_manual_workflow_node_presave(EntityInterface $entity) {
     }
   }
 }
-
 
 /**
  * Helper function to queue service items.
@@ -98,7 +93,7 @@ function service_manual_workflow_query_outdated_services_alter(AlterableInterfac
 }
 
 /**
- * Implements hook_form_alter().
+ * Implements hook_form_FORM_ID_alter().
  */
 function service_manual_workflow_form_node_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   // Add popup only for service node form.

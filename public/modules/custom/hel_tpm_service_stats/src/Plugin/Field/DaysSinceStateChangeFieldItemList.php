@@ -6,8 +6,7 @@ use Drupal\Core\Field\FieldItemList;
 use Drupal\Core\TypedData\ComputedItemListTrait;
 
 /**
- * Item list for a computed field that displays
- * how long service has been in current state.
+ * Computed field that displays how long service has been in current state.
  */
 class DaysSinceStateChangeFieldItemList extends FieldItemList implements FieldItemListInterface {
   use ComputedItemListTrait;

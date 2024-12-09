@@ -9,10 +9,8 @@ use Drupal\Core\KeyValueStore\KeyValueStoreInterface;
 use Drupal\hel_tpm_url_shortener\ShortUrlService;
 use Drupal\rest\ModifiedResourceResponse;
 use Drupal\rest\Plugin\ResourceBase;
-use Drupal\rest\ResourceResponse;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Route;
 
 /**
@@ -99,12 +97,12 @@ final class UrlShortenerRestResource extends ResourceBase {
    */
   public function post(array $data): ModifiedResourceResponse {
     if (empty($data['redirect_path'])) {
-      return new ModifiedResourceResponse(null, 404);
+      return new ModifiedResourceResponse(NULL, 404);
     }
     $redirect_path = $data['redirect_path'];
     $short_link = $this->shortUrlService->generateShortLink($redirect_path);
     if (empty($short_link)) {
-      return new ModifiedResourceResponse(null, 404);
+      return new ModifiedResourceResponse(NULL, 404);
     }
     $data['short_link'] = $short_link->getShortUrl();
     $this->storage->set($data['short_link'], $data);
@@ -122,14 +120,6 @@ final class UrlShortenerRestResource extends ResourceBase {
       $route->setRequirement('id', '\d+');
     }
     return $route;
-  }
-
-  /**
-   * Returns next available ID.
-   */
-  private function getNextId(): int {
-    $ids = \array_keys($this->storage->getAll());
-    return count($ids) > 0 ? max($ids) + 1 : 1;
   }
 
 }

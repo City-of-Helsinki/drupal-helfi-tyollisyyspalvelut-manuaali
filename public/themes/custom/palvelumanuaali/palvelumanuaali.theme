@@ -13,7 +13,7 @@ use Drupal\views_infinite_scroll\Plugin\views\pager\InfiniteScroll;
  */
 function palvelumanuaali_preprocess_html(&$variables) {
   $route = \Drupal::routeMatch()->getRouteName();
-  switch($route) {
+  switch ($route) {
     case 'entity.user.edit_form':
       $variables['attributes']['class'][] = 'user-edit';
       break;
@@ -23,7 +23,7 @@ function palvelumanuaali_preprocess_html(&$variables) {
 /**
  * Implements hook_preprocess_breadcrumb().
  */
-function palvelumanuaali_preprocess_breadcrumb(&$variables){
+function palvelumanuaali_preprocess_breadcrumb(&$variables) {
   $request = \Drupal::request();
   $route = \Drupal::routeMatch()->getRouteObject();
   if ($variables['breadcrumb']) {
@@ -69,7 +69,7 @@ function palvelumanuaali_preprocess_links__language_block(&$variables) {
  */
 function palvelumanuaali_preprocess_node(&$variables) {
   if (!isset($variables['is_front'])) {
-    $variables['is_front'] =  \Drupal::service('path.matcher')->isFrontPage();
+    $variables['is_front'] = \Drupal::service('path.matcher')->isFrontPage();
   }
   _palvelumanuaali_preprocess_view_card_liftup($variables);
   _palvelumanuaali_preprocess_taxonomy_card($variables);
@@ -82,7 +82,7 @@ function palvelumanuaali_preprocess_field(&$variables) {
 
   if ($variables['field_name'] == 'field_field_client_consent_descr') {
     $node = $variables['element']['#object'];
-     if ($node->hasField('field_client_consent')) {
+    if ($node->hasField('field_client_consent')) {
       if ($node->get('field_client_consent')->isEmpty() || $node->field_client_consent->value === "0") {
         unset($variables['items']);
       }
@@ -98,13 +98,22 @@ function palvelumanuaali_preprocess_field(&$variables) {
     $variables['attributes']['class'][] = 'font-spacing--spaced';
     $variables['attributes']['class'][] = 'font-weight--bold';
   }
-  if ($variables['field_name'] == 'field_paragraph' && $variables['element']['#bundle'] == 'basic_page')  {
+  if ($variables['field_name'] == 'field_paragraph' && $variables['element']['#bundle'] == 'basic_page') {
     foreach ($variables['items'] as $key => $item) {
       $variables['items'][$key]['attributes']->setAttribute('class', 'margin-bottom-double-space');
     }
   }
 }
 
+/**
+ * Preprocess function for view card liftup.
+ *
+ * @param array $variables
+ *   Variable array.
+ *
+ * @return void
+ *   -
+ */
 function _palvelumanuaali_preprocess_view_card_liftup(&$variables) {
   if (empty($variables['view_mode']) || $variables['view_mode'] !== 'view_card_lift') {
     return;
@@ -116,7 +125,7 @@ function _palvelumanuaali_preprocess_view_card_liftup(&$variables) {
     'outdated' => 'warning',
     'published' => 'default',
     'ready_to_publish' => 'warning',
-    'temporarily_archived' => 'grey'
+    'temporarily_archived' => 'grey',
   ];
   $node = $variables['node'];
   $content_moderation_state = ContentModerationState::loadFromModeratedEntity($node);
@@ -137,6 +146,15 @@ function _palvelumanuaali_preprocess_view_card_liftup(&$variables) {
 
 }
 
+/**
+ * Preprocess function for taxonomy cards.
+ *
+ * @param array $variables
+ *   Variable array.
+ *
+ * @return void
+ *   -
+ */
 function _palvelumanuaali_preprocess_taxonomy_card(&$variables) {
   if (empty($variables['view_mode']) || $variables['view_mode'] !== 'taxonomy_card') {
     return;
@@ -200,11 +218,7 @@ function palvelumanuaali_preprocess_table(&$variables) {
 }
 
 /**
- * Implements theme_preprocess_textarea();
- *
- * @param $variables
- *
- * @return void
+ * Implements theme_preprocess_textarea().
  */
 function palvelumanuaali_preprocess_textarea(&$variables) {
   if (empty($variables['element'])) {
@@ -217,9 +231,7 @@ function palvelumanuaali_preprocess_textarea(&$variables) {
 }
 
 /**
- * @param array $suggestions
- * @param array $variables
- * @param $hook
+ * Implements hook_theme_suggestions_HOOK_alter().
  */
 function palvelumanuaali_theme_suggestions_form_element_alter(array &$suggestions, array $variables, $hook) {
   if (isset($variables['element']['#id'])) {
@@ -229,17 +241,18 @@ function palvelumanuaali_theme_suggestions_form_element_alter(array &$suggestion
 }
 
 /**
- * @param array $suggestions
- * @param array $variables
- * @param $hook
+ * Implements hook_theme_suggestions_HOOK_alter().
  */
 function palvelumanuaali_theme_suggestions_form_alter(array &$suggestions, array $variables, $hook) {
   if (isset($variables['element']['#id'])) {
-   $id = str_replace("-", "_", $variables['element']['#id']);
-   $suggestions[] = 'form__'.$id;
+    $id = str_replace("-", "_", $variables['element']['#id']);
+    $suggestions[] = 'form__' . $id;
   }
 }
 
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
 function palvelumanuaali_theme_suggestions_select_alter(array &$suggestions, array $variables, $hook) {
 
   if (isset($variables['element']['#name'])) {
@@ -258,11 +271,13 @@ function palvelumanuaali_theme_suggestions_select_alter(array &$suggestions, arr
 
   if (isset($variables['element']['#type']) && isset($variables['element']['#form_id'])) {
     $type = str_replace("-", "_", $variables['element']['#type']);
-    $formId = str_replace("-", "_", $variables['element']['#form_id']);
     $suggestions[] = $hook . '__' . $type;
   }
 }
 
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
 function palvelumanuaali_theme_suggestions_details_alter(array &$suggestions, array $variables, $hook) {
 
   if (isset($variables['element']['#type']) && isset($variables['element']['#form_id'])) {
@@ -272,21 +287,23 @@ function palvelumanuaali_theme_suggestions_details_alter(array &$suggestions, ar
     $suggestions[] = $hook . '__' . $type . '__' . $formId;
   }
   if (isset($variables['element']['#type']) && isset($variables['element']['#id'])) {
-      $id = str_replace("-", "_", $variables['element']['#id']);
-      $suggestions[] = $hook .  '__' . $id;
+    $id = str_replace("-", "_", $variables['element']['#id']);
+    $suggestions[] = $hook . '__' . $id;
   }
   if (isset($variables['element']['#type']) && isset($variables['element']['#field_name'])) {
-      $fieldType = str_replace("-", "_", $variables['element']['#field_name']);
-      $suggestions[] = $hook .  '__' . $fieldType;
+    $fieldType = str_replace("-", "_", $variables['element']['#field_name']);
+    $suggestions[] = $hook . '__' . $fieldType;
   }
 }
 
+/**
+ * Implements hook_preprocess_HOOK().
+ */
 function palvelumanuaali_preprocess_details(&$variables) {
   if ($node = \Drupal::request()->attributes->get('node')) {
-     $variables['nid'] = $node->id();
+    $variables['nid'] = $node->id();
   }
 }
-
 
 /**
  * Implements hook_preprocess_views_view().
@@ -332,7 +349,7 @@ function palvelumanuaali_theme_suggestions_taxonomy_term_alter(array &$suggestio
  * @inheritdoc
  */
 function palvelumanuaali_theme_suggestions_views_view_alter(array &$suggestions, array $variables) {
-  $suggestions[] =  'views_view__' . $variables['view']->id();
+  $suggestions[] = 'views_view__' . $variables['view']->id();
 }
 
 /**
@@ -343,7 +360,7 @@ function palvelumanuaali_theme_suggestions_views_view_alter(array &$suggestions,
  * @inheritdoc
  */
 function palvelumanuaali_theme_suggestions_views_view_unformatted_alter(array &$suggestions, array $variables) {
-  $suggestions[] =  'views_view_unformatted__' . $variables['view']->id();
+  $suggestions[] = 'views_view_unformatted__' . $variables['view']->id();
 }
 
 /**
@@ -357,12 +374,14 @@ function palvelumanuaali_theme_suggestions_views_view_field(array $variables) {
   $suggestions[] = 'views_view_field__' . $variables['field']->field;
 }
 
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
 function palvelumanuaali_theme_suggestions_input_alter(&$suggestions, array $variables) {
   if (!empty($variables['element']['#form_id']) && $variables['theme_hook_original'] === "input__submit") {
     $suggestions[] = 'input__' . $variables['element']['#type'] . '__' . $variables['element']['#form_id'];
   }
 }
-
 
 /**
  * Implements hook_theme_suggestions_HOOK_alter().
@@ -384,9 +403,7 @@ function palvelumanuaali_theme_suggestions_field_alter(array &$suggestions, arra
 }
 
 /**
- * @param array $suggestions
- * @param array $variables
- * @param $hook
+ * Add views unformatted template suggestions.
  */
 function palvelumanuaali_theme_suggestions_fieldset_alter(array &$suggestions, array $variables, $hook) {
   if (isset($variables['element']['#group'])) {
@@ -440,9 +457,9 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id) {
     'node_landing_page_edit_form',
     'node_landing_page_form',
     'node_basic_page_form',
-    'node_basic_page_edit_form'
+    'node_basic_page_edit_form',
   ];
-  
+
   if ($form['#id'] == 'views-exposed-form-solr-service-search-page-1') {
     $form['#attributes']['class'][] = 'width--full';
   }
@@ -453,7 +470,7 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id) {
   }
 
   if (in_array($form_id, $forms)) {
-    if ($form_id == 'node_service_edit_form' || $form_id == 'node_service_form' ) {
+    if ($form_id == 'node_service_edit_form' || $form_id == 'node_service_form') {
       $node = $form_state->getFormObject()->getEntity();
       if (!($node->isDefaultTranslation())) {
         $form['field_service_price']['widget'][0]['subform']['field_free_service']['#disabled'] = TRUE;
@@ -468,16 +485,16 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id) {
       }
     }
 
-    if ($form_id == 'node_basic_page_form' || $form_id == 'node_basic_page_edit_form' ) {
+    if ($form_id == 'node_basic_page_form' || $form_id == 'node_basic_page_edit_form') {
       $form['field_paragraph']['#attributes']['class'][] = 'hide-title';
     }
-    if ($form_id == 'node_landing_page_form' || $form_id == 'node_landing_page_edit_form' ) {
+    if ($form_id == 'node_landing_page_form' || $form_id == 'node_landing_page_edit_form') {
       $form['field_paragraph']['#attributes']['class'][] = 'hide-title';
       $form['field_quick_links']['#attributes']['class'][] = 'hide-title';
 
     }
 
-    // combinations of these will be used to adjust the details block
+    // Combinations of these will be used to adjust the details block.
     $form['revision_information']['#access'] = FALSE;
     $form['meta']['published']['#access'] = FALSE;
     $form['menu']['#access'] = FALSE;
@@ -490,7 +507,6 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id) {
     $form['moderation_state']['widget'][0]['state']['#title'] = t('Change to:');
     $form['actions']['delete']['#access'] = FALSE;
     $form['actions']['cancel']['#access'] = FALSE;
-
 
   }
 }

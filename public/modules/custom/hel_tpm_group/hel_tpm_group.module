@@ -8,7 +8,6 @@
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -46,7 +45,7 @@ function _hel_tpm_group_create_missing_updatees_queue_items() {
   $query = \Drupal::entityTypeManager()->getStorage('group')->getQuery();
   $query->accessCheck(FALSE);
   $groups = $query->execute();
-  foreach ($groups as $revision_id => $entity_id) {
+  foreach ($groups as $entity_id) {
     $queue = \Drupal::queue('hel_tpm_group_service_missing_updatees_queue');
     $queue->createItem(['gid' => (int) $entity_id]);
   }
@@ -71,7 +70,7 @@ function hel_tpm_group_entity_type_alter(array &$entity_types): void {
  *
  * Allows group admins to see members' status field.
  */
-function hel_tpm_group_entity_field_access($operation, FieldDefinitionInterface $field_definition, AccountInterface $account, FieldItemListInterface $items = NULL): AccessResultInterface {
+function hel_tpm_group_entity_field_access($operation, FieldDefinitionInterface $field_definition, AccountInterface $account, ?FieldItemListInterface $items = NULL): AccessResultInterface {
   // Don't interfere if not trying to view user's status field.
   if (empty($field_definition->getTargetEntityTypeId())
     || $field_definition->getTargetEntityTypeId() != 'user'
@@ -263,7 +262,7 @@ function hel_tpm_group_views_data_alter(array &$data) {
     'filter' => [
       'id' => 'moderation_state_filter_exclude_archived',
       'field' => 'moderation_state',
-      'allow empty' => TRUE
+      'allow empty' => TRUE,
     ],
   ];
   $data['groups']['group_active_members_count_filter'] = [
