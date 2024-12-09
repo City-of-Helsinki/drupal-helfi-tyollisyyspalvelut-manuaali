@@ -1,12 +1,19 @@
 <?php
 
 /**
-* Implements hook_token_info_alter().
-*/
+ * @file
+ * Hel_tpm_user_expiry tokens.
+ */
+
+use Drupal\Core\Render\BubbleableMetadata;
+
+/**
+ * Implements hook_token_info_alter().
+ */
 function hel_tpm_user_expiry_token_info() {
   $tokens['one-time-login-expiry'] = [
     'name' => t('One time login expiration in Days'),
-    'description' => t('Token to show how long one time login link is valid')
+    'description' => t('Token to show how long one time login link is valid'),
   ];
   return ['tokens' => ['user' => $tokens]];
 }
@@ -14,7 +21,7 @@ function hel_tpm_user_expiry_token_info() {
 /**
  * Implements hook_tokens().
  */
-function hel_tpm_user_expiry_tokens($type, $tokens, array $data, array $options, \Drupal\Core\Render\BubbleableMetadata $bubbleable_metadata) {
+function hel_tpm_user_expiry_tokens($type, $tokens, array $data, array $options, BubbleableMetadata $bubbleable_metadata) {
   if ($type !== 'user') {
     return;
   }

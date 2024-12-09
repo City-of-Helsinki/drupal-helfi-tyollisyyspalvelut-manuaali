@@ -1,17 +1,47 @@
 <?php
+
 namespace Drupal\Tests\hel_tpm_group\Traits;
 
 use Drupal\group\Entity\GroupInterface;
 
+/**
+ * Group initialization trait.
+ */
 trait GroupInitTrait {
 
+  /**
+   * User account.
+   *
+   * @var \Drupal\user\UserInterface
+   */
   protected $spUser;
+
+  /**
+   * Group entity.
+   *
+   * @var \Drupal\group\Entity\GroupInterface
+   */
   protected $spGroup;
 
+  /**
+   * Group entity.
+   *
+   * @var \Drupal\group\Entity\GroupInterface
+   */
   protected $orgGroup;
 
+  /**
+   * User account.
+   *
+   * @var \Drupal\user\UserInterface
+   */
   protected $orgUser;
 
+  /**
+   * User account.
+   *
+   * @var \Drupal\user\UserInterface
+   */
   protected $orgUser2;
 
   /**
@@ -34,7 +64,6 @@ trait GroupInitTrait {
     $this->orgUser2 = $this->createUserWithRoles(['specialist editor', 'editor']);
     $this->orgGroup->addMember($this->orgUser, ['group_roles' => ['organisation-editor']]);
 
-
     if ($create_subgroup === TRUE) {
       // Create service provider group.
       $this->spUser = $this->createUserWithRoles(['editor']);
@@ -46,6 +75,17 @@ trait GroupInitTrait {
     }
   }
 
+  /**
+   * Create group content method.
+   *
+   * @param \Drupal\group\Entity\GroupInterface $group
+   *   Group interface.
+   *
+   * @return \Drupal\Core\Entity\EntityInterface
+   *   Created node.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
   protected function createGroupContent(GroupInterface $group) {
     $content_plugin = 'group_node:service';
     $node = $this->createNode([

@@ -1,14 +1,12 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Drupal\hel_tpm_group\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\Core\Field\FormatterBase;
-use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceEntityFormatter;
-use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceFormatterBase;
 use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceLabelFormatter;
-use Drupal\Core\Field\Plugin\Field\FieldType\EntityReferenceItem;
 use Drupal\user\UserInterface;
 
 /**
@@ -46,19 +44,26 @@ final class MissingReferenceHighlightFormatter extends EntityReferenceLabelForma
    * Create highlight wrapper for element and add message.
    *
    * @param array $element
+   *   Element render array.
    * @param string $message
+   *   Message to render.
    *
    * @return array
+   *   Renderable element array.
    */
   protected function addHighlightMessage(array $element, string $message) {
     $element['#prefix'] = '<div class="highlight-wrapper">';
     $element['message'] = [
+      // phpcs:ignore Drupal.Semantics.FunctionT.NotLiteralString
       '#markup' => sprintf('<div class="message">%s</div>', $this->t($message)),
     ];
     $element['#suffix'] = '</div>';
     return $element;
   }
 
+  /**
+   * Validate referenced entity.
+   */
   protected function validateReferencedEntity(UserInterface $user, EntityInterface $parent_entity) {
     // If loaded user object is empty user is removed from systems.
     // Add node to result array.
@@ -67,7 +72,8 @@ final class MissingReferenceHighlightFormatter extends EntityReferenceLabelForma
     }
     // If user doesn't have update access add to result array.
     if (!$parent_entity->access('update', $user) || $user->isBlocked()) {
-       return 'user has no update access';
+      return 'user has no update access';
     }
   }
+
 }

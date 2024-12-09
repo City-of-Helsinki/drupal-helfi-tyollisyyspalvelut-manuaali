@@ -1,11 +1,11 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\hel_tpm_group\Plugin\views\filter;
 
-use Drupal\content_moderation\Plugin\views\filter\ModerationStateFilter;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\content_moderation\Plugin\views\filter\ModerationStateFilter;
 
 /**
  * Provides a filter for the moderation state and excludes archived by default.
@@ -85,7 +85,11 @@ class ModerationStateExcludeArchived extends ModerationStateFilter {
     }
   }
 
+  /**
+   * Get exposed identifier.
+   */
   protected function getExposedIdentifier(): string {
     return $this->options['expose']['identifier'];
   }
+
 }

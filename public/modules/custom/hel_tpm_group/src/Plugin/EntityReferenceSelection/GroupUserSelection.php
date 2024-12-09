@@ -71,20 +71,22 @@ class GroupUserSelection extends UserSelection {
   /**
    * {@inheritdoc}
    */
-  public function __construct(array $configuration,
-                              $plugin_id,
-                              $plugin_definition,
-                              EntityTypeManagerInterface $entity_type_manager,
-                              ModuleHandlerInterface $module_handler,
-                              AccountInterface $current_user,
-                              Connection $connection,
-                              EntityFieldManagerInterface $entity_field_manager = NULL,
-                              EntityTypeBundleInfoInterface $entity_type_bundle_info = NULL,
-                              EntityRepositoryInterface $entity_repository = NULL,
-                              GroupMembershipLoaderInterface $group_membership_loader,
-                              GroupStateTransitionValidation $group_state_transition_validator,
-                              GroupHierarchyManagerInterface $group_hierarchy_manager,
-                              RouteMatchInterface $route_match) {
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    EntityTypeManagerInterface $entity_type_manager,
+    ModuleHandlerInterface $module_handler,
+    AccountInterface $current_user,
+    Connection $connection,
+    ?EntityFieldManagerInterface $entity_field_manager = NULL,
+    ?EntityTypeBundleInfoInterface $entity_type_bundle_info = NULL,
+    ?EntityRepositoryInterface $entity_repository = NULL,
+    GroupMembershipLoaderInterface $group_membership_loader,
+    GroupStateTransitionValidation $group_state_transition_validator,
+    GroupHierarchyManagerInterface $group_hierarchy_manager,
+    RouteMatchInterface $route_match,
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_type_manager, $module_handler, $current_user, $connection, $entity_field_manager, $entity_type_bundle_info, $entity_repository);
 
     $this->groupMembershipLoader = $group_membership_loader;

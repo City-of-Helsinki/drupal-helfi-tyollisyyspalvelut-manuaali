@@ -69,11 +69,11 @@ class Shortenerredirect extends ContentEntityBase implements ShortenerredirectIn
   /**
    * Set last usage.
    *
-   * @param $timestamp
-   *  Unix timestamp.
+   * @param string $timestamp
+   *   Unix timestamp.
    *
    * @return void
-   *  Void.
+   *   Void.
    */
   public function setLastUsage($timestamp) {
     $this->set('last_usage', $timestamp);
@@ -86,6 +86,7 @@ class Shortenerredirect extends ContentEntityBase implements ShortenerredirectIn
    *   Shortened link uri.
    */
   public function getShortUrl() {
+    // phpcs:ignore entities cannot have dependency injection.
     return \Drupal::request()->getSchemeAndHttpHost() . $this->shortened_link->uri;
   }
 

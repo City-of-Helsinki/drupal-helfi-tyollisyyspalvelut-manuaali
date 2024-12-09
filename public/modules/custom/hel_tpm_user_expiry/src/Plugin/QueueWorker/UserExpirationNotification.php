@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Drupal\hel_tpm_user_expiry\Plugin\QueueWorker;
 
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Logger\LoggerChannelTrait;
+use Drupal\Core\Password\PasswordGeneratorInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueWorkerBase;
 use Drupal\Core\State\State;
-use Drupal\group\GroupMembershipLoaderInterface;
 use Drupal\hel_tpm_user_expiry\Anonymizer;
 use Drupal\message\Entity\Message;
 use Drupal\message_notify\MessageNotifier;
-use Drupal\user\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -81,9 +81,11 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
   private $uid;
 
   /**
-   * @var \Drupal\group\GroupMembershipLoaderInterface
+   * Entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  private GroupMembershipLoaderInterface $groupMembershipLoader;
+  private EntityTypeManagerInterface $entityTypeManager;
 
   /**
    * Anonymizer service.
@@ -103,17 +105,23 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
    *   Plugin definition array.
    * @param \Drupal\message_notify\MessageNotifier $message_notifier
    *   Message notifier service.
+   * @param \Drupal\Core\Password\PasswordGeneratorInterface $password_generator
+   *   Password generator service.
    * @param \Drupal\Core\State\State $state
-   *   State object.
+   *   State service.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   Entity type manager.
    * @param \Drupal\hel_tpm_user_expiry\Anonymizer $anonymizer
    *   User anonymizer service.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, MessageNotifier $message_notifier, State $state, Anonymizer $anonymizer) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, MessageNotifier $message_notifier, PasswordGeneratorInterface $password_generator, State $state, EntityTypeManagerInterface $entity_type_manager, Anonymizer $anonymizer) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->logger = $this->getLogger('hel_tpm_user_expiry');
     $this->messageNotifier = $message_notifier;
     $this->state = $state;
+    $this->passwordGenerator = $password_generator;
     $this->anonymizer = $anonymizer;
+    $this->entityTypeManager = $entity_type_manager;
   }
 
   /**
@@ -125,7 +133,9 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
       $plugin_id,
       $plugin_definition,
       $container->get('message_notify.sender'),
+      $container->get('password_generator'),
       $container->get('state'),
+      $container->get('entity_type.manager'),
       $container->get('hel_tpm_user_expiry.anonymizer')
     );
   }
@@ -143,6 +153,7 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
     // If user has been notified less than 2 times and last notification
     // has been sent in more.
     if (($count === 0 || $count === 1) && $this->getTimeLimit($count) >= $timestamp) {
+      $user = $this->entityTypeManager->getStorage('user')->load($this->getUid());
       if (!$user->isBlocked()) {
         // Send inactivity reminder.
         $this->sendNotification($this->getUid(), self::$reminderTemplates[$count]);
@@ -266,7 +277,7 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
   protected function deactivateUser(): bool {
-    $user = User::load($this->getUid());
+    $user = $this->entityTypeManager->getStorage('user')->load($this->getUid());
     if ($user->isBlocked()) {
       return FALSE;
     }
