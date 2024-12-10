@@ -9,7 +9,6 @@
 }
 .main-menu {
   >.main-menu__item--with-sub {
-    padding-bottom: 20px;
     @include large {
       padding-bottom: 0;
       &:last-child {
@@ -22,21 +21,23 @@
 
 /* A */
 .main-menu__link {
-  color: clr(footer-color);
+  color: clr(text);
   display: block;
-  padding: 0 $space-triple $space $space-one-and-half;
+  padding: $space-one-half $space-triple $space-one-half $space-one-and-half;
   text-decoration: none;
-  font-weight: 700;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 24px; /* 200% */
   letter-spacing: 1px;
-  text-transform: uppercase;
   @extend .header-text-dsk;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 20px;
+  @include xl {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px; /* 200% */
+  };
+
   &--with-sub {
-    width: 80%;
-    text-transform: uppercase;
+    width: calc(100% - 42px);
   }
   &--active {
     @include xl {
@@ -91,9 +92,10 @@
   font-style: normal;
   font-weight: 600;
   letter-spacing: unset;
-  width: calc(100% + 2rem);
+  width: calc(100% + 1rem);
   margin-left: -16px;
   @extend .header-text-dsk;
+  background-color: clr(background-border);
   &:focus, &:hover {
     color: clr(alt-header-color);
     background-color: clr(background-dropdown);
@@ -101,7 +103,7 @@
     background-repeat: no-repeat;
     background-position: calc(100% - 24px) center;
   }
-  @include large {
+  @include xl {
     width: auto;
     display: block;
     padding: $space-double $space-double $space-double $space-two-and-half;
@@ -120,7 +122,7 @@
   padding-left: $space-quadruple;
 }
 .header-text-dsk {
-  @include large {
+  @include xl {
     text-transform: unset;
     font-style: normal;
     font-weight: 600;
