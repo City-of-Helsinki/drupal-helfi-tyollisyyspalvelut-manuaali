@@ -2,18 +2,12 @@
 .main-menu__item {
   display: flex;
   flex-wrap: wrap;
-  position: relative;
-
   @include medium {
     border-top: none;
 
     /* Only top level */
     &:not(.main-menu__item--sub):hover {
       transition: all 0.2s;
-
-      & > .main-menu--sub {
-        display: block;
-      }
     }
   }
 
@@ -49,6 +43,26 @@
 
       &:not(:first-child) {
         border-top: 1px solid clr(highlight);
+      }
+    }
+  }
+}
+
+.main-menu > .main-menu__item {
+  >.main-menu--sub {
+    @include xl {
+      display: none;
+    }
+  }
+  &--active {
+    >.main-menu--sub {
+      @include xl {
+        display: flex;
+      }
+      > li:first-child {
+        @include xl {
+          margin-left: 240px;
+        }
       }
     }
   }

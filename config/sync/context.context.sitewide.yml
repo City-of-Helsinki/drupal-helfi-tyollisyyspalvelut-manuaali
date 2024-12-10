@@ -4,7 +4,6 @@ status: true
 dependencies:
   config:
     - system.menu.footer
-    - system.menu.main
     - views.view.quick_links
   module:
     - system
@@ -21,24 +20,6 @@ reactions:
     id: blocks
     uuid: 270e436a-a6e9-46cb-8def-dc822c1b9e61
     blocks:
-      821a76bf-7bfa-4a4c-abc2-8b553b454f33:
-        uuid: 821a76bf-7bfa-4a4c-abc2-8b553b454f33
-        id: 'system_menu_block:main'
-        label: 'Main navigation'
-        provider: system
-        label_display: '0'
-        region: sidebar
-        weight: '-4'
-        custom_id: system_menu_block_main
-        theme: palvelumanuaali
-        css_class: 'hide-mobile sidebar-main-nav'
-        unique: 0
-        context_id: sitewide
-        context_mapping: {  }
-        level: '1'
-        depth: '0'
-        expand_all_items: 0
-        third_party_settings: {  }
       e2e283a8-5381-4f49-8e63-78f292f6fbf4:
         uuid: e2e283a8-5381-4f49-8e63-78f292f6fbf4
         id: 'system_menu_block:footer'
@@ -73,24 +54,6 @@ reactions:
         context_mapping: {  }
         views_label: ''
         items_per_page: '3'
-        third_party_settings: {  }
-      7200a5d7-41db-412e-b4f8-9e6ece2a364c:
-        uuid: 7200a5d7-41db-412e-b4f8-9e6ece2a364c
-        id: 'system_menu_block:main'
-        label: 'Main navigation'
-        provider: system
-        label_display: '0'
-        region: header
-        weight: '0'
-        custom_id: system_menu_block_main
-        theme: palvelumanuaali
-        css_class: 'hide-desktop header-main-nav'
-        unique: 1
-        context_id: sitewide
-        context_mapping: {  }
-        level: '1'
-        depth: '0'
-        expand_all_items: 0
         third_party_settings: {  }
     include_default_blocks: 1
     saved: false

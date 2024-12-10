@@ -1,0 +1,29 @@
+uuid: 8ac7e5a7-ec28-4a57-850a-986996756751
+langcode: fi
+status: true
+dependencies:
+  config:
+    - system.menu.main
+  module:
+    - block_class
+    - system
+  theme:
+    - palvelumanuaali
+third_party_settings:
+  block_class:
+    classes: 'header-main-nav margin--dxl--ra'
+id: system_block_menu_main
+theme: palvelumanuaali
+region: header
+weight: -14
+provider: null
+plugin: 'system_menu_block:main'
+settings:
+  id: 'system_menu_block:main'
+  label: Päävalikko
+  label_display: '0'
+  provider: system
+  level: 1
+  depth: 2
+  expand_all_items: true
+visibility: {  }
