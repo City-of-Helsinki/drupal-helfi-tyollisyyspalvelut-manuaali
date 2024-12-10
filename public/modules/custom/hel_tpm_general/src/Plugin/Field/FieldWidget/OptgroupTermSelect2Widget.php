@@ -88,6 +88,9 @@ class OptgroupTermSelect2Widget extends OptionsWidgetBase implements ContainerFa
     return $element;
   }
 
+  /**
+   * Get selected options method.
+   */
   protected function getSelectedOptions(FieldItemListInterface $items) {
     $selected_options = parent::getSelectedOptions($items);
     foreach ($selected_options as $key => $option) {

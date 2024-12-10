@@ -2,15 +2,35 @@
 
 namespace Drupal\hel_tpm_url_shortener\Form;
 
-use Drupal\Core\Ajax\AjaxResponse;
-use Drupal\Core\Ajax\InvokeCommand;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\hel_tpm_url_shortener\ShortUrlService;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a Hel TPM Url shortener form.
  */
 class ShortenUrlLinkForm extends FormBase {
+
+  /**
+   * Url shortener.
+   *
+   * @var \Drupal\hel_tpm_url_shortener\ShortUrlService
+   */
+  private ShortUrlService $urlShortener;
+
+  public function __construct(ShortUrlService $url_shortener) {
+    $this->urlShortener = $url_shortener;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('hel_tpm_url_shortener.short_url_service')
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -34,8 +54,8 @@ class ShortenUrlLinkForm extends FormBase {
       '#attributes' => ['class' => ['current-path']],
       '#attached' => [
         'library' => [
-          'hel_tpm_url_shortener/url_shortener'
-        ]
+          'hel_tpm_url_shortener/url_shortener',
+        ],
       ],
     ];
     $element['submit'] = [
@@ -91,11 +111,8 @@ class ShortenUrlLinkForm extends FormBase {
    *   Returns element form wrapper.
    */
   public function submitAjaxCall(array &$form, FormStateInterface $form_state) {
-    $short_link_generator = \Drupal::service('hel_tpm_url_shortener.short_url_service');
-
     $path = $form_state->getValue('current_path');
-
-    $url = $short_link_generator->generateShortLink($path);
+    $url = $this->urlShortener->generateShortLink($path);
 
     if (empty($url)) {
       return $form['wrapper'];
@@ -113,12 +130,11 @@ class ShortenUrlLinkForm extends FormBase {
       '#suffix' => '</div>',
       '#markup' => sprintf(
         '<div class="short-link">%s</div>', $url->getShortUrl()
-      )
+      ),
     ];
     $form['wrapper']['clipboard-status'] = [
-      '#markup' => '<div class="clipboard-status popup pill--small-message-base pill--small-message-url pill--small-message--add pill--padding-small-text small-font font-primary-blue font-weight-bold"><div class="popup-title"></div></div>'
+      '#markup' => '<div class="clipboard-status popup pill--small-message-base pill--small-message-url pill--small-message--add pill--padding-small-text small-font font-primary-blue font-weight-bold"><div class="popup-title"></div></div>',
     ];
-
 
     return $form['wrapper'];
   }

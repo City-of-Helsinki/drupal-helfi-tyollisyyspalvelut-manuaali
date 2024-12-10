@@ -2,9 +2,9 @@
 
 namespace Drupal\Tests\hel_tpm_service_stats\Traits;
 
+use Drupal\Tests\user\Traits\UserCreationTrait;
 use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
-use Drupal\Tests\user\Traits\UserCreationTrait;
 
 /**
  * Service manual workflow test trait.

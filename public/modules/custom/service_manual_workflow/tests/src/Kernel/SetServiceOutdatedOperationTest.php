@@ -1,17 +1,17 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\Tests\service_manual_workflow\Kernel;
 
 use Drupal\Core\Access\AccessResultAllowed;
 use Drupal\Core\Access\AccessResultForbidden;
 use Drupal\Core\Form\FormState;
-use Drupal\node\NodeInterface;
-use Drupal\service_manual_workflow\Form\SetServiceOutdatedOperationForm;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\Tests\service_manual_workflow\Traits\ServiceManualWorkflowTestTrait;
 use Drupal\Tests\user\Traits\UserCreationTrait;
+use Drupal\node\NodeInterface;
+use Drupal\service_manual_workflow\Form\SetServiceOutdatedOperationForm;
 
 /**
  * Test description.

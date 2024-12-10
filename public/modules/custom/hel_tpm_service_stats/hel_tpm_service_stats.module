@@ -7,8 +7,7 @@
 
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Cache\RefinableCacheableDependencyInterface;
-use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
-use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Database\Query\AlterableInterface;
 
 /**
  * Implements hook_menu_local_tasks_alter().
@@ -47,7 +46,7 @@ function hel_tpm_service_stats_field_widget_info_alter(array &$info) {
 /**
  * Implements hook_query_TAG_alter().
  */
-function hel_tpm_service_stats_query_ready_to_publish_alter(Drupal\Core\Database\Query\AlterableInterface $query) {
+function hel_tpm_service_stats_query_ready_to_publish_alter(AlterableInterface $query) {
   $query->addJoin('LEFT', 'content_moderation_state_field_data', 'md', 'md.content_entity_revision_id = base_table.vid');
   $query->condition('md.moderation_state', 'ready_to_publish', '=');
 }

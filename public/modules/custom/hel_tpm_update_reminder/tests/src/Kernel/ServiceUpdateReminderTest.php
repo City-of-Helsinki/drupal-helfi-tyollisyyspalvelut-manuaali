@@ -122,12 +122,10 @@ final class ServiceUpdateReminderTest extends EntityKernelTestBase {
    */
   public function testQueueWithTransitions(): void {
     $daysAgo = UpdateReminderUtility::LIMIT_1 + 1;
-    $services = [
-      $this->createServiceWithTransition('draft', 'published', $daysAgo),
-      $this->createServiceWithTransition('ready_to_publish', 'published', $daysAgo),
-      $this->createServiceWithTransition('published', 'published', $daysAgo),
-      $this->createServiceWithTransition('published', 'ready_to_publish', $daysAgo),
-    ];
+    $this->createServiceWithTransition('draft', 'published', $daysAgo);
+    $this->createServiceWithTransition('ready_to_publish', 'published', $daysAgo);
+    $this->createServiceWithTransition('published', 'published', $daysAgo);
+    $this->createServiceWithTransition('published', 'ready_to_publish', $daysAgo);
     // Only run specific cron function for keeping the items in queue.
     _hel_tpm_update_reminder_service_reminders();
     $this->assertEquals(4, $this->queue->numberOfItems());
@@ -146,12 +144,10 @@ final class ServiceUpdateReminderTest extends EntityKernelTestBase {
    */
   public function testQueueWithRecentlyChecked(): void {
     $daysAgo = UpdateReminderUtility::LIMIT_1 - 1;
-    $servicesRecent = [
-      $this->createServiceWithTransition('draft', 'published', $daysAgo),
-      $this->createServiceWithTransition('ready_to_publish', 'published', $daysAgo),
-      $this->createServiceWithTransition('published', 'published', $daysAgo),
-      $this->createServiceWithTransition('published', 'ready_to_publish', $daysAgo),
-    ];
+    $this->createServiceWithTransition('draft', 'published', $daysAgo);
+    $this->createServiceWithTransition('ready_to_publish', 'published', $daysAgo);
+    $this->createServiceWithTransition('published', 'published', $daysAgo);
+    $this->createServiceWithTransition('published', 'ready_to_publish', $daysAgo);
     // Only run specific cron function for keeping the items in queue.
     _hel_tpm_update_reminder_service_reminders();
     $this->assertEquals(0, $this->queue->numberOfItems());
@@ -170,10 +166,8 @@ final class ServiceUpdateReminderTest extends EntityKernelTestBase {
    */
   public function testQueueWithTransitionsNotPublished(): void {
     $daysAgo = UpdateReminderUtility::LIMIT_1 + 1;
-    $notPublishedServices = [
-      $this->createServiceWithTransition('draft', 'ready_to_publish', $daysAgo),
-      $this->createServiceWithTransition('ready_to_publish', 'ready_to_publish', $daysAgo),
-    ];
+    $this->createServiceWithTransition('draft', 'ready_to_publish', $daysAgo);
+    $this->createServiceWithTransition('ready_to_publish', 'ready_to_publish', $daysAgo);
     // Only run specific cron function for keeping the items in queue.
     _hel_tpm_update_reminder_service_reminders();
     $this->assertEquals(0, $this->queue->numberOfItems());

@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * Install file for hel_tpm_user_expiry module.
+ */
+
+/**
  * Remove anonymous users from groups.
  */
 function hel_tpm_user_expiry_update_10001(&$sandbox) {
@@ -20,5 +25,25 @@ function hel_tpm_user_expiry_update_10001(&$sandbox) {
     foreach ($memberships as $membership) {
       $membership->getGroupRelationship()->delete();
     }
+  }
+}
+
+/**
+ * Anonymize blocked users which are not yet anonymized.
+ */
+function hel_tpm_user_expiry_update_10002(&$sandbox) {
+  $anonymizer = \Drupal::service('hel_tpm_user_expiry.anonymizer');
+  $storage = \Drupal::service('entity_type.manager')->getStorage('user');
+  $blocked_users = $storage->getQuery()
+    ->accessCheck(FALSE)
+    ->condition('name', 'anonymous-%', 'NOT LIKE')
+    ->condition('status', 0)
+    ->condition('changed', strtotime('-210 days'), "<")
+    ->condition('uid', 0, "!=")
+    ->execute();
+
+  foreach ($blocked_users as $uid) {
+    $user = $storage->load($uid);
+    $anonymizer->anonymizeUser($user);
   }
 }

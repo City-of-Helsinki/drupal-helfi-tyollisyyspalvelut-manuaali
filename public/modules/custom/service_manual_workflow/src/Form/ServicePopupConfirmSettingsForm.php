@@ -85,6 +85,7 @@ class ServicePopupConfirmSettingsForm extends ConfigFormBase {
     foreach ($workflow_config['states'] as $state_id => $state) {
       $form[$state_id] = [
         '#type' => 'textarea',
+        // phpcs:ignore
         '#title' => $this->t($state['label']),
         '#default_value' => $config->get($state_id),
       ];

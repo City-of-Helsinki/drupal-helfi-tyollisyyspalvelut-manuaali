@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\hel_tpm_search\Plugin\views\filter;
 
@@ -22,9 +22,9 @@ class AgeGroups extends ManyToOne {
   /**
    * {@inheritdoc}
    */
-  public function init(ViewExecutable $view, DisplayPluginBase $display, array &$options = NULL): void {
+  public function init(ViewExecutable $view, DisplayPluginBase $display, ?array &$options = NULL): void {
     parent::init($view, $display, $options);
-    $this->valueTitle = t('Age groups');
+    $this->valueTitle = $this->t('Age groups');
     $this->definition['options callback'] = [$this, 'generateOptions'];
   }
 
@@ -75,9 +75,9 @@ class AgeGroups extends ManyToOne {
    */
   protected function generateOptions(): array {
     return [
-      '16-29' => t("16–29-year-olds"),
-      '30-54' => t("30–54-year-olds"),
-      '55-70' => t("55–70-year-olds"),
+      '16-29' => $this->t("16–29-year-olds"),
+      '30-54' => $this->t("30–54-year-olds"),
+      '55-70' => $this->t("55–70-year-olds"),
     ];
   }
 

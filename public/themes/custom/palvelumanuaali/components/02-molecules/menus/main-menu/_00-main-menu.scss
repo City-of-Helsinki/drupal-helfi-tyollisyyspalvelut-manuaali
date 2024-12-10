@@ -31,8 +31,7 @@ $main-menu-medium: $medium;
 /* UL */
 .main-menu {
   @include list-reset;
-
-  z-index: 10;
+  z-index: $zi-main-menu;
   >li {
     margin-bottom: $space-one-half;
     @include xl {
@@ -71,7 +70,7 @@ $main-menu-medium: $medium;
       position: absolute;
       top: 55px;
       width: 315px;
-      z-index: 1;
+      z-index: $zi-above-content;
       font-size: 0.9rem;
       opacity: 0.6;
     }

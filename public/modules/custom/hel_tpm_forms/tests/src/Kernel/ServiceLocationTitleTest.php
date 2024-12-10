@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\hel_tpm_forms\Kernel;
 
+use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\KernelTests\Core\Entity\EntityKernelTestBase;
+use Drupal\Tests\group\Traits\NodeTypeCreationTrait;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
-use Drupal\KernelTests\Core\Entity\EntityKernelTestBase;
 use Drupal\node\Entity\Node;
-use Drupal\Tests\group\Traits\NodeTypeCreationTrait;
 
 /**
  * Tests generating service location title.
@@ -18,6 +19,8 @@ use Drupal\Tests\group\Traits\NodeTypeCreationTrait;
 final class ServiceLocationTitleTest extends EntityKernelTestBase {
 
   use NodeTypeCreationTrait;
+
+  use StringTranslationTrait;
 
   /**
    * {@inheritdoc}
@@ -59,7 +62,7 @@ final class ServiceLocationTitleTest extends EntityKernelTestBase {
    */
   public function testWithOrganization() {
     $node = Node::create([
-      'title' => t('Old title'),
+      'title' => $this->t('Old title'),
       'type' => 'service_location',
     ]);
     $node->set('field_address', [
@@ -80,7 +83,7 @@ final class ServiceLocationTitleTest extends EntityKernelTestBase {
    */
   public function testWithoutOrganization() {
     $node = Node::create([
-      'title' => t('Old title'),
+      'title' => $this->t('Old title'),
       'type' => 'service_location',
     ]);
     $node->set('field_address', [

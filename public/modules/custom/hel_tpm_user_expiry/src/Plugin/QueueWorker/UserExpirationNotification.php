@@ -1,22 +1,17 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\hel_tpm_user_expiry\Plugin\QueueWorker;
 
-use Drupal;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Logger\LoggerChannelTrait;
-use Drupal\Core\Password\PasswordGeneratorInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueWorkerBase;
-use Drupal\Core\Session\AccountInterface;
-use Drupal\Core\Session\UserSession;
 use Drupal\Core\State\State;
-use Drupal\group\Entity\GroupMembershipInterface;
-use Drupal\group\GroupMembershipLoaderInterface;
+use Drupal\hel_tpm_user_expiry\Anonymizer;
 use Drupal\message\Entity\Message;
 use Drupal\message_notify\MessageNotifier;
-use Drupal\user\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -64,13 +59,6 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
   protected $messageNotifier;
 
   /**
-   * Password generator service.
-   *
-   * @var \Drupal\Core\Password\PasswordGeneratorInterface
-   */
-  protected $passwordGenerator;
-
-  /**
    * The state store.
    *
    * @var \Drupal\Core\State\State
@@ -85,9 +73,18 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
   private $uid;
 
   /**
-   * @var \Drupal\group\GroupMembershipLoaderInterface
+   * Entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  private GroupMembershipLoaderInterface $groupMembershipLoader;
+  private EntityTypeManagerInterface $entityTypeManager;
+
+  /**
+   * Anonymizer service.
+   *
+   * @var \Drupal\hel_tpm_user_expiry\Anonymizer
+   */
+  private Anonymizer $anonymizer;
 
   /**
    * Constructor.
@@ -100,16 +97,20 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
    *   Plugin definition array.
    * @param \Drupal\message_notify\MessageNotifier $message_notifier
    *   Message notifier service.
-   * @param \Drupal\Core\Password\PasswordGeneratorInterface $password_generator
-   *   Password generator service.
+   * @param \Drupal\Core\State\State $state
+   *   State service.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   Entity type manager.
+   * @param \Drupal\hel_tpm_user_expiry\Anonymizer $anonymizer
+   *   User anonymizer service.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, MessageNotifier $message_notifier, PasswordGeneratorInterface $password_generator, State $state, GroupMembershipLoaderInterface $group_membership_loader) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, MessageNotifier $message_notifier, State $state, EntityTypeManagerInterface $entity_type_manager, Anonymizer $anonymizer) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->logger = $this->getLogger('hel_tpm_user_expiry');
     $this->messageNotifier = $message_notifier;
-    $this->passwordGenerator = $password_generator;
     $this->state = $state;
-    $this->groupMembershipLoader = $group_membership_loader;
+    $this->anonymizer = $anonymizer;
+    $this->entityTypeManager = $entity_type_manager;
   }
 
   /**
@@ -121,9 +122,9 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
       $plugin_id,
       $plugin_definition,
       $container->get('message_notify.sender'),
-      $container->get('password_generator'),
       $container->get('state'),
-      $container->get('group.membership_loader')
+      $container->get('entity_type.manager'),
+      $container->get('hel_tpm_user_expiry.anonymizer')
     );
   }
 
@@ -135,11 +136,12 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
     $notified = $this->getNotified();
     $count = (int) $notified['count'];
     $timestamp = $notified['timestamp'];
+    $user = $this->entityTypeManager->getStorage('user')->load($this->getUid());
 
     // If user has been notified less than 2 times and last notification
     // has been sent in more.
     if (($count === 0 || $count === 1) && $this->getTimeLimit($count) >= $timestamp) {
-      $user = User::load($this->getUid());
+      $user = $this->entityTypeManager->getStorage('user')->load($this->getUid());
       if (!$user->isBlocked()) {
         // Send inactivity reminder.
         $this->sendNotification($this->getUid(), self::$reminderTemplates[$count]);
@@ -155,7 +157,7 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
     }
     elseif ($count === 3 && $this->getTimeLimit($count) >= $timestamp) {
       // Anonymize user if deactivation happened 30 days ago.
-      if ($this->anonymizeUser()) {
+      if ($this->anonymizer->anonymizeUser($user)) {
         $this->updateNotified();
       }
     }
@@ -263,7 +265,7 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
   protected function deactivateUser(): bool {
-    $user = User::load($this->getUid());
+    $user = $this->entityTypeManager->getStorage('user')->load($this->getUid());
     if ($user->isBlocked()) {
       return FALSE;
     }
@@ -271,75 +273,6 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
     $user->save();
     $this->logger->info('Deactivated %user', ['%user' => $user->id()]);
     return TRUE;
-  }
-
-  /**
-   * Anonymize inactive and blocked user.
-   *
-   * @return bool
-   *   TRUE when successful, FALSE otherwise.
-   *
-   * @throws \Drupal\Core\Entity\EntityStorageException
-   * @throws \Exception
-   */
-  protected function anonymizeUser(): bool {
-    $user = User::load($this->getUid());
-    // Perform extra checks before anonymizing user data.
-    if (!$user->isBlocked()
-      || $user->get('access')->value >= strtotime('-210 days')
-      || ($user->id() == 0 || $user->id() == 1)) {
-      return FALSE;
-    }
-
-    // Anonymize user data.
-    // Setting the email will also change the username.
-    // See hel_tpm_general.module for more information.
-    $user->setEmail('anonymous-' . $user->id() . '-' . random_int(100000, 999999) . '@anonymous.invalid');
-    $user->setPassword($this->passwordGenerator->generate(20));
-    $user->set('field_name', '');
-    $user->set('field_job_title', '');
-    $user->set('field_employer', '');
-    foreach ($user->getRoles() as $role) {
-      $user->removeRole($role);
-    }
-
-    if (count($user->validate())) {
-      $this->logger->error('Anonymization of user %user failed for validation errors.', ['%user' => $user->id()]);
-      return FALSE;
-    }
-    $user->save();
-
-    // After anonymization remove user group memberships.
-    $this->removeGroupMemberships($user);
-
-    // Store anonymized user IDs using State API.
-    if (is_array($anonymized_users = $this->state->get('hel_tpm_user_expiry.anonymized_users'))) {
-      $anonymized_users[] = $user->id();
-    }
-    else {
-      $anonymized_users = [$user->id()];
-    }
-    $this->state->set('hel_tpm_user_expiry.anonymized_users', $anonymized_users);
-
-    $this->logger->info('Anonymized inactive and blocked user %user.', ['%user' => $user->id()]);
-    return TRUE;
-  }
-
-  /**
-   * Remove group memberships from user.
-   *
-   * @param \Drupal\Core\Session\AccountInterface $user
-   *  User account interface.
-   *
-   * @return void
-   *  Void.
-   * @throws \Drupal\Core\Entity\EntityStorageException
-   */
-  private function removeGroupMemberships(AccountInterface $user) {
-    $memberships = $this->groupMembershipLoader->loadByUser($user);
-    foreach ($memberships as $membership) {
-      $membership->getGroupRelationship()->delete();
-    }
   }
 
   /**
