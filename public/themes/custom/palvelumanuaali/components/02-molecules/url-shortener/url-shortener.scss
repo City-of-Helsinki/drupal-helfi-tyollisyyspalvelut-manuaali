@@ -3,7 +3,7 @@
   @include large {
     position: sticky;
     top: 93%;
-    z-index: 1;
+    z-index: $zi-above-content;
     order: unset;
   }
   >form {
@@ -29,7 +29,7 @@
   .shorten-link {
       left: 93%;
       bottom: 5%;
-      z-index: 1;
+      z-index: $zi-above-content;
       float: right;
       position: relative;
       left: unset;

@@ -67,7 +67,7 @@
           }
           &--hide-while-unselected {
             display: block !important;
-            z-index: 200;
+            z-index: $zi-dropdown-unselected;
           }
         }
       }
@@ -77,7 +77,7 @@
         }
         &--hide-while-unselected {
           display: block !important;
-          z-index: 200;
+          z-index: $zi-dropdown-unselected;
         }
       }
     }
@@ -121,7 +121,7 @@
     overflow-y: auto;
     overflow-x: hidden;
     border-radius: 8px;
-    z-index: 50;
+    z-index: $zi-dropdown-multiselect;
 
   }
 
