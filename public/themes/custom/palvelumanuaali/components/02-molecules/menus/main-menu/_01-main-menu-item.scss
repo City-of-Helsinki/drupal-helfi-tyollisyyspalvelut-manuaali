@@ -25,8 +25,21 @@
 
 /* Expand Button */
 .expand-sub {
-  @include medium {
+  content: "";
+  background-image: url('../../assets/images/icons/arrow-sm-down-black.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 42px;
+  height: 32px;
+  display: block;
+  top: 0;
+  right: 0;
+  background-size: 24px;
+  @include xl {
     display: none;
+  }
+  &--open {
+    transform: rotate(180deg);
   }
 }
 

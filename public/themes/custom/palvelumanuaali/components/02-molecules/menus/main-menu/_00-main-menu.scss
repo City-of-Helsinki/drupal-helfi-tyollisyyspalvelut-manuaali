@@ -33,7 +33,12 @@ $main-menu-medium: $medium;
   @include list-reset;
 
   z-index: 10;
-
+  >li {
+    margin-bottom: $space-one-half;
+    @include xl {
+      margin-bottom: inherit;
+    }
+  }
   @include medium {
     border-bottom: none;
   }
@@ -47,10 +52,11 @@ $main-menu-medium: $medium;
 .main-menu--sub {
   border-bottom: none;
   width: 100%;
-
+  display: none;
   /* See main-menu.js */
   &-open {
     height: auto;
+    display: block;
   }
   &--nested {
     height: 0;
@@ -91,7 +97,7 @@ $main-menu-medium: $medium;
 }
 
 .main-menu--sub {
-  @include large {
+  @include xl {
     margin-top: -8px;
     padding-top: 0;
     width: 100vw;
