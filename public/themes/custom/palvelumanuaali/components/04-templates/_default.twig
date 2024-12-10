@@ -11,9 +11,12 @@
 
 <div {{ bem('layout-container', layout_modifiers) }}>
   {% block page_sidebar %}{% endblock %}
-  <div {{ bem('right-column', layout_modifiers, '', layout_extra_classes) }}>
+  <div {{ bem('layout-column', layout_modifiers, '', layout_extra_classes) }}>
     {% block page_header %}
       {% include "@organisms/site/site-header/site-header.twig" %}
+    {% endblock %}
+    {% block page_lowerheader %}
+        <div {{ bem('lowerheader', [], header__base_class) }}></div>
     {% endblock %}
     {% block page_system %}
     {% endblock %}
