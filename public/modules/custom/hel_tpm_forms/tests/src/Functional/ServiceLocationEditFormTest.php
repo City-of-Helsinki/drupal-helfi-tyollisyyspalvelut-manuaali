@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\hel_tpm_forms\Functional;
 
+use Drupal\Tests\BrowserTestBase;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
-use Drupal\Tests\BrowserTestBase;
 
 /**
  * Tests service location edit forms.

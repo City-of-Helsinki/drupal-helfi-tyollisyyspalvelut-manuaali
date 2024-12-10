@@ -14,7 +14,7 @@
     position: absolute;
     top: 42%;
     right: 1em;
-    z-index: 2;
+    z-index: $zi-dropdown-after;
 
     /* These hacks make the select behind the arrow clickable in some browsers */
     pointer-events: none;
@@ -97,7 +97,7 @@
   .multi-select-button,
   .form-select {
     background-color: unset;
-    z-index: 100;
+    z-index: $zi-details-select-form-select;
     &:hover {
       cursor: pointer;
     }
@@ -147,7 +147,7 @@
     max-width: 200px;
   }
   .icon {
-    z-index: 100;
+    z-index: $zi-form-item-langcode-icon;
   }
   .multi-select-container {
     border: 0;
@@ -178,7 +178,7 @@
     font-size: 14px;
     line-height: 24px;
     padding:  10px 12px 10px 16px;
-    z-index: 20;
+    z-index: $zi-select-white-rounded-button;
     background-color: clr(text-inverse);
     box-shadow: inset 0px 0px 0px 2px clr(form-border);
     box-sizing: border-box;
@@ -226,7 +226,7 @@
     &.icon {
       padding: 0;
       position: absolute;
-      z-index: 21;
+      z-index: $zi-select-white-icon;
       right:0;
       top: 0;
       border: 0;
@@ -299,7 +299,7 @@
 
 .select2-selection {
   position: relative;
-  z-index: 50;
+  z-index: $zi-select2-selection;
 }
 
 .select2-container .selection .select2-selection {

@@ -1,0 +1,25 @@
+uuid: 1e661554-7aa9-4c5c-9e27-251a64dcf4e9
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_days_since_last_state_chan
+    - node.type.service
+  module:
+    - hel_tpm_service_stats
+id: node.service.field_days_since_last_state_chan
+field_name: field_days_since_last_state_chan
+entity_type: node
+bundle: service
+label: 'Days since last state change'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: '0'
+  max: ''
+  prefix: ''
+  suffix: ''
+field_type: hel_tpm_service_stats_days_since_state_change

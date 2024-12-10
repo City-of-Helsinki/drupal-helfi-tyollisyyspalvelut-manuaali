@@ -196,24 +196,18 @@ display:
           entity_type: node
           plugin_id: moderation_state_filter_exclude_archived
           operator: in
-          value:
-            all_exclude_archived: all_exclude_archived
-            service_moderation-draft: service_moderation-draft
-            service_moderation-ready_to_publish: service_moderation-ready_to_publish
-            service_moderation-published: service_moderation-published
-            service_moderation-outdated: service_moderation-outdated
-            service_moderation-archived: service_moderation-archived
+          value: {  }
           group: 1
           exposed: true
           expose:
             operator_id: moderation_state_filter_exclude_archived_op
-            label: 'Moderation state'
+            label: 'Moderation state excluding archived by default'
             description: ''
             use_operator: false
             operator: moderation_state_filter_exclude_archived_op
             operator_limit_selection: false
             operator_list: {  }
-            identifier: moderation_state
+            identifier: moderation_state_filter_exclude_archived
             required: false
             remember: false
             multiple: false

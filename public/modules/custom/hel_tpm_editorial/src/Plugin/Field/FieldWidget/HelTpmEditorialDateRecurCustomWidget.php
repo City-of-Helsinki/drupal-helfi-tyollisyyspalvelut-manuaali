@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\hel_tpm_editorial\Plugin\Field\FieldWidget;
 
@@ -10,6 +10,7 @@ use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\date_recur\DateRecurPartGrid;
 use Drupal\date_recur\DateRecurRuleInterface;
 use Drupal\date_recur\Exception\DateRecurHelperArgumentException;
 use Drupal\date_recur\Plugin\Field\FieldType\DateRecurItem;
@@ -64,7 +65,7 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
    *
    * @var \Drupal\date_recur\DateRecurPartGrid
    */
-  protected $partGrid;
+  protected DateRecurPartGrid $partGrid;
 
   /**
    * {@inheritdoc}
@@ -204,6 +205,7 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
     $element['weekdays']['#attributes']['class'][] = 'weekdays';
 
     foreach ($element['weekdays']['#options'] as $key => &$value) {
+      // phpcs:ignore Drupal.Semantics.FunctionT.NotLiteralString
       $value = $this->t($key);
     }
 
@@ -410,7 +412,7 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
         $elements['add_more'] = [
           '#type' => 'submit',
           '#name' => strtr($id_prefix, '-', '_') . '_add_more',
-          '#value' => t('Add another date'),
+          '#value' => $this->t('Add another date'),
           '#attributes' => ['class' => ['field-add-more-submit']],
           '#limit_validation_errors' => [array_merge($parents, [$field_name])],
           '#submit' => [[static::class, 'addMoreSubmit']],
@@ -445,13 +447,13 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
         '#type' => 'submit',
         '#value' => $this->t('Remove'),
         '#validate' => [],
-        '#submit' => [[static::class, 'submitRemove']],
+        '#submit' => [[static::class, 'deleteSubmit']],
         '#limit_validation_errors' => [],
         '#attributes' => [
           'class' => ['remove-field-delta--' . $delta],
         ],
         '#ajax' => [
-          'callback' => [static::class, 'removeAjaxContentRefresh'],
+          'callback' => [static::class, 'deleteAjax'],
           'wrapper' => $wrapper_id,
           'effect' => 'fade',
         ],
@@ -546,13 +548,19 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
     $timeZone = self::TIME_ZONE;
 
     if ($start && !$timeZone) {
-      $form_state->setError($element['start'], \t('Time zone must be set if start date is set.'));
+      $form_state->setError($element['start'], t('Time zone must be set if start date is set.'));
     }
     if ($end && !$timeZone) {
-      $form_state->setError($element['end'], \t('Time zone must be set if end date is set.'));
+      $form_state->setError($element['end'], t('Time zone must be set if end date is set.'));
     }
     if (($start instanceof DrupalDateTime || $end instanceof DrupalDateTime) && (!$start instanceof DrupalDateTime || !$end instanceof DrupalDateTime)) {
-      $form_state->setError($element, \t('Start date and end date must be provided.'));
+      $form_state->setError($element, t('Start date and end date must be provided.'));
+    }
+
+    if ($start && $end) {
+      if ($start->getTimestamp() > $end->getTimestamp()) {
+        $form_state->setError($element['start'], t('Start date must be greater than end date.'));
+      }
     }
 
     // Recreate datetime object with exactly the same date and time but
@@ -586,7 +594,7 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
    * @return array
    *   The element.
    */
-  public static function afterBuildModularWidget(array $element, FormStateInterface $form_state) {
+  public static function afterBuildModularWidget(array $element, FormStateInterface $form_state): array {
     // Wait until ID is created, and after
     // \Drupal\Core\Render\Element\Checkboxes::processCheckboxes is run so
     // states are not replicated to children.
@@ -618,7 +626,7 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
     $grid = $this->partGrid;
 
     $returnValues = [];
-    foreach ($values as $delta => $value) {
+    foreach ($values as $value) {
       // Call to parent invalidates and empties individual values.
       if (empty($value)) {
         continue;

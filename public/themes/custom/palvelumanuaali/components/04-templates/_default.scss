@@ -33,19 +33,10 @@ body {
  * Layout Using Flexbox (IE11+).
  * Remove this and uncomment Grid code below to use CSS Grid.
 */
-.right-column {
-  margin-left: $space;
-  margin-right: $space;
-  padding-bottom: 10rem;
-  @include large {
-    margin-left: 0;
-    margin-right: 0;
-    order: 2;
-    width: $main-width-large;
-  }
-  @include xxl {
-    width: $main-width-xl;
-  }
+.layout-column {
+  min-height: 100%;
+  width: 100%;
+  min-height: 100vh;
 }
 
 .node-service-edit-form .right-column {
@@ -66,6 +57,7 @@ body {
     }
   }
 }
+
 .main {
   display: block;
   position: relative;
@@ -73,6 +65,8 @@ body {
   margin-bottom: 10em;
   @media only screen and (max-width: $large) {
     margin-top: 0 !important;
+    margin-left: $space;
+    margin-right: $space;
   }
 
   @include xs {
@@ -84,7 +78,7 @@ body {
     margin-right: $space-quadruple;
     margin-left: $space-quadruple;
   }
-  @include xxl {
+  @include xl {
     margin: auto;
   }
 }
@@ -156,8 +150,15 @@ body {
 }
 
 
-.taxonomy-view-page,
-.edit-create-form {
+.taxonomy-view-page {
+  .block--main-block {
+    overflow-x: hidden;
+    @include xl {
+       overflow-x: auto;
+    }
+  }
+}
+
   .main-content {
 
     @include xl {
@@ -187,7 +188,7 @@ body {
         }
       }
   }
-}
+
 
 .date {
   font-weight: bold;

@@ -9,6 +9,7 @@ use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\hel_tpm_service_stats\Plugin\Field\ServiceRowGroupField;
 use Drupal\hel_tpm_service_stats\ServicePublishedRowInterface;
 use Drupal\user\EntityOwnerTrait;
 
@@ -120,6 +121,13 @@ final class ServicePublishedRow extends ContentEntityBase implements ServicePubl
       ->setDisplayConfigurable('view', TRUE)
       ->setReadOnly(TRUE);
 
+    $fields['group'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Group'))
+      ->setSetting('target_type', 'group')
+      ->setComputed(TRUE)
+      ->setClass(ServiceRowGroupField::class)
+      ->setReadOnly(TRUE);
+
     return $fields;
   }
 
@@ -141,6 +149,13 @@ final class ServicePublishedRow extends ContentEntityBase implements ServicePubl
    */
   public function getPreviousDate(): string {
     return $this->previous_date->value;
+  }
+
+  /**
+   * Getter for publish vid.
+   */
+  public function getPublishVid(): int {
+    return (int) $this->publish_vid->value;
   }
 
 }

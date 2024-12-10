@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\hel_tpm_general\Form;
 
@@ -28,7 +28,7 @@ class PreventMailForm extends FormBase {
       '#type' => 'checkbox',
       '#title' => $this->t('Block sending mail'),
       '#default_value' => PreventMailUtility::get(),
-      '#description' => t("Normally this should not be checked! This setting is stored using State API."),
+      '#description' => $this->t("Normally this should not be checked! This setting is stored using State API."),
     ];
     $form['actions']['#type'] = 'actions';
     $form['actions']['submit'] = [

@@ -1,7 +1,12 @@
 services:
   hel_tpm_group.event_subscriber:
     class: Drupal\hel_tpm_group\EventSubscriber\HelTpmGroupSubscriber
-    arguments: ['@messenger', '@group.membership_loader', '@message_notify.sender']
+    arguments: [
+      '@messenger',
+      '@group.membership_loader',
+      '@message_notify.sender',
+      '@entity_type.manager'
+    ]
     tags:
       - { name: event_subscriber }
 
@@ -21,3 +26,9 @@ services:
   hel_tpm_group.service_missing_updatees:
     class: Drupal\hel_tpm_group\ServiceMissingUpdatees
     arguments: ['@entity_type.manager', '@database']
+
+  hel_tpm_group.relation_handler.leave_group_access_control:
+   class: Drupal\hel_tpm_group\Plugin\Group\RelationHandler\LeaveGroupAccessControl
+   decorates: group.relation_handler.access_control
+   arguments: [ '@entity_type.manager', '@group_relation_type.manager' ]
+   shared: false

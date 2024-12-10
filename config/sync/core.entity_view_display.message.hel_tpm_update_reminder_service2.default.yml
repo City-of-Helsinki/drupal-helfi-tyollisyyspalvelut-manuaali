@@ -1,0 +1,46 @@
+uuid: 07fb7bca-a806-4ecf-9302-e614d9a9ca1a
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.field.message.hel_tpm_update_reminder_service2.field_node
+    - field.field.message.hel_tpm_update_reminder_service2.field_user
+    - message.template.hel_tpm_update_reminder_service2
+  module:
+    - user
+id: message.hel_tpm_update_reminder_service2.default
+targetEntityType: message
+bundle: hel_tpm_update_reminder_service2
+mode: default
+content:
+  field_node:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_user:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  partial_0:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  partial_1:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  search_api_excerpt: true

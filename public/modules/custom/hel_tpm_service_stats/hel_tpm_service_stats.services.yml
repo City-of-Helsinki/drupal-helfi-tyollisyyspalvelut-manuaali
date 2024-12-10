@@ -1,7 +1,13 @@
 services:
   hel_tpm_service_stats.revision_history:
     class: Drupal\hel_tpm_service_stats\RevisionHistoryService
-    arguments: ['@entity_type.manager', '@database', '@content_moderation.moderation_information']
+    arguments: [
+      '@entity_type.manager',
+      '@database',
+      '@content_moderation.moderation_information',
+      '@current_user',
+      '@datetime.time'
+    ]
 
   hel_tpm_service_stats.event_subscriber:
     class: Drupal\hel_tpm_service_stats\EventSubscriber\HelTpmServiceStatsSubscriber

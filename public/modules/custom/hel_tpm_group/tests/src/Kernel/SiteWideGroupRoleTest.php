@@ -2,8 +2,8 @@
 
 namespace Drupal\Tests\hel_tpm_group\Kernel;
 
-use Drupal\group\PermissionScopeInterface;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
+use Drupal\group\PermissionScopeInterface;
 
 /**
  * Test description.

@@ -1,0 +1,4 @@
+services:
+  hel_tpm_user_expiry.anonymizer:
+    class: Drupal\hel_tpm_user_expiry\Anonymizer
+    arguments: ['@password_generator', '@state']

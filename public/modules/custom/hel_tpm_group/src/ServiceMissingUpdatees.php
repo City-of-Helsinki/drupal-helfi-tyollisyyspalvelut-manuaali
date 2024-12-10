@@ -1,12 +1,11 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\hel_tpm_group;
 
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityTypeManager;
-use Drupal\group\Entity\GroupInterface;
 use Drupal\node\NodeInterface;
 
 /**
@@ -30,6 +29,13 @@ class ServiceMissingUpdatees {
    * @var \Drupal\Core\Entity\EntityTypeManager
    */
   private EntityTypeManager $entityTypeManager;
+
+  /**
+   * Database connection.
+   *
+   * @var \Drupal\Core\Database\Connection
+   */
+  private Connection $database;
 
   /**
    * Constructor.
@@ -59,7 +65,7 @@ class ServiceMissingUpdatees {
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public function getGroupServiceMissingUpdatee(int $group_id = NULL, bool $nids_only = FALSE) {
+  public function getGroupServiceMissingUpdatee(?int $group_id = NULL, bool $nids_only = FALSE) {
     if (empty($group_id)) {
       return NULL;
     }
@@ -108,8 +114,6 @@ class ServiceMissingUpdatees {
    *
    * @param \Drupal\node\NodeInterface $node
    *   Node object.
-   * @param \Drupal\group\Entity\GroupInterface $group
-   *   Group object.
    * @param bool $skip_municipality
    *   Boolean whether to skip municipality field values.
    *

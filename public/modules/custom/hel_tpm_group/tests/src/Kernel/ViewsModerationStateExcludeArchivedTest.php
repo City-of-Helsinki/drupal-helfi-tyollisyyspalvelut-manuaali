@@ -1,11 +1,11 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\Tests\hel_tpm_group\Kernel;
 
-use Drupal\node\Entity\Node;
 use Drupal\Tests\views\Kernel\ViewsKernelTestBase;
+use Drupal\node\Entity\Node;
 use Drupal\views\Views;
 
 /**
@@ -123,7 +123,7 @@ class ViewsModerationStateExcludeArchivedTest extends ViewsKernelTestBase {
     $this->assertWithFilters([
       $node_archived,
     ], [
-      'moderation_state' => 'service_moderation-archived',
+      'moderation_state_filter_exclude_archived' => 'service_moderation-archived',
     ]);
 
   }

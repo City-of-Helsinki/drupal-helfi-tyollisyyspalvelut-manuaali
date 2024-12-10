@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.service.field_client_consent
     - field.field.node.service.field_contact_info
     - field.field.node.service.field_contact_info_external
+    - field.field.node.service.field_days_since_last_state_chan
     - field.field.node.service.field_description
     - field.field.node.service.field_field_client_consent_descr
     - field.field.node.service.field_implementation_extra_info
@@ -70,7 +71,7 @@ third_party_settings:
       label: Osallistuminen
       parent_name: group_customer_view
       region: content
-      weight: 14
+      weight: 42
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--participation'
@@ -91,7 +92,7 @@ third_party_settings:
       label: Toteutustapa
       parent_name: group_customer_view
       region: content
-      weight: 15
+      weight: 43
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--execution'
@@ -111,7 +112,7 @@ third_party_settings:
       label: 'Missä ja milloin'
       parent_name: group_customer_view
       region: content
-      weight: 16
+      weight: 44
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--where-and-when'
@@ -127,11 +128,12 @@ third_party_settings:
         description: ''
     group_target_group:
       children:
+        - field_description
         - field_target_group
       label: Kohderyhmä
       parent_name: group_customer_view
       region: content
-      weight: 13
+      weight: 41
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--target-group'
@@ -158,11 +160,11 @@ third_party_settings:
         classes: width--full
         show_empty_fields: false
         id: ''
+        label_as_html: false
         direction: horizontal
-        width_breakpoint: 640
+        width_breakpoint: 300
     group_customer_view:
       children:
-        - field_description
         - field_implementation_extra_info
         - field_life_situations
         - field_service_set
@@ -217,7 +219,7 @@ third_party_settings:
       label: 'Ohjaus palveluun'
       parent_name: group_work_instructions
       region: content
-      weight: 7
+      weight: 20
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--guidance-to-service'
@@ -238,7 +240,7 @@ third_party_settings:
       label: 'Palvelun velvoittavuus'
       parent_name: group_work_instructions
       region: content
-      weight: 9
+      weight: 22
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--service-requirements'
@@ -260,7 +262,7 @@ third_party_settings:
       label: 'Lausunnot ja työttömyysetuus'
       parent_name: group_work_instructions
       region: content
-      weight: 11
+      weight: 24
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--statements-and-jobprofits'
@@ -280,7 +282,7 @@ third_party_settings:
       label: 'Merkinnät asiakastietojärjestelmään'
       parent_name: group_work_instructions
       region: content
-      weight: 10
+      weight: 23
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--markings-to-system'
@@ -300,7 +302,7 @@ third_party_settings:
       label: 'Toimenpiteet osallistumisen ajalta'
       parent_name: group_work_instructions
       region: content
-      weight: 12
+      weight: 25
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--measures-during'
@@ -321,7 +323,7 @@ third_party_settings:
       label: Poikkeustilanteet
       parent_name: group_work_instructions
       region: content
-      weight: 13
+      weight: 26
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--exceptions'
@@ -342,7 +344,7 @@ third_party_settings:
       label: ' Täydentävä työnhakukeskustelu'
       parent_name: group_work_instructions
       region: content
-      weight: 14
+      weight: 27
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--complementary-job-search'
@@ -361,7 +363,7 @@ third_party_settings:
       label: 'Kuntakohtaiset ohjeet'
       parent_name: group_work_instructions
       region: content
-      weight: 8
+      weight: 21
       format_type: html_element
       format_settings:
         classes: service-group
@@ -383,7 +385,7 @@ third_party_settings:
       label: sidebar-public
       parent_name: group_customer_view
       region: content
-      weight: 17
+      weight: 45
       format_type: html_element
       format_settings:
         classes: ''
@@ -419,7 +421,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 12
+    weight: 40
     region: content
   field_attendance:
     type: entity_reference_revisions_entity_view
@@ -454,7 +456,7 @@ content:
       view_mode: default
       link: true
     third_party_settings: {  }
-    weight: 18
+    weight: 31
     region: content
   field_contact_info_external:
     type: entity_reference_entity_view
@@ -470,7 +472,7 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 6
+    weight: 33
     region: content
   field_field_client_consent_descr:
     type: text_default
@@ -485,7 +487,7 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 7
+    weight: 35
     region: content
   field_internal_files:
     type: file_default
@@ -493,7 +495,7 @@ content:
     settings:
       use_description_as_link_text: true
     third_party_settings: {  }
-    weight: 16
+    weight: 29
     region: content
   field_internal_links:
     type: link
@@ -505,7 +507,7 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
-    weight: 17
+    weight: 30
     region: content
   field_life_situations:
     type: entity_reference_label
@@ -513,7 +515,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 8
+    weight: 36
     region: content
   field_measures_during_attendance:
     type: text_default
@@ -575,7 +577,7 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 15
+    weight: 28
     region: content
   field_service_benefits:
     type: text_default
@@ -621,7 +623,7 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 10
+    weight: 38
     region: content
   field_service_other_info:
     type: entity_reference_revisions_entity_view
@@ -639,7 +641,7 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 11
+    weight: 39
     region: content
   field_service_producer:
     type: entity_reference_label
@@ -669,7 +671,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 9
+    weight: 37
     region: content
   field_service_suits_info:
     type: text_default
@@ -715,7 +717,7 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 14
+    weight: 34
     region: content
   flag_cart:
     settings: {  }
@@ -754,6 +756,7 @@ hidden:
   entity_print_view_word_docx: true
   field_career_marking: true
   field_contact_info_internal: true
+  field_days_since_last_state_chan: true
   field_guidance_to_service: true
   field_instructions_markup: true
   field_links_and_attachments: true

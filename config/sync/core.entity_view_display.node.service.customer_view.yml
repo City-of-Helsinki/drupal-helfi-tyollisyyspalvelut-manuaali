@@ -10,6 +10,7 @@ dependencies:
     - field.field.node.service.field_client_consent
     - field.field.node.service.field_contact_info
     - field.field.node.service.field_contact_info_external
+    - field.field.node.service.field_days_since_last_state_chan
     - field.field.node.service.field_description
     - field.field.node.service.field_field_client_consent_descr
     - field.field.node.service.field_implementation_extra_info
@@ -148,7 +149,7 @@ third_party_settings:
       label: 'Service navigation'
       parent_name: ''
       region: hidden
-      weight: 33
+      weight: 35
       format_type: tabs
       format_settings:
         classes: ''
@@ -168,7 +169,7 @@ third_party_settings:
       label: 'Work instructions'
       parent_name: ''
       region: hidden
-      weight: 34
+      weight: 36
       format_type: tab
       format_settings:
         classes: ''
@@ -183,7 +184,7 @@ third_party_settings:
       label: 'Ohjaus palveluun'
       parent_name: group_work_instructions
       region: hidden
-      weight: 7
+      weight: 9
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--guidance-to-service'
@@ -204,7 +205,7 @@ third_party_settings:
       label: 'Palvelun velvoittavuus'
       parent_name: group_work_instructions
       region: hidden
-      weight: 9
+      weight: 11
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--service-requirements'
@@ -226,7 +227,7 @@ third_party_settings:
       label: 'Lausunnot ja työttömyysetuus'
       parent_name: group_work_instructions
       region: hidden
-      weight: 11
+      weight: 13
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--statements-and-jobprofits'
@@ -246,7 +247,7 @@ third_party_settings:
       label: 'Merkinnät asiakastietojärjestelmään'
       parent_name: group_work_instructions
       region: hidden
-      weight: 10
+      weight: 12
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--markings-to-system'
@@ -266,7 +267,7 @@ third_party_settings:
       label: 'Toimenpiteet osallistumisen ajalta'
       parent_name: group_work_instructions
       region: hidden
-      weight: 12
+      weight: 14
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--measures-during'
@@ -289,7 +290,7 @@ third_party_settings:
       label: Poikkeustilanteet
       parent_name: group_work_instructions
       region: hidden
-      weight: 13
+      weight: 15
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--exceptions'
@@ -307,12 +308,11 @@ third_party_settings:
       children:
         - field_service_suits_info
         - field_service_suits_job_search
-        - flag_cart
         - flag_flag_list_template_1
       label: ' Täydentävä työnhakukeskustelu'
       parent_name: ''
       region: hidden
-      weight: 35
+      weight: 37
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--complementary-job-search'
@@ -331,7 +331,7 @@ third_party_settings:
       label: 'Kuntakohtaiset ohjeet'
       parent_name: group_work_instructions
       region: hidden
-      weight: 8
+      weight: 10
       format_type: html_element
       format_settings:
         classes: service-group
@@ -528,6 +528,11 @@ content:
     third_party_settings: {  }
     weight: 14
     region: content
+  flag_cart:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 16
+    region: content
   flag_lista:
     settings: {  }
     third_party_settings: {  }
@@ -542,6 +547,7 @@ hidden:
   field_career_markings: true
   field_contact_info: true
   field_contact_info_internal: true
+  field_days_since_last_state_chan: true
   field_guidance_to_service: true
   field_instructions_markup: true
   field_internal_files: true
@@ -570,7 +576,6 @@ hidden:
   field_service_suits_job_search: true
   field_statements: true
   field_statements_unemployment: true
-  flag_cart: true
   flag_flag_list_template_1: true
   flag_lists: true
   langcode: true

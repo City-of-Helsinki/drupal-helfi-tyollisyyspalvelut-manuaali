@@ -64,7 +64,6 @@ final class TimeSinceLastStateChange extends FieldPluginBase {
    */
   public function render(ResultRow $values): array {
     $entity = $values->_entity;
-    $langcode = $values->node_field_revision_langcode;
     if ($entity->isTranslatable() && $entity->language()->getId() != $values->node_field_revision_langcode) {
       $entity = $entity->getTranslation($values->node_field_revision_langcode);
     }

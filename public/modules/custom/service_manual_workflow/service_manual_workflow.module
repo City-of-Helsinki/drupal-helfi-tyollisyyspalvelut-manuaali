@@ -5,14 +5,15 @@
  * Primary module hooks for Service manual workflow module.
  */
 
-use Drupal\content_moderation\Entity\ContentModerationStateInterface;
 use Drupal\Core\Access\AccessResultForbidden;
 use Drupal\Core\Database\Query\AlterableInterface;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Drupal\content_moderation\Entity\ContentModerationStateInterface;
 use Drupal\field\FieldConfigInterface;
+use Drupal\node\NodeInterface;
 use Drupal\service_manual_workflow\Event\ServiceModerationEvent;
 
 /**
@@ -20,6 +21,24 @@ use Drupal\service_manual_workflow\Event\ServiceModerationEvent;
  */
 function service_manual_workflow_cron() {
   _service_manual_workflow_queue_services_for_archival();
+}
+
+/**
+ * Implements hook_ENTITY_presave().
+ */
+function service_manual_workflow_node_presave(EntityInterface $entity) {
+
+  if ($entity instanceof NodeInterface && $entity->isTranslatable() && !$entity->isNew() && !$entity->isDefaultTranslation()) {
+    $active_langcode = $entity->language()->getId();
+    $translations = $entity->getTranslationLanguages();
+    foreach ($translations as $translation_langcode => $translation_language) {
+      // Prevent secondary languages from disrupting other translations.
+      if ($translation_langcode !== $active_langcode) {
+        $translation = $entity->getTranslation($translation_language->getId());
+        $translation->setRevisionTranslationAffected(FALSE);
+      }
+    }
+  }
 }
 
 /**
@@ -74,7 +93,7 @@ function service_manual_workflow_query_outdated_services_alter(AlterableInterfac
 }
 
 /**
- * Implements hook_form_alter().
+ * Implements hook_form_FORM_ID_alter().
  */
 function service_manual_workflow_form_node_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   // Add popup only for service node form.
