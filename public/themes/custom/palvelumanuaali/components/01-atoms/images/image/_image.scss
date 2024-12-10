@@ -21,8 +21,10 @@ figure {
 .logo__image{
   &--hidden-mobile {
     display: none;
-    @include large {
+    @include xl {
       display: block;
+      margin-top: auto;
+      margin-bottom: auto;
     }
   }
 }
@@ -33,7 +35,7 @@ figure {
     margin-left: auto;
     margin-right: auto;
     margin-top: 12px;
-    @include large {
+    @include xl {
       display: none;
     }
   }

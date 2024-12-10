@@ -55,7 +55,18 @@ body {
       display: none;
     }
   }
-
+  //desktop-extra-large
+  &-dxl {
+    @include xl {
+      display: none;
+    }
+  }
+  //tablet
+  &-tblt {
+    @media only screen and (max-width: $xl) {
+      display: none;
+    }
+  }
 }
 
 
@@ -138,16 +149,10 @@ article ul {
   flex-wrap: wrap;
 }
 
-.right-column {
+.right-column,
+.layout-column {
   @include large {
     position: relative;
-  }
-}
-
-footer.footer{
-  @include large {
-    position:  absolute;
-    bottom: 0;
   }
 }
 
@@ -338,6 +343,22 @@ footer.footer{
       }
     }
   }
+  //desktop-extra-large
+  &--dxl {
+    //left-right-auto
+    &--lra {
+      @include xl {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+    //right-auto
+    &--ra {
+      @include xl {
+        margin-right: auto;
+      }
+    }
+  }
 }
 
 //Font
@@ -400,6 +421,13 @@ footer.footer{
   &--right-zero {
     right: 0;
   }
+  &--d {
+    &--unst {
+      @include large {
+        position: unset;
+      }
+    }
+  }
 }
 
 //Display
@@ -415,6 +443,11 @@ footer.footer{
   }
   &--flex {
     display: flex;
+    &--dsk {
+      @include xl {
+        display: flex;
+      }
+    }
   }
 }
 

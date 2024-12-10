@@ -64,7 +64,7 @@ Drupal.behaviors.mainMenu = {
     }
 
     $(context).ajaxStop(function () {
-      
+
       let toggleExpand = $('.header__inner >.toggle-expand');
       let toggleInnerExpand = $('.header-main-nav .toggle-expand');
       let menu = $('.header-main-nav .main-nav');
