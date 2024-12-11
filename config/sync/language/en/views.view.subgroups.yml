@@ -11,17 +11,10 @@ display:
             label: 'Subgroup type'
       exposed_form:
         options:
-          submit_button: Apply
-          reset_button_label: Reset
-          exposed_sorts_label: 'Sort by'
-          sort_asc_label: Asc
-          sort_desc_label: Desc
+          text_input_required_format: ''
       pager:
         options:
-          expose:
-            items_per_page_label: 'Items per page'
-            items_per_page_options_all_label: '- All -'
-            offset_label: Offset
+          expose: {  }
           tags:
             next: 'Next ›'
             previous: '‹ Previous'
@@ -29,42 +22,28 @@ display:
             last: 'Last »'
       fields:
         label:
-          label: Title
-          separator: ', '
+          label: 'Group name'
         changed:
-          label: Updated
-          separator: ', '
+          label: 'Group updated'
         view_group_content:
-          admin_label: 'View relation link'
           label: 'Link to Group content'
           text: 'view relation'
         edit_group_content:
-          admin_label: 'Edit relation link'
           label: 'Link to edit Group content'
           text: 'Edit relation'
         delete_group_content:
-          admin_label: 'Delete relation link'
-          label: 'Link to delete Group content'
-          text: 'Delete relation'
-        edit_group:
-          admin_label: 'Edit subgroup link'
-          label: 'Link to edit Group'
-          text: 'Edit subgroup'
+          label: Actions
+          text: 'Remove from service providers'
+        edit_group: {  }
         delete_group:
-          admin_label: 'Delete subgroup link'
           label: 'Link to delete Group'
           text: 'Delete subgroup'
       title: Subgroups
       arguments:
         gid:
-          exception:
-            title: All
-          title: '{{ arguments.gid|placeholder }} subgroups'
-    display_title: Master
+          exception: {  }
   page_1:
-    display_title: Page
     display_options:
       menu:
         title: Subgroups
 label: Subgroups
-description: 'Lists all of the subgroups that have been added to a group.'

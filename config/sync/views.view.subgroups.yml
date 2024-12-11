@@ -34,7 +34,7 @@ display:
           entity_type: null
           entity_field: label
           plugin_id: field
-          label: Title
+          label: 'Ryhmän nimi'
           exclude: false
           alter:
             alter_text: false
@@ -78,7 +78,7 @@ display:
           click_sort_column: value
           type: string
           settings:
-            link_to_entity: false
+            link_to_entity: true
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -99,7 +99,7 @@ display:
           entity_type: group
           entity_field: changed
           plugin_id: field
-          label: Updated
+          label: 'Ryhmää päivitetty'
           exclude: false
           alter:
             alter_text: false
@@ -155,6 +155,7 @@ display:
               past_format: '@interval ago'
               granularity: 2
               refresh: 60
+              description: ''
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -280,8 +281,8 @@ display:
           admin_label: 'Delete relation link'
           entity_type: group_content
           plugin_id: entity_link_delete
-          label: 'Link to delete Group content'
-          exclude: true
+          label: Toiminnot
+          exclude: false
           alter:
             alter_text: false
             text: ''
@@ -321,7 +322,7 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          text: 'Poista relaatio'
+          text: 'Poista palveluntuottajista'
           output_url_as_text: false
           absolute: false
         edit_group:
