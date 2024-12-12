@@ -89,6 +89,73 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
+        status:
+          id: status
+          table: groups_field_data
+          field: status
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: group
+          entity_field: status
+          plugin_id: field
+          label: 'Ryhmän tila'
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: boolean
+          settings:
+            format: custom
+            format_custom_false: Arkistoitu
+            format_custom_true: Julkaistu
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
         changed:
           id: changed
           table: groups_field_data
@@ -545,7 +612,7 @@ display:
           exposed: true
           expose:
             operator_id: type_op
-            label: 'Organisaation tyyppi '
+            label: 'Ryhmän tyyppi '
             description: ''
             use_operator: false
             operator: type_op
@@ -564,6 +631,52 @@ display:
               specialist: '0'
               specialist_editor: '0'
             reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        status:
+          id: status
+          table: groups_field_data
+          field: status
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: group
+          entity_field: status
+          plugin_id: boolean
+          operator: '='
+          value: '1'
+          group: 1
+          exposed: true
+          expose:
+            operator_id: ''
+            label: 'Ryhmän tila'
+            description: ''
+            use_operator: false
+            operator: status_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: status
+            required: true
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+              specialist_editor: '0'
           is_grouped: false
           group_info:
             label: ''
@@ -623,6 +736,10 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
       style:
         type: table
         options:
@@ -631,15 +748,14 @@ display:
           default_row_class: true
           columns:
             label: label
-            type: type
+            status: status
             changed: changed
             view_group_content: view_group_content
             edit_group_content: edit_group_content
             delete_group_content: delete_group_content
             edit_group: edit_group
             delete_group: delete_group
-            dropbutton: dropbutton
-          default: '-1'
+          default: label
           info:
             label:
               sortable: true
@@ -648,7 +764,7 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
-            type:
+            status:
               sortable: true
               default_sort_order: asc
               align: ''
@@ -691,13 +807,6 @@ display:
               empty_column: false
               responsive: ''
             delete_group:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            dropbutton:
               sortable: false
               default_sort_order: asc
               align: ''
@@ -786,6 +895,15 @@ display:
                     filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: false
+              status:
+                plugin_id: bef_select2
+                advanced:
+                  sort_options: false
+                  placeholder_text: '- Ei mikään -'
+                  rewrite:
+                    filter_rewrite_values: "Tosi|Julkaistu\r\nEpätosi|Arkistoitu"
+                  collapsible: false
+                  is_secondary: false
               label:
                 plugin_id: default
                 advanced:
@@ -798,7 +916,8 @@ display:
                 options_show_items_count: false
       defaults:
         exposed_form: false
-      display_extenders: {  }
+      display_extenders:
+        ajax_history: {  }
       path: group/%group/subgroups2
       menu:
         type: tab
