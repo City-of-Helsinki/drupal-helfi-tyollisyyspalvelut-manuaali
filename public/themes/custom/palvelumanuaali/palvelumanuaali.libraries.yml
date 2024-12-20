@@ -10,7 +10,6 @@ global:
     js/favorite-unflag-event.js: {}
     dist/js/02-molecules/small-message/small-message.js: {}
     dist/js/03-organisms/view/view.js: {}
-
   dependencies:
     - core/popperjs
     - core/jquery
@@ -52,14 +51,6 @@ search-filters:
     - core/drupal
     - core/jquery
 
-
-taxonomy-filters:
-  js:
-    components/03-organisms/view/taxonomy-view.js: {}
-  dependencies:
-    - core/drupal
-    - core/jquery
-
 # See also components/01-atoms/images/icons/_icon.twig to remove attach_library.
 sprite:
   js:
@@ -78,8 +69,6 @@ user-form:
   dependencies:
     - core/drupal
     - select2/select2
-
-
 
 select2.theme:
   css:
