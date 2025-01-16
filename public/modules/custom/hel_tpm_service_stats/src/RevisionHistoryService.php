@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Drupal\hel_tpm_service_stats;
 
-use Drupal\content_moderation\ModerationInformationInterface;
+use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\content_moderation\ModerationInformationInterface;
 
 /**
  * Revision history service.
@@ -21,6 +23,8 @@ final class RevisionHistoryService {
     private readonly EntityTypeManagerInterface $entityTypeManager,
     private readonly Connection $connection,
     private readonly ModerationInformationInterface $moderationInformation,
+    private readonly AccountInterface $currentUser,
+    private readonly TimeInterface $time,
   ) {}
 
   /**
@@ -45,7 +49,7 @@ final class RevisionHistoryService {
     }
 
     $publish_storage->create([
-      'uid' => \Drupal::currentUser()->id(),
+      'uid' => $this->currentUser->id(),
       'nid' => $published_revision->content_entity_id,
       'langcode' => $published_revision->langcode,
       'publish_vid' => $published_revision->content_entity_revision_id,
@@ -196,9 +200,10 @@ final class RevisionHistoryService {
     // Make sure loaded entity is in proper language.
     $last_revision = $last_revision->getTranslation($entity->language()->getId());
 
-    $elapsed_time = \Drupal::time()->getRequestTime() - $last_revision->getRevisionCreationTime();
+    $elapsed_time = $this->time->getRequestTime() - $last_revision->getRevisionCreationTime();
+    $days = $elapsed_time / 86400;
 
-    return intval($elapsed_time / 86400);
+    return intval(round($days));
   }
 
 }

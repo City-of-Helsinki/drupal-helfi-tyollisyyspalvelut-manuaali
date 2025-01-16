@@ -1,13 +1,13 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\Tests\hel_tpm_general\Kernel;
 
 use Drupal\Core\Test\AssertMailTrait;
-use Drupal\hel_tpm_general\PreventMailUtility;
 use Drupal\KernelTests\Core\Entity\EntityKernelTestBase;
 use Drupal\Tests\user\Traits\UserCreationTrait;
+use Drupal\hel_tpm_general\PreventMailUtility;
 
 /**
  * Tests preventing sending mails.

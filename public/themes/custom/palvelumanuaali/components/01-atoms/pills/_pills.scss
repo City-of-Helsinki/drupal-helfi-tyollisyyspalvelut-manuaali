@@ -187,16 +187,15 @@ $pill-colors: (
     position: absolute;
     right: 0;
     bottom: -32px;
-    z-index: 100;
+    z-index: $zi-pill-small-message;
   }
   &--small-message-service {
     position: absolute;
-    right: 0;
+    right: unset;
     bottom: -32px;
-    z-index: 100;
+    z-index: $zi-pill-small-message;
     transform: unset;
     left: unset;
-    right: unset;
   }
 }
 

@@ -28,7 +28,7 @@ class ServiceProcessor extends ProcessorPluginBase {
   /**
    * {@inheritdoc}
    */
-  public function getPropertyDefinitions(DatasourceInterface $datasource = NULL) {
+  public function getPropertyDefinitions(?DatasourceInterface $datasource = NULL) {
     $properties = [];
 
     /** @var \Drupal\search_api\Plugin\search_api\datasource\ContentEntity $datasource */

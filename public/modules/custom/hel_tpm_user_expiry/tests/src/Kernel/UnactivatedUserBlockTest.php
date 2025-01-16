@@ -1,15 +1,13 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\Tests\hel_tpm_user_expiry\Kernel;
 
 use Drupal\Core\Database\Database;
-use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Test\AssertMailTrait;
 use Drupal\KernelTests\Core\Entity\EntityKernelTestBase;
 use Drupal\Tests\user\Traits\UserCreationTrait;
-use Drupal\user\Entity\User;
 use Drupal\user\UserInterface;
 
 /**
@@ -76,8 +74,9 @@ final class UnactivatedUserBlockTest extends EntityKernelTestBase {
     $config->save();
   }
 
-
-
+  /**
+   * Test unactivated user blocking.
+   */
   public function testUnactivatedUserBlock(): void {
     $user = $this->createLastAccessUser(2);
     $user2 = $this->createLastAccessUser(3, "-5 days");
@@ -95,7 +94,6 @@ final class UnactivatedUserBlockTest extends EntityKernelTestBase {
     $this->assertEquals('1', $user3->get('status')->value);
 
     $this->resetCronLastRun();
-
 
     // Set user2 created to -8 days.
     $user2->set('created', strtotime('-8 days'));
@@ -117,15 +115,19 @@ final class UnactivatedUserBlockTest extends EntityKernelTestBase {
    *
    * @param int $uid
    *   The user id.
-   * @param string $lastAccess
-   *   The strtotime format of user's last access.
+   * @param string $created
+   *   Created timestamp.
+   * @param string|null $access
+   *   Last access timestamp.
+   * @param int $status
+   *   User status.
    *
    * @return \Drupal\user\UserInterface
    *   The user entity.
    *
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  protected function createLastAccessUser(int $uid = 1, string $created = '-7 days -1 minute', string $access = NULL, int $status = 1): UserInterface {
+  protected function createLastAccessUser(int $uid = 1, string $created = '-7 days -1 minute', ?string $access = NULL, int $status = 1): UserInterface {
     $access = !empty($access) ? strtotime($access) : 0;
     $created = strtotime($created);
     $user = $this->createUser([], NULL, FALSE, [

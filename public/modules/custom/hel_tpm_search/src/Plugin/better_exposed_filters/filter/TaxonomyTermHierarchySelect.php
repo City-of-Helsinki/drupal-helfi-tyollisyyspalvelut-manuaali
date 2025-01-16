@@ -2,10 +2,9 @@
 
 namespace Drupal\hel_tpm_search\Plugin\better_exposed_filters\filter;
 
-use Drupal\better_exposed_filters\BetterExposedFiltersHelper;
-use Drupal\better_exposed_filters\Plugin\better_exposed_filters\filter\FilterWidgetBase;
-use Drupal\better_exposed_filters\Plugin\better_exposed_filters\filter\RadioButtons;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\better_exposed_filters\BetterExposedFiltersHelper;
+use Drupal\better_exposed_filters\Plugin\better_exposed_filters\filter\RadioButtons;
 use Drupal\selective_better_exposed_filters\Plugin\better_exposed_filters\filter\SelectiveFilterBase;
 
 /**
@@ -35,6 +34,7 @@ class TaxonomyTermHierarchySelect extends RadioButtons {
     $form += SelectiveFilterBase::buildConfigurationForm($filter, $this->configuration);
     return $form;
   }
+
   /**
    * Add multiselect support for dropdown filter.
    *
@@ -61,8 +61,7 @@ class TaxonomyTermHierarchySelect extends RadioButtons {
   }
 
   /**
-   * Override FilterWidgetBase:processSortedOptions
-   * to allow taxonomies be sorted by hand.
+   * Override ::processSortedOptions to allow taxonomies be sorted by hand.
    *
    * @param array $element
    *   The form element.

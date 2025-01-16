@@ -37,17 +37,37 @@ $space-three-and-half: $space * 3.5;
 $space-four-and-half: $space * 4.5;
 $space-three-fourths: $space * 0.75;
 
-
 $sidebar-width: 280px;
 $sidebar-md-width: 232px;
 
-
 // Sizes
-
 $small-caption: 0.875rem; // 16
 $small-font: 0.75rem; // 12
-
 $nav-height: 118px;
+
+// Z-indexes
+$zi-above-content: 1;
+$zi-below-content: -1;
+$zi-modal: 1000;
+
+// @TODO Do not use many different z-index values.
+$zi-dropdown-unselected: 200;
+$zi-dropdown-multiselect: 50;
+$zi-dropdown-after: 2;
+$zi-group-page-select: 30;
+$zi-flag-action: 80;
+$zi-search-page-flag-action: 40;
+$zi-field-instructions-markup: 20;
+$zi-details-select-form-select: 100;
+$zi-form-item-langcode-icon: 100;
+$zi-select-white-rounded-button: 20;
+$zi-select-white-icon: 21;
+$zi-select2-selection: 50;
+$zi-datepicker: 20;
+$zi-icon-absolute: 20;
+$zi-pill-small-message: 20;
+$zi-main-menu: 10;
+$zi-page-controls: 200;
 
 /*
  * Use this on the outer wrapper of page-level elements.

@@ -18,6 +18,8 @@ class ParagraphBase extends ProcessPluginBase {
    *   The migration row.
    * @param string $field_name
    *   The field name.
+   * @param string $paragraph_type
+   *   Paragraph type.
    * @param int $delta
    *   The field delta.
    *
@@ -32,7 +34,7 @@ class ParagraphBase extends ProcessPluginBase {
   }
 
   /**
-   *
+   * Get config value.
    */
   protected function getConfigValues(Row $row, $settingName) {
     $field_name = $this->configuration[$settingName];

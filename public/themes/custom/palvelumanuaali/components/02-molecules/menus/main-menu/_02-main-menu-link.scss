@@ -1,15 +1,16 @@
+
+
 .main-nav {
   &--open {
-    @media only screen and (max-width: $large) {
-      padding-top: $space-double;
+    @media only screen and (max-width: $xl) {
+      padding-top: $space-quadruple;
     }
   }
 }
 .main-menu {
   >.main-menu__item--with-sub {
-    padding-bottom: 20px;
     @include large {
-      padding-bottom: $space-one-and-half;
+      padding-bottom: 0;
       &:last-child {
         padding-bottom: 0;
 
@@ -20,29 +21,44 @@
 
 /* A */
 .main-menu__link {
-  color: clr(footer-color);
+  color: clr(text);
   display: block;
-  padding: 0 $space-triple $space $space-one-and-half;
+  padding: $space-one-half $space-triple $space-one-half $space-one-and-half;
   text-decoration: none;
-  font-weight: 700;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 24px; /* 200% */
   letter-spacing: 1px;
-  text-transform: uppercase;
+  @extend .header-text-dsk;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 20px;
+  @include xl {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px; /* 200% */
+  };
 
   &--with-sub {
-    width: 80%;
-    text-transform: uppercase;
+    width: calc(100% - 42px);
+  }
+  &--active {
+    @include xl {
+      text-decoration-line: underline;
+      text-decoration-color: $blue100;
+      text-decoration-thickness: 4px;
+      text-underline-offset: 5px;
+    }
   }
 
-  @include large {
+  @include xl {
     border-bottom: none;
     display: inline-block;
-    padding: 0 $space 12px $space-two-and-half;
-    position: relative;
+    padding: 30px $space 30px $space-two-and-half;
     width: auto;
+    &:hover {
+      text-decoration-line: underline;
+      text-decoration-color: $blue100;
+      text-decoration-thickness: 4px;
+      text-underline-offset: 5px;
+    }
     &--sub {
       line-height: 20px;
       &::after {
@@ -54,7 +70,6 @@
     }
   }
   @include xxl {
-    padding: 0 $space 36px $space-two-and-half;
     line-height: 24px;
   }
 }
@@ -77,8 +92,10 @@
   font-style: normal;
   font-weight: 600;
   letter-spacing: unset;
-  width: calc(100% + 2rem);
+  width: calc(100% + 1rem);
   margin-left: -16px;
+  @extend .header-text-dsk;
+  background-color: clr(background-border);
   &:focus, &:hover {
     color: clr(alt-header-color);
     background-color: clr(background-dropdown);
@@ -86,13 +103,31 @@
     background-repeat: no-repeat;
     background-position: calc(100% - 24px) center;
   }
-  @include large {
+  @include xl {
+    width: auto;
     display: block;
-    padding: $space-three-fourths $space-double $space-three-fourths $space-two-and-half;
+    padding: $space-double $space-double $space-double $space-two-and-half;
     margin-left: 0;
+    &:focus, &:hover {
+      color: clr(alt-header-color);
+      background-color: clr(background-dropdown);
+      background-image: unset;
+      background-repeat: no-repeat;
+      background-position: calc(100% - 24px) center;
+    }
   }
 }
 
 .main-menu__link--sub-2 {
   padding-left: $space-quadruple;
+}
+.header-text-dsk {
+  @include xl {
+    text-transform: unset;
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: unset;
+    font-size: 15px;
+    color: clr(text);
+  }
 }

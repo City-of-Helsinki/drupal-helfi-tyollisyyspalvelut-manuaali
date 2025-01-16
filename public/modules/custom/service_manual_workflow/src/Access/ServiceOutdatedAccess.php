@@ -2,10 +2,10 @@
 
 namespace Drupal\service_manual_workflow\Access;
 
-use Drupal\content_moderation\ModerationInformationInterface;
-use Drupal\content_moderation\StateTransitionValidationInterface;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\content_moderation\ModerationInformationInterface;
+use Drupal\content_moderation\StateTransitionValidationInterface;
 use Drupal\node\NodeInterface;
 
 /**

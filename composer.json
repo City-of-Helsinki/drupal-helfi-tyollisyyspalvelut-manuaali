@@ -80,8 +80,8 @@
         "drupal/core-composer-scaffold": "^10.3",
         "drupal/core-recommended": "^10.3",
         "drupal/csv_serialization": "^4.0",
-        "drupal/date_recur": "^3.2",
-        "drupal/date_recur_modular": "^3.0",
+        "drupal/date_recur": "^3.8",
+        "drupal/date_recur_modular": "^3.2",
         "drupal/dependent_fields": "^1.0",
         "drupal/disable_html5_validation": "^1.1",
         "drupal/dropzonejs": "^2.8",
@@ -195,6 +195,7 @@
         "weitzman/logintrait": "^1.2"
     },
     "require-dev": {
+        "brainmaestro/composer-git-hooks": "*",
         "citrussolutions/gulp-workflow": "^2.0",
         "drupal/core-dev": "^10.3",
         "phpspec/prophecy-phpunit": "^2.0",
@@ -209,7 +210,7 @@
     "prefer-stable": true,
     "config": {
         "platform": {
-            "php": "8.2"
+            "php": "8.3"
         },
         "discard-changes": true,
         "sort-packages": true,
@@ -254,6 +255,17 @@
         "drupal-scaffold": {
             "locations": {
                 "web-root": "public/"
+            }
+        },
+        "hooks": {
+            "pre-commit": [
+                "scripts/git/pre-commit/custom-module-lint-check",
+                "scripts/git/pre-commit/custom-theme-lint-check"
+            ],
+            "config": {
+                "stop-on-failure": [
+                    "pre-commit"
+                ]
             }
         },
         "installer-paths": {
