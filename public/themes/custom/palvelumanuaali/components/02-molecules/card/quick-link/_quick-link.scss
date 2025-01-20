@@ -52,7 +52,8 @@ $main-width-xl: calc(100vw - (#{$sidebar-width} ));
 }
 
 .basic-page {
-  .quick-link-row {
+  .quick-link-row,
+  .link-card-row {
     @include xl {
       width: $main-width-large-with-gutters;
       margin-left: $main-width-large-gutter;
