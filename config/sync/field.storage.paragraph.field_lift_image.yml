@@ -1,17 +1,16 @@
-uuid: 560741d6-ea47-4899-86ac-a3b21a59d148
+uuid: f543a920-1533-4ed1-aef7-cfe31d63b10e
 langcode: fi
 status: true
 dependencies:
   module:
+    - media
     - paragraphs
-id: paragraph.field_title
-field_name: field_title
+id: paragraph.field_lift_image
+field_name: field_lift_image
 entity_type: paragraph
-type: string
+type: entity_reference
 settings:
-  max_length: 255
-  case_sensitive: false
-  is_ascii: false
+  target_type: media
 module: core
 locked: false
 cardinality: 1
