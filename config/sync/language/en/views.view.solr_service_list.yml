@@ -1,0 +1,33 @@
+display:
+  default:
+    display_options:
+      filters:
+        field_service_set:
+          expose:
+            label: 'Service category:'
+        field_life_situations:
+          expose:
+            label: 'Life situation:'
+        field_free_service:
+          group_info:
+            label: 'Service is chargeable'
+            group_items:
+              1:
+                title: 'Paid service'
+              2:
+                title: 'Free of charge'
+        field_accessibility:
+          expose:
+            label: Accessibility
+        field_implementation_extra_info:
+          expose:
+            label: Implementation
+        age_groups_filter:
+          expose:
+            label: 'Target groups age'
+        field_target_group_municipality:
+          expose:
+            label: 'Municipality of residence'
+        field_language_1:
+          expose:
+            label: 'Service language'

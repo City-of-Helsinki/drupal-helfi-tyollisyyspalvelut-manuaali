@@ -7,6 +7,7 @@ dependencies:
     - node.type.landing_page
     - paragraphs.paragraphs_type.content_card_lift
     - paragraphs.paragraphs_type.header_description_link
+    - paragraphs.paragraphs_type.service_list
   module:
     - entity_reference_revisions
 id: node.landing_page.field_paragraph
@@ -25,6 +26,7 @@ settings:
     target_bundles:
       content_card_lift: content_card_lift
       header_description_link: header_description_link
+      service_list: service_list
     negate: 0
     target_bundles_drag_drop:
       contact_information:
@@ -42,8 +44,8 @@ settings:
       content_link_file_guide:
         weight: 20
         enabled: false
-      content_list_lift_header_icon:
-        weight: 9
+      full_width_card_lift:
+        weight: 24
         enabled: false
       header_description_link:
         weight: 22
@@ -57,9 +59,18 @@ settings:
       municipality_guide:
         weight: 25
         enabled: false
+      quick_link:
+        weight: 29
+        enabled: false
+      quick_link_row:
+        weight: 30
+        enabled: false
       service_language:
         weight: 26
         enabled: false
+      service_list:
+        weight: 32
+        enabled: true
       service_price:
         weight: 11
         enabled: false
