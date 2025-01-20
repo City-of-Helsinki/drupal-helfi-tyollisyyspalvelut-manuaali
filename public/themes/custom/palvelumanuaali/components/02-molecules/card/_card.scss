@@ -713,11 +713,13 @@ $card-font-small-heading: 15px;
   display: flex;
   flex-direction: column;
   position: relative;
+  margin-bottom: $space-double;
   @include medium {
     width: calc(50% - 16px);
     flex-basis: calc(50% - 16px);
     flex-grow: 1;
     max-width: calc(50% - 11px);
+    margin-bottom: unset;
   }
   @include xl {
     width: calc(33% - 16px);
@@ -733,6 +735,9 @@ $card-font-small-heading: 15px;
   }
   a {
     text-decoration-line: none;
+  }
+  img {
+    width: 100%;
   }
   .arrow-icon {
     background-image: url("../../assets/images/icons/arrow-right-1.svg");

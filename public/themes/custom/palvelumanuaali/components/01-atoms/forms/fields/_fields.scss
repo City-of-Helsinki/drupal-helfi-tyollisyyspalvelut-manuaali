@@ -326,10 +326,11 @@
   display: flex;
   flex-direction: column;
   margin-bottom: $space-quadruple;
-  @include large {
+  @include medium {
     flex-direction: row;
     flex-wrap: wrap;
     gap: 1.5rem;
+    justify-content: center;
   }
   @include xl {
     gap: 3rem;
