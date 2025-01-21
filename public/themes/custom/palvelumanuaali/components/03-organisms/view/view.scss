@@ -327,6 +327,9 @@
 }
 
 .view-taxonomy-term {
+  @include large {
+    min-height: 700px;
+  }
   header {
     margin-bottom: $space;
   }
