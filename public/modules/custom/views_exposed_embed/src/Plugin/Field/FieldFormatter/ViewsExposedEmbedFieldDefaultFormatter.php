@@ -101,27 +101,21 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
     if (empty($view)) {
       return [];
     }
-    $render_array = $view->render();
+
+    $view->preview();
 
     $filters = $this->getSetting('exposed_filters') ?? [];
 
-    // Disable exposed form.
-    if (!empty($render_array['#view']->exposed_widgets)) {
-      if ($this->hideExposedFilters($filters)) {
-        $render_array['#view']->exposed_widgets = [];
-      }
-      else {
-        foreach ($render_array['#view']->exposed_widgets as $key => &$widget) {
-          // Skip if value is not in filters.
-          if (!isset($filters[$key])) {
-            continue;
-          }
-          if (empty($filters[$key])) {
-            $widget['#access'] = FALSE;
-          }
+    // Disable exposed filters that are not selected in the filters array.
+    if (!empty($view->exposed_widgets)) {
+      foreach ($view->exposed_widgets as $key => &$widget) {
+        // Disable the filter if it is not selected or not present in filters.
+        if (isset($filters[$key]) && empty($filters[$key])) {
+          $widget['#access'] = FALSE;
         }
       }
     }
+    $render_array = $view->buildRenderable();
 
     return !empty($render_array) ? $render_array : [];
   }
@@ -196,11 +190,11 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
     $view = $this->getView();
     $view->initHandlers();
     $filters = [];
-    foreach ($view->filter as $filter_key => $filter) {
+    foreach ($view->filter as $filter) {
       if (!$filter->isExposed()) {
         continue;
       }
-      $filters[$filter_key] = $filter->configuration['title'];
+      $filters[$filter->options['expose']['identifier']] = $filter->configuration['title'];
     }
     return $filters;
   }

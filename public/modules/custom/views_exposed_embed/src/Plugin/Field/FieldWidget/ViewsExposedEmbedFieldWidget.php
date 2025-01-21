@@ -118,7 +118,7 @@ final class ViewsExposedEmbedFieldWidget extends WidgetBase {
    * @param array $form
    *   Exposed filter form.
    * @param \Drupal\Core\Field\FieldItemInterface $field_item
-   *   Field item iternface.
+   *   Field item interface.
    *
    * @return array
    *   Filtered exposed form.
