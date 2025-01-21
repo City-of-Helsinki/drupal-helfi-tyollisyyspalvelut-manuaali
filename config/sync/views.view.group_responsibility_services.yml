@@ -815,7 +815,10 @@ display:
           entity_field: langcode
           plugin_id: language
           operator: in
-          value: {  }
+          value:
+            fi: fi
+            en: en
+            sv: sv
           group: 1
           exposed: true
           expose:
@@ -838,7 +841,7 @@ display:
               editor: '0'
               specialist: '0'
               specialist_editor: '0'
-            reduce: false
+            reduce: true
           is_grouped: false
           group_info:
             label: ''
