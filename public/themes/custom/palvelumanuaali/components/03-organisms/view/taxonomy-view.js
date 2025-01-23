@@ -70,7 +70,12 @@
         let array = calculateFilterRows(filterWrapper);
         let margin = array.length * 34;
         let marginpx = margin+'px';
-        $('.form-checkboxes').css("margin-bottom", marginpx);
+        let browserWidth = getWidth();
+        if  (browserWidth < 1280) {
+          $('.form-checkboxes').css("margin-bottom", '0px');
+        } else {
+          $('.form-checkboxes').css("margin-bottom", marginpx);
+        }
       }
       //
       // /**
@@ -98,6 +103,16 @@
       $(window).on('resize', function() {
         initRows(FILTER_WRAPPER);
       });
+
+      function getWidth() {
+        return Math.max(
+          document.body.scrollWidth,
+          document.documentElement.scrollWidth,
+          document.body.offsetWidth,
+          document.documentElement.offsetWidth,
+          document.documentElement.clientWidth
+        );
+      }
     }
   }
 })(jQuery, Drupal, this);
