@@ -1,26 +1,27 @@
-uuid: 4615f861-6660-4219-94f4-c0ffac628078
+uuid: 0c2166dc-52a9-484c-9aac-59064f32c4d6
 langcode: fi
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.media.card_image
     - field.field.media.image.field_media_image
     - media.type.image
-    - responsive_image.styles.480x480
+    - responsive_image.styles.336x201
   module:
     - svg_image_responsive
-id: media.image.default
+id: media.image.card_image
 targetEntityType: media
 bundle: image
-mode: default
+mode: card_image
 content:
   field_media_image:
     type: responsive_image
     label: visually_hidden
     settings:
-      responsive_image_style: 480x480
+      responsive_image_style: 336x201
       image_link: ''
       image_loading:
-        attribute: lazy
+        attribute: eager
       svg_attributes:
         width: null
         height: null

@@ -1,0 +1,29 @@
+uuid: 446eae61-2d4a-43fd-9eb4-ca4a3bca5a00
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_lift_image
+    - media.type.image
+    - paragraphs.paragraphs_type.link_card_with_image
+id: paragraph.link_card_with_image.field_lift_image
+field_name: field_lift_image
+entity_type: paragraph
+bundle: link_card_with_image
+label: Nostokuva
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image: image
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

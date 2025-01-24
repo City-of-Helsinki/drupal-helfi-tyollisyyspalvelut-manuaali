@@ -51,6 +51,8 @@ $main-width-xl: calc(100vw - (#{$sidebar-width} ));
   }
 }
 
+
+
 .basic-page {
   .quick-link-row {
     @include xl {
@@ -62,6 +64,18 @@ $main-width-xl: calc(100vw - (#{$sidebar-width} ));
       margin-left: -252px;
       max-width: 1464px;
     }
+  }
+  .link-card-row {
+    @include xl {
+      width: calc(100vw - (#{$sidebar-md-width} + 256px));
+      margin-left: $main-width-large-gutter;
+    }
+    @include xxl {
+      width: $main-width-xl;
+      margin-left: -252px;
+      max-width: 1464px;
+    }
+
   }
 }
 
