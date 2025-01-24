@@ -22,6 +22,13 @@ body {
 .main {
   display: block; /* Fix for IE weirdness */
   max-width: $content-max-width;
+  min-height: calc(100vh - 400px);
+  @include medium {
+    min-height: calc(100vh - 75px);
+  }
+  @include large {
+    min-height: calc(100vh - 150px);
+  }
   .main-content {
     @include make-col();
   }
