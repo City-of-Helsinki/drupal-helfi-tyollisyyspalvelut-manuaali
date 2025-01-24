@@ -110,8 +110,8 @@ function hel_tpm_service_stats_update_10004() {
 /**
  * Creates a default field revision for the specified entity and language.
  *
- * @param int $revision
- *   The revision ID of the entity.
+ * @param object $revision
+ *   The revision object of the entity.
  * @param string $langcode
  *   The language code for which the default field revision is created.
  *
@@ -126,8 +126,8 @@ function _hel_tpm_service_stats_create_default_field_revision($revision, $langco
 /**
  * Creates a field revision entry for the specified revision and language code.
  *
- * @param int|string $revision
- *   The revision ID for which the field revision entry is created.
+ * @param object $revision
+ *   The revision object for which the field revision entry is created.
  * @param string $langcode
  *   The language code for the entry.
  *
