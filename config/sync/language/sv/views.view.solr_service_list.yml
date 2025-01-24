@@ -1,0 +1,28 @@
+display:
+  default:
+    display_options:
+      exposed_form:
+        options:
+          submit_button: Sök
+      filters:
+        field_free_service:
+          group_info:
+            label: 'Tjänsten är betald'
+        field_service_set:
+          expose:
+            label: 'Tjänstekategori:'
+        field_life_situations:
+          expose:
+            label: 'Livssituation:'
+        field_accessibility:
+          expose:
+            label: Tillgänglighet
+        field_implementation_extra_info:
+          expose:
+            label: Genomförande
+        age_groups_filter:
+          expose:
+            label: 'Målgruppens ålder'
+        field_target_group_municipality:
+          expose:
+            label: Hemkommun

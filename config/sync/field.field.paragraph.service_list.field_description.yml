@@ -1,0 +1,24 @@
+uuid: 36ed1eb7-aaaa-458e-8c07-d3f6ab12ab1f
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_description
+    - filter.format.filtered_html
+    - paragraphs.paragraphs_type.service_list
+  module:
+    - text
+id: paragraph.service_list.field_description
+field_name: field_description
+entity_type: paragraph
+bundle: service_list
+label: 'Content:'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - filtered_html
+field_type: text_long
