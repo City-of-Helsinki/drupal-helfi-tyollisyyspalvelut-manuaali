@@ -79,30 +79,105 @@ function hel_tpm_service_stats_update_10003() {
 }
 
 /**
- * Helper to create field revisions.
+ * Re-generate default values for service fields.
  */
-function _hel_tpm_service_stats_create_field_revision($revision) {
-  $database = Drupal::database();
+function hel_tpm_service_stats_update_10004() {
+  $storage = Drupal::service('entity_type.manager')->getStorage('node');
+  $nodes = $storage->loadByProperties(['type' => 'service']);
+
+  foreach ($nodes as $node) {
+    $languages = $node->getTranslationLanguages();
+    $revision_ids = $storage->revisionIds($node);
+    $revision_ids = array_reverse($revision_ids);
+
+    foreach ($revision_ids as $revision_id) {
+      $revision = $storage->loadRevision($revision_id);
+
+      foreach ($languages as $langcode => $language) {
+
+        if ($revision->isDefaultRevision()) {
+          _hel_tpm_service_stats_create_default_field_revision($revision, $langcode);
+        }
+
+        if ($revision->hasTranslation($langcode)) {
+          _hel_tpm_service_stats_create_field_revision($revision, $langcode);
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Creates a default field revision for the specified entity and language.
+ *
+ * @param object $revision
+ *   The revision object of the entity.
+ * @param string $langcode
+ *   The language code for which the default field revision is created.
+ *
+ * @return void
+ *   This function does not return a value.
+ */
+function _hel_tpm_service_stats_create_default_field_revision($revision, $langcode) {
   $field_table = 'node__field_days_since_last_state_chan';
+  _hel_tpm_service_stats_insert_default_value($revision, $langcode, $field_table);
+}
+
+/**
+ * Creates a field revision entry for the specified revision and language code.
+ *
+ * @param object $revision
+ *   The revision object for which the field revision entry is created.
+ * @param string $langcode
+ *   The language code for the entry.
+ *
+ * @return void
+ *   This method does not return a value.
+ */
+function _hel_tpm_service_stats_create_field_revision($revision, $langcode) {
   $field_revision_table = 'node_revision__field_days_since_last_state_chan';
+  _hel_tpm_service_stats_insert_default_value($revision, $langcode, $field_revision_table);
+}
+
+/**
+ * Inserts a default value into a specified field table for a given revision.
+ *
+ * @param object $revision
+ *   The revision object containing entity information
+ *   for which the operation is performed.
+ * @param string $langcode
+ *   The language code to associate with the default value entry.
+ * @param string $field_table
+ *   The name of the database table where the default value should be inserted.
+ *
+ * @return void
+ *   No return value.
+ */
+function _hel_tpm_service_stats_insert_default_value($revision, string $langcode, $field_table) {
+  $database = Drupal::database();
   $table = [
     'bundle' => $revision->bundle(),
     'deleted' => 0,
     'entity_id' => $revision->id(),
     'revision_id' => $revision->getRevisionId(),
-    'langcode' => $revision->language()->getId(),
+    'langcode' => $langcode,
     'delta' => 0,
     'field_days_since_last_state_chan_value' => 0,
   ];
 
-  if ($revision->isDefaultRevision()) {
+  $existing_entry = $database->select($field_table, 't')
+    ->fields('t', ['entity_id', 'revision_id'])
+    ->condition('entity_id', $revision->id())
+    ->condition('revision_id', $revision->getRevisionId())
+    ->condition('langcode', $langcode)
+    ->execute()
+    ->fetchField();
+
+  if (!$existing_entry) {
     $database->insert($field_table)
       ->fields(array_keys($table))
       ->values(array_values($table))
       ->execute();
   }
-  $database->insert($field_revision_table)
-    ->fields(array_keys($table))
-    ->values(array_values($table))
-    ->execute();
+
 }
