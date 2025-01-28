@@ -22,6 +22,7 @@ body {
 .main {
   display: block; /* Fix for IE weirdness */
   max-width: $content-max-width;
+  flex: 1;
   .main-content {
     @include make-col();
   }
@@ -154,6 +155,11 @@ article ul {
   @include large {
     position: relative;
   }
+}
+
+.layout-column {
+  display: flex;
+  flex-direction: column;
 }
 
 .placeholder {
