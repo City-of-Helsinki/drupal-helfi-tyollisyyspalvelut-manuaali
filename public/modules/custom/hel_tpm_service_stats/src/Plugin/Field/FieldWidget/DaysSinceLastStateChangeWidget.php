@@ -30,6 +30,8 @@ final class DaysSinceLastStateChangeWidget extends NumberWidget {
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state): array {
     $element = parent::formElement($items, $delta, $element, $form, $form_state);
+    $element['value']['#default_value'] = 0;
+    $element['value']['#placeholder'] = 0;
     $element['#access'] = FALSE;
     return $element;
   }
