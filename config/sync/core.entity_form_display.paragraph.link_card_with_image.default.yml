@@ -1,0 +1,61 @@
+uuid: bac53521-a40b-4214-b0ed-b1c146d44ef4
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.link_card_with_image.field_lift_image
+    - field.field.paragraph.link_card_with_image.field_short_description
+    - field.field.paragraph.link_card_with_image.field_single_link
+    - field.field.paragraph.link_card_with_image.field_title
+    - paragraphs.paragraphs_type.link_card_with_image
+  module:
+    - link
+    - maxlength
+    - media_library
+id: paragraph.link_card_with_image.default
+targetEntityType: paragraph
+bundle: link_card_with_image
+mode: default
+content:
+  field_lift_image:
+    type: media_library_widget
+    weight: 0
+    region: content
+    settings:
+      media_types: {  }
+    third_party_settings: {  }
+  field_short_description:
+    type: string_textfield
+    weight: 2
+    region: content
+    settings:
+      size: 200
+      placeholder: ''
+    third_party_settings:
+      maxlength:
+        maxlength_js: 200
+        maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
+        maxlength_js_enforce: false
+  field_single_link:
+    type: link_default
+    weight: 3
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+  field_title:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 100
+      placeholder: ''
+    third_party_settings:
+      maxlength:
+        maxlength_js: 100
+        maxlength_js_label: 'Sisältö on rajattu @limit merkkiin, jäljellä: <strong>@remaining</strong>'
+        maxlength_js_enforce: false
+hidden:
+  created: true
+  status: true
