@@ -4,8 +4,8 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.link_card_with_image.field_lift_image
-    - field.field.paragraph.link_card_with_image.field_link
     - field.field.paragraph.link_card_with_image.field_short_description
+    - field.field.paragraph.link_card_with_image.field_single_link
     - field.field.paragraph.link_card_with_image.field_title
     - paragraphs.paragraphs_type.link_card_with_image
   module:
@@ -24,14 +24,6 @@ content:
     settings:
       media_types: {  }
     third_party_settings: {  }
-  field_link:
-    type: link_default
-    weight: 3
-    region: content
-    settings:
-      placeholder_url: ''
-      placeholder_title: ''
-    third_party_settings: {  }
   field_short_description:
     type: string_textfield
     weight: 2
@@ -44,6 +36,14 @@ content:
         maxlength_js: 200
         maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
         maxlength_js_enforce: false
+  field_single_link:
+    type: link_default
+    weight: 3
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
   field_title:
     type: string_textfield
     weight: 1

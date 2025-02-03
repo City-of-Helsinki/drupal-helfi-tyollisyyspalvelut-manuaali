@@ -4,8 +4,8 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.link_card_with_image.field_lift_image
-    - field.field.paragraph.link_card_with_image.field_link
     - field.field.paragraph.link_card_with_image.field_short_description
+    - field.field.paragraph.link_card_with_image.field_single_link
     - field.field.paragraph.link_card_with_image.field_title
     - paragraphs.paragraphs_type.link_card_with_image
   module:
@@ -24,9 +24,17 @@ content:
     third_party_settings: {  }
     weight: 0
     region: content
-  field_link:
-    type: link
+  field_short_description:
+    type: string
     label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_single_link:
+    type: link
+    label: above
     settings:
       trim_length: 80
       url_only: false
@@ -35,14 +43,6 @@ content:
       target: ''
     third_party_settings: {  }
     weight: 3
-    region: content
-  field_short_description:
-    type: string
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 2
     region: content
   field_title:
     type: string

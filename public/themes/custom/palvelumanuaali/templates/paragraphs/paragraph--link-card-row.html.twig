@@ -40,18 +40,10 @@
 {%
   set classes = [
     paragraph.bundle|clean_class,
-    'taxonomy-card',
+    'width--full',
   ]
 %}
 
 <div{{ attributes.addClass(classes) }}>
-  <a href={{ content.field_single_link['0']['#url'] }} title={{content.field_single_link['0']['#title']}}>
-    {{ content.field_lift_image }}
-    <div class='card-text-wrapper'>
-      {{ content|without('field_lift_image','field_single_link') }}
-    </div>
-    <span class="arrow-icon">
-
-    </span>
-  </a>
+  {{ content }}
 </div>
