@@ -66,9 +66,13 @@ $main-width-xl: calc(100vw - (#{$sidebar-width} ));
     }
   }
   .link-card-row {
+    @include large {
+      margin-left: auto;
+      margin-right: auto;
+    }
     @include xl {
-      width: calc(100vw - (#{$sidebar-md-width} + 256px));
-      margin-left: $main-width-large-gutter;
+      width: calc(100% + (100vw*0.3333) - 32px);
+      margin-left: calc(100vw * (-0.1666) + 16px);
     }
     @include xxl {
       width: $main-width-xl;
