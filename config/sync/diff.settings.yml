@@ -7,14 +7,17 @@ general_settings:
   context_lines_trailing: 1
   revision_pager_limit: 50
   layout_plugins:
-    visual_inline:
+    service_entity_visual_inline:
       enabled: true
-      weight: 0
+      weight: -50
     split_fields:
       enabled: true
-      weight: 1
+      weight: -49
+    visual_inline:
+      enabled: false
+      weight: -48
     unified_fields:
-      enabled: true
-      weight: 2
+      enabled: false
+      weight: -47
   visual_default_view_mode: full
   visual_inline_theme: default
