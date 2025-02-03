@@ -705,3 +705,65 @@ $card-font-small-heading: 15px;
     margin-left: 2px;
   }
 }
+
+.link-card-with-image {
+  background-color: clr(sidebar-color);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin-bottom: $space-double;
+  @include medium {
+    width: calc(50% - 16px);
+    flex-basis: calc(50% - 16px);
+    flex-grow: 1;
+    margin-bottom: unset;
+    max-width: 325px;
+  }
+  @include xl {
+    width: calc(33% - 16px);
+    flex-basis: calc(33% - 16px);
+    flex-grow: 1;
+  }
+  @media (min-width: 1640px) {
+    width: calc(25% - 18px);
+    flex-basis: calc(25% - 36px);
+    flex-grow: 1;
+  }
+  a {
+    text-decoration-line: none;
+  }
+  img {
+    width: 100%;
+  }
+  .arrow-icon {
+    background-image: url("../../assets/images/icons/arrow-right-1.svg");
+    background-color: clr(background-section);
+    width: 62px;
+    height: 62px;
+    display: block;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-top-left-radius: 16px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+}
+
+.card-text-wrapper {
+  padding: 18px 22px;
+  margin-bottom: 48px;
+  .field--name-field-title {
+    margin-bottom: 12px;
+    font-size: 18px;
+    font-weight: 600;
+    color: clr(alt-header-color);
+  }
+  .field--name-field-short-description {
+    font-size: 16px;
+    font-weight: 600;
+    color: clr(text);
+  }
+}

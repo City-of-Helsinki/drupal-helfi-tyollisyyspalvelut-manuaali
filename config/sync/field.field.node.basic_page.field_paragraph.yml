@@ -7,6 +7,7 @@ dependencies:
     - node.type.basic_page
     - paragraphs.paragraphs_type.content
     - paragraphs.paragraphs_type.full_width_card_lift
+    - paragraphs.paragraphs_type.link_card_row
     - paragraphs.paragraphs_type.quick_link_row
     - paragraphs.paragraphs_type.url_and_file
   module:
@@ -27,6 +28,7 @@ settings:
     target_bundles:
       content: content
       full_width_card_lift: full_width_card_lift
+      link_card_row: link_card_row
       url_and_file: url_and_file
       quick_link_row: quick_link_row
     negate: 0
@@ -54,6 +56,12 @@ settings:
         enabled: false
       link:
         weight: 21
+        enabled: false
+      link_card_row:
+        weight: 25
+        enabled: true
+      link_card_with_image:
+        weight: 26
         enabled: false
       long_text_field_with_toolbar:
         weight: 22

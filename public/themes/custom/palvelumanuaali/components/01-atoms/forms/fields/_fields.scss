@@ -329,3 +329,18 @@
 .form-number {
   @extend .disabled-form-element;
 }
+
+.field--name-field-linklist-card {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: $space-quadruple;
+  @include medium {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+  }
+  @include xl {
+    gap: 3rem;
+  }
+}
