@@ -2,4 +2,11 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+  @include large {
+    width: calc(338px * 2 + 3rem);
+    margin: auto;
+  }
+  @include xl {
+    width: 100%;
+  }
 }
