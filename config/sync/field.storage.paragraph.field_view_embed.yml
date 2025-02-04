@@ -1,16 +1,16 @@
-uuid: b7df38ed-7aa8-46df-a0f9-8a1c4dd9ba74
+uuid: 3fb3a4e6-f7ca-4abc-ade1-646c2ab5927d
 langcode: fi
 status: true
 dependencies:
   module:
     - paragraphs
-    - text
-id: paragraph.field_description
-field_name: field_description
+    - views_exposed_embed
+id: paragraph.field_view_embed
+field_name: field_view_embed
 entity_type: paragraph
-type: text_long
+type: views_exposed_embed_field
 settings: {  }
-module: text
+module: views_exposed_embed
 locked: false
 cardinality: 1
 translatable: true

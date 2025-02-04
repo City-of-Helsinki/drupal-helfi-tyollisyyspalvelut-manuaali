@@ -1,0 +1,1118 @@
+uuid: c11f56cb-ca56-4fb1-b6ff-f58575dee3b8
+langcode: fi
+status: true
+dependencies:
+  config:
+    - search_api.index.service_search_solr_index
+    - taxonomy.vocabulary.life_situation
+    - taxonomy.vocabulary.municipality
+    - taxonomy.vocabulary.service_accessiblity
+    - taxonomy.vocabulary.service_implementation_type
+    - taxonomy.vocabulary.service_languages
+    - taxonomy.vocabulary.service_set
+  content:
+    - 'taxonomy_term:municipality:0b316fca-39a5-42c9-a5ed-fec61654a665'
+    - 'taxonomy_term:municipality:0d144a4b-d279-4a85-9f36-4b6eb84b1281'
+    - 'taxonomy_term:municipality:3718c3d5-6275-4038-a11a-41a19ec16cb5'
+    - 'taxonomy_term:municipality:3da41814-536a-46e5-abad-648400d7d9fe'
+    - 'taxonomy_term:municipality:72ac1850-9c40-4cf3-9ede-352383bb125a'
+    - 'taxonomy_term:municipality:d00e8633-8287-41e3-b6b4-a5a7695265c2'
+    - 'taxonomy_term:municipality:d8aee90f-d5eb-45ea-956a-8518601779ff'
+  module:
+    - better_exposed_filters
+    - group
+    - hel_tpm_search
+    - search_api
+id: solr_service_list
+label: 'Solr Service list'
+module: views
+description: ''
+tag: ''
+base_table: search_api_index_service_search_solr_index
+base_field: search_api_id
+display:
+  default:
+    id: default
+    display_title: Default
+    display_plugin: default
+    position: 0
+    display_options:
+      title: 'Service search'
+      fields:
+        search_api_rendered_item:
+          id: search_api_rendered_item
+          table: search_api_index_service_search_solr_index
+          field: search_api_rendered_item
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_rendered_item
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          view_modes:
+            'entity:node':
+              service: card_lift
+      pager:
+        type: none
+        options:
+          offset: 0
+      exposed_form:
+        type: bef
+        options:
+          submit_button: 'Hae palveluita'
+          reset_button: false
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+          text_input_required: 'Valitse mikä tahansa suodatin ja klikkaa Suorita nähdäksesi tulokset'
+          text_input_required_format: filtered_html
+          bef:
+            general:
+              autosubmit: true
+              autosubmit_exclude_textfield: false
+              autosubmit_textfield_delay: 500
+              autosubmit_hide: true
+              input_required: false
+              allow_secondary: false
+              secondary_label: Lisävaihtoehdot
+              secondary_open: false
+              reset_button_always_show: false
+            filter:
+              search_api_fulltext:
+                plugin_id: default
+                advanced:
+                  placeholder_text: ''
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+                options_show_only_used: false
+                options_show_only_used_filtered: false
+                options_hide_when_empty: false
+                options_show_items_count: false
+              field_service_set:
+                plugin_id: default
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+                options_show_only_used: false
+                options_show_only_used_filtered: false
+                options_hide_when_empty: false
+                options_show_items_count: 0
+              field_life_situations:
+                plugin_id: default
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+                options_show_only_used: false
+                options_show_only_used_filtered: false
+                options_hide_when_empty: false
+                options_show_items_count: 0
+              field_language_1:
+                plugin_id: default
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+                options_show_only_used: false
+                options_show_only_used_filtered: false
+                options_hide_when_empty: false
+                options_show_items_count: 0
+              field_free_service:
+                plugin_id: default
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+                options_show_only_used: false
+                options_show_only_used_filtered: false
+                options_hide_when_empty: false
+                options_show_items_count: false
+              age_groups_filter:
+                plugin_id: default
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+                options_show_only_used: false
+                options_show_only_used_filtered: false
+                options_hide_when_empty: false
+                options_show_items_count: false
+              field_accessibility:
+                plugin_id: default
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+                options_show_only_used: false
+                options_show_only_used_filtered: false
+                options_hide_when_empty: false
+                options_show_items_count: 0
+              field_implementation_extra_info:
+                plugin_id: default
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+                options_show_only_used: false
+                options_show_only_used_filtered: false
+                options_hide_when_empty: false
+                options_show_items_count: 0
+              field_target_group_municipality:
+                plugin_id: default
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+                options_show_only_used: false
+                options_show_only_used_filtered: false
+                options_hide_when_empty: false
+                options_show_items_count: 0
+              service_provider_entity_id:
+                plugin_id: default
+                advanced:
+                  placeholder_text: ''
+                  collapsible: false
+                  is_secondary: false
+                options_show_only_used: false
+                options_show_only_used_filtered: false
+                options_hide_when_empty: false
+                options_show_items_count: false
+              gid:
+                plugin_id: default
+                advanced:
+                  placeholder_text: ''
+                  collapsible: false
+                  is_secondary: false
+                options_show_only_used: false
+                options_show_only_used_filtered: false
+                options_hide_when_empty: false
+                options_show_items_count: false
+      access:
+        type: none
+        options: {  }
+      cache:
+        type: search_api_none
+        options: {  }
+      empty: {  }
+      sorts: {  }
+      arguments: {  }
+      filters:
+        search_api_fulltext:
+          id: search_api_fulltext
+          table: search_api_index_service_search_solr_index
+          field: search_api_fulltext
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_fulltext
+          operator: or
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: search_api_fulltext_op
+            label: ''
+            description: ''
+            use_operator: false
+            operator: search_api_fulltext_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: search_api_fulltext
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+              specialist_editor: '0'
+            expose_fields: false
+            placeholder: ''
+            searched_fields_id: search_api_fulltext_searched_fields
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          parse_mode: terms
+          min_length: 3
+          fields: {  }
+        field_service_set:
+          id: field_service_set
+          table: search_api_index_service_search_solr_index
+          field: field_service_set
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_term
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_service_set_op
+            label: Palvelukategoria
+            description: ''
+            use_operator: false
+            operator: field_service_set_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_service_set
+            required: false
+            remember: false
+            multiple: true
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+              specialist_editor: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: service_set
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        field_life_situations:
+          id: field_life_situations
+          table: search_api_index_service_search_solr_index
+          field: field_life_situations
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_term
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_life_situations_op
+            label: Elämäntilanne
+            description: ''
+            use_operator: false
+            operator: field_life_situations_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_life_situations
+            required: false
+            remember: false
+            multiple: true
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+              specialist_editor: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: life_situation
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        field_language_1:
+          id: field_language_1
+          table: search_api_index_service_search_solr_index
+          field: field_language_1
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_term
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_language_1_op
+            label: 'Palvelun kieli'
+            description: ''
+            use_operator: false
+            operator: field_language_1_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_language_1
+            required: false
+            remember: false
+            multiple: true
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+              specialist_editor: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: service_languages
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        field_free_service:
+          id: field_free_service
+          table: search_api_index_service_search_solr_index
+          field: field_free_service
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_boolean
+          operator: '='
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: ''
+            label: 'Service price » Paragraph » Palvelu on maksullinen'
+            description: null
+            use_operator: false
+            operator: field_free_service_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_free_service
+            required: true
+            remember: false
+            multiple: true
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: true
+          group_info:
+            label: Maksullisuus
+            description: ''
+            identifier: field_free_service
+            optional: true
+            widget: select
+            multiple: true
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items:
+              1:
+                title: Maksullinen
+                operator: '='
+                value: '1'
+              2:
+                title: Maksuton
+                operator: '='
+                value: '0'
+        age_groups_filter:
+          id: age_groups_filter
+          table: search_api_index_service_search_solr_index
+          field: age_groups_filter
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: age_groups_filter
+          operator: or
+          value:
+            all: all
+            16-29: 16-29
+            30-54: 30-54
+            55-70: 55-70
+          group: 1
+          exposed: true
+          expose:
+            operator_id: age_groups_filter_op
+            label: 'Kohderyhmän ikä'
+            description: ''
+            use_operator: false
+            operator: age_groups_filter_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: age_groups_filter
+            required: false
+            remember: false
+            multiple: true
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+              specialist_editor: '0'
+            reduce: true
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+        field_accessibility:
+          id: field_accessibility
+          table: search_api_index_service_search_solr_index
+          field: field_accessibility
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_term
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_accessibility_op
+            label: Esteettömyys
+            description: ''
+            use_operator: false
+            operator: field_accessibility_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_accessibility
+            required: false
+            remember: false
+            multiple: true
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+              specialist_editor: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: service_accessiblity
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        field_implementation_extra_info:
+          id: field_implementation_extra_info
+          table: search_api_index_service_search_solr_index
+          field: field_implementation_extra_info
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_term
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_implementation_extra_info_op
+            label: Toteutustapa
+            description: ''
+            use_operator: false
+            operator: field_implementation_extra_info_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_implementation_extra_info
+            required: false
+            remember: false
+            multiple: true
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+              specialist_editor: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: service_implementation_type
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        search_api_language:
+          id: search_api_language
+          table: search_api_index_service_search_solr_index
+          field: search_api_language
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_language
+          operator: in
+          value:
+            '***LANGUAGE_language_content***': '***LANGUAGE_language_content***'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        status:
+          id: status
+          table: search_api_index_service_search_solr_index
+          field: status
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_boolean
+          operator: '='
+          value: '1'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        field_target_group_municipality:
+          id: field_target_group_municipality
+          table: search_api_index_service_search_solr_index
+          field: field_target_group_municipality
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_term
+          operator: or
+          value:
+            33: 33
+            37: 37
+            32: 32
+            35: 35
+            38: 38
+            36: 36
+            34: 34
+            408: 408
+          group: 2
+          exposed: true
+          expose:
+            operator_id: field_target_group_municipality_op
+            label: Kotikunta
+            description: ''
+            use_operator: false
+            operator: field_target_group_municipality_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_municipality
+            required: false
+            remember: false
+            multiple: true
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+              specialist_editor: '0'
+            reduce: true
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: municipality
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        field_municipality_irrelevant:
+          id: field_municipality_irrelevant
+          table: search_api_index_service_search_solr_index
+          field: field_municipality_irrelevant
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_boolean
+          operator: '='
+          value: '1'
+          group: 2
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        service_provider_entity_id:
+          id: service_provider_entity_id
+          table: search_api_index_service_search_solr_index
+          field: service_provider_entity_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_numeric
+          operator: '='
+          value:
+            min: ''
+            max: ''
+            value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: service_provider_entity_id_op
+            label: 'Palvelun tuottaja ID'
+            description: ''
+            use_operator: false
+            operator: service_provider_entity_id_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: service_provider_entity_id
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+              specialist_editor: '0'
+            min_placeholder: ''
+            max_placeholder: ''
+            placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        group_id:
+          id: group_id
+          table: search_api_index_service_search_solr_index
+          field: group_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_numeric
+          operator: '='
+          value:
+            min: ''
+            max: ''
+            value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: group_id_op
+            label: 'Palvelun järjestäjä ID'
+            description: ''
+            use_operator: false
+            operator: group_id_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: group_id
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+              specialist_editor: '0'
+            min_placeholder: ''
+            max_placeholder: ''
+            placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        content_group_id:
+          id: content_group_id
+          table: search_api_index_service_search_solr_index
+          field: content_group_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_numeric
+          operator: '='
+          value:
+            min: ''
+            max: ''
+            value: ''
+          group: 1
+          exposed: false
+          expose:
+            operator_id: content_group_id_op
+            label: 'Ryhmät » Group relationship » ID'
+            description: ''
+            use_operator: false
+            operator: content_group_id_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: content_group_id
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+              specialist_editor: '0'
+            min_placeholder: ''
+            max_placeholder: ''
+            placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        gid:
+          id: gid
+          table: search_api_index_service_search_solr_index
+          field: gid
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_numeric
+          operator: '='
+          value:
+            min: ''
+            max: ''
+            value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: gid_op
+            label: 'Ryhmät » Group relationship » Isäntäryhmä'
+            description: ''
+            use_operator: false
+            operator: gid_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: gid
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+              specialist_editor: '0'
+            min_placeholder: ''
+            max_placeholder: ''
+            placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+          2: OR
+      style:
+        type: default
+        options:
+          row_class: taxonomy-card
+          default_row_class: true
+          uses_fields: false
+      row:
+        type: search_api
+        options:
+          view_modes:
+            'entity:node':
+              service: taxonomy_card
+      query:
+        type: search_api_query
+        options:
+          bypass_access: false
+          skip_access: false
+          preserve_facet_query_args: false
+          query_tags: {  }
+      relationships:
+        field_service_producer:
+          id: field_service_producer
+          table: search_api_datasource_service_search_solr_index_entity_node
+          field: field_service_producer
+          relationship: none
+          group_type: group
+          admin_label: 'Palvelun tuottaja: Group'
+          entity_type: node
+          plugin_id: search_api
+          required: false
+          skip_access: false
+        field_responsible_municipality:
+          id: field_responsible_municipality
+          table: search_api_datasource_service_search_solr_index_entity_node
+          field: field_responsible_municipality
+          relationship: none
+          group_type: group
+          admin_label: 'Vastuukunta:: Group'
+          entity_type: node
+          plugin_id: search_api
+          required: false
+          skip_access: false
+      css_class: service-search
+      use_ajax: false
+      header: {  }
+      footer: {  }
+      display_extenders:
+        ajax_history:
+          enable_history: true
+          exclude_args: ''
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_interface'
+        - url
+        - 'user.node_grants:view'
+      tags:
+        - 'config:search_api.index.service_search_solr_index'
+        - 'search_api_list:service_search_solr_index'
+  embed_1:
+    id: embed_1
+    display_title: Upota
+    display_plugin: embed
+    position: 3
+    display_options:
+      display_extenders:
+        ajax_history:
+          enable_history: false
+          exclude_args: ''
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_interface'
+        - url
+        - 'user.node_grants:view'
+      tags:
+        - 'config:search_api.index.service_search_solr_index'
+        - 'search_api_list:service_search_solr_index'
