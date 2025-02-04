@@ -139,6 +139,7 @@ final class ViewsExposedEmbedFieldWidget extends WidgetBase {
       '#value',
     ];
 
+    $empty_filter = NULL;
     foreach ($form['#info'] as $filter) {
 
       $field_key = $filter['value'];
@@ -154,7 +155,11 @@ final class ViewsExposedEmbedFieldWidget extends WidgetBase {
       }
 
       $filters[$field_key] = $filter;
-      $filters[$field_key]['#default_value'] = !empty($default_values[$field_key]) ? $default_values[$field_key] : NULL;
+
+      if ($filter['#type'] === 'select') {
+        $empty_filter = [];
+      }
+      $filters[$field_key]['#default_value'] = !empty($default_values[$field_key]) ? $default_values[$field_key] : $empty_filter;
     }
 
     return $filters;
