@@ -3,6 +3,7 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - entity_browser.browser.entity_browser
     - filter.format.filtered_html
     - filter.format.plain_text_format
     - media.type.image
@@ -49,6 +50,8 @@ permissions:
   - 'create paragraph content full_width_card_lift'
   - 'create paragraph content header_description_link'
   - 'create paragraph content link'
+  - 'create paragraph content link_card_row'
+  - 'create paragraph content link_card_with_image'
   - 'create paragraph content long_text_field_with_toolbar'
   - 'create paragraph content municipality_guide'
   - 'create paragraph content quick_link'
@@ -69,6 +72,8 @@ permissions:
   - 'delete paragraph content full_width_card_lift'
   - 'delete paragraph content header_description_link'
   - 'delete paragraph content link'
+  - 'delete paragraph content link_card_row'
+  - 'delete paragraph content link_card_with_image'
   - 'delete paragraph content long_text_field_with_toolbar'
   - 'delete paragraph content municipality_guide'
   - 'delete paragraph content quick_link'
@@ -103,6 +108,8 @@ permissions:
   - 'update paragraph content full_width_card_lift'
   - 'update paragraph content header_description_link'
   - 'update paragraph content link'
+  - 'update paragraph content link_card_row'
+  - 'update paragraph content link_card_with_image'
   - 'update paragraph content long_text_field_with_toolbar'
   - 'update paragraph content municipality_guide'
   - 'update paragraph content quick_link'

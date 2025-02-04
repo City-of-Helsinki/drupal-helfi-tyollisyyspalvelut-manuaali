@@ -62,7 +62,7 @@ body:not(.admin-toolbar-enabled) {
 
 .slide-in-loginform {
   padding-top: $space-two-and-half;
-  display: block;
+  display: none;
   height: 100%;
   position: fixed;
   inset:0;
@@ -88,10 +88,12 @@ body:not(.admin-toolbar-enabled) {
   &.slide-in {
     animation: slide-in 0.5s forwards;
     -webkit-animation: slide-in 0.5s forwards;
+    display: block;
   }
   &.slide-out-right {
     animation: slide-out-right 0.5s forwards;
     -webkit-animation: slide-out-right 0.5s forwards;
+    display: block;
     .main-nav {
       display: none;
     }
@@ -894,7 +896,7 @@ body:not(.admin-toolbar-enabled) {
 }
 
 .dropdown-mobile-menu {
-    display: block;
+    display: none;
     height: 100%;
     position: fixed;
     inset: 0;
@@ -911,10 +913,12 @@ body:not(.admin-toolbar-enabled) {
     &.slide-in {
       animation: slide-in 0.5s forwards;
       -webkit-animation: slide-in 0.5s forwards;
+      display: block;
     }
     &.slide-out-right {
       animation: slide-out-right 0.5s forwards;
       -webkit-animation: slide-out-right 0.5s forwards;
+      display: block;
     }
     .btn-menu-close {
       margin-top: 12px;
