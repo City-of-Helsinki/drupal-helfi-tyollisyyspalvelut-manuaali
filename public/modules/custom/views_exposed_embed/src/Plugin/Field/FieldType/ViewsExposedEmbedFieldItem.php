@@ -67,7 +67,10 @@ final class ViewsExposedEmbedFieldItem extends MapItem {
       ],
     ];
 
-    $user_input = $element_state->getUserInput()['settings'];
+    $user_input = $element_state->getUserInput();
+    if (!empty($user_input['settings'])) {
+      $user_input = $user_input['settings'];
+    }
 
     if (!empty($user_input['view_id'])) {
       $view_id = $user_input['view_id'];
