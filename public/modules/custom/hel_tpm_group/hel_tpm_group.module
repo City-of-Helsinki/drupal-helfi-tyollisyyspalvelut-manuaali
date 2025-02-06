@@ -13,6 +13,7 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\group\Entity\GroupInterface;
+use Drupal\group\Entity\GroupRelationship;
 use Drupal\group\Entity\GroupRelationshipInterface;
 use Drupal\group\Entity\GroupRole;
 use Drupal\hel_tpm_group\Event\GroupMembershipChanged;
@@ -101,6 +102,56 @@ function hel_tpm_group_entity_field_access($operation, FieldDefinitionInterface 
     return AccessResult::allowedIfHasPermission($account, 'access extra member info if group admin')->cachePerPermissions();
   }
   return AccessResult::neutral();
+}
+
+/**
+ * Implements hook_ENTITY_insert().
+ */
+function hel_tpm_group_group_content_insert(EntityInterface $entity): void {
+  _hel_tpm_group_invalidate_service_provider_member_cache($entity);
+}
+
+/**
+ * Implements hook_ENTITY_update().
+ */
+function hel_tpm_group_group_content_update(EntityInterface $entity): void {
+  _hel_tpm_group_invalidate_service_provider_member_cache($entity);
+}
+
+/**
+ * Implements hook_ENTITY_delete().
+ */
+function hel_tpm_group_group_content_delete(EntityInterface $entity): void {
+  _hel_tpm_group_invalidate_service_provider_member_cache($entity);
+}
+
+/**
+ * Invalidate group membership cache for service provider relationships.
+ *
+ * @param \Drupal\Core\Entity\EntityInterface $entity
+ *   The GroupRelationship entity.
+ *
+ * @return void
+ *   Void.
+ */
+function _hel_tpm_group_invalidate_service_provider_member_cache(EntityInterface $entity): void {
+  if (!$entity instanceof GroupRelationship) {
+    return;
+  }
+  if ($entity->getPluginId() !== 'subgroup:service_provider') {
+    return;
+  }
+
+  // Invalidate group membership cache for all group members. Without this,
+  // adding new subgroups (using ggroup module) or removing existing subgroup
+  // relationships would not update the cache. The group members would have
+  // insufficient or too broad access to subgroups and their contents until
+  // cache would be cleared.
+  foreach ($entity->getGroup()->getMembers() as $member) {
+    \Drupal::service('cache_tags.invalidator')->invalidateTags([
+      'group_content_list:plugin:group_membership:entity:' . $member->getUser()->id(),
+    ]);
+  }
 }
 
 /**
