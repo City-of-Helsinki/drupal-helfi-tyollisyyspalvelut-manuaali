@@ -35,14 +35,23 @@ display:
           label: Uppdaterad
           separator: ', '
         view_group_content:
+          admin_label: 'View relation link'
           label: 'Linkki ryhmäsisältöön'
           text: Näytä
         edit_group_content:
+          admin_label: 'Edit relation link'
           label: 'Linkki ryhmärelaation muokkaukseen'
           text: 'Muokkaa relaatiota'
         delete_group_content:
+          admin_label: 'Delete relation link'
+          label: Toiminnot
           text: 'Hylkää suhde'
+        edit_group:
+          admin_label: 'Edit subgroup link'
+          label: 'Link to edit Group'
+          text: 'Edit subgroup'
         delete_group:
+          admin_label: 'Delete subgroup link'
           label: 'Poista palveluntuottaja '
           text: 'Poista palveluntuottaja '
       title: Tjänsteleverantörer
@@ -50,6 +59,7 @@ display:
         gid:
           exception:
             title: Alla
+          title: '{{ arguments.gid|placeholder }} subgroups'
     display_title: Huvud
   page_1:
     display_title: Sida
@@ -57,3 +67,4 @@ display:
       menu:
         title: Tjänsteleverantörer
 label: Tjänsteleverantörer
+description: 'Lists all of the subgroups that have been added to a group.'

@@ -3,8 +3,8 @@ langcode: fi
 status: true
 dependencies:
   module:
+    - block_class
     - context
-    - node
     - system
   theme:
     - palvelumanuaali
@@ -23,13 +23,4 @@ visibility:
   request_path_exclusion:
     id: request_path_exclusion
     negate: true
-    pages: "*/haku*\r\n*/search*\r\n*/edit*\r\n*/add*"
-  'entity_bundle:node':
-    id: 'entity_bundle:node'
-    negate: false
-    context_mapping:
-      node: '@node.node_route_context:node'
-    bundles:
-      basic_page: basic_page
-      service: service
-      service_location: service_location
+    pages: "/*/edit*\r\n/*/add*"

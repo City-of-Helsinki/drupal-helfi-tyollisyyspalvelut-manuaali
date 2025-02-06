@@ -12,6 +12,11 @@ display:
           sort_desc_label: Fallande
       pager:
         options:
+          tags:
+            previous: '‹ Föregående'
+            next: 'Nästa ›'
+            first: '« Första'
+            last: 'Sista »'
           expose:
             items_per_page_label: 'Inlägg per sida'
             items_per_page_options_all_label: '- Alla -'
@@ -32,12 +37,19 @@ display:
         created:
           label: 'Bjudna på '
           separator: ', '
+        delete_group_content:
+          admin_label: 'Remove member link'
+          text: Poista
         dropbutton:
           label: Funktioner
+      empty:
+        area_text_custom:
+          content: 'No invitations available.'
       arguments:
         gid:
           exception:
             title: Alla
+          title: '{{ arguments.gid|placeholder }} invitations'
       title: Inbjudningar
   page_1:
     display_title: Sida

@@ -7,12 +7,12 @@ dependencies:
 id: content
 label: Content
 type: 'canonical_entities:node'
-pattern: '[node:menu-link:parents]/[node:menu-link:title]'
+pattern: '[node:menu-link:parent:url:path]/[node:menu-link:title]'
 selection_criteria:
-  31f351d2-0d07-45b3-945c-c1ed2df274f5:
+  f7934cd1-b0aa-49e6-9660-4fa41466ee2d:
     id: 'entity_bundle:node'
     negate: false
-    uuid: 31f351d2-0d07-45b3-945c-c1ed2df274f5
+    uuid: f7934cd1-b0aa-49e6-9660-4fa41466ee2d
     context_mapping:
       node: node
     bundles:
