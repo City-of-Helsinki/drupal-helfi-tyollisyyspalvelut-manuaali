@@ -423,6 +423,12 @@
   .form-item-checkbox {
     @extend .checkbox-pill;
     padding: 0;
+    input {
+      left: 0;
+      @include large {
+        left: inherit;
+      }
+    }
     label {
       padding: 8px 24px;
       width: max-content;

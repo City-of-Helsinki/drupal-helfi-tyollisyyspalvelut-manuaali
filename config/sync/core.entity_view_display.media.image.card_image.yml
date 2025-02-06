@@ -1,0 +1,41 @@
+uuid: 0c2166dc-52a9-484c-9aac-59064f32c4d6
+langcode: fi
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.card_image
+    - field.field.media.image.field_media_image
+    - media.type.image
+    - responsive_image.styles.336x201
+  module:
+    - svg_image_responsive
+id: media.image.card_image
+targetEntityType: media
+bundle: image
+mode: card_image
+content:
+  field_media_image:
+    type: responsive_image
+    label: visually_hidden
+    settings:
+      responsive_image_style: 336x201
+      image_link: ''
+      image_loading:
+        attribute: eager
+      svg_attributes:
+        width: null
+        height: null
+      svg_render_as_image: true
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  created: true
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  langcode: true
+  name: true
+  search_api_excerpt: true
+  thumbnail: true
+  uid: true

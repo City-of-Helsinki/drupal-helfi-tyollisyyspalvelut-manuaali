@@ -1,0 +1,85 @@
+uuid: 9a830f70-2d68-430f-816a-e9a462b9be1e
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_linklist_card
+    - paragraphs.paragraphs_type.link_card_row
+    - paragraphs.paragraphs_type.link_card_with_image
+  module:
+    - entity_reference_revisions
+id: paragraph.link_card_row.field_linklist_card
+field_name: field_linklist_card
+entity_type: paragraph
+bundle: link_card_row
+label: Linkkinostokortti
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      link_card_with_image: link_card_with_image
+    negate: 0
+    target_bundles_drag_drop:
+      contact_information:
+        weight: 20
+        enabled: false
+      content:
+        weight: 21
+        enabled: false
+      content_card_lift:
+        weight: 22
+        enabled: false
+      content_link_file:
+        weight: 23
+        enabled: false
+      content_link_file_guide:
+        weight: 24
+        enabled: false
+      full_width_card_lift:
+        weight: 25
+        enabled: false
+      header_description_link:
+        weight: 26
+        enabled: false
+      link:
+        weight: 27
+        enabled: false
+      link_card_row:
+        weight: 28
+        enabled: false
+      link_card_with_image:
+        weight: 29
+        enabled: true
+      long_text_field_with_toolbar:
+        weight: 30
+        enabled: false
+      municipality_guide:
+        weight: 31
+        enabled: false
+      quick_link:
+        weight: 32
+        enabled: false
+      quick_link_row:
+        weight: 33
+        enabled: false
+      service_language:
+        weight: 34
+        enabled: false
+      service_price:
+        weight: 35
+        enabled: false
+      service_time_and_place:
+        weight: 36
+        enabled: false
+      target_group:
+        weight: 37
+        enabled: false
+      url_and_file:
+        weight: 38
+        enabled: false
+field_type: entity_reference_revisions

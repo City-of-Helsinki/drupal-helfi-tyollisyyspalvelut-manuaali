@@ -40,6 +40,8 @@ final class Anonymizer {
    *
    * @param \Drupal\user\UserInterface $user
    *   User interface.
+   * @param bool $force
+   *   Bool to force anonymization without last access check.
    *
    * @return bool
    *   TRUE when successful, FALSE otherwise.
@@ -47,11 +49,15 @@ final class Anonymizer {
    * @throws \Drupal\Core\Entity\EntityStorageException
    * @throws \Random\RandomException
    */
-  public function anonymizeUser(UserInterface $user): bool {
+  public function anonymizeUser(UserInterface $user, bool $force = FALSE): bool {
     // Perform extra checks before anonymizing user data.
     if (!$user->isBlocked()
-      || $user->get('access')->value >= strtotime('-210 days')
       || in_array($user->id(), [0, 1])) {
+      return FALSE;
+    }
+
+    // Check last access if check hasn't been overridden.
+    if ($force === FALSE && $user->get('access')->value >= strtotime('-210 days')) {
       return FALSE;
     }
 

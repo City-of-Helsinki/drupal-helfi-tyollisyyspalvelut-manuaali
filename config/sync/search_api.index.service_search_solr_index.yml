@@ -3,33 +3,33 @@ langcode: fi
 status: true
 dependencies:
   config:
-    - field.storage.node.field_accessibility
-    - field.storage.node.field_target_group
-    - field.storage.paragraph.field_age
-    - field.storage.paragraph.field_age_groups
+    - field.storage.node.field_life_situations
     - field.storage.node.field_description
+    - field.storage.node.field_service_set
+    - field.storage.node.field_accessibility
+    - field.storage.node.field_service_producer
+    - field.storage.node.field_service_languages
+    - field.storage.paragraph.field_language
     - field.storage.node.field_service_price
     - field.storage.paragraph.field_free_service
-    - field.storage.node.field_implementation_extra_info
     - field.storage.node.field_service_time_and_location
-    - field.storage.paragraph.field_language
-    - field.storage.node.field_service_languages
     - field.storage.paragraph.field_level
-    - field.storage.node.field_life_situations
-    - field.storage.paragraph.field_municipality_irrelevant
-    - field.storage.node.field_service_execution
-    - field.storage.node.field_service_producer
-    - field.storage.node.field_service_set
-    - field.storage.paragraph.field_target_group_municipality
     - field.storage.node.field_address
     - field.storage.paragraph.field_service_location
+    - field.storage.node.field_target_group
+    - field.storage.paragraph.field_municipality_irrelevant
+    - field.storage.paragraph.field_target_group_municipality
+    - field.storage.paragraph.field_age
+    - field.storage.paragraph.field_age_groups
+    - field.storage.node.field_implementation_extra_info
+    - field.storage.node.field_service_execution
     - search_api.server.solr_search
     - core.entity_view_mode.node.search_index
   module:
     - search_api_solr
     - node
-    - entitygroupfield
     - group
+    - entitygroupfield
     - paragraphs
     - search_api
     - hel_tpm_search
@@ -272,6 +272,15 @@ field_settings:
         - field.storage.paragraph.field_target_group_municipality
       module:
         - paragraphs
+  gid:
+    label: 'Ryhmät » Group relationship » Isäntäryhmä'
+    datasource_id: 'entity:node'
+    property_path: 'entitygroupfield:entity:gid'
+    type: integer
+    dependencies:
+      module:
+        - entitygroupfield
+        - group
   locality:
     label: 'Service time and location » Paragraph » Valitse paikka: » Sisältö » Address » The locality (i.e. city)'
     datasource_id: 'entity:node'
@@ -303,6 +312,16 @@ field_settings:
       view_mode:
         'entity:node':
           service: search_index
+  service_provider_entity_id:
+    label: 'Palvelun tuottaja » Group » ID'
+    datasource_id: 'entity:node'
+    property_path: 'field_service_producer:entity:id'
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_service_producer
+      module:
+        - group
   status:
     label: status
     datasource_id: 'entity:node'

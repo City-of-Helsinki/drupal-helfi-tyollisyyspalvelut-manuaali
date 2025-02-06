@@ -53,7 +53,7 @@ body {
   .main {
     margin-bottom: 5em;
     @include xxl {
-      margin: auto;
+      margin: auto auto $space-triple auto;
     }
   }
 }
@@ -79,7 +79,7 @@ body {
     margin-left: $space-quadruple;
   }
   @include xl {
-    margin: auto;
+    margin: auto auto $space-triple auto;
   }
 }
 

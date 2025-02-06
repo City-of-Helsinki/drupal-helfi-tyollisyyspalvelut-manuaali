@@ -1,0 +1,23 @@
+uuid: 364afc85-25cb-4823-b760-afd75b097203
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_view_embed
+    - paragraphs.paragraphs_type.service_list
+  module:
+    - views_exposed_embed
+id: paragraph.service_list.field_view_embed
+field_name: field_view_embed
+entity_type: paragraph
+bundle: service_list
+label: 'View embed'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  view_id: solr_service_list
+  display_id: embed_1
+field_type: views_exposed_embed_field

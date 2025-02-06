@@ -47,3 +47,40 @@ function hel_tpm_user_expiry_update_10002(&$sandbox) {
     $anonymizer->anonymizeUser($user);
   }
 }
+
+/**
+ * Anonymize blocked users which are not yet anonymized.
+ */
+function hel_tpm_user_expiry_update_10003(&$sandbox) {
+  $anonymizer = \Drupal::service('hel_tpm_user_expiry.anonymizer');
+  $storage = \Drupal::service('entity_type.manager')->getStorage('user');
+  $query = $storage->getQuery()
+    ->accessCheck(FALSE)
+    ->condition('name', 'anonymous-%', 'NOT LIKE')
+    ->condition('status', 0)
+    ->condition('changed', strtotime('-30 days'), "<")
+    ->condition('uid', 0, "!=")
+    ->sort('uid', 'ASC');
+
+  if (!isset($sandbox['progress'])) {
+    $count_query = clone $query;
+    // This must be the first run. Initialize the sandbox.
+    $sandbox['progress'] = 0;
+    $sandbox['current_uid'] = 0;
+    $sandbox['max'] = $count_query->count()->execute();
+  }
+
+  $blocked_users = $query
+    ->condition('uid', $sandbox['current_uid'], '>')
+    ->range(0, 20)
+    ->execute();
+
+  foreach ($blocked_users as $uid) {
+    $user = $storage->load($uid);
+    $anonymizer->anonymizeUser($user, TRUE);
+    $sandbox['current_uid'] = $uid;
+    $sandbox['progress']++;
+  }
+
+  $sandbox['#finished'] = empty($sandbox['max']) ? 1 : $sandbox['progress'] / $sandbox['max'];
+}
