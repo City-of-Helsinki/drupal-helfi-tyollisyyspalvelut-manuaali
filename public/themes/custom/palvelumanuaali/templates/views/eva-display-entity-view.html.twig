@@ -62,7 +62,7 @@
   {{ attachment_before }}
 
   {{ rows }}
-  {% if empty %}
+  {% if empty and not empty_table %}
     <div class="view-empty">
       {{ empty }}
     </div>

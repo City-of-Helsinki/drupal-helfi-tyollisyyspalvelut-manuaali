@@ -326,6 +326,10 @@ function palvelumanuaali_preprocess_views_view(&$vars) {
  */
 function palvelumanuaali_preprocess_eva_display_entity_view(&$vars) {
   palvelumanuaali_preprocess_views_view($vars);
+  $style_plugin = $vars['view']->style_plugin->options;
+  if (!empty($style_plugin['empty_table']) && $style_plugin['empty_table'] === TRUE) {
+    $vars['empty_table'] = TRUE;
+  }
 }
 
 /**
