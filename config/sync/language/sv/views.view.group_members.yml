@@ -19,10 +19,13 @@ display:
           label: Roll
           separator: ', '
         view_group_content:
+          admin_label: 'View member link'
           text: Näytä
         edit_group_content:
+          admin_label: 'Edit member link'
           text: Muokkaa
         delete_group_content:
+          admin_label: 'Remove member link'
           text: 'Poista jäsen'
         dropbutton:
           label: Funktioner
@@ -45,10 +48,14 @@ display:
           exposed_sorts_label: 'Sortera efter'
           sort_asc_label: Stigande
           sort_desc_label: Fallande
+      empty:
+        area_text_custom:
+          content: 'No members available.'
       arguments:
         gid:
           exception:
             title: Alla
+          title: '{{ arguments.gid|placeholder }} members'
     display_title: Huvud
   page_1:
     display_title: Sida
