@@ -10,9 +10,9 @@ dependencies:
     - user.role.root
     - workflows.workflow.service_moderation
   module:
+    - content_moderation
     - group
     - node
-    - service_manual_workflow
     - user
 id: service_ready_to_publish_no_responsible_municipality
 label: 'Service ready to publish no responsible municipality'
@@ -362,7 +362,18 @@ display:
       cache:
         type: tag
         options: {  }
-      empty: {  }
+      empty:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text_custom
+          empty: true
+          content: 'Ei palveluita ilman vastuukuntaa'
+          tokenize: false
       sorts:
         created:
           id: created
