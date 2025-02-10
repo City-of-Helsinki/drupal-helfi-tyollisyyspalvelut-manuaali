@@ -421,6 +421,59 @@ display:
             group_items: {  }
       style:
         type: table
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+          columns:
+            title: title
+            changed: changed
+            moderation_state: moderation_state
+            time_since_last_state_change: time_since_last_state_change
+            gid: gid
+          default: '-1'
+          info:
+            title:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            changed:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            moderation_state:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            time_since_last_state_change:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            gid:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+          override: true
+          sticky: false
+          summary: ''
+          empty_table: true
+          caption: ''
+          description: ''
       row:
         type: fields
       query:
@@ -870,6 +923,18 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
+      empty:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text_custom
+          empty: true
+          content: 'Ei julkaisua odottavia palveluita.'
+          tokenize: false
       arguments:
         field_responsible_municipality_target_id:
           id: field_responsible_municipality_target_id
@@ -906,6 +971,7 @@ display:
           break_phrase: false
           not: false
       defaults:
+        empty: false
         relationships: false
         fields: false
         arguments: false
