@@ -923,6 +923,10 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
+      pager:
+        type: none
+        options:
+          offset: 0
       empty:
         area_text_custom:
           id: area_text_custom
@@ -972,6 +976,7 @@ display:
           not: false
       defaults:
         empty: false
+        pager: false
         relationships: false
         fields: false
         arguments: false
