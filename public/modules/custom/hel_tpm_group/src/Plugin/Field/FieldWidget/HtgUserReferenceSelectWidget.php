@@ -25,19 +25,11 @@ class HtgUserReferenceSelectWidget extends Select2EntityReferenceWidget {
   use Select2Trait;
 
   /**
-   * Current user object.
-   *
-   * @var \Drupal\Core\Session\AccountInterface
-   */
-  protected $currentUser;
-
-  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): Select2EntityReferenceWidget {
     $widget = parent::create($container, $configuration, $plugin_id, $plugin_definition);
     $widget->setEntityTypeManager($container->get('entity_type.manager'));
-    $widget->currentUser = $container->get('current_user');
     return $widget;
   }
 
