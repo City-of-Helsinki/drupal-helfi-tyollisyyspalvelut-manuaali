@@ -306,8 +306,12 @@ display:
             admin: admin
             specialist_editor: specialist_editor
       cache:
-        type: tag
-        options: {  }
+        type: time
+        options:
+          results_lifespan: 3600
+          results_lifespan_custom: 0
+          output_lifespan: 3600
+          output_lifespan_custom: 0
       empty:
         area_text_custom:
           id: area_text_custom
