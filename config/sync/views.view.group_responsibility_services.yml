@@ -688,8 +688,12 @@ display:
         options:
           group_permission: 'access subgroup overview'
       cache:
-        type: tag
-        options: {  }
+        type: time
+        options:
+          results_lifespan: 60
+          results_lifespan_custom: 0
+          output_lifespan: 60
+          output_lifespan_custom: 0
       empty: {  }
       sorts:
         created:
@@ -1126,7 +1130,8 @@ display:
     display_plugin: page
     position: 1
     display_options:
-      display_extenders: {  }
+      display_extenders:
+        ajax_history: {  }
       path: group/%group/group-responsibility-services
       menu:
         type: tab
