@@ -22,6 +22,21 @@ display:
         moderation_state_filter_exclude_archived:
           expose:
             label: 'Service status'
+      title: 'Responsibility services'
+      empty:
+        area_text_custom:
+          content: 'Responsibility services not found.'
+      header:
+        area:
+          admin_label: 'Attached view title'
+          content:
+            value: '<h2>Services waiting for publishing</h2>'
+            format: full_html
+        area_1:
+          admin_label: 'View title'
+          content:
+            value: '<h2>All responsibility services</h2>'
+            format: full_html
   page_1:
     display_options:
       menu:
