@@ -100,8 +100,12 @@ display:
             admin: admin
             specialist_editor: specialist_editor
       cache:
-        type: tag
-        options: {  }
+        type: time
+        options:
+          results_lifespan: 60
+          results_lifespan_custom: 0
+          output_lifespan: 60
+          output_lifespan_custom: 0
       empty: {  }
       sorts: {  }
       arguments:
