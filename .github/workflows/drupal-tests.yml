@@ -18,6 +18,8 @@ jobs:
 
       - name: Setup Lando
         uses: lando/setup-lando@v3
+        with:
+          lando-version: stable
 
 #      - name: Grab latest Lando CLI
 #        run: |
