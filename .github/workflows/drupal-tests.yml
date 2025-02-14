@@ -1,7 +1,6 @@
 name: PHPUnit Tests
 
 on:
-  - pull_request
   - push
 
 env:
@@ -16,10 +15,15 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Setup Lando
+        uses: lando/setup-lando@v3
+
       - name: Grab latest Lando CLI
         run: |
           sudo curl -fsSL -o /usr/local/bin/lando "https://files.lando.dev/cli/lando-linux-x64-${LANDO_VERSION}"
           sudo chmod +x /usr/local/bin/lando
+
       # This is optional.
       - name: Cache Composer packages
         id: composer-cache
@@ -31,9 +35,7 @@ jobs:
             ${{ runner.os }}-php-
       # Map GH Actions env vars into Lando env vars, which wil then be injected
       # into the application container.
-      # Boot Lando and set up Laravel
       - run: lando start
-      - run: lando composer install
 
       - run: lando composer test /app/public/modules/custom
 
