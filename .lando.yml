@@ -33,7 +33,7 @@ services:
         SIMPLETEST_DB: "mysql://drupal10:drupal10@database/drupal10"
         MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","goog:chromeOptions":{"args":["--disable-gpu","--headless"]}}, "http://chrome:9515"]'
         DRUSH_OPTIONS_URI: "https://helfi-manuska.lndo.site"
-        XDEBUG_MODE: "coverage,develop"
+        XDEBUG_MODE: "coverage,debug"
         TFA_KEY: ''
         FILE_PRIVATE_PATH: "/app/private"
   chrome:
