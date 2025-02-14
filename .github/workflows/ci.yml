@@ -54,7 +54,7 @@ jobs:
         run: ./vendor/bin/phpunit -c ./public/core ./public/core/modules/user/tests/src/Unit/UserAccessControlHandlerTest.php
 
       - name: Run tests with phpunit/phpunit
-        run: ./vendor/bin/phpunit -c /home/runner/work/drupal-helfi-tyollisyyspalvelut-manuaali/drupal-helfi-tyollisyyspalvelut-manuaali/phpunit.xml  --coverage-clover=coverage.xml ./public/modules/custom
+        run: ./vendor/bin/phpunit -c /home/runner/work/drupal-helfi-tyollisyyspalvelut-manuaali/drupal-helfi-tyollisyyspalvelut-manuaali/phpunit.github.xml  --coverage-clover=coverage.xml ./public/modules/custom
 
       - run: ./vendor/bin/drush
 
