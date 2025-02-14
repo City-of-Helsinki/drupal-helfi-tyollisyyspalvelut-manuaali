@@ -19,10 +19,10 @@ jobs:
       - name: Setup Lando
         uses: lando/setup-lando@v3
 
-      - name: Grab latest Lando CLI
-        run: |
-          sudo curl -fsSL -o /usr/local/bin/lando "https://files.lando.dev/cli/lando-linux-x64-${LANDO_VERSION}"
-          sudo chmod +x /usr/local/bin/lando
+#      - name: Grab latest Lando CLI
+#        run: |
+#          sudo curl -fsSL -o /usr/local/bin/lando "https://files.lando.dev/cli/lando-linux-x64-${LANDO_VERSION}"
+#          sudo chmod +x /usr/local/bin/lando
 
       # This is optional.
       - name: Cache Composer packages
