@@ -555,6 +555,7 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
     }
     if (($start instanceof DrupalDateTime || $end instanceof DrupalDateTime) && (!$start instanceof DrupalDateTime || !$end instanceof DrupalDateTime)) {
       $form_state->setError($element, t('Start date and end date must be provided.'));
+      return;
     }
 
     if ($start && $end) {
