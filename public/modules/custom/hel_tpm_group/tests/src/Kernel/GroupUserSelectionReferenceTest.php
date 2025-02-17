@@ -264,6 +264,7 @@ class GroupUserSelectionReferenceTest extends GroupKernelTestBase {
         'include_supergroup_members' => TRUE,
       ],
       'Test');
+    var_dump($matches);
     $this->assertCount(2, $matches);
 
     $users = $this->getLabelsFromMatches($matches);
