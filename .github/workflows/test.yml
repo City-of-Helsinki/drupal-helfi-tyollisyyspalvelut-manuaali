@@ -1,8 +1,0 @@
-on:
-  pull_request:
-  push:
-    branches: ['main', 'dev']
-name: CI
-jobs:
-  tests:
-    uses: city-of-helsinki/drupal-gh-actions/.github/workflows/project-tests.yml@main

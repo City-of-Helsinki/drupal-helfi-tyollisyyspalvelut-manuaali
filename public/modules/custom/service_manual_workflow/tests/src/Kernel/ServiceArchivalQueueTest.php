@@ -61,7 +61,7 @@ class ServiceArchivalQueueTest extends GroupKernelTestBase {
   /**
    * Test callback.
    *
-   * @covers Drupal\service_manual_workflow\Form\SetServiceOutdatedOperationForm;
+   * @covers \Drupal\service_manual_workflow\Form\SetServiceOutdatedOperationForm;
    */
   public function testServiceAutomaticArchival(): void {
     $queue_name = 'service_manual_workflow_service_archival_queue';
