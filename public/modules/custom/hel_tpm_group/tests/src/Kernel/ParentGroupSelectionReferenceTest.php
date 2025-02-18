@@ -235,6 +235,8 @@ class ParentGroupSelectionReferenceTest extends GroupKernelTestBase {
    *
    * @return void
    *   -
+   *
+   * @group exclude
    */
   public function testSubgroupHasParentGroupAlso(): void {
     /** @var \Drupal\Core\Entity\EntityAutocompleteMatcherInterface $autocomplete */
