@@ -81,6 +81,7 @@ trait GroupSelectionTrait {
           $super_groups = $this->groupHierarchyManager->getGroupSupergroups($group->id());
         }
         if (empty($super_groups)) {
+          var_dump('super groups empty');
           continue;
         }
         var_dump('Super groups');
