@@ -83,7 +83,10 @@ trait GroupSelectionTrait {
         if (empty($super_groups)) {
           continue;
         }
-        var_dump(count($super_groups));
+        var_dump('Super groups');
+        var_dump($super_groups);
+        var_dump('groups');
+        var_dump($groups);
         $groups = array_merge($groups, $super_groups);
       }
     }
