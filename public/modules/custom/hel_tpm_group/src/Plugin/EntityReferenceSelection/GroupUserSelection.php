@@ -79,13 +79,13 @@ class GroupUserSelection extends UserSelection {
     ModuleHandlerInterface $module_handler,
     AccountInterface $current_user,
     Connection $connection,
-    ?EntityFieldManagerInterface $entity_field_manager = NULL,
-    ?EntityTypeBundleInfoInterface $entity_type_bundle_info = NULL,
-    ?EntityRepositoryInterface $entity_repository = NULL,
     GroupMembershipLoaderInterface $group_membership_loader,
     GroupStateTransitionValidation $group_state_transition_validator,
     GroupHierarchyManagerInterface $group_hierarchy_manager,
     RouteMatchInterface $route_match,
+    ?EntityFieldManagerInterface $entity_field_manager = NULL,
+    ?EntityTypeBundleInfoInterface $entity_type_bundle_info = NULL,
+    ?EntityRepositoryInterface $entity_repository = NULL,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_type_manager, $module_handler, $current_user, $connection, $entity_field_manager, $entity_type_bundle_info, $entity_repository);
 
@@ -107,13 +107,13 @@ class GroupUserSelection extends UserSelection {
       $container->get('module_handler'),
       $container->get('current_user'),
       $container->get('database'),
-      $container->get('entity_field.manager'),
-      $container->get('entity_type.bundle.info'),
-      $container->get('entity.repository'),
       $container->get('group.membership_loader'),
       $container->get('gcontent_moderation.state_transition_validation'),
       $container->get('ggroup.group_hierarchy_manager'),
-      $container->get('current_route_match')
+      $container->get('current_route_match'),
+      $container->get('entity_field.manager'),
+      $container->get('entity_type.bundle.info'),
+      $container->get('entity.repository'),
     );
   }
 
