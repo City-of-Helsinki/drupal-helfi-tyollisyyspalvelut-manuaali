@@ -69,27 +69,19 @@ trait GroupSelectionTrait {
     }
 
     if ($include_supergroups === TRUE) {
-      var_dump('test');
       // Fetch parent groups for subgroups.
       foreach ($groups as $group) {
         // If groups are not loaded get only ids.
         if ($load_groups === FALSE) {
-          var_dump('foo');
           $super_groups = $this->groupHierarchyManager->getGroupSupergroupIds($group);
         }
         else {
-          var_dump('bar');
           // Child groups are loaded get supergroups using group id.
           $super_groups = $this->groupHierarchyManager->getGroupSupergroups($group->id());
         }
         if (empty($super_groups)) {
-          var_dump('super groups empty');
           continue;
         }
-        var_dump('Super groups');
-        var_dump($super_groups);
-        var_dump('groups');
-        var_dump($groups);
         $groups = array_merge($groups, $super_groups);
       }
     }

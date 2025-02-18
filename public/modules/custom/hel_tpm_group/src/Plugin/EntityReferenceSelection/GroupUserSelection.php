@@ -153,13 +153,11 @@ class GroupUserSelection extends UserSelection {
     $configuration = $this->getConfiguration();
     $include_supergroups = empty($configuration['include_supergroup_members']) ? FALSE : $configuration['include_supergroup_members'];
 
-    var_dump($include_supergroups);
     if (!empty($configuration['entity'])) {
       $entity = $configuration['entity'];
     }
 
     $groups = $this->getGroups($entity, $include_supergroups, TRUE);
-    var_dump(count($groups));
     $members = $this->getMembers($groups);
 
     // Append uids to query condition.
