@@ -253,8 +253,8 @@ class GroupUserSelection extends UserSelection {
         continue;
       }
 
-      var_dump($configuration);
-      if ($configuration['filter_users_without_publish'] === TRUE) {
+      var_dump($configuration['filter_users_without_publish']);
+      if (!empty($configuration['filter_users_without_publish']) && $configuration['filter_users_without_publish'] === TRUE) {
         $allowed = $this->groupStateTransitionValidator->allowedTransitions($member->getUser(), $mock_service, [$group]);
         var_dump($id);
         var_dump($allowed);
