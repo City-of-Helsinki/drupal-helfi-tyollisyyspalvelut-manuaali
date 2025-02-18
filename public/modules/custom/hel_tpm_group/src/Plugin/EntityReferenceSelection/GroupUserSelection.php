@@ -159,7 +159,7 @@ class GroupUserSelection extends UserSelection {
     }
 
     $groups = $this->getGroups($entity, $include_supergroups, TRUE);
-    var_dump($groups);
+    var_dump(count($groups));
     $members = $this->getMembers($groups);
 
     // Append uids to query condition.
