@@ -74,9 +74,11 @@ trait GroupSelectionTrait {
       foreach ($groups as $group) {
         // If groups are not loaded get only ids.
         if ($load_groups === FALSE) {
+          var_dump('foo');
           $super_groups = $this->groupHierarchyManager->getGroupSupergroupIds($group);
         }
         else {
+          var_dump('bar');
           // Child groups are loaded get supergroups using group id.
           $super_groups = $this->groupHierarchyManager->getGroupSupergroups($group->id());
         }
