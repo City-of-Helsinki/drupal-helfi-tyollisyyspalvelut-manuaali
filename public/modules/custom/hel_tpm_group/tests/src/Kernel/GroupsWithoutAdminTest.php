@@ -9,6 +9,8 @@ use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
 use Drupal\Tests\service_manual_workflow\Traits\ServiceManualWorkflowTestTrait;
 use Drupal\Tests\user\Traits\UserCreationTrait;
+use Drupal\group\Entity\GroupInterface;
+use Drupal\user\Entity\User;
 
 /**
  * Test description.
@@ -61,35 +63,35 @@ final class GroupsWithoutAdminTest extends GroupKernelTestBase {
    *
    * @var \Drupal\user\Entity\User
    */
-  private \Drupal\user\Entity\User $spUser;
+  private User $spUser;
 
   /**
    * Service provider group.
    *
    * @var \Drupal\group\Entity\GroupInterface
    */
-  private \Drupal\group\Entity\GroupInterface $spGroup;
+  private GroupInterface $spGroup;
 
   /**
    * Organization group.
    *
    * @var \Drupal\group\Entity\GroupInterface
    */
-  private \Drupal\group\Entity\GroupInterface $orgGroup;
+  private GroupInterface $orgGroup;
 
   /**
    * Organization user.
    *
    * @var \Drupal\user\Entity\User
    */
-  private \Drupal\user\Entity\User $orgUser;
+  private User $orgUser;
 
   /**
    * Organization user 2.
    *
    * @var \Drupal\user\Entity\User
    */
-  private \Drupal\user\Entity\User $orgUser2;
+  private User $orgUser2;
 
   /**
    * Setup test.

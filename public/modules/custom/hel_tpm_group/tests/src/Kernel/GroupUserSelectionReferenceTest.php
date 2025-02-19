@@ -251,6 +251,7 @@ class GroupUserSelectionReferenceTest extends GroupKernelTestBase {
    *
    * @return void
    *   -
+   *
    * @group exclude
    */
   public function testHasParentGroupUsers(): void {

@@ -27,7 +27,7 @@ class HelTpmGroupSubscriberTest extends GroupKernelTestBase {
   ];
 
   /**
-   * Group role storage
+   * Group role storage.
    *
    * @var \Drupal\Core\Entity\EntityStorageInterface|mixed|object
    */
