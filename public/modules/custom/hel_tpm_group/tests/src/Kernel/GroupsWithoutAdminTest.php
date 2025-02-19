@@ -57,6 +57,41 @@ final class GroupsWithoutAdminTest extends GroupKernelTestBase {
   ];
 
   /**
+   * Service provider user.
+   *
+   * @var \Drupal\user\Entity\User
+   */
+  private \Drupal\user\Entity\User $spUser;
+
+  /**
+   * Service provider group.
+   *
+   * @var \Drupal\group\Entity\GroupInterface
+   */
+  private \Drupal\group\Entity\GroupInterface $spGroup;
+
+  /**
+   * Organization group.
+   *
+   * @var \Drupal\group\Entity\GroupInterface
+   */
+  private \Drupal\group\Entity\GroupInterface $orgGroup;
+
+  /**
+   * Organization user.
+   *
+   * @var \Drupal\user\Entity\User
+   */
+  private \Drupal\user\Entity\User $orgUser;
+
+  /**
+   * Organization user 2.
+   *
+   * @var \Drupal\user\Entity\User
+   */
+  private \Drupal\user\Entity\User $orgUser2;
+
+  /**
    * Setup test.
    */
   protected function setUp(): void {
