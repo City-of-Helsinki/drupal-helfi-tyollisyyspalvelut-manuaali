@@ -27,6 +27,34 @@ class HelTpmGroupSubscriberTest extends GroupKernelTestBase {
   ];
 
   /**
+   * Group role storage
+   *
+   * @var \Drupal\Core\Entity\EntityStorageInterface|mixed|object
+   */
+  private mixed $groupRoleStorage;
+
+  /**
+   * Group entity.
+   *
+   * @var \Drupal\group\Entity\Group
+   */
+  private $group;
+
+  /**
+   * Account interface.
+   *
+   * @var \Drupal\user\Entity\User
+   */
+  private $account;
+
+  /**
+   * Group role.
+   *
+   * @var \Drupal\group\Entity\GroupRoleInterface
+   */
+  private GroupRoleInterface $groupRole;
+
+  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {
@@ -36,7 +64,7 @@ class HelTpmGroupSubscriberTest extends GroupKernelTestBase {
     $this->groupRoleStorage = $this->entityTypeManager->getStorage('group_role');
     $this->group = $this->createGroup(['type' => $this->createGroupType(['id' => 'default'])->id()]);
     $this->account = $this->createUser();
-    $this->group_role = $this->createGroupRole([
+    $this->groupRole = $this->createGroupRole([
       'id' => 'group-editor',
       'label' => 'editor',
     ]);
@@ -53,7 +81,7 @@ class HelTpmGroupSubscriberTest extends GroupKernelTestBase {
    * Test onGroupMembershipChange method.
    */
   public function testOnGroupMembershipChange() {
-    $this->group_role->setThirdPartySetting('hel_tpm_group', 'site_wide_role', [
+    $this->groupRole->setThirdPartySetting('hel_tpm_group', 'site_wide_role', [
       'editor' => 'editor',
       'publisher' => 0,
     ])->save();
@@ -81,7 +109,7 @@ class HelTpmGroupSubscriberTest extends GroupKernelTestBase {
    */
   public function testOnGroupSiteWideRoleChanged() {
     // Test setting initial role.
-    $this->group_role->setThirdPartySetting('hel_tpm_group', 'site_wide_role', [
+    $this->groupRole->setThirdPartySetting('hel_tpm_group', 'site_wide_role', [
       'publisher' => 0,
       'editor' => 'editor',
     ])->save();
@@ -90,20 +118,20 @@ class HelTpmGroupSubscriberTest extends GroupKernelTestBase {
     $this->assertEqualsCanonicalizing(['editor', 'authenticated'], $this->account->getRoles());
 
     // Test changing the role.
-    $this->group_role->setThirdPartySetting('hel_tpm_group', 'site_wide_role', [
+    $this->groupRole->setThirdPartySetting('hel_tpm_group', 'site_wide_role', [
       'publisher' => 'publisher',
       'editor' => 0,
     ])->save();
-    $this->dispatchSiteWideRoleChanged($this->group_role);
+    $this->dispatchSiteWideRoleChanged($this->groupRole);
     $this->reloadUser();
     $this->assertEqualsCanonicalizing(['publisher', 'authenticated'], $this->account->getRoles());
 
     // Test that user can have multiple site wide roles.
-    $this->group_role->setThirdPartySetting('hel_tpm_group', 'site_wide_role', [
+    $this->groupRole->setThirdPartySetting('hel_tpm_group', 'site_wide_role', [
       'publisher' => 'publisher',
       'editor' => 'editor',
     ])->save();
-    $this->dispatchSiteWideRoleChanged($this->group_role);
+    $this->dispatchSiteWideRoleChanged($this->groupRole);
     $this->reloadUser();
     $this->assertEqualsCanonicalizing(['publisher', 'editor', 'authenticated'], $this->account->getRoles());
 
