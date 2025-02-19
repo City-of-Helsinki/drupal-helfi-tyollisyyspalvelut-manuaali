@@ -5,6 +5,7 @@
 
 $color-heading: clr(accent);
 
+//h1 44px/56px
 @mixin heading-xl(
   $font-family: $font-heading,
   $font-size: 2.75rem,
@@ -13,17 +14,22 @@ $color-heading: clr(accent);
   $color-link: inherit,
   $color-link-hover: inherit,
   $font-weight: 600,
-  $margin: 0 0 0.5em
+  $margin: 0 0 0.5em,
+  $font-size-mobile: 1.75rem,
+  $line-height-mobile:  1.14
 ) {
   color: $color;
   font-family: $font-family;
   font-weight: $font-weight;
   font-style: normal;
-  font-size: $font-size;
-  line-height: $line-height;
+  font-size: $font-size-mobile;
+  line-height: $line-height-mobile;
   margin: $margin;
   width: auto;
-
+  @include large {
+    font-size: $font-size;
+    line-height: $line-height;
+  }
   &__link {
     color: $color-link;
 
@@ -32,7 +38,7 @@ $color-heading: clr(accent);
     }
   }
 }
-
+ // (h2) 38px
 @mixin heading-large(
   $font-family: $font-heading,
   $font-size: 2.375rem,
@@ -41,17 +47,22 @@ $color-heading: clr(accent);
   $color-link: inherit,
   $color-link-hover: inherit,
   $font-weight: 600,
-  $margin: 0 0 0.5em
+  $margin: 0 0 0.5em,
+  $font-size-mobile: 1.5rem,
+  $line-height-mobile: 1.33
 ) {
   color: $color;
   font-family: $font-family;
   font-weight: $font-weight;
   font-style: normal;
-  font-size: $font-size;
-  line-height: $line-height;
+  font-size: $font-size-mobile;
+  line-height: $line-height-mobile;
   margin: $margin;
   width: auto;
-
+  @include large {
+    font-size: $font-size;
+    line-height: $line-height;
+  }
   &__link {
     color: $color-link;
 
@@ -61,6 +72,7 @@ $color-heading: clr(accent);
   }
 }
 
+//h3 32px
 @mixin heading-medium(
   $font-family: $font-heading,
   $font-size: 2rem,
@@ -69,17 +81,22 @@ $color-heading: clr(accent);
   $color-link: inherit,
   $color-link-hover: inherit,
   $font-weight: 600,
-  $margin: 0 0 0.5em
+  $margin: 0 0 0.5em,
+  $font-size-mobile: 1.25rem,
+  $line-height-mobile:  1.4
 ) {
   color: $color;
   font-family: $font-family;
   font-weight: $font-weight;
   font-style: normal;
-  font-size: $font-size;
-  line-height: $line-height;
+  font-size: $font-size-mobile;
+  line-height: $line-height-mobile;
   margin: $margin;
   width: auto;
-
+  @include large {
+    font-size: $font-size;
+    line-height: $line-height;
+  }
   &__link {
     color: $color-link;
 
@@ -89,6 +106,7 @@ $color-heading: clr(accent);
   }
 }
 
+//h4 24px
 @mixin heading-small(
   $font-family: $font-heading,
   $font-size: 1.5rem,
@@ -97,17 +115,22 @@ $color-heading: clr(accent);
   $color-link: inherit,
   $color-link-hover: inherit,
   $font-weight: 600,
-  $margin: 0 0 0.5em
+  $margin: 0 0 0.5em,
+  $font-size-mobile: 1rem,
+  $line-height-mobile:  1.5
 ) {
   color: $color;
   font-family: $font-family;
   font-weight: $font-weight;
   font-style: normal;
-  font-size: $font-size;
-  line-height: $line-height;
+  font-size: $font-size-mobile;
+  line-height: $line-height-mobile;
   margin: $margin;
   width: auto;
-
+  @include large {
+    font-size: $font-size;
+    line-height: $line-height;
+  }
   &__link {
     color: $color-link;
 
@@ -117,6 +140,7 @@ $color-heading: clr(accent);
   }
 }
 
+//h5 18px
 @mixin heading-xs(
   $font-family: $font-heading,
   $font-size: 1.125rem,
@@ -125,17 +149,22 @@ $color-heading: clr(accent);
   $color-link: inherit,
   $color-link-hover: inherit,
   $font-weight: 600,
-  $margin: 0 0 0.5em
+  $margin: 0 0 0.5em,
+  $font-size-mobile: 0.81rem,
+  $line-height-mobile:  1rem
 ) {
   color: $color;
   font-family: $font-family;
   font-weight: $font-weight;
   font-style: normal;
-  font-size: $font-size;
-  line-height: $line-height;
+  font-size: $font-size-mobile;
+  line-height: $line-height-mobile;
   margin: $margin;
   width: auto;
-
+  @include large {
+    font-size: $font-size;
+    line-height: $line-height;
+  }
   &__link {
     color: $color-link;
 
@@ -144,7 +173,7 @@ $color-heading: clr(accent);
     }
   }
 }
-
+//H6 16px/24px
 @mixin heading-xxs(
   $font-family: $font-heading,
   $font-size: 1rem,
@@ -153,17 +182,22 @@ $color-heading: clr(accent);
   $color-link: inherit,
   $color-link-hover: inherit,
   $font-weight: 600,
-  $margin: 0 0 0.5em
+  $margin: 0 0 0.5em,
+  $font-size-mobile: 0.75rem,
+  $line-height-mobile:  1rem
 ) {
   color: $color;
   font-family: $font-family;
   font-weight: $font-weight;
   font-style: normal;
-  font-size: $font-size;
-  line-height: $line-height;
+  font-size: $font-size-mobile;
+  line-height: $line-height-mobile;
   margin: $margin;
   width: auto;
-
+  @include large {
+    font-size: $font-size;
+    line-height: $line-height;
+  }
   &__link {
     color: $color-link;
 
@@ -175,7 +209,6 @@ $color-heading: clr(accent);
 
 .h1 {
   @include heading-xl;
-
   &--page-title {
     @include heading-medium;
     text-align: center;

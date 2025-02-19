@@ -77,14 +77,14 @@ third_party_settings:
         classes: 'service-group service-group--participation'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: true
-        label_element: h3
+        label_element: h2
         label_element_classes: 'group-label--h3 h3 group-label'
         attributes: ''
         effect: none
         speed: fast
-        description: ''
     group_execution:
       children:
         - field_service_execution
@@ -98,14 +98,14 @@ third_party_settings:
         classes: 'service-group service-group--execution'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: true
-        label_element: h3
+        label_element: h2
         label_element_classes: 'group-label--h3 h3 group-label'
         attributes: ''
         effect: none
         speed: fast
-        description: ''
     group_where_and_when:
       children:
         - field_service_time_and_location
@@ -118,14 +118,14 @@ third_party_settings:
         classes: 'service-group service-group--where-and-when'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: true
-        label_element: h4
+        label_element: h3
         label_element_classes: 'group-label--h4 h4 group-label'
         attributes: ''
         effect: none
         speed: fast
-        description: ''
     group_target_group:
       children:
         - field_description
@@ -139,14 +139,14 @@ third_party_settings:
         classes: 'service-group service-group--target-group'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: true
-        label_element: h3
+        label_element: h2
         label_element_classes: 'group-label--h3 h3 group-label'
         attributes: ''
         effect: none
         speed: fast
-        description: ''
     group_service_navigation:
       children:
         - group_customer_view
@@ -225,14 +225,14 @@ third_party_settings:
         classes: 'service-group service-group--guidance-to-service'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: true
-        label_element: h4
+        label_element: h2
         label_element_classes: 'group-label--h4 h4 group-label'
         attributes: ''
         effect: none
         speed: fast
-        description: ''
     group_service_obligatoryness:
       children:
         - field_obligatoryness
@@ -246,14 +246,14 @@ third_party_settings:
         classes: 'service-group service-group--service-requirements'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: true
-        label_element: h4
+        label_element: h2
         label_element_classes: 'group-label--h4 h4 group-label'
         attributes: ''
         effect: none
         speed: fast
-        description: ''
     group_statements_unemploym:
       children:
         - field_statements
@@ -268,14 +268,14 @@ third_party_settings:
         classes: 'service-group service-group--statements-and-jobprofits'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: true
-        label_element: h4
-        label_element_classes: 'group-label--h4 h4 group-label'
+        label_element: h2
+        label_element_classes: 'group-label--h3 h3 group-label'
         attributes: ''
         effect: none
         speed: fast
-        description: ''
     group_career_marking:
       children:
         - field_career_markings
@@ -288,14 +288,14 @@ third_party_settings:
         classes: 'service-group service-group--markings-to-system'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: true
-        label_element: h4
+        label_element: h2
         label_element_classes: 'group-label--h4 h4 group-label'
         attributes: ''
         effect: none
         speed: fast
-        description: ''
     group_measures_during:
       children:
         - field_measures_during_attendance
@@ -308,14 +308,14 @@ third_party_settings:
         classes: 'service-group service-group--measures-during'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: true
-        label_element: h4
+        label_element: h2
         label_element_classes: 'group-label--h4 h4 group-label'
         attributes: ''
         effect: none
         speed: fast
-        description: ''
     group_exceptions:
       children:
         - field_service_exceptions
@@ -329,14 +329,14 @@ third_party_settings:
         classes: 'service-group service-group--exceptions'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: true
-        label_element: h4
+        label_element: h2
         label_element_classes: 'group-label--h4 h4 group-label'
         attributes: ''
         effect: none
         speed: fast
-        description: ''
     group_complementary_job_search:
       children:
         - field_service_suits_job_search
@@ -350,9 +350,10 @@ third_party_settings:
         classes: 'service-group service-group--complementary-job-search'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: true
-        label_element: h4
+        label_element: h2
         label_element_classes: 'group-label--h4 h4 group-label'
         attributes: ''
         effect: none
@@ -369,14 +370,14 @@ third_party_settings:
         classes: service-group
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: true
-        label_element: h5
-        label_element_classes: 'group-label--h5 h5 group-label'
+        label_element: h3
+        label_element_classes: 'group-label--h4 h4 group-label'
         attributes: ''
         effect: none
         speed: fast
-        description: ''
     group_sidebar_public:
       children:
         - field_service_implement
