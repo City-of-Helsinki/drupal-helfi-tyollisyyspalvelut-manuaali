@@ -402,7 +402,7 @@ function palvelumanuaali_theme_suggestions_field_alter(array &$suggestions, arra
         $paragraph = $value;
         $suggestions[] = 'field__' . $element['#field_name'] . '__paragraph__' . $paragraph['#view_mode'];
       }
-    };
+    }
   }
 }
 
