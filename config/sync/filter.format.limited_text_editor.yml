@@ -1,9 +1,9 @@
-uuid: eaa69710-ad0d-4fa8-b0cf-3e6a89f0c761
-langcode: en
+uuid: 7b7472af-2aab-4147-8e52-09b9b6484a48
+langcode: fi
 status: true
 dependencies: {  }
-name: 'Filtered Html'
-format: filtered_html
+name: 'Perussivujen sisällönsyöttö'
+format: limited_text_editor
 weight: 0
 filters:
   filter_autop:
@@ -18,7 +18,7 @@ filters:
     status: true
     weight: -10
     settings:
-      allowed_html: '<br> <p> <h3 id> <a hreflang href> <ul type> <ol type start> <strong> <em> <blockquote> <li> <dl class> <dt> <dd>'
+      allowed_html: '<br> <p> <h2> <h3> <h4> <h5> <h6> <strong> <em>'
       filter_html_help: true
       filter_html_nofollow: false
   filter_html_image_secure:
