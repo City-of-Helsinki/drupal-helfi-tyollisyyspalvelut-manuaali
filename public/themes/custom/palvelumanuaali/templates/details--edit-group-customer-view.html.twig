@@ -35,7 +35,9 @@
 
   {{ description }}
   {% set nidid = nid|render|striptags|spaceless %}
-  {{ drupal_entity('node', nidid, 'customer_view') }}
+
+  {{ node__customer_view|render }}
+
   {{ value }}
 
 </details>
