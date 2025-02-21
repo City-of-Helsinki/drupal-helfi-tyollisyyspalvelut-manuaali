@@ -25,13 +25,6 @@ class GroupSelect2Widget extends Select2EntityReferenceWidget {
   use Select2Trait;
 
   /**
-   * The entity type manager service.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
-
-  /**
    * Field permission service.
    *
    * @var \Drupal\field_permissions\FieldPermissionsService
@@ -39,20 +32,11 @@ class GroupSelect2Widget extends Select2EntityReferenceWidget {
   protected $fieldPermissionService;
 
   /**
-   * Current user object.
-   *
-   * @var \Drupal\Core\Session\AccountInterface
-   */
-  protected $currentUser;
-
-  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): self {
     $widget = parent::create($container, $configuration, $plugin_id, $plugin_definition);
-    $widget->setEntityTypeManager($container->get('entity_type.manager'));
     $widget->fieldPermissionService = $container->get('field_permissions.permissions_service');
-    $widget->currentUser = $container->get('current_user');
     return $widget;
   }
 
