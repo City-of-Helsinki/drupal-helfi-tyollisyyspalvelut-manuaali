@@ -302,8 +302,8 @@ function palvelumanuaali_theme_suggestions_details_alter(array &$suggestions, ar
 function palvelumanuaali_preprocess_details(&$variables) {
   if ($node = \Drupal::request()->attributes->get('node')) {
     $variables['node__customer_view'] = \Drupal::entityTypeManager()
-    ->getViewBuilder('node')
-    ->view($node, 'customer_view');
+      ->getViewBuilder('node')
+      ->view($node, 'customer_view');
   }
 }
 
