@@ -312,7 +312,18 @@ display:
           results_lifespan_custom: 0
           output_lifespan: 60
           output_lifespan_custom: 0
-      empty: {  }
+      empty:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text_custom
+          empty: true
+          content: 'Ei julkaisua odottavia palveluita'
+          tokenize: false
       sorts: {  }
       arguments:
         field_responsible_municipality_target_id:
@@ -448,8 +459,9 @@ display:
           default_row_class: true
           columns:
             title: title
-            hel_tpm_editorial_service_has_unpublished_changes: hel_tpm_editorial_service_has_unpublished_changes
             gid: gid
+            field_days_since_last_state_chan__revision_id: field_days_since_last_state_chan__revision_id
+            field_responsible_updatee: field_responsible_updatee
             edit_node: edit_node
           default: '-1'
           info:
@@ -460,14 +472,21 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
-            hel_tpm_editorial_service_has_unpublished_changes:
+            gid:
               sortable: false
               default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
               responsive: ''
-            gid:
+            field_days_since_last_state_chan__revision_id:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_responsible_updatee:
               sortable: false
               default_sort_order: asc
               align: ''
@@ -484,7 +503,7 @@ display:
           override: true
           sticky: false
           summary: ''
-          empty_table: false
+          empty_table: true
           caption: ''
           description: ''
       row:

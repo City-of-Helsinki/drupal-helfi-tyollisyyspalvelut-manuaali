@@ -289,6 +289,13 @@
 
 .view-organizatio-with-ready-to-publish-content  {
   margin-bottom: $space-quadruple;
+  .view-empty {
+    background: white;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bolder;
+    padding: 1rem;
+  }
 }
 
 .organization-ready-to-publish-block,
@@ -568,4 +575,9 @@
     font-size: 15px;
 
   }
+}
+
+/* Add extra margin between view header and the actual content. */
+.view-header .view-content {
+  margin-bottom: $space-quadruple;
 }

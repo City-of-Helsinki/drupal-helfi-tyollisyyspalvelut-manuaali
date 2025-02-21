@@ -459,7 +459,18 @@ display:
           results_lifespan_custom: 86400
           output_lifespan: 21600
           output_lifespan_custom: 86400
-      empty: {  }
+      empty:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text_custom
+          empty: true
+          content: 'Ei julkaistuhistoriaa'
+          tokenize: false
       sorts:
         publish_date:
           id: publish_date
@@ -622,7 +633,7 @@ display:
           override: true
           sticky: false
           summary: ''
-          empty_table: false
+          empty_table: true
           caption: ''
           description: ''
       row:

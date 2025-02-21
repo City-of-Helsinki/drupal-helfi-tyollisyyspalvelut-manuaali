@@ -27,7 +27,7 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: 'Group responsibility services'
+      title: Vastuupalvelut
       fields:
         title:
           id: title
@@ -694,7 +694,18 @@ display:
           results_lifespan_custom: 0
           output_lifespan: 60
           output_lifespan_custom: 0
-      empty: {  }
+      empty:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text_custom
+          empty: true
+          content: 'Ei vastuupalveluita.'
+          tokenize: false
       sorts:
         created:
           id: created
@@ -1038,7 +1049,7 @@ display:
           override: true
           sticky: true
           summary: ''
-          empty_table: false
+          empty_table: true
           caption: ''
           description: ''
       row:
@@ -1098,6 +1109,19 @@ display:
           required: false
       use_ajax: true
       header:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: 'Liitetyn näkymän otsikko'
+          plugin_id: text
+          empty: true
+          content:
+            value: '<h2>Julkaisua odottavat palvelut</h2>'
+            format: full_html
+          tokenize: false
         view:
           id: view
           table: views
@@ -1106,9 +1130,22 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: view
-          empty: false
+          empty: true
           view_to_insert: 'service_rtb_publish_stats:block_3'
           inherit_arguments: true
+        area_1:
+          id: area_1
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: 'Varsinaisen näkymän otsikko'
+          plugin_id: text
+          empty: true
+          content:
+            value: '<h2>Kaikki vastuupalvelut</h2>'
+            format: full_html
+          tokenize: false
       footer: {  }
       display_extenders: {  }
     cache_metadata:

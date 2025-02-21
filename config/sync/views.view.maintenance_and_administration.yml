@@ -192,7 +192,18 @@ display:
       cache:
         type: tag
         options: {  }
-      empty: {  }
+      empty:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text_custom
+          empty: true
+          content: 'Ei listattavia sisältöjä'
+          tokenize: false
       sorts: {  }
       arguments:
         uid:
@@ -302,10 +313,18 @@ display:
           row_class: ''
           default_row_class: true
           columns:
+            id: id
             label: label
             created: created
           default: '-1'
           info:
+            id:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
             label:
               sortable: true
               default_sort_order: asc
@@ -323,7 +342,7 @@ display:
           override: true
           sticky: false
           summary: ''
-          empty_table: false
+          empty_table: true
           caption: ''
           description: ''
       row:
@@ -611,7 +630,8 @@ display:
           field_api_classes: false
       defaults:
         fields: false
-      display_extenders: {  }
+      display_extenders:
+        ajax_history: {  }
       path: hallinta-ja-yllapito
     cache_metadata:
       max-age: -1

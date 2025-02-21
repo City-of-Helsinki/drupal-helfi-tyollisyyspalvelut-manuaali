@@ -106,7 +106,18 @@ display:
           results_lifespan_custom: 0
           output_lifespan: 60
           output_lifespan_custom: 0
-      empty: {  }
+      empty:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text_custom
+          empty: true
+          content: 'Ei julkaistavia sisältöjä'
+          tokenize: false
       sorts: {  }
       arguments:
         uid:
@@ -320,7 +331,7 @@ display:
       display_extenders:
         ajax_history: {  }
       block_description: 'Organisaatioiden valmiiksi julkaistavana oleva sisältö'
-      block_hide_empty: true
+      block_hide_empty: false
     cache_metadata:
       max-age: -1
       contexts:
