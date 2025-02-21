@@ -21,6 +21,48 @@ class ServiceUpdateeMissingNotificationTest extends GroupKernelTestBase {
   use ContentTypeCreationTrait;
   use ServiceManualWorkflowTestTrait;
 
+  /**
+   * Service provider group entity.
+   *
+   * @var \Drupal\group\Entity\GroupInterface
+   */
+  private $spGroup;
+
+  /**
+   * Service Provide user entity.
+   *
+   * @var \Drupal\user\UserInterface
+   */
+  private $spUser;
+
+  /**
+   * Organization group entity.
+   *
+   * @var \Drupal\group\Entity\GroupInterface
+   */
+  private $orgGroup;
+
+  /**
+   * Organization user.
+   *
+   * @var \Drupal\user\UserInterface
+   */
+  private $orgUser;
+
+  /**
+   * Organization user 2.
+   *
+   * @var \Drupal\user\UserInterface
+   */
+  private $orgUser2;
+
+  /**
+   * Organization user 3.
+   *
+   * @var \Drupal\user\UserInterface
+   */
+  private $orgUser3;
+
   use AssertMailTrait {
     getMails as drupalGetMails;
   }
