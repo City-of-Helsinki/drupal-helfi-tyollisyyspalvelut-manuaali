@@ -81,6 +81,18 @@ body {
 .flex-wrap {
   display: flex;
   flex-wrap: wrap;
+  &--dsk {
+    @include xl {
+      flex-wrap: wrap;
+    }
+  }
+}
+.no-wrap {
+  &--dsk {
+    @include xl {
+      flex-wrap: no-wrap;
+    }
+  }
 }
 
 

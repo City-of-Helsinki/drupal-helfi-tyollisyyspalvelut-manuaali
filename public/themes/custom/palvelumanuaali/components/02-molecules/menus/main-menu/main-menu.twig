@@ -57,6 +57,7 @@
         {% endif %}
         {% if menu_level > 0 %}
           {% set menu_modifiers = menu_modifiers|merge(['sub', 'sub-' ~ menu_level]) %}
+          {% set menu_additional_class = ['flex-wrap--dsk'] %}
         {% endif %}
         {% include "@molecules/menus/main-menu/main-menu-list.twig" with {
           icon_name: icon_name,
@@ -68,7 +69,7 @@
 
     {% import _self as menus %}
 
-    {{ menus.menu_links(items, attributes, 0, menu_class, menu_modifiers, menu_blockname, ['d--flex--dsk', 'position--d--unst'], item_base_class, item_modifiers, item_blockname, directory, icon_name, icon_base_class) }}
+    {{ menus.menu_links(items, attributes, 0, menu_class, menu_modifiers, menu_blockname, ['d--flex--dsk', 'position--d--unst', 'flex-wrap--dsk'], item_base_class, item_modifiers, item_blockname, directory, icon_name, icon_base_class) }}
 
 </div>
 </nav>
