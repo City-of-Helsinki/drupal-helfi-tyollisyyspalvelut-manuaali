@@ -301,9 +301,15 @@ function palvelumanuaali_theme_suggestions_details_alter(array &$suggestions, ar
  */
 function palvelumanuaali_preprocess_details(&$variables) {
   if ($node = \Drupal::request()->attributes->get('node')) {
-    $variables['node__customer_view'] = \Drupal::entityTypeManager()
+    if ($node->bundle() !== 'service') {
+      return;
+    }
+    $variables['node__customer_view'] = \Drupal::service('entity_type.manager')
       ->getViewBuilder('node')
       ->view($node, 'customer_view');
+    $variables['node__internal_view'] = \Drupal::service('entity_type.manager')
+      ->getViewBuilder('node')
+      ->view($node, 'internal');
   }
 }
 

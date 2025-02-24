@@ -31,10 +31,9 @@
       {{ errors }}
     </div>
   {% endif %}
-  {% set nidid = nid|render|striptags|spaceless %}
 
   {{ description }}
-  {{ drupal_entity('node', nidid, 'internal') }}
+  {{ node__internal_view|render }}
   {{ value }}
 
 </details>
