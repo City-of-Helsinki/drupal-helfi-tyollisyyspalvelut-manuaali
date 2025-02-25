@@ -2,13 +2,13 @@
 
 namespace Drupal\hel_tpm_group\Plugin\views\argument;
 
-use Drupal\hel_tpm_group\ServiceMissingUpdatees;
+use Drupal\hel_tpm_group\ServicesMissingUpdaters;
 use Drupal\node\NodeStorageInterface;
 use Drupal\views\Plugin\views\argument\NumericArgument;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Argument handler to get services missing updatees via group id.
+ * Argument handler to get services missing updaters via group id.
  *
  * @ViewsArgument("group_services_missing_references")
  */
@@ -19,17 +19,17 @@ class GroupServicesMissingReferences extends NumericArgument {
    *
    * @var \Drupal\node\NodeStorageInterface
    */
-  protected $nodeStorage;
+  protected NodeStorageInterface $nodeStorage;
 
   /**
-   * Missing updatee service.
+   * Missing updaters service.
    *
-   * @var \Drupal\hel_tpm_group\ServiceMissingUpdatees
+   * @var \Drupal\hel_tpm_group\ServicesMissingUpdaters
    */
-  protected $missingUpdateesService;
+  protected ServicesMissingUpdaters $servicesMissingUpdaters;
 
   /**
-   * Constructs the Nid object.
+   * Constructs a GroupServicesMissingReferences object.
    *
    * @param array $configuration
    *   A configuration array containing information about the plugin instance.
@@ -39,13 +39,13 @@ class GroupServicesMissingReferences extends NumericArgument {
    *   The plugin implementation definition.
    * @param \Drupal\node\NodeStorageInterface $node_storage
    *   The node storage handler.
-   * @param \Drupal\hel_tpm_group\ServiceMissingUpdatees $missing_updatees_services
-   *   Missing updatees service.
+   * @param \Drupal\hel_tpm_group\ServicesMissingUpdaters $services_missing_updaters
+   *   Missing updaters service.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, NodeStorageInterface $node_storage, ServiceMissingUpdatees $missing_updatees_services) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, NodeStorageInterface $node_storage, ServicesMissingUpdaters $services_missing_updaters) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->nodeStorage = $node_storage;
-    $this->missingUpdateesService = $missing_updatees_services;
+    $this->servicesMissingUpdaters = $services_missing_updaters;
   }
 
   /**
@@ -57,7 +57,7 @@ class GroupServicesMissingReferences extends NumericArgument {
       $plugin_id,
       $plugin_definition,
       $container->get('entity_type.manager')->getStorage('node'),
-      $container->get('hel_tpm_group.service_missing_updatees')
+      $container->get('hel_tpm_group.services_missing_updaters')
     );
   }
 
@@ -65,7 +65,7 @@ class GroupServicesMissingReferences extends NumericArgument {
    * {@inheritdoc}
    */
   public function validateArgument($arg) {
-    // Validate if there is services missing updatees.
+    // Validate if there are services missing updaters.
     $this->getFilterValues();
     if (empty($this->value)) {
       $arg = NULL;
@@ -92,7 +92,7 @@ class GroupServicesMissingReferences extends NumericArgument {
    */
   protected function getFilterValues() {
     $arg_value = (int) $this->argument;
-    $this->value = $this->missingUpdateesService->getGroupServiceMissingUpdatee($arg_value, TRUE);
+    $this->value = $this->servicesMissingUpdaters->getByGroup($arg_value, TRUE);
   }
 
 }
