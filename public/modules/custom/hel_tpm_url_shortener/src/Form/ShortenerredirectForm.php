@@ -25,7 +25,6 @@ class ShortenerredirectForm extends ContentEntityForm {
   public function __construct(EntityRepositoryInterface $entity_repository, EntityTypeBundleInfoInterface $entity_type_bundle_info, TimeInterface $time, RendererInterface $renderer) {
     parent::__construct($entity_repository, $entity_type_bundle_info, $time);
     $this->renderer = $renderer;
-    ;
   }
 
   /**
