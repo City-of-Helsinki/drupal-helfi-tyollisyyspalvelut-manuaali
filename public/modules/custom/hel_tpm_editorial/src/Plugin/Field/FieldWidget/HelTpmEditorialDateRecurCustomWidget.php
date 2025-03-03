@@ -157,7 +157,7 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
       '#date_date_element' => 'text',
       '#date_time_element' => 'text',
       '#date_date_format' => 'd.m.Y',
-      '#date_time_format' => 'H:i:s',
+      '#date_time_format' => 'H:i',
       '#attached' => [
         'library' => ['hel_tpm_editorial/custom-datetimepicker'],
       ],
