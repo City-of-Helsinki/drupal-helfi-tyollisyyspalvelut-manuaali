@@ -13,6 +13,15 @@
       max-width: 100%;
     }
   }
+  .field--name-field-paragraph {
+    .field__items > div {
+      width: 100%;
+      margin-bottom: $space-double;
+      &.url-and-file {
+        max-width: 600px;
+      }
+    }
+  }
 }
 
 .icon-header-wrapper {
