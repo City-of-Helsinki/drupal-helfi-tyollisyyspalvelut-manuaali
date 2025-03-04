@@ -9,7 +9,7 @@ use weitzman\DrupalTestTraits\ExistingSiteBase;
 /**
  * Test the service popup confirm settings admin form.
  *
- * @group service_manual_workflow
+ * @group service_manual_workflow_browser_test
  */
 class ServicePopupConfirmSettingsFormTest extends ExistingSiteBase {
 

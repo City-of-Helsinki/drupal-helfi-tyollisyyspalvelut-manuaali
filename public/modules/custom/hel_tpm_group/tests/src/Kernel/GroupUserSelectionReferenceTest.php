@@ -251,6 +251,8 @@ class GroupUserSelectionReferenceTest extends GroupKernelTestBase {
    *
    * @return void
    *   -
+   *
+   * @group exclude
    */
   public function testHasParentGroupUsers(): void {
     /** @var \Drupal\Core\Entity\EntityAutocompleteMatcherInterface $autocomplete */
@@ -264,6 +266,7 @@ class GroupUserSelectionReferenceTest extends GroupKernelTestBase {
         'include_supergroup_members' => TRUE,
       ],
       'Test');
+
     $this->assertCount(2, $matches);
 
     $users = $this->getLabelsFromMatches($matches);

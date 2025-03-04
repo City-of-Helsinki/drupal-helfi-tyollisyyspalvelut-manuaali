@@ -68,7 +68,7 @@ trait GroupSelectionTrait {
       return [];
     }
 
-    if ($include_supergroups) {
+    if ($include_supergroups === TRUE) {
       // Fetch parent groups for subgroups.
       foreach ($groups as $group) {
         // If groups are not loaded get only ids.
