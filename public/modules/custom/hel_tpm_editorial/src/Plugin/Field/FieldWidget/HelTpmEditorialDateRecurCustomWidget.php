@@ -547,6 +547,14 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
     /** @var string|null $timeZone */
     $timeZone = self::TIME_ZONE;
 
+    if (is_array($start) && empty($start['object'])) {
+      $start['object'] = DrupalDateTime::createFromTimestamp(strtotime(implode($start)));
+
+    }
+    if (is_array($end)) {
+      $end['object'] = DrupalDateTime::createFromTimestamp(strtotime(implode($end)));
+
+    }
     if ($start && !$timeZone) {
       $form_state->setError($element['start'], t('Time zone must be set if start date is set.'));
     }
