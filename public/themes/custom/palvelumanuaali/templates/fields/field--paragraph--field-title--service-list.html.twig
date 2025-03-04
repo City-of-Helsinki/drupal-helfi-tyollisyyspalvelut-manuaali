@@ -54,5 +54,10 @@
 %}
 
     {% for item in items %}
-      <h3{{ item.attributes.addClass('field__item') }}>{{ item.content }}</h3>
+      {% include "@atoms/text/headings/_heading.twig" with {
+        "heading_level": 2,
+        "heading": item.content,
+        "heading_modifiers": 'semibold',
+        "heading_base_class": 'h3',
+      } %}
     {% endfor %}

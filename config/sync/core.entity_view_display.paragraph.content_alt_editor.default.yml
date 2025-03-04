@@ -1,0 +1,35 @@
+uuid: e40f292c-d63f-4f64-85bc-3d75df8d281f
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.content_alt_editor.field_body_alt
+    - field.field.paragraph.content_alt_editor.field_title
+    - paragraphs.paragraphs_type.content_alt_editor
+  module:
+    - text
+id: paragraph.content_alt_editor.default
+targetEntityType: paragraph
+bundle: content_alt_editor
+mode: default
+content:
+  field_body_alt:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  search_api_excerpt: true
