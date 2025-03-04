@@ -9,29 +9,29 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueWorkerBase;
 use Drupal\group\Entity\GroupInterface;
 use Drupal\group\Entity\GroupMembership;
-use Drupal\hel_tpm_group\ServiceMissingUpdatees;
+use Drupal\hel_tpm_group\ServicesMissingUpdaters;
 use Drupal\message\Entity\Message;
 use Drupal\message_notify\MessageNotifier;
 use Drupal\user\UserInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Defines 'hel_tpm_group_service_missing_updatees_queue' queue worker.
+ * Defines 'hel_tpm_group_services_missing_updaters_queue' queue worker.
  *
  * @QueueWorker(
- *   id = "hel_tpm_group_service_missing_updatees_queue",
- *   title = @Translation("Service missing updatees queue"),
+ *   id = "hel_tpm_group_services_missing_updaters_queue",
+ *   title = @Translation("Service missing updaters queue"),
  *   cron = {"time" = 60},
  * )
  */
-final class ServiceMissingUpdateesQueue extends QueueWorkerBase implements ContainerFactoryPluginInterface {
+final class ServicesMissingUpdatersQueue extends QueueWorkerBase implements ContainerFactoryPluginInterface {
 
   /**
    * Message template used to send notifications.
    *
    * @var string
    */
-  protected static string $messageTemplate = 'services_missing_updatees';
+  protected static string $messageTemplate = 'services_missing_updaters';
 
   /**
    * State api key.
@@ -41,14 +41,14 @@ final class ServiceMissingUpdateesQueue extends QueueWorkerBase implements Conta
   protected static string $stateName = 'hel_tpm_group_missing_updatees.group';
 
   /**
-   * Constructs a new ServiceMissingUpdateesQueue instance.
+   * Constructs a new ServicesMissingUpdatersQueue instance.
    */
   public function __construct(
     array $configuration,
     $plugin_id,
     $plugin_definition,
     private readonly EntityTypeManagerInterface $entityTypeManager,
-    private readonly ServiceMissingUpdatees $helTpmGroupServiceMissingUpdatees,
+    private readonly ServicesMissingUpdaters $servicesMissingUpdaters,
     private readonly MessageNotifier $messageNotifier,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
@@ -63,7 +63,7 @@ final class ServiceMissingUpdateesQueue extends QueueWorkerBase implements Conta
       $plugin_id,
       $plugin_definition,
       $container->get('entity_type.manager'),
-      $container->get('hel_tpm_group.service_missing_updatees'),
+      $container->get('hel_tpm_group.services_missing_updaters'),
       $container->get('message_notify.sender')
     );
   }
@@ -73,7 +73,7 @@ final class ServiceMissingUpdateesQueue extends QueueWorkerBase implements Conta
    */
   public function processItem($data): void {
     $group_id = $data['gid'];
-    $services = $this->helTpmGroupServiceMissingUpdatees->getGroupServiceMissingUpdatee($group_id, TRUE);
+    $services = $this->servicesMissingUpdaters->getByGroup($group_id, TRUE, TRUE);
     // Return if there's nothing to notify from.
     if (empty($services)) {
       return;

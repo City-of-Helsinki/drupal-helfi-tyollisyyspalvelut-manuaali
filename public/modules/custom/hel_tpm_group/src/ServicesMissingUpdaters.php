@@ -9,16 +9,16 @@ use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\node\NodeInterface;
 
 /**
- * Missing updatees service.
+ * Check whether group services are missing updaters.
  */
-class ServiceMissingUpdatees {
+class ServicesMissingUpdaters {
 
   /**
    * Static variable for field mappings.
    *
    * @var string[]
    */
-  private static array $updateeFields = [
+  private static array $updatersFields = [
     'municipality' => 'field_responsible_updatee',
     'group' => 'field_service_provider_updatee',
   ];
@@ -51,21 +51,23 @@ class ServiceMissingUpdatees {
   }
 
   /**
-   * Get all services with missing updatees.
+   * Get group's services with missing updaters.
    *
-   * @param int|null $group_id
+   * @param int $group_id
    *   Group id.
    * @param bool $nids_only
-   *   Boolean to decide whether to return
-   *   array of nids or nids mapped to fields.
+   *   TRUE if array of nids should be returned, FALSE if nids mapped to fields
+   *   should be returned.
+   * @param bool $published_only
+   *   TRUE if only checking published services, FALSE otherwise.
    *
-   * @return array|mixed|null
+   * @return array|null
    *   -
    *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public function getGroupServiceMissingUpdatee(?int $group_id = NULL, bool $nids_only = FALSE) {
+  public function getByGroup(int $group_id, bool $nids_only = FALSE, bool $published_only = FALSE): ?array {
     if (empty($group_id)) {
       return NULL;
     }
@@ -90,6 +92,11 @@ class ServiceMissingUpdatees {
     // Go through nodes and corresponding fields.
     foreach ($nodes as $source) {
       foreach ($source as $node) {
+        // If required, only take into account services that are published.
+        if ($published_only && $node->get('moderation_state')->value !== 'published') {
+          continue;
+        }
+
         $err = $this->validateReferences($node, $skip_municipality);
         // If error is set add current node to array.
         if (!empty($err)) {
@@ -117,12 +124,12 @@ class ServiceMissingUpdatees {
    * @param bool $skip_municipality
    *   Boolean whether to skip municipality field values.
    *
-   * @return array
+   * @return array|null
    *   -
    */
-  public function validateReferences(NodeInterface $node, bool $skip_municipality = FALSE) {
+  public function validateReferences(NodeInterface $node, bool $skip_municipality = FALSE): ?array {
     $err = NULL;
-    foreach (self::$updateeFields as $group_ref => $user_ref) {
+    foreach (self::$updatersFields as $group_ref => $user_ref) {
       if ($skip_municipality && $group_ref == 'municipality') {
         continue;
       }
@@ -156,7 +163,7 @@ class ServiceMissingUpdatees {
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  protected function getServicesByGroup($group_id) {
+  protected function getServicesByGroup(int $group_id): array {
     $result = $this->database->select('group_relationship_field_data', 'gr')
       ->fields('gr', ['entity_id'])
       ->condition('gid', $group_id)
@@ -182,7 +189,7 @@ class ServiceMissingUpdatees {
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  protected function getMunicipalityNodes($group_id) {
+  protected function getMunicipalityNodes(int $group_id): array|int {
     $node_storage = $this->entityTypeManager->getStorage('node');
     // Get all nodes where selected group is either responsible municipality or
     // service provider.
