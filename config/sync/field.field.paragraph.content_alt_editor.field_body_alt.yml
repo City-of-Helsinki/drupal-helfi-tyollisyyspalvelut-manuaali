@@ -1,0 +1,24 @@
+uuid: 76bfa992-fa8d-4330-86b0-713a32e2c0c1
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_body_alt
+    - filter.format.limited_text_editor
+    - paragraphs.paragraphs_type.content_alt_editor
+  module:
+    - text
+id: paragraph.content_alt_editor.field_body_alt
+field_name: field_body_alt
+entity_type: paragraph
+bundle: content_alt_editor
+label: Body
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - limited_text_editor
+field_type: text_long

@@ -13,6 +13,15 @@
       max-width: 100%;
     }
   }
+  .field--name-field-paragraph {
+    .field__items > div {
+      width: 100%;
+      margin-bottom: $space-double;
+      &.url-and-file {
+        max-width: 600px;
+      }
+    }
+  }
 }
 
 .icon-header-wrapper {
@@ -60,7 +69,6 @@
 .landing-page .block {
   h2 {
     margin-bottom: $space;
-    font-size: 18px;
     @include xl {
       margin-bottom: $space-one-and-half;
     }
