@@ -3,13 +3,13 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.message.mail_body
-    - field.field.message.services_missing_updatees.field_group
-    - message.template.services_missing_updatees
+    - field.field.message.services_missing_updaters.field_group
+    - message.template.services_missing_updaters
   module:
     - user
-id: message.services_missing_updatees.mail_body
+id: message.services_missing_updaters.mail_body
 targetEntityType: message
-bundle: services_missing_updatees
+bundle: services_missing_updaters
 mode: mail_body
 content:
   partial_1:

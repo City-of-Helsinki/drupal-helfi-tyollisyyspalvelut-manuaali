@@ -1,0 +1,23 @@
+uuid: fe7f4fbc-dd07-4a76-a3d4-562271b5612b
+langcode: fi
+status: true
+dependencies:
+  config:
+    - filter.format.filtered_html
+    - filter.format.full_html
+template: services_missing_updaters
+label: 'Services missing updaters'
+description: 'Services in group have missing updatee references notification'
+text:
+  -
+    value: "<p>Ryhmän [message:field_group] palveluiden vastuupäivittäjätiedoissa puutteita</p>"
+    format: filtered_html
+  -
+    value: "<p>Ryhmässäsi on yksi tai useampi palvelu joiden vastuupäivittäjätieto on puutteellinen. Käy tarkistamassa ryhmän <a href=\"[site:base-url]/group/[message:field_group:entity:id]/missing-updaters\">Puuttuvat vastuupäivittäjät -lista</a>.<br />\r\n&nbsp;</p>\r\n"
+    format: full_html
+settings:
+  'token options':
+    clear: false
+    'token replace': true
+  purge_override: false
+  purge_methods: {  }

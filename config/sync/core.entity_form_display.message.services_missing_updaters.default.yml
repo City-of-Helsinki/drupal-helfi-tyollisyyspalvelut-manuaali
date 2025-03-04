@@ -1,0 +1,40 @@
+uuid: 0c7d844b-00f7-4622-8294-104c00333e6a
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.field.message.services_missing_updaters.field_group
+    - message.template.services_missing_updaters
+id: message.services_missing_updaters.default
+targetEntityType: message
+bundle: services_missing_updaters
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_group:
+    type: entity_reference_autocomplete
+    weight: 12
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 5
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    '#group': advanced
+hidden: {  }

@@ -1,0 +1,25 @@
+uuid: 993ff025-b61d-461e-9acb-f9ed013b3d8c
+langcode: fi
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.message.mail_body
+    - field.field.message.services_missing_updaters.field_group
+    - message.template.services_missing_updaters
+  module:
+    - user
+id: message.services_missing_updaters.mail_body
+targetEntityType: message
+bundle: services_missing_updaters
+mode: mail_body
+content:
+  partial_1:
+    weight: 0
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  field_group: true
+  partial_0: true
+  search_api_excerpt: true
