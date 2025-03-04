@@ -213,10 +213,6 @@ body:not(.admin-toolbar-enabled) {
         @include xl {
           font-size: 15px;
         }
-        .content {
-          padding-top: 30px;
-          padding-bottom: 30px;
-        }
       }
       .block-language-blocklanguage-interface {
         display: none;
@@ -456,7 +452,8 @@ body:not(.admin-toolbar-enabled) {
      @include xl {
        position: relative;
        top: unset;
-       right: unset
+       right: unset;
+       align-content: center;
      }
   }
   .menu--favorites {
@@ -472,6 +469,7 @@ body:not(.admin-toolbar-enabled) {
        right: unset;
        width: unset;
        margin-right: $space;
+       align-content: center;
      }
   }
   #block-kirjautuminen {
