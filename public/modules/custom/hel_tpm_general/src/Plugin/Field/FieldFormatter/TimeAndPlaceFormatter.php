@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Drupal\hel_tpm_general\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceEntityFormatter;
+use Drupal\entity_reference_revisions\Plugin\Field\FieldFormatter\EntityReferenceRevisionsEntityFormatter;
 
 /**
  * Plugin implementation of the 'Time and Place formatter' formatter.
@@ -16,7 +16,7 @@ use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceEntityFormatter
  *   field_types = {"entity_reference_revisions"},
  * )
  */
-final class TimeAndPlaceFormatter extends EntityReferenceEntityFormatter {
+final class TimeAndPlaceFormatter extends EntityReferenceRevisionsEntityFormatter {
 
   /**
    * {@inheritdoc}
