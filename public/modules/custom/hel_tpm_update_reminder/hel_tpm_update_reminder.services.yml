@@ -3,3 +3,6 @@ services:
     class: Drupal\hel_tpm_update_reminder\EventSubscriber\ServiceStateChangedSubscriber
     tags:
       - { name: event_subscriber }
+  hel_tpm_update_reminder.update_reminder_user:
+    class: Drupal\hel_tpm_update_reminder\UpdateReminderUserService
+    arguments: ['@database']
