@@ -455,6 +455,7 @@ final class ServiceUpdateReminderTest extends EntityKernelTestBase {
    */
   public function testFetchServicesWithUpdaters(): void {
     $update_reminder_service = \Drupal::service('hel_tpm_update_reminder.update_reminder_user');
+    $update_reminder_service->getServicesToRemind();
 
     // Create 2 users with specific roles or properties.
     $user1 = $this->createUser([
@@ -480,12 +481,14 @@ final class ServiceUpdateReminderTest extends EntityKernelTestBase {
 
     // Create 1 draft service.
     $draftService = $this->createService(['moderation_state' => 'draft']);
-
+    $draftService->id();
     // Create 1 ready to publish service.
     $readyToPublishService = $this->createService(['moderation_state' => 'ready_to_publish']);
 
+    $readyToPublishService->id();
     // Create 1 published service.
     $publishedService = $this->createService(['moderation_state' => 'published']);
+    $publishedService->id();
 
   }
 

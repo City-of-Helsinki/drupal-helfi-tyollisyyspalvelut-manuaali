@@ -3,6 +3,7 @@
 namespace Drupal\hel_tpm_update_reminder;
 
 use Drupal\Core\Database\Connection;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\node\NodeInterface;
 
 /**
@@ -17,8 +18,16 @@ class UpdateReminderUserService {
    */
   protected $database;
 
-  public function __construct(Connection $database) {
+  /**
+   * The entity type manager service.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
+  public function __construct(Connection $database, EntityTypeManagerInterface $entityTypeManager) {
     $this->database = $database;
+    $this->entityTypeManager = $entityTypeManager;
   }
 
   /**
@@ -53,7 +62,7 @@ class UpdateReminderUserService {
    *   An array of service node IDs.
    */
   public function fetchPublishedServiceIds(): array {
-    return \Drupal::entityQuery('node')
+    return $this->entityTypeManager->getStorage('node')->getQuery()
       ->condition('type', 'service')
       ->condition('status', NodeInterface::PUBLISHED)
       ->accessCheck(FALSE)

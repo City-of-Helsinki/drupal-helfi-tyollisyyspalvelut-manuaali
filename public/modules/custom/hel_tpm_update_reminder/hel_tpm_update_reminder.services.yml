@@ -5,4 +5,4 @@ services:
       - { name: event_subscriber }
   hel_tpm_update_reminder.update_reminder_user:
     class: Drupal\hel_tpm_update_reminder\UpdateReminderUserService
-    arguments: ['@database']
+    arguments: ['@database', '@entity_type.manager']
