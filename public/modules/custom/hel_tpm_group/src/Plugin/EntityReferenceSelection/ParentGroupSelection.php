@@ -108,7 +108,7 @@ class ParentGroupSelection extends GroupSelection {
       $entity = $configuration['entity'];
     }
 
-    $include_supergroups = empty($configuration['include_supergroup']) ? FALSE : $configuration['include_supergroup'];
+    $include_supergroups = !empty($configuration['include_supergroup']);
     $groups = $this->getGroups($entity, $include_supergroups);
     if (!empty($groups)) {
       $query->condition('id', $groups, 'IN');
