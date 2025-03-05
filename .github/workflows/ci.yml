@@ -8,8 +8,9 @@ env:
   SIMPLETEST_BASE_URL: "http://127.0.0.1:8080"
 
 jobs:
+
   build:
-    runs-on: 'ubuntu-20.04'
+    runs-on: 'ubuntu-24.04'
     strategy:
       fail-fast: false
       matrix:
@@ -29,7 +30,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
-          extensions: gd, pdo_sqlite
+          extensions: gd, pdo_sqlite, xdebug
 
       - name: Update composer
         run: composer --verbose self-update --${{ matrix.composer-channel }}
@@ -43,30 +44,31 @@ jobs:
       - name: Install dependencies
         run: composer --verbose install
 
-      - if: matrix.drupal-release == 'dev'
-        run: composer --verbose require --no-update drupal/core-recommended:9.2.x-dev && composer --verbose require --no-update --dev drupal/core-dev:9.2.x-dev
-
-      - if: matrix.drupal-release == 'dev'
-        run: composer --verbose update
-
       - run: ./vendor/bin/drush site-install --verbose --yes --db-url=sqlite://tmp/site.sqlite
 
       - run: ./vendor/bin/drush runserver $SIMPLETEST_BASE_URL &
 
       - run: until curl -s $SIMPLETEST_BASE_URL; do true; done > /dev/null
 
-        # https://www.drupal.org/project/drupal/issues/3182653
-        # https://www.drupal.org/node/3176567
-      - if: ${{ matrix.php-versions == '7.4' }} || ${{ matrix.php-versions == '8.1' }}
-        run: composer require phpspec/prophecy-phpunit:^2
-
       - name: Run a single unit test to verfiy the testing setup.
         run: ./vendor/bin/phpunit -c ./public/core ./public/core/modules/user/tests/src/Unit/UserAccessControlHandlerTest.php
+
+      - name: Run tests with phpunit/phpunit
+        run: ./vendor/bin/phpunit -c /home/runner/work/drupal-helfi-tyollisyyspalvelut-manuaali/drupal-helfi-tyollisyyspalvelut-manuaali/phpunit.github.xml --exclude-group service_manual_workflow_browser_test,exclude --coverage-clover=coverage.xml ./public/modules/custom
 
       - run: ./vendor/bin/drush
 
       - name: Run Custom module code standards.
         run: ./vendor/bin/phpcs --standard=Drupal,DrupalPractice --ignore=node_modules,bower_components,vendor --extensions=php,module,inc,install,test,profile,theme,info,yml ./public/modules/custom
 
-      - name: Check theme coding standards .
+      - name: Check theme coding standards.
         run: ./vendor/bin/phpcs --standard=Drupal,DrupalPractice --ignore=node_modules,bower_components,vendor --extensions=php,module,inc,install,test,profile,theme,info,yml ./public/themes/custom
+
+      - name: Check security updates.
+        run: composer audit
+
+      - name: SonarQube Scan
+        if: ${{ env.SONARCLOUD_TOKEN }}
+        uses: SonarSource/sonarqube-scan-action@v4
+        env:
+          SONAR_TOKEN: ${{ secrets.sonarcloud_token }}

@@ -77,8 +77,6 @@ final class SetServiceOutdatedOperationTest extends GroupKernelTestBase {
 
   /**
    * Test callback.
-   *
-   * @covers Drupal\service_manual_workflow\Form\SetServiceOutdatedOperationForm;
    */
   public function testSetServiceOutdatedOperationForm(): void {
     $user = $this->createUser([], NULL, TRUE);
