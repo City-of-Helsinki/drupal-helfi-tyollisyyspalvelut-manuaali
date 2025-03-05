@@ -157,7 +157,7 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
       '#date_date_element' => 'text',
       '#date_time_element' => 'text',
       '#date_date_format' => 'd.m.Y',
-      '#date_time_format' => 'H:i',
+      '#date_time_format' => 'H:i:s',
       '#attached' => [
         'library' => ['hel_tpm_editorial/custom-datetimepicker'],
       ],
@@ -547,14 +547,6 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
     /** @var string|null $timeZone */
     $timeZone = self::TIME_ZONE;
 
-    if (is_array($start) && empty($start['object'])) {
-      $element['start']['#value']['object'] = DrupalDateTime::createFromTimestamp(strtotime(implode($start)));
-    }
-    if (is_array($end)) {
-      $element['end']['#value']['object'] = DrupalDateTime::createFromTimestamp(strtotime(implode($end)));
-    }
-    $start = $element['start']['#value']['object'];
-    $end = $element['end']['#value']['object'];
     if ($start && !$timeZone) {
       $form_state->setError($element['start'], t('Time zone must be set if start date is set.'));
     }
