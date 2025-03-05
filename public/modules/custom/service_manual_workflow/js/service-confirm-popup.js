@@ -25,7 +25,7 @@
       }
 
       if (message.length > 0) {
-        once('serviceConfirmPopup', this.confirmPopup(title, message));
+        once('serviceConfirmPopup','input.form-submit', this.confirmPopup(title, message));
       }
     },
 

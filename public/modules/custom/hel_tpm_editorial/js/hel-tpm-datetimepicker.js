@@ -28,7 +28,7 @@
           if (placeholder === null) {
             return;
           }
-          if (placeholder === timeFormat) {
+          if (placeholder === timeFormat || placeholder === 'hh:mm') {
             $(this).attr('placeholder',  'hh:mm');
             $(this).timepicker({
               timeFormat: timeFormat,
