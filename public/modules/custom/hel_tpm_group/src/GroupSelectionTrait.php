@@ -30,7 +30,7 @@ trait GroupSelectionTrait {
    * @return array
    *   Array of groups.
    */
-  protected function getGroups($node, $include_supergroups, $load_groups = FALSE) {
+  protected function getGroups(NodeInterface $node, bool $include_supergroups, bool $load_groups = FALSE): array {
     $groups = [];
     if (!$node instanceof NodeInterface) {
       return $groups;
@@ -68,7 +68,7 @@ trait GroupSelectionTrait {
       return [];
     }
 
-    if ($include_supergroups === TRUE) {
+    if ($include_supergroups) {
       // Fetch parent groups for subgroups.
       foreach ($groups as $group) {
         // If groups are not loaded get only ids.
