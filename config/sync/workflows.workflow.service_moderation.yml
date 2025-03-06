@@ -45,10 +45,15 @@ type_settings:
         - published
       to: archived
       weight: 3
+    create_draft_from_archived:
+      label: 'Create Draft from Archived'
+      from:
+        - archived
+      to: draft
+      weight: 5
     create_new_draft:
       label: 'Create New Draft'
       from:
-        - archived
         - draft
         - published
       to: draft

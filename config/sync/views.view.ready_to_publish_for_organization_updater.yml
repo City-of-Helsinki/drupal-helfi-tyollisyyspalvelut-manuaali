@@ -1,4 +1,4 @@
-uuid: 9e0c5e4e-2655-4326-bacf-72c62085c591
+uuid: ce534e89-35fc-4dc3-80ad-7b721b758172
 langcode: fi
 status: true
 dependencies:
@@ -10,11 +10,11 @@ dependencies:
     - user.role.specialist_editor
     - workflows.workflow.service_moderation
   module:
+    - content_moderation
     - node
-    - service_manual_workflow
     - user
-id: ready_to_publish_for_organization_updatee
-label: 'ready to publish for organization updatee'
+id: ready_to_publish_for_organization_updater
+label: 'Ready to publish for organization updater'
 module: views
 description: ''
 tag: ''
@@ -471,7 +471,7 @@ display:
     position: 1
     display_options:
       display_extenders: {  }
-      block_description: 'Ready to publish service for responsible updatee block'
+      block_description: 'Ready to publish service for responsible updater block'
       block_hide_empty: true
     cache_metadata:
       max-age: -1
