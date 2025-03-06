@@ -1,0 +1,109 @@
+uuid: 70bea025-6cf5-4266-8559-414569c4894a
+langcode: fi
+status: true
+dependencies: {  }
+id: service_location_export
+label: 'Service location export'
+entity_type_id: node
+bundle: service_location
+delimiter: ','
+fields:
+  nid:
+    enable: true
+    order: 0
+    exporter: default_export
+    form:
+      options:
+        header: label
+        property:
+          value: value
+        property_separator: '|'
+        property_separate_column: 0
+        format: ''
+  field_address:
+    enable: true
+    order: 1
+    exporter: address_export
+    form:
+      options:
+        header: label
+        property:
+          organization: organization
+          address_line1: address_line1
+          address_line2: address_line2
+          postal_code: postal_code
+          locality: locality
+          family_name: '0'
+          additional_name: '0'
+          given_name: '0'
+          dependent_locality: '0'
+          sorting_code: '0'
+          administrative_area: '0'
+          country_code: '0'
+          langcode: '0'
+        property_separator: '|'
+        property_separate_column: 1
+        format: ''
+  field_accessibility:
+    enable: true
+    order: 2
+    exporter: entity_reference_export
+    form:
+      options:
+        header: label
+        property:
+          target_id: target_id
+        property_separator: '|'
+        property_separate_column: 0
+        format: entity_reference_label
+        explode: ''
+        separator: '|'
+  field_accessibility_details:
+    enable: true
+    order: 3
+    exporter: default_export
+    form:
+      options:
+        header: label
+        property:
+          value: value
+        property_separator: '|'
+        property_separate_column: 0
+        format: ''
+  status:
+    enable: true
+    order: 4
+    exporter: default_export
+    form:
+      options:
+        header: label
+        property:
+          value: value
+        property_separator: '|'
+        property_separate_column: 0
+        format: ''
+  changed:
+    enable: true
+    order: 5
+    exporter: timestamp_export
+    form:
+      options:
+        header: label
+        property:
+          value: value
+        property_separator: '|'
+        property_separate_column: 0
+        format: date_month_year
+        custom_date_format: ''
+  uid:
+    enable: true
+    order: 6
+    exporter: entity_reference_export
+    form:
+      options:
+        header: label
+        property:
+          target_id: target_id
+        property_separator: '|'
+        property_separate_column: 0
+        format: entity_reference_label

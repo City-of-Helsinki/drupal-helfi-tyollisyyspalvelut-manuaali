@@ -14,10 +14,10 @@ entity_types:
   flag_list_item:
     enable: 0
     limit_per_bundle: {  }
-  group_content:
+  group:
     enable: 0
     limit_per_bundle: {  }
-  group:
+  group_content:
     enable: 0
     limit_per_bundle: {  }
   group_config_wrapper:
@@ -42,8 +42,17 @@ entity_types:
     enable: 1
     limit_per_bundle:
       service: service
+      service_location: service_location
     bundles:
       service: {  }
+      service_location:
+        nid: nid
+        status: status
+        uid: uid
+        changed: changed
+        field_accessibility: field_accessibility
+        field_accessibility_details: field_accessibility_details
+        field_address: field_address
   notification_message:
     enable: 0
     limit_per_bundle: {  }
