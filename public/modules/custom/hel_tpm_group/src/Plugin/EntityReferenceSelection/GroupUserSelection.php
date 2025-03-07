@@ -151,8 +151,8 @@ class GroupUserSelection extends UserSelection {
   protected function buildEntityQuery($match = NULL, $match_operator = 'CONTAINS') {
     $query = parent::buildEntityQuery($match, $match_operator);
     $configuration = $this->getConfiguration();
-    $include_supergroups = empty($configuration['include_supergroup_members']) ? FALSE : $configuration['include_supergroup_members'];
 
+    $include_supergroups = !empty($configuration['include_supergroup_members']);
     if (!empty($configuration['entity'])) {
       $entity = $configuration['entity'];
     }

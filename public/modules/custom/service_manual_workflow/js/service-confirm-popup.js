@@ -2,11 +2,13 @@
 
   Drupal.behaviors.serviceConfirmPopup = {
     attach: function (context, settings) {
-
+      let button = $('#edit-submit-popup');
       // call to function to open popup
-      $("#edit-submit-popup").click(function (e) {
-        e.preventDefault();
-        Drupal.behaviors.serviceConfirmPopup.addPopup(context, settings);
+      $(once('confirmPopup', button)).each(function() {
+        button.click(function (e) {
+          e.preventDefault();
+          Drupal.behaviors.serviceConfirmPopup.addPopup(context, settings);
+        });
       });
 
     },
@@ -25,7 +27,7 @@
       }
 
       if (message.length > 0) {
-        once('serviceConfirmPopup', this.confirmPopup(title, message));
+        this.confirmPopup(title, message);
       }
     },
 
