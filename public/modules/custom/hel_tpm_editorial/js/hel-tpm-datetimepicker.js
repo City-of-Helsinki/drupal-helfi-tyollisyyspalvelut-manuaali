@@ -1,7 +1,7 @@
 (function ($, Drupal, drupalSettings) {
   Drupal.behaviors.jqueryDatetimePicker = {
     attach(context, settings) {
-      let widget = '.field--widget-hel-tpm-editorial-date-recur-custom';
+      let widget = '.hel-tpm-editorial-date-recur-custom-widget';
       formatTimePickers(widget);
       inheritEndDate(widget)
 
@@ -28,7 +28,7 @@
           if (placeholder === null) {
             return;
           }
-          if (placeholder === 'hh:mm:ss' || placeholder === 'hh:mm') {
+          if (placeholder === timeFormat || placeholder === 'hh:mm') {
             $(this).attr('placeholder',  'hh:mm');
             $(this).timepicker({
               timeFormat: timeFormat,

@@ -10,30 +10,72 @@ use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
 use Drupal\Tests\service_manual_workflow\Traits\ServiceManualWorkflowTestTrait;
 use Drupal\Tests\user\Traits\UserCreationTrait;
-use Drupal\hel_tpm_group\Plugin\QueueWorker\ServiceMissingUpdateesQueue;
+use Drupal\hel_tpm_group\Plugin\QueueWorker\ServicesMissingUpdatersQueue;
 
 /**
- * Provides tests for missing service updatees.
+ * Provides tests for missing service updaters.
  */
-class ServiceUpdateeMissingNotificationTest extends GroupKernelTestBase {
+class ServicesMissingUpdatersNotificationTest extends GroupKernelTestBase {
   use UserCreationTrait;
   use ContentModerationTestTrait;
   use ContentTypeCreationTrait;
   use ServiceManualWorkflowTestTrait;
+
+  /**
+   * Service provider group entity.
+   *
+   * @var \Drupal\group\Entity\GroupInterface
+   */
+  private $spGroup;
+
+  /**
+   * Service Provide user entity.
+   *
+   * @var \Drupal\user\UserInterface
+   */
+  private $spUser;
+
+  /**
+   * Organization group entity.
+   *
+   * @var \Drupal\group\Entity\GroupInterface
+   */
+  private $orgGroup;
+
+  /**
+   * Organization user.
+   *
+   * @var \Drupal\user\UserInterface
+   */
+  private $orgUser;
+
+  /**
+   * Organization user 2.
+   *
+   * @var \Drupal\user\UserInterface
+   */
+  private $orgUser2;
+
+  /**
+   * Organization user 3.
+   *
+   * @var \Drupal\user\UserInterface
+   */
+  private $orgUser3;
 
   use AssertMailTrait {
     getMails as drupalGetMails;
   }
 
   /**
-   * Missing updatee service.
+   * Missing updaters service.
    *
    * @var mixed
    */
-  protected $missingUpdateeServices;
+  protected $servicesMissingUpdaters;
 
   /**
-   * Service missing updatees queue.
+   * Service missing updaters queue.
    *
    * @var mixed|object|null
    */
@@ -86,43 +128,42 @@ class ServiceUpdateeMissingNotificationTest extends GroupKernelTestBase {
       'content_moderation',
     ]);
 
-    $this->queue = $this->container->get('queue')->get('hel_tpm_group_service_missing_updatees_queue');
-    $this->missingUpdateeServices = \Drupal::service('hel_tpm_group.service_missing_updatees');
-
+    $this->queue = $this->container->get('queue')->get('hel_tpm_group_services_missing_updaters_queue');
+    $this->servicesMissingUpdaters = \Drupal::service('hel_tpm_group.services_missing_updaters');
   }
 
   /**
-   * Test updatee notifications when updatee account is disabled.
+   * Test notifications when updater account is disabled.
    *
    * @return void
    *   Void.
    *
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  public function testServiceProviderMissingUpdatees() {
+  public function testDisabledUpdater() {
     $this->initGroups();
     $this->createServiceNode();
 
-    $result = $this->missingUpdateeServices->getGroupServiceMissingUpdatee((int) $this->spGroup->id(), TRUE);
+    $result = $this->servicesMissingUpdaters->getByGroup((int) $this->spGroup->id(), TRUE);
     $this->assertEmpty($result, 'Result not empty');
 
     $this->spUser->set('status', 0);
     $this->spUser->save();
 
-    $result = $this->missingUpdateeServices->getGroupServiceMissingUpdatee((int) $this->spGroup->id(), TRUE);
+    $result = $this->servicesMissingUpdaters->getByGroup((int) $this->spGroup->id(), TRUE);
     $this->assertEquals(1, $result[0], 'Disabled service provider user still has permissions to edit.');
 
-    $result = $this->missingUpdateeServices->getGroupServiceMissingUpdatee((int) $this->orgGroup->id(), TRUE);
-    $this->assertCount(1, $result, 'Expected updatee count didn\'t match');
+    $result = $this->servicesMissingUpdaters->getByGroup((int) $this->orgGroup->id(), TRUE);
+    $this->assertCount(1, $result, 'Expected updater count didn\'t match');
 
-    $users = ServiceMissingUpdateesQueue::getUsersToNotify($this->orgGroup);
+    $users = ServicesMissingUpdatersQueue::getUsersToNotify($this->orgGroup);
     $this->assertNotEmpty($users[$this->orgUser->id()], 'Expected user missing.');
     $this->assertTrue(empty($users[$this->orgUser3->id()]), 'Disabled user in users to sent message.');
     $this->assertCount(1, $users);
   }
 
   /**
-   * Test when updatee member is removed from group.
+   * Test updater removed from the group.
    *
    * @return void
    *   Void
@@ -136,9 +177,9 @@ class ServiceUpdateeMissingNotificationTest extends GroupKernelTestBase {
     $this->spGroup->removeMember($this->spUser);
     $this->orgGroup->removeMember($this->orgUser);
 
-    $result = $this->missingUpdateeServices->getGroupServiceMissingUpdatee((int) $this->orgGroup->id());
-    $this->assertEquals("user has no update access", $result[0]['errors']['field_service_provider_updatee'], 'Updatee error did not match.');
-    $this->assertEquals("user has no update access", $result[0]['errors']['field_responsible_updatee'], 'Updatee error did not match.');
+    $result = $this->servicesMissingUpdaters->getByGroup((int) $this->orgGroup->id());
+    $this->assertEquals("user has no update access", $result[0]['errors']['field_service_provider_updatee'], 'Updater error did not match.');
+    $this->assertEquals("user has no update access", $result[0]['errors']['field_responsible_updatee'], 'Updater error did not match.');
   }
 
   /**

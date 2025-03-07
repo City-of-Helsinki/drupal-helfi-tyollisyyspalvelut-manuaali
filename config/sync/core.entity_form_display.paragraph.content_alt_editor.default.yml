@@ -1,0 +1,34 @@
+uuid: a2a9203f-5e55-4b2d-a675-92900a72ff9c
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.content_alt_editor.field_body_alt
+    - field.field.paragraph.content_alt_editor.field_title
+    - paragraphs.paragraphs_type.content_alt_editor
+  module:
+    - text
+id: paragraph.content_alt_editor.default
+targetEntityType: paragraph
+bundle: content_alt_editor
+mode: default
+content:
+  field_body_alt:
+    type: text_textarea
+    weight: 1
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true
