@@ -452,27 +452,17 @@ final class ServiceUpdateReminderTest extends EntityKernelTestBase {
    * @throws \Drupal\Core\Entity\EntityStorageException
    *   Thrown when there is an issue with entity storage
    *   operations during service or user creation.
+   *
+   * @group update_reminder_user_service_1
    */
   public function testFetchServicesWithUpdaters(): void {
     $update_reminder_service = \Drupal::service('hel_tpm_update_reminder.update_reminder_user');
-    $update_reminder_service->getServicesToRemind();
 
-    // Create 2 users with specific roles or properties.
-    $user1 = $this->createUser([
-      'name' => 'TestUser1',
-      'mail' => 'testuser1@example.com',
-    // Active.
-      'status' => 1,
-      'roles' => ['authenticated'],
-    ]);
+    $user1 = $this->createUser([], NULL, TRUE);
 
-    $user2 = $this->createUser([
-      'name' => 'TestUser2',
-      'mail' => 'testuser2@example.com',
-    // Active.
-      'status' => 1,
-      'roles' => ['authenticated'],
-    ]);
+    $user2 = $this->createUser([], NULL, TRUE);
+
+    $user3 = $this->createUser([], NULL, TRUE);
 
     // Optionally, add assertions to validate
     // that the users were created successfully.
@@ -480,16 +470,40 @@ final class ServiceUpdateReminderTest extends EntityKernelTestBase {
     $this->assertNotNull($user2->id(), 'User 2 was created successfully.');
 
     // Create 1 draft service.
-    $draftService = $this->createService(['moderation_state' => 'draft']);
-    $draftService->id();
-    // Create 1 ready to publish service.
-    $readyToPublishService = $this->createService(['moderation_state' => 'ready_to_publish']);
+    $this->setCurrentUser($user1);
+    $service = $this->createService([
+      'moderation_state' => 'draft',
+      'field_service_provider_updatee' => $user1,
+      'created' => strtotime('-130 days '),
+      'changed' => strtotime('-130 days '),
+    ]);
 
-    $readyToPublishService->id();
-    // Create 1 published service.
-    $publishedService = $this->createService(['moderation_state' => 'published']);
-    $publishedService->id();
+    $this->updateService((int) $service->id(), ['moderation_state' => 'published'], 129);
+    $remind_service = $update_reminder_service->getServicesToRemind();
+    $this->assertCount(1, $remind_service);
 
+    $this->setCurrentUser($user2);
+
+    $this->updateService((int) $service->id(), ['moderation_state' => 'published'], 10);
+    $remind_service = $update_reminder_service->getServicesToRemind();
+    $this->assertCount(1, $remind_service);
+
+    $this->setCurrentUser($user1);
+
+    $this->updateService((int) $service->id(), ['moderation_state' => 'published'], 2);
+    $remind_service = $update_reminder_service->getServicesToRemind();
+    $this->assertCount(0, $remind_service);
+
+    $this->updateService((int) $service->id(), [
+      'moderation_state' => 'draft',
+      'field_service_provider_updatee' => $user3->id(),
+    ], 1);
+    $remind_service = $update_reminder_service->getServicesToRemind();
+    $this->assertCount(0, $remind_service);
+
+    $this->updateService((int) $service->id(), ['moderation_state' => 'published'], 0);
+    $remind_service = $update_reminder_service->getServicesToRemind();
+    $this->assertCount(1, $remind_service);
   }
 
   /**
@@ -566,6 +580,9 @@ final class ServiceUpdateReminderTest extends EntityKernelTestBase {
       'title' => $this->randomMachineName(8),
     ];
     $node = Node::create($values);
+    if ($values['changed']) {
+      $node->setRevisionCreationTime($values['changed']);
+    }
     $node->save();
     return $this->reloadEntity($node);
   }
@@ -589,12 +606,19 @@ final class ServiceUpdateReminderTest extends EntityKernelTestBase {
     $node = Node::load($nid);
     $changed = strtotime('-' . $days . ' days', \Drupal::time()->getRequestTime());
 
+    if (!$node->isLatestRevision()) {
+      $vid = \Drupal::entityTypeManager()
+        ->getStorage('node')
+        ->getLatestRevisionId($nid);
+      $node = \Drupal::entityTypeManager()->getStorage('node')->loadRevision($vid);
+    }
     foreach ($values as $key => $value) {
       $node->set($key, $value);
     }
 
     $node->setChangedTime($changed);
     $node->setRevisionCreationTime($changed);
+    $node->setRevisionUserId(\Drupal::CurrentUser()->id());
     $node->save();
     $this->setCheckedTimestampToValue((int) $node->id(), $days);
     return $this->reloadEntity($node);
