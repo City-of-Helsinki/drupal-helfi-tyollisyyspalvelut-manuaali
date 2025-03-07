@@ -453,7 +453,7 @@ final class ServiceUpdateReminderTest extends EntityKernelTestBase {
    *   Thrown when there is an issue with entity storage
    *   operations during service or user creation.
    *
-   * @group update_reminder_user_service_1
+   * @group update_reminder_user_service
    */
   public function testFetchServicesWithUpdaters(): void {
     $update_reminder_service = \Drupal::service('hel_tpm_update_reminder.update_reminder_user');
@@ -580,7 +580,7 @@ final class ServiceUpdateReminderTest extends EntityKernelTestBase {
       'title' => $this->randomMachineName(8),
     ];
     $node = Node::create($values);
-    if ($values['changed']) {
+    if (!empty($values['changed'])) {
       $node->setRevisionCreationTime($values['changed']);
     }
     $node->save();
