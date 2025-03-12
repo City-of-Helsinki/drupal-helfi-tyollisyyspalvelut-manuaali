@@ -23,6 +23,7 @@ dependencies:
     - group
     - hel_tpm_search
     - search_api
+    - views_exposed_embed
 id: solr_service_list
 label: 'Solr Service list'
 module: views
@@ -216,17 +217,20 @@ display:
                 options_hide_when_empty: false
                 options_show_items_count: 0
               field_target_group_municipality:
-                plugin_id: default
+                plugin_id: bef
                 advanced:
                   sort_options: false
                   rewrite:
                     filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: false
+                select_all_none: false
+                select_all_none_nested: false
+                display_inline: false
                 options_show_only_used: false
                 options_show_only_used_filtered: false
                 options_hide_when_empty: false
-                options_show_items_count: 0
+                options_show_items_count: 1
               service_provider_entity_id:
                 plugin_id: default
                 advanced:
@@ -1081,7 +1085,7 @@ display:
           required: false
           skip_access: false
       css_class: service-search
-      use_ajax: false
+      use_ajax: true
       header: {  }
       footer: {  }
       display_extenders:
@@ -1097,16 +1101,15 @@ display:
       tags:
         - 'config:search_api.index.service_search_solr_index'
         - 'search_api_list:service_search_solr_index'
-  embed_1:
-    id: embed_1
-    display_title: Upota
-    display_plugin: embed
-    position: 3
+  exposed_embed_1:
+    id: exposed_embed_1
+    display_title: 'Exposed Embed'
+    display_plugin: exposed_embed
+    position: 2
     display_options:
       display_extenders:
-        ajax_history:
-          enable_history: false
-          exclude_args: ''
+        ajax_history: {  }
+      exposed_block: true
     cache_metadata:
       max-age: -1
       contexts:
