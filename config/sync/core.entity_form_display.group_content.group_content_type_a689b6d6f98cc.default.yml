@@ -5,6 +5,8 @@ dependencies:
   config:
     - field.field.group_content.group_content_type_a689b6d6f98cc.group_roles
     - group.content_type.group_content_type_a689b6d6f98cc
+  module:
+    - hel_tpm_group
 id: group_content.group_content_type_a689b6d6f98cc.default
 targetEntityType: group_content
 bundle: group_content_type_a689b6d6f98cc
@@ -21,7 +23,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
   group_roles:
-    type: options_buttons
+    type: hel_tpm_group_group_role_required_select
     weight: 1
     region: content
     settings: {  }
