@@ -46,8 +46,31 @@ final class ParagraphExport extends FieldTypeExportBase {
   /**
    * {@inheritdoc}
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, DateFormatterInterface $date_formatter, ModuleHandlerInterface $module_handler, EntityRepositoryInterface $entity_repository, EntityFieldManagerInterface $entity_field_manager, LanguageManagerInterface $language_manager, ConfigFactoryInterface $config_factory, RendererInterface $renderer) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_type_manager, $date_formatter, $module_handler, $entity_repository, $entity_field_manager, $language_manager, $config_factory);
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    EntityTypeManagerInterface $entity_type_manager,
+    DateFormatterInterface $date_formatter,
+    ModuleHandlerInterface $module_handler,
+    EntityRepositoryInterface $entity_repository,
+    EntityFieldManagerInterface $entity_field_manager,
+    LanguageManagerInterface $language_manager,
+    ConfigFactoryInterface $config_factory,
+    RendererInterface $renderer,
+  ) {
+    parent::__construct(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $entity_type_manager,
+      $date_formatter,
+      $module_handler,
+      $entity_repository,
+      $entity_field_manager,
+      $language_manager,
+      $config_factory
+    );
     $this->renderer = $renderer;
   }
 
@@ -84,7 +107,12 @@ final class ParagraphExport extends FieldTypeExportBase {
   /**
    * {@inheritdoc}
    */
-  public function massageExportPropertyValue(FieldItemInterface $field_item, $property_name, FieldDefinitionInterface $field_definition, $options = []) {
+  public function massageExportPropertyValue(
+    FieldItemInterface $field_item,
+    $property_name,
+    FieldDefinitionInterface $field_definition,
+    $options = [],
+  ) {
     if ($field_item->isEmpty()) {
       return NULL;
     }
@@ -128,7 +156,10 @@ final class ParagraphExport extends FieldTypeExportBase {
     if ($this->getConfiguration()['format'] === 'paragraph_fields_separated') {
       $properties_selected = [];
       $handler_settings = $field_definition->getSetting('handler_settings');
-      $field_definitions = $this->entityFieldManager->getFieldDefinitions('paragraph', array_key_first($handler_settings['target_bundles']));
+      $field_definitions = $this->entityFieldManager->getFieldDefinitions(
+        'paragraph',
+        array_key_first($handler_settings['target_bundles'])
+      );
       foreach ($field_definitions as $field_key => $value) {
         if (!$value instanceof FieldConfig) {
           continue;

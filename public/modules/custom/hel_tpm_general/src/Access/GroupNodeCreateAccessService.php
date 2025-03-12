@@ -4,6 +4,8 @@ namespace Drupal\hel_tpm_general\Access;
 
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Access\AccessResultAllowed;
+use Drupal\Core\Access\AccessResultInterface;
+use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\group\Access\GroupRelationshipCreateEntityAccessCheck;
 use Drupal\group\Entity\GroupInterface;
@@ -14,44 +16,23 @@ use Symfony\Component\Routing\RouterInterface;
 /**
  * Group node create access service.
  */
-class GroupNodeCreateAccessService {
-
-  /**
-   * Group membership loader.
-   *
-   * @var \Drupal\group\GroupMembershipLoader
-   */
-  protected $groupMembershipLoader;
-
-  /**
-   * Group content create entity access.
-   *
-   * @var \Drupal\group\Access\GroupContentCreateEntityAccessCheck
-   */
-  protected $groupContentCreateEntityAccess;
-
-  /**
-   * Router interface.
-   *
-   * @var \Symfony\Component\Routing\RouterInterface
-   */
-  protected $router;
+class GroupNodeCreateAccessService implements ContainerInjectionInterface {
 
   /**
    * Constructor.
    *
-   * @param \Drupal\group\GroupMembershipLoader $group_membership_loader
+   * @param \Drupal\group\GroupMembershipLoader $groupMembershipLoader
    *   Group membership loader service.
-   * @param \Drupal\group\Access\GroupContentCreateEntityAccessCheck $group_content_create_entity_access
+   * @param \Drupal\group\Access\GroupRelationshipCreateEntityAccessCheck $groupContentCreateEntityAccess
    *   Group content create entity access service.
    * @param \Symfony\Component\Routing\RouterInterface $router
    *   Router service.
    */
-  public function __construct(GroupMembershipLoader $group_membership_loader, GroupRelationshipCreateEntityAccessCheck $group_content_create_entity_access, RouterInterface $router) {
-    $this->groupMembershipLoader = $group_membership_loader;
-    $this->groupContentCreateEntityAccess = $group_content_create_entity_access;
-    $this->router = $router;
-  }
+  public function __construct(
+    protected GroupMembershipLoader $groupMembershipLoader,
+    protected GroupRelationshipCreateEntityAccessCheck $groupContentCreateEntityAccess,
+    protected RouterInterface $router,
+  ) {}
 
   /**
    * {@inheritdoc}
@@ -95,7 +76,7 @@ class GroupNodeCreateAccessService {
    * @return \Drupal\Core\Access\AccessResultInterface
    *   Access result.
    */
-  public function hasCreateServiceAccess(GroupInterface $group, string $plugin_id, AccountInterface $account) {
+  public function hasCreateServiceAccess(GroupInterface $group, string $plugin_id, AccountInterface $account): AccessResultInterface {
     $path = $this->buildPath($group, $plugin_id);
     $route = $this->getRouteByPath($path);
     return $this->groupContentCreateEntityAccess->access($route, $account, $group, $plugin_id);
@@ -112,7 +93,7 @@ class GroupNodeCreateAccessService {
    * @return string
    *   Link path for group content creation.
    */
-  private function buildPath(GroupInterface $group, string $plugin_id) {
+  private function buildPath(GroupInterface $group, string $plugin_id): string {
     return sprintf('/group/%s/content/create/%s', $group->id(), $plugin_id);
   }
 
@@ -125,7 +106,7 @@ class GroupNodeCreateAccessService {
    * @return false|mixed
    *   If route is found return route object.
    */
-  private function getRouteByPath(string $path) {
+  private function getRouteByPath(string $path): mixed {
     $route = $this->router->match($path);
     if (empty($route)) {
       return FALSE;

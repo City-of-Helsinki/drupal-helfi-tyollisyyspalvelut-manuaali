@@ -57,7 +57,14 @@ class AddServiceButton extends AreaPluginBase {
    * @param \Drupal\Core\Session\AccountInterface $current_user
    *   Current user account.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, GroupNodeCreateAccessService $group_node_add_access_service, CurrentGroup $current_group, AccountInterface $current_user) {
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    GroupNodeCreateAccessService $group_node_add_access_service,
+    CurrentGroup $current_group,
+    AccountInterface $current_user,
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->groupNodeAddAccessService = $group_node_add_access_service;
     $this->currentGroup = $current_group;

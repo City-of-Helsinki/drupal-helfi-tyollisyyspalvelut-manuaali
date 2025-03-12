@@ -69,7 +69,10 @@ class BulkGroupInvitationCustom extends BulkGroupInvitation {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $group_type = $this->group->getGroupType();
-    $relation_type_id = $this->entityTypeManager->getStorage('group_content_type')->getRelationshipTypeId($group_type->id(), 'group_invitation');
+    $relation_type_id = $this->entityTypeManager->getStorage(
+      'group_content_type')->getRelationshipTypeId($group_type->id(),
+      'group_invitation'
+    );
     // Prepare params to store them in tempstore.
     $params = [];
     $params['gid'] = $this->group->id();

@@ -67,9 +67,17 @@ class SiteWideGroupRoleTest extends GroupKernelTestBase {
       ->create(['id' => 'publisher', 'label' => 'Publisher'])
       ->save();
 
-    $this->assertEqualsCanonicalizing(['authenticated'], $this->account->getRoles(), 'Account doesn\'t have any roles');
+    $this->assertEqualsCanonicalizing(
+      ['authenticated'],
+      $this->account->getRoles(),
+      'Account doesn\'t have any roles'
+    );
     $this->group->addMember($this->account);
-    $this->assertEqualsCanonicalizing(['authenticated'], $this->account->getRoles(), 'Account doesn\'t have any sitewide roles after adding to group');
+    $this->assertEqualsCanonicalizing(
+      ['authenticated'],
+      $this->account->getRoles(),
+      'Account doesn\'t have any sitewide roles after adding to group'
+    );
 
     // Grant the member a new group role and check the storage.
     $group_role = $this->groupRoleStorage->create([

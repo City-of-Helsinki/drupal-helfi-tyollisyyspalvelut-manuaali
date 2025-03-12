@@ -61,9 +61,18 @@ class RealUsernameFormatter extends FormatterBase {
    * @param \Drupal\Core\Session\AccountProxyInterface $current_user
    *   Current user account interface.
    */
-  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, GroupMembershipLoaderInterface $group_membership_loader, AccountProxyInterface $current_user) {
+  public function __construct(
+    $plugin_id,
+    $plugin_definition,
+    FieldDefinitionInterface $field_definition,
+    array $settings,
+    string $label,
+    string $view_mode,
+    array $third_party_settings,
+    GroupMembershipLoaderInterface $group_membership_loader,
+    AccountProxyInterface $current_user,
+  ) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
-
     $this->groupMembershipLoader = $group_membership_loader;
     $this->currentUser = $current_user;
   }

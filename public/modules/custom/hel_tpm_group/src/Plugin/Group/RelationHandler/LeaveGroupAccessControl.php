@@ -19,7 +19,12 @@ class LeaveGroupAccessControl extends BaseAccessControl {
   /**
    * {@inheritdoc}
    */
-  public function relationshipAccess(GroupRelationshipInterface $group_relationship, $operation, AccountInterface $account, $return_as_object = FALSE) {
+  public function relationshipAccess(
+    GroupRelationshipInterface $group_relationship,
+    $operation,
+    AccountInterface $account,
+    $return_as_object = FALSE,
+  ) {
     $result = parent::relationshipAccess($group_relationship, $operation, $account, $return_as_object);
 
     // Don't process anything else than group membership delete operations that

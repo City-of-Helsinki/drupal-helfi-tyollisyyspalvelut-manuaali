@@ -157,7 +157,11 @@ class ViewsLatestModerationStateFilterTest extends ViewsKernelTestBase {
    * @internal
    */
   //phpcs:disable
-  protected function assertNodesWithFilters(array $nodes, array $filters, string $view_id = 'test_content_moderation_state_filter_base_table'): void {
+  protected function assertNodesWithFilters(
+    array $nodes,
+    array $filters,
+    string $view_id = 'test_content_moderation_state_filter_base_table'
+  ): void {
     $view = Views::getView($view_id);
     $view->setExposedInput($filters);
     $view->execute();
