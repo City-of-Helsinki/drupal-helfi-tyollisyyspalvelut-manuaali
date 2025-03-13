@@ -5,12 +5,6 @@ dependencies:
   config:
     - field.storage.node.field_other_services
     - node.type.service
-  module:
-    - epp
-third_party_settings:
-  epp:
-    value: ''
-    on_update: 0
 id: node.service.field_other_services
 field_name: field_other_services
 entity_type: node
@@ -22,13 +16,10 @@ translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:
-  handler: 'default:node'
+  handler: views
   handler_settings:
-    target_bundles:
-      service: service
-    sort:
-      field: title
-      direction: ASC
-    auto_create: false
-    auto_create_bundle: ''
+    view:
+      view_name: published_services_selection
+      display_name: entity_reference_1
+      arguments: {  }
 field_type: entity_reference
