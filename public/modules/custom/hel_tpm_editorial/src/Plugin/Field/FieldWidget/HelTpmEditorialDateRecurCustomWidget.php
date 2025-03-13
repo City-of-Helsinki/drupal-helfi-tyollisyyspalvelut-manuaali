@@ -25,7 +25,7 @@ use Drupal\date_recur_modular\Plugin\Field\FieldWidget\DateRecurModularAlphaWidg
  * of CSS.
  *
  * It supports the following modes:
- *  - Non recurring.
+ *  - Non-recurring.
  *  - Multiday.
  *  - Weekly:
  *    - hard coded interval of 1. Or 2 if fortnightly is chosen.
@@ -245,7 +245,7 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
       ];
     }
 
-    // States dont yet work on date time so put it in a container.
+    // States don't yet work on date time so put it in a container.
     // @see https://www.drupal.org/project/drupal/issues/2419131
     $element['ends_date'] = [
       '#type' => 'container',

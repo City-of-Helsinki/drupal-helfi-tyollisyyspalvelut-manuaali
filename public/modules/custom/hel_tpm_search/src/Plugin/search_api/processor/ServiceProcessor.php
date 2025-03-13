@@ -60,11 +60,9 @@ class ServiceProcessor extends ProcessorPluginBase {
       /** @var \Drupal\group\Entity\GroupRelationshipInterface $group_content */
       foreach ($group_content_array as $group_content) {
         $group = $group_content->getGroup();
-        if ($group) {
-          if ($group->field_group_prioritise_in_search->value) {
-            $priority_item = TRUE;
-            break;
-          }
+        if ($group && $group->field_group_prioritise_in_search->value) {
+          $priority_item = TRUE;
+          break;
         }
       }
     }

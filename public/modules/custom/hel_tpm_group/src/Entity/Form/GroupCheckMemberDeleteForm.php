@@ -35,7 +35,12 @@ class GroupCheckMemberDeleteForm extends GroupRelationshipDeleteForm {
   /**
    * {@inheritdoc}
    */
-  public function __construct(EntityRepositoryInterface $entity_repository, EntityTypeBundleInfoInterface $entity_type_bundle_info, TimeInterface $time, LanguageManagerInterface $language_manager) {
+  public function __construct(
+    EntityRepositoryInterface $entity_repository,
+    EntityTypeBundleInfoInterface $entity_type_bundle_info,
+    TimeInterface $time,
+    LanguageManagerInterface $language_manager,
+  ) {
     parent::__construct($entity_repository, $entity_type_bundle_info, $time);
     $this->languageManager = $language_manager;
   }
@@ -62,7 +67,9 @@ class GroupCheckMemberDeleteForm extends GroupRelationshipDeleteForm {
     // responsible for. If those services exist, get them as links, show them at
     // the form and prevent removing the member.
     if (!empty($serviceLinks = $this->getNodeLinks())) {
-      $form['description'] = ['#markup' => $this->t("Group member can't be removed. The member has responsibility for the following services. Edit the services first.")];
+      $form['description'] = [
+        '#markup' => $this->t("Group member can't be removed. The member has responsibility for the following services. Edit the services first."),
+      ];
       $form['referenced_services'] = [
         '#theme' => 'item_list',
         '#items' => $serviceLinks,

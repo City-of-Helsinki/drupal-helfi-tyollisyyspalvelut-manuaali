@@ -26,7 +26,10 @@ final class HelTpmServiceStatsSubscriber implements EventSubscriberInterface {
   public function readyToPublishToPublished(ServiceModerationEvent $event): void {
     $state = $event->getModerationState();
     $langcode = $state->language()->getId();
-    $published_row = $this->helTpmServiceStatsRevisionHistory->getPublishedRevisionRow($state->content_entity_revision_id->value, $langcode);
+    $published_row = $this->helTpmServiceStatsRevisionHistory->getPublishedRevisionRow(
+      $state->content_entity_revision_id->value,
+      $langcode
+    );
     if (empty($published_row)) {
       return;
     }

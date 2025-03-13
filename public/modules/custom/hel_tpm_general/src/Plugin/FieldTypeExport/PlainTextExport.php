@@ -28,7 +28,12 @@ class PlainTextExport extends FieldTypeExportBase {
   /**
    * {@inheritdoc}
    */
-  public function massageExportPropertyValue(FieldItemInterface $field_item, $property_name, FieldDefinitionInterface $field_definition, $options = []) {
+  public function massageExportPropertyValue(
+    FieldItemInterface $field_item,
+    $property_name,
+    FieldDefinitionInterface $field_definition,
+    $options = [],
+  ) {
     $value = parent::massageExportPropertyValue($field_item, $property_name, $field_definition, $options);
     return strip_tags($value);
   }

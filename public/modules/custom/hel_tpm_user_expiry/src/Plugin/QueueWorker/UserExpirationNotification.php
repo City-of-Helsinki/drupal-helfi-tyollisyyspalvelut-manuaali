@@ -104,7 +104,15 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
    * @param \Drupal\hel_tpm_user_expiry\Anonymizer $anonymizer
    *   User anonymizer service.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, MessageNotifier $message_notifier, State $state, EntityTypeManagerInterface $entity_type_manager, Anonymizer $anonymizer) {
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    MessageNotifier $message_notifier,
+    State $state,
+    EntityTypeManagerInterface $entity_type_manager,
+    Anonymizer $anonymizer,
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->logger = $this->getLogger('hel_tpm_user_expiry');
     $this->messageNotifier = $message_notifier;

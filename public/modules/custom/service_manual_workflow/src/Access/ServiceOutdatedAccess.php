@@ -35,7 +35,10 @@ class ServiceOutdatedAccess {
    * @param \Drupal\content_moderation\ModerationInformationInterface $moderation_information
    *   Moderation information service.
    */
-  public function __construct(StateTransitionValidationInterface $group_state_transition_validator, ModerationInformationInterface $moderation_information) {
+  public function __construct(
+    StateTransitionValidationInterface $group_state_transition_validator,
+    ModerationInformationInterface $moderation_information,
+  ) {
     $this->groupStateTransitionValidator = $group_state_transition_validator;
     $this->moderationInformation = $moderation_information;
   }

@@ -127,7 +127,12 @@ final class UnactivatedUserBlockTest extends EntityKernelTestBase {
    *
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  protected function createLastAccessUser(int $uid = 1, string $created = '-7 days -1 minute', ?string $access = NULL, int $status = 1): UserInterface {
+  protected function createLastAccessUser(
+    int $uid = 1,
+    string $created = '-7 days -1 minute',
+    ?string $access = NULL,
+    int $status = 1,
+  ): UserInterface {
     $access = !empty($access) ? strtotime($access) : 0;
     $created = strtotime($created);
     $user = $this->createUser([], NULL, FALSE, [

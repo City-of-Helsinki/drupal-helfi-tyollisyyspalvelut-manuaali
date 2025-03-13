@@ -44,6 +44,13 @@ class GroupContentCreateLinksBlock extends BlockBase implements ContainerFactory
   protected $currentUser;
 
   /**
+   * Group node create access service.
+   *
+   * @var \Drupal\hel_tpm_general\Access\GroupNodeCreateAccessService
+   */
+  protected $groupNodeAddAccessService;
+
+  /**
    * Constructs a new GroupContentCreateLinksBlock instance.
    *
    * @param array $configuration
@@ -64,7 +71,15 @@ class GroupContentCreateLinksBlock extends BlockBase implements ContainerFactory
    * @param \Drupal\hel_tpm_general\Access\GroupNodeCreateAccessService $group_node_add_access_service
    *   Group node add access service.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, GroupMembershipLoader $group_membership_loader, AccountInterface $current_user, GroupNodeCreateAccessService $group_node_add_access_service) {
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    EntityTypeManagerInterface $entity_type_manager,
+    GroupMembershipLoader $group_membership_loader,
+    AccountInterface $current_user,
+    GroupNodeCreateAccessService $group_node_add_access_service,
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->entityTypeManager = $entity_type_manager;
     $this->groupMembershipLoader = $group_membership_loader;

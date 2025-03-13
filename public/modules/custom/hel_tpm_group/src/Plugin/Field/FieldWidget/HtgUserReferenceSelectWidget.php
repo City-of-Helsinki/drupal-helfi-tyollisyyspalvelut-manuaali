@@ -27,7 +27,12 @@ class HtgUserReferenceSelectWidget extends Select2EntityReferenceWidget {
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): Select2EntityReferenceWidget {
+  public static function create(
+    ContainerInterface $container,
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+  ): Select2EntityReferenceWidget {
     $widget = parent::create($container, $configuration, $plugin_id, $plugin_definition);
     $widget->setEntityTypeManager($container->get('entity_type.manager'));
     return $widget;

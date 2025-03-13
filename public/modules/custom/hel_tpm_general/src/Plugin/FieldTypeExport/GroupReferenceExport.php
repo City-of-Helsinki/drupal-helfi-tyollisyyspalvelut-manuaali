@@ -29,7 +29,12 @@ class GroupReferenceExport extends EntityReferenceExport {
   /**
    * {@inheritdoc}
    */
-  public function massageExportPropertyValue(FieldItemInterface $field_item, $property_name, FieldDefinitionInterface $field_definition, $options = []) {
+  public function massageExportPropertyValue(
+    FieldItemInterface $field_item,
+    $property_name,
+    FieldDefinitionInterface $field_definition,
+    $options = [],
+  ) {
     // If this entity/bundle has no group relation type plugins enabled,
     // there's no way there could be any group associations, so exit early.
     if (!entitygroupfield_get_group_relation_type_plugin_ids($field_item->getEntity()->getEntityTypeId(), $field_item->getEntity()->bundle())) {

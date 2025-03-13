@@ -9,7 +9,6 @@ use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Provides a Hel TPM Search Autosuggest form.
@@ -17,19 +16,21 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class SearchAutoSuggestForm extends FormBase implements ContainerInjectionInterface {
 
   /**
-   * Langauge manager service.
+   * Language manager service.
    *
    * @var \Drupal\Core\Language\LanguageManagerInterface
    */
   private LanguageManagerInterface $languageManager;
 
   /**
-   * Request stack service.
+   * Current request.
+   *
+   * @var \Symfony\Component\HttpFoundation\Request
    */
-  private RequestStack $request;
+  private Request $currentRequest;
 
   /**
-   * Constructior.
+   * Constructor.
    *
    * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
    *   Language manager interface.

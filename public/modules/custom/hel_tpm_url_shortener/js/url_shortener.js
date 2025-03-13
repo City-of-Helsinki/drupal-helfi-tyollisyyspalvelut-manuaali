@@ -31,7 +31,6 @@
         let createLinkButton = $('.create-link', parent);
         let clipboardButton = $('.clipboard-button', parent);
         let shortLinkResult = $('.short-link-result', parent);
-        let shortLink = $('.short-link', parent);
 
         $(once('clipboard-button', clipboardButton)).click(function (event) {
           event.preventDefault();

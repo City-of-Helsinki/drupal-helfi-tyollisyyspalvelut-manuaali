@@ -71,7 +71,10 @@ final class SetServiceOutdatedOperationTest extends GroupKernelTestBase {
       'content_moderation',
     ]);
 
-    $this->serviceOutdatedOperationForm = new SetServiceOutdatedOperationForm($this->entityTypeManager, \Drupal::service('service_manual_workflow.set_outdated_access'));
+    $this->serviceOutdatedOperationForm = new SetServiceOutdatedOperationForm(
+      $this->entityTypeManager,
+      \Drupal::service('service_manual_workflow.set_outdated_access')
+    );
 
   }
 

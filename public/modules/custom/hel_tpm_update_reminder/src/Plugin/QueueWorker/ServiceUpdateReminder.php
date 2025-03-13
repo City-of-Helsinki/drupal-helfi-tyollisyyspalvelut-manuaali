@@ -71,7 +71,13 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
    * @param \Drupal\message_notify\MessageNotifier $message_notifier
    *   Message notifier service.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, MessageNotifier $message_notifier) {
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    EntityTypeManagerInterface $entity_type_manager,
+    MessageNotifier $message_notifier,
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->entityTypeManager = $entity_type_manager;
     $this->messageNotifier = $message_notifier;

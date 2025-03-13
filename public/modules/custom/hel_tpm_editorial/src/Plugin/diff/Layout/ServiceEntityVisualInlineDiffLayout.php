@@ -35,14 +35,42 @@ class ServiceEntityVisualInlineDiffLayout extends EntityVisualInlineDiffLayout {
   private ThemeManagerInterface $themeManager;
 
   /**
-   * Theme initiliazation service.
+   * Theme initialization service.
    *
    * @var \Drupal\Core\Theme\ThemeInitializationInterface
    */
   private ThemeInitializationInterface $themeInitialization;
 
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $config, EntityTypeManagerInterface $entity_type_manager, DiffEntityParser $entity_parser, DateFormatterInterface $date, RendererInterface $renderer, DiffEntityComparison $entity_comparison, \HtmlDiffAdvancedInterface $html_diff, RequestStack $request_stack, EntityDisplayRepositoryInterface $entity_display_repository, ThemeManagerInterface $theme_manager, ThemeInitializationInterface $theme_initialization) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition, $config, $entity_type_manager, $entity_parser, $date, $renderer, $entity_comparison, $html_diff, $request_stack, $entity_display_repository);
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    ConfigFactoryInterface $config,
+    EntityTypeManagerInterface $entity_type_manager,
+    DiffEntityParser $entity_parser,
+    DateFormatterInterface $date,
+    RendererInterface $renderer,
+    DiffEntityComparison $entity_comparison,
+    \HtmlDiffAdvancedInterface $html_diff,
+    RequestStack $request_stack,
+    EntityDisplayRepositoryInterface $entity_display_repository,
+    ThemeManagerInterface $theme_manager,
+    ThemeInitializationInterface $theme_initialization,
+  ) {
+    parent::__construct(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $config,
+      $entity_type_manager,
+      $entity_parser,
+      $date,
+      $renderer,
+      $entity_comparison,
+      $html_diff,
+      $request_stack,
+      $entity_display_repository
+    );
     $this->themeManager = $theme_manager;
     $this->themeInitialization = $theme_initialization;
   }

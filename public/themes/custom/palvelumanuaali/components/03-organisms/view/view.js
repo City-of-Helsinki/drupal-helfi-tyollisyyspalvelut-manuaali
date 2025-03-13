@@ -9,9 +9,9 @@
           firstLength = $('.view-solr-service-search .taxonomy-card').length;
           if (firstLength) {
             setTimeout(function() {
-              var choice = $('.view-solr-service-search .taxonomy-card')[firstLength];
-              var choice2 = $(choice).children('.card')[0];
-              var choice3 = $(choice2).children('.card__link')[0];
+              let choice = $('.view-solr-service-search .taxonomy-card')[firstLength];
+              let choice2 = $(choice).children('.card')[0];
+              let choice3 = $(choice2).children('.card__link')[0];
               $(choice3).focus();
               $(choice).scrollIntoView({
                 behavior: "smooth",

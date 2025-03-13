@@ -131,10 +131,14 @@ class BulkGroupInvitationCustomConfirm extends BulkGroupInvitationConfirm {
     }
     else {
       $error_operation = reset($operations);
-      \Drupal::service('messenger')->addMessage(new TranslatableMarkup('An error occurred while processing @operation with arguments : @args', [
-        '@operation' => $error_operation[0],
-        '@args' => print_r($error_operation[0]),
-      ]));
+      \Drupal::service('messenger')->addMessage(
+        new TranslatableMarkup(
+          'An error occurred while processing @operation with arguments : @args',
+          [
+            '@operation' => $error_operation[0],
+            '@args' => print_r($error_operation[0]),
+          ]
+        ));
     }
   }
 

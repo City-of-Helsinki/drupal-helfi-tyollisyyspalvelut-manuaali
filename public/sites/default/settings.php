@@ -27,21 +27,21 @@ if (getenv('SYSTEM_SITE_FRONT')) {
 
 // Automatic Platform.sh settings.
 if (getenv('PLATFORM_VARIABLES')) {
-  include $app_root . '/' . $site_path . '/settings.platformsh.php';
+  include_once $app_root . '/' . $site_path . '/settings.platformsh.php';
 }
 
 // Openshift settings.
 if (getenv('OPENSHIFT_BUILD_NAMESPACE')) {
-  include $app_root . '/' . $site_path . '/settings.openshift.php';
+  include_once $app_root . '/' . $site_path . '/settings.openshift.php';
 }
 
 // Lando settings.
 if (isset($_ENV['LANDO_INFO'])) {
-  include $app_root . '/' . $site_path . '/settings.lando.php';
+  include_once $app_root . '/' . $site_path . '/settings.lando.php';
 }
 // Local settings. These come last so that they can override anything.
 if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
-  include $app_root . '/' . $site_path . '/settings.local.php';
+  include_once $app_root . '/' . $site_path . '/settings.local.php';
 }
 
 if (getenv('FILE_PRIVATE_PATH')) {

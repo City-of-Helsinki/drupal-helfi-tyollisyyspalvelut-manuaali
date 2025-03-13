@@ -10,13 +10,12 @@
           Drupal.behaviors.serviceConfirmPopup.addPopup(context, settings);
         });
       });
-
     },
 
     addPopup: function(context, settings) {
       let title = '';
       let message = this.getConfirmMessage(context, settings);
-      if ($('#edit-title-0-value').val() != '') {
+      if ($('#edit-title-0-value').val() !== '') {
         title = $('#edit-title-0-value').val();
       }
 
@@ -37,29 +36,29 @@
      * @param message
      */
     confirmPopup: function(title = "", message = "") {
-    var content = '<div class="desc">' + message + '</div>';
-    confirmationDialog = Drupal.dialog(content, {
-      dialogClass: 'confirm-dialog',
-      resizable: true,
-      closeOnEscape: false,
-      width: 600,
-      title: title,
-      buttons: [
-        {
-          text: Drupal.t('Cancel'),
-          click: function () {
-            $(this).dialog('close');
+      const content = '<div class="desc">' + message + '</div>';
+      let confirmationDialog = Drupal.dialog(content, {
+        dialogClass: 'confirm-dialog',
+        resizable: true,
+        closeOnEscape: false,
+        width: 600,
+        title: title,
+        buttons: [
+          {
+            text: Drupal.t('Cancel'),
+            click: function () {
+              $(this).dialog('close');
+            }
+          },
+          {
+            text: Drupal.t('Approve'),
+            class: 'button--primary button',
+            click: function () {
+              $('#edit-submit').click();
+            }
           }
-        },
-        {
-          text: Drupal.t('Approve'),
-          class: 'button--primary button',
-          click: function () {
-            $('#edit-submit').click();
-          }
-        }
-      ],
-    });
+        ],
+      });
     confirmationDialog.showModal();
   },
 

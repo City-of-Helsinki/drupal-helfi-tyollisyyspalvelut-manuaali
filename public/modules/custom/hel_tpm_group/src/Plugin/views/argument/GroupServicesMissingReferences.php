@@ -42,7 +42,13 @@ class GroupServicesMissingReferences extends NumericArgument {
    * @param \Drupal\hel_tpm_group\ServicesMissingUpdaters $services_missing_updaters
    *   Missing updaters service.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, NodeStorageInterface $node_storage, ServicesMissingUpdaters $services_missing_updaters) {
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    NodeStorageInterface $node_storage,
+    ServicesMissingUpdaters $services_missing_updaters,
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->nodeStorage = $node_storage;
     $this->servicesMissingUpdaters = $services_missing_updaters;
