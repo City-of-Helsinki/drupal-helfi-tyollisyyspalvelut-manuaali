@@ -927,6 +927,10 @@ display:
         type: none
         options:
           offset: 0
+      access:
+        type: group_permission
+        options:
+          group_permission: 'view unpublished group_node:service entity'
       empty:
         area_text_custom:
           id: area_text_custom
@@ -976,6 +980,7 @@ display:
           not: false
       defaults:
         empty: false
+        access: false
         pager: false
         relationships: false
         fields: false
@@ -1015,8 +1020,9 @@ display:
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
+        - route.group
         - url
+        - user.group_permissions
         - 'user.node_grants:view'
-        - user.permissions
       tags:
         - 'config:workflow_list'
