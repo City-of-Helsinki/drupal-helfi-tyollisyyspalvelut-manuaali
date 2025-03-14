@@ -1,0 +1,49 @@
+.bef-exposed-form {
+  .form-item--checkboxes {
+    flex-wrap: nowrap;
+  }
+  .bef-toggle {
+    @extend .checkbox-pill;
+    text-decoration: none;
+  }
+
+  .bef-checkboxes {
+    position: relative;
+    width: 100%;
+    display: flex;
+
+    .form-item-checkbox {
+      @extend .checkbox-pill;
+      padding: 0;
+      margin-left: 0.5rem;
+      margin-right: 0.5rem;
+
+      input {
+        left: 0;
+        @include large {
+          left: inherit;
+        }
+      }
+
+      label {
+        padding: 8px 24px;
+        width: max-content;
+        max-width: 40ch;
+        @include large {
+          max-width: fit-content;
+        }
+      }
+    }
+  }
+}
+.view-solr-service-list {
+  ul.pager {
+    display: flex;
+    li::before {
+      display: none;
+    }
+    li {
+      list-style: none;
+    }
+  }
+}

@@ -4,22 +4,66 @@ declare(strict_types=1);
 
 namespace Drupal\views_exposed_embed\Plugin\Field\FieldFormatter;
 
+use Drupal\Core\Field\Attribute\FieldFormatter;
+use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
+use Drupal\Core\Form\FormBuilderInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\views\ViewExecutable;
 use Drupal\views\Views;
 use Drupal\views_exposed_embed\Plugin\Field\FieldType\ViewsExposedEmbedFieldItem;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Plugin implementation of the 'views_exposed_embed_field_default' formatter.
+ * Provides a formatter for the Views Exposed Embed field.
  *
- * @FieldFormatter(
- *   id = "views_exposed_embed_field_default",
- *   label = @Translation("Default"),
- *   field_types = {"views_exposed_embed_field"},
- * )
+ * Allows the rendering of exposed filters configured in a view and manages
+ * their interaction with the Views Exposed Embed field type.
  */
+#[FieldFormatter(
+  id: 'views_exposed_embed_field_default',
+  label: new TranslatableMarkup('Default'),
+  field_types: [
+    'views_exposed_embed_field',
+  ],
+)]
 final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
+
+  /**
+   * Form builder service.
+   *
+   * @var \Drupal\Core\Form\FormBuilderInterface
+   */
+  private FormBuilderInterface $formBuilder;
+
+  /**
+   * {@inheritdoc}
+   */
+  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, FormBuilderInterface $form_builder, Request $current_request) {
+    parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
+
+    $this->formBuilder = $form_builder;
+    $this->currentRequest = $current_request;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static($plugin_id,
+      $plugin_definition,
+      $configuration['field_definition'],
+      $configuration['settings'],
+      $configuration['label'],
+      $configuration['view_mode'],
+      $configuration['third_party_settings'],
+      $container->get('form_builder'),
+      $container->get('request_stack')->getCurrentRequest()
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -54,12 +98,11 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $form = parent::settingsForm($form, $form_state);
 
-    $filters = $this->getViewsExposedFiltersList();
     $form['exposed_filters'] = [
       '#type' => 'checkboxes',
       '#title' => $this->t('Exposed filters'),
       '#description' => $this->t('Exposed filters will be displayed on the node view page.'),
-      '#options' => $filters,
+      '#options' => $this->getViewsExposedFiltersList(),
       '#default_value' => $this->getSetting('exposed_filters'),
     ];
 
@@ -73,8 +116,7 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
     $element = [];
 
     foreach ($items as $delta => $item) {
-      $render_view = $this->renderView($item);
-      $element[$delta] = $render_view;
+      $element[$delta] = $this->renderView($item);
     }
 
     return $element;
@@ -90,54 +132,112 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
    *   View render array.
    */
   protected function renderView(ViewsExposedEmbedFieldItem $item): array {
-    $filter_values = $item->getValue();
-    $filter_values = reset($filter_values);
-
-    if (!$filter_values) {
-      return [];
-    }
+    $filter_values = $this->buildFilters($item);
 
     $view = $this->prepareViewRender($filter_values);
     if (empty($view)) {
       return [];
     }
 
+    // Create a preview render from view.
     $view->preview();
 
-    $filters = $this->getSetting('exposed_filters') ?? [];
-
-    // Disable exposed filters that are not selected in the filters array.
-    if (!empty($view->exposed_widgets)) {
-      foreach ($view->exposed_widgets as $key => &$widget) {
-        // Disable the filter if it is not selected or not present in filters.
-        if (isset($filters[$key]) && empty($filters[$key])) {
-          $widget['#access'] = FALSE;
-        }
-      }
-    }
+    // Create renderable array from view preview.
     $render_array = $view->buildRenderable();
+
+    // Create custom exposed filter list.
+    $render_array['exposed_filters'] = $this->createFilterForm($view);
 
     return !empty($render_array) ? $render_array : [];
   }
 
   /**
-   * Determines whether all exposed filters are hidden.
+   * Builds and retrieves the filters for the provided view item.
    *
-   * @param array $filters
-   *   An array of exposed filters to be checked. Each filter's value indicates
-   *   whether it is exposed or not.
+   * @param \Drupal\views\ViewsExposedEmbedFieldItem $item
+   *   The views exposed embed field item from which filters are derived.
    *
-   * @return bool
-   *   Returns TRUE if all filters are hidden (i.e., empty), otherwise FALSE.
+   * @return array
+   *   An array of filters after merging with the exposed filter selection.
    */
-  protected function hideExposedFilters(array $filters) {
-    foreach ($filters as $filter) {
-      $is_not_empty = !empty($filter);
-      if ($is_not_empty) {
-        return FALSE;
+  protected function buildFilters(ViewsExposedEmbedFieldItem $item): array {
+    $filters = $item->getValue();
+    $filters = reset($filters);
+    $filters = array_merge($filters, $this->getExposedFilterSelection());
+    return $filters;
+  }
+
+  /**
+   * Retrieves the selected values for exposed filters.
+   *
+   * This method processes the exposed filters settings and checks for values
+   * submitted via the POST request. Only filters with non-empty values in
+   * both settings and POST data are included in the selection.
+   *
+   * @return array
+   *   An associative array of exposed filter IDs as keys and their
+   *   corresponding submitted values as values. If no valid filters are
+   *   found, an empty array is returned.
+   */
+  protected function getExposedFilterSelection(): array {
+    $filters = $this->getSetting('exposed_filters') ?? [];
+    $selection = [];
+    if (empty($filters)) {
+      return [];
+    }
+
+    $query = $this->currentRequest->query;
+    foreach ($filters as $filter => $value) {
+      if (empty($value)) {
+        continue;
+      }
+      $filter_value = $query->all($filter);
+      if (empty($filter_value)) {
+        continue;
+      }
+      $selection[$filter] = $filter_value;
+    }
+    return $selection;
+  }
+
+  /**
+   * Creates and returns a filter form for exposed filters in a view.
+   *
+   * @param \Drupal\views\ViewExecutable $view
+   *   The view to which the filter form is being attached.
+   *
+   * @return array
+   *   A renderable array representing the filter form, or an empty array if no
+   *   exposed filters are configured.
+   */
+  protected function createFilterForm(ViewExecutable $view) {
+    $filter_form = [];
+    $filters = $this->getSetting('exposed_filters') ?? [];
+
+    if (empty($filters)) {
+      return $filter_form;
+    }
+
+    if ($view->display_handler->usesExposed()) {
+      /** @var \Drupal\views\Plugin\views\exposed_form\ExposedFormPluginInterface $exposed_form */
+      $exposed_form = $view->display_handler->getPlugin('exposed_form');
+      $output = $exposed_form->renderExposedForm(TRUE);
+      if (!empty($output)) {
+        $output += [
+          '#view' => $view,
+          '#display_id' => $view->current_display,
+        ];
       }
     }
-    return TRUE;
+
+    foreach ($filters as $filter => $value) {
+      if ($value !== 0) {
+        continue;
+      }
+      $output[$filter]['#access'] = FALSE;
+    }
+
+    return $output;
   }
 
   /**
@@ -151,11 +251,7 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
    *   The prepared view executable instance.
    */
   protected function prepareViewRender(array $filter_values) {
-    $view_id = $this->getFieldSetting('view_id');
-    $display_id = $this->getFieldSetting('display_id');
-    $view = Views::getView($view_id);
-    $view->setDisplay($display_id);
-
+    $view = $this->getView();
     $exposed_input = $view->getExposedInput();
     $exposed_input = array_merge($exposed_input, $filter_values);
     $view->setExposedInput($exposed_input);
@@ -173,6 +269,7 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
   protected function getView() {
     $view_id = $this->getFieldSetting('view_id');
     $display_id = $this->getFieldSetting('display_id');
+
     $view = Views::getView($view_id);
     $view->setDisplay($display_id);
 
