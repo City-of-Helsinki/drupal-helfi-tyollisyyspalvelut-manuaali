@@ -18,6 +18,10 @@
       {% block header__menu %}
         {% include "@molecules/menus/main-menu/main-menu.twig" %}
       {% endblock %}
+      <div class="hide-desktop mobile-user-menu">
+        {{ drupal_block('user_login_block') }}
+        {{ drupal_block('system_menu_block:account') }}
+      </div>
     </div>
     <div {{ bem('secondary', [], header__base_class) }}>
       {% block header__breadcrumbs %}

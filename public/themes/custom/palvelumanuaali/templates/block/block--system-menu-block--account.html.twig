@@ -41,7 +41,7 @@
 %}
 
 {% set heading_id = 'block-kayttajavalikko' ~ '-menu'|clean_id %}
-{% set show_anchor = "show-" ~'block-kayttajavalikko'|clean_id %}
+{% set show_anchor = "show-" ~ 'block-kayttajavalikko'|clean_id %}
 {% set hide_anchor = "hide-" ~ 'block-kayttajavalikko'|clean_id %}
 
 <nav role="navigation" aria-labelledby="{{ heading_id }}"{{ attributes.addClass(classes)|without('role', 'aria-labelledby') }}>

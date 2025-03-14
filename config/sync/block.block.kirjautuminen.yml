@@ -3,6 +3,8 @@ langcode: fi
 status: true
 dependencies:
   module:
+    - block_class
+    - system
     - user
   theme:
     - palvelumanuaali
@@ -25,3 +27,7 @@ visibility:
       user: '@user.current_user_context:current_user'
     roles:
       anonymous: anonymous
+  request_path:
+    id: request_path
+    negate: false
+    pages: "/tyollisyyspalvelujen-henkilosto\r\n/palveluntuottajalle "

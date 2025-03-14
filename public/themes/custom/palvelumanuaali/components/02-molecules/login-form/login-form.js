@@ -4,11 +4,11 @@ Drupal.behaviors.loginForm = {
       attach: function (context, settings) {
 
       let body = $('body');
-      let loginBlock = $('.header__secondary .block-user-login-block');
+      let loginBlock = $('.header__primary .mobile-user-menu .block-user-login-block');
       let toggleLogin = $('>.btn-menu', loginBlock);
       let header = $('.header__primary');
       let additionalMenu = $('.additional-links-menu-nav', header);
-      let sidebarLogin = $('.header__secondary .slide-in-loginform');
+      let sidebarLogin = $('.header__primary .slide-in-loginform');
       let toggleInnerLogin = $('.btn-menu-close', sidebarLogin);
 
     if (typeof loginBlock !== 'undefined' || menu == null) {

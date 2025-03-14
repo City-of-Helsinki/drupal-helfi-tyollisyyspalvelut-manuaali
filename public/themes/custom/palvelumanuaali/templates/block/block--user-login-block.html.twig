@@ -35,22 +35,15 @@
   ]
 %}
   <nav{{ attributes.addClass(classes) }}>
-    <button id="loginlinkButton-mobile" class="btn btn-menu hide-dxl" type="button">
-        {% include "@atoms/images/icons/_icon.twig" with {
-          icon_base_class: 'icon',
-          icon_name: 'padlock-blue',
-          icon_modifiers: ['small'],
-        } %}
-        <span class="visually-hidden">
-          {{'Log in'|t}}
-        </span>
+    <button id="loginlinkButton-mobile" class="btn btn-menu hide-dxl login-btn-mobile" type="button">
+      {{'Log in'|t}}
     </button>
     <div class='slide-in-loginform slide-in-menu-end hide-desktop'>
       <button id="loginlinkButton-mobile" class="btn btn-menu-close hide-dxl" type="button">
         {% include "@atoms/images/icons/_icon.twig" with {
           icon_base_class: "icon",
           icon_blockname: "toggle-expand-close",
-          icon_name: "arrow-right-2",
+          icon_name: "close",
         } %}
         <span class="visually-hidden">
           {{'Close'|t}}
