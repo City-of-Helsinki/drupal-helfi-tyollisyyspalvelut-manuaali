@@ -1,5 +1,36 @@
 
 // Group theming will be continued to this file
 .group-form {
- 
+  .field-responsible-authority-values.table {
+    &.table {
+      .field-label {
+        padding: 0;
+      }
+      .table__heading-cell {
+        border: 0;
+        &::after {
+          border: 0;
+        }
+      }
+      .label {
+        font-size: 12px;
+        line-height: 24px;
+        font-weight: 600;
+        margin-bottom: calc(1rem/2);
+        letter-spacing: 0.1px;
+        text-transform: none;
+      }
+      .table__row {
+        border: 0;
+      }
+      .tabledrag-handle  {
+        position: relative;
+        top: 11px;
+      }
+      .handle {
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
 }
