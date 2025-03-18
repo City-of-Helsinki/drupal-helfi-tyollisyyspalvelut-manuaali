@@ -8,7 +8,6 @@ use Drupal\Core\Field\Attribute\FieldFormatter;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
-use Drupal\Core\Form\FormBuilderInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\views\ViewExecutable;
@@ -33,19 +32,18 @@ use Symfony\Component\HttpFoundation\Request;
 final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
 
   /**
-   * Form builder service.
+   * Current request.
    *
-   * @var \Drupal\Core\Form\FormBuilderInterface
+   * @var \Symfony\Component\HttpFoundation\Request
    */
-  private FormBuilderInterface $formBuilder;
+  private Request $currentRequest;
 
   /**
    * {@inheritdoc}
    */
-  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, FormBuilderInterface $form_builder, Request $current_request) {
+  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, Request $current_request) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
 
-    $this->formBuilder = $form_builder;
     $this->currentRequest = $current_request;
   }
 
@@ -60,7 +58,6 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
       $configuration['label'],
       $configuration['view_mode'],
       $configuration['third_party_settings'],
-      $container->get('form_builder'),
       $container->get('request_stack')->getCurrentRequest()
     );
   }
@@ -79,7 +76,7 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
   /**
    * {@inheritdoc}
    */
-  public function settingsSummary() {
+  public function settingsSummary(): array {
     $summary = [];
     $summary[] = $this->t('Show exposed embed filters');
     $filters = $this->getSetting('exposed_filters') ?? [];
@@ -95,7 +92,7 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
   /**
    * {@inheritdoc}
    */
-  public function settingsForm(array $form, FormStateInterface $form_state) {
+  public function settingsForm(array $form, FormStateInterface $form_state): array {
     $form = parent::settingsForm($form, $form_state);
 
     $form['exposed_filters'] = [
@@ -210,7 +207,7 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
    *   A renderable array representing the filter form, or an empty array if no
    *   exposed filters are configured.
    */
-  protected function createFilterForm(ViewExecutable $view) {
+  protected function createFilterForm(ViewExecutable $view): array {
     $filter_form = [];
     $filters = $this->getSetting('exposed_filters') ?? [];
 
@@ -250,7 +247,7 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
    * @return \Drupal\views\ViewExecutable
    *   The prepared view executable instance.
    */
-  protected function prepareViewRender(array $filter_values) {
+  protected function prepareViewRender(array $filter_values): ?ViewExecutable {
     $view = $this->getView();
     $exposed_input = $view->getExposedInput();
     $exposed_input = array_merge($exposed_input, $filter_values);
@@ -266,7 +263,7 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
    * @return \Drupal\views\ViewExecutable|null
    *   The view executable instance if the view exists, or NULL otherwise.
    */
-  protected function getView() {
+  protected function getView(): ?ViewExecutable {
     $view_id = $this->getFieldSetting('view_id');
     $display_id = $this->getFieldSetting('display_id');
 
