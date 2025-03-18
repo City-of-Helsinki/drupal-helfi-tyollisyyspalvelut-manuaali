@@ -27,76 +27,12 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterface {
 
   use StringTranslationTrait;
-
   use ServiceNotificationTrait;
-
-  /**
-   * The messenger.
-   *
-   * @var \Drupal\Core\Messenger\MessengerInterface
-   */
-  protected $messenger;
-
-  /**
-   * Entity type manager service.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManager
-   */
-  protected $entityTypeManager;
-
-  /**
-   * Content group service.
-   *
-   * @var \Drupal\service_manual_workflow\ContentGroupService
-   */
-  protected $contentGroupService;
-
-  /**
-   * Group state transition validation service.
-   *
-   * @var \Drupal\gcontent_moderation\GroupStateTransitionValidation
-   */
-  protected $stateTransitionValidation;
-
-  /**
-   * Route match service.
-   *
-   * @var \Drupal\Core\Routing\RouteMatchInterface
-   */
-  protected $routeMatch;
-
-  /**
-   * Account interface.
-   *
-   * @var \Drupal\Core\Session\AccountProxyInterface
-   */
-  protected $currentUser;
-
-  /**
-   * Message notifier service.
-   *
-   * @var \Drupal\message_notify\MessageNotifier
-   */
-  protected $messageSender;
-
-  /**
-   * Group hierarchy manager.
-   *
-   * @var \Drupal\ggroup\GroupHierarchyManagerInterface
-   */
-  protected $groupHierarchyManager;
 
   /**
    * Used message template.
    */
   const MESSAGE_TEMPLATE = 'group_ready_to_publish_notificat';
-
-  /**
-   * Config factory.
-   *
-   * @var \Drupal\Core\Config\ConfigFactoryInterface
-   */
-  private ConfigFactoryInterface $configFactory;
 
   /**
    * Constructs event subscriber.
@@ -120,17 +56,17 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
    * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
    *   Config factory interface.
    */
-  public function __construct(MessengerInterface $messenger, EntityTypeManager $entityTypeManager, ContentGroupService $contentGroupService, GroupStateTransitionValidation $stateTransitionValidation, RouteMatchInterface $routeMatch, AccountProxyInterface $currentUser, MessageNotifier $messageSender, GroupHierarchyManagerInterface $groupHierarchyManager, ConfigFactoryInterface $configFactory) {
-    $this->messenger = $messenger;
-    $this->entityTypeManager = $entityTypeManager;
-    $this->contentGroupService = $contentGroupService;
-    $this->stateTransitionValidation = $stateTransitionValidation;
-    $this->routeMatch = $routeMatch;
-    $this->currentUser = $currentUser;
-    $this->messageSender = $messageSender;
-    $this->groupHierarchyManager = $groupHierarchyManager;
-    $this->configFactory = $configFactory;
-  }
+  public function __construct(
+    protected MessengerInterface $messenger,
+    protected EntityTypeManager $entityTypeManager,
+    protected ContentGroupService $contentGroupService,
+    protected GroupStateTransitionValidation $stateTransitionValidation,
+    protected RouteMatchInterface $routeMatch,
+    protected AccountProxyInterface $currentUser,
+    protected MessageNotifier $messageSender,
+    protected GroupHierarchyManagerInterface $groupHierarchyManager,
+    protected ConfigFactoryInterface $configFactory,
+  ) {}
 
   /**
    * From draft to ready to publish event.
@@ -159,7 +95,11 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
     // Get users to notify.
     $accounts = $this->getUsersToNotify($entity);
     if (empty($accounts)) {
-      $this->messenger->addStatus($this->t('Users with publish permissions not found. Please contact site administration.', ['@group' => $group->label()]));
+      $this->messenger->addStatus(
+        $this->t(
+          'Users with publish permissions not found. Please contact site administration.',
+          ['@group' => $group->label()]
+        ));
       return;
     }
 
@@ -279,7 +219,9 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
     }
 
     if ($entity->field_responsible_municipality->isEmpty()) {
-      return $this->entityTypeManager->getStorage('user')->loadByProperties(['mail' => $this->configFactory->get('system.site')->get('mail')]);
+      return $this->entityTypeManager->getStorage('user')->loadByProperties([
+        'mail' => $this->configFactory->get('system.site')->get('mail'),
+      ]);
     }
 
     $municipality = $entity->field_responsible_municipality->entity;

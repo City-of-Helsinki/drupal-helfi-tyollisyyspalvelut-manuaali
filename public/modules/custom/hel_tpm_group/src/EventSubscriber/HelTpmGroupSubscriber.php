@@ -3,7 +3,6 @@
 namespace Drupal\hel_tpm_group\EventSubscriber;
 
 use Drupal\Component\EventDispatcher\Event;
-use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Logger\LoggerChannelTrait;
 use Drupal\Core\Messenger\MessengerInterface;
@@ -75,13 +74,6 @@ class HelTpmGroupSubscriber implements EventSubscriberInterface {
   private EntityTypeManagerInterface $entityTypeManager;
 
   /**
-   * Entity type interface.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeInterface
-   */
-  private EntityTypeInterface $entityType;
-
-  /**
    * Constructs event subscriber.
    *
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
@@ -93,7 +85,12 @@ class HelTpmGroupSubscriber implements EventSubscriberInterface {
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   Entity type manager.
    */
-  public function __construct(MessengerInterface $messenger, GroupMembershipLoader $membership_loader, MessageNotifier $message_notifier, EntityTypeManagerInterface $entityTypeManager) {
+  public function __construct(
+    MessengerInterface $messenger,
+    GroupMembershipLoader $membership_loader,
+    MessageNotifier $message_notifier,
+    EntityTypeManagerInterface $entityTypeManager,
+  ) {
     $this->messenger = $messenger;
     $this->membershipLoader = $membership_loader;
     $this->messageNotifier = $message_notifier;

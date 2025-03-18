@@ -130,7 +130,7 @@ final class UserExpirationTest extends GroupKernelTestBase {
     $this->assertEquals($last_run, \Drupal::state()->get('hel_tpm_user_expiry.last_run'));
 
     // Confirm cron runs after 12 hours since last run.
-    \Drupal::state()->set('hel_tpm_user_expiry.last_run', $run_time_limit = strtotime('12 hours', 0));
+    \Drupal::state()->set('hel_tpm_user_expiry.last_run', strtotime('12 hours', 0));
     $this->cron->run();
     $this->assertEquals(\Drupal::time()->getRequestTime(), \Drupal::state()->get('hel_tpm_user_expiry.last_run'));
   }

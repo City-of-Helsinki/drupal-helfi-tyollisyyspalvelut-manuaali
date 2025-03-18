@@ -41,7 +41,12 @@ class ShortenerredirectListBuilder extends EntityListBuilder {
    * @param \Drupal\Core\Routing\RedirectDestinationInterface $redirect_destination
    *   The redirect destination service.
    */
-  public function __construct(EntityTypeInterface $entity_type, EntityStorageInterface $storage, DateFormatterInterface $date_formatter, RedirectDestinationInterface $redirect_destination) {
+  public function __construct(
+    EntityTypeInterface $entity_type,
+    EntityStorageInterface $storage,
+    DateFormatterInterface $date_formatter,
+    RedirectDestinationInterface $redirect_destination,
+  ) {
     parent::__construct($entity_type, $storage);
     $this->dateFormatter = $date_formatter;
     $this->redirectDestination = $redirect_destination;
