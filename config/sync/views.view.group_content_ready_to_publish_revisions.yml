@@ -6,16 +6,12 @@ dependencies:
     - field.storage.node.field_days_since_last_state_chan
     - field.storage.node.field_responsible_updatee
     - node.type.service
-    - user.role.admin
-    - user.role.root
-    - user.role.specialist_editor
     - workflows.workflow.service_moderation
   module:
     - content_moderation
     - eva
     - group
     - node
-    - user
 id: group_content_ready_to_publish_revisions
 label: 'Group content ready to publish (revisions)'
 module: views
@@ -299,12 +295,9 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       access:
-        type: role
+        type: group_permission
         options:
-          role:
-            root: root
-            admin: admin
-            specialist_editor: specialist_editor
+          group_permission: 'view unpublished group_node:service entity'
       cache:
         type: time
         options:
@@ -572,9 +565,10 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - route
+        - route.group
         - url
+        - user.group_permissions
         - 'user.node_grants:view'
-        - user.roles
       tags:
         - 'config:field.storage.node.field_days_since_last_state_chan'
         - 'config:field.storage.node.field_responsible_updatee'
@@ -598,9 +592,10 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - route
+        - route.group
         - url
+        - user.group_permissions
         - 'user.node_grants:view'
-        - user.roles
       tags:
         - 'config:field.storage.node.field_days_since_last_state_chan'
         - 'config:field.storage.node.field_responsible_updatee'
@@ -625,9 +620,10 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - route
+        - route.group
         - url
+        - user.group_permissions
         - 'user.node_grants:view'
-        - user.roles
       tags:
         - 'config:field.storage.node.field_days_since_last_state_chan'
         - 'config:field.storage.node.field_responsible_updatee'
