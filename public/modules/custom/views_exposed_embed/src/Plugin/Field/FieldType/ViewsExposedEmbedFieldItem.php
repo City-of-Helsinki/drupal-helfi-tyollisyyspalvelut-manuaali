@@ -54,7 +54,7 @@ final class ViewsExposedEmbedFieldItem extends MapItem {
     $view_options = $this->getViewOptions(FALSE);
     $element['view_id'] = [
       '#type' => 'select',
-      '#options' => $view_options,
+      '#options' => empty($view_options) ? [] : $view_options,
       '#title' => $this->t('View ID'),
       '#default_value' => $this->getSetting('view_id'),
       '#description' => $this->t('Views available for content authors. Leave empty to allow all.'),
@@ -83,12 +83,13 @@ final class ViewsExposedEmbedFieldItem extends MapItem {
     }
 
     $display_options = $this->getDisplayOptions($view_id);
+
     // Render filtered display id selection.
     $element['display_id'] = [
       '#type' => 'select',
       '#prefix' => '<div id="' . $this::DISPLAY_ID_WRAPPER . '">',
       '#suffix' => '</div>',
-      '#options' => $display_options,
+      '#options' => empty($display_options) ? [] : $display_options,
       '#title' => $this->t('Display ID'),
       '#default_value' => $this->getSetting('display_id'),
       '#description' => $this->t('Display types available for content authors. Leave empty to allow all.'),
@@ -111,8 +112,17 @@ final class ViewsExposedEmbedFieldItem extends MapItem {
     $views_options = [];
     $allowed_views = $filter ? array_filter($this->getSetting('allowed_views')) : [];
     foreach (Views::getEnabledViews() as $key => $view) {
-      if (empty($allowed_views) || isset($allowed_views[$key])) {
-        $views_options[$key] = FieldFilteredMarkup::create($view->get('label'));
+      $allow = FALSE;
+      $displays = $view->get('display');
+      foreach ($displays as $display) {
+        if ($display['display_plugin'] === 'exposed_embed') {
+          $allow = TRUE;
+        }
+      }
+      if ($allow) {
+        if (empty($allowed_views) || isset($allowed_views[$key])) {
+          $views_options[$key] = FieldFilteredMarkup::create($view->get('label'));
+        }
       }
     }
     natcasesort($views_options);
@@ -149,6 +159,9 @@ final class ViewsExposedEmbedFieldItem extends MapItem {
     $views = Views::getEnabledViews();
     if (isset($views[$entity_id])) {
       foreach ($views[$entity_id]->get('display') as $key => $display) {
+        if ($display['display_plugin'] !== 'exposed_embed') {
+          continue;
+        }
         if (isset($display['display_options']['enabled']) && !$display['display_options']['enabled']) {
           continue;
         }
