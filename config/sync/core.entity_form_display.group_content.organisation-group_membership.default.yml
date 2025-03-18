@@ -5,6 +5,8 @@ dependencies:
   config:
     - field.field.group_content.organisation-group_membership.group_roles
     - group.content_type.organisation-group_membership
+  module:
+    - hel_tpm_group
 id: group_content.organisation-group_membership.default
 targetEntityType: group_content
 bundle: organisation-group_membership
@@ -21,7 +23,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
   group_roles:
-    type: options_buttons
+    type: hel_tpm_group_group_role_required_select
     weight: 1
     region: content
     settings: {  }

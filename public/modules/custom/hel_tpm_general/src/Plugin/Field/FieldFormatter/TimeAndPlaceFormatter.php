@@ -22,17 +22,23 @@ final class TimeAndPlaceFormatter extends EntityReferenceRevisionsEntityFormatte
    * {@inheritdoc}
    */
   public function viewElements(FieldItemListInterface $items, $langcode): array {
+    $deltasToRemove = [];
     foreach ($this->getEntitiesToView($items, $langcode) as $delta => $entity) {
-      if (!$entity->hasField('field_service_location')) {
-        continue;
-      }
-      if (!$entity->hasField('field_dates')) {
+      if (!$entity->hasField('field_service_location') || !$entity->hasField('field_dates')) {
         continue;
       }
       if ($entity->get('field_service_location')->isEmpty() && $entity->get('field_dates')->isEmpty()) {
-        $items->removeItem($delta);
+        $deltasToRemove[] = $delta;
       }
     }
+
+    // Hide empty items by removing them in reverse order to ensure the removed
+    // index exists.
+    rsort($deltasToRemove);
+    foreach ($deltasToRemove as $delta) {
+      $items->removeItem($delta);
+    }
+
     return parent::viewElements($items, $langcode);
   }
 
