@@ -316,6 +316,14 @@ article ul {
     margin-left: auto;
     margin-right: auto;
   }
+  &--left-auto {
+    margin-left: auto;
+  }
+  &--dsk-la {
+    @include xl {
+      margin-left: auto;
+    }
+  }
   &--bottom-zero {
     margin-bottom: 0!important;
   }
