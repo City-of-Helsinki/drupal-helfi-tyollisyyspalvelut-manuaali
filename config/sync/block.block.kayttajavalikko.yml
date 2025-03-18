@@ -5,10 +5,14 @@ dependencies:
   config:
     - system.menu.account
   module:
+    - block_class
     - system
     - user
   theme:
     - palvelumanuaali
+third_party_settings:
+  block_class:
+    classes: 'margin--dsk-la margin--dsk-rforty'
 id: kayttajavalikko
 theme: palvelumanuaali
 region: header
@@ -31,3 +35,7 @@ visibility:
       user: '@user.current_user_context:current_user'
     roles:
       authenticated: authenticated
+  request_path:
+    id: request_path
+    negate: false
+    pages: "/tyollisyyspalvelujen-henkilosto\r\n/palveluntuottajalle"
