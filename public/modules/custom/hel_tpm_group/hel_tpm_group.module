@@ -123,6 +123,7 @@ function hel_tpm_group_group_content_update(EntityInterface $entity): void {
  */
 function hel_tpm_group_group_content_delete(EntityInterface $entity): void {
   _hel_tpm_group_invalidate_service_provider_member_cache($entity);
+  _hel_tpm_group_clear_invalid_responsible_persons($entity, 'delete');
 }
 
 /**
@@ -151,6 +152,61 @@ function _hel_tpm_group_invalidate_service_provider_member_cache(EntityInterface
     \Drupal::service('cache_tags.invalidator')->invalidateTags([
       'group_content_list:plugin:group_membership:entity:' . $member->getUser()->id(),
     ]);
+  }
+}
+
+/**
+ * Clear no longer valid responsible updater fields from related services.
+ *
+ * @param \Drupal\Core\Entity\EntityInterface $entity
+ *   The GroupRelationship entity.
+ * @param string $operation
+ *   Currently only supports 'delete'.
+ *
+ * @return void
+ *   Void.
+ */
+function _hel_tpm_group_clear_invalid_responsible_persons(EntityInterface $entity, string $operation): void {
+  if (!$entity instanceof GroupRelationship) {
+    return;
+  }
+  if ($entity->getPluginId() !== 'subgroup:service_provider') {
+    return;
+  }
+  if ($operation !== 'delete') {
+    return;
+  }
+
+  $subgroup = $entity->getEntity();
+  if (!$services = $subgroup->getRelatedEntities('group_node:service')) {
+    return;
+  }
+
+  // Get all remaining super group member IDs.
+  $allParentMembers = [];
+  $supergroups = \Drupal::service('ggroup.group_hierarchy_manager')->getGroupSupergroups($subgroup->id());
+  foreach ($supergroups as $supergroup) {
+    $parentMemberEntities = $supergroup->getMembers();
+    foreach ($parentMemberEntities as $parentMemberEntity) {
+      $allParentMembers[] = $parentMemberEntity->getUser()->id();
+    }
+  }
+
+  // Check each subgroup service and remove responsible updater if the subgroup
+  // does not have other parent groups that have the same user as member.
+  foreach ($services as $service) {
+    $updaterValue = $service->get('field_responsible_updatee')->getValue();
+    if (empty($updaterValue)) {
+      continue;
+    }
+
+    foreach ($updaterValue as $key => $value) {
+      if (!in_array($value['target_id'], $allParentMembers)) {
+        unset($updaterValue[$key]);
+      }
+    }
+    $service->set('field_responsible_updatee', $updaterValue);
+    $service->save();
   }
 }
 
