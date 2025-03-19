@@ -33,7 +33,14 @@ final class ViewsExposedEmbedFieldWidget extends WidgetBase {
    */
   private FormBuilderInterface $formBuilder;
 
-  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, array $third_party_settings, FormBuilderInterface $form_builder) {
+  public function __construct(
+    $plugin_id,
+    $plugin_definition,
+    FieldDefinitionInterface $field_definition,
+    array $settings,
+    array $third_party_settings,
+    FormBuilderInterface $form_builder,
+  ) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $third_party_settings);
     $this->formBuilder = $form_builder;
   }
@@ -168,7 +175,12 @@ final class ViewsExposedEmbedFieldWidget extends WidgetBase {
   /**
    * {@inheritdoc}
    */
-  public function errorElement(array $element, ConstraintViolationInterface $error, array $form, FormStateInterface $form_state): array|bool {
+  public function errorElement(
+    array $element,
+    ConstraintViolationInterface $error,
+    array $form,
+    FormStateInterface $form_state,
+  ): array|bool {
     $element = parent::errorElement($element, $error, $form, $form_state);
     if ($element === FALSE) {
       return FALSE;

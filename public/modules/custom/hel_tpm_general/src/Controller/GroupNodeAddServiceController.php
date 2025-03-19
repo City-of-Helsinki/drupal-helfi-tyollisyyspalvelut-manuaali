@@ -18,27 +18,6 @@ use Symfony\Component\Routing\RouterInterface;
 class GroupNodeAddServiceController extends ControllerBase implements ContainerInjectionInterface {
 
   /**
-   * Group membership loader.
-   *
-   * @var \Drupal\group\GroupMembershipLoader
-   */
-  protected $groupMembershipLoader;
-
-  /**
-   * Group content create enityt access.
-   *
-   * @var \Drupal\group\Access\GroupContentCreateEntityAccessCheck
-   */
-  protected $groupContentCreateEntityAccess;
-
-  /**
-   * Router interface.
-   *
-   * @var \Symfony\Component\Routing\RouterInterface
-   */
-  protected $router;
-
-  /**
    * Content plugin id.
    *
    * @var string
@@ -46,37 +25,23 @@ class GroupNodeAddServiceController extends ControllerBase implements ContainerI
   protected $pluginId = 'group_node:service';
 
   /**
-   * Current user interface.
-   *
-   * @var \Drupal\Core\Session\AccountProxyInterface
-   */
-  protected $user;
-
-  /**
-   * Group node create access service.
-   *
-   * @var \Drupal\hel_tpm_general\Access\GroupNodeCreateAccessService
-   */
-  private $groupNodeCreateAccessService;
-
-  /**
    * Constructor for GroupNodeAddServiceController.
    *
-   * @param \Drupal\group\GroupMembershipLoader $group_membership_loader
+   * @param \Drupal\group\GroupMembershipLoader $groupMembershipLoader
    *   Group membership loader.
    * @param \Symfony\Component\Routing\RouterInterface $router
    *   Router service.
-   * @param \Drupal\hel_tpm_general\Access\GroupNodeCreateAccessService $group_node_create_access_service
+   * @param \Drupal\hel_tpm_general\Access\GroupNodeCreateAccessService $groupNodeCreateAccessService
    *   Group node create entity access.
    * @param \Drupal\Core\Session\AccountProxyInterface $user
    *   Current user account interface.
    */
-  public function __construct(GroupMembershipLoader $group_membership_loader, RouterInterface $router, GroupNodeCreateAccessService $group_node_create_access_service, AccountProxyInterface $user) {
-    $this->groupMembershipLoader = $group_membership_loader;
-    $this->router = $router;
-    $this->groupNodeCreateAccessService = $group_node_create_access_service;
-    $this->user = $user;
-  }
+  public function __construct(
+    protected GroupMembershipLoader $groupMembershipLoader,
+    protected RouterInterface $router,
+    protected GroupNodeCreateAccessService $groupNodeCreateAccessService,
+    protected AccountProxyInterface $user,
+  ) {}
 
   /**
    * {@inheritdoc}

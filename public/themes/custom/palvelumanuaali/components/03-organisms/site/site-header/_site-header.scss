@@ -73,7 +73,7 @@ body:not(.admin-toolbar-enabled) {
 }
 
 .slide-in-loginform {
-  padding-top: $space-two-and-half;
+  padding: 0 $space;
   display: none;
   height: 100%;
   position: fixed;
@@ -81,7 +81,6 @@ body:not(.admin-toolbar-enabled) {
   overflow-y: scroll;
   background-color: clr(background-dropdown);
   z-index: 300;
-  padding: 0 $space;
   margin-left: 0;
   transform:translateX(100%);
   width:  100%;
@@ -179,14 +178,13 @@ body:not(.admin-toolbar-enabled) {
   }
 
   &__primary {
-    background-color: clr(background);
+    background: white;
     margin-top: 40px;
     display: block;
     height: 100%;
     position: fixed;
     inset:0;
     overflow-y: scroll;
-    background: white;
     z-index: 300;
     padding: 0 $space;
     margin-left: 0;
@@ -199,7 +197,7 @@ body:not(.admin-toolbar-enabled) {
     > a {
         display: inherit;
     }
-    .logo-link {
+    .logo-link {
       @include large {
         display: inherit;
       }
@@ -209,12 +207,11 @@ body:not(.admin-toolbar-enabled) {
       background-color: clr(text-inverse);
       width: 100%;
       position: relative;
-      bottom: unset;
+      inset: unset;
       padding: 0 $space-double 0 $space-double;
       margin-left: unset;
       transform: unset;
       margin-top: 0;
-      inset: unset;
       overflow-y: visible;
       .menu--favorites {
         display: none;
@@ -303,12 +300,11 @@ body:not(.admin-toolbar-enabled) {
       background-color: clr(text-inverse);
       width: 100%;
       position: relative;
-      bottom: unset;
+      inset: unset;
       padding: 0 $space-double 0 $space-double;
       margin-left: unset;
       transform: unset;
       margin-top: 0;
-      inset: unset;
       overflow-y: visible;
       .menu--favorites {display: block}
     }
