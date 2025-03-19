@@ -307,6 +307,9 @@ final class ServiceUpdateReminderTest extends EntityKernelTestBase {
   public function testUserCheckingService(): void {
     // Ensure the reminder is not sent when user marks the service as checked.
     $serviceChecked = $this->createServiceWithTransition('ready_to_publish', 'published', UpdateReminderUtility::LIMIT_1 + 1, TRUE);
+    // Set service owner to current user.
+    $owner = $serviceChecked->getOwner();
+    $this->drupalSetCurrentUser($owner);
     $serviceChecked->set('moderation_state', 'ready_to_publish');
     $serviceChecked->save();
     $serviceChecked = $this->reloadEntity($serviceChecked);
@@ -331,10 +334,21 @@ final class ServiceUpdateReminderTest extends EntityKernelTestBase {
     $this->assertEquals(1, count($this->getReminderMails()));
     $this->assertEquals(1, UpdateReminderUtility::getMessagesSent((int) $serviceCheckedSecond->id()));
     $this->setRemindedTimestampToValue((int) $serviceCheckedSecond->id(), UpdateReminderUtility::LIMIT_2 + 1);
+
     $serviceCheckedSecond->save();
     $serviceCheckedSecond = $this->reloadEntity($serviceCheckedSecond);
     $this->cronRunHelper();
-    $this->assertEquals(1, count($this->getReminderMails()));
+
+    $this->assertEquals(2, count($this->getReminderMails()));
+    $this->assertEquals(2, UpdateReminderUtility::getMessagesSent((int) $serviceCheckedSecond->id()));
+
+    $owner = $serviceCheckedSecond->getOwner();
+    $this->drupalSetCurrentUser($owner);
+    $serviceCheckedSecond->save();
+    $serviceCheckedSecond = $this->reloadEntity($serviceCheckedSecond);
+    $this->cronRunHelper();
+
+    $this->assertEquals(2, count($this->getReminderMails()));
     $this->assertEquals(0, UpdateReminderUtility::getMessagesSent((int) $serviceCheckedSecond->id()));
   }
 
