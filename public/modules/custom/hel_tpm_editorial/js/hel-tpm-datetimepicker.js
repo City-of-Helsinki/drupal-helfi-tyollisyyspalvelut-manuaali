@@ -40,7 +40,8 @@
           else {
             $(this).attr('placeholder', dateFormat);
             $(this).datepicker({
-              dateFormat: 'dd.mm.yy'
+              dateFormat: 'dd.mm.yy',
+              firstDay: 1
             });
           }
         })
