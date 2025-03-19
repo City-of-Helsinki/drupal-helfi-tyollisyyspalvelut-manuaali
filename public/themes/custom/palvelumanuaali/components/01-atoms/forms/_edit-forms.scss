@@ -114,7 +114,7 @@
 
     }
     .button {
-      width: 160px;
+      min-width: 160px;
       border: unset;
     }
   }
@@ -404,6 +404,9 @@ details>.form-wrapper:last-child {
       margin-top: 32px;
       background-size: 18px;
     }
+    .button {
+      margin-top: $space;
+    }
   }
   .field-service-reference-values {
     border-collapse: separate;
@@ -415,6 +418,9 @@ details>.form-wrapper:last-child {
     }
     input[data-drupal-selector*="-actions-remove-button"] {
       background-size: 18px;
+    }
+    .button {
+      margin-left: $space;
     }
   }
   .form-fieldset {
@@ -521,5 +527,11 @@ details>.form-wrapper:last-child {
         background-color: clr(text-inverse);
       }
     }
+  }
+}
+
+.node-service-location-form {
+  .form-text {
+    margin-bottom: $space;
   }
 }
