@@ -84,8 +84,8 @@ third_party_settings:
         width_breakpoint: 640
     group_specialist:
       children:
-        - group_service_requirements
         - group_guidance_to_service
+        - group_service_requirements
         - group_service_obligatoryness
         - group_markings_for_service
         - group_statements_unemploym
@@ -108,12 +108,12 @@ third_party_settings:
         required_fields: true
     group_customer:
       children:
-        - field_service_execution
         - field_attendance
         - group_benefits_serfice
         - group_requirements_of_service
         - group_participation_concent
         - field_field_client_consent_descr
+        - field_service_execution
         - field_service_other_info
       label: Customer
       region: content
@@ -292,7 +292,7 @@ third_party_settings:
       label: 'Palvelun velvoittavuus'
       region: content
       parent_name: group_specialist
-      weight: 8
+      weight: 9
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -314,7 +314,7 @@ third_party_settings:
       label: 'Lausunnot ja työttömyysetuus'
       region: content
       parent_name: group_specialist
-      weight: 10
+      weight: 11
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -335,7 +335,7 @@ third_party_settings:
       label: 'Täydentävä työnhakukeskustelu'
       region: content
       parent_name: group_specialist
-      weight: 13
+      weight: 14
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -356,7 +356,7 @@ third_party_settings:
       label: Poikkeustilanteet
       region: content
       parent_name: group_specialist
-      weight: 12
+      weight: 13
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -376,7 +376,7 @@ third_party_settings:
       label: 'Toimenpiteet osallistumisen ajalta'
       region: content
       parent_name: group_specialist
-      weight: 11
+      weight: 12
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -396,7 +396,7 @@ third_party_settings:
       label: Arkistointiohje
       region: content
       parent_name: group_specialist
-      weight: 14
+      weight: 15
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -416,7 +416,7 @@ third_party_settings:
       label: 'Palveluun osallistumisen edellytykset'
       region: content
       parent_name: group_specialist
-      weight: 6
+      weight: 8
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -436,7 +436,7 @@ third_party_settings:
       label: 'Merkinnät asiakastietojärjestelmään'
       region: content
       parent_name: group_specialist
-      weight: 9
+      weight: 10
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -538,7 +538,7 @@ third_party_settings:
       label: 'Liitteet ja linkit'
       region: content
       parent_name: group_specialist
-      weight: 15
+      weight: 16
       format_type: html_element
       format_settings:
         classes: fieldset-internal-files-and-attachments
@@ -696,7 +696,7 @@ content:
             selector: ''
   field_field_client_consent_descr:
     type: text_textarea
-    weight: 13
+    weight: 12
     region: content
     settings:
       rows: 5
@@ -885,7 +885,7 @@ content:
     third_party_settings: {  }
   field_service_execution:
     type: inline_entity_form_simple
-    weight: 7
+    weight: 13
     region: content
     settings:
       form_mode: default
