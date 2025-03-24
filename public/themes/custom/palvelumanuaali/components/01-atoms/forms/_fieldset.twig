@@ -28,7 +28,9 @@
     'form-item',
     'js-form-wrapper',
     'form-wrapper',
-    with_margin ? with_margin : 'form-fieldset--no-margin',
+    with_margin ? '' : 'form-fieldset--no-margin',
+    with_padding ? '' : 'form-fieldset--no-padding'
+
   ]
 %}
 <fieldset{{ attributes.addClass(classes) }}>
