@@ -9,7 +9,6 @@ use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 use Drupal\hel_tpm_update_reminder\UpdateReminderUtility;
 use Drupal\message\Entity\Message;
-use Drupal\node\NodeInterface;
 
 /**
  * Implements hook_cron().
@@ -31,30 +30,15 @@ function _hel_tpm_update_reminder_service_reminders(): void {
     return;
   }
 
-  // Fetch all node ids with published moderation state.
-  $published_moderation_nids = \Drupal::database()->select('content_moderation_state_field_data', 'c')
-    ->condition('c.moderation_state', 'published')
-    ->fields('c', ['content_entity_id'])
-    ->execute()
-    ->fetchAll(\PDO::FETCH_COLUMN);
+  $service = \Drupal::service('hel_tpm_update_reminder.update_reminder_user');
 
-  // Fetch all ids for services that might need to be reminded using published
-  // services' changed status.
-  $reminder_service_ids = \Drupal::entityQuery('node')
-    ->condition('type', 'service')
-    ->condition('status', NodeInterface::PUBLISHED)
-    ->condition('changed', UpdateReminderUtility::getFirstLimitTimestamp(), '<')
-    ->accessCheck(FALSE);
-  if (!empty($published_moderation_nids)) {
-    $reminder_service_ids->condition('nid', $published_moderation_nids, 'IN');
-  }
-  $reminder_service_ids = $reminder_service_ids->execute();
+  $reminder_service_ids = $service->getServicesToRemind();
 
   $queue = Drupal::queue('hel_tpm_update_reminder_service');
-  foreach ($reminder_service_ids as $nid) {
-    if (!empty($checked = UpdateReminderUtility::getCheckedTimestamp($nid))) {
+  foreach ($reminder_service_ids as $row) {
+    if (!empty($checked = UpdateReminderUtility::getCheckedTimestamp($row['nid']))) {
       if ($checked < UpdateReminderUtility::getFirstLimitTimestamp()) {
-        $queue->createItem((int) $nid);
+        $queue->createItem((int) $row['nid']);
       }
     }
   }
