@@ -262,6 +262,12 @@
           .on('keydown.multiselect', _this.upDown.bind(_this, 'preset'))
           .appendTo(_this.$presets);
 
+        let $checkbox = $('<div></div>')
+        .attr({
+          'class':'checkbox'
+        })
+        .prependTo($item);
+
         let $input = $('<input>')
           .attr({
             'type': 'radio',
@@ -358,6 +364,12 @@
         })
         .on('keydown.multiselect', this.upDown.bind(this, 'menuitem'))
         .text(' ' + $option.text());
+
+      let $checkbox = $('<div></div>')
+        .attr({
+          'class':'checkbox'
+        })
+        .prependTo($item);
 
       let $input = $('<input>')
         .attr({
