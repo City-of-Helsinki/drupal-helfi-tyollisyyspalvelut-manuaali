@@ -1,0 +1,25 @@
+uuid: accf32a8-3fd8-41be-b1dd-7a73b5b74b66
+langcode: fi
+status: true
+dependencies:
+  module:
+    - system
+label: 'Login helper context'
+name: login_helper_context
+group: null
+description: ''
+requireAllConditions: false
+disabled: false
+conditions:
+  request_path:
+    id: request_path
+    negate: false
+    uuid: 80a30e8c-1df1-4bc6-a8ed-60c9679f6327
+    context_mapping: {  }
+    pages: "/tyollisyyspalvelujen-henkilosto*\r\n/palveluntuottajalle*\r\n/henkilostolle*\r\n"
+reactions:
+  body_class:
+    id: body_class
+    body_class: lgin-on
+    saved: false
+weight: 0

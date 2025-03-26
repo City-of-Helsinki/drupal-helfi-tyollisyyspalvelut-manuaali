@@ -23,6 +23,8 @@ dependencies:
     - group
     - hel_tpm_search
     - search_api
+    - views_exposed_embed
+    - views_infinite_scroll
 id: solr_service_list
 label: 'Solr Service list'
 module: views
@@ -92,9 +94,28 @@ display:
             'entity:node':
               service: card_lift
       pager:
-        type: none
+        type: infinite_scroll
         options:
           offset: 0
+          pagination_heading_level: h4
+          items_per_page: 8
+          total_pages: null
+          id: 0
+          tags:
+            next: 'Seuraava ›'
+            previous: '‹ Edellinen'
+          expose:
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+          views_infinite_scroll:
+            button_text: 'Load More'
+            automatically_load_content: false
+            initially_load_all_pages: false
       exposed_form:
         type: bef
         options:
@@ -216,17 +237,20 @@ display:
                 options_hide_when_empty: false
                 options_show_items_count: 0
               field_target_group_municipality:
-                plugin_id: default
+                plugin_id: bef_taxonomy_term_hierarchy_select
                 advanced:
                   sort_options: false
                   rewrite:
                     filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: false
-                options_show_only_used: false
-                options_show_only_used_filtered: false
-                options_hide_when_empty: false
-                options_show_items_count: 0
+                select_all_none: 0
+                select_all_none_nested: false
+                display_inline: 1
+                options_show_only_used: 0
+                options_show_only_used_filtered: 0
+                options_hide_when_empty: 0
+                options_show_items_count: 1
               service_provider_entity_id:
                 plugin_id: default
                 advanced:
@@ -251,7 +275,7 @@ display:
         type: none
         options: {  }
       cache:
-        type: search_api_none
+        type: search_api_tag
         options: {  }
       empty: {  }
       sorts: {  }
@@ -1081,7 +1105,7 @@ display:
           required: false
           skip_access: false
       css_class: service-search
-      use_ajax: false
+      use_ajax: true
       header: {  }
       footer: {  }
       display_extenders:
@@ -1093,25 +1117,26 @@ display:
       contexts:
         - 'languages:language_interface'
         - url
+        - url.query_args
         - 'user.node_grants:view'
       tags:
         - 'config:search_api.index.service_search_solr_index'
         - 'search_api_list:service_search_solr_index'
-  embed_1:
-    id: embed_1
-    display_title: Upota
-    display_plugin: embed
-    position: 3
+  exposed_embed_1:
+    id: exposed_embed_1
+    display_title: 'Exposed Embed'
+    display_plugin: exposed_embed
+    position: 2
     display_options:
       display_extenders:
-        ajax_history:
-          enable_history: false
-          exclude_args: ''
+        ajax_history: {  }
+      exposed_block: true
     cache_metadata:
       max-age: -1
       contexts:
         - 'languages:language_interface'
         - url
+        - url.query_args
         - 'user.node_grants:view'
       tags:
         - 'config:search_api.index.service_search_solr_index'

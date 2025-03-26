@@ -29,9 +29,6 @@
 
   .form-item__dropdown > .select2 {
     max-width: 100%;
-    input {
-      width: 100% !important;
-    }
   }
 
   select {
@@ -539,6 +536,15 @@
   #edit-actions .button {
     @include button-color-blue;
     width: unset;
+  }
+  .field--name-entitygroupfield  {
+    .table__row {
+      height: 60px;
+
+    }
+    .field-add-more-submit {
+      margin-top: $space;
+    }
   }
 }
 

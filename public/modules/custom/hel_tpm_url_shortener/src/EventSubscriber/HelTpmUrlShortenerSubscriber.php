@@ -57,7 +57,12 @@ class HelTpmUrlShortenerSubscriber implements EventSubscriberInterface {
    * @param \Drupal\Component\Datetime\TimeInterface $time
    *   Time interface.
    */
-  public function __construct(MessengerInterface $messenger, RequestStack $request_stack, EntityTypeManagerInterface $entity_type_manager, TimeInterface $time) {
+  public function __construct(
+    MessengerInterface $messenger,
+    RequestStack $request_stack,
+    EntityTypeManagerInterface $entity_type_manager,
+    TimeInterface $time,
+  ) {
     $this->messenger = $messenger;
     $this->request = $request_stack->getCurrentRequest();
     $this->entityTypeManager = $entity_type_manager;

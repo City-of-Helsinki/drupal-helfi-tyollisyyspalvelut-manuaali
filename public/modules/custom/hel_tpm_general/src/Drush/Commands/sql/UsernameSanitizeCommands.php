@@ -13,7 +13,7 @@ use Drush\Sql\SqlBase;
 use Symfony\Component\Console\Input\InputInterface;
 
 /**
- * A Drush commandfile.
+ * A Drush command file.
  *
  * In addition to this file, you need a drush.services.yml
  * in root of your module, and a composer.json file that provides the name

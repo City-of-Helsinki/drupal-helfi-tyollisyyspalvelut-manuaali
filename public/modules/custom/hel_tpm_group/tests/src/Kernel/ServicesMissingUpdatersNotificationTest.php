@@ -178,8 +178,16 @@ class ServicesMissingUpdatersNotificationTest extends GroupKernelTestBase {
     $this->orgGroup->removeMember($this->orgUser);
 
     $result = $this->servicesMissingUpdaters->getByGroup((int) $this->orgGroup->id());
-    $this->assertEquals("user has no update access", $result[0]['errors']['field_service_provider_updatee'], 'Updater error did not match.');
-    $this->assertEquals("user has no update access", $result[0]['errors']['field_responsible_updatee'], 'Updater error did not match.');
+    $this->assertEquals(
+      "user has no update access",
+      $result[0]['errors']['field_service_provider_updatee'],
+      'Updater error did not match.'
+    );
+    $this->assertEquals(
+      "user has no update access",
+      $result[0]['errors']['field_responsible_updatee'],
+      'Updater error did not match.'
+    );
   }
 
   /**

@@ -25,7 +25,7 @@ use Drupal\date_recur_modular\Plugin\Field\FieldWidget\DateRecurModularAlphaWidg
  * of CSS.
  *
  * It supports the following modes:
- *  - Non recurring.
+ *  - Non-recurring.
  *  - Multiday.
  *  - Weekly:
  *    - hard coded interval of 1. Or 2 if fortnightly is chosen.
@@ -245,7 +245,7 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
       ];
     }
 
-    // States dont yet work on date time so put it in a container.
+    // States don't yet work on date time so put it in a container.
     // @see https://www.drupal.org/project/drupal/issues/2419131
     $element['ends_date'] = [
       '#type' => 'container',
@@ -434,7 +434,7 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
    *
    * {@inheritdoc}
    */
-  public function addRemoveRowButton(&$elements, $id_prefix, $wrapper_id, $max_delta) {
+  public function addRemoveRowButton(&$elements, $id_prefix, $wrapper_id, $max_delta): void {
     for ($delta = 0; $delta < $max_delta; $delta++) {
       if (empty($elements[$delta])) {
         return;
@@ -469,7 +469,7 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
   /**
    * Submission handler for the "Add another item" button.
    */
-  public static function addMoreSubmit(array $form, FormStateInterface $form_state) {
+  public static function addMoreSubmit(array $form, FormStateInterface $form_state): void {
     $button = $form_state->getTriggeringElement();
 
     // Go one level up in the form, to the widgets container.
@@ -496,7 +496,7 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
    * @return array
    *   Return preview date element.
    */
-  public function previewDate(array $form, FormStateInterface &$form_state) {
+  public function previewDate(array $form, FormStateInterface &$form_state): array {
     $triggering_element = $form_state->getTriggeringElement();
     $parents = $triggering_element['#parents'];
     $input = $form_state->getUserInput();
@@ -538,8 +538,8 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
    *   The complete form structure.
    */
   public static function validateModularWidget(array &$element, FormStateInterface $form_state, array &$complete_form): void {
-    // Each of these values can be array if input was invalid. E.g date or time
-    // not provided.
+    // Each of these values can be array if input was invalid, e.g. date or time
+    // is not provided.
     /** @var \Drupal\Core\Datetime\DrupalDateTime|array|null $start */
     $start = $form_state->getValue(array_merge($element['#parents'], ['start']));
     /** @var \Drupal\Core\Datetime\DrupalDateTime|array|null $end */
@@ -547,18 +547,23 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
     /** @var string|null $timeZone */
     $timeZone = self::TIME_ZONE;
 
+    // Check timezone.
     if ($start && !$timeZone) {
       $form_state->setError($element['start'], t('Time zone must be set if start date is set.'));
     }
     if ($end && !$timeZone) {
       $form_state->setError($element['end'], t('Time zone must be set if end date is set.'));
     }
-    if (($start instanceof DrupalDateTime || $end instanceof DrupalDateTime) && (!$start instanceof DrupalDateTime || !$end instanceof DrupalDateTime)) {
+
+    if (
+      ($start instanceof DrupalDateTime || $end instanceof DrupalDateTime)
+      && (!$start instanceof DrupalDateTime || !$end instanceof DrupalDateTime)
+    ) {
       $form_state->setError($element, t('Start date and end date must be provided.'));
       return;
     }
 
-    if ($start && $end) {
+    if ($start instanceof DrupalDateTime && $end instanceof DrupalDateTime) {
       if ($start->getTimestamp() > $end->getTimestamp()) {
         $form_state->setError($element['start'], t('Start date must be greater than end date.'));
       }
@@ -636,19 +641,19 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
       $item = [];
 
       $start = $value['start'] ?? NULL;
-      if (empty($start)) {
-        continue;
-      }
       if (is_array($start)) {
         $start = $this->createDrupalDateTime($start);
       }
-      assert(!isset($start) || $start instanceof DrupalDateTime);
-      $end = $value['end'] ?? NULL;
-      if (empty($end)) {
+      if (empty($start)) {
         continue;
       }
+      assert(!isset($start) || $start instanceof DrupalDateTime);
+      $end = $value['end'] ?? NULL;
       if (is_array($end)) {
         $end = $this->createDrupalDateTime($end);
+      }
+      if (empty($end)) {
+        continue;
       }
       assert(!isset($end) || $end instanceof DrupalDateTime);
       $timeZone = self::TIME_ZONE;
@@ -701,16 +706,19 @@ class HelTpmEditorialDateRecurCustomWidget extends DateRecurModularAlphaWidget {
   }
 
   /**
-   * Create DrauplDateTime element from given date.
+   * Create DrupalDateTime element from given date.
    *
    * @param array $date
    *   Date array.
    *
-   * @return \Drupal\Core\Datetime\DrupalDateTime
-   *   DrupalDateTime object.
+   * @return \Drupal\Core\Datetime\DrupalDateTime|null
+   *   DrupalDateTime object or null.
    */
-  protected function createDrupalDateTime(array $date) {
-    return DrupalDateTime::createFromTimestamp(strtotime(implode($date)));
+  protected function createDrupalDateTime(array $date): ?DrupalDateTime {
+    if (!$timestamp = strtotime(implode($date))) {
+      return NULL;
+    }
+    return DrupalDateTime::createFromTimestamp($timestamp);
   }
 
 }

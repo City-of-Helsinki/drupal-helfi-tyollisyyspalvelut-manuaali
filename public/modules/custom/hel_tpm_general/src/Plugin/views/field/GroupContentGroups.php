@@ -42,7 +42,12 @@ class GroupContentGroups extends FieldPluginBase {
    * @param \Drupal\ggroup\GroupHierarchyManagerInterface $ggroup_membership_loader
    *   Group hierarchy manager.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, GroupHierarchyManagerInterface $ggroup_membership_loader) {
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    GroupHierarchyManagerInterface $ggroup_membership_loader,
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->groupMembershipLoader = $ggroup_membership_loader;
   }
