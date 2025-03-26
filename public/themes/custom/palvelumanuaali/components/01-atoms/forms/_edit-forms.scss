@@ -39,18 +39,24 @@
       @include button-round-corners;
     }
   }
+  .dropbutton-wrapper {
+    margin-right: 0;
+    padding-right: 0;
+  }
   .dropbutton-widget {
+position: relative;
     input {
       background-color: transparent;
       color: clr(background-section);
-      max-width: 130px;
+      max-width: max-content;
+
       &:hover {
         background-color: transparent;
         color: clr(alt-header-color);
       }
     }
     .dropbutton-arrow {
-      top: 9px;
+      top: 13px;
     }
   }
   display: grid;
