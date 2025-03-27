@@ -848,11 +848,13 @@ input[data-drupal-selector="edit-field-contact-info-external-actions-ief-add"]{
   background-image: url("../../assets/images/icons/user-blue.svg");
   border-radius: 50%;
   background-size: 18px;
-  margin-left: auto;
   &:hover {
     background-color: clr(background-border);
   }
   @include xl {
+    background-color: clr(background-section);
+    background-image: url("../../assets/images/icons/user-white.svg");
+
     margin-left: 22px;
     &:hover {
       border: 2px solid $blue100;
