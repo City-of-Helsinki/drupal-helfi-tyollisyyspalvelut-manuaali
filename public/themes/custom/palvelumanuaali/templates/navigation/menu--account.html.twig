@@ -20,11 +20,10 @@
 #}
 {{ attach_library('palvelumanuaali/user-menu') }}
 
-<button id="accountMenuButton" class="btn btn-menu" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="{{'User account menu'|t}}">
+<button id="accountMenuButton" class="btn btn-menu btn--hide-on-mobile" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="{{'User account menu'|t}}">
   {# leaving these here for possible further development #}
   {# {{ drupal_view('user_info', 'block_1') }} #}
   <span class='login-button background-default'></span>
-  <span class='expand-sub'></span>
   {# leaving these here for possible further development #}
   {# {% include "@atoms/images/icons/_icon.twig" with {
     icon_base_class: 'icon',
@@ -37,5 +36,25 @@
   {{ drupal_view('user_info', 'block_1') }}
   {% include "@molecules/menus/_menu.twig" with {
      menu_class: 'dropdown-menu-inner',
+  } %}
+</div>
+
+<div id="accountMenuButton2" class="btn btn-menu hide-desktop logged-in-open" type="button" aria-haspopup="true" aria-expanded="false" title="{{'User account menu'|t}}">
+  <span class='login-button background-default'></span>
+</div>
+<div class='dropdown-mobile-menu hide-desktop'>
+  <button id="dropdownMobileCloseButton" class="btn logged-in-close btn-menu-close hide-lg" type="button">
+    {% include "@atoms/images/icons/_icon.twig" with {
+      icon_base_class: "icon",
+      icon_blockname: "toggle-expand-close",
+      icon_name: "close",
+    } %}
+    <span class="visually-hidden">
+      {{'Close'|t}}
+    </span>
+  </button>
+  {{ drupal_view('user_info', 'block_1') }}
+  {% include "@molecules/menus/_menu.twig" with {
+     menu_class: '',
   } %}
 </div>

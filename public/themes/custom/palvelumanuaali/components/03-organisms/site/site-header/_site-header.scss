@@ -27,18 +27,6 @@ body:not(.admin-toolbar-enabled) {
 }
 
 
-.lgin-on {
-  .header__primary {
-    .mobile-user-menu {
-      display: block;
-      margin-top: $space;
-        @include xl { display: none;}
-
-    }
-  }
-}
-
-
 .slide-in-menu {
   margin-top: $space-two-and-half;
   display: block;
@@ -191,9 +179,6 @@ body:not(.admin-toolbar-enabled) {
     transform:translateX(-100%);
     width:  100%;
     max-width: 100vw;
-    .mobile-user-menu {
-      display: none;
-    }
     > a {
         display: inherit;
     }
@@ -334,6 +319,9 @@ body:not(.admin-toolbar-enabled) {
       }
     }
 
+    .menu--account {
+        display: none;
+      }
     .search-form {
       display: flex;
     }
@@ -486,10 +474,6 @@ body:not(.admin-toolbar-enabled) {
   }
   #block-kayttajavalikko {
     align-content: center;
-    display: none;
-    @include xl {
-      display: flex;
-    }
   }
 
   #block-views-exposed-filter-block-service-search-special-search-filters,
@@ -550,26 +534,6 @@ body:not(.admin-toolbar-enabled) {
   display: flex;
   align-items: start;
   z-index: 10;
-  >.content {
-    width: 100%;
-    align-items: center;
-    display: flex;
-    @include xl {
-      height: 100%;
-    }
-  }
-  .btn {
-    width: 100%;
-    align-content: inherit;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    &.show {
-      .expand-sub {
-        transform: rotateX(180deg);
-      }
-    }
-  }
   .btn--hide-on-mobile {
     display: none;
     @include large {
