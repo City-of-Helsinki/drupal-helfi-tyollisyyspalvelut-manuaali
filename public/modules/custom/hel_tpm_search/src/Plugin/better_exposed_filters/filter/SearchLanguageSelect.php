@@ -92,9 +92,12 @@ class SearchLanguageSelect extends RadioButtons implements ContainerFactoryPlugi
     unset($field['#options']['All']);
 
     $handler = &$this->handler;
-
+    $user_input = $form_state->getUserInput();
+    if (!empty($user_input) && !empty($user_input[$field_id])) {
+      $current_value = $user_input[$field_id];
+    }
     foreach ($handler->facet_results as $result) {
-      $label = $this->formatOptionLabel($result);
+      $label = $this->formatOptionLabel($result, $current_value);
       if (empty($label)) {
         continue;
       }
@@ -104,21 +107,26 @@ class SearchLanguageSelect extends RadioButtons implements ContainerFactoryPlugi
   }
 
   /**
-   * Creates a label for a given result option.
+   * Formats the label for an option based on given result and selected value.
    *
-   * @param \Drupal\facets\Result\Result $result
-   *   The result object for which the label is being created.
+   * @param \Drupal\facets_result\Result $result
+   *   The result object containing the raw value and count.
+   * @param mixed $selected_value
+   *   The currently selected value to determine if the option is active.
    *
-   * @return string|null
-   *   The generated label with the language name and count, or NULL if the
-   *   language code is not found.
+   * @return string
+   *   The formatted option label as an HTML string.
    */
-  protected function formatOptionLabel(Result $result) {
+  protected function formatOptionLabel(Result $result, $selected_value) {
     $langcode = $result->getRawValue();
+    $label = $this->t('<span class="text">Results in @language</span>', ['@language' => $this->languageManager->getLanguage($langcode)->getName()]);
 
-    $label = $this->t('Results in @language', ['@language' => $this->languageManager->getLanguage($langcode)->getName()]);
+    $classes = ['count'];
+    if ($selected_value === $langcode) {
+      $classes[] = 'active';
+    }
 
-    return sprintf('%s <span class="count">(%s)</span>', $label, $result->getCount());
+    return sprintf('%s <span class="%s">%s</span>', $label, implode(' ', $classes), $result->getCount());
   }
 
 }

@@ -1,6 +1,42 @@
 .view-solr-service-search .view-filters {
   position: relative;
 
+  fieldset[data-drupal-selector="edit-langcode"] {
+    flex: auto;
+
+    input {
+      display: none;
+    }
+
+    .form-radios {
+      width: 100%;
+
+      .form-item {
+        display: block;
+      }
+      .form-item:nth-last-of-type(2) label {
+        display: flex;
+        justify-content: left;
+      }
+      label {
+        font-weight: bold;
+        span {
+          padding: $space-one-half 12px;
+        }
+        .count {
+          color: $blue100;
+          background: #fff;
+          border: 2px solid $blue40 !important;
+          border-radius: 8px;
+        }
+        .count.active {
+          background: $blue100;
+          color: #fff;
+        }
+
+      }
+    }
+  }
   .dropdownMultiselect {
     display: none;
   }
@@ -46,6 +82,7 @@
         }
       }
     }
+
   }
   .control-wrapper {
     display: flex;
