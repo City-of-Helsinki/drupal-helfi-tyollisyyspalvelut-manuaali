@@ -91,6 +91,10 @@
           prevBtn.hidden = true
         }
 
+        if (n === 0) {
+           nextBtn.hidden = false;
+        }
+
         if (n === lastTab) {
           nextBtn.hidden = true;
         }
