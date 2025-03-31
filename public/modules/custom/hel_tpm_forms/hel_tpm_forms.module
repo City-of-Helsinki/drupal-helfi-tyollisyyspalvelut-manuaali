@@ -63,14 +63,15 @@ function hel_tpm_forms_time_and_location_form_helper(&$form, FormStateInterface 
     return;
   }
 
-  for ($i = 0; $i <= $form[$field_key]['#max_delta']; $i++) {
+  for ($i = 0; $i <= $form[$field_key]['widget']['#max_delta']; $i++) {
     if (empty($form[$field_key]['widget'][$i])) {
       continue;
     }
 
+    $input = sprintf(':input[name="field_service_time_and_location[%s][subform][field_service_location][0][target_id]"]', $i);
     $form[$field_key]['widget'][$i]['subform']['field_location_additional_info']['#states'] = [
       'visible' => [
-        ':input[name="field_service_time_and_location[0][subform][field_service_location][0][target_id]"]' => ['empty' => FALSE],
+        $input => ['empty' => FALSE],
       ],
     ];
   }
