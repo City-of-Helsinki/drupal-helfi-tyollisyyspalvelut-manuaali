@@ -124,6 +124,7 @@ function hel_tpm_group_group_content_update(EntityInterface $entity): void {
 function hel_tpm_group_group_content_delete(EntityInterface $entity): void {
   _hel_tpm_group_invalidate_service_provider_member_cache($entity);
   _hel_tpm_group_clear_invalid_responsible_persons($entity, 'delete');
+  _hel_tpm_group_clear_invalid_responsible_municipality($entity, 'delete');
 }
 
 /**
@@ -200,12 +201,68 @@ function _hel_tpm_group_clear_invalid_responsible_persons(EntityInterface $entit
       continue;
     }
 
+    $fieldChanged = FALSE;
     foreach ($updaterValue as $key => $value) {
       if (!in_array($value['target_id'], $allParentMembers)) {
         unset($updaterValue[$key]);
+        $fieldChanged = TRUE;
       }
     }
+    if (!$fieldChanged) {
+      continue;
+    }
     $service->set('field_responsible_updatee', $updaterValue);
+    $service->save();
+  }
+}
+
+/**
+ * Remove former parent group from the responsible municipality field.
+ *
+ * @param \Drupal\Core\Entity\EntityInterface $entity
+ *   The GroupRelationship entity.
+ * @param string $operation
+ *   Currently only supports 'delete'.
+ *
+ * @return void
+ *   Void.
+ */
+function _hel_tpm_group_clear_invalid_responsible_municipality(EntityInterface $entity, string $operation): void {
+  if (!$entity instanceof GroupRelationship) {
+    return;
+  }
+  if ($entity->getPluginId() !== 'subgroup:service_provider') {
+    return;
+  }
+  if ($operation !== 'delete') {
+    return;
+  }
+
+  $formerParent = $entity->getGroupId();
+  $subgroup = $entity->getEntity();
+  if (!$services = $subgroup->getRelatedEntities('group_node:service')) {
+    return;
+  }
+
+  // Check each subgroup service and remove responsible municipality value if it
+  // belongs to the former parent group.
+  foreach ($services as $service) {
+    $municipalityValue = $service->get('field_responsible_municipality')->getValue();
+    if (empty($municipalityValue)) {
+      continue;
+    }
+
+    $fieldChanged = FALSE;
+    foreach ($municipalityValue as $key => $value) {
+      if ($value['target_id'] === $formerParent) {
+        unset($municipalityValue[$key]);
+        $fieldChanged = TRUE;
+      }
+    }
+    if (!$fieldChanged) {
+      continue;
+    }
+    $service->set('field_responsible_municipality', $municipalityValue);
     $service->save();
   }
 }
