@@ -1,9 +1,16 @@
 uuid: dd199beb-aa21-4b37-96a1-c9c3bbf38403
 langcode: fi
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - field_permissions
 id: root
 label: Root
 weight: 2
 is_admin: true
-permissions: {  }
+permissions:
+  - 'create field_service_implement'
+  - 'edit field_service_implement'
+  - 'edit own field_service_implement'
+  - 'view field_service_implement'
+  - 'view own field_service_implement'
