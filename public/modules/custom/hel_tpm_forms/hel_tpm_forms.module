@@ -36,6 +36,44 @@ function hel_tpm_forms_form_node_form_alter(&$form, FormStateInterface &$form_st
   hel_tpm_forms_node_service_form_alter_helper($form, $form_state, $form_id);
   hel_tpm_forms_node_service_location_form_alter_helper($form, $form_state);
   hel_tpm_forms_disable_untranslatable_paragraph_fields($form, $form_state);
+  hel_tpm_forms_time_and_location_form_helper($form, $form_state);
+}
+
+/**
+ * Helper function to modify the service time and location form.
+ *
+ * @param array $form
+ *   The form structure array.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The form state interface.
+ *
+ * @return void
+ *   -
+ */
+function hel_tpm_forms_time_and_location_form_helper(&$form, FormStateInterface &$form_state) {
+  $bundle = $form_state->getStorage()['form_display']->getTargetBundle();
+  // Check that we alter only service bundle.
+  if ($bundle != 'service') {
+    return;
+  }
+
+  $field_key = 'field_service_time_and_location';
+
+  if (empty($form[$field_key])) {
+    return;
+  }
+
+  for ($i = 0; $i <= $form[$field_key]['#max_delta']; $i++) {
+    if (empty($form[$field_key]['widget'][$i])) {
+      continue;
+    }
+
+    $form[$field_key]['widget'][$i]['subform']['field_location_additional_info']['#states'] = [
+      'visible' => [
+        ':input[name="field_service_time_and_location[0][subform][field_service_location][0][target_id]"]' => ['empty' => FALSE],
+      ],
+    ];
+  }
 }
 
 /**
