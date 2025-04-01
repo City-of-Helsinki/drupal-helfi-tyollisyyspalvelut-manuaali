@@ -1,0 +1,18 @@
+uuid: a5ccc51a-435e-484d-95aa-f630ab7adcb8
+langcode: en
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.content_alt_editor
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: false
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: paragraph.content_alt_editor
+target_entity_type_id: paragraph
+target_bundle: content_alt_editor
+default_langcode: site_default
+language_alterable: false
