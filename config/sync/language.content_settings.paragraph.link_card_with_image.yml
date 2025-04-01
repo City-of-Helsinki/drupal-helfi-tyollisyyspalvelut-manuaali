@@ -1,9 +1,9 @@
-uuid: d286be2c-ca09-4fc9-b531-3f20602ebdb0
-langcode: fi
+uuid: 427916c0-5668-4b80-b200-d632bb404d7f
+langcode: en
 status: true
 dependencies:
   config:
-    - paragraphs.paragraphs_type.service_language
+    - paragraphs.paragraphs_type.link_card_with_image
   module:
     - content_translation
 third_party_settings:
@@ -11,8 +11,8 @@ third_party_settings:
     enabled: false
     bundle_settings:
       untranslatable_fields_hide: '0'
-id: paragraph.service_language
+id: paragraph.link_card_with_image
 target_entity_type_id: paragraph
-target_bundle: service_language
+target_bundle: link_card_with_image
 default_langcode: site_default
-language_alterable: true
+language_alterable: false
