@@ -5,6 +5,7 @@
  * This module creates various additional contents.
  */
 
+use Drupal\field\Entity\FieldConfig;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 
@@ -34,6 +35,54 @@ function hel_tpm_forms_theme($existing, $type, $theme, $path) {
 function hel_tpm_forms_form_node_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
   hel_tpm_forms_node_service_form_alter_helper($form, $form_state, $form_id);
   hel_tpm_forms_node_service_location_form_alter_helper($form, $form_state);
+  hel_tpm_forms_disable_untranslatable_paragraph_fields($form, $form_state);
+}
+
+/**
+ * Disables untranslatable paragraph fields in the given form.
+ *
+ * @param array $form
+ *   The form array.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The form state interface.
+ *
+ * @return void
+ *   -
+ */
+function hel_tpm_forms_disable_untranslatable_paragraph_fields(&$form, FormStateInterface &$form_state) {
+  $paragraph_fields = ['field_service_time_and_location'];
+  $field_manager = \Drupal::service('entity_field.manager');
+
+  $form_object = $form_state->getFormObject();
+  if ($form_object->getEntity()->isDefaultTranslation()) {
+    return;
+  }
+
+  foreach ($paragraph_fields as $field) {
+    if (empty($form[$field])) {
+      continue;
+    }
+    $widget = &$form[$field]['widget'];
+    $max_delta = $widget['#max_delta'];
+
+    if (empty($widget) || empty($max_delta)) {
+      continue;
+    }
+
+    for ($i = 0; $i <= $max_delta; $i++) {
+      $row = &$widget[$i];
+      $field_definitions = $field_manager->getFieldDefinitions('paragraph', $row['#paragraph_type']);
+      foreach ($field_definitions as $field_key => $field_definition) {
+        if (!$field_definition instanceof FieldConfig) {
+          continue;
+        }
+        if ($field_definition->isTranslatable()) {
+          continue;
+        }
+        $row['subform'][$field_key]['#disabled'] = TRUE;
+      }
+    }
+  }
 }
 
 /**
