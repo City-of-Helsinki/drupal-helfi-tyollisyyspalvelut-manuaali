@@ -27,6 +27,21 @@ body:not(.admin-toolbar-enabled) {
 }
 
 
+.mobile-user-menu {
+  display: none;
+}
+
+.lgin-on {
+  .header__primary {
+    .mobile-user-menu {
+      display: block;
+      margin-top: $space;
+        @include xl { display: none;}
+
+    }
+  }
+}
+
 .slide-in-menu {
   margin-top: $space-two-and-half;
   display: block;
