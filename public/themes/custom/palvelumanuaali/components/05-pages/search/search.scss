@@ -229,15 +229,17 @@
       }
 
       .text-search-wrapper{
+        grid-row: 1;
         @include xl {
             grid-column: 2/3;
-            grid-row: 1;
+
         }
       }
       .filters-wrapper {
+        grid-row: 2;
         @include xl {
             grid-column: 2/3;
-            grid-row: 2;
+
         }
       }
     }

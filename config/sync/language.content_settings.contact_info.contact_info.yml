@@ -1,0 +1,17 @@
+uuid: bd1fe932-7be2-417e-b6a0-b2db63964dfb
+langcode: en
+status: true
+dependencies:
+  module:
+    - content_translation
+    - hel_tpm_contact_info
+third_party_settings:
+  content_translation:
+    enabled: false
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: contact_info.contact_info
+target_entity_type_id: contact_info
+target_bundle: contact_info
+default_langcode: site_default
+language_alterable: false

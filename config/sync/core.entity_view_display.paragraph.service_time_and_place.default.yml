@@ -7,9 +7,11 @@ dependencies:
     - core.date_format.time
     - date_recur.interpreter.default_interpreter
     - field.field.paragraph.service_time_and_place.field_dates
+    - field.field.paragraph.service_time_and_place.field_location_additional_info
     - field.field.paragraph.service_time_and_place.field_separate_time
     - field.field.paragraph.service_time_and_place.field_service_language
     - field.field.paragraph.service_time_and_place.field_service_location
+    - field.field.paragraph.service_time_and_place.field_time_additional_info
     - paragraphs.paragraphs_type.service_time_and_place
   module:
     - date_recur
@@ -24,6 +26,7 @@ content:
     settings:
       timezone_override: ''
       format_type: medium
+      from_to: both
       separator: '-'
       show_next: 5
       count_per_item: true
@@ -64,4 +67,6 @@ hidden:
   entity_print_view_epub: true
   entity_print_view_pdf: true
   entity_print_view_word_docx: true
+  field_location_additional_info: true
+  field_time_additional_info: true
   search_api_excerpt: true

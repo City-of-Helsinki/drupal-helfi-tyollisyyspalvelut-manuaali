@@ -214,7 +214,7 @@ class UpdateReminderUtility {
    * @return void
    *   Void.
    */
-  public static function checkNode(int $nid): void {
+  public static function markNodeChecked(int $nid): void {
     self::clearMessagesSent($nid);
     self::setCheckedTimestamp($nid);
   }
