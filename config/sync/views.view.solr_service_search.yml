@@ -1221,17 +1221,7 @@ display:
         sorts: false
         header: false
         footer: false
-      header:
-        result:
-          id: result
-          table: views
-          field: result
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: result
-          empty: false
-          content: '<strong>Hakutuloksia:</strong> <span class="total-number">@total</span>'
+      header: {  }
       footer: {  }
       display_extenders:
         ajax_history:
