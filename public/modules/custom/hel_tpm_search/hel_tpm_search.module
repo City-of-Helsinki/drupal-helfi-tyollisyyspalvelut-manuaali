@@ -62,15 +62,6 @@ function hel_tpm_search_views_data_alter(array &$data): void {
         'id' => 'age_groups_filter',
       ],
     ];
-    $data[$key]['search_api_language_custom'] = [
-      'title' => t('Custom Search Api Language'),
-      'filter' => [
-        'title' => t('Custom Search Api Language'),
-        'help' => 'Provides search api language filter with custom default value.',
-        'id' => 'search_api_language_custom',
-        'field' => 'search_api_language',
-      ],
-    ];
   }
 }
 
