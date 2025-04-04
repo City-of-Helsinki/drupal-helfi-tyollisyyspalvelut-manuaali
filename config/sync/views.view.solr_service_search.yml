@@ -23,6 +23,7 @@ dependencies:
     - 'taxonomy_term:municipality:d8aee90f-d5eb-45ea-956a-8518601779ff'
   module:
     - better_exposed_filters
+    - facets_exposed_filters
     - hel_tpm_search
     - search_api
     - views_load_more
@@ -656,46 +657,6 @@ display:
           hierarchy: false
           limit: true
           error_message: true
-        search_api_language:
-          id: search_api_language
-          table: search_api_index_service_search_solr_index
-          field: search_api_language
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: search_api_language
-          operator: in
-          value:
-            '***LANGUAGE_language_content***': '***LANGUAGE_language_content***'
-          group: 1
-          exposed: false
-          expose:
-            operator_id: ''
-            label: ''
-            description: ''
-            use_operator: false
-            operator: ''
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: ''
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-            reduce: false
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
         status:
           id: status
           table: search_api_index_service_search_solr_index
@@ -833,6 +794,62 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
+        facets_langcode:
+          id: facets_langcode
+          table: search_api_index_service_search_solr_index
+          field: facets_langcode
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: facets_filter
+          operator: '='
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: langcode
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              0: '0'
+              anonymous: '0'
+              root: '0'
+              admin: '0'
+              editor: '0'
+              specialist: '0'
+              specialist_editor: '0'
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          hierarchy: false
+          label_display: visible
+          facet:
+            query_operator: or
+            min_count: 0
+            show_numbers: true
+            processor_configs:
+              list_item:
+                weights:
+                  build: 5
+                settings: {  }
       filter_groups:
         operator: AND
         groups:
@@ -1133,6 +1150,16 @@ display:
                 options_hide_when_empty: 0
                 options_show_items_count: 0
                 term_optgroup: 0
+              facets_langcode:
+                plugin_id: search_language_select
+                advanced:
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+                select_all_none: false
+                select_all_none_nested: false
+                display_inline: 0
       empty:
         area:
           id: area
@@ -1194,17 +1221,7 @@ display:
         sorts: false
         header: false
         footer: false
-      header:
-        result:
-          id: result
-          table: views
-          field: result
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: result
-          empty: false
-          content: '<strong>Hakutuloksia:</strong> <span class="total-number">@total</span>'
+      header: {  }
       footer: {  }
       display_extenders:
         ajax_history:
