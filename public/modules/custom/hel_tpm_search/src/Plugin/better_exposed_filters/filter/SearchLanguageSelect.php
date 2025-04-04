@@ -35,6 +35,17 @@ class SearchLanguageSelect extends RadioButtons implements ContainerFactoryPlugi
   private EntityTypeManagerInterface $entityTypeManager;
 
   /**
+   * Mapping of languages and their translations.
+   *
+   * @var array
+   */
+  private array $languageMap = [
+    'fi' => ['fi' => 'suomeksi', 'sv' => 'ruotsiksi', 'en' => 'englanniksi'],
+    'en' => ['fi' => 'finnish', 'sv' => 'swedish', 'en' => 'english'],
+    'sv' => ['fi' => 'finska', 'sv' => 'svenska', 'en' => 'engelska'],
+  ];
+
+  /**
    * {@inheritdoc}
    */
   public function __construct(
@@ -119,7 +130,13 @@ class SearchLanguageSelect extends RadioButtons implements ContainerFactoryPlugi
    */
   protected function formatOptionLabel(Result $result, $selected_value) {
     $langcode = $result->getRawValue();
-    $label = $this->t('<span class="text">Results in @language</span>', ['@language' => $this->languageManager->getLanguage($langcode)->getName()]);
+    $current_language = $this->languageManager->getCurrentLanguage()->getId();
+
+    $lang = $this->languageMap[$current_language][$langcode];
+
+    $label = $this->t('<span class="text">Results in @language</span>', [
+      '@language' => $lang,
+    ]);
 
     $classes = ['count'];
     if ($selected_value === $langcode) {
