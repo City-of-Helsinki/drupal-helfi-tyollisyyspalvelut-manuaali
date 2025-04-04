@@ -1,0 +1,20 @@
+uuid: 66811dea-92a1-4f07-bbc6-ded59d0d3a47
+langcode: en
+status: true
+dependencies:
+  config:
+    - message.template.services_missing_updaters
+id: message.services_missing_updaters.uid
+field_name: uid
+entity_type: message
+bundle: services_missing_updaters
+label: 'Created by'
+description: 'The user that created the message.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: 'Drupal\message\Entity\Message::getCurrentUserId'
+settings:
+  handler: default
+  handler_settings: {  }
+field_type: entity_reference

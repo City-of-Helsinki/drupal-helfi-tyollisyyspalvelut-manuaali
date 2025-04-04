@@ -18,6 +18,8 @@
     margin-bottom: $space;
   }
 
+
+
   table {
     background-color: unset;
     margin: 0;
@@ -414,7 +416,6 @@
   }
 
 
-  .field--name-field-service-execution,
   .field--name-field-service-obligatoryness,
   .field--name-field-exceptions {
     margin-bottom: $space-triple;
@@ -509,6 +510,14 @@
     border-bottom: 2px solid clr(background-border);
   }
 
+  .group--margin-bottom {
+    margin-bottom: $space-triple;
+  }
+
+  .field--name-field-service-req-speacialist {
+    margin-bottom: $space;
+  }
+
   div[data-drupal-selector*="edit-field-contact-info-external-form"],
   div[data-drupal-selector*="edit-field-contact-info-form"],
   .ief-entity-operations {
@@ -545,6 +554,9 @@
     .field-add-more-submit {
       margin-top: $space;
     }
+  }
+  .form-fieldset--no-padding {
+    padding: 0;
   }
 }
 
