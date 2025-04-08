@@ -12,9 +12,11 @@ dependencies:
     - field.field.paragraph.service_time_and_place.field_service_language
     - field.field.paragraph.service_time_and_place.field_service_location
     - field.field.paragraph.service_time_and_place.field_time_additional_info
+    - field.field.paragraph.service_time_and_place.field_weekday_and_time
     - paragraphs.paragraphs_type.service_time_and_place
   module:
     - date_recur
+    - hel_tpm_service_dates
 id: paragraph.service_time_and_place.default
 targetEntityType: paragraph
 bundle: service_time_and_place
@@ -62,6 +64,13 @@ content:
       link: false
     third_party_settings: {  }
     weight: 2
+    region: content
+  field_weekday_and_time:
+    type: hel_tpm_service_dates_weekday_and_time_field_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 4
     region: content
 hidden:
   entity_print_view_epub: true
