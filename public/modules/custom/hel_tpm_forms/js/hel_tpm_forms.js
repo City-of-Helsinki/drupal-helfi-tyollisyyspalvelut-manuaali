@@ -49,14 +49,11 @@
        */
       function togglePriceElements(priceElement) {
         let servicePrice = '.field--name-field-service-price .field--name-field-price';
-        let servicePriceDescription = '.field--name-field-service-price .field--name-field-description';
         if ($(priceElement).is(":checked") === false) {
           $(servicePrice).hide();
-          $(servicePriceDescription).hide();
         }
         else {
           $(servicePrice).show();
-          $(servicePriceDescription).show();
         }
       }
 
