@@ -56,6 +56,10 @@ $button-colors: (
     color: map-get($pallate, text);
   }
 
+  &:active {
+    color: map-get($pallate, text-hover);
+    background-color: map-get($pallate, bg-hover);
+  }
   &:hover {
     color: map-get($pallate, text-hover);
     background-color: map-get($pallate, bg-hover);
