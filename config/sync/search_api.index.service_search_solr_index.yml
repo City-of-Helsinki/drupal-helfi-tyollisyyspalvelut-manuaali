@@ -281,6 +281,14 @@ field_settings:
       module:
         - entitygroupfield
         - group
+  langcode:
+    label: Kieli
+    datasource_id: 'entity:node'
+    property_path: langcode
+    type: string
+    dependencies:
+      module:
+        - node
   locality:
     label: 'Service time and location » Paragraph » Valitse paikka: » Sisältö » Address » The locality (i.e. city)'
     datasource_id: 'entity:node'
@@ -410,6 +418,7 @@ processor_settings:
       - field_age_groups
       - field_description
       - field_service_producer_labels
+      - langcode
       - locality
       - rendered_item
       - title
@@ -432,6 +441,7 @@ processor_settings:
       - field_age_groups
       - field_description
       - field_service_producer_labels
+      - langcode
       - locality
       - rendered_item
       - title
