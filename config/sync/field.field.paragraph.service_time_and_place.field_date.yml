@@ -1,0 +1,21 @@
+uuid: 6e6c38e0-c4b0-4d7a-aadb-9dcc0cc96cbd
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_date
+    - paragraphs.paragraphs_type.service_time_and_place
+  module:
+    - datetime_range
+id: paragraph.service_time_and_place.field_date
+field_name: field_date
+entity_type: paragraph
+bundle: service_time_and_place
+label: Date
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: daterange
