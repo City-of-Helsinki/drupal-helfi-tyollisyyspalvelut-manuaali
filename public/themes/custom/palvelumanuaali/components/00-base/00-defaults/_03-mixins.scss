@@ -103,6 +103,19 @@ $outer-container-break: $small;
   }
 }
 
+@mixin round-icon-button-transparent {
+  background-color: transparent;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid $blue100;
+  padding-left: 0;
+  color: $blue100;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+
 @mixin close-button {
   color: transparent;
   background-repeat: no-repeat;
