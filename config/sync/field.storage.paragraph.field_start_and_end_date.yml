@@ -1,19 +1,19 @@
-uuid: 716e144c-caf8-47bb-a24f-f20851e18ba2
+uuid: 5743da17-3e11-43e5-ada1-fdcbd496935d
 langcode: fi
 status: true
 dependencies:
   module:
     - datetime_range
     - paragraphs
-id: paragraph.field_date
-field_name: field_date
+id: paragraph.field_start_and_end_date
+field_name: field_start_and_end_date
 entity_type: paragraph
 type: daterange
 settings:
-  datetime_type: datetime
+  datetime_type: date
 module: datetime_range
 locked: false
-cardinality: -1
+cardinality: 1
 translatable: true
 indexes: {  }
 persist_with_no_fields: false
