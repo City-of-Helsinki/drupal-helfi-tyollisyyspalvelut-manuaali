@@ -116,10 +116,18 @@
     .ui-timepicker-input{
       padding: 4px 8px;
       width: 7ch;
+      margin-bottom: $space;
+      @include large {
+        margin-bottom: 0;
+      }
     }
     .weekday-row {
-      margin-bottom: $space-one-and-half;
-      height: 40px;
+      margin-bottom: $space;
+
+      @include large {
+        margin-bottom: $space-one-and-half;
+        height: 40px;
+      }
       > div {
         margin-right: $space-two-and-half;
       }
