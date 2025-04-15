@@ -9,10 +9,12 @@ dependencies:
     - field.field.paragraph.service_time_and_place.field_service_language
     - field.field.paragraph.service_time_and_place.field_service_location
     - field.field.paragraph.service_time_and_place.field_time_additional_info
+    - field.field.paragraph.service_time_and_place.field_weekday_and_time
     - paragraphs.paragraphs_type.service_time_and_place
   module:
     - field_group
     - hel_tpm_editorial
+    - hel_tpm_service_dates
     - select2
 third_party_settings:
   field_group:
@@ -38,6 +40,7 @@ third_party_settings:
       children:
         - field_dates
         - field_time_additional_info
+        - field_weekday_and_time
       label: 'Milloin palvelu järjestetään'
       region: content
       parent_name: group_location
@@ -108,6 +111,12 @@ content:
     settings:
       rows: 5
       placeholder: ''
+    third_party_settings: {  }
+  field_weekday_and_time:
+    type: hel_tpm_service_dates_weekday_and_time_field
+    weight: 7
+    region: content
+    settings: {  }
     third_party_settings: {  }
   translation:
     weight: 10
