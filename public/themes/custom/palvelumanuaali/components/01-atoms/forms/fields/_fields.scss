@@ -67,6 +67,7 @@
     }
   }
 
+
   .hyphen-wrapper {
     position: relative;
     .hyphen {
@@ -124,6 +125,125 @@
     }
 
   }
+}
+
+.hel-tpm-service-dates-weekday-and-time-field-elements {
+  >.label {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 17px;
+    @extend .form-required-on-publish;
+    &:nth-child(1) {
+      width: 82px;
+    }
+    &:nth-child(2) {
+      width: 150px;
+    }
+  }
+  .date-preview {
+    float: left;
+  }
+    .form-item--checkboxes {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+    }
+    .form-item {
+      width: auto;
+    }
+    .ui-timepicker-input{
+      padding: 4px 8px;
+      width: 7ch;
+      margin-bottom: $space;
+      @include large {
+        margin-bottom: 0;
+      }
+    }
+    .weekday-row {
+      margin-bottom: $space;
+
+      @include large {
+        margin-bottom: $space-one-and-half;
+        height: 40px;
+      }
+      > div {
+        margin-right: $space-two-and-half;
+      }
+      .form-wrapper {
+        > div {
+          &:first-child {
+            &::after {
+              content: "-";
+              margin-left: 4px;
+              margin-right: 4px;
+            }
+          }
+        }
+      }
+    }
+
+    .form-item-checkbox {
+      margin-right: $space-one-half;
+      margin-bottom: 0;
+      height: 32px;
+      input {
+        opacity: 0;
+        position: absolute;
+        & + label {
+
+        }
+        &:checked +label {
+          background-color: $blue100;
+          color: $white;
+        }
+
+      }
+      &:nth-child(3) {
+        label {
+          color: transparent;
+          &:hover {
+            color: transparent;
+          }
+         }
+      }
+
+      .add-time-button {
+        & + label {
+          background-color: $blue100;
+          @include round-icon-button;
+          background-image: url("../../assets/images/icons/plus.svg");
+          &:hover {
+            color: transparent;
+          }
+        }
+        &:checked +label {
+          @include round-icon-button;
+          background-image: url("../../assets/images/icons/minus.svg");
+        }
+      }
+      label {
+        width: 32px;
+        height: 32px;
+        color: clr(alt-header-color);
+        border-radius: 50%;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        font-weight: 700;
+        font-size: 12px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        padding-left: 8px;
+        justify-content: center;
+        @include round-icon-button-transparent;
+        &:hover {
+          background-color: $blue100;
+          color: $white;
+          cursor: pointer;
+        }
+      }
+    }
 }
 
 .field--widget-hel-tpm-editorial-date-recur-custom {

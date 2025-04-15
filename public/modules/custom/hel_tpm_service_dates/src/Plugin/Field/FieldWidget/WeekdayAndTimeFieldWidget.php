@@ -70,6 +70,7 @@ final class WeekdayAndTimeFieldWidget extends WidgetBase {
           $default_values[1] = [];
         }
         $row[$day][1] = $this->createTimeSelectElement('Add', $selector, $default_values[1], $form_state, $wrapper_id);
+        $row[$day][1]['selector']['#attributes']['class'][] = 'add-time-button';
       }
 
     }

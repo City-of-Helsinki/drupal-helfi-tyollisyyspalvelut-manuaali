@@ -1,5 +1,5 @@
 {% set link_base_class = 'logo-link' %}
-{% set link_url = logo_link__url|default(front_page) %}
+{% set link_url = logo_link__url|default(url('<front>')) %}
 {% extends "@atoms/links/link/link.twig" %}
   {% block link_content %}
     {% if large %}
