@@ -16,7 +16,6 @@ dependencies:
     - paragraphs.paragraphs_type.service_time_and_place
   module:
     - conditional_fields
-    - datetime_range
     - field_group
     - hel_tpm_editorial
     - hel_tpm_service_dates
@@ -96,7 +95,7 @@ content:
             effect_options: {  }
             selector: ''
   field_date_selection:
-    type: options_select
+    type: options_buttons
     weight: 13
     region: content
     settings: {  }
@@ -145,7 +144,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_start_and_end_date:
-    type: daterange_default
+    type: hel_tpm_service_dates_date_range
     weight: 14
     region: content
     settings: {  }

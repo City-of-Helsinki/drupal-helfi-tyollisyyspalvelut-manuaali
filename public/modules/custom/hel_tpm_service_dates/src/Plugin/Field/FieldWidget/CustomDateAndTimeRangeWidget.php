@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\hel_tpm_service_dates\Plugin\Field\FieldWidget;
 
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Field\Attribute\FieldWidget;
 use Drupal\Core\Field\FieldItemListInterface;
@@ -28,6 +29,7 @@ final class CustomDateAndTimeRangeWidget extends DateRangeDefaultWidget {
     $element = parent::formElement($items, $delta, $element, $form, $form_state);
 
     $element['#attached']['library'][] = 'hel_tpm_service_dates/custom_date_range_widget';
+    $element['#attached']['drupalSettings']['hel_tpm_service_dates']['field_name'][] = sprintf('.field--name-%s', Html::cleanCssIdentifier($items->getName()));
 
     $element['value']['#date_date_format'] = 'd.m.Y';
     $element['value']['#date_time_format'] = 'H:i';
