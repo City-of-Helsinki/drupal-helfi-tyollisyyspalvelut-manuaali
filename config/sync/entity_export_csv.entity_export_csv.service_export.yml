@@ -624,7 +624,7 @@ fields:
   field_contact_info_external:
     enable: true
     order: 25
-    exporter: entity_reference_export
+    exporter: contact_info_reference_export
     form:
       options:
         header: label
@@ -632,7 +632,7 @@ fields:
           target_id: target_id
         property_separator: '|'
         property_separate_column: 0
-        format: entity_reference_label
+        format: contact_info_fields
         explode: ''
         separator: '|'
   field_other_services:
@@ -850,7 +850,7 @@ fields:
   field_contact_info:
     enable: true
     order: 42
-    exporter: entity_reference_export
+    exporter: contact_info_reference_export
     form:
       options:
         header: label
@@ -858,7 +858,7 @@ fields:
           target_id: target_id
         property_separator: '|'
         property_separate_column: 0
-        format: entity_reference_label
+        format: contact_info_fields
         explode: ''
         separator: '|'
   field_internal_links:
