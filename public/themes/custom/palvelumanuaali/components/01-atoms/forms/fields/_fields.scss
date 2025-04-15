@@ -87,6 +87,44 @@
     }
   }
 }
+.field--widget-hel-tpm-service-dates-custom-date-and-time-range-widget {
+  fieldset {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: $space-double;
+    .form-item {
+      margin-bottom: $space;
+      @include large {
+        margin-bottom: unset;
+      }
+    }
+    h4 {
+      width: 100%;
+      @include large {
+        order: 1;
+        width: 50%;
+      }
+      font-size: 12px;
+      font-weight: 600;
+    }
+    div {
+      display: flex;
+      gap: $space;
+      @include large {
+      order: 2;
+      width: 50%;
+      }
+    }
+    div[class*='-value-time'] {
+
+      width: 100px;
+    }
+    div[class*='-value-date'] {
+      width: 160px;
+    }
+
+  }
+}
 
 .field--widget-hel-tpm-editorial-date-recur-custom {
   .hel-tpm-editorial-date-recur-custom-widget {

@@ -28,7 +28,6 @@ final class CustomDateAndTimeRangeWidget extends DateRangeDefaultWidget {
     $element = parent::formElement($items, $delta, $element, $form, $form_state);
 
     $element['#attached']['library'][] = 'hel_tpm_service_dates/custom_date_range_widget';
-    $element['#attached']['library'][] = '';
 
     $element['value']['#date_date_format'] = 'd.m.Y';
     $element['value']['#date_time_format'] = 'H:i';
