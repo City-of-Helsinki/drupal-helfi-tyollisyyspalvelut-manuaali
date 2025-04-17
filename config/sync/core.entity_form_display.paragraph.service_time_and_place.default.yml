@@ -15,9 +15,7 @@ dependencies:
     - field.field.paragraph.service_time_and_place.field_weekday_and_time
     - paragraphs.paragraphs_type.service_time_and_place
   module:
-    - conditional_fields
     - field_group
-    - hel_tpm_editorial
     - hel_tpm_service_dates
     - select2
 third_party_settings:
@@ -75,36 +73,10 @@ content:
     region: content
     settings:
       disable_end_date: false
-    third_party_settings:
-      conditional_fields:
-        54424b10-b5bc-4497-a4bd-b3c22961d91d:
-          entity_type: paragraph
-          bundle: service_time_and_place
-          dependee: field_date_selection
-          settings:
-            state: visible
-            reset: true
-            condition: value
-            grouping: AND
-            values_set: 1
-            value: ''
-            values: {  }
-            value_form:
-              -
-                value: separate_dates
-            effect: show
-            effect_options: {  }
-            selector: ''
+    third_party_settings: {  }
   field_date_selection:
     type: options_buttons
     weight: 13
-    region: content
-    settings: {  }
-    third_party_settings:
-      conditional_fields: {  }
-  field_dates:
-    type: hel_tpm_editorial_date_recur_custom
-    weight: 2
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -122,8 +94,7 @@ content:
     region: content
     settings:
       display_label: true
-    third_party_settings:
-      conditional_fields: {  }
+    third_party_settings: {  }
   field_service_language:
     type: select2_entity_reference
     weight: 3
@@ -150,26 +121,7 @@ content:
     region: content
     settings:
       disable_end_date: false
-    third_party_settings:
-      conditional_fields:
-        39abb0a0-83d8-49c0-987c-8d527aa14dd7:
-          entity_type: paragraph
-          bundle: service_time_and_place
-          dependee: field_date_selection
-          settings:
-            state: visible
-            reset: true
-            condition: value
-            grouping: AND
-            values_set: 1
-            value: ''
-            values: {  }
-            value_form:
-              -
-                value: start_and_end_date
-            effect: show
-            effect_options: {  }
-            selector: ''
+    third_party_settings: {  }
   field_time_additional_info:
     type: string_textarea
     weight: 17
@@ -177,49 +129,13 @@ content:
     settings:
       rows: 5
       placeholder: ''
-    third_party_settings:
-      conditional_fields:
-        77699aae-c60d-48ac-9fd9-4eef2eadfc76:
-          entity_type: paragraph
-          bundle: service_time_and_place
-          dependee: field_date_selection
-          settings:
-            state: visible
-            reset: true
-            condition: value
-            grouping: AND
-            values_set: 3
-            value: ''
-            values: "date_not_available\r\nstart_and_end_date\r\nservice_continous\r\nseparate_dates"
-            value_form:
-              -
-                value: date_not_available
-            effect: show
-            effect_options: {  }
-            selector: ''
+    third_party_settings: {  }
   field_weekday_and_time:
     type: hel_tpm_service_dates_weekday_and_time_field
     weight: 16
     region: content
     settings: {  }
-    third_party_settings:
-      conditional_fields:
-        0b2e3438-e5a8-480b-8ddb-8eabb9841436:
-          entity_type: paragraph
-          bundle: service_time_and_place
-          dependee: field_date_selection
-          settings:
-            state: visible
-            reset: true
-            condition: value
-            grouping: AND
-            values_set: 3
-            value: ''
-            values: "start_and_end_date\r\nservice_continous"
-            value_form: {  }
-            effect: show
-            effect_options: {  }
-            selector: ''
+    third_party_settings: {  }
   translation:
     weight: 1
     region: content
@@ -227,4 +143,5 @@ content:
     third_party_settings: {  }
 hidden:
   created: true
+  field_dates: true
   status: true
