@@ -1,12 +1,10 @@
 (function ($, Drupal, drupalSettings) {
   Drupal.behaviors.customDatetimePicker = {
     attach(context, settings) {
-      let widgets = settings.hel_tpm_service_dates.field_name;
-      $(widgets).each(function () {
-        console.log(this);
-        formatDatePicker(this);
-        formatTimePicker(this);
-      });
+      let widget = '.field--widget-hel-tpm-service-dates-date-range';
+      console.log(widget);
+      formatDatePicker(widget);
+      formatTimePicker(widget);
     }
   }
 })(jQuery, Drupal, drupalSettings);

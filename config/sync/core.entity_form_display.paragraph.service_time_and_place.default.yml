@@ -70,10 +70,11 @@ bundle: service_time_and_place
 mode: default
 content:
   field_date:
-    type: hel_tpm_service_dates_custom_date_and_time_range_widget
+    type: hel_tpm_service_dates_date_range
     weight: 15
     region: content
-    settings: {  }
+    settings:
+      disable_end_date: false
     third_party_settings:
       conditional_fields:
         54424b10-b5bc-4497-a4bd-b3c22961d91d:
@@ -147,7 +148,8 @@ content:
     type: hel_tpm_service_dates_date_range
     weight: 14
     region: content
-    settings: {  }
+    settings:
+      disable_end_date: false
     third_party_settings:
       conditional_fields:
         39abb0a0-83d8-49c0-987c-8d527aa14dd7:
