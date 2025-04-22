@@ -42,10 +42,6 @@ display:
         dropbutton:
           label: Funktioner
       filters:
-        title:
-          expose:
-            label: 'Filtrera:'
-            placeholder: 'Filtrera efter sökterm'
         status:
           expose:
             label: 'Status för publicering'
@@ -59,12 +55,14 @@ display:
         type:
           expose:
             label: Typ
+        combine:
+          expose:
+            label: Filtrera
+            placeholder: 'Filtrera efter namn eller ID'
       title: Innehåll
       pager:
         options:
           tags:
-            next: ››
-            previous: ‹‹
             first: '« Första'
             last: 'Sista »'
           expose:

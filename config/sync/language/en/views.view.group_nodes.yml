@@ -42,10 +42,6 @@ display:
         dropbutton:
           label: Operations
       filters:
-        title:
-          expose:
-            label: 'Filter:'
-            placeholder: 'Filter by search term'
         status:
           expose:
             label: 'Published status'
@@ -59,12 +55,14 @@ display:
         type:
           expose:
             label: Type
+        combine:
+          expose:
+            label: Filter
+            placeholder: 'Search with name or ID'
       title: 'Group content'
       pager:
         options:
           tags:
-            next: ››
-            previous: ‹‹
             first: '« First'
             last: 'Last »'
           expose:
