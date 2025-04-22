@@ -6,12 +6,16 @@ dependencies:
     - field.storage.node.field_days_since_last_state_chan
     - field.storage.node.field_responsible_updatee
     - node.type.service
+    - user.role.admin
+    - user.role.root
+    - user.role.specialist_editor
     - workflows.workflow.service_moderation
   module:
     - content_moderation
     - eva
     - group
     - node
+    - user
 id: group_content_ready_to_publish_revisions
 label: 'Group content ready to publish (revisions)'
 module: views
@@ -641,11 +645,21 @@ display:
         - 'config:workflow_list'
   entity_view_1:
     id: entity_view_1
-    display_title: EVA
+    display_title: 'EVA with role access'
     display_plugin: entity_view
     position: 1
     display_options:
       title: ''
+      access:
+        type: role
+        options:
+          role:
+            root: root
+            admin: admin
+            specialist_editor: specialist_editor
+      defaults:
+        access: false
+      display_description: ''
       display_extenders:
         ajax_history: {  }
       entity_type: group
@@ -658,10 +672,9 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - route
-        - route.group
         - url
-        - user.group_permissions
         - 'user.node_grants:view'
+        - user.roles
       tags:
         - 'config:field.storage.node.field_days_since_last_state_chan'
         - 'config:field.storage.node.field_responsible_updatee'
