@@ -74,6 +74,9 @@ final class CustomDateRangeWidget extends DateRangeDefaultWidget {
    * {@inheritdoc}
    */
   public function validateStartEnd(array &$element, FormStateInterface $form_state, array &$complete_form) {
+    if (empty($element['value']['#value']['object']) || empty($element['end_value']['#value']['object'])) {
+      return;
+    }
     $start_date = $element['value']['#value']['object'];
     $end_date = &$element['end_value']['#value']['object'];
 

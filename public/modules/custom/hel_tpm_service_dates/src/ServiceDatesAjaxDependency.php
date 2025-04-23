@@ -80,7 +80,7 @@ class ServiceDatesAjaxDependency extends AjaxDependency {
     $keys = ['value', 'end_value'];
     foreach ($keys as $key) {
       if (isset($targetElement[$key]['#type']) && $targetElement[$key]['#type'] === 'datetime') {
-        $targetElement[$key]['#value'] = NULL;
+        $targetElement[$key]['#value'] = ['date' => "", 'time' => "", 'object' => NULL];
       }
     }
   }
