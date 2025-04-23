@@ -110,7 +110,7 @@ final class WeekdayAndTimeFieldWidget extends WidgetBase {
     if ($element['#required']) {
       $empty = TRUE;
       foreach (self::$weekdays as $day => $name) {
-        if ($element['value'][$day][0]['selector']['value'] == 1) {
+        if ($element['value'][$day][0]['selector']['#value'] == 1) {
           $empty = FALSE;
         }
       }

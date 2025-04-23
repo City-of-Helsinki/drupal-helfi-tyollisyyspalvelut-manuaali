@@ -35,6 +35,7 @@ class ServiceDatesAjaxDependency extends AjaxDependency {
     for ($i = 0; $i <= $targetElement['#max_delta']; $i++) {
       if (!$condition) {
         $targetElement[$i]['#access'] = FALSE;
+        self::emptyDateTimeValues($targetElement[$i]);
       }
       else {
         $targetElement[$i]['#required'] = TRUE;
@@ -56,11 +57,31 @@ class ServiceDatesAjaxDependency extends AjaxDependency {
    *   $targetElement array.
    */
   public static function makeDateTimeValuesRequired(&$targetElement) {
-    if (isset($targetElement['value']['#type']) && $targetElement['value']['#type'] === 'datetime') {
-      $targetElement['value']['#required'] = TRUE;
+    $keys = ['value', 'end_value'];
+    foreach ($keys as $key) {
+      if (isset($targetElement[$key]['#type']) && $targetElement[$key]['#type'] === 'datetime') {
+        $targetElement[$key]['#required'] = TRUE;
+      }
     }
-    if (isset($targetElement['end_value']['#type']) && $targetElement['end_value']['#type'] === 'datetime') {
-      $targetElement['end_value']['#required'] = TRUE;
+  }
+
+  /**
+   * Clears the values of datetime fields in the target element.
+   *
+   * @param array $targetElement
+   *   The target element array, passed by reference, where datetime
+   *   field values should be cleared.
+   *
+   * @return void
+   *   No return value, the modification is done directly on the provided
+   *   $targetElement array.
+   */
+  public static function emptyDateTimeValues(&$targetElement) {
+    $keys = ['value', 'end_value'];
+    foreach ($keys as $key) {
+      if (isset($targetElement[$key]['#type']) && $targetElement[$key]['#type'] === 'datetime') {
+        $targetElement[$key]['#value'] = NULL;
+      }
     }
   }
 
