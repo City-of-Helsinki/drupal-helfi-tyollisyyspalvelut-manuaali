@@ -13,8 +13,12 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 
 /**
- * Defines the 'hel_tpm_service_dates_weekday_and_time_field' field widget.
- */
+ * Toggles the time elements in response to AJAX events.
+ *
+ * @param array $form
+ *   The complete form structure for the current request.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The state object of the form, containing current*/
 #[FieldWidget(
   id: 'hel_tpm_service_dates_weekday_and_time_field',
   label: new TranslatableMarkup('Weekday and time field'),
@@ -41,7 +45,6 @@ final class WeekdayAndTimeFieldWidget extends WidgetBase {
    * {@inheritdoc}
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state): array {
-
     $values = $items[$delta]->getValue();
 
     if (!empty($values)) {
@@ -72,7 +75,6 @@ final class WeekdayAndTimeFieldWidget extends WidgetBase {
         $row[$day][1] = $this->createTimeSelectElement('Add', $selector, $default_values[1], $form_state, $wrapper_id);
         $row[$day][1]['selector']['#attributes']['class'][] = 'add-time-button';
       }
-
     }
 
     $element['value'] = $row;
@@ -80,10 +82,42 @@ final class WeekdayAndTimeFieldWidget extends WidgetBase {
     // Add shared properties for the element.
     $element['#theme'] = 'hel_tpm_dates_weekday_and_time_field_widget';
     $element['#theme_wrappers'] = ['container', 'form_element'];
-    $element['#attributes']['class'] = ['container-inline', 'hel-tpm-service-dates-weekday-and-time-field-elements'];
+    $element['#attributes']['class'] = [
+      'container-inline',
+      'hel-tpm-service-dates-weekday-and-time-field-elements',
+    ];
     $element['#attached']['library'][] = 'hel_tpm_service_dates/hel_tpm_service_dates_weekday_and_time_field';
 
+    $element['#element_validate'][] = [$this, 'validateWeekdayAndTimeFieldWidget'];
+
     return $element;
+  }
+
+  /**
+   * Validates the weekday and time field widget.
+   *
+   * @param array $element
+   *   The form element to be validated.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current state of the form.
+   * @param array $complete_form
+   *   The complete form structure.
+   *
+   * @return void
+   *   Void.
+   */
+  public function validateWeekdayAndTimeFieldWidget(&$element, FormStateInterface $form_state, array &$complete_form) {
+    if ($element['#required']) {
+      $empty = TRUE;
+      foreach (self::$weekdays as $day => $name) {
+        if ($element['value'][$day][0]['selector']['value'] == 1) {
+          $empty = FALSE;
+        }
+      }
+      if ($empty) {
+        $form_state->setError($element, $this->t('At least one weekday and time field is required.'));
+      }
+    }
   }
 
   /**
@@ -101,7 +135,7 @@ final class WeekdayAndTimeFieldWidget extends WidgetBase {
    */
   private function showSecondTimeElement($values, $form_state, $parent_selector) {
     $triggering_element = $form_state->getTriggeringElement();
-    if (!empty($triggering_element) && $triggering_element['#attributes']['data-selector'] === $parent_selector) {
+    if (!empty($triggering_element) && !empty($triggering_element['#attributes']['data-selector']) && $triggering_element['#attributes']['data-selector'] === $parent_selector) {
       return (bool) $triggering_element['#value'];
     }
     if (empty($values[0]['selector'])) {
@@ -133,7 +167,10 @@ final class WeekdayAndTimeFieldWidget extends WidgetBase {
         '#type' => 'checkbox',
         // phpcs:ignore
         '#title' => $this->t($label),
-        '#attributes' => ['data-selector' => $selector, 'autocomplete' => 'off'],
+        '#attributes' => [
+          'data-selector' => $selector,
+          'autocomplete' => 'off',
+        ],
         '#default_value' => !empty($default_values['selector']) ? $default_values['selector'] : NULL,
         '#ajax' => [
           'wrapper' => $ajax_wrapper,
@@ -253,6 +290,10 @@ final class WeekdayAndTimeFieldWidget extends WidgetBase {
    * {@inheritdoc}
    */
   public function massageFormValues(array $values, array $form, FormStateInterface $form_state): array {
+    if ($this->ajaxEmptyValuesCheck($form_state)) {
+      return ['value' => NULL];
+    }
+
     foreach ($values as &$value) {
       if (empty($value['value'])) {
         continue;
@@ -269,6 +310,34 @@ final class WeekdayAndTimeFieldWidget extends WidgetBase {
       }
     }
     return $values;
+  }
+
+  /**
+   * Rough fix to empty field values when field ajax dependency isn't met.
+   *
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current state of the form.
+   *
+   * @return bool
+   *   TRUE if the triggering element is not in the defined field values,
+   *   FALSE otherwise.
+   */
+  private function ajaxEmptyValuesCheck(FormStateInterface $form_state): bool {
+    $field_values = [
+      'start_and_end_date',
+      'service_continous',
+    ];
+
+    $triggering_element = $form_state->getTriggeringElement();
+
+    if (!empty($triggering_element)) {
+      $end = end($triggering_element['#parents']);
+      if ($end === 'field_date_selection') {
+        return !in_array($triggering_element['#return_value'], $field_values);
+      }
+    }
+
+    return FALSE;
   }
 
 }
