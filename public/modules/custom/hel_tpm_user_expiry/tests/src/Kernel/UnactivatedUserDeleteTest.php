@@ -15,7 +15,7 @@ use Drupal\user\UserInterface;
  *
  * @group hel_tpm_user_expiry
  */
-final class UnactivatedUserBlockTest extends EntityKernelTestBase {
+final class UnactivatedUserDeleteTest extends EntityKernelTestBase {
 
   use UserCreationTrait;
 
