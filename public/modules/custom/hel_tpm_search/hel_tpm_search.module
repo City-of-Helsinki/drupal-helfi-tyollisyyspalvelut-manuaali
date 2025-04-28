@@ -66,6 +66,19 @@ function hel_tpm_search_views_data_alter(array &$data): void {
 }
 
 /**
+ * Implements hook_views_pre_build().
+ */
+function hel_tpm_search_views_pre_build(ViewExecutable $view) {
+  if ($view->id() === 'solr_service_search') {
+    $exposed_input = $view->getExposedInput();
+    if (empty($exposed_input['langcode'])) {
+      $exposed_input['langcode'] = \Drupal::service('language_manager')->getCurrentLanguage()->getId();
+      $view->setExposedInput($exposed_input);
+    }
+  }
+}
+
+/**
  * Implements hook_theme().
  */
 function hel_tpm_search_theme() {
