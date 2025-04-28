@@ -88,6 +88,7 @@
       icon_name: 'speech-bubble-dark-blue',
       icon_modifiers: ['small'],
     } %}
+    <div class='text-wrapper'>
     <div{{ title_attributes.addClass(title_classes) }}>{{ label }}</div>
     {% if multiple %}
       <div class="field__items">
@@ -103,5 +104,6 @@
     {% if multiple %}
       </div>
     {% endif %}
+    </div>
   </div>
 {% endif %}
