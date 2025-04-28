@@ -64,6 +64,7 @@ final class UnactivatedUserBlockTest extends EntityKernelTestBase {
   protected function setUp(): void {
     parent::setUp();
     $this->installEntitySchema('user');
+    $this->installSchema('user', ['users_data']);
     $this->installConfig(['field', 'system']);
     $this->cron = \Drupal::service('cron');
     $this->connection = Database::getConnection();
@@ -85,7 +86,8 @@ final class UnactivatedUserBlockTest extends EntityKernelTestBase {
     $this->cron->run();
 
     $user = $this->reloadEntity($user);
-    $this->assertEquals('0', $user->get('status')->value);
+
+    $this->assertNull($user);
 
     $user2 = $this->reloadEntity($user2);
     $this->assertEquals('1', $user2->get('status')->value);
@@ -102,8 +104,8 @@ final class UnactivatedUserBlockTest extends EntityKernelTestBase {
     $this->cron->run();
     $user2 = $this->reloadEntity($user2);
 
-    // Confirm user2 is blocked.
-    $this->assertEquals('0', $user2->get('status')->value);
+    // Confirm user is removed.
+    $this->assertNull($user2);
 
     // Confirm user3 is not blocked.
     $user3 = $this->reloadEntity($user3);
