@@ -3,36 +3,35 @@ langcode: fi
 status: true
 dependencies:
   config:
-    - field.storage.node.field_life_situations
-    - field.storage.node.field_description
-    - field.storage.node.field_service_set
+    - core.entity_view_mode.node.search_index
     - field.storage.node.field_accessibility
-    - field.storage.node.field_service_producer
-    - field.storage.node.field_service_languages
-    - field.storage.paragraph.field_language
-    - field.storage.node.field_service_price
-    - field.storage.paragraph.field_free_service
-    - field.storage.node.field_service_time_and_location
-    - field.storage.paragraph.field_level
     - field.storage.node.field_address
-    - field.storage.paragraph.field_service_location
+    - field.storage.node.field_description
+    - field.storage.node.field_implementation_extra_info
+    - field.storage.node.field_life_situations
+    - field.storage.node.field_service_execution
+    - field.storage.node.field_service_languages
+    - field.storage.node.field_service_price
+    - field.storage.node.field_service_producer
+    - field.storage.node.field_service_set
+    - field.storage.node.field_service_time_and_location
     - field.storage.node.field_target_group
-    - field.storage.paragraph.field_municipality_irrelevant
-    - field.storage.paragraph.field_target_group_municipality
     - field.storage.paragraph.field_age
     - field.storage.paragraph.field_age_groups
-    - field.storage.node.field_implementation_extra_info
-    - field.storage.node.field_service_execution
+    - field.storage.paragraph.field_free_service
+    - field.storage.paragraph.field_language
+    - field.storage.paragraph.field_level
+    - field.storage.paragraph.field_municipality_irrelevant
+    - field.storage.paragraph.field_service_location
+    - field.storage.paragraph.field_target_group_municipality
     - search_api.server.solr_search
-    - core.entity_view_mode.node.search_index
   module:
-    - search_api_solr
-    - node
-    - group
     - entitygroupfield
-    - paragraphs
-    - search_api
+    - group
     - hel_tpm_search
+    - node
+    - paragraphs
+    - search_api_solr
 third_party_settings:
   search_api_solr:
     finalize: false
