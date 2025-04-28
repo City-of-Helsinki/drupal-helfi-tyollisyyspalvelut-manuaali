@@ -21,6 +21,7 @@ display:
       exposed_form:
         options:
           submit_button: Apply
+          text_input_required_format: ''
       filters:
         status:
           group_info:
@@ -28,13 +29,13 @@ display:
         langcode:
           expose:
             label: Language
-        title:
-          expose:
-            label: 'Filter:'
-            placeholder: 'Filter by search term '
         moderation_state_filter_exclude_archived:
           expose:
             label: 'Service status'
+        combine:
+          expose:
+            label: Filter
+            placeholder: 'Filter by service name or ID'
   page_1:
     display_options:
       menu:
