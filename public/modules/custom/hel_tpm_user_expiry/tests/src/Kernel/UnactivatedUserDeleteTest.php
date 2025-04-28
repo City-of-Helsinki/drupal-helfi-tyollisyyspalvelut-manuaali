@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\hel_tpm_user_expiry\Kernel;
 
 use Drupal\Core\Database\Database;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Test\AssertMailTrait;
 use Drupal\KernelTests\Core\Entity\EntityKernelTestBase;
 use Drupal\Tests\user\Traits\UserCreationTrait;
@@ -85,14 +86,14 @@ final class UnactivatedUserDeleteTest extends EntityKernelTestBase {
 
     $this->cron->run();
 
-    $user = $this->reloadEntity($user);
+    $user = $this->reloadUser($user);
 
     $this->assertNull($user);
 
-    $user2 = $this->reloadEntity($user2);
+    $user2 = $this->reloadUser($user2);
     $this->assertEquals('1', $user2->get('status')->value);
 
-    $user3 = $this->reloadEntity($user3);
+    $user3 = $this->reloadUser($user3);
     $this->assertEquals('1', $user3->get('status')->value);
 
     $this->resetCronLastRun();
@@ -102,13 +103,13 @@ final class UnactivatedUserDeleteTest extends EntityKernelTestBase {
     $user2->save();
 
     $this->cron->run();
-    $user2 = $this->reloadEntity($user2);
+    $user2 = $this->reloadUser($user2);
 
     // Confirm user is removed.
     $this->assertNull($user2);
 
     // Confirm user3 is not blocked.
-    $user3 = $this->reloadEntity($user3);
+    $user3 = $this->reloadUser($user3);
     $this->assertEquals('1', $user3->get('status')->value);
   }
 
@@ -160,6 +161,21 @@ final class UnactivatedUserDeleteTest extends EntityKernelTestBase {
    */
   protected function resetCronLastRun() {
     \Drupal::state()->delete('hel_tpm_user_expiry.block_unactivated_users_last_run');
+  }
+
+  /**
+   * Reloads the given entity from the storage and returns it.
+   *
+   * @param \Drupal\Core\Entity\EntityInterface $entity
+   *   The entity to be reloaded.
+   *
+   * @return \Drupal\Core\Entity\EntityInterface
+   *   The reloaded entity.
+   */
+  protected function reloadUser(EntityInterface $entity):? EntityInterface {
+    $controller = $this->entityTypeManager->getStorage($entity->getEntityTypeId());
+    $controller->resetCache([$entity->id()]);
+    return $controller->load($entity->id());
   }
 
 }
