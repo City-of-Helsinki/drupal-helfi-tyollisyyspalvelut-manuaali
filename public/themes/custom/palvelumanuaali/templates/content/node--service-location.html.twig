@@ -75,14 +75,23 @@
 <article {{ bem("node",'service-location','',['flex-wrap']) }}>
 
   {% if not page %}
+  {% set place_header = 'Place'|t %}
+  {% include "@atoms/images/icons/_icon.twig" with {
+    icon_base_class: 'icon',
+    icon_name: 'pin',
+    icon_modifiers: ['small'],
+  } %}
+    <div class='text-wrapper'>
     {% include "@atoms/text/headings/_heading.twig" with {
-      "heading_level": 4,
-      "heading": label,
+      "heading_level": 6,
+      "heading": place_header,
       "heading_modifiers": "service-location",
       "heading_link_attributes": {
         'rel': 'bookmark'
       },
     } %}
+    <span>{{label}}</span>
+    </div>
   {% endif %}
 
   <div{{ content_attributes }}>
@@ -90,5 +99,7 @@
   </div>
 
 </article>
-{{content.field_accessibility_details}}
+<div class='accessibility-wrapper'>
 {{content.field_accessibility}}
+{{content.field_accessibility_details}}
+</div>
