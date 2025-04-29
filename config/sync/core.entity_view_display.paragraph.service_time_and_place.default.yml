@@ -6,6 +6,7 @@ dependencies:
     - core.date_format.medium
     - core.date_format.time
     - date_recur.interpreter.default_interpreter
+    - field.field.paragraph.service_time_and_place.field_date
     - field.field.paragraph.service_time_and_place.field_dates
     - field.field.paragraph.service_time_and_place.field_location_additional_info
     - field.field.paragraph.service_time_and_place.field_separate_time
@@ -16,12 +17,24 @@ dependencies:
     - paragraphs.paragraphs_type.service_time_and_place
   module:
     - date_recur
+    - datetime_range
     - hel_tpm_service_dates
 id: paragraph.service_time_and_place.default
 targetEntityType: paragraph
 bundle: service_time_and_place
 mode: default
 content:
+  field_date:
+    type: daterange_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+      from_to: both
+      separator: '-'
+    third_party_settings: {  }
+    weight: 5
+    region: content
   field_dates:
     type: date_recur_basic_formatter
     label: hidden
