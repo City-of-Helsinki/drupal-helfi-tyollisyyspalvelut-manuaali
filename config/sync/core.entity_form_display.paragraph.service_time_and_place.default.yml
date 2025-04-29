@@ -22,6 +22,7 @@ third_party_settings:
   field_group:
     group_location:
       children:
+        - group_label
         - field_service_location
         - field_location_additional_info
         - field_service_language
@@ -33,9 +34,10 @@ third_party_settings:
       weight: 0
       format_type: fieldset
       format_settings:
-        classes: 'group--light-blue group--rounded-corners group--no-margin-bottom'
+        classes: 'group--light-blue group--rounded-corners group--no-margin-bottom h4'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         description: ''
         required_fields: true
     group_time:
@@ -48,12 +50,13 @@ third_party_settings:
       label: 'Milloin palvelu järjestetään'
       region: content
       parent_name: group_location
-      weight: 5
+      weight: 17
       format_type: html_element
       format_settings:
         classes: event-times
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: true
         label_element: label
@@ -62,6 +65,26 @@ third_party_settings:
         effect: none
         speed: fast
         required_fields: true
+    group_label:
+      children: {  }
+      label: Paikka
+      region: content
+      parent_name: group_location
+      weight: 12
+      format_type: html_element
+      format_settings:
+        classes: 'margin-bottom-one-space d--block'
+        show_empty_fields: true
+        id: ''
+        label_as_html: false
+        element: span
+        show_label: true
+        label_element: h3
+        label_element_classes: 'h6 margin-bottom-one-space'
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: false
 id: paragraph.service_time_and_place.default
 targetEntityType: paragraph
 bundle: service_time_and_place
@@ -80,9 +103,15 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_dates:
+    type: hel_tpm_editorial_date_recur_custom
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   field_location_additional_info:
     type: string_textarea
-    weight: 2
+    weight: 14
     region: content
     settings:
       rows: 5
@@ -90,14 +119,14 @@ content:
     third_party_settings: {  }
   field_separate_time:
     type: boolean_checkbox
-    weight: 4
+    weight: 16
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   field_service_language:
     type: select2_entity_reference
-    weight: 3
+    weight: 15
     region: content
     settings:
       width: 100%
@@ -107,7 +136,7 @@ content:
     third_party_settings: {  }
   field_service_location:
     type: entity_reference_autocomplete
-    weight: 1
+    weight: 13
     region: content
     settings:
       match_operator: CONTAINS

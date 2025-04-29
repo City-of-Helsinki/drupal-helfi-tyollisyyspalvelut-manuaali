@@ -56,52 +56,43 @@
 {% if label_hidden %}
   {% if multiple %}
     <div{{ attributes.addClass(classes, 'field__items') }}>
-
+    {% include "@atoms/images/icons/_icon.twig" with {
+      icon_base_class: 'icon',
+      icon_name: 'arrow-sm-down',
+      icon_modifiers: ['small'],
+    } %}
       {% for item in items %}
-        {% embed "@molecules/card/card.twig" with {
-          card__modifiers: ['bg-light-blue', 'square-left', 'border-left-light-blue', 'bottom-gutter', 'padded-xxl', 'service-card']
-        } %}
-          {% block card__content %}
-            <div{{ item.attributes.addClass('field__item') }}>
-              {{item.content}}
-            </div>
-          {% endblock %}
-        {% endembed %}
-
+        <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
       {% endfor %}
     </div>
   {% else %}
+    {% include "@atoms/images/icons/_icon.twig" with {
+      icon_base_class: 'icon',
+      icon_name: 'arrow-sm-down',
+      icon_modifiers: ['small'],
+    } %}
     {% for item in items %}
-      {% embed "@molecules/card/card.twig" with {
-        card__modifiers: ['bg-light-blue', 'square-left', 'border-left-light-blue', 'bottom-gutter', 'padded-xxl', 'service-card']
-      } %}
-        {% block card__content %}
-          <div{{ item.attributes.addClass(classes, 'field__item') }}>
-            {{item.content}}
-          </div>
-        {% endblock %}
-      {% endembed %}
+      <div{{ attributes.addClass(classes, 'field__item') }}>{{ item.content }}</div>
     {% endfor %}
   {% endif %}
 {% else %}
   <div{{ attributes.addClass(classes) }}>
+  {% include "@atoms/images/icons/_icon.twig" with {
+    icon_base_class: 'icon',
+    icon_name: 'question',
+    icon_modifiers: ['small'],
+  } %}
+   <div class='text-wrapper'>
     <div{{ title_attributes.addClass(title_classes) }}>{{ label }}</div>
     {% if multiple %}
       <div class="field__items">
     {% endif %}
     {% for item in items %}
-      {% embed "@molecules/card/card.twig" with {
-        card__modifiers: ['bg-light-blue', 'square-left', 'border-left-light-blue', 'bottom-gutter', 'padded-xxl', 'service-card']
-      } %}
-        {% block card__content %}
-          <div{{ item.attributes.addClass('field__item') }}>
-            {{item.content}}
-          </div>
-        {% endblock %}
-      {% endembed %}
+      <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
     {% endfor %}
     {% if multiple %}
       </div>
     {% endif %}
+    </diV>
   </div>
 {% endif %}
