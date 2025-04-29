@@ -51,6 +51,13 @@ content:
     third_party_settings: {  }
     weight: 0
     region: content
+  field_location_additional_info:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
+    region: content
   field_separate_time:
     type: boolean
     label: above
@@ -63,11 +70,11 @@ content:
     region: content
   field_service_language:
     type: entity_reference_label
-    label: visually_hidden
+    label: above
     settings:
       link: false
     third_party_settings: {  }
-    weight: 3
+    weight: 4
     region: content
   field_service_location:
     type: entity_reference_entity_view
@@ -78,17 +85,22 @@ content:
     third_party_settings: {  }
     weight: 2
     region: content
+  field_time_additional_info:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 6
+    region: content
   field_weekday_and_time:
     type: hel_tpm_service_dates_weekday_and_time_field_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 4
+    weight: 5
     region: content
 hidden:
   entity_print_view_epub: true
   entity_print_view_pdf: true
   entity_print_view_word_docx: true
-  field_location_additional_info: true
-  field_time_additional_info: true
   search_api_excerpt: true
