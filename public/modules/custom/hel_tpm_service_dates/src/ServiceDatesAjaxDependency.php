@@ -35,6 +35,9 @@ class ServiceDatesAjaxDependency extends AjaxDependency {
     for ($i = 0; $i <= $targetElement['#max_delta']; $i++) {
       if (!$condition) {
         $targetElement[$i]['#access'] = FALSE;
+        if (!empty($targetElement['add_more'])) {
+          $targetElement['add_more']['#access'] = FALSE;
+        }
         self::emptyDateTimeValues($targetElement[$i]);
       }
       else {
