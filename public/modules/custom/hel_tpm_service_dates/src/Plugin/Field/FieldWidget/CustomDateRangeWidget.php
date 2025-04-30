@@ -57,7 +57,7 @@ final class CustomDateRangeWidget extends DateRangeDefaultWidget {
       $value['#date_date_element'] = 'text';
       if ($value['#date_time_element'] != 'none') {
         $value['#date_time_element'] = 'text';
-        $value['#date_time_format'] = 'H:i';
+        $value['#date_time_format'] = 'H:i:s';
       }
     }
 
