@@ -32,6 +32,9 @@ class ServiceDatesAjaxDependency extends AjaxDependency {
    *   Void.
    */
   public static function widgetContentIf($condition, &$sourceElement, &$targetElement, FormStateInterface $formState) {
+    if (!isset($targetElement['#max_delta'])) {
+      return;
+    }
     for ($i = 0; $i <= $targetElement['#max_delta']; $i++) {
       if (!$condition) {
         $targetElement[$i]['#access'] = FALSE;
