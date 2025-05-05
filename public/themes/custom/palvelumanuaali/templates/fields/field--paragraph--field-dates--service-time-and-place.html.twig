@@ -59,6 +59,7 @@
     icon_name: 'calendar-dark-blue',
     icon_modifiers: ['small'],
   } %}
+  <div class='text-wrapper'>
   <div class="field__items">
     {% if items|length < 4 %}
       {% for item in items %}
@@ -86,5 +87,6 @@
         <button class="button--no-color-no-border button--dropdown-button" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">{{"Show more"|t}}</button>
       </div>
     {% endif %}
+  </div>
   </div>
 </div>

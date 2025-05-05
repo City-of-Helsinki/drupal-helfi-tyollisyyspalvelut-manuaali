@@ -49,59 +49,22 @@
 {%
   set title_classes = [
     'field__label',
-    label_display == 'visually_hidden' ? 'visually-hidden',
   ]
 %}
 
-{% if label_hidden %}
-  {% if multiple %}
-    <div{{ attributes.addClass(classes, 'field__items') }}>
 
       {% for item in items %}
-        {% embed "@molecules/card/card.twig" with {
-          card__modifiers: ['bg-light-blue', 'square-left', 'border-left-light-blue', 'bottom-gutter', 'padded-xxl', 'service-card']
-        } %}
-          {% block card__content %}
-            <div{{ item.attributes.addClass('field__item') }}>
-              {{item.content}}
+        {% if item.content['#markup'] == 'date_not_available' %}
+          <div{{ attributes.addClass(classes, 'field__items') }}>
+          {% include "@atoms/images/icons/_icon.twig" with {
+            icon_base_class: 'icon',
+            icon_name: 'calendar-dark-blue',
+            icon_modifiers: ['small'],
+          } %}
+              <div class='text-wrapper'>
+              <div{{ title_attributes.addClass(title_classes) }}>{{ 'Weekday and time'|t }}</div>
+            <div class='field__item'}}>{{ 'To be agreed upon'|t }}</div>
             </div>
-          {% endblock %}
-        {% endembed %}
-
+          </div>
+        {% endif %}
       {% endfor %}
-    </div>
-  {% else %}
-    {% for item in items %}
-      {% embed "@molecules/card/card.twig" with {
-        card__modifiers: ['bg-light-blue', 'square-left', 'border-left-light-blue', 'bottom-gutter', 'padded-xxl', 'service-card']
-      } %}
-        {% block card__content %}
-          <div{{ item.attributes.addClass(classes, 'field__item') }}>
-            {{item.content}}
-          </div>
-        {% endblock %}
-      {% endembed %}
-    {% endfor %}
-  {% endif %}
-{% else %}
-  <div{{ attributes.addClass(classes) }}>
-    <div{{ title_attributes.addClass(title_classes) }}>{{ label }}</div>
-    {% if multiple %}
-      <div class="field__items">
-    {% endif %}
-    {% for item in items %}
-      {% embed "@molecules/card/card.twig" with {
-        card__modifiers: ['bg-light-blue', 'square-left', 'border-left-light-blue', 'bottom-gutter', 'padded-xxl', 'service-card']
-      } %}
-        {% block card__content %}
-          <div{{ item.attributes.addClass('field__item') }}>
-            {{item.content}}
-          </div>
-        {% endblock %}
-      {% endembed %}
-    {% endfor %}
-    {% if multiple %}
-      </div>
-    {% endif %}
-  </div>
-{% endif %}

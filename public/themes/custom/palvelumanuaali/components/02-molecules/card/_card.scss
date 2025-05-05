@@ -143,6 +143,20 @@ $card-font-small-heading: 15px;
   }
 }
 
+.card--padded-xxl {
+  padding: $space-double $space-two-and-half $space-one-and-half $space-two-and-half;
+  @include xl {
+    padding: 60px $space-four-and-half 60px $space-four-and-half;
+  }
+  .card__content {
+    margin: 0;
+    >.field__item {
+      margin-bottom: 0;
+    }
+  }
+}
+
+
 
 .card--padded-centered {
   margin-left: $space;
@@ -276,13 +290,19 @@ $card-font-small-heading: 15px;
     > article {
       width: 100%;
       margin-bottom: $space-one-and-half;
-      @include large {
-        margin-bottom: $space;
-      }
       @include xl {
-        margin-bottom: $space-two-and-half;
+        margin-bottom: 30px;
       }
     }
+  }
+  .icon {
+    min-width: 24px;
+    width: 24px;
+    height: 24px;
+    margin-right: $space;
+    order: unset;
+    display: block;
+    margin-bottom: 0 !important;
   }
   .address {
     display: flex;
@@ -302,16 +322,15 @@ $card-font-small-heading: 15px;
     margin-bottom: 0 !important;
   }
 
-  .field--name-field-dates {
+  .field--name-field-dates,
+  .field--name-field-weekday-and-time,
+  .field--name-field-date-selection {
     width: 100%;
-    order: 3;
+    order: 5;
     display: flex;
-    margin-bottom: $space-double;
-    @include large {
-      margin-bottom: $space-one-and-half;
-    }
+    margin-bottom: $space-one-and-half;
     @include xl {
-      margin-bottom: $space-triple;
+      margin-bottom: 30px;
     }
     &.icon {
       min-width: 24px;
@@ -363,9 +382,45 @@ $card-font-small-heading: 15px;
     }
   }
 
-  .field--name-field-service-language {
+  .field--name-field-time-additional-info {
+    order: 6;
+    width: 100%;
+    margin-bottom: $space;
+    display: flex;
+    @include large {
+      margin-bottom: $space-one-and-half;
+    }
+    &.icon {
+      min-width: 24px;
+      width: 24px;
+      margin-right: $space;
+      order: unset;
+      display: block;
+      margin-bottom: 0 !important;
+    }
+  }
+
+  .field--name-field-location-additional-info {
     width: 100%;
     order: 2;
+    margin-bottom: $space;
+    display: flex;
+    @include large {
+      margin-bottom: $space-one-and-half;
+    }
+    &.icon {
+      min-width: 24px;
+      width: 24px;
+      margin-right: $space;
+      order: unset;
+      display: block;
+      margin-bottom: 0 !important;
+    }
+  }
+
+  .field--name-field-service-language {
+    width: 100%;
+    order: 4;
     display: flex;
     flex-wrap: nowrap;
     margin-bottom: $space;
@@ -420,20 +475,39 @@ $card-font-small-heading: 15px;
     }
   }
 
+  .accessibility-wrapper {
+   order: 3;
+   margin-bottom: $space-one-and-half;
+   margin-left: 40px;
+   @include xl {
+      margin-bottom: 30px;
+   }
+  }
+
   .field--name-field-accessibility-details {
-    order: 5;
+    order: 3;
     width: 100%;
     margin-bottom: 0;
     font-size: $card-font-small-mobile;
+    display: flex;
     @include xl {
       font-size: $card-font-small;
+    }
+    &.icon {
+      min-width: 24px;
+      width: 24px;
+      margin-right: $space;
+      order: unset;
+      display: block;
+      margin-bottom: 0 !important;
     }
   }
 
   .field--name-field-accessibility {
-    order: 4;
+    order: 3;
     width: 100%;
-    margin-bottom: $space;
+    margin-bottom: 0;
+    display: flex;
     .field__label {
       font-weight: 600;
       margin-bottom: $space-one-half;
@@ -441,6 +515,14 @@ $card-font-small-heading: 15px;
       @include xl {
         font-size: $card-font-small-heading;
       }
+    }
+    &.icon {
+      min-width: 24px;
+      width: 24px;
+      margin-right: $space;
+      order: unset;
+      display: block;
+      margin-bottom: 0 !important;
     }
     .field__items {
       display: flex;
