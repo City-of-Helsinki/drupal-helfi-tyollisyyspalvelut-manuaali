@@ -4,7 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
+<<<<<<< HEAD
     "content-hash": "2eba1ee3ebaeeb298be4f157f5b12d14",
+=======
+    "content-hash": "4399605bf0f07eb8dff2f75144ab7730",
+>>>>>>> 5b0c901e529780e61909767e8ee10419c848170b
     "packages": [
         {
             "name": "ajgl/breakpoint-twig-extension",
@@ -5707,17 +5711,17 @@
         },
         {
             "name": "drupal/ginvite",
-            "version": "3.0.0-rc2",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/ginvite.git",
-                "reference": "3.0.0-rc2"
+                "reference": "3.0.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/ginvite-3.0.0-rc2.zip",
-                "reference": "3.0.0-rc2",
-                "shasum": "c94f6f5a6225f4078b2e7eb4c2d0494f6300e467"
+                "url": "https://ftp.drupal.org/files/projects/ginvite-3.0.0.zip",
+                "reference": "3.0.0",
+                "shasum": "25848751db1599378cc7e2ad17068b6be490f2b5"
             },
             "require": {
                 "drupal/core": "^9 || ^10",
@@ -5726,11 +5730,11 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "3.0.0-rc2",
-                    "datestamp": "1725970248",
+                    "version": "3.0.0",
+                    "datestamp": "1736957876",
                     "security-coverage": {
-                        "status": "not-covered",
-                        "message": "RC releases are not covered by Drupal security advisories."
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
                     }
                 }
             },
@@ -6864,6 +6868,40 @@
                 "source": "https://git.drupalcode.org/project/mail_login",
                 "issues": "http://drupal.org/project/issues/mail_login",
                 "email": "mqanneh@gmail.com"
+            }
+        },
+        {
+            "name": "drupal/mailer_transport",
+            "version": "1.6.0-beta1",
+            "require": {
+                "drupal/core": "^10.3 || ^11",
+                "drupal/symfony_mailer": "^1"
+            },
+            "type": "metapackage",
+            "extra": {
+                "drupal": {
+                    "version": "1.6.0-beta1",
+                    "datestamp": "1737896716",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Beta releases are not covered by Drupal security advisories."
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "adamps",
+                    "homepage": "https://www.drupal.org/user/2650563"
+                }
+            ],
+            "description": "Placeholder to support upgrade to v2.x",
+            "homepage": "https://www.drupal.org/project/symfony_mailer",
+            "support": {
+                "source": "https://git.drupalcode.org/project/symfony_mailer"
             }
         },
         {

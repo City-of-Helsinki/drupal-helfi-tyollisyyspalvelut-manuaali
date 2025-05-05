@@ -32,9 +32,15 @@ class ServiceDatesAjaxDependency extends AjaxDependency {
    *   Void.
    */
   public static function widgetContentIf($condition, &$sourceElement, &$targetElement, FormStateInterface $formState) {
+    if (!isset($targetElement['#max_delta'])) {
+      return;
+    }
     for ($i = 0; $i <= $targetElement['#max_delta']; $i++) {
       if (!$condition) {
         $targetElement[$i]['#access'] = FALSE;
+        if (!empty($targetElement['add_more'])) {
+          $targetElement['add_more']['#access'] = FALSE;
+        }
         self::emptyDateTimeValues($targetElement[$i]);
       }
       else {
@@ -80,7 +86,7 @@ class ServiceDatesAjaxDependency extends AjaxDependency {
     $keys = ['value', 'end_value'];
     foreach ($keys as $key) {
       if (isset($targetElement[$key]['#type']) && $targetElement[$key]['#type'] === 'datetime') {
-        $targetElement[$key]['#value'] = NULL;
+        $targetElement[$key]['#value'] = ['date' => "", 'time' => "", 'object' => NULL];
       }
     }
   }

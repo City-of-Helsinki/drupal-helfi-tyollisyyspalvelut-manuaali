@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\hel_tpm_service_dates\Plugin\Field\FieldWidget;
 
 use Drupal\Component\Utility\NestedArray;
+use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Field\Attribute\FieldWidget;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
@@ -89,6 +90,7 @@ final class WeekdayAndTimeFieldWidget extends WidgetBase {
     $element['#attached']['library'][] = 'hel_tpm_service_dates/hel_tpm_service_dates_weekday_and_time_field';
 
     $element['#element_validate'][] = [$this, 'validateWeekdayAndTimeFieldWidget'];
+    $element['#element_validate'][] = [$this, 'validateTimeSelection'];
 
     return $element;
   }
@@ -117,6 +119,51 @@ final class WeekdayAndTimeFieldWidget extends WidgetBase {
       if ($empty) {
         $form_state->setError($element, $this->t('At least one weekday and time field is required.'));
       }
+    }
+  }
+
+  /**
+   * Validates time selection for form elements.
+   *
+   * This method checks if the start and end time
+   * values are provided and ensures
+   * they are valid instances of DrupalDateTime. If the validation fails, an
+   * error is added to the form state.
+   *
+   * @param array &$element
+   *   The form element being validated, passed by reference.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The state of the form being validated.
+   * @param array &$complete_form
+   *   The complete structure of the form where the element exists,
+   *   passed by reference.
+   *
+   * @return void
+   *   Does not return any value. Instead, modifies
+   *   the form state to record errors as needed.
+   */
+  public function validateTimeSelection(&$element, FormStateInterface $form_state, array &$complete_form) {
+    if (empty($element['start']['#value']['object']) && empty($element['end']['#value']['object'])) {
+      return;
+    }
+
+    if (empty($element['start']['#value']['object']) || empty($element['end']['#value']['object'])) {
+      $form_state->setError($element, $this->t('Time is required.'));
+      return;
+    }
+
+    $start = $element['start']['#value']['object'];
+    $end = $element['end']['#value']['object'];
+
+    if (!$start instanceof DrupalDateTime || !$end instanceof DrupalDateTime) {
+      $form_state->setError($element, $this->t('Time is required.'));
+      return;
+    }
+
+    $start_time = $start->getPhpDateTime();
+    $end_time = $end->getPhpDateTime();
+    if ($start_time->getTimestamp() > $end_time->getTimestamp()) {
+      $form_state->setError($element, $this->t('The start time must be greater than end time.'));
     }
   }
 
@@ -216,6 +263,7 @@ final class WeekdayAndTimeFieldWidget extends WidgetBase {
       '#attributes' => ['id' => $ajax_wrapper_id],
       'start' => $time_element,
       'end' => $time_element,
+      '#element_validate' => [[$this, 'validateTimeSelection']],
     ];
 
     if (!empty($values['time']['start'])) {

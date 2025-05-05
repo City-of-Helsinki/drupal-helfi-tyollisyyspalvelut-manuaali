@@ -40,7 +40,7 @@ display:
           entity_field: nid
           plugin_id: field
           label: ID
-          exclude: true
+          exclude: false
           alter:
             alter_text: false
             text: ''
@@ -72,7 +72,7 @@ display:
           element_class: ''
           element_label_type: ''
           element_label_class: ''
-          element_label_colon: true
+          element_label_colon: false
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
@@ -84,7 +84,7 @@ display:
           type: number_integer
           settings:
             thousand_separator: ''
-            prefix_suffix: true
+            prefix_suffix: false
           group_column: entity_id
           group_columns: {  }
           group_rows: true
@@ -616,7 +616,7 @@ display:
           default: '-1'
           info:
             nid:
-              sortable: false
+              sortable: true
               default_sort_order: asc
               align: ''
               separator: ''
