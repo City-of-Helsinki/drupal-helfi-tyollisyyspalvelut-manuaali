@@ -84,3 +84,27 @@ function hel_tpm_user_expiry_update_10003(&$sandbox) {
 
   $sandbox['#finished'] = empty($sandbox['max']) ? 1 : $sandbox['progress'] / $sandbox['max'];
 }
+
+/**
+ * Delete blocked unactivated users.
+ */
+function hel_tpm_user_expiry_update_10004(&$sandbox) {
+  $storage = \Drupal::service('entity_type.manager')->getStorage('user');
+
+  $uids = \Drupal::database()->select('users_field_data', 'ufd')
+    ->fields('ufd', ['uid'])
+    ->condition('uid', 0, '<>')
+    ->condition('uid', 1, '<>')
+    ->condition('status', 0)
+    ->condition('access', 0)
+    ->execute()->fetchAllAssoc('uid');
+
+  if (empty($uids)) {
+    return;
+  }
+
+  $users = $storage->loadMultiple(array_keys($uids));
+  foreach ($users as $user) {
+    $user->delete();
+  }
+}

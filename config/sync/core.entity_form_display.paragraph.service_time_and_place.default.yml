@@ -44,9 +44,10 @@ third_party_settings:
       children:
         - field_date_selection
         - field_start_and_end_date
-        - field_date
-        - field_weekday_and_time
+        - field_dates
         - field_time_additional_info
+        - field_weekday_and_time
+        - field_date
       label: 'Milloin palvelu järjestetään'
       region: content
       parent_name: group_location
@@ -100,6 +101,9 @@ content:
   field_date_selection:
     type: options_buttons
     weight: 13
+  field_dates:
+    type: hel_tpm_editorial_date_recur_custom
+    weight: 12
     region: content
     settings: {  }
     third_party_settings: {  }
