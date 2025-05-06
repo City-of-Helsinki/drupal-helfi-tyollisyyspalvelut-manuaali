@@ -17,6 +17,7 @@ class UsernameGenerateTest extends BrowserTestBase {
   protected static $modules = [
     'hel_tpm_general',
     'group',
+    'purge',
   ];
 
   /**
