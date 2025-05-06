@@ -53,7 +53,7 @@ final class WeekdayAndTimeFieldWidget extends WidgetBase {
     }
 
     foreach (self::$weekdays as $day => $name) {
-      $wrapper_id = sprintf('%s-%s', $day, $delta);
+      $wrapper_id = sprintf('%s-%s-%s', implode('-', $element['#field_parents']), $day, $delta);
       // Initialize weekday container.
       $row[$day] = [
         '#type' => 'container',
