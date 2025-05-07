@@ -29,6 +29,7 @@ final class PreventMailTest extends EntityKernelTestBase {
     'flexible_permissions',
     'group',
     'hel_tpm_general',
+    'purge',
   ];
 
   /**

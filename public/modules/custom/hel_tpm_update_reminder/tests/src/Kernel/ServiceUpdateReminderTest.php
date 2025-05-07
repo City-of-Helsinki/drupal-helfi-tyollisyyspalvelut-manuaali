@@ -41,6 +41,7 @@ final class ServiceUpdateReminderTest extends EntityKernelTestBase {
     'hel_tpm_update_reminder',
     'hel_tpm_update_reminder_test',
     'hel_tpm_general',
+    'purge',
   ];
 
   /**
