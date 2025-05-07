@@ -29,6 +29,13 @@ final class TxBufferUnique extends TxBuffer {
   private ConfigFactoryInterface $configFactory;
 
   /**
+   * Plugin manager.
+   *
+   * @var \Drupal\Component\Plugin\PluginManagerInterface
+   */
+  private PluginManagerInterface $pluginManager;
+
+  /**
    * {@inheritdoc}
    */
   public function __construct(PluginManagerInterface $pluginManager, Connection $connection, ConfigFactoryInterface $configFactory) {
