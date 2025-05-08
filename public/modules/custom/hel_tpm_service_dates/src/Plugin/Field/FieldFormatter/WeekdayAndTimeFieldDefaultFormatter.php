@@ -67,10 +67,10 @@ final class WeekdayAndTimeFieldDefaultFormatter extends FormatterBase {
             '@day at @start1 - @end1 and @start2 - @end2',
             [
               '@day' => WeekdayAndTimeFieldWidget::$weekdays[$weekday],
-              '@start1' => $value['0']['time']['start']->format('h:i'),
-              '@end1' => $value['0']['time']['end']->format('h:i'),
-              '@start2' => !empty($value['1']['time']['start']) ? $value['1']['time']['start']->format('h:i') : '',
-              '@end2' => !empty($value['1']['time']['end']) ? $value['1']['time']['end']->format('h:i') : '',
+              '@start1' => !empty($value[0]['time']['start']) ? $value[0]['time']['start']->format('h:i') : '',
+              '@end1' => !empty($value[0]['time']['end']) ? $value[0]['time']['end']->format('h:i') : '',
+              '@start2' => !empty($value[1]['time']['start']) ? $value[1]['time']['start']->format('h:i') : '',
+              '@end2' => !empty($value[1]['time']['end']) ? $value[1]['time']['end']->format('h:i') : '',
             ]
           ),
         ];
