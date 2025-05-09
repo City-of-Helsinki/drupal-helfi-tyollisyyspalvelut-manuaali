@@ -11,6 +11,8 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
+use Drupal\datetime_range\Plugin\Field\FieldType\DateRangeItem;
 use Drupal\datetime_range\Plugin\Field\FieldWidget\DateRangeDefaultWidget;
 
 /**
@@ -208,6 +210,35 @@ final class CustomDateRangeWidget extends DateRangeDefaultWidget {
     $element['#attached']['library'][] = 'hel_tpm_service_dates/custom_date_range_widget';
 
     return $element;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
+    $keys = ['value', 'end_value'];
+    $values = parent::massageFormValues($values, $form, $form_state);
+    $datetime_type = $this->getFieldSetting('datetime_type');
+    if ($datetime_type === DateRangeItem::DATETIME_TYPE_DATE) {
+      $storage_format = DateTimeItemInterface::DATE_STORAGE_FORMAT;
+    }
+    else {
+      $storage_format = DateTimeItemInterface::DATETIME_STORAGE_FORMAT;
+    }
+    foreach ($values as &$value) {
+      foreach ($keys as $key) {
+        if (is_array($value[$key])) {
+          if (empty($value[$key]['object'])) {
+            $value[$key] = NULL;
+          }
+          else {
+            $object = $value[$key]['object']->getPhpDateTime();
+            $value[$key] = $object->format($storage_format);
+          }
+        }
+      }
+    }
+    return $values;
   }
 
   /**

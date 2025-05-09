@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\hel_tpm_service_dates\Plugin\Field\FieldWidget;
 
+use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Field\Attribute\FieldWidget;
@@ -48,16 +49,21 @@ final class WeekdayAndTimeFieldWidget extends WidgetBase {
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state): array {
     $values = $items[$delta]->getValue();
 
+    $parents = $element['#field_parents'];
+    $id_prefix = implode('-', array_merge($parents, [$items->getName(), $delta]));
+    $wrapper_base = 'edit-' . Html::getUniqueId($id_prefix);
+
     if (!empty($values)) {
       $values = reset($values);
     }
 
     foreach (self::$weekdays as $day => $name) {
-      $wrapper_id = sprintf('%s-%s', $day, $delta);
+      $row_wrapper = sprintf('%s-%s', $wrapper_base, $day);
+
       // Initialize weekday container.
       $row[$day] = [
         '#type' => 'container',
-        '#attributes' => ['id' => $wrapper_id, 'class' => ['weekday-row']],
+        '#attributes' => ['id' => Html::getId($row_wrapper), 'class' => ['weekday-row']],
       ];
 
       $default_values = [0 => []];
@@ -65,15 +71,15 @@ final class WeekdayAndTimeFieldWidget extends WidgetBase {
         $default_values = $values[$day];
       }
 
-      $selector = sprintf('%s-%s-%s', $day, $delta, 0);
-      $row[$day][0] = $this->createTimeSelectElement($name, $selector, $default_values[0], $form_state, $wrapper_id);
+      $selector = sprintf('%s-%s', $row_wrapper, 0);
+      $row[$day][0] = $this->createTimeSelectElement($name, $selector, $default_values[0], $form_state, $row_wrapper);
 
       if ($this->showSecondTimeElement($default_values, $form_state, $selector)) {
-        $selector = sprintf('%s-%s-%s', $day, $delta, 1);
+        $selector = sprintf('%s-%s', $row_wrapper, 1);
         if (empty($default_values[1])) {
           $default_values[1] = [];
         }
-        $row[$day][1] = $this->createTimeSelectElement('Add', $selector, $default_values[1], $form_state, $wrapper_id);
+        $row[$day][1] = $this->createTimeSelectElement('Add', $selector, $default_values[1], $form_state, $row_wrapper);
         $row[$day][1]['selector']['#attributes']['class'][] = 'add-time-button';
       }
     }
@@ -209,6 +215,8 @@ final class WeekdayAndTimeFieldWidget extends WidgetBase {
    *   An array structure defining the selector and associated time elements.
    */
   private function createTimeSelectElement(string $label, string $selector, array $default_values, FormStateInterface $form_state, string $ajax_wrapper): array {
+    $default_value = !empty($default_values['selector']) ? $default_values['selector'] : NULL;
+
     $element = [
       'selector' => [
         '#type' => 'checkbox',
@@ -217,12 +225,14 @@ final class WeekdayAndTimeFieldWidget extends WidgetBase {
         '#attributes' => [
           'data-selector' => $selector,
           'autocomplete' => 'off',
+          'class' => [$default_value == 1 ? 'selected' : NULL],
         ],
-        '#default_value' => !empty($default_values['selector']) ? $default_values['selector'] : NULL,
+        '#default_value' => $default_value,
         '#ajax' => [
-          'wrapper' => $ajax_wrapper,
+          'wrapper' => Html::getId($ajax_wrapper),
           'event' => 'change',
           'callback' => [$this, 'toggleTimeAjax'],
+          'blocking' => TRUE,
         ],
       ],
     ];
@@ -316,9 +326,7 @@ final class WeekdayAndTimeFieldWidget extends WidgetBase {
    */
   public function toggleTimeAjax(array &$form, FormStateInterface $form_state) {
     $triggering_element = $form_state->getTriggeringElement();
-    array_pop($triggering_element['#array_parents']);
-    array_pop($triggering_element['#array_parents']);
-    $element = NestedArray::getValue($form, $triggering_element['#array_parents']);
+    $element = NestedArray::getValue($form, array_slice($triggering_element['#array_parents'], 0, -2));
     return $element;
   }
 

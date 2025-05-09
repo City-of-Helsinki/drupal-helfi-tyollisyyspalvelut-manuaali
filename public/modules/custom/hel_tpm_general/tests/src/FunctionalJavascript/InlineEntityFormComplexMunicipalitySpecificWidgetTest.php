@@ -26,6 +26,7 @@ class InlineEntityFormComplexMunicipalitySpecificWidgetTest extends InlineEntity
     'hel_tpm_general_inline_entity_form_complex_test',
     'field',
     'field_ui',
+    'purge',
   ];
 
   /**
