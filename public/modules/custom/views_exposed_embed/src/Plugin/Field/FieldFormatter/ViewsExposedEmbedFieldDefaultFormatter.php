@@ -161,7 +161,8 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
     $filters = $item->getValue();
     $filters = reset($filters);
     $filters = array_merge($filters, $this->getExposedFilterSelection());
-    return $filters;
+
+    return array_filter($filters);
   }
 
   /**
