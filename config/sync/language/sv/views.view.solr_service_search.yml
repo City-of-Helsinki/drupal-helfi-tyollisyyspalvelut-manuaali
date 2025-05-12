@@ -3,12 +3,17 @@ display:
     display_options:
       exposed_form:
         options:
-          submit_button: Sök
-          reset_button_label: 'Ta bort filter '
+          submit_button: 'Sök tjänster'
+          reset_button_label: 'Töm filtren'
+          exposed_sorts_label: 'Sortera:'
+          bef:
+            sort:
+              advanced:
+                combine_rewrite: "Relevance Asc|\r\nRelevance Desc|Mest relevanta\r\nChanged Asc|\r\nChanged Desc|Senast uppdaterade\_\r\nTitle Asc|Alfabetiskt A -> Ö\r\nTitle Desc|Alfabetiskt Ö -> A\_"
       empty:
         area:
           content:
-            value: "<p>Inga resultat hittades för sökningen.</p>\r\n"
+            value: '<p>Inga resultat hittades för sökningen.</p>'
             format: filtered_html
   default:
     display_options:
@@ -18,22 +23,30 @@ display:
       filters:
         field_free_service:
           group_info:
-            label: 'Tjänsten är betald'
+            label: Avgifter
+            group_items:
+              1:
+                title: Avgiftsbelagd
+              2:
+                title: Avgiftsfri
         field_service_set:
           expose:
-            label: 'Tjänstekategori:'
+            label: Tjänstekategori
         field_life_situations:
           expose:
-            label: 'Livssituation:'
+            label: Livssituation
         field_accessibility:
           expose:
             label: Tillgänglighet
         field_implementation_extra_info:
           expose:
-            label: Genomförande
+            label: Organisationssätt
         age_groups_filter:
           expose:
             label: 'Målgruppens ålder'
         field_target_group_municipality:
           expose:
             label: Hemkommun
+        field_language_1:
+          expose:
+            label: 'Tjänstens språk'
