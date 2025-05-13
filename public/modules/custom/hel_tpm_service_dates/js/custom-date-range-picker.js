@@ -1,7 +1,7 @@
 (function ($, Drupal, drupalSettings) {
   Drupal.behaviors.customDatetimePicker = {
     attach(context, settings) {
-      let widget = '.field--widget-hel-tpm-service-dates-custom-date-and-time-range-widget';
+      let widget = '.field--widget-hel-tpm-service-dates-date-range';
       formatDatePicker(widget);
       formatTimePicker(widget);
     }

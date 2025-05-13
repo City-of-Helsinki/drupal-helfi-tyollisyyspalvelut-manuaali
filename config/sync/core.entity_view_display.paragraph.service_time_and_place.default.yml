@@ -7,11 +7,13 @@ dependencies:
     - core.date_format.time
     - date_recur.interpreter.default_interpreter
     - field.field.paragraph.service_time_and_place.field_date
+    - field.field.paragraph.service_time_and_place.field_date_selection
     - field.field.paragraph.service_time_and_place.field_dates
     - field.field.paragraph.service_time_and_place.field_location_additional_info
     - field.field.paragraph.service_time_and_place.field_separate_time
     - field.field.paragraph.service_time_and_place.field_service_language
     - field.field.paragraph.service_time_and_place.field_service_location
+    - field.field.paragraph.service_time_and_place.field_start_and_end_date
     - field.field.paragraph.service_time_and_place.field_time_additional_info
     - field.field.paragraph.service_time_and_place.field_weekday_and_time
     - paragraphs.paragraphs_type.service_time_and_place
@@ -19,6 +21,7 @@ dependencies:
     - date_recur
     - datetime_range
     - hel_tpm_service_dates
+    - options
 id: paragraph.service_time_and_place.default
 targetEntityType: paragraph
 bundle: service_time_and_place
@@ -29,11 +32,18 @@ content:
     label: above
     settings:
       timezone_override: ''
-      format_type: medium
+      format_type: short_date_with_leading_day
       from_to: both
       separator: '-'
     third_party_settings: {  }
     weight: 5
+    region: content
+  field_date_selection:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 6
     region: content
   field_dates:
     type: date_recur_basic_formatter
@@ -84,6 +94,17 @@ content:
       link: false
     third_party_settings: {  }
     weight: 2
+    region: content
+  field_start_and_end_date:
+    type: daterange_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+      from_to: both
+      separator: '-'
+    third_party_settings: {  }
+    weight: 7
     region: content
   field_time_additional_info:
     type: basic_string

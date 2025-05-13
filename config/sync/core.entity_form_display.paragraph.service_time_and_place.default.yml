@@ -4,17 +4,18 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.service_time_and_place.field_date
+    - field.field.paragraph.service_time_and_place.field_date_selection
     - field.field.paragraph.service_time_and_place.field_dates
     - field.field.paragraph.service_time_and_place.field_location_additional_info
     - field.field.paragraph.service_time_and_place.field_separate_time
     - field.field.paragraph.service_time_and_place.field_service_language
     - field.field.paragraph.service_time_and_place.field_service_location
+    - field.field.paragraph.service_time_and_place.field_start_and_end_date
     - field.field.paragraph.service_time_and_place.field_time_additional_info
     - field.field.paragraph.service_time_and_place.field_weekday_and_time
     - paragraphs.paragraphs_type.service_time_and_place
   module:
     - field_group
-    - hel_tpm_editorial
     - hel_tpm_service_dates
     - select2
 third_party_settings:
@@ -41,14 +42,15 @@ third_party_settings:
         required_fields: true
     group_time:
       children:
-        - field_dates
-        - field_time_additional_info
-        - field_weekday_and_time
+        - field_date_selection
+        - field_start_and_end_date
         - field_date
+        - field_weekday_and_time
+        - field_time_additional_info
       label: 'Milloin palvelu järjestetään'
       region: content
       parent_name: group_location
-      weight: 17
+      weight: 7
       format_type: html_element
       format_settings:
         classes: event-times
@@ -68,7 +70,7 @@ third_party_settings:
       label: Paikka
       region: content
       parent_name: group_location
-      weight: 12
+      weight: 1
       format_type: html_element
       format_settings:
         classes: 'margin-bottom-one-space d--block'
@@ -89,21 +91,21 @@ bundle: service_time_and_place
 mode: default
 content:
   field_date:
-    type: hel_tpm_service_dates_custom_date_and_time_range_widget
+    type: hel_tpm_service_dates_date_range
     weight: 15
     region: content
     settings:
-      foo: bar
+      disable_end_date: false
     third_party_settings: {  }
-  field_dates:
-    type: hel_tpm_editorial_date_recur_custom
-    weight: 12
+  field_date_selection:
+    type: options_buttons
+    weight: 13
     region: content
     settings: {  }
     third_party_settings: {  }
   field_location_additional_info:
     type: string_textarea
-    weight: 14
+    weight: 4
     region: content
     settings:
       rows: 5
@@ -111,14 +113,14 @@ content:
     third_party_settings: {  }
   field_separate_time:
     type: boolean_checkbox
-    weight: 16
+    weight: 6
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   field_service_language:
     type: select2_entity_reference
-    weight: 15
+    weight: 5
     region: content
     settings:
       width: 100%
@@ -128,7 +130,7 @@ content:
     third_party_settings: {  }
   field_service_location:
     type: entity_reference_autocomplete
-    weight: 13
+    weight: 3
     region: content
     settings:
       match_operator: CONTAINS
@@ -136,9 +138,16 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  field_start_and_end_date:
+    type: hel_tpm_service_dates_date_range
+    weight: 14
+    region: content
+    settings:
+      disable_end_date: false
+    third_party_settings: {  }
   field_time_additional_info:
     type: string_textarea
-    weight: 13
+    weight: 17
     region: content
     settings:
       rows: 5
@@ -146,7 +155,7 @@ content:
     third_party_settings: {  }
   field_weekday_and_time:
     type: hel_tpm_service_dates_weekday_and_time_field
-    weight: 14
+    weight: 16
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -157,4 +166,5 @@ content:
     third_party_settings: {  }
 hidden:
   created: true
+  field_dates: true
   status: true
