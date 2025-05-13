@@ -119,14 +119,23 @@
    {% endblock %}
    {% block page_sidebar %}
       {{ content.field_municipality_specific }}
-      {{ content.field_contact_info }}
+      {% if content.field_contact_info|render %}
+        <div class="contact-info-wrapper">
+          {% include "@atoms/text/headings/_heading.twig" with {
+            "heading_level": 5,
+            "heading": 'Sisäiset yhteystiedot'|t,
+            "heading_modifiers": ['margin-bottom-two', 'blue-desktop'],
+          } %}
+          {{ content.field_contact_info }}
+        </div>
+      {% endif %}  
       {{ content.field_responsible_updatee }}
       {% if content.field_related_archive['0']['#markup'] == 'yes' %}
         <div class="archiving-guides">
           {% include "@atoms/text/headings/_heading.twig" with {
-            "heading_level": 4,
+            "heading_level": 5,
             "heading": 'Archiving guides:'|t,
-            "heading_modifiers": 'semibold',
+            "heading_modifiers": ['semibold','margin-bottom-two', 'blue-desktop'],
           } %}
           <a class="small-font" href="/node/275">{{ 'Archiving guide'|t }}</a>
         </div>
