@@ -87,7 +87,7 @@ class SearchLanguageSelect extends RadioButtons implements ContainerFactoryPlugi
    * {@inheritdoc}
    */
   public function exposedFormAlter(array &$form, FormStateInterface $form_state) {
-    if ($this->view->search_language_filter === TRUE) {
+    if (!empty($this->view->search_language_filter) && $this->view->search_language_filter === TRUE) {
       return;
     }
 
