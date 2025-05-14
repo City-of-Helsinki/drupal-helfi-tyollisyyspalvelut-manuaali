@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\views_exposed_embed\Plugin\Field\FieldFormatter;
 
+use Drupal\Component\Serialization\Json;
 use Drupal\Core\Field\Attribute\FieldFormatter;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
@@ -113,7 +114,7 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
     $element = [];
 
     foreach ($items as $delta => $item) {
-      $element[$delta] = $this->renderView($item);
+      $element[$delta] = $this->renderView($item, $delta);
     }
 
     return $element;
@@ -129,9 +130,9 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
    *   View render array.
    */
   protected function renderView(ViewsExposedEmbedFieldItem $item): array {
-    $filter_values = $this->buildFilters($item);
+    $filters = $this->buildFilters($item);
 
-    $view = $this->prepareViewRender($filter_values);
+    $view = $this->prepareViewRender($filters);
     if (empty($view)) {
       return [];
     }
@@ -140,10 +141,12 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
     $view->preview();
 
     // Create renderable array from view preview.
+    $this->setFilterCookie($view->dom_id, $filters);
     $render_array = $view->buildRenderable();
 
     // Create custom exposed filter list.
     $render_array['exposed_filters'] = $this->createFilterForm($view);
+    $render_array['#arguments'][] = Json::encode(['exposed_embed' => $filters]);
 
     return !empty($render_array) ? $render_array : [];
   }
@@ -161,7 +164,6 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
     $filters = $item->getValue();
     $filters = reset($filters);
     $filters = array_merge($filters, $this->getExposedFilterSelection());
-
     return array_filter($filters);
   }
 

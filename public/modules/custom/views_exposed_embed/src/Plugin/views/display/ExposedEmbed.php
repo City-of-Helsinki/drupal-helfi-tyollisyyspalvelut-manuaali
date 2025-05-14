@@ -2,9 +2,14 @@
 
 namespace Drupal\views_exposed_embed\Plugin\views\display;
 
+use Drupal\Component\Serialization\Json;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\views\Attribute\ViewsDisplay;
 use Drupal\views\Plugin\views\display\Embed;
+use Drupal\views\ViewExecutable;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a Views display plugin for exposed embeds.
@@ -22,6 +27,71 @@ use Drupal\views\Plugin\views\display\Embed;
 )]
 
 class ExposedEmbed extends Embed {
+
+  /**
+   * {@inheritdoc}
+   */
+  public function preExecute() {
+    $this->view->setAjaxEnabled($this->ajaxEnabled());
+    if ($this->isMoreEnabled() && !$this->useMoreAlways()) {
+      $this->view->get_total_rows = TRUE;
+    }
+    $this->view->initHandlers();
+    if ($this->usesExposed()) {
+      /** @var \Drupal\views\Plugin\views\exposed_form\ExposedFormPluginInterface $exposed_form */
+      $exposed_form = $this->getPlugin('exposed_form');
+      $exposed_form->preExecute();
+    }
+
+    $filters = $this->getDefaultFilters();
+    if (!empty($filters)) {
+      $this->filter = $filters;
+      foreach ($filters as $field => $value) {
+        if (empty($this->view->filter[$field])) {
+          continue;
+        }
+        $this->view->exposed_data[$field] = $value;
+        $this->view->filter[$field]->value = $value;
+      }
+    }
+
+    foreach ($this->extenders as $extender) {
+      $extender->preExecute();
+    }
+  }
+
+  /**
+   * Retrieves the default filters applied to the view.
+   *
+   * This method processes the view arguments to extract and decode
+   * filter definitions specified within them. Only arguments containing
+   * the 'exposed_embed' string are considered. If multiple filters are found,
+   * the first one is returned.
+   *
+   * @return array
+   *   An associative array representing the decoded filter settings.
+   *   Returns an empty array if no valid filters are found.
+   */
+  private function getDefaultFilters() {
+    $filters = [];
+
+    if (empty($this->view->args)) {
+      return $filters;
+    }
+
+    $args = $this->view->args;
+    foreach ($args as $arg) {
+      if (strpos($arg, 'exposed_embed') === FALSE) {
+        continue;
+      }
+      $filters = Json::decode($arg);
+    }
+    if (!empty($filters)) {
+      $filters = reset($filters);
+    }
+
+    return $filters;
+  }
 
   /**
    * {@inheritdoc}
