@@ -13,9 +13,14 @@ use Drupal\views\ViewExecutable;
  * Implements hook_views_query_alter().
  */
 function hel_tpm_search_views_query_alter(ViewExecutable $view, QueryPluginBase $query) {
+  $views = [
+    'solr_service_search',
+    'solr_service_list',
+  ];
 
   // Remove municipality condition when exposed filter isn't selected.
-  if ($view->id() == 'solr_service_search') {
+  if (in_array($view->id(), $views)) {
+
     $exposed_input = $view->getExposedInput();
     if (!empty($exposed_input['field_municipality'])) {
       return;
