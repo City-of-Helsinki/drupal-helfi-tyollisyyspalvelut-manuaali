@@ -285,12 +285,12 @@ $card-font-small-heading: 15px;
 .field--name-field-date {
   display: flex;
   order: 5;
+  margin-bottom: $space;
   .field__item {
-    display: flex;
-    flex-wrap: wrap;
     time {
       &:nth-child(2) {
         width: 100%;
+        display: inline;
       }
     }
   }
