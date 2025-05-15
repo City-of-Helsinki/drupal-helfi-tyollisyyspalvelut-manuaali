@@ -3,7 +3,6 @@
     attach: function (context, settings) {
       addError();
       togglePrice();
-      toggleTime();
       toggleAgeRange();
       handleSelectedStatement();
       handleSelectedObligatoryness();
@@ -93,27 +92,6 @@
         });
       }
 
-
-      // hide time element on the second page of service entity form.
-      function toggleTime() {
-        let separateTimeCheckbox = '.field--name-field-separate-time .form-checkbox';
-        let hideableTimes = '.event-times';
-        $(separateTimeCheckbox).each(function() {
-          if ($(this).is(":checked")) {
-            $(this).parent().parent().siblings(hideableTimes).hide();
-          }
-        });
-        //handle show/hide logic of service time
-        $(separateTimeCheckbox).click(function () {
-          let thisTimeCheckbox = $(this).parent().parent().siblings(hideableTimes);
-          if ($(this).is(":checked") === true) {
-            $(thisTimeCheckbox).hide();
-          }
-          else {
-            $(thisTimeCheckbox).show();
-          }
-        });
-      }
 
       // handle checkbox select color changed
       // input selected -> parent gets "selected" class

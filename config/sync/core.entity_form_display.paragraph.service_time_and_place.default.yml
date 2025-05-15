@@ -26,7 +26,6 @@ third_party_settings:
         - field_service_location
         - field_location_additional_info
         - field_service_language
-        - field_separate_time
         - group_time
       label: ''
       region: content
@@ -47,7 +46,7 @@ third_party_settings:
         - field_date
         - field_weekday_and_time
         - field_time_additional_info
-      label: 'Milloin palvelu järjestetään'
+      label: Ajankohta
       region: content
       parent_name: group_location
       weight: 7
@@ -59,8 +58,8 @@ third_party_settings:
         label_as_html: false
         element: div
         show_label: true
-        label_element: label
-        label_element_classes: ''
+        label_element: h3
+        label_element_classes: h6
         attributes: ''
         effect: none
         speed: fast
@@ -111,13 +110,6 @@ content:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
-  field_separate_time:
-    type: boolean_checkbox
-    weight: 6
-    region: content
-    settings:
-      display_label: true
-    third_party_settings: {  }
   field_service_language:
     type: select2_entity_reference
     weight: 5
@@ -167,4 +159,5 @@ content:
 hidden:
   created: true
   field_dates: true
+  field_separate_time: true
   status: true
