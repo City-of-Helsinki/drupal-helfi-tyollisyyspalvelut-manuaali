@@ -140,8 +140,6 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
     // Create a preview render from view.
     $view->preview();
 
-    // Create renderable array from view preview.
-    $this->setFilterCookie($view->dom_id, $filters);
     $render_array = $view->buildRenderable();
 
     // Create custom exposed filter list.

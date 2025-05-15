@@ -3,13 +3,9 @@
 namespace Drupal\views_exposed_embed\Plugin\views\display;
 
 use Drupal\Component\Serialization\Json;
-use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\views\Attribute\ViewsDisplay;
 use Drupal\views\Plugin\views\display\Embed;
-use Drupal\views\ViewExecutable;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a Views display plugin for exposed embeds.
