@@ -36,7 +36,7 @@ content:
       from_to: both
       separator: '-'
     third_party_settings: {  }
-    weight: 5
+    weight: 4
     region: content
   field_date_selection:
     type: list_default
@@ -66,17 +66,7 @@ content:
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 3
-    region: content
-  field_separate_time:
-    type: boolean
-    label: above
-    settings:
-      format: default
-      format_custom_false: ''
-      format_custom_true: ''
-    third_party_settings: {  }
-    weight: 1
+    weight: 2
     region: content
   field_service_language:
     type: entity_reference_label
@@ -84,7 +74,7 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 4
+    weight: 3
     region: content
   field_service_location:
     type: entity_reference_entity_view
@@ -93,7 +83,7 @@ content:
       view_mode: default
       link: false
     third_party_settings: {  }
-    weight: 2
+    weight: 1
     region: content
   field_start_and_end_date:
     type: daterange_default
@@ -104,14 +94,14 @@ content:
       from_to: both
       separator: '-'
     third_party_settings: {  }
-    weight: 7
+    weight: 8
     region: content
   field_time_additional_info:
     type: basic_string
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 6
+    weight: 7
     region: content
   field_weekday_and_time:
     type: hel_tpm_service_dates_weekday_and_time_field_default
@@ -124,4 +114,5 @@ hidden:
   entity_print_view_epub: true
   entity_print_view_pdf: true
   entity_print_view_word_docx: true
+  field_separate_time: true
   search_api_excerpt: true
