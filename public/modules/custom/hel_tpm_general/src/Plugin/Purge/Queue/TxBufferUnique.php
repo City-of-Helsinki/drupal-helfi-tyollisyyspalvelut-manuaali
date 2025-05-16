@@ -109,6 +109,9 @@ final class TxBufferUnique extends TxBuffer {
 
     if (empty($table)) {
       $plugin_id = $this->configFactory->get('purge.plugins')->get('queue');
+      if (empty($plugin_id)) {
+        return 'purge_queue';
+      }
       $table = $this->pluginManager->createInstance($plugin_id)::TABLE_NAME;
     }
 
