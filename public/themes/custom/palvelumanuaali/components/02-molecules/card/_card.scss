@@ -282,21 +282,8 @@ $card-font-small-heading: 15px;
     }
   }
 }
-.field--name-field-date {
-  display: flex;
-  order: 5;
-  margin-bottom: $space;
-  .field__item {
-    time {
-      &:nth-child(2) {
-        width: 100%;
-        display: inline;
-      }
-    }
-  }
-}
-.card--service-card {
 
+.card--service-card {
   .service-time-and-place {
     display: flex;
     flex-wrap: wrap;
@@ -801,78 +788,9 @@ $card-font-small-heading: 15px;
   }
 }
 
-body:not(.edit-create-form) {
-  .field--name-field-linklist-card  {
-    min-width: 310px;
-
-    @include medium {
-      min-width: unset;
-      width: calc(50% - 16px);
-      flex-basis: calc(50% - 16px);
-      flex-grow: 1;
-      margin-bottom: unset;
-      max-width: 325px;
-    }
-    @include xl {
-      width: calc(33% - 16px);
-      flex-basis: calc(33% - 16px);
-      flex-grow: 1;
-    }
-    @media (min-width: 1640px) {
-      width: calc(25% - 18px);
-      flex-basis: calc(25% - 36px);
-      flex-grow: 1;
-    }
-    .link-card-with-image {
-      background-color: clr(sidebar-color);
-      border-radius: 16px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      min-height: 250px;
-      margin-bottom: $space-double;
-      @include medium {
-        width: unset;
-        flex-basis: unset;
-        flex-grow: 1;
-        margin-bottom: unset;
-        max-width: 325px;
-      }
-      @include xl {
-        width: calc(33% - 16px);
-        flex-basis: calc(33% - 16px);
-        flex-grow: 1;
-      }
-      @media (min-width: 1640px) {
-        width: calc(25% - 18px);
-        flex-basis: calc(25% - 36px);
-        flex-grow: 1;
-      }
-      a {
-        text-decoration-line: none;
-      }
-      img {
-        width: 100%;
-      }
-      .arrow-icon {
-        background-image: url("../../assets/images/icons/arrow-right-1.svg");
-        background-color: clr(background-section);
-        width: 62px;
-        height: 62px;
-        display: block;
-        background-repeat: no-repeat;
-        background-position: center;
-        border-top-left-radius: 16px;
-        position: absolute;
-        bottom: 0;
-        right: 0;
-      }
-    }
-  }
+body:not(.edit-create-form) .field--name-field-linklist-card {
+  width: 100%;
 }
-
-
 .link-card-with-image {
   background-color: clr(sidebar-color);
   border-radius: 16px;
@@ -881,9 +799,24 @@ body:not(.edit-create-form) {
   flex-direction: column;
   position: relative;
   margin-bottom: $space-double;
+  min-width: 310px;
+  min-height: 300px;
   @include medium {
+    min-width: unset;
+    width: calc(50% - 16px);
+    flex-basis: calc(50% - 16px);
+    flex-grow: 1;
     margin-bottom: unset;
     max-width: 325px;
+  }
+  @include xl {
+    width: calc(33% - 16px);
+    flex-basis: calc(33% - 16px);
+    flex-grow: 1;
+  }
+  @media (min-width: 1640px) {
+    width: calc(25% - 18px);
+    flex-basis: calc(25% - 36px);
     flex-grow: 1;
   }
   a {
@@ -906,7 +839,6 @@ body:not(.edit-create-form) {
     right: 0;
   }
 }
-
 
 .card-text-wrapper {
   padding: 18px 22px;
