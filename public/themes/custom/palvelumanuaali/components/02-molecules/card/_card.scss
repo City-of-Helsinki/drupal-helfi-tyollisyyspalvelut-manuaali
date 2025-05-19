@@ -282,8 +282,21 @@ $card-font-small-heading: 15px;
     }
   }
 }
-
+.field--name-field-date {
+  display: flex;
+  order: 5;
+  margin-bottom: $space;
+  .field__item {
+    time {
+      &:nth-child(2) {
+        width: 100%;
+        display: inline;
+      }
+    }
+  }
+}
 .card--service-card {
+
   .service-time-and-place {
     display: flex;
     flex-wrap: wrap;

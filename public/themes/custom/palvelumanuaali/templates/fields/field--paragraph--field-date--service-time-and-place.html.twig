@@ -54,7 +54,11 @@
 %}
 
 <div{{ attributes.addClass(classes) }}>
-
+  {% include "@atoms/images/icons/_icon.twig" with {
+    icon_base_class: 'icon',
+    icon_name: 'calendar-dark-blue',
+    icon_modifiers: ['small'],
+  } %}
   <div class='text-wrapper'>
   <div{{ title_attributes.addClass(title_classes) }}>{{ 'Weekday and time'|t }}</div>
   <div class="field__items">
