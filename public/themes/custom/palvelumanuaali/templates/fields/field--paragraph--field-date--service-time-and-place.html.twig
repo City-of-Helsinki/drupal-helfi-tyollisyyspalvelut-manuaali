@@ -33,10 +33,9 @@
  * - field_type: The type of the field.
  * - label_display: The display settings for the label.
  *
+ *
  * @see template_preprocess_field()
  */
-
- @TODO: THIS CAN BE REMOVED IF BEM CLASSES CAN BE APPLIED IN WYSIWYG
 #}
 {%
   set classes = [
@@ -44,11 +43,35 @@
     'field--name-' ~ field_name|clean_class,
     'field--type-' ~ field_type|clean_class,
     'field--label-' ~ label_display,
+    label_display == 'inline' ? 'clearfix',
+  ]
+%}
+{%
+  set title_classes = [
+    'field__label',
+    label_display == 'visually_hidden' ? 'visually-hidden',
   ]
 %}
 
-  {% for item in items %}
-      <div{{ item.attributes.addClass('field__item') }}>
-       <span>{{"Service fees "|t}}</span> {{item.content}}
+<div{{ attributes.addClass(classes) }}>
+
+  <div class='text-wrapper'>
+  <div{{ title_attributes.addClass(title_classes) }}>{{ 'Weekday and time'|t }}</div>
+  <div class="field__items">
+      <div class="field-items-wrapper">
+        {% for item in items %}
+          {% if loop.index == 1 %}
+            <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
+          {% else %}
+            <div{{ item.attributes.addClass('field__item').addClass('collapse').addClass('multi-collapse') }}>{{ item.content }}</div>
+          {% endif %}
+        {% endfor %}
       </div>
-  {% endfor %}
+      {% if items|length > 1 %}
+        <div class="button-wrapper">
+          <button class="button--no-color-no-border button--dropdown-button" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">{{"Show more"|t}}</button>
+        </div>
+      {% endif %}
+  </div>
+  </div>
+</div>

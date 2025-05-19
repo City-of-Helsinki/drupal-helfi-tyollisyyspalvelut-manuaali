@@ -20,18 +20,20 @@ display:
       filters:
         field_service_set:
           expose:
-            label: 'Service category:'
+            label: 'Service category'
         field_life_situations:
           expose:
-            label: 'Life situation:'
+            label: 'Life situation'
         field_free_service:
           group_info:
-            label: 'Service is chargeable'
+            label: Charges
             group_items:
               1:
-                title: 'Paid service'
+                title: 'Subject to a charge'
               2:
                 title: 'Free of charge'
+          expose:
+            description: ''
         field_accessibility:
           expose:
             label: Accessibility
@@ -40,7 +42,7 @@ display:
             label: Implementation
         age_groups_filter:
           expose:
-            label: 'Target groups age'
+            label: 'Target group age'
         field_target_group_municipality:
           expose:
             label: 'Municipality of residence'

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\views_exposed_embed\Plugin\Field\FieldFormatter;
 
+use Drupal\Component\Serialization\Json;
 use Drupal\Core\Field\Attribute\FieldFormatter;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
@@ -113,7 +114,7 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
     $element = [];
 
     foreach ($items as $delta => $item) {
-      $element[$delta] = $this->renderView($item);
+      $element[$delta] = $this->renderView($item, $delta);
     }
 
     return $element;
@@ -129,21 +130,23 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
    *   View render array.
    */
   protected function renderView(ViewsExposedEmbedFieldItem $item): array {
-    $filter_values = $this->buildFilters($item);
+    $filters = $this->buildFilters($item);
 
-    $view = $this->prepareViewRender($filter_values);
+    $view = $this->prepareViewRender($filters);
     if (empty($view)) {
       return [];
     }
 
     // Create a preview render from view.
     $view->preview();
-
-    // Create renderable array from view preview.
     $render_array = $view->buildRenderable();
 
     // Create custom exposed filter list.
-    $render_array['exposed_filters'] = $this->createFilterForm($view);
+    if ($this->showExposedForm($filters)) {
+      $render_array['exposed_filters'] = $this->createFilterForm($view, $filters);
+    }
+
+    $render_array['#arguments'][] = Json::encode(['exposed_embed' => $filters]);
 
     return !empty($render_array) ? $render_array : [];
   }
@@ -161,7 +164,7 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
     $filters = $item->getValue();
     $filters = reset($filters);
     $filters = array_merge($filters, $this->getExposedFilterSelection());
-    return $filters;
+    return array_filter($filters);
   }
 
   /**
@@ -198,16 +201,18 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
   }
 
   /**
-   * Creates and returns a filter form for exposed filters in a view.
+   * Creates a filter form for a given view and selected filters.
    *
    * @param \Drupal\views\ViewExecutable $view
-   *   The view to which the filter form is being attached.
+   *   The view executable object for which the filter form is generated.
+   * @param array $selected_filters
+   *   An associative array of selected filters, where keys are the filter
+   *   identifiers and values are the selected values.
    *
    * @return array
-   *   A renderable array representing the filter form, or an empty array if no
-   *   exposed filters are configured.
+   *   A renderable array representing the filter form.
    */
-  protected function createFilterForm(ViewExecutable $view): array {
+  protected function createFilterForm(ViewExecutable $view, array $selected_filters): array {
     $filter_form = [];
     $filters = $this->getSetting('exposed_filters') ?? [];
 
@@ -229,8 +234,12 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
 
     foreach ($filters as $filter => $value) {
       if ($value !== 0) {
+        if (!empty($selected_filters[$filter])) {
+          $output[$filter]['#access'] = FALSE;
+        }
         continue;
       }
+
       $output[$filter]['#access'] = FALSE;
     }
 
@@ -253,7 +262,6 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
     $exposed_input = array_merge($exposed_input, $filter_values);
     $view->setExposedInput($exposed_input);
     $view->initHandlers();
-
     return $view;
   }
 
@@ -291,6 +299,29 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
       $filters[$filter->options['expose']['identifier']] = $filter->configuration['title'];
     }
     return $filters;
+  }
+
+  /**
+   * Determines whether the exposed form should be shown based on filters.
+   *
+   * @param array $filters
+   *   An array of filters with their corresponding values.
+   *
+   * @return bool
+   *   TRUE if the exposed form should be shown, FALSE otherwise.
+   */
+  protected function showExposedForm($filters) : bool {
+    $exposed_filters = $this->getSetting('exposed_filters') ?? [];
+    if (empty($exposed_filters)) {
+      return FALSE;
+    }
+    $enabled_exposed = array_diff($exposed_filters, [0]);
+    foreach ($enabled_exposed as $exposed_filter) {
+      if (empty($filters[$exposed_filter])) {
+        return TRUE;
+      }
+    }
+    return FALSE;
   }
 
 }

@@ -47,7 +47,7 @@
   {% if content.field_free_service[0]['#markup'] == 1 %}
     {{ content|without('field_free_service') }}
   {% else %}
-    <span class='field__item'>{{'The service is free'|t}}</span>
+    <span class='field__item'>{{'The service is free of charge'|t}}</span>
       {{content|without('field_free_service', 'field_price')}}
   {% endif %}
 

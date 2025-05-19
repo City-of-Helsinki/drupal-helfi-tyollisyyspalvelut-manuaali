@@ -21,7 +21,6 @@
       float: left;
     }
     .weekdays.container-inline {
-
       .form-item--checkboxes {
         display: flex;
         flex-wrap: wrap;
@@ -88,7 +87,9 @@
     }
   }
 }
-.field--widget-hel-tpm-service-dates-custom-date-and-time-range-widget {
+
+.field--widget-hel-tpm-service-dates-custom-date-and-time-range-widget,
+.field--widget-hel-tpm-service-dates-date-range {
   fieldset {
     display: flex;
     flex-wrap: wrap;
@@ -127,6 +128,16 @@
   }
 }
 
+.field--name-field-start-and-end-date  {
+  fieldset {
+    div[class*='-value-date'] {
+      width: 230px;
+    }
+  }
+}
+
+
+
 .hel-tpm-service-dates-weekday-and-time-field-elements {
   >.label {
     font-size: 12px;
@@ -161,7 +172,7 @@
     }
     .weekday-row {
       margin-bottom: $space;
-
+      width: 100%;
       @include large {
         margin-bottom: $space-one-and-half;
         height: 40px;
@@ -192,7 +203,7 @@
         & + label {
 
         }
-        &:checked +label {
+        &.selected + label {
           background-color: $blue100;
           color: $white;
         }
@@ -216,7 +227,7 @@
             color: transparent;
           }
         }
-        &:checked +label {
+        &.selected +label {
           @include round-icon-button;
           background-image: url("../../assets/images/icons/minus.svg");
         }
@@ -320,9 +331,7 @@
   .field--name-field-service-languages {
     margin-bottom: $space-two-and-half;
   }
-  .field--name-field-separate-time {
-    margin-bottom: $space-double;
-  }
+
   .field-service-time-and-location-values > tbody > tr > .table__cell {
     margin-bottom: $space;
   }
@@ -346,6 +355,36 @@
   .select--white-rounded select,
   .form-number {
     background-color: clr(text-inverse);
+  }
+}
+
+.field--name-field-date-selection {
+  .form-item--radio {
+    flex-direction: column;
+  }
+  .form-item--radio-button {
+    label {
+      margin-left: 0;
+      &::before {
+        content:'';
+        display: block;
+        width: 24px;
+        height: 24px;
+        border: 1px solid clr(background-section);
+        margin-right: 20px;
+        border-radius: 2px;
+      }
+    }
+  }
+  input[type="radio"] {
+    display: none;
+  }
+  input[type="radio"]:checked + label::before {
+    background-image: url('../../assets/images/icons/check-black.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 14px 11px;
+
   }
 }
 

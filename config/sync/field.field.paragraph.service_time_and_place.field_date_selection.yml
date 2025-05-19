@@ -1,0 +1,21 @@
+uuid: 209bfe87-ae37-4f1f-9695-b35b7c0e41ee
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_date_selection
+    - paragraphs.paragraphs_type.service_time_and_place
+  module:
+    - options
+id: paragraph.service_time_and_place.field_date_selection
+field_name: field_date_selection
+entity_type: paragraph
+bundle: service_time_and_place
+label: 'Valitse yksi seuraavista:'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string
