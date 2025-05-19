@@ -1,0 +1,66 @@
+label: 'Locked content'
+display:
+  default:
+    display_title: Master
+    display_options:
+      title: 'Locked content'
+      fields:
+        node_bulk_form:
+          label: 'Node operations bulk form'
+          action_title: Action
+        title:
+          label: Title
+          separator: ', '
+        type:
+          label: 'Content type'
+          separator: ', '
+        timestamp:
+          label: 'Lock Date/Time'
+        name:
+          label: 'Lock owner'
+          separator: ', '
+        operations:
+          label: Operations
+      pager:
+        options:
+          tags:
+            next: ››
+            previous: ‹‹
+            first: '« First'
+            last: 'Last »'
+          expose:
+            items_per_page_label: 'Items per page'
+            items_per_page_options_all_label: '- All -'
+            offset_label: Offset
+      exposed_form:
+        options:
+          submit_button: Apply
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      empty:
+        area_text_custom:
+          content: 'There is no content currently locked.'
+      filters:
+        status:
+          expose:
+            label: 'Published status'
+          group_info:
+            label: 'Published status'
+            group_items:
+              1:
+                title: Published
+              2:
+                title: Unpublished
+        type:
+          expose:
+            label: 'Content type'
+        title:
+          expose:
+            label: Title
+  page_1:
+    display_title: Page
+    display_options:
+      menu:
+        title: 'Locked content'

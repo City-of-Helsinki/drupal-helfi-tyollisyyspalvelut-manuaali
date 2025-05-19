@@ -1,0 +1,60 @@
+label: 'Låst innehåll'
+display:
+  default:
+    display_title: Huvud
+    display_options:
+      title: 'Låst innehåll'
+      fields:
+        node_bulk_form:
+          action_title: Åtgärd
+        title:
+          label: Organisation
+          separator: ', '
+        type:
+          label: Innehållstyp
+          separator: ', '
+        name:
+          label: 'Lås ägare'
+          separator: ', '
+        operations:
+          label: Funktioner
+      pager:
+        options:
+          tags:
+            next: ››
+            previous: ‹‹
+            first: '« Första'
+            last: 'Sista »'
+          expose:
+            items_per_page_label: 'Inlägg per sida'
+            items_per_page_options_all_label: '- Alla -'
+            offset_label: Kompensera
+      exposed_form:
+        options:
+          submit_button: Verkställ
+          reset_button_label: Återställ
+          exposed_sorts_label: 'Sortera efter'
+          sort_asc_label: Stigande
+          sort_desc_label: Fallande
+      filters:
+        status:
+          expose:
+            label: 'Status för publicering'
+          group_info:
+            label: 'Status för publicering'
+            group_items:
+              1:
+                title: Publicerad
+              2:
+                title: 'Ej publicerad'
+        type:
+          expose:
+            label: Innehållstyp
+        title:
+          expose:
+            label: Organisation
+  page_1:
+    display_title: Sida
+    display_options:
+      menu:
+        title: 'Låst innehåll'
