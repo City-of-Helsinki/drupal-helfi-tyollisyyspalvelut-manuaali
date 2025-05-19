@@ -29,23 +29,32 @@ final class CustomDateRangeWidget extends DateRangeDefaultWidget {
    * {@inheritdoc}
    */
   public static function defaultSettings() {
-    $settings = parent::defaultSettings();
-    $settings['disable_end_date'] = FALSE;
-    return $settings;
+    return ['disable_end_date' => FALSE] + parent::defaultSettings();
   }
 
   /**
    * {@inheritdoc}
    */
   public function settingsForm(array $form, FormStateInterface $form_state) {
-    $element = parent::settingsForm($form, $form_state);
     $element['disable_end_date'] = [
-      '#type' => 'boolean',
+      '#type' => 'checkbox',
       '#title' => new TranslatableMarkup('Disable end date'),
       '#description' => new TranslatableMarkup('Disable end date'),
       '#default_value' => $this->getSetting('disable_end_date'),
     ];
     return $element;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function settingsSummary() {
+    $summary = parent::settingsSummary();
+    if ($this->getSetting('disable_end_date')) {
+      $summary[] = new TranslatableMarkup('End date disabled');
+    }
+
+    return $summary;
   }
 
   /**
