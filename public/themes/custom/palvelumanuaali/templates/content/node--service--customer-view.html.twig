@@ -137,7 +137,7 @@
           <div class="contact-info-wrapper">
             {% include "@atoms/text/headings/_heading.twig" with {
               "heading_level": 5,
-              "heading": 'Contact information'|t,
+              "heading": "Contact information"|t({}, {'context' : 'customer-view'}),
               "heading_modifiers": ['margin-bottom-two', 'blue-desktop'],
             } %}
             {{ content.field_contact_info_external }}
