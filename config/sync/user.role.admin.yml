@@ -23,6 +23,7 @@ dependencies:
     - workflows.workflow.service_moderation
   module:
     - admin_toolbar_search
+    - content_lock
     - content_moderation
     - content_translation
     - dropzonejs
@@ -79,6 +80,7 @@ permissions:
   - 'administer shortcuts'
   - 'administer url aliases'
   - 'administer users'
+  - 'break content lock'
   - 'bypass node access'
   - 'bypass paragraphs type content access'
   - 'create basic_page content'
