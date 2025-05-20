@@ -34,6 +34,11 @@ body {
   box-sizing: inherit;
 }
 
+/* Remove Edge password reveal control. */
+::-ms-reveal {
+  display: none;
+}
+
 .visually-hidden {
   position: absolute !important;
   clip: rect(1px, 1px, 1px, 1px);
@@ -90,7 +95,7 @@ body {
 .no-wrap {
   &--dsk {
     @include xl {
-      flex-wrap: no-wrap;
+      flex-wrap: nowrap;
     }
   }
 }
