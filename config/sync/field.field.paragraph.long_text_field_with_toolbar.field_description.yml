@@ -6,20 +6,16 @@ dependencies:
     - field.storage.paragraph.field_description
     - paragraphs.paragraphs_type.long_text_field_with_toolbar
   module:
-    - epp
     - require_on_publish
     - text
 third_party_settings:
-  epp:
-    value: ''
-    on_update: 0
   require_on_publish:
     require_on_publish: true
 id: paragraph.long_text_field_with_toolbar.field_description
 field_name: field_description
 entity_type: paragraph
 bundle: long_text_field_with_toolbar
-label: 'Content:'
+label: Sisältö
 description: ''
 required: false
 translatable: false

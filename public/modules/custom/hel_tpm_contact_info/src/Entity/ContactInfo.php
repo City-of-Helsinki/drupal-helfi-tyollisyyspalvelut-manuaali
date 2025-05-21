@@ -15,8 +15,8 @@ use Drupal\user\UserInterface;
  *
  * @ContentEntityType(
  *   id = "contact_info",
- *   label = @Translation("Contact info"),
- *   label_collection = @Translation("Contact infos"),
+ *   label = @Translation("Contact information"),
+ *   label_collection = @Translation("Contacts"),
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
  *     "list_builder" = "Drupal\hel_tpm_contact_info\ContactInfoListBuilder",

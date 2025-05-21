@@ -94,7 +94,7 @@ third_party_settings:
         - group_complementary_job_search
         - group_archive_guide
         - group_liitteet_ja_linkit
-      label: Specialist
+      label: 'Asiantuntijan työohje'
       region: content
       parent_name: group_tabs
       weight: 7
@@ -103,19 +103,20 @@ third_party_settings:
         classes: ''
         show_empty_fields: false
         id: ''
+        label_as_html: false
         formatter: closed
         description: ''
         required_fields: true
     group_customer:
       children:
         - field_attendance
-        - group_benefits_serfice
-        - group_requirements_of_service
+        - field_service_benefits
+        - field_service_requirements
         - group_participation_concent
         - field_field_client_consent_descr
         - field_service_execution
         - field_service_other_info
-      label: Customer
+      label: Asiakasnäkymä
       region: content
       parent_name: group_tabs
       weight: 5
@@ -124,6 +125,7 @@ third_party_settings:
         classes: ''
         show_empty_fields: false
         id: ''
+        label_as_html: false
         formatter: open
         description: ''
         required_fields: true
@@ -154,7 +156,7 @@ third_party_settings:
         - field_implementation_extra_info
         - field_service_time_and_location
         - field_service_implement
-      label: 'Place and time'
+      label: 'Aika ja paikka'
       region: content
       parent_name: ''
       weight: 2
@@ -163,6 +165,7 @@ third_party_settings:
         classes: 'tab tab-1'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: true
         label_element: h3
@@ -202,7 +205,7 @@ third_party_settings:
         - field_responsible_updatee
         - field_other_services
         - field_days_since_last_state_chan
-      label: 'Additional info'
+      label: Lisätiedot
       region: content
       parent_name: ''
       weight: 4
@@ -211,6 +214,7 @@ third_party_settings:
         classes: 'tab tab-3'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: true
         label_element: h3
@@ -272,7 +276,7 @@ third_party_settings:
         - moderation_state
         - created
         - status
-      label: 'Lisätiedot: '
+      label: Lisätiedot
       region: content
       parent_name: ''
       weight: 0
@@ -281,6 +285,7 @@ third_party_settings:
         classes: ''
         show_empty_fields: true
         id: details-sidebar
+        label_as_html: false
         open: true
         description: ''
         required_fields: false
@@ -472,53 +477,13 @@ third_party_settings:
         effect: none
         speed: fast
         required_fields: true
-    group_benefits_serfice:
-      children:
-        - field_service_benefits
-      label: 'Palveluun osallistumisen hyödyt'
-      region: content
-      parent_name: group_customer
-      weight: 9
-      format_type: html_element
-      format_settings:
-        classes: form-wrapper
-        show_empty_fields: false
-        id: ''
-        element: div
-        show_label: true
-        label_element: legend
-        label_element_classes: field-group--title
-        attributes: ''
-        effect: none
-        speed: fast
-        required_fields: false
-    group_requirements_of_service:
-      children:
-        - field_service_requirements
-      label: 'Palveluun osallistumisen edellytykset'
-      region: content
-      parent_name: group_customer
-      weight: 10
-      format_type: html_element
-      format_settings:
-        classes: form-wrapper
-        show_empty_fields: false
-        id: ''
-        element: div
-        show_label: true
-        label_element: legend
-        label_element_classes: field-group--title
-        attributes: ''
-        effect: none
-        speed: fast
-        required_fields: true
     group_participation_concent:
       children:
         - field_client_consent
-      label: Suostumus
+      label: Asiakassuostumus
       region: content
       parent_name: group_customer
-      weight: 11
+      weight: 13
       format_type: html_element
       format_settings:
         classes: form-wrapper
@@ -536,7 +501,7 @@ third_party_settings:
       children:
         - field_internal_links
         - field_internal_files
-      label: 'Liitteet ja linkit'
+      label: 'Sisäiset liitteet ja linkit'
       region: content
       parent_name: group_specialist
       weight: 17
@@ -673,7 +638,7 @@ content:
     third_party_settings:
       maxlength:
         maxlength_js: 250
-        maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
+        maxlength_js_label: 'Merkkimäärä rajattu @limit merkkiin, jäljellä: <strong>@remaining</strong>'
         maxlength_js_enforce: true
         maxlength_js_truncate_html: false
       conditional_fields:
@@ -697,7 +662,7 @@ content:
             selector: ''
   field_field_client_consent_descr:
     type: text_textarea
-    weight: 12
+    weight: 14
     region: content
     settings:
       rows: 5
@@ -858,7 +823,7 @@ content:
     third_party_settings: {  }
   field_service_benefits:
     type: text_textarea
-    weight: 10
+    weight: 9
     region: content
     settings:
       rows: 5
@@ -886,7 +851,7 @@ content:
     third_party_settings: {  }
   field_service_execution:
     type: inline_entity_form_simple
-    weight: 13
+    weight: 15
     region: content
     settings:
       form_mode: default
@@ -923,7 +888,7 @@ content:
     third_party_settings: {  }
   field_service_other_info:
     type: inline_entity_form_simple
-    weight: 14
+    weight: 16
     region: content
     settings:
       form_mode: default
@@ -976,7 +941,7 @@ content:
     third_party_settings: {  }
   field_service_requirements:
     type: text_textarea
-    weight: 11
+    weight: 10
     region: content
     settings:
       rows: 5
@@ -1079,7 +1044,7 @@ content:
     third_party_settings:
       maxlength:
         maxlength_js: 120
-        maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
+        maxlength_js_label: 'Merkkimäärä rajattu @limit merkkiin, jäljellä: <strong>@remaining</strong>'
   uid:
     type: select2_entity_reference
     weight: 6
