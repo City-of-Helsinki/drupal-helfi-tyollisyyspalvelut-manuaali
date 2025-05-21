@@ -803,6 +803,9 @@ $card-font-small-heading: 15px;
   }
 }
 
+body:not(.edit-create-form) .field--name-field-linklist-card {
+  width: 100%;
+}
 .link-card-with-image {
   background-color: clr(sidebar-color);
   border-radius: 16px;
@@ -811,7 +814,10 @@ $card-font-small-heading: 15px;
   flex-direction: column;
   position: relative;
   margin-bottom: $space-double;
+  min-width: 310px;
+  min-height: 300px;
   @include medium {
+    min-width: unset;
     width: calc(50% - 16px);
     flex-basis: calc(50% - 16px);
     flex-grow: 1;
@@ -830,7 +836,6 @@ $card-font-small-heading: 15px;
   }
   a {
     text-decoration-line: none;
-    margin-top: auto;
   }
   img {
     width: 100%;
