@@ -512,10 +512,10 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id) {
     $form['meta']['#type'] = 'container';
     $form['meta']['#group'] = 'group_details_sidebar';
     $form['meta']['changed']['#title'] = t('Updated:');
-    $form['meta']['author']['#title'] = t('Author:');
-    $form['langcode']['widget'][0]['value']['#title'] = t('Language:');
-    $form['moderation_state']['widget'][0]['current']['#title'] = t('Current state:');
-    $form['moderation_state']['widget'][0]['state']['#title'] = t('Change to:');
+    $form['meta']['author']['#title'] = t('Created by:');
+    $form['langcode']['widget'][0]['value']['#title'] = t('Language version:');
+    $form['moderation_state']['widget'][0]['current']['#title'] = t('Status of service:');
+    $form['moderation_state']['widget'][0]['state']['#title'] = t('Change status:');
     $form['actions']['delete']['#access'] = FALSE;
     $form['actions']['cancel']['#access'] = FALSE;
 

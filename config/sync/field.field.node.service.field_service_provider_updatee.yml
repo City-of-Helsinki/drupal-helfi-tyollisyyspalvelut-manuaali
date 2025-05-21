@@ -9,7 +9,7 @@ id: node.service.field_service_provider_updatee
 field_name: field_service_provider_updatee
 entity_type: node
 bundle: service
-label: 'Responsible for service in the organisation'
+label: 'Service provider’s person responsible for updates'
 description: 'The responsible person is the owner of the service in the organization. They know the service and monitor the up-to-dateness of the information. '
 required: true
 translatable: false
@@ -23,7 +23,6 @@ settings:
       field: _none
       direction: ASC
     auto_create: false
-    auto_create_bundle: ''
     filter:
       type: _none
     include_anonymous: false
