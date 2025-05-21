@@ -44,23 +44,26 @@
 %}
   <div{{ attributes.addClass(classes) }}>
     {% if content.field_separate_time[0]['#markup'] == 1 %}
-      {{content|without('field_separate_time','field_dates')}}
+      {{content|without('field_dates')}}
     {% else %}
       {% if content.field_service_location[0]|default(null) %}
-        {{content|without('field_separate_time')}}
-
+      {{content|without('field_separate_time','field_location_additional_info','field_weekday_and_time','field_date_selection','field_start_and_end_date','field_date')}}
+      <div class='date-wrapper o--five d--flex'>
+        {% include "@atoms/images/icons/_icon.twig" with {
+          icon_base_class: 'icon',
+          icon_name: 'calendar-dark-blue',
+          icon_modifiers: ['small'],
+        } %}
+      <div class='text-wrapper'>
+      <div class='field__label'>{{ 'Weekday and time'|t }}</div>
+        {{content.field_date_selection}}
+        {{content.field_start_and_end_date}}
+        {{content.field_date}}
+        {{content.field_weekday_and_time}}
+      </div>
+      </div>
       {% else %}
         {{content|without('field_separate_time','field_location_additional_info','field_weekday_and_time','field_date_selection','field_start_and_end_date','field_date')}}
-        {# <article {{ bem("node",'service-location','',['flex-wrap']) }}>
-          {% include "@atoms/text/headings/_heading.twig" with {
-            "heading_level": 4,
-            "heading": "No location has been specified."|t,
-            "heading_modifiers": "service-location",
-            "heading_link_attributes": {
-              'rel': 'bookmark'
-            }
-          } %}
-        </article> #}
         <div class='date-wrapper o--five d--flex'>
           {% include "@atoms/images/icons/_icon.twig" with {
             icon_base_class: 'icon',
@@ -68,6 +71,7 @@
             icon_modifiers: ['small'],
           } %}
           <div class='text-wrapper'>
+          <div{{ title_attributes.addClass(title_classes) }}>{{ 'Weekday and time'|t }}</div>
             {{content.field_date_selection}}
             {{content.field_start_and_end_date}}
             {{content.field_date}}
