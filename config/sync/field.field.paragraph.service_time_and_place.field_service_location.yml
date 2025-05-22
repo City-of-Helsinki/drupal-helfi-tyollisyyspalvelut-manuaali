@@ -4,7 +4,6 @@ status: true
 dependencies:
   config:
     - field.storage.paragraph.field_service_location
-    - node.type.service_location
     - paragraphs.paragraphs_type.service_time_and_place
 id: paragraph.service_time_and_place.field_service_location
 field_name: field_service_location
@@ -17,13 +16,10 @@ translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
-  handler: 'default:node'
+  handler: views
   handler_settings:
-    target_bundles:
-      service_location: service_location
-    sort:
-      field: field_address.address_line1
-      direction: DESC
-    auto_create: false
-    auto_create_bundle: ''
+    view:
+      view_name: service_location_reference
+      display_name: entity_reference_1
+      arguments: {  }
 field_type: entity_reference
