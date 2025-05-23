@@ -28,18 +28,18 @@ bundle: service_time_and_place
 mode: default
 content:
   field_date:
-    type: daterange_default
-    label: above
+    type: hel_tpm_service_dates_custom_daterange
+    label: hidden
     settings:
       timezone_override: ''
-      format_type: short_date_with_leading_day
+      date_format: 'D d.m.Y \k\l\o H:i'
       from_to: both
       separator: '-'
     third_party_settings: {  }
     weight: 4
     region: content
   field_date_selection:
-    type: list_default
+    type: list_key
     label: above
     settings: {  }
     third_party_settings: {  }
@@ -87,10 +87,10 @@ content:
     region: content
   field_start_and_end_date:
     type: daterange_default
-    label: above
+    label: hidden
     settings:
       timezone_override: ''
-      format_type: medium
+      format_type: date_month_year
       from_to: both
       separator: '-'
     third_party_settings: {  }
@@ -105,7 +105,7 @@ content:
     region: content
   field_weekday_and_time:
     type: hel_tpm_service_dates_weekday_and_time_field_default
-    label: above
+    label: hidden
     settings: {  }
     third_party_settings: {  }
     weight: 5
