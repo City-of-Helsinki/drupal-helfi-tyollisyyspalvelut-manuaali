@@ -99,7 +99,9 @@
   </div>
 
 </article>
+{% if (content.field_accessibility['0'] is not null and content.field_accessibility_details['0'] is not null) %}
 <div class='accessibility-wrapper'>
 {{content.field_accessibility}}
 {{content.field_accessibility_details}}
 </div>
+{% endif %}

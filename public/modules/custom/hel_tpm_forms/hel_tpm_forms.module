@@ -505,7 +505,7 @@ function hel_tpm_forms_field_widget_single_element_form_alter(array &$element, F
     return;
   }
   if (($element['#type'] === 'select2') || ($element['#type'] === 'select')) {
-    $element['#placeholder'] = t('Choose from following options');
+    $element['#placeholder'] = t('Choose from the following options');
     // Fix for wrong selection when changing
     // roles of an user and refreshing services form.
     $element['#attributes']['autocomplete'] = 'off';

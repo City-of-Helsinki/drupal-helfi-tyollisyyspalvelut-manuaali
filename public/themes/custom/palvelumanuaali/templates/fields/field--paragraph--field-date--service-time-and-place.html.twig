@@ -54,13 +54,6 @@
 %}
 
 <div{{ attributes.addClass(classes) }}>
-  {% include "@atoms/images/icons/_icon.twig" with {
-    icon_base_class: 'icon',
-    icon_name: 'calendar-dark-blue',
-    icon_modifiers: ['small'],
-  } %}
-  <div class='text-wrapper'>
-  <div{{ title_attributes.addClass(title_classes) }}>{{ 'Weekday and time'|t }}</div>
   <div class="field__items">
       <div class="field-items-wrapper">
         {% for item in items %}
@@ -76,6 +69,5 @@
           <button class="button--no-color-no-border button--dropdown-button" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">{{"Show more"|t}}</button>
         </div>
       {% endif %}
-  </div>
   </div>
 </div>
