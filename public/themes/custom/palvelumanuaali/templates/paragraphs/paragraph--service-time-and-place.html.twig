@@ -47,7 +47,7 @@
       {{content|without('field_dates')}}
     {% else %}
       {% if content.field_service_location[0]|default(null) %}
-      {{content|without('field_separate_time','field_location_additional_info','field_weekday_and_time','field_date_selection','field_start_and_end_date','field_date')}}
+      {{content|without('field_separate_time','field_weekday_and_time','field_date_selection','field_start_and_end_date','field_date')}}
       <div class='date-wrapper o--five d--flex'>
         {% include "@atoms/images/icons/_icon.twig" with {
           icon_base_class: 'icon',
@@ -63,7 +63,7 @@
       </div>
       </div>
       {% else %}
-        {{content|without('field_separate_time','field_location_additional_info','field_weekday_and_time','field_date_selection','field_start_and_end_date','field_date')}}
+        {{content|without('field_separate_time','field_weekday_and_time','field_date_selection','field_start_and_end_date','field_date')}}
         <div class='date-wrapper o--five d--flex'>
           {% include "@atoms/images/icons/_icon.twig" with {
             icon_base_class: 'icon',
