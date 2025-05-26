@@ -41,7 +41,6 @@ class ExposedEmbed extends Embed {
 
     $filters = $this->getDefaultFilters();
     if (!empty($filters)) {
-      $this->filter = $filters;
       foreach ($filters as $field => $value) {
         if (empty($this->view->filter[$field])) {
           continue;
