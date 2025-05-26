@@ -10,6 +10,7 @@ use Drupal\Core\Field\Attribute\FieldWidget;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Security\TrustedCallbackInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 use Drupal\datetime_range\Plugin\Field\FieldType\DateRangeItem;
@@ -23,13 +24,16 @@ use Drupal\datetime_range\Plugin\Field\FieldWidget\DateRangeDefaultWidget;
   label: new TranslatableMarkup('Custom date range'),
   field_types: ['daterange'],
 )]
-final class CustomDateRangeWidget extends DateRangeDefaultWidget {
+final class CustomDateRangeWidget extends DateRangeDefaultWidget implements TrustedCallbackInterface {
 
   /**
    * {@inheritdoc}
    */
   public static function defaultSettings() {
-    return ['disable_end_date' => FALSE] + parent::defaultSettings();
+    return [
+      'disable_end_date' => FALSE,
+      'display_time_label' => FALSE,
+    ] + parent::defaultSettings();
   }
 
   /**
@@ -42,6 +46,12 @@ final class CustomDateRangeWidget extends DateRangeDefaultWidget {
       '#description' => new TranslatableMarkup('Disable end date'),
       '#default_value' => $this->getSetting('disable_end_date'),
     ];
+    $element['display_time_label'] = [
+      '#type' => 'checkbox',
+      '#title' => new TranslatableMarkup('Display time label'),
+      '#description' => new TranslatableMarkup('Display time label'),
+      '#default_value' => $this->getSetting('display_time_label'),
+    ];
     return $element;
   }
 
@@ -53,7 +63,9 @@ final class CustomDateRangeWidget extends DateRangeDefaultWidget {
     if ($this->getSetting('disable_end_date')) {
       $summary[] = new TranslatableMarkup('End date disabled');
     }
-
+    if ($this->getSetting('display_time_label')) {
+      $summary[] = new TranslatableMarkup('Display time label');
+    }
     return $summary;
   }
 
@@ -199,6 +211,7 @@ final class CustomDateRangeWidget extends DateRangeDefaultWidget {
    * {@inheritdoc}
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state): array {
+    $time_labels = ['value' => $this->t('Start Time'), 'end_value' => $this->t('End Time')];
     $value_keys = ['value', 'end_value'];
     $element = parent::formElement($items, $delta, $element, $form, $form_state);
 
@@ -210,15 +223,32 @@ final class CustomDateRangeWidget extends DateRangeDefaultWidget {
         $value['#date_time_element'] = 'text';
         $value['#date_time_format'] = 'H:i:s';
       }
+
+      if ($this->getSetting('display_time_label')) {
+        $value['#time_title'] = $time_labels[$key];
+        $value['#date_time_callbacks'] = [[$this, 'timeLabelCallbackTrusted']];
+      }
+
     }
 
     if ($this->getSetting('disable_end_date') === TRUE) {
       $element['end_value']['#date_date_element'] = 'none';
+      $element['end_value']['#title_display'] = 'invisible';
     }
 
     $element['#attached']['library'][] = 'hel_tpm_service_dates/custom_date_range_widget';
 
     return $element;
+  }
+
+  /**
+   * Set labels for time element.
+   */
+  public static function timeLabelCallbackTrusted(array &$element, FormStateInterface $form_state, ?DrupalDateTime $date = NULL) {
+    if ($element['#time_title']) {
+      $element['time']['#title'] = $element['#time_title'];
+      $element['time']['#title_display'] = 'before';
+    }
   }
 
   /**
@@ -267,6 +297,13 @@ final class CustomDateRangeWidget extends DateRangeDefaultWidget {
     }
 
     parent::validateStartEnd($element, $form_state, $complete_form);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function trustedCallbacks() {
+    return ['timeLabelCallbackTrusted'];
   }
 
 }
