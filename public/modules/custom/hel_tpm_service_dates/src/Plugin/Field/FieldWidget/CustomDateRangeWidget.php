@@ -211,11 +211,10 @@ final class CustomDateRangeWidget extends DateRangeDefaultWidget implements Trus
    * {@inheritdoc}
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state): array {
-    $time_labels = ['value' => $this->t('Start Time'), 'end_value' => $this->t('End Time')];
-    $value_keys = ['value', 'end_value'];
+    $value_keys = ['value' => $this->t('Start Time'), 'end_value' => $this->t('End Time')];
     $element = parent::formElement($items, $delta, $element, $form, $form_state);
 
-    foreach ($value_keys as $key) {
+    foreach ($value_keys as $key => $label) {
       $value = &$element[$key];
       $value['#date_date_format'] = 'd.m.Y';
       $value['#date_date_element'] = 'text';
@@ -225,7 +224,7 @@ final class CustomDateRangeWidget extends DateRangeDefaultWidget implements Trus
       }
 
       if ($this->getSetting('display_time_label')) {
-        $value['#time_title'] = $time_labels[$key];
+        $value['#time_title'] = $label;
         $value['#date_time_callbacks'] = [[$this, 'timeLabelCallbackTrusted']];
       }
 
@@ -233,7 +232,8 @@ final class CustomDateRangeWidget extends DateRangeDefaultWidget implements Trus
 
     if ($this->getSetting('disable_end_date') === TRUE) {
       $element['end_value']['#date_date_element'] = 'none';
-      $element['end_value']['#title_display'] = 'invisible';
+      $element['end_value']['#title'] = NULL;
+      $element['#attributes']['class'][] = 'custom-date-range-end-date-disabled';
     }
 
     $element['#attached']['library'][] = 'hel_tpm_service_dates/custom_date_range_widget';
