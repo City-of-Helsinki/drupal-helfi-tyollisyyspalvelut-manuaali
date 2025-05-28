@@ -34,6 +34,11 @@ body {
   box-sizing: inherit;
 }
 
+/* Remove Edge password reveal control. */
+::-ms-reveal {
+  display: none;
+}
+
 .visually-hidden {
   position: absolute !important;
   clip: rect(1px, 1px, 1px, 1px);
@@ -90,7 +95,7 @@ body {
 .no-wrap {
   &--dsk {
     @include xl {
-      flex-wrap: no-wrap;
+      flex-wrap: nowrap;
     }
   }
 }
@@ -332,8 +337,14 @@ article ul {
   &--bottom-two-and-half {
     margin-bottom: $space-two-and-half;
   }
+  &--top-auto {
+    margin-top: auto;
+  }
   &--top-one-space {
     margin-top: $space;
+  }
+  &--top-double {
+    margin-top: $space-double;
   }
   &--top-two-half,
   &--top-two-and-half {
@@ -571,5 +582,23 @@ article ul {
 .zi {
   &--high {
     z-index: 10;
+  }
+}
+
+.o {
+  &--one{
+    order: 1;
+  }
+  &--two {
+    order: 2;
+  }
+  &--three {
+    order: 3;
+  }
+  &--four {
+    order: 4;
+  }
+  &--five {
+    order: 5;
   }
 }

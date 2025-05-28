@@ -12,6 +12,7 @@ use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\hel_tpm_general\PreventMailUtility;
 use Drupal\menu_link_content\Entity\MenuLinkContent;
 use Drupal\node\Entity\Node;
+use Drupal\paragraphs\ParagraphInterface;
 
 /**
  * Remove the taxonomy contents.
@@ -670,6 +671,56 @@ function hel_tpm_general_update_10110(&$sandbox) {
         ->execute();
     }
   }
+}
+
+/**
+ * Remove orphaned paragraphs with files.
+ */
+function hel_tpm_general_update_10111(&$sandbox) {
+  $database = \Drupal::service('database');
+  $entity_type_manager = \Drupal::service('entity_type.manager');
+  $storage = $entity_type_manager->getStorage('paragraph');
+
+  $file_usage = $database->select('file_usage', 'f')
+    ->fields('f')
+    ->condition('f.type', 'paragraph')
+    ->execute()
+    ->fetchAll();
+
+  if (empty($file_usage)) {
+    return;
+  }
+
+  foreach ($file_usage as $item) {
+    $paragraph = $storage->load($item->id);
+    if (empty($paragraph)) {
+      continue;
+    }
+    if (!_hel_tpm_general_paragraph_is_orphaned($paragraph)) {
+      continue;
+    }
+    $paragraph->delete();
+  }
+}
+
+/**
+ * Checks if a paragraph entity is orphaned.
+ *
+ * A paragraph is considered orphaned if it does not have a valid parent entity
+ * or if the parent entity does not contain the
+ * field referenced by the paragraph.
+ *
+ * @param \Drupal\paragraphs\ParagraphInterface $paragraph
+ *   The paragraph entity to check.
+ *
+ * @return bool
+ *   TRUE if the paragraph is orphaned, FALSE otherwise.
+ */
+function _hel_tpm_general_paragraph_is_orphaned(ParagraphInterface $paragraph) {
+  if (($parent = $paragraph->getParentEntity()) && $parent->hasField($paragraph->get('parent_field_name')->value)) {
+    return FALSE;
+  }
+  return TRUE;
 }
 
 /**

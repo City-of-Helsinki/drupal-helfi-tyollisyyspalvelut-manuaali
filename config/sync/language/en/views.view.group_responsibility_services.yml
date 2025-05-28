@@ -18,10 +18,16 @@ display:
           label: 'Responsible for service in the organisation'
         name:
           label: 'Responsible for service in municipality'
+        operations:
+          label: Operations
       filters:
         moderation_state_filter_exclude_archived:
           expose:
             label: 'Service status'
+        combine:
+          expose:
+            label: Filter
+            placeholder: 'Search with service name or ID'
       title: 'Responsibility services'
       empty:
         area_text_custom:

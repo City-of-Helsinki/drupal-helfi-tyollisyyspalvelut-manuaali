@@ -21,7 +21,6 @@
       float: left;
     }
     .weekdays.container-inline {
-
       .form-item--checkboxes {
         display: flex;
         flex-wrap: wrap;
@@ -67,6 +66,7 @@
     }
   }
 
+
   .hyphen-wrapper {
     position: relative;
     .hyphen {
@@ -86,6 +86,201 @@
       flex-wrap: wrap;
     }
   }
+}
+
+.field--widget-hel-tpm-service-dates-date-range {
+  > div {
+    width: 100%;
+  }
+  .custom-date-range-end-date-disabled {
+    h4 {
+      width: 100%;
+    }
+    div[class*='-value-time'] {
+      .form-item__label {
+        position: absolute;
+        top: 3px;
+      }
+      input {
+        width: 85px;
+      }
+    }
+  }
+}
+
+.field--widget-hel-tpm-service-dates-custom-date-and-time-range-widget,
+.field--widget-hel-tpm-service-dates-date-range {
+  .table__row {
+    td {
+      input.form-submit {
+        margin-top: $space-double;
+      }
+    }
+  }
+  fieldset {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: $space-double;
+    .form-item {
+      margin-bottom: $space;
+      @include large {
+        margin-bottom: unset;
+      }
+    }
+    h4 {
+      width: 100%;
+      @include large {
+        order: 1;
+        width: 50%;
+      }
+      font-size: 12px;
+      font-weight: 600;
+    }
+    div {
+      display: flex;
+      gap: $space;
+      @include large {
+      order: 2;
+      width: 50%;
+      }
+    }
+    div[class*='-value-time'] {
+      width: 100px;
+    }
+    div[class*='-value-date'] {
+      width: 160px;
+    }
+
+  }
+}
+
+.field--name-field-start-and-end-date  {
+  fieldset {
+    div[class*='-value-date'] {
+      width: 230px;
+    }
+  }
+}
+
+
+
+.hel-tpm-service-dates-weekday-and-time-field-elements {
+  >.label {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 17px;
+    @extend .form-required-on-publish;
+    &:nth-child(1) {
+      width: 82px;
+    }
+    &:nth-child(2) {
+      width: 150px;
+    }
+  }
+  .date-preview {
+    float: left;
+  }
+    .form-item--checkboxes {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+    }
+    .form-item {
+      width: auto;
+    }
+    .ui-timepicker-input{
+      padding: 4px 8px;
+      width: 7ch;
+      margin-bottom: $space;
+      @include large {
+        margin-bottom: 0;
+      }
+    }
+    .weekday-row {
+      margin-bottom: $space;
+      width: 100%;
+      @include large {
+        margin-bottom: $space-one-and-half;
+        height: 40px;
+      }
+      > div {
+        margin-right: $space-two-and-half;
+      }
+      .form-wrapper {
+        > div {
+          &:first-child {
+            &::after {
+              content: "-";
+              margin-left: 4px;
+              margin-right: 4px;
+            }
+          }
+        }
+      }
+    }
+
+    .form-item-checkbox {
+      margin-right: $space-one-half;
+      margin-bottom: 0;
+      height: 32px;
+      input {
+        opacity: 0;
+        position: absolute;
+        & + label {
+
+        }
+        &.selected + label {
+          background-color: $blue100;
+          color: $white;
+        }
+
+      }
+      &:nth-child(3) {
+        label {
+          color: transparent;
+          &:hover {
+            color: transparent;
+          }
+         }
+      }
+
+      .add-time-button {
+        & + label {
+          background-color: $blue100;
+          @include round-icon-button;
+          background-image: url("../../assets/images/icons/plus.svg");
+          &:hover {
+            color: transparent;
+          }
+        }
+        &.selected +label {
+          @include round-icon-button;
+          background-image: url("../../assets/images/icons/minus.svg");
+        }
+      }
+      label {
+        width: 32px;
+        height: 32px;
+        color: clr(alt-header-color);
+        border-radius: 50%;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        font-weight: 700;
+        font-size: 12px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        padding-left: 8px;
+        justify-content: center;
+        @include round-icon-button-transparent;
+        &:hover {
+          background-color: $blue100;
+          color: $white;
+          cursor: pointer;
+        }
+      }
+    }
 }
 
 .field--widget-hel-tpm-editorial-date-recur-custom {
@@ -156,15 +351,16 @@
   input[data-drupal-selector*="edit-field-service-time-and-location-add-more-add-more-button-service-time-and-place"] {
     width: 100%;
   }
+  textarea {
+    background-color: clr(text-inverse);
+  }
   .field--name-field-service-location {
     margin-bottom: $space-double;
   }
   .field--name-field-service-languages {
     margin-bottom: $space-two-and-half;
   }
-  .field--name-field-separate-time {
-    margin-bottom: $space-double;
-  }
+
   .field-service-time-and-location-values > tbody > tr > .table__cell {
     margin-bottom: $space;
   }
@@ -188,6 +384,37 @@
   .select--white-rounded select,
   .form-number {
     background-color: clr(text-inverse);
+  }
+}
+
+.field--name-field-date-selection {
+  .form-item--radio {
+    flex-direction: column;
+  }
+  .form-item--radio-button {
+    label {
+      margin-left: 0;
+      &::before {
+        content:'';
+        display: block;
+        width: 24px;
+        height: 24px;
+        border: 1px solid clr(background-section);
+        margin-right: 20px;
+        border-radius: 2px;
+        background: clr(text-inverse);
+      }
+    }
+  }
+  input[type="radio"] {
+    display: none;
+  }
+  input[type="radio"]:checked + label::before {
+    background-image: url('../../assets/images/icons/check-black.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 14px 11px;
+
   }
 }
 

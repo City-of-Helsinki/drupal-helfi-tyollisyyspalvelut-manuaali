@@ -1,9 +1,10 @@
 (function ($, Drupal, drupalSettings) {
-  Drupal.behaviors.jqueryDatetimePicker = {
+  Drupal.behaviors.jqueryDatetimePickerFoo = {
     attach(context, settings) {
       let widget = '.hel-tpm-editorial-date-recur-custom-widget';
-      formatTimePickers(widget);
-      inheritEndDate(widget)
+      formatTimePicker(widget);
+      formatDatePicker(widget);
+      inheritEndDate(widget);
 
       function inheritEndDate(widget) {
         let startInput = widget + ' .start-date input'

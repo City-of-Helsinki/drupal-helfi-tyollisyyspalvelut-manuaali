@@ -3,25 +3,29 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - field.field.paragraph.service_time_and_place.field_date
+    - field.field.paragraph.service_time_and_place.field_date_selection
     - field.field.paragraph.service_time_and_place.field_dates
     - field.field.paragraph.service_time_and_place.field_location_additional_info
     - field.field.paragraph.service_time_and_place.field_separate_time
     - field.field.paragraph.service_time_and_place.field_service_language
     - field.field.paragraph.service_time_and_place.field_service_location
+    - field.field.paragraph.service_time_and_place.field_start_and_end_date
     - field.field.paragraph.service_time_and_place.field_time_additional_info
+    - field.field.paragraph.service_time_and_place.field_weekday_and_time
     - paragraphs.paragraphs_type.service_time_and_place
   module:
     - field_group
-    - hel_tpm_editorial
+    - hel_tpm_service_dates
     - select2
 third_party_settings:
   field_group:
     group_location:
       children:
+        - group_label
         - field_service_location
         - field_location_additional_info
         - field_service_language
-        - field_separate_time
         - group_time
       label: ''
       region: content
@@ -29,61 +33,87 @@ third_party_settings:
       weight: 0
       format_type: fieldset
       format_settings:
-        classes: 'group--light-blue group--rounded-corners group--no-margin-bottom'
+        classes: 'group--light-blue group--rounded-corners group--no-margin-bottom h4'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         description: ''
         required_fields: true
     group_time:
       children:
-        - field_dates
+        - field_date_selection
+        - field_start_and_end_date
+        - field_date
+        - field_weekday_and_time
         - field_time_additional_info
-      label: 'Milloin palvelu järjestetään'
+      label: Ajankohta
       region: content
       parent_name: group_location
-      weight: 5
+      weight: 7
       format_type: html_element
       format_settings:
         classes: event-times
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: true
-        label_element: label
-        label_element_classes: ''
+        label_element: h3
+        label_element_classes: h6
         attributes: ''
         effect: none
         speed: fast
         required_fields: true
+    group_label:
+      children: {  }
+      label: Paikka
+      region: content
+      parent_name: group_location
+      weight: 1
+      format_type: html_element
+      format_settings:
+        classes: 'margin-bottom-one-space d--block'
+        show_empty_fields: true
+        id: ''
+        label_as_html: false
+        element: span
+        show_label: true
+        label_element: h3
+        label_element_classes: 'h6 margin-bottom-one-space'
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: false
 id: paragraph.service_time_and_place.default
 targetEntityType: paragraph
 bundle: service_time_and_place
 mode: default
 content:
-  field_dates:
-    type: hel_tpm_editorial_date_recur_custom
-    weight: 5
+  field_date:
+    type: hel_tpm_service_dates_date_range
+    weight: 15
+    region: content
+    settings:
+      disable_end_date: true
+      display_time_label: '1'
+    third_party_settings: {  }
+  field_date_selection:
+    type: options_buttons
+    weight: 13
     region: content
     settings: {  }
     third_party_settings: {  }
   field_location_additional_info:
     type: string_textarea
-    weight: 2
+    weight: 4
     region: content
     settings:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
-  field_separate_time:
-    type: boolean_checkbox
-    weight: 4
-    region: content
-    settings:
-      display_label: true
-    third_party_settings: {  }
   field_service_language:
     type: select2_entity_reference
-    weight: 3
+    weight: 5
     region: content
     settings:
       width: 100%
@@ -93,7 +123,7 @@ content:
     third_party_settings: {  }
   field_service_location:
     type: entity_reference_autocomplete
-    weight: 1
+    weight: 3
     region: content
     settings:
       match_operator: CONTAINS
@@ -101,19 +131,35 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  field_start_and_end_date:
+    type: hel_tpm_service_dates_date_range
+    weight: 14
+    region: content
+    settings:
+      disable_end_date: false
+      display_time_label: false
+    third_party_settings: {  }
   field_time_additional_info:
     type: string_textarea
-    weight: 6
+    weight: 17
     region: content
     settings:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
+  field_weekday_and_time:
+    type: hel_tpm_service_dates_weekday_and_time_field
+    weight: 16
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   translation:
-    weight: 10
+    weight: 1
     region: content
     settings: {  }
     third_party_settings: {  }
 hidden:
   created: true
+  field_dates: true
+  field_separate_time: true
   status: true

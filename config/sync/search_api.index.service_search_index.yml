@@ -3,27 +3,26 @@ langcode: fi
 status: false
 dependencies:
   config:
-    - field.storage.node.field_accessibility
-    - field.storage.node.field_target_group
-    - field.storage.paragraph.field_age_groups
-    - field.storage.node.field_service_price
-    - field.storage.paragraph.field_free_service
-    - field.storage.node.field_implementation_extra_info
-    - field.storage.node.field_service_time_and_location
-    - field.storage.paragraph.field_level
-    - field.storage.node.field_life_situations
-    - field.storage.paragraph.field_municipality
-    - field.storage.node.field_service_set
-    - field.storage.paragraph.field_age
-    - field.storage.node.field_address
-    - field.storage.paragraph.field_service_location
     - core.entity_view_mode.node.full
+    - field.storage.node.field_accessibility
+    - field.storage.node.field_address
+    - field.storage.node.field_implementation_extra_info
+    - field.storage.node.field_life_situations
+    - field.storage.node.field_service_price
+    - field.storage.node.field_service_set
+    - field.storage.node.field_service_time_and_location
+    - field.storage.node.field_target_group
+    - field.storage.paragraph.field_age
+    - field.storage.paragraph.field_age_groups
+    - field.storage.paragraph.field_free_service
+    - field.storage.paragraph.field_level
+    - field.storage.paragraph.field_municipality
+    - field.storage.paragraph.field_service_location
   module:
+    - content_moderation
+    - hel_tpm_search
     - node
     - paragraphs
-    - content_moderation
-    - search_api
-    - hel_tpm_search
     - search_api_solr
 id: service_search_index
 name: 'Service search index'

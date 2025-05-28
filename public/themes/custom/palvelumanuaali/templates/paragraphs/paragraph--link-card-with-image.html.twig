@@ -44,8 +44,15 @@
   ]
 %}
 
+{%
+  set link_classes = [
+    content.field_lift_image['0'] is null ? 'margin--top-auto',
+  ]
+%}
+
 <div{{ attributes.addClass(classes) }}>
-  <a href={{ content.field_single_link['0']['#url'] }} title={{content.field_single_link['0']['#title']}}>
+  {% do attributes.removeAttribute('class') %}
+  <a {{ attributes.addClass(link_classes) }} href={{ content.field_single_link['0']['#url'] }} title='{{content.field_single_link['0']['#title'] }}'>
     {{ content.field_lift_image }}
     <div class='card-text-wrapper'>
       {{ content|without('field_lift_image','field_single_link') }}

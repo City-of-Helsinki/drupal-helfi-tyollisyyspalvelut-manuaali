@@ -265,13 +265,19 @@ table > :not(caption) > * > * {
 }
 
 .field-service-time-and-location-values {
+  display: block;
   >tbody {
     display: flex;
     flex-direction: column;
   }
   >tbody > tr {
-    display: grid;
+    display: block;
+    position: relative;
+    > .table__cell {
+      display: block;
+    }
   }
+
 }
 
 .field--widget-entity-reference-paragraphs,

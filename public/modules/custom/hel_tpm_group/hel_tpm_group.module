@@ -108,6 +108,7 @@ function hel_tpm_group_entity_field_access($operation, FieldDefinitionInterface 
  * Implements hook_ENTITY_insert().
  */
 function hel_tpm_group_group_content_insert(EntityInterface $entity): void {
+  _hel_tpm_group_add_responsible_municipality($entity);
   _hel_tpm_group_invalidate_service_provider_member_cache($entity);
 }
 
@@ -153,6 +154,45 @@ function _hel_tpm_group_invalidate_service_provider_member_cache(EntityInterface
     \Drupal::service('cache_tags.invalidator')->invalidateTags([
       'group_content_list:plugin:group_membership:entity:' . $member->getUser()->id(),
     ]);
+  }
+}
+
+/**
+ * Add group from relationship to empty responsible municipality field.
+ *
+ * @param \Drupal\Core\Entity\EntityInterface $entity
+ *   The GroupRelationship entity.
+ *
+ * @return void
+ *   Void.
+ */
+function _hel_tpm_group_add_responsible_municipality(EntityInterface $entity): void {
+  if (!$entity instanceof GroupRelationship) {
+    return;
+  }
+  if ($entity->getPluginId() !== 'subgroup:service_provider') {
+    return;
+  }
+
+  $parentId = $entity->getGroupId();
+  $subgroup = $entity->getEntity();
+  if (!$services = $subgroup->getRelatedEntities('group_node:service')) {
+    return;
+  }
+
+  // Check each subgroup service and add the group from the relationship as a
+  // responsible municipality value if the field is empty.
+  foreach ($services as $service) {
+    $municipalityValue = $service->get('field_responsible_municipality')->getValue();
+    if (!empty($municipalityValue) || !is_array($municipalityValue)) {
+      continue;
+    }
+
+    $municipalityValue[] = [
+      'target_id' => $parentId,
+    ];
+    $service->set('field_responsible_municipality', $municipalityValue);
+    $service->save();
   }
 }
 

@@ -19,11 +19,12 @@ id: node.service.field_service_requirements
 field_name: field_service_requirements
 entity_type: node
 bundle: service
-label: 'Sisältö:'
+label: 'Palveluun osallistumisen edellytykset'
 description: 'Kerro asiakkaalle, millaisten edellytysten tulee täyttyä, jotta hän voi osallistua palveluun. Esim. kielitaitotaso, ikä, pohjakoulutus tai työkokemus, työttömyyden kesto, myönteinen päätös osallistumiselle jne.'
 required: false
 translatable: true
 default_value: {  }
 default_value_callback: ''
-settings: {  }
+settings:
+  allowed_formats: {  }
 field_type: text_long

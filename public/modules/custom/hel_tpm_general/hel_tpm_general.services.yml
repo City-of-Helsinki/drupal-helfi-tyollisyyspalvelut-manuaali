@@ -2,3 +2,9 @@ services:
   hel_tpm_general.group_node_add_access_service:
     class: Drupal\hel_tpm_general\Access\GroupNodeCreateAccessService
     arguments: ['@group.membership_loader', '@access_check.group_content.create_entity', '@router.no_access_checks', '@current_user']
+  hel_tpm_general.purge.queue.txbufferunique:
+    public: true
+    class: Drupal\hel_tpm_general\Plugin\Purge\Queue\TxBufferUnique
+    decorates: purge.queue.txbuffer
+    decoration_priority: 9
+    arguments: ['@plugin.manager.purge.queue', '@database', '@config.factory']

@@ -6,7 +6,14 @@ dependencies:
     - field.storage.paragraph.field_file
     - paragraphs.paragraphs_type.url_and_file
   module:
+    - content_translation
     - file
+third_party_settings:
+  content_translation:
+    translation_sync:
+      target_id: target_id
+      display: display
+      description: description
 id: paragraph.url_and_file.field_file
 field_name: field_file
 entity_type: paragraph
@@ -14,7 +21,7 @@ bundle: url_and_file
 label: 'Liitetiedostot (valinnainen)'
 description: "Suurin sallittu tiedoston koko on 50 Mb.\r\nTätä suuremmat videotiedostot on linkitettävä jonkin toisen videopalvelun kautta. \r\nHuomioithan, että palvelun tietojen tulee olla saavutettavia. Saavutettavissa videotallenteissa on tekstitykset sekä sisällön kuvailu."
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:

@@ -48,13 +48,12 @@ function _hel_tpm_user_expiry_block_unactivated_users() {
     return;
   }
 
-  // Block all users which haven't activated their
-  // account within password reset timeout.
-  foreach (array_keys($uids) as $uid) {
-    $user = $storage->load($uid);
-    $user->block();
-    $user->save();
+  $users = $storage->loadMultiple(array_keys($uids));
+  foreach ($users as $user) {
+    $user->delete();
   }
+
+  \Drupal::logger('hel_tpm_user_expiry')->info('Deleted inactive users (@ids)', ['@ids' => implode(', ', array_keys($uids))]);
 
   \Drupal::state()->set($cron_last_run, Drupal::time()->getRequestTime());
 }

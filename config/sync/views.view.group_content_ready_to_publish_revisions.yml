@@ -6,12 +6,16 @@ dependencies:
     - field.storage.node.field_days_since_last_state_chan
     - field.storage.node.field_responsible_updatee
     - node.type.service
+    - user.role.admin
+    - user.role.root
+    - user.role.specialist_editor
     - workflows.workflow.service_moderation
   module:
     - content_moderation
     - eva
     - group
     - node
+    - user
 id: group_content_ready_to_publish_revisions
 label: 'Group content ready to publish (revisions)'
 module: views
@@ -27,18 +31,84 @@ display:
     position: 0
     display_options:
       fields:
+        nid_1:
+          id: nid_1
+          table: node_field_data
+          field: nid
+          relationship: nid
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: nid
+          plugin_id: field
+          label: ID
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: number_integer
+          settings:
+            thousand_separator: ''
+            prefix_suffix: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
         title:
           id: title
           table: node_field_revision
           field: title
-          relationship: none
+          relationship: nid
           group_type: group
           admin_label: ''
           entity_type: node
           entity_field: title
           plugin_id: field
           label: Palvelu
-          exclude: false
+          exclude: true
           alter:
             alter_text: false
             text: ''
@@ -81,7 +151,7 @@ display:
           click_sort_column: value
           type: string
           settings:
-            link_to_entity: true
+            link_to_entity: false
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -92,6 +162,59 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
+        link_to_latest_revision:
+          id: link_to_latest_revision
+          table: node_revision
+          field: link_to_latest_revision
+          relationship: nid
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          plugin_id: link_to_latest_revision
+          label: Palvelu
+          exclude: false
+          alter:
+            alter_text: true
+            text: '{{ title }}'
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          text: ''
+          output_url_as_text: false
+          absolute: false
         gid:
           id: gid
           table: group_relationship_field_data
@@ -575,11 +698,21 @@ display:
         - 'config:workflow_list'
   entity_view_1:
     id: entity_view_1
-    display_title: EVA
+    display_title: 'EVA with role access'
     display_plugin: entity_view
     position: 1
     display_options:
       title: ''
+      access:
+        type: role
+        options:
+          role:
+            root: root
+            admin: admin
+            specialist_editor: specialist_editor
+      defaults:
+        access: false
+      display_description: ''
       display_extenders:
         ajax_history: {  }
       entity_type: group
@@ -592,10 +725,9 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - route
-        - route.group
         - url
-        - user.group_permissions
         - 'user.node_grants:view'
+        - user.roles
       tags:
         - 'config:field.storage.node.field_days_since_last_state_chan'
         - 'config:field.storage.node.field_responsible_updatee'
