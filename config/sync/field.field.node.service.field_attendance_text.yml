@@ -1,0 +1,26 @@
+uuid: 4555b4cc-5a12-47fb-96d5-89364b967f93
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_attendance_text
+    - node.type.service
+  module:
+    - require_on_publish
+    - text
+third_party_settings:
+  require_on_publish:
+    require_on_publish: true
+id: node.service.field_attendance_text
+field_name: field_attendance_text
+entity_type: node
+bundle: service
+label: Osallistuminen
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

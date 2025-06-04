@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.node.service.field_accessibility
     - field.field.node.service.field_attendance
+    - field.field.node.service.field_attendance_text
     - field.field.node.service.field_career_markings
     - field.field.node.service.field_client_consent
     - field.field.node.service.field_contact_info
@@ -31,6 +32,7 @@ dependencies:
     - field.field.node.service.field_service_coordination
     - field.field.node.service.field_service_exceptions
     - field.field.node.service.field_service_execution
+    - field.field.node.service.field_service_execution_text
     - field.field.node.service.field_service_implement
     - field.field.node.service.field_service_languages
     - field.field.node.service.field_service_other_info
@@ -63,7 +65,7 @@ third_party_settings:
   field_group:
     group_participation:
       children:
-        - field_attendance
+        - field_attendance_text
         - field_service_requirements
         - field_service_benefits
         - field_client_consent
@@ -87,7 +89,7 @@ third_party_settings:
         speed: fast
     group_execution:
       children:
-        - field_service_execution
+        - field_service_execution_text
         - field_service_other_info
       label: Toteutustapa
       parent_name: group_customer_view
@@ -262,7 +264,7 @@ third_party_settings:
       label: 'Lausunnot ja työttömyysetuus'
       parent_name: group_work_instructions
       region: content
-      weight: 24
+      weight: 25
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--statements-and-jobprofits'
@@ -282,7 +284,7 @@ third_party_settings:
       label: 'Merkinnät asiakastietojärjestelmään'
       parent_name: group_work_instructions
       region: content
-      weight: 23
+      weight: 24
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--markings-to-system'
@@ -302,7 +304,7 @@ third_party_settings:
       label: 'Toimenpiteet osallistumisen ajalta'
       parent_name: group_work_instructions
       region: content
-      weight: 25
+      weight: 26
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--measures-during'
@@ -451,7 +453,14 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 15
+    weight: 9
+    region: content
+  field_attendance_text:
+    type: text_default
+    label: visually_hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 16
     region: content
   field_career_markings:
     type: text_default
@@ -468,7 +477,7 @@ content:
       format_custom_false: "Participation  doesn't require customer consent."
       format_custom_true: 'Participation requires customer consent.'
     third_party_settings: {  }
-    weight: 18
+    weight: 19
     region: content
   field_contact_info:
     type: entity_reference_entity_view
@@ -486,7 +495,7 @@ content:
       view_mode: default
       link: false
     third_party_settings: {  }
-    weight: 19
+    weight: 25
     region: content
   field_description:
     type: basic_string
@@ -500,7 +509,7 @@ content:
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 19
+    weight: 20
     region: content
   field_implementation_extra_info:
     type: entity_reference_label
@@ -605,14 +614,14 @@ content:
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 17
+    weight: 18
     region: content
   field_service_coordination:
     type: text_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 1
+    weight: 24
     region: content
   field_service_exceptions:
     type: text_default
@@ -628,14 +637,21 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 12
+    weight: 8
+    region: content
+  field_service_execution_text:
+    type: text_default
+    label: visually_hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 13
     region: content
   field_service_implement:
     type: basic_string
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 18
+    weight: 24
     region: content
   field_service_languages:
     type: entity_reference_revisions_entity_view
@@ -653,7 +669,7 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 13
+    weight: 14
     region: content
   field_service_price:
     type: entity_reference_revisions_entity_view
@@ -670,21 +686,21 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 20
+    weight: 26
     region: content
   field_service_req_speacialist:
     type: text_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 2
+    weight: 25
     region: content
   field_service_requirements:
     type: text_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 16
+    weight: 17
     region: content
   field_service_set:
     type: entity_reference_label
