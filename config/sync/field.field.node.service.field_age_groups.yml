@@ -1,0 +1,21 @@
+uuid: 94c5d494-0946-47d9-a510-9344721ae7d2
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_age_groups
+    - node.type.service
+  module:
+    - options
+id: node.service.field_age_groups
+field_name: field_age_groups
+entity_type: node
+bundle: service
+label: Ikä
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string
