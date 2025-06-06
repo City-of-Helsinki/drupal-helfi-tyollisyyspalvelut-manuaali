@@ -107,6 +107,8 @@ function hel_tpm_forms_disable_untranslatable_paragraph_fields(&$form, FormState
     }
     $max_delta = $widget['#max_delta'];
 
+    $max_delta = $widget['#max_delta'];
+
     for ($i = 0; $i <= $max_delta; $i++) {
       $row = &$widget[$i];
       $field_definitions = $field_manager->getFieldDefinitions('paragraph', $row['#paragraph_type']);
