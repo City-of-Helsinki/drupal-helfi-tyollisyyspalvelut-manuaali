@@ -1,0 +1,2 @@
+!function(e){"use strict";Drupal.behaviors.loginMove={attach:function(){var i=e(".header__primary >.block-user-login-block");if(0!==i.length){var n=e(".main-menu__item--active.main-menu__item--with-sub >.main-menu--sub-1");0===n.length||e(i).appendTo(n)}}}}(jQuery);
+//# sourceMappingURL=login.js.map
