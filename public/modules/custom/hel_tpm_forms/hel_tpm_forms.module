@@ -102,11 +102,11 @@ function hel_tpm_forms_disable_untranslatable_paragraph_fields(&$form, FormState
       continue;
     }
     $widget = &$form[$field]['widget'];
-    $max_delta = $widget['#max_delta'];
-
-    if (empty($widget) || empty($max_delta)) {
+    if (empty($widget)) {
       continue;
     }
+
+    $max_delta = $widget['#max_delta'];
 
     for ($i = 0; $i <= $max_delta; $i++) {
       $row = &$widget[$i];
