@@ -1,12 +1,12 @@
 diff --git a/eu_cookie_compliance.libraries.yml b/eu_cookie_compliance.libraries.yml
-index 28b4e51..03a24a8 100644
+index 8e7d737..478b3ea 100644
 --- a/eu_cookie_compliance.libraries.yml
 +++ b/eu_cookie_compliance.libraries.yml
 @@ -1,7 +1,7 @@
  eu_cookie_compliance:
    version: VERSION
    js:
--    js/eu_cookie_compliance.min.js: { attributes: { defer: true } }
+-    js/eu_cookie_compliance.min.js: { minified: true }
 +    js/eu_cookie_compliance.js: { attributes: { defer: true } }
    dependencies:
      - core/jquery
