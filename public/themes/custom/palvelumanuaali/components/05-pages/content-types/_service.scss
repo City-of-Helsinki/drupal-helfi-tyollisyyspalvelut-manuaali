@@ -326,7 +326,10 @@
   }
 
   .content-column {
-    padding-right: $space-quadruple;
+    padding-right: $space;
+    @include large {
+      padding-right: $space-quadruple;
+    }
     >.field {
       margin-bottom: $space-two-and-half;
     }
@@ -378,19 +381,25 @@
   }
 
   .field--name-field-description {
-    font-size: 18px;
-    line-height: 32px;
+    @extend .text-large;
   }
 
   .field--name-field-implementation-extra-info,
   .field--name-field-service-price,
   .field--name-field-service-languages,
   .field--name-field-service-language {
+    @extend .text-normal;
     margin-bottom: $space-double;
     @include large {
       margin-bottom: $space-two-and-half;
     }
   }
+  .field--name-field-life-situations,
+  .field--name-field-service-set,
+  .field--name-field-client-consent {
+    @extend .text-normal;
+  }
+
 
   .service-language {
     display: inline-flex;
@@ -398,7 +407,6 @@
   .service-price {
     display: flex;
     flex-wrap: wrap;
-    font-size: 16px;
     .field__item {
       color: clr(alt-header-color);
       letter-spacing: 0.01em;
@@ -475,8 +483,7 @@
     a {
       text-decoration: none;
       color: clr(background-section);
-      font-size: 15px;
-      font-weight: 600;
+      @extend .text-normal;
     }
   }
 }
@@ -543,6 +550,24 @@
     .h5 {
       margin-left: 0;
       margin-bottom: $space-one-half;
+    }
+  }
+  .field--name-field-other-services {  
+    .card__heading  {
+      margin-bottom: 24px;
+      span {
+        font-size: 13px;
+        line-height: 16px;
+        font-weight: 700;
+        color: clr(alt-header-color);
+        @include large {
+          font-size: 18px;
+          line-height: 24px;
+        }
+      }
+    }
+    .field--name-field-description {
+      @extend .text-small;
     }
   }
 }
