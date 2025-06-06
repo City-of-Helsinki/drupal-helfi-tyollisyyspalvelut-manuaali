@@ -62,12 +62,6 @@ function _hel_tpm_service_dates_service_date_selection(&$form, $form_state) {
   }
 
   $dependencies = [
-    'field_time_additional_info' => [
-      'date_not_available',
-      'start_and_end_date',
-      'service_continous',
-      'separate_dates',
-    ],
     'field_start_and_end_date' => [
       'start_and_end_date',
     ],
