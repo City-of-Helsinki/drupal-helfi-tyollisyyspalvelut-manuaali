@@ -325,17 +325,7 @@ $color-heading: clr(accent);
 }
 
 .page-heading {
-  @include heading-small;
-  @include medium {
-    font-size: 34px;
-  }
-
-  @include xl {
-
-    @include heading-large;
-    font-weight: 600px;
-    margin-bottom: $space-double;
-  }
+  @extend .h2;
 }
 
 

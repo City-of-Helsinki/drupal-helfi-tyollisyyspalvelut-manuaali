@@ -88,6 +88,26 @@
   }
 }
 
+.field--widget-hel-tpm-service-dates-date-range {
+  > div {
+    width: 100%;
+  }
+  .custom-date-range-end-date-disabled {
+    h4 {
+      width: 100%;
+    }
+    div[class*='-value-time'] {
+      .form-item__label {
+        position: absolute;
+        top: 3px;
+      }
+      input {
+        width: 85px;
+      }
+    }
+  }
+}
+
 .field--widget-hel-tpm-service-dates-custom-date-and-time-range-widget,
 .field--widget-hel-tpm-service-dates-date-range {
   .table__row {
@@ -125,7 +145,6 @@
       }
     }
     div[class*='-value-time'] {
-
       width: 100px;
     }
     div[class*='-value-date'] {
@@ -332,6 +351,9 @@
   input[data-drupal-selector*="edit-field-service-time-and-location-add-more-add-more-button-service-time-and-place"] {
     width: 100%;
   }
+  textarea {
+    background-color: clr(text-inverse);
+  }
   .field--name-field-service-location {
     margin-bottom: $space-double;
   }
@@ -380,6 +402,7 @@
         border: 1px solid clr(background-section);
         margin-right: 20px;
         border-radius: 2px;
+        background: clr(text-inverse);
       }
     }
   }

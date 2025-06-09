@@ -72,7 +72,7 @@
 #}
 
 
-<article {{ bem("node",'service-location','',['flex-wrap']) }}>
+<article {{ bem("node",'service-location','',['d--flex']) }}>
 
   {% if not page %}
   {% set place_header = 'Place'|t %}
@@ -82,14 +82,7 @@
     icon_modifiers: ['small'],
   } %}
     <div class='text-wrapper'>
-    {% include "@atoms/text/headings/_heading.twig" with {
-      "heading_level": 6,
-      "heading": place_header,
-      "heading_modifiers": "service-location",
-      "heading_link_attributes": {
-        'rel': 'bookmark'
-      },
-    } %}
+    <div class='field__label'>{{place_header}}</div>
     <span>{{label}}</span>
     </div>
   {% endif %}
