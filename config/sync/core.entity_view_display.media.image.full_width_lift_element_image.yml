@@ -1,0 +1,41 @@
+uuid: c1db817e-6aa0-453b-bf78-b172158404fb
+langcode: fi
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.full_width_lift_element_image
+    - field.field.media.image.field_media_image
+    - media.type.image
+    - responsive_image.styles.wide_lift_element
+  module:
+    - svg_image_responsive
+id: media.image.full_width_lift_element_image
+targetEntityType: media
+bundle: image
+mode: full_width_lift_element_image
+content:
+  field_media_image:
+    type: responsive_image
+    label: visually_hidden
+    settings:
+      responsive_image_style: wide_lift_element
+      image_link: ''
+      image_loading:
+        attribute: lazy
+      svg_attributes:
+        width: null
+        height: null
+      svg_render_as_image: true
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  created: true
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  langcode: true
+  name: true
+  search_api_excerpt: true
+  thumbnail: true
+  uid: true

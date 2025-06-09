@@ -1,0 +1,45 @@
+uuid: 18579d06-9a13-4111-937a-f197ecab0d5d
+langcode: fi
+status: true
+dependencies:
+  config:
+    - image.style.wide_large_1200x699
+    - image.style.wide_medium_800x466
+    - image.style.wide_mobile_532x312
+  theme:
+    - emulsify
+id: wide_lift_element
+label: 'Wide lift element'
+image_style_mappings:
+  -
+    image_mapping_type: image_style
+    image_mapping: wide_large_1200x699
+    breakpoint_id: whisk.xxlarge
+    multiplier: 1x
+  -
+    image_mapping_type: image_style
+    image_mapping: wide_large_1200x699
+    breakpoint_id: whisk.xlarge
+    multiplier: 1x
+  -
+    image_mapping_type: image_style
+    image_mapping: wide_large_1200x699
+    breakpoint_id: whisk.large
+    multiplier: 1x
+  -
+    image_mapping_type: image_style
+    image_mapping: wide_medium_800x466
+    breakpoint_id: whisk.medium
+    multiplier: 1x
+  -
+    image_mapping_type: image_style
+    image_mapping: wide_medium_800x466
+    breakpoint_id: whisk.small
+    multiplier: 1x
+  -
+    image_mapping_type: image_style
+    image_mapping: wide_mobile_532x312
+    breakpoint_id: whisk.xsmall
+    multiplier: 1x
+breakpoint_group: emulsify
+fallback_image_style: wide_large_1200x699
