@@ -1,0 +1,29 @@
+uuid: 25c50797-af74-4b1a-9e68-ea0654664d62
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_lift_media
+    - media.type.image
+    - paragraphs.paragraphs_type.full_width_lift_element
+id: paragraph.full_width_lift_element.field_lift_media
+field_name: field_lift_media
+entity_type: paragraph
+bundle: full_width_lift_element
+label: 'Lift image'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image: image
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

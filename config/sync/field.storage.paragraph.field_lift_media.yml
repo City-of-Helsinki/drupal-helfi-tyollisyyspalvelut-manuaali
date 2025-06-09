@@ -1,16 +1,17 @@
-uuid: d3bcfcb6-7b4a-4d09-b884-9619d73204bb
+uuid: e102d8c0-e481-48b0-9104-0cd54ba4b3be
 langcode: fi
 status: true
 dependencies:
   module:
+    - media
     - paragraphs
-    - text
-id: paragraph.field_body
-field_name: field_body
+id: paragraph.field_lift_media
+field_name: field_lift_media
 entity_type: paragraph
-type: text_long
-settings: {  }
-module: text
+type: entity_reference
+settings:
+  target_type: media
+module: core
 locked: false
 cardinality: 1
 translatable: true
