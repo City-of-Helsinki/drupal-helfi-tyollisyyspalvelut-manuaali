@@ -73,6 +73,9 @@
 {% if logged_in %}
   {% embed "@pages/content-types/landing-page.twig" with {
   } %}
+      {% block paragraph %}
+    {{ content.field_paragraph }}
+  {% endblock %}
 
     {% block greeting %}
     {% set greeting_text = 'Welcome to the Service Manual!'|t  %}

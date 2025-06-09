@@ -602,3 +602,19 @@ article ul {
     order: 5;
   }
 }
+
+// Fill class, used to make sure image takes the whole area
+
+.fill {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    height: 100%;
+  >img {
+    flex-shrink: 1;
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+  }
+}
