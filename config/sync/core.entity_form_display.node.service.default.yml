@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.node.service.field_accessibility
     - field.field.node.service.field_attendance
+    - field.field.node.service.field_attendance_text
     - field.field.node.service.field_career_markings
     - field.field.node.service.field_client_consent
     - field.field.node.service.field_contact_info
@@ -31,6 +32,7 @@ dependencies:
     - field.field.node.service.field_service_coordination
     - field.field.node.service.field_service_exceptions
     - field.field.node.service.field_service_execution
+    - field.field.node.service.field_service_execution_text
     - field.field.node.service.field_service_implement
     - field.field.node.service.field_service_languages
     - field.field.node.service.field_service_other_info
@@ -109,12 +111,12 @@ third_party_settings:
         required_fields: true
     group_customer:
       children:
-        - field_attendance
+        - field_attendance_text
         - field_service_benefits
         - field_service_requirements
         - group_participation_concent
         - field_field_client_consent_descr
-        - field_service_execution
+        - field_service_execution_text
         - field_service_other_info
       label: Asiakasnäkymä
       region: content
@@ -297,7 +299,7 @@ third_party_settings:
       label: 'Palvelun velvoittavuus'
       region: content
       parent_name: group_specialist
-      weight: 10
+      weight: 11
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -319,7 +321,7 @@ third_party_settings:
       label: 'Lausunnot ja työttömyysetuus'
       region: content
       parent_name: group_specialist
-      weight: 12
+      weight: 13
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -340,7 +342,7 @@ third_party_settings:
       label: 'Täydentävä työnhakukeskustelu'
       region: content
       parent_name: group_specialist
-      weight: 15
+      weight: 16
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -361,7 +363,7 @@ third_party_settings:
       label: Poikkeustilanteet
       region: content
       parent_name: group_specialist
-      weight: 14
+      weight: 15
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -381,7 +383,7 @@ third_party_settings:
       label: 'Toimenpiteet osallistumisen ajalta'
       region: content
       parent_name: group_specialist
-      weight: 13
+      weight: 14
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -401,7 +403,7 @@ third_party_settings:
       label: Arkistointiohje
       region: content
       parent_name: group_specialist
-      weight: 16
+      weight: 17
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -422,7 +424,7 @@ third_party_settings:
       label: 'Palveluun osallistumisen edellytykset'
       region: content
       parent_name: group_specialist
-      weight: 8
+      weight: 10
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -442,7 +444,7 @@ third_party_settings:
       label: 'Merkinnät asiakastietojärjestelmään'
       region: content
       parent_name: group_specialist
-      weight: 11
+      weight: 12
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -462,7 +464,7 @@ third_party_settings:
       label: 'Ohjaus palveluun'
       region: content
       parent_name: group_specialist
-      weight: 7
+      weight: 9
       format_type: html_element
       format_settings:
         classes: group--margin-bottom
@@ -483,7 +485,7 @@ third_party_settings:
       label: Asiakassuostumus
       region: content
       parent_name: group_customer
-      weight: 13
+      weight: 12
       format_type: html_element
       format_settings:
         classes: form-wrapper
@@ -504,7 +506,7 @@ third_party_settings:
       label: 'Sisäiset liitteet ja linkit'
       region: content
       parent_name: group_specialist
-      weight: 17
+      weight: 18
       format_type: html_element
       format_settings:
         classes: fieldset-internal-files-and-attachments
@@ -531,7 +533,7 @@ content:
     third_party_settings: {  }
   entitygroupfield:
     type: hel_tpm_group_autocomplete_widget
-    weight: 10
+    weight: 17
     region: content
     settings:
       help_text: ''
@@ -549,22 +551,17 @@ content:
       match_operator: CONTAINS
       match_limit: 10
     third_party_settings: {  }
-  field_attendance:
-    type: inline_entity_form_simple
-    weight: 8
+  field_attendance_text:
+    type: text_textarea
+    weight: 9
     region: content
     settings:
-      form_mode: default
-      override_labels: false
-      label_singular: ''
-      label_plural: ''
-      collapsible: false
-      collapsed: false
-      revision: false
+      rows: 5
+      placeholder: ''
     third_party_settings: {  }
   field_career_markings:
     type: text_textarea
-    weight: 12
+    weight: 7
     region: content
     settings:
       rows: 5
@@ -583,7 +580,7 @@ content:
     third_party_settings: {  }
   field_contact_info:
     type: ief_no_confirm_widget
-    weight: 9
+    weight: 16
     region: content
     settings:
       form_mode: default
@@ -603,7 +600,7 @@ content:
         ief_popup_enabled: '1'
   field_contact_info_external:
     type: ief_no_confirm_widget
-    weight: 8
+    weight: 15
     region: content
     settings:
       form_mode: default
@@ -623,7 +620,7 @@ content:
         ief_popup_enabled: '1'
   field_days_since_last_state_chan:
     type: hel_tpm_service_stats_days_since_last_state_change_widget
-    weight: 16
+    weight: 23
     region: content
     settings:
       placeholder: ''
@@ -662,7 +659,7 @@ content:
             selector: ''
   field_field_client_consent_descr:
     type: text_textarea
-    weight: 14
+    weight: 13
     region: content
     settings:
       rows: 5
@@ -690,7 +687,7 @@ content:
     third_party_settings: {  }
   field_internal_files:
     type: file_generic
-    weight: 19
+    weight: 20
     region: content
     settings:
       progress_indicator: throbber
@@ -715,7 +712,7 @@ content:
     third_party_settings: {  }
   field_measures_during_attendance:
     type: text_textarea
-    weight: 10
+    weight: 7
     region: content
     settings:
       rows: 5
@@ -723,7 +720,7 @@ content:
     third_party_settings: {  }
   field_municipality_guidance:
     type: municipality_specific_ief_widget
-    weight: 8
+    weight: 10
     region: content
     settings:
       form_mode: default
@@ -743,7 +740,7 @@ content:
         ief_popup_enabled: '1'
   field_municipality_specific:
     type: municipality_specific_ief_widget
-    weight: 14
+    weight: 8
     region: content
     settings:
       form_mode: default
@@ -781,13 +778,13 @@ content:
         maxlength_js_enforce: false
   field_other_preferences:
     type: options_buttons
-    weight: 16
+    weight: 17
     region: content
     settings: {  }
     third_party_settings: {  }
   field_other_services:
     type: select2_entity_reference
-    weight: 15
+    weight: 22
     region: content
     settings:
       width: 100%
@@ -803,7 +800,7 @@ content:
     third_party_settings: {  }
   field_responsible_municipality:
     type: hel_tpm_group_select2_widget
-    weight: 13
+    weight: 20
     region: content
     settings:
       width: 100%
@@ -813,7 +810,7 @@ content:
     third_party_settings: {  }
   field_responsible_updatee:
     type: select2_entity_reference
-    weight: 14
+    weight: 21
     region: content
     settings:
       width: 100%
@@ -823,7 +820,7 @@ content:
     third_party_settings: {  }
   field_service_benefits:
     type: text_textarea
-    weight: 9
+    weight: 10
     region: content
     settings:
       rows: 5
@@ -843,24 +840,19 @@ content:
     third_party_settings: {  }
   field_service_exceptions:
     type: text_textarea
-    weight: 13
+    weight: 7
     region: content
     settings:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
-  field_service_execution:
-    type: inline_entity_form_simple
+  field_service_execution_text:
+    type: text_textarea
     weight: 15
     region: content
     settings:
-      form_mode: default
-      override_labels: false
-      label_singular: ''
-      label_plural: ''
-      collapsible: false
-      collapsed: false
-      revision: false
+      rows: 5
+      placeholder: ''
     third_party_settings: {  }
   field_service_implement:
     type: string_textarea
@@ -913,7 +905,7 @@ content:
     third_party_settings: {  }
   field_service_producer:
     type: select2_entity_reference
-    weight: 11
+    weight: 18
     region: content
     settings:
       width: 100%
@@ -923,7 +915,7 @@ content:
     third_party_settings: {  }
   field_service_provider_updatee:
     type: select2_entity_reference
-    weight: 12
+    weight: 19
     region: content
     settings:
       width: 100%
@@ -941,7 +933,7 @@ content:
     third_party_settings: {  }
   field_service_requirements:
     type: text_textarea
-    weight: 10
+    weight: 11
     region: content
     settings:
       rows: 5
@@ -985,7 +977,7 @@ content:
     third_party_settings: {  }
   field_statements:
     type: options_buttons
-    weight: 15
+    weight: 16
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -1056,6 +1048,8 @@ content:
       match_limit: 10
     third_party_settings: {  }
 hidden:
+  field_attendance: true
+  field_service_execution: true
   field_service_radioactivity: true
   path: true
   promote: true
