@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "083f5b06eec11ef32dff880296f66f0b",
+    "content-hash": "8e35927ec3c2554067454e119b7e0f68",
     "packages": [
         {
             "name": "ajgl/breakpoint-twig-extension",
@@ -6933,6 +6933,40 @@
                 "source": "https://git.drupalcode.org/project/mail_login",
                 "issues": "http://drupal.org/project/issues/mail_login",
                 "email": "mqanneh@gmail.com"
+            }
+        },
+        {
+            "name": "drupal/mailer_transport",
+            "version": "1.6.1",
+            "require": {
+                "drupal/core": "^10.3 || ^11",
+                "drupal/symfony_mailer": "^1"
+            },
+            "type": "metapackage",
+            "extra": {
+                "drupal": {
+                    "version": "1.6.1",
+                    "datestamp": "1749109091",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "adamps",
+                    "homepage": "https://www.drupal.org/user/2650563"
+                }
+            ],
+            "description": "Placeholder to support upgrade to v2.x",
+            "homepage": "https://www.drupal.org/project/symfony_mailer",
+            "support": {
+                "source": "https://git.drupalcode.org/project/symfony_mailer"
             }
         },
         {
