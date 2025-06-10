@@ -91,12 +91,28 @@ class ServiceEditFormTest extends BrowserTestBase {
         'type' => 'text_textarea',
         'settings' => [],
       ])
-      ->setComponent('field_target_group', [
-        'type' => 'entity_reference_paragraphs',
+      ->setComponent('field_age', [
+        'type' => 'range',
+        'settings' => [],
+      ])
+      ->setComponent('field_age_groups', [
+        'type' => 'options_buttons',
         'settings' => [],
       ])
       ->setComponent('field_service_provider_updatee', [
         'type' => 'options_select',
+        'settings' => [],
+      ])
+      ->setComponent('field_municipality_irrelevant', [
+        'type' => 'boolean_checkbox',
+        'settings' => [],
+      ])
+      ->setComponent('field_attendance_text', [
+        'type' => 'text_textarea',
+        'settings' => [],
+      ])
+      ->setComponent('field_service_execution_text', [
+        'type' => 'text_textarea',
         'settings' => [],
       ])
       ->setComponent('field_service_execution', [
@@ -123,12 +139,12 @@ class ServiceEditFormTest extends BrowserTestBase {
     $this->assertSession()->pageTextContains('age group is mandatory');
 
     // Filling only the "age from" field should not pass validation.
-    $page->fillField('edit-field-target-group-0-subform-field-age-0-from', '18');
+    $page->fillField('edit-field-age-0-from', '18');
     $this->submitForm([], 'Save');
     $this->assertSession()->pageTextContains('Both range values (FROM and TO) are required.');
 
     // Filling also the "age to" field should pass validation.
-    $page->fillField('edit-field-target-group-0-subform-field-age-0-to', '30');
+    $page->fillField('edit-field-age-0-to', '30');
     $this->submitForm([], 'Save');
     $this->assertSession()->pageTextNotContains('Both range values (FROM and TO) are required.');
     $this->assertSession()->pageTextNotContains('age group is mandatory');
@@ -137,9 +153,9 @@ class ServiceEditFormTest extends BrowserTestBase {
     // should pass validation.
     $this->drupalGet('node/1/edit');
     $page->selectFieldOption('moderation_state[0][state]', 'published');
-    $page->fillField('edit-field-target-group-0-subform-field-age-0-from', '');
-    $page->fillField('edit-field-target-group-0-subform-field-age-0-to', '');
-    $page->checkField('edit-field-target-group-0-subform-field-age-groups-no-age-restriction');
+    $page->fillField('edit-field-age-0-from', '');
+    $page->fillField('edit-field-age-0-to', '');
+    $page->checkField('edit-field-age-groups-no-age-restriction');
     $this->submitForm([], 'Save');
     $this->assertSession()->pageTextNotContains('age group is mandatory');
   }
@@ -157,7 +173,7 @@ class ServiceEditFormTest extends BrowserTestBase {
     $this->assertSession()->pageTextContains('municipalities is required');
 
     // Checking the "municipality irrelevant" field should pass validation.
-    $page->checkField('edit-field-target-group-0-subform-field-municipality-irrelevant-value');
+    $page->checkField('edit-field-municipality-irrelevant-value');
     $this->submitForm([], 'Save');
     $this->assertSession()->pageTextNotContains('municipalities is required');
   }
@@ -189,22 +205,22 @@ class ServiceEditFormTest extends BrowserTestBase {
     $this->drupalGet('node/1/edit');
     $page->selectFieldOption('moderation_state[0][state]', 'ready_to_publish');
 
-    $requiredParagraphTextFields = [
-      'field_service_execution' => 'Method of organizing',
-      'field_attendance' => 'Participation in the service',
+    $requiredTextFields = [
+      'field_service_execution_text' => 'Method of organizing',
+      'field_attendance_text' => 'Participation in the service',
     ];
 
     // Not filling required paragraph text fields should not pass validation.
     $this->submitForm([], 'Save');
-    foreach ($requiredParagraphTextFields as $fieldLabel) {
+    foreach ($requiredTextFields as $fieldLabel) {
       $this->assertSession()->pageTextContains($fieldLabel . ': field is required');
     }
 
     // Filling required paragraph text fields should pass validation.
-    $page->fillField('edit-field-service-execution-0-inline-entity-form-field-description-0-value', 'foo');
-    $page->fillField('edit-field-attendance-0-inline-entity-form-field-description-0-value', 'bar');
+    $page->fillField('edit-field-service-execution-text-0-value', 'foo');
+    $page->fillField('edit-field-attendance-text-0-value', 'bar');
     $this->submitForm([], 'Save');
-    foreach ($requiredParagraphTextFields as $fieldLabel) {
+    foreach ($requiredTextFields as $fieldLabel) {
       $this->assertSession()->pageTextNotContains($fieldLabel . ': field is required');
     }
   }
