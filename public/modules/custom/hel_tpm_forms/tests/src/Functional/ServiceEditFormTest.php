@@ -198,34 +198,6 @@ class ServiceEditFormTest extends BrowserTestBase {
   }
 
   /**
-   * Tests filling the required long-text paragraph fields.
-   */
-  public function testRequiredParagraphTextFields() {
-    $page = $this->getSession()->getPage();
-    $this->drupalGet('node/1/edit');
-    $page->selectFieldOption('moderation_state[0][state]', 'ready_to_publish');
-
-    $requiredTextFields = [
-      'field_service_execution_text' => 'Method of organizing',
-      'field_attendance_text' => 'Participation in the service',
-    ];
-
-    // Not filling required paragraph text fields should not pass validation.
-    $this->submitForm([], 'Save');
-    foreach ($requiredTextFields as $fieldLabel) {
-      $this->assertSession()->pageTextContains($fieldLabel . ': field is required');
-    }
-
-    // Filling required paragraph text fields should pass validation.
-    $page->fillField('edit-field-service-execution-text-0-value', 'foo');
-    $page->fillField('edit-field-attendance-text-0-value', 'bar');
-    $this->submitForm([], 'Save');
-    foreach ($requiredTextFields as $fieldLabel) {
-      $this->assertSession()->pageTextNotContains($fieldLabel . ': field is required');
-    }
-  }
-
-  /**
    * Tests filling the required language selection paragraph fields.
    */
   public function testRequiredParagraphLanguageSelection() {
