@@ -499,7 +499,6 @@ $card-font-small-heading: 15px;
   .accessibility-wrapper {
    order: 3;
    margin-bottom: $space-one-and-half;
-   margin-left: 40px;
    @include xl {
       margin-bottom: 30px;
    }
@@ -509,10 +508,10 @@ $card-font-small-heading: 15px;
     order: 3;
     width: 100%;
     margin-bottom: 0;
-    font-size: $card-font-small-mobile;
     display: flex;
+    font-size: $card-font-base-small;
     @include xl {
-      font-size: $card-font-small;
+      font-size: $card-font-base;
     }
     &.icon {
       min-width: 24px;
@@ -548,9 +547,9 @@ $card-font-small-heading: 15px;
     .field__items {
       display: flex;
       flex-wrap: wrap;
-      font-size: $card-font-small-mobile;
+      font-size: $card-font-base-small;
       @include xl {
-        font-size: $card-font-small;
+        font-size: $card-font-base;
       }
     }
     .field__item {
