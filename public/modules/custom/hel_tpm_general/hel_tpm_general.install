@@ -704,6 +704,124 @@ function hel_tpm_general_update_10111(&$sandbox) {
 }
 
 /**
+ * Import missing field configs.
+ */
+function hel_tpm_general_update_10112(&$sandbox) {
+  $config_path = Settings::get('config_sync_directory');
+  $source = new FileStorage($config_path);
+  $fields = ['field_attendance_text', 'field_service_execution_text'];
+
+  foreach ($fields as $field) {
+    $storage_config = sprintf('field.storage.node.%s', $field);
+    $field_storage_config = \Drupal::entityTypeManager()->getStorage('field_storage_config');
+    $field_storage_config->create($source->read($storage_config))->save();
+
+    $node_field_config = sprintf('field.field.node.service.%s', $field);
+    $field_config = \Drupal::entityTypeManager()->getStorage('field_config');
+    $field_config->create($source->read($node_field_config))->save();
+  }
+
+}
+
+/**
+ * Updates node paragraph fields by transferring content to new fields.
+ */
+function hel_tpm_general_update_10113(&$sandbox) {
+  $node_paragraph_fields = ['field_service_execution', 'field_attendance'];
+  $p_content_field = 'field_description';
+
+  foreach ($node_paragraph_fields as $field) {
+    $new_field = $field . '_text';
+    $node_paragraph_rows = _hel_tpm_general_get_node_paragraph_rows($field);
+
+    foreach ($node_paragraph_rows as $node_paragraph_row) {
+      $p_field_value = _hel_tpm_general_get_paragraph_field_content($p_content_field, $node_paragraph_row->{$field . '_target_revision_id'}, $node_paragraph_row->langcode);
+      if (empty($p_field_value)) {
+        continue;
+      }
+      $p_field_value = reset($p_field_value);
+      $n_field_value = clone $p_field_value;
+      unset($n_field_value->{$p_content_field . '_value'});
+      unset($n_field_value->{$p_content_field . '_format'});
+      $n_field_value->bundle = $node_paragraph_row->bundle;
+      $n_field_value->entity_id = $node_paragraph_row->entity_id;
+      $n_field_value->revision_id = $node_paragraph_row->revision_id;
+      $n_field_value->{$new_field . '_value'} = $p_field_value->{$p_content_field . '_value'};
+      $n_field_value->{$new_field . '_format'} = $p_field_value->{$p_content_field . '_format'};
+      _hel_tpm_general_insert_field_row($new_field, (array) $n_field_value);
+    }
+  }
+}
+
+/**
+ * Inserts a row into the specified field's database tables.
+ *
+ * This function inserts values for a given field into the appropriate database
+ * tables based on whether the revision is a default revision or not.
+ *
+ * @param string $field
+ *   The machine name of the field being updated.
+ * @param array $row
+ *   An associative array representing the row of data to insert, with keys
+ *   corresponding to database column names and values
+ *   being the respective data.
+ *
+ * @return void
+ *   No value is returned.
+ */
+function _hel_tpm_general_insert_field_row($field, $row) {
+  $database = \Drupal::database();
+  $tables = ['node_revision__' . $field];
+  if (_hel_tpm_general_is_default($row['revision_id'])) {
+    $tables[] = 'node__' . $field;
+  }
+  foreach ($tables as $table) {
+    $database->insert($table)
+      ->fields(array_keys($row))
+      ->values($row)
+      ->execute();
+  }
+}
+
+/**
+ * Retrieves a specified paragraph field for a given revision and language.
+ *
+ * @param string $field
+ *   The name of the field to retrieve content from.
+ * @param int $revision_id
+ *   The ID of the paragraph revision.
+ * @param string $langcode
+ *   The language code for the content to retrieve.
+ *
+ * @return array
+ *   An array of records containing the field content.
+ */
+function _hel_tpm_general_get_paragraph_field_content($field, $revision_id, $langcode) {
+  $database = \Drupal::database();
+  return $database->select('paragraph_revision__' . $field, 'f')
+    ->fields('f')
+    ->condition('f.revision_id', $revision_id)
+    ->condition('f.langcode', $langcode)
+    ->execute()->fetchAll();
+}
+
+/**
+ * Retrieves rows from a node revision field table for a given field.
+ *
+ * @param string $field
+ *   The field name for which the rows are to be retrieved.
+ *
+ * @return array
+ *   An array of rows from the specified field table.
+ */
+function _hel_tpm_general_get_node_paragraph_rows($field) {
+  $database = \Drupal::database();
+  return $database->select('node_revision__' . $field, 'f')
+    ->fields('f')
+    ->execute()->fetchAll();
+}
+
+/**
  * Checks if a paragraph entity is orphaned.
  *
  * A paragraph is considered orphaned if it does not have a valid parent entity
