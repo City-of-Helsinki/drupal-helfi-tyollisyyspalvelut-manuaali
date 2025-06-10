@@ -88,7 +88,7 @@
 }
 
 .font-small-caption {
-  font-size: 9px;
+  font-size: 10px;
   font-style: normal;
   font-weight: 700;
   line-height: 16px; /* 177.778% */
@@ -115,4 +115,53 @@
 
 .font-weight-bold {
   font-weight: 600;
+}
+
+.text-small {
+  font-size: 12px;
+  line-height: 20px;
+  span {
+    font-size: 12px;
+    line-height: 20px;
+  }
+  @include large {
+    font-size: 14px;
+    line-height: 24px;
+    span {
+      font-size: 14px;
+      line-height: 24px;
+    }
+  }
+}
+.text-normal {
+  font-size: 14px;
+  line-height: 22px;
+  span {
+    font-size: 14px;
+    line-height: 22px;
+  }
+  @include large {
+    font-size: 16px;
+    line-height: 28px;
+    span {
+      font-size: 16px;
+      line-height: 28px;
+    }
+  }
+}
+.text-large {
+  font-size: 15px;
+  line-height: 28px;
+  span {
+    font-size: 15px;
+    line-height: 28px;
+  }
+  @include large {
+    font-size: 18px;
+    line-height: 32px;
+    span {
+      font-size: 18px;
+      line-height: 32px;
+    }
+  }
 }
