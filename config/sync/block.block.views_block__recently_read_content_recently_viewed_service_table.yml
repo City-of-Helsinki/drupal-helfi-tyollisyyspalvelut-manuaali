@@ -31,11 +31,15 @@ visibility:
   request_path:
     id: request_path
     negate: false
-    pages: '<front>'
+    pages: "/henkilostolle\r\n/arbetsformedlingens-personal\r\n/employment-services-personnel\r\n/palveluntuottajalle\r\n/tjansteleverantorer\r\n/service-provider"
   user_role:
     id: user_role
     negate: false
     context_mapping:
       user: '@user.current_user_context:current_user'
     roles:
-      authenticated: authenticated
+      root: root
+      admin: admin
+      editor: editor
+      specialist: specialist
+      specialist_editor: specialist_editor

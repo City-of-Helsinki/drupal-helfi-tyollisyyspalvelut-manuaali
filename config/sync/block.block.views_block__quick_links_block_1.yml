@@ -8,7 +8,6 @@ dependencies:
     - block_class
     - context
     - node
-    - user
     - views
   theme:
     - palvelumanuaali
@@ -41,10 +40,3 @@ visibility:
       node: '@node.node_route_context:node'
     bundles:
       landing_page: landing_page
-  user_role:
-    id: user_role
-    negate: false
-    context_mapping:
-      user: '@user.current_user_context:current_user'
-    roles:
-      authenticated: authenticated
