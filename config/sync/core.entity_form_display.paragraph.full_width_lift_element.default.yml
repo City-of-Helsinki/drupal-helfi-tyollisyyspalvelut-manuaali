@@ -1,0 +1,112 @@
+uuid: e7e3f8f9-c8b7-43d8-93c7-fd3ca2fac87f
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.full_width_lift_element.field_alignment
+    - field.field.paragraph.full_width_lift_element.field_background_color
+    - field.field.paragraph.full_width_lift_element.field_body
+    - field.field.paragraph.full_width_lift_element.field_button_link
+    - field.field.paragraph.full_width_lift_element.field_lift_media
+    - field.field.paragraph.full_width_lift_element.field_title
+    - paragraphs.paragraphs_type.full_width_lift_element
+  module:
+    - field_group
+    - link
+    - maxlength
+    - media_library
+    - text
+third_party_settings:
+  field_group:
+    group_button_group:
+      children:
+        - field_button_link
+      label: 'Button group'
+      region: content
+      parent_name: ''
+      weight: 3
+      format_type: tab
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        formatter: closed
+        description: ''
+        required_fields: true
+        direction: vertical
+        width_breakpoint: 640
+        open: false
+    group_kuva_ja_asemointi:
+      children:
+        - field_lift_media
+        - field_alignment
+        - field_background_color
+      label: 'Kuva ja asemointi'
+      region: content
+      parent_name: ''
+      weight: 2
+      format_type: tab
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        formatter: closed
+        description: ''
+        required_fields: true
+id: paragraph.full_width_lift_element.default
+targetEntityType: paragraph
+bundle: full_width_lift_element
+mode: default
+content:
+  field_alignment:
+    type: options_select
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_background_color:
+    type: options_select
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_body:
+    type: text_textarea
+    weight: 1
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings:
+      maxlength:
+        maxlength_js: null
+        maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
+        maxlength_js_enforce: false
+  field_button_link:
+    type: link_default
+    weight: 21
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+  field_lift_media:
+    type: media_library_widget
+    weight: 0
+    region: content
+    settings:
+      media_types: {  }
+    third_party_settings: {  }
+  field_title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

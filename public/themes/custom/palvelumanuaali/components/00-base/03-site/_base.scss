@@ -104,14 +104,17 @@ body {
 
 
 .content-column ol,
-article ol, {
+article ol,
+.custom-counter-list {
   counter-reset: my-awesome-counter;
   list-style: none;
   margin-bottom: $space-one-and-half;
+
 }
 
 .content-column ol >li,
-article ol >li {
+article ol >li,
+.custom-counter-element {
   counter-increment: my-awesome-counter;
   position: relative;
   padding-left: $space-two-and-half;
@@ -119,7 +122,8 @@ article ol >li {
 }
 
 .content-column ol li::before,
-article ol li::before {
+article ol li::before,
+.custom-counter-number {
   content: counter(my-awesome-counter);
   color: clr(text-inverse);
   font-size: 1rem;
@@ -139,7 +143,8 @@ article ol li::before {
 
 
 .content-column ul,
-article ul {
+article ul,
+.bulleted-list {
   margin-bottom: $space-one-and-half;
  >li {
    margin-bottom: $space-one-and-half;
@@ -600,5 +605,30 @@ article ul {
   }
   &--five {
     order: 5;
+  }
+}
+
+// Fill class, used to make sure image takes the whole area
+
+.fill {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    height: 100%;
+  >img,
+  >picture,
+  >picture>img {
+    flex-shrink: 1;
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+  }
+  picture {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    height: 100%;
   }
 }
