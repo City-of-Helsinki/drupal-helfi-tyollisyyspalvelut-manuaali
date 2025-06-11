@@ -3,15 +3,19 @@
     display: flex;
     border-radius: 16px;
     overflow: hidden;
-
+    position: relative;
     .field--name-field-lift-media   > div,
     .field--name-field-media-image {
       height: 100%;
     }
+    .content-wrapper {
+      z-index: 1;
+    }
   &.background {
     &--blue {
       background: clr(footer-color);
-      .content-wrapper{
+      .content-wrapper,
+      .h3{
         color: clr(text-inverse);
       }
     }
@@ -104,7 +108,5 @@
       }
     }
   }
-  .field--name-field-button-link {
-    max-width: fit-content;
-  }
+
 }
