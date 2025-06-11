@@ -71,6 +71,12 @@
  */
 #}
 
+{%
+  set title_classes = [
+    'field__label',
+    label_display == 'visually_hidden' ? 'visually-hidden',
+  ]
+%}
 
 <article {{ bem("node",'service-location','',['d--flex']) }}>
 
@@ -92,8 +98,9 @@
   </div>
 
 </article>
-{% if (content.field_accessibility['0'] is not null and content.field_accessibility_details['0'] is not null) %}
+{% if (content.field_accessibility['0'] is not null or content.field_accessibility_details['0'] is not null) %}
 <div class='accessibility-wrapper'>
+<div{{ title_attributes.addClass(title_classes) }}>{{ 'Accessibility'|t }}</div>
 {{content.field_accessibility}}
 {{content.field_accessibility_details}}
 </div>
