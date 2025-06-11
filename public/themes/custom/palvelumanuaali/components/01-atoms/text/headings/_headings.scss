@@ -265,7 +265,6 @@ $color-heading: clr(accent);
 
 .h5 {
   @include heading-xs;
-  font-size: 1rem;
   @include large {
     font-size: 1.125rem;
   }
@@ -377,4 +376,10 @@ $color-heading: clr(accent);
   line-height: 24px;
   font-weight: 600;
   margin-bottom: $space-one-half;
+}
+
+.long-text {
+  h5 {
+    @extend .h5;
+  }
 }
