@@ -6,7 +6,8 @@ dependencies:
     - views.view.service_ready_to_publish_no_responsible_municipality
   module:
     - block_class
-    - node
+    - system
+    - user
     - views
   theme:
     - palvelumanuaali
@@ -21,16 +22,21 @@ provider: null
 plugin: 'views_block:service_ready_to_publish_no_responsible_municipality-block_1'
 settings:
   id: 'views_block:service_ready_to_publish_no_responsible_municipality-block_1'
-  label: 'Service ready to publish no responsible municipality'
+  label: ''
   label_display: visible
   provider: views
-  views_label: 'Service ready to publish no responsible municipality'
+  views_label: ''
   items_per_page: none
 visibility:
-  'entity_bundle:node':
-    id: 'entity_bundle:node'
+  request_path:
+    id: request_path
+    negate: false
+    pages: "/hallinta-ja-yllapito\r\n/administration-och-underhall\r\n/administration-and-maintenance"
+  user_role:
+    id: user_role
     negate: false
     context_mapping:
-      node: '@node.node_route_context:node'
-    bundles:
-      landing_page: landing_page
+      user: '@user.current_user_context:current_user'
+    roles:
+      root: root
+      admin: admin
