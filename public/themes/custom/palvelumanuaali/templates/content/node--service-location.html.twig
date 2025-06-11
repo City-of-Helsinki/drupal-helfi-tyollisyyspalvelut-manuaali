@@ -71,6 +71,12 @@
  */
 #}
 
+{%
+  set title_classes = [
+    'field__label',
+    label_display == 'visually_hidden' ? 'visually-hidden',
+  ]
+%}
 
 <article {{ bem("node",'service-location','',['d--flex']) }}>
 
@@ -93,12 +99,8 @@
 
 </article>
 {% if (content.field_accessibility['0'] is not null or content.field_accessibility_details['0'] is not null) %}
-{% include "@atoms/images/icons/_icon.twig" with {
-  icon_base_class: 'icon',
-  icon_name: 'question',
-  icon_modifiers: ['small'],
-} %}
 <div class='accessibility-wrapper'>
+<div{{ title_attributes.addClass(title_classes) }}>{{ 'Accessibility'|t }}</div>
 {{content.field_accessibility}}
 {{content.field_accessibility_details}}
 </div>

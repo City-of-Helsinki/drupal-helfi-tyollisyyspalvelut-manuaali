@@ -53,32 +53,8 @@
   ]
 %}
 
-{% if label_hidden %}
-  {% if multiple %}
-    <div{{ attributes.addClass(classes, 'field__items') }}>
-      {% for item in items %}
-        <div{{ item.attributes.addClass('field__item') }}>
-          {{ item.content }}
-          {% if not loop.last %}
-            <p>{{","}}&nbsp;</p>
-          {% endif %}
-        </div>
-      {% endfor %}
-    </div>
-  {% else %}
-    {% for item in items %}
-      <div{{ attributes.addClass(classes, 'field__item') }}>
-        {{ item.content }}
-        {% if not loop.last %}
-          <p>{{","}}&nbsp;</p>
-        {% endif %}
-      </div>
-    {% endfor %}
-  {% endif %}
-{% else %}
   <div{{ attributes.addClass(classes) }}>
     <div class='text-wrapper'>
-    <div{{ title_attributes.addClass(title_classes) }}>{{ label }}</div>
     {% if multiple %}
       <div class="field__items">
     {% endif %}
@@ -95,4 +71,3 @@
     {% endif %}
     </div>
   </div>
-{% endif %}
