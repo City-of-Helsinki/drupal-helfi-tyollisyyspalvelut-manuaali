@@ -30,6 +30,13 @@ function hel_tpm_forms_theme($existing, $type, $theme, $path) {
 }
 
 /**
+ * Implements hook_entity_type_alter().
+ */
+function hel_tpm_forms_entity_type_alter(array &$entity_types) {
+  $entity_types['node']->setHandlerClass('translation', 'Drupal\hel_tpm_forms\NodeServiceTranslationHelper');
+}
+
+/**
  * Implements hook_form_FORM_ID_alter().
  */
 function hel_tpm_forms_form_node_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
