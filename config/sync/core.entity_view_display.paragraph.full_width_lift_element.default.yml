@@ -1,0 +1,76 @@
+uuid: bf904b0b-c6f1-4401-a23b-5b8cbc5faf8f
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.full_width_lift_element.field_alignment
+    - field.field.paragraph.full_width_lift_element.field_background_color
+    - field.field.paragraph.full_width_lift_element.field_body
+    - field.field.paragraph.full_width_lift_element.field_button_link
+    - field.field.paragraph.full_width_lift_element.field_lift_media
+    - field.field.paragraph.full_width_lift_element.field_title
+    - paragraphs.paragraphs_type.full_width_lift_element
+  module:
+    - link
+    - options
+    - text
+id: paragraph.full_width_lift_element.default
+targetEntityType: paragraph
+bundle: full_width_lift_element
+mode: default
+content:
+  field_alignment:
+    type: list_key
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_background_color:
+    type: list_key
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_body:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_button_link:
+    type: link
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_lift_media:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: full_width_lift_element_image
+      link: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  search_api_excerpt: true

@@ -1,16 +1,16 @@
-uuid: d3bcfcb6-7b4a-4d09-b884-9619d73204bb
+uuid: 61a1c91d-0401-4ebf-a51d-f3025d1d773a
 langcode: fi
 status: true
 dependencies:
   module:
+    - link
     - paragraphs
-    - text
-id: paragraph.field_body
-field_name: field_body
+id: paragraph.field_button_link
+field_name: field_button_link
 entity_type: paragraph
-type: text_long
+type: link
 settings: {  }
-module: text
+module: link
 locked: false
 cardinality: 1
 translatable: true

@@ -1,0 +1,24 @@
+uuid: 4931b4ca-2acd-44de-9b9c-a68fb8dcf086
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_body
+    - filter.format.filtered_html
+    - paragraphs.paragraphs_type.full_width_lift_element
+  module:
+    - text
+id: paragraph.full_width_lift_element.field_body
+field_name: field_body
+entity_type: paragraph
+bundle: full_width_lift_element
+label: Body
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - filtered_html
+field_type: text_long
