@@ -6,24 +6,23 @@ dependencies:
     - core.entity_view_mode.node.search_index
     - field.storage.node.field_accessibility
     - field.storage.node.field_address
+    - field.storage.node.field_age
+    - field.storage.node.field_age_groups
     - field.storage.node.field_description
     - field.storage.node.field_implementation_extra_info
     - field.storage.node.field_life_situations
+    - field.storage.node.field_municipality_irrelevant
     - field.storage.node.field_service_execution_text
     - field.storage.node.field_service_languages
     - field.storage.node.field_service_price
     - field.storage.node.field_service_producer
     - field.storage.node.field_service_set
     - field.storage.node.field_service_time_and_location
-    - field.storage.node.field_target_group
-    - field.storage.paragraph.field_age
-    - field.storage.paragraph.field_age_groups
+    - field.storage.node.field_target_group_municipality
     - field.storage.paragraph.field_free_service
     - field.storage.paragraph.field_language
     - field.storage.paragraph.field_level
-    - field.storage.paragraph.field_municipality_irrelevant
     - field.storage.paragraph.field_service_location
-    - field.storage.paragraph.field_target_group_municipality
     - search_api.server.solr_search
   module:
     - entitygroupfield
@@ -113,38 +112,29 @@ field_settings:
       config:
         - field.storage.node.field_accessibility
   field_age_from:
-    label: 'Target group » Paragraafi  » Tarkenna ikäväliä » Alkaen'
+    label: 'Tarkenna ikäväliä (valinnainen) » Alkaen'
     datasource_id: 'entity:node'
-    property_path: 'field_target_group:entity:field_age:from'
+    property_path: 'field_age:from'
     type: integer
     dependencies:
       config:
-        - field.storage.node.field_target_group
-        - field.storage.paragraph.field_age
-      module:
-        - paragraphs
+        - field.storage.node.field_age
   field_age_groups:
-    label: 'Target group » Paragraph » Ikäryhmät'
+    label: Ikäryhmä
     datasource_id: 'entity:node'
-    property_path: 'field_target_group:entity:field_age_groups'
+    property_path: field_age_groups
     type: string
     dependencies:
       config:
-        - field.storage.node.field_target_group
-        - field.storage.paragraph.field_age_groups
-      module:
-        - paragraphs
+        - field.storage.node.field_age_groups
   field_age_to:
-    label: 'Target group » Paragraafi  » Tarkenna ikäväliä » Asti'
+    label: 'Tarkenna ikäväliä (valinnainen) » Asti'
     datasource_id: 'entity:node'
-    property_path: 'field_target_group:entity:field_age:to'
+    property_path: 'field_age:to'
     type: integer
     dependencies:
       config:
-        - field.storage.node.field_target_group
-        - field.storage.paragraph.field_age
-      module:
-        - paragraphs
+        - field.storage.node.field_age
   field_description:
     label: 'Lyhyt kuvaus'
     datasource_id: 'entity:node'
@@ -215,16 +205,13 @@ field_settings:
       config:
         - field.storage.node.field_life_situations
   field_municipality_irrelevant:
-    label: 'Target group » Paragraafi  » Kotikunnalla ei merkitystä'
+    label: 'Kotikunnalla ei merkitystä'
     datasource_id: 'entity:node'
-    property_path: 'field_target_group:entity:field_municipality_irrelevant'
+    property_path: field_municipality_irrelevant
     type: boolean
     dependencies:
       config:
-        - field.storage.node.field_target_group
-        - field.storage.paragraph.field_municipality_irrelevant
-      module:
-        - paragraphs
+        - field.storage.node.field_municipality_irrelevant
   field_service_execution_text:
     label: Toteutustapa
     datasource_id: 'entity:node'
@@ -261,16 +248,13 @@ field_settings:
       config:
         - field.storage.node.field_service_time_and_location
   field_target_group_municipality:
-    label: 'Target group » Paragraafi  » Kotikunta:'
+    label: Kotikunta
     datasource_id: 'entity:node'
-    property_path: 'field_target_group:entity:field_target_group_municipality'
+    property_path: field_target_group_municipality
     type: integer
     dependencies:
       config:
-        - field.storage.node.field_target_group
-        - field.storage.paragraph.field_target_group_municipality
-      module:
-        - paragraphs
+        - field.storage.node.field_target_group_municipality
   gid:
     label: 'Ryhmät » Group relationship » Isäntäryhmä'
     datasource_id: 'entity:node'

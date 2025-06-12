@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_service_execution_text
+    - node.type.service
+  module:
+    - require_on_publish
+    - text
+third_party_settings:
+  require_on_publish:
+    require_on_publish: true
+id: node.service.field_service_execution_text
+field_name: field_service_execution_text
+entity_type: node
+bundle: service
+label: 'Method of organizing'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

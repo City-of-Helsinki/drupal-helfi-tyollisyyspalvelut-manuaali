@@ -1,0 +1,26 @@
+uuid: 115beab4-438a-44c6-96bb-8ebc3e142501
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_target_group_description
+    - node.type.service
+  module:
+    - require_on_publish
+    - text
+third_party_settings:
+  require_on_publish:
+    require_on_publish: true
+id: node.service.field_target_group_description
+field_name: field_target_group_description
+entity_type: node
+bundle: service
+label: 'Kohderyhmän kuvaus'
+description: 'Kerro tarkemmin, millaiselle asiakkaalle palvelu on tarkoitettu. Kuvaa, millaisessa elämäntilanteessa oleva asiakas osallistumisesta hyötyy ja kenelle se soveltuu, tai onko työttömyyden statuksella tai kestolla merkitystä osallistumiseen. Kuvaa myös asiakkaan iän, asuinkunnan ja kielitaidon merkitys. '
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

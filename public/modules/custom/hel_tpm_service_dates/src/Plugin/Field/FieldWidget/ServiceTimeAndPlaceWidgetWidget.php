@@ -4,7 +4,7 @@ namespace Drupal\hel_tpm_service_dates\Plugin\Field\FieldWidget;
 
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\paragraphs\Plugin\Field\FieldWidget\InlineParagraphsWidget;
+use Drupal\paragraphs_asymmetric_translation_widgets\Plugin\Field\FieldWidget\ParagraphsClassicAsymmetricWidget;
 
 /**
  * Defines the 'hel_tpm_service_dates_service_time_and_place_widget' widget.
@@ -17,7 +17,7 @@ use Drupal\paragraphs\Plugin\Field\FieldWidget\InlineParagraphsWidget;
  *   }
  * )
  */
-class ServiceTimeAndPlaceWidgetWidget extends InlineParagraphsWidget {
+class ServiceTimeAndPlaceWidgetWidget extends ParagraphsClassicAsymmetricWidget {
 
   /**
    * {@inheritdoc}
