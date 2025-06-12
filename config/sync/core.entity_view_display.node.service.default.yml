@@ -136,7 +136,9 @@ third_party_settings:
     group_target_group:
       children:
         - field_description
-        - field_target_group
+        - field_target_group_description
+        - field_target_group_municipality
+        - field_age_groups
       label: Kohderyhmä
       parent_name: group_customer_view
       region: content
@@ -451,6 +453,13 @@ content:
     third_party_settings: {  }
     weight: 40
     region: content
+  field_age_groups:
+    type: hel_tpm_general_age_group_field_formatter
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 37
+    region: content
   field_attendance_text:
     type: text_default
     label: visually_hidden
@@ -734,14 +743,20 @@ content:
     third_party_settings: {  }
     weight: 15
     region: content
-  field_target_group:
-    type: entity_reference_revisions_entity_view
-    label: hidden
-    settings:
-      view_mode: default
-      link: ''
+  field_target_group_description:
+    type: text_default
+    label: above
+    settings: {  }
     third_party_settings: {  }
-    weight: 34
+    weight: 35
+    region: content
+  field_target_group_municipality:
+    type: hel_tpm_general_municipality_field_formatter
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 36
     region: content
   flag_cart:
     settings: {  }
@@ -779,7 +794,6 @@ hidden:
   entity_print_view_pdf: true
   entity_print_view_word_docx: true
   field_age: true
-  field_age_groups: true
   field_attendance: true
   field_career_marking: true
   field_contact_info_internal: true
@@ -798,8 +812,7 @@ hidden:
   field_service_links_internal: true
   field_service_provider_updatee: true
   field_service_radioactivity: true
-  field_target_group_description: true
-  field_target_group_municipality: true
+  field_target_group: true
   langcode: true
   search_api_excerpt: true
   view_mode_switcher: true
