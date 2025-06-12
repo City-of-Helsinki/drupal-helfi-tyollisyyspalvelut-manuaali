@@ -68,7 +68,7 @@ third_party_settings:
   field_group:
     group_participation:
       children:
-        - field_attendance
+        - field_attendance_text
         - field_service_requirements
         - field_service_benefits
         - field_client_consent
@@ -92,7 +92,7 @@ third_party_settings:
         speed: fast
     group_execution:
       children:
-        - field_service_execution
+        - field_service_execution_text
         - field_service_other_info
       label: Toteutustapa
       parent_name: ''
@@ -386,14 +386,12 @@ content:
     third_party_settings: {  }
     weight: 17
     region: content
-  field_attendance:
-    type: entity_reference_revisions_entity_view
+  field_attendance_text:
+    type: text_default
     label: hidden
-    settings:
-      view_mode: default
-      link: ''
+    settings: {  }
     third_party_settings: {  }
-    weight: 15
+    weight: 0
     region: content
   field_client_consent:
     type: boolean
@@ -403,7 +401,7 @@ content:
       format_custom_false: ''
       format_custom_true: 'Palveluun osallistuminen edellyttää asiakkaan suostumusta hänen henkilötietojensa luovuttamiseen.'
     third_party_settings: {  }
-    weight: 18
+    weight: 4
     region: content
   field_contact_info_external:
     type: entity_reference_entity_view
@@ -426,7 +424,7 @@ content:
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 19
+    weight: 5
     region: content
   field_implementation_extra_info:
     type: entity_reference_label
@@ -458,16 +456,14 @@ content:
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 17
+    weight: 3
     region: content
-  field_service_execution:
-    type: entity_reference_revisions_entity_view
-    label: visually_hidden
-    settings:
-      view_mode: default
-      link: ''
+  field_service_execution_text:
+    type: text_default
+    label: above
+    settings: {  }
     third_party_settings: {  }
-    weight: 12
+    weight: 13
     region: content
   field_service_implement:
     type: basic_string
@@ -492,7 +488,7 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 13
+    weight: 14
     region: content
   field_service_price:
     type: entity_reference_revisions_entity_view
@@ -516,7 +512,7 @@ content:
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 16
+    weight: 2
     region: content
   field_service_set:
     type: entity_reference_label
@@ -566,7 +562,7 @@ hidden:
   entity_print_view_pdf: true
   entity_print_view_word_docx: true
   field_age: true
-  field_attendance_text: true
+  field_attendance: true
   field_career_marking: true
   field_career_markings: true
   field_contact_info: true
@@ -591,7 +587,7 @@ hidden:
   field_responsible_updatee: true
   field_service_coordination: true
   field_service_exceptions: true
-  field_service_execution_text: true
+  field_service_execution: true
   field_service_language: true
   field_service_links_external: true
   field_service_links_internal: true
