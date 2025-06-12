@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\hel_tpm_contact_info\Entity;
 
 use Drupal\Core\Entity\EntityChangedTrait;
@@ -29,9 +31,11 @@ use Drupal\user\UserInterface;
  *     },
  *     "route_provider" = {
  *       "html" = "Drupal\Core\Entity\Routing\AdminHtmlRouteProvider",
- *     }
+ *     },
+ *     "translation" = "Drupal\content_translation\ContentTranslationHandler"
  *   },
  *   base_table = "contact_info",
+ *   data_table = "contact_info_field_data",
  *   revision_table = "contact_info_revision",
  *   show_revision_ui = TRUE,
  *   admin_permission = "administer contact info",
@@ -39,13 +43,17 @@ use Drupal\user\UserInterface;
  *     "id" = "id",
  *     "revision" = "revision_id",
  *     "label" = "title",
- *     "uuid" = "uuid"
+ *     "uuid" = "uuid",
+ *     "langcode" = "langcode",
+ *     "default_langcode" = "default_langcode",
+ *     "revision_translation_affected" = "revision_translation_affected"
  *   },
  *   revision_metadata_keys = {
  *     "revision_user" = "revision_uid",
  *     "revision_created" = "revision_timestamp",
  *     "revision_log_message" = "revision_log"
  *   },
+ *   translatable = TRUE,
  *   links = {
  *     "add-form" = "/admin/content/contact-info/add",
  *     "canonical" = "/contact_info/{contact_info}",
@@ -248,6 +256,26 @@ class ContactInfo extends RevisionableContentEntityBase implements ContactInfoIn
     $fields['changed'] = BaseFieldDefinition::create('changed')
       ->setLabel(t('Changed'))
       ->setDescription(t('The time that the contact info was last edited.'));
+
+    $fields['langcode'] = BaseFieldDefinition::create('language')
+      ->setLabel(t('Language code'))
+      ->setDescription(t('The language code for the entity.'))
+      ->setRevisionable(TRUE)
+      ->setTranslatable(TRUE)
+      ->setRequired(TRUE);
+
+    $fields['default_langcode'] = BaseFieldDefinition::create('boolean')
+      ->setLabel(t('Default translation'))
+      ->setDescription(t('A flag indicating whether this is the default translation.'))
+      ->setTranslatable(TRUE)
+      ->setRevisionable(TRUE);
+
+    $fields['revision_translation_affected'] = BaseFieldDefinition::create('boolean')
+      ->setLabel(t('Revision translation affected'))
+      ->setDescription(t('Indicates if the last edit of a translation belongs to current revision.'))
+      ->setReadOnly(TRUE)
+      ->setRevisionable(TRUE)
+      ->setTranslatable(TRUE);
 
     return $fields;
   }

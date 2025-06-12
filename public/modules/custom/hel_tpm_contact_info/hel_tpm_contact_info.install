@@ -1,0 +1,137 @@
+<?php
+
+/**
+ * @file
+ * Contains installation functions for Contact info module.
+ */
+
+declare(strict_types=1);
+
+use Drupal\Core\Field\BaseFieldDefinition;
+
+/**
+ * Add missing fields and update entity type to enable translations.
+ */
+function hel_tpm_contact_info_update_10101(&$sandbox): void {
+  \Drupal::entityTypeManager()->clearCachedDefinitions();
+
+  $entity_definition_update_manager = \Drupal::entityDefinitionUpdateManager();
+  $entity_type_id = 'contact_info';
+
+  if ($entity_definition_update_manager->needsUpdates()) {
+    $changes = $entity_definition_update_manager->getChangeSummary();
+    if (array_key_exists($entity_type_id, $changes)) {
+      $entity_type = $entity_definition_update_manager->getEntityType($entity_type_id);
+
+      $entity_keys = $entity_type->get('entity_keys');
+      $entity_keys += [
+        'langcode' => 'langcode',
+        'default_langcode' => 'default_langcode',
+        'revision_translation_affected' => 'revision_translation_affected',
+      ];
+      $entity_type->set('entity_keys', $entity_keys);
+      // @todo Missing langcode field:
+      // $entity_type->set('translatable', TRUE);
+      $entity_type->set('data_table', 'contact_info_field_data');
+      $langcode = BaseFieldDefinition::create('language')
+        ->setLabel(t('Language code'))
+        ->setDescription(t('The language code for the entity.'))
+        ->setRevisionable(TRUE)
+        ->setTranslatable(TRUE)
+        ->setInitialValue(\Drupal::languageManager()->getDefaultLanguage()->getId());
+      $entity_definition_update_manager->installFieldStorageDefinition('langcode', $entity_type_id, 'hel_tpm_contact_info', $langcode);
+
+      $default_langcode = BaseFieldDefinition::create('boolean')
+        ->setLabel(t('Default translation'))
+        ->setDescription(t('A flag indicating whether this is the default translation.'))
+        ->setRevisionable(TRUE)
+        ->setTranslatable(TRUE)
+        ->setInitialValue(1);
+      $entity_definition_update_manager->installFieldStorageDefinition('default_langcode', $entity_type_id, 'hel_tpm_contact_info', $default_langcode);
+
+      $revision_translation_affected = BaseFieldDefinition::create('boolean')
+        ->setLabel(t('Revision translation affected'))
+        ->setDescription(t('Indicates if the last edit of a translation belongs to current revision.'))
+        ->setReadOnly(TRUE)
+        ->setRevisionable(TRUE)
+        ->setTranslatable(TRUE);
+      $entity_definition_update_manager->installFieldStorageDefinition('revision_translation_affected', $entity_type_id, 'hel_tpm_contact_info', $revision_translation_affected);
+
+      $last_installed_schema_repository = \Drupal::service('entity.last_installed_schema.repository');
+      $field_storage_definitions = $last_installed_schema_repository->getLastInstalledFieldStorageDefinitions($entity_type_id);
+      $entity_definition_update_manager->updateFieldableEntityType($entity_type, $field_storage_definitions, $sandbox);
+    }
+  }
+}
+
+/**
+ * Use separate data table.
+ */
+function hel_tpm_contact_info_update_10102(): void {
+  /** @var \Drupal\Core\Database\Connection $database */
+  $database = \Drupal::getContainer()->get('database');
+  /** @var \Drupal\Core\Entity\EntityTypeManagerInterface $entity_manager */
+  $entity_manager = \Drupal::getContainer()->get('entity_type.manager');
+  /** @var \Drupal\Core\Entity\EntityLastInstalledSchemaRepositoryInterface $schema_repository */
+  $schema_repository = \Drupal::getContainer()->get('entity.last_installed_schema.repository');
+
+  $entity_manager->clearCachedDefinitions();
+  $entity_type_id = 'contact_info';
+  $storage_handler = $entity_manager->getHandler($entity_type_id, 'storage');
+
+  $old_entity_type = $schema_repository->getLastInstalledDefinition($entity_type_id);
+  $new_entity_type = $entity_manager->getDefinition($entity_type_id);
+  $new_storage = $entity_manager->createHandlerInstance($storage_handler, $new_entity_type);
+
+  $base_table = 'contact_info';
+  $data_table = $base_table . '_field_data';
+  $temp_table = $base_table . '_temp_migrate';
+
+  // Rename old base table.
+  $database->schema()->renameTable($base_table, $temp_table);
+
+  // Create the new tables.
+  $new_storage->onEntityTypeCreate($new_entity_type);
+
+  // Update existing entity definition.
+  // @todo Missing langcode field:
+  // $old_entity_type->set('translatable', TRUE);
+  $old_entity_type->set('data_table', $data_table);
+  $entity_keys = $old_entity_type->get('entity_keys');
+  $entity_keys += [
+    'langcode' => 'langcode',
+    'default_langcode' => 'default_langcode',
+    'revision_translation_affected' => 'revision_translation_affected',
+  ];
+  $old_entity_type->set('entity_keys', $entity_keys);
+  $schema_repository->setLastInstalledDefinition($old_entity_type);
+
+  // Insert old data to new tables.
+  $base_query = $database->select($temp_table, 't')->fields('t', [
+    'id',
+    'revision_id',
+    'uuid',
+    'langcode',
+  ]);
+  $data_query = $database->select($temp_table, 't')->fields('t', [
+    'id',
+    'revision_id',
+    'langcode',
+    'title',
+    'status',
+    'uid',
+    'created',
+    'changed',
+    'default_langcode',
+    'revision_translation_affected',
+    'content_translation_source',
+    'content_translation_outdated',
+    'content_translation_uid',
+    'content_translation_status',
+    'content_translation_created',
+    'content_translation_changed',
+  ]);
+  $database->insert($base_table)->from($base_query)->execute();
+  $database->insert($data_table)->from($data_query)->execute();
+  // @todo Remove temp table.
+}
