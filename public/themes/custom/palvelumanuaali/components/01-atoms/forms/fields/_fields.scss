@@ -229,7 +229,7 @@
         & + label {
 
         }
-        &.selected + label {
+        &:checked + label {
           background-color: $blue100;
           color: $white;
         }
@@ -253,7 +253,7 @@
             color: transparent;
           }
         }
-        &.selected +label {
+        &:checked +label {
           @include round-icon-button;
           background-image: url("../../assets/images/icons/minus.svg");
         }
