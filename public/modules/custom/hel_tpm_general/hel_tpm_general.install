@@ -746,6 +746,7 @@ function hel_tpm_general_update_10113(&$sandbox) {
       $n_field_value->bundle = $node_paragraph_row->bundle;
       $n_field_value->entity_id = $node_paragraph_row->entity_id;
       $n_field_value->revision_id = $node_paragraph_row->revision_id;
+      $n_field_value->langcode = $node_paragraph_row->langcode;
       $n_field_value->{$new_field . '_value'} = $p_field_value->{$p_content_field . '_value'};
       $n_field_value->{$new_field . '_format'} = $p_field_value->{$p_content_field . '_format'};
       _hel_tpm_general_insert_field_row($new_field, (array) $n_field_value);
@@ -908,7 +909,6 @@ function _hel_tpm_general_get_paragraph_field_content($field, $revision_id, $lan
   return $database->select($table, 'f')
     ->fields('f')
     ->condition('f.revision_id', $revision_id)
-    ->condition('f.langcode', $langcode)
     ->execute()->fetchAll();
 }
 
