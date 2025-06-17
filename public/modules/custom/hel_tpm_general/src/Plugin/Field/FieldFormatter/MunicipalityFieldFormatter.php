@@ -23,8 +23,8 @@ final class MunicipalityFieldFormatter extends EntityReferenceLabelFormatter {
    */
   public function viewElements(FieldItemListInterface $items, $langcode): array {
     $element = parent::viewElements($items, $langcode);
-    $paragraph = $items->getEntity();
-    $field_municipality_irrelevant = $paragraph->field_municipality_irrelevant;
+    $entity = $items->getEntity();
+    $field_municipality_irrelevant = $entity->field_municipality_irrelevant;
     // If there is no value return default render of the element.
     if (empty($field_municipality_irrelevant->value) || $field_municipality_irrelevant->value == 0) {
       return $element;
