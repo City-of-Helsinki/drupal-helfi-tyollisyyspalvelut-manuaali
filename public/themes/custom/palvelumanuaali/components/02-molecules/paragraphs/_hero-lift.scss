@@ -1,0 +1,65 @@
+
+.hero-lift {
+    display: flex;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    background: clr(alt-header-color);
+    .field--name-field-lift-media   > div,
+    .field--name-field-media-image {
+      height: 100%;
+    }
+    .content-wrapper,
+    .h3{
+      color: clr(text-inverse);
+    }
+  .field--name-field-lift-media {
+    width: 33%;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    @include large {
+      position: relative;
+    }
+  }
+  .content-wrapper {
+    padding: 18px 16px 32px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 1;
+    flex: 1;
+    @include large {
+      padding: 80px;
+      max-width: unset;
+      width: 50%;
+    }
+    .long-text {
+      max-width: 60%;
+      @include large {
+        max-width: unset;
+      }
+    }
+    p {
+      max-width: 55ch;
+    }
+    ul {
+      @extend .bulleted-list;
+      li {
+        @extend .list-item;
+      }
+    }
+    ol {
+        @extend .custom-counter-list;
+      > li {
+        @extend .custom-counter-element;
+      }
+    }
+    ol li {
+      &::before {
+        @extend .custom-counter-number;
+      }
+    }
+  }
+
+}
