@@ -9,6 +9,7 @@ dependencies:
     - paragraphs.paragraphs_type.content_card_lift
     - paragraphs.paragraphs_type.full_width_lift_element
     - paragraphs.paragraphs_type.header_description_link
+    - paragraphs.paragraphs_type.hero_lift
     - paragraphs.paragraphs_type.link_card_row
     - paragraphs.paragraphs_type.quick_link_row
     - paragraphs.paragraphs_type.service_list
@@ -37,6 +38,7 @@ settings:
       full_width_lift_element: full_width_lift_element
       url_and_file: url_and_file
       service_list: service_list
+      hero_lift: hero_lift
     negate: 0
     target_bundles_drag_drop:
       contact_information:
@@ -65,6 +67,9 @@ settings:
         enabled: true
       header_description_link:
         weight: 22
+        enabled: true
+      hero_lift:
+        weight: 33
         enabled: true
       link:
         weight: 23
