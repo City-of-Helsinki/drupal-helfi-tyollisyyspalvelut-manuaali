@@ -8,6 +8,7 @@ dependencies:
     - paragraphs.paragraphs_type.content
     - paragraphs.paragraphs_type.content_alt_editor
     - paragraphs.paragraphs_type.full_width_card_lift
+    - paragraphs.paragraphs_type.full_width_lift_element
     - paragraphs.paragraphs_type.link_card_row
     - paragraphs.paragraphs_type.quick_link_row
     - paragraphs.paragraphs_type.service_list
@@ -34,6 +35,7 @@ settings:
       link_card_row: link_card_row
       url_and_file: url_and_file
       quick_link_row: quick_link_row
+      full_width_lift_element: full_width_lift_element
       service_list: service_list
     negate: 0
     target_bundles_drag_drop:
@@ -57,6 +59,9 @@ settings:
         enabled: false
       full_width_card_lift:
         weight: 21
+        enabled: true
+      full_width_lift_element:
+        weight: 30
         enabled: true
       header_description_link:
         weight: 20
