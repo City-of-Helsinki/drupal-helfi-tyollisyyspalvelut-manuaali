@@ -1,0 +1,34 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_age
+    - node.type.service
+  module:
+    - range
+id: node.service.field_age
+field_name: field_age
+entity_type: node
+bundle: service
+label: 'Tarkenna ikäväliä (valinnainen)'
+description: 'Syötä täsmällinen palvelun osallistujien ikäväli. Esim. 18-29 vuotta.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  field:
+    prefix: ''
+    suffix: '-vuotiaat'
+  from:
+    prefix: ''
+    suffix: ''
+  to:
+    prefix: ''
+    suffix: ''
+  combined:
+    prefix: ''
+    suffix: ''
+field_type: range_integer
