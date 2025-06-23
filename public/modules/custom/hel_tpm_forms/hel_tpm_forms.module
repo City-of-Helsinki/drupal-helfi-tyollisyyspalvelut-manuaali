@@ -30,6 +30,13 @@ function hel_tpm_forms_theme($existing, $type, $theme, $path) {
 }
 
 /**
+ * Implements hook_entity_type_alter().
+ */
+function hel_tpm_forms_entity_type_alter(array &$entity_types) {
+  $entity_types['node']->setHandlerClass('translation', 'Drupal\hel_tpm_forms\NodeServiceTranslationHelper');
+}
+
+/**
  * Implements hook_form_FORM_ID_alter().
  */
 function hel_tpm_forms_form_node_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
@@ -190,25 +197,25 @@ function hel_tpm_forms_node_service_form_alter_helper(&$form, FormStateInterface
 
   // Require age range to be set, unless the `no age restriction` checkbox is
   // checked.
-  $form['field_target_group']['widget'][0]['subform']['field_age']['widget'][0]['from']['#states'] = [
+  $form['field_age']['widget'][0]['from']['#states'] = [
     'required' => [
-      [':input[name="field_target_group[0][subform][field_age_groups][no_age_restriction]"]' => ['checked' => FALSE]],
+      [':input[name="field_age_groups[no_age_restriction]"]' => ['checked' => FALSE]],
     ],
   ];
-  $form['field_target_group']['widget'][0]['subform']['field_age']['widget'][0]['to']['#states'] = [
+  $form['field_age']['widget'][0]['to']['#states'] = [
     'required' => [
-      [':input[name="field_target_group[0][subform][field_age_groups][no_age_restriction]"]' => ['checked' => FALSE]],
+      [':input[name="field_age_groups[no_age_restriction]"]' => ['checked' => FALSE]],
     ],
   ];
 
   // Set field_target_group_municipality visible and required
   // only when field_municipality_irrelevant is not selected.
-  $form['field_target_group']['widget'][0]['subform']['field_target_group_municipality']['widget']['#states'] = [
+  $form['field_target_group_municipality']['widget']['#states'] = [
     'visible' => [
-      [':input[name="field_target_group[0][subform][field_municipality_irrelevant][value]"]' => ['checked' => FALSE]],
+      [':input[name="field_municipality_irrelevant[value]"]' => ['checked' => FALSE]],
     ],
     'required' => [
-      [':input[name="field_target_group[0][subform][field_municipality_irrelevant][value]"]' => ['checked' => FALSE]],
+      [':input[name="field_municipality_irrelevant[value]"]' => ['checked' => FALSE]],
     ],
   ];
 
@@ -248,19 +255,13 @@ function hel_tpm_forms_validate_service_form_helper(array &$form, FormStateInter
     }
   }
 
-  // Check that age range is given, unless age group is selected. Not trying to
-  // validate, if the field `field_target_group` is missing.
-  if (($target_group = $form_state->getValue('field_target_group')) && $require_fields) {
-    _hel_tpm_forms_validate_age_groups($target_group, $form_state);
-    _hel_tpm_forms_validate_municipality($target_group, $form_state);
-    _hel_tpm_forms_validate_target_group_description($target_group, $form_state);
-  }
-
   if ($require_fields) {
+    _hel_tpm_forms_validate_age_groups($form, $form_state);
+    _hel_tpm_forms_validate_municipality($form, $form_state);
+    _hel_tpm_forms_validate_target_group_description($form, $form_state);
     if ($languages = $form_state->getValue('field_service_languages')) {
       _hel_tpm_forms_validate_paragraph_language_selection($form, $form_state, $languages, 'field_service_languages');
     }
-    _hel_tpm_forms_validate_required_paragraph_long_texts_with_editor($form, $form_state);
   }
 }
 
@@ -355,21 +356,20 @@ function _hel_tpm_forms_validate_paragraph_language_selection(array $form, FormS
 /**
  * Helper validator for municipality selections.
  *
- * @param array $target_group
- *   Submitted target group values.
+ * @param array $form
+ *   Submitted entity form.
  * @param \Drupal\Core\Form\FormStateInterface $form_state
  *   Submitted form state object.
  *
  * @return void
  *   -
  */
-function _hel_tpm_forms_validate_municipality($target_group, FormStateInterface &$form_state) {
-  $subform = $target_group[0]['subform'];
-  $municipality_irrelevant = $subform['field_municipality_irrelevant'];
-  $municipalities = $subform['field_target_group_municipality'];
-  if ((empty($municipality_irrelevant) || $municipality_irrelevant['value'] == 0) && empty($municipalities)) {
+function _hel_tpm_forms_validate_municipality($form, FormStateInterface &$form_state) {
+  $municipality_irrelevant = $form['field_municipality_irrelevant']['widget']['value']['#value'] ?? NULL;
+  $municipalities = $form['field_target_group_municipality']['widget']['#value'] ?? NULL;
+  if ((empty($municipality_irrelevant) || $municipality_irrelevant == 0) && empty($municipalities)) {
     $form_state->setErrorByName(
-      'field_target_group][0][subform][field_target_group_municipality',
+      'field_target_group_municipality',
       t("Selecting municipalities is required, unless municipality doesn't matter  is selected.")
     );
   }
@@ -378,26 +378,26 @@ function _hel_tpm_forms_validate_municipality($target_group, FormStateInterface 
 /**
  * Helper validator for age groups.
  *
- * @param array $target_group
- *   Target group paragraph values.
+ * @param array $form
+ *   Submitted entity form.
  * @param \Drupal\Core\Form\FormStateInterface $form_state
  *   Form state interface.
  *
  * @return void
  *   -
  */
-function _hel_tpm_forms_validate_age_groups($target_group, &$form_state) {
-  $age_groups = $target_group[0]['subform']['field_age_groups'][0]['value'] ?? NULL;
-  $age_from = $target_group[0]['subform']['field_age'][0]['from'] ?? NULL;
-  $age_to = $target_group[0]['subform']['field_age'][0]['to'] ?? NULL;
+function _hel_tpm_forms_validate_age_groups($form, &$form_state) {
+  $age_groups = $form['field_age_groups']['widget']['#value'] ?? NULL;
+  $age_from = $form['field_age']['widget'][0]['from']['#value'] ?? NULL;
+  $age_to = $form['field_age']['widget'][0]['to']['#value'] ?? NULL;
 
   if (empty($age_groups) && (empty($age_from) || empty($age_to))) {
     $form_state->setErrorByName(
-      "field_target_group][0][subform][field_age_groups",
+      "field_age_groups",
       t('Selecting an age group is mandatory, unless the age range is set.')
     );
     $form_state->setErrorByName(
-      "field_target_group][0][subform][field_age][0",
+      "field_age][0",
       t('Setting the age range is mandatory, unless an age group is selected.')
     );
   }
@@ -406,20 +406,19 @@ function _hel_tpm_forms_validate_age_groups($target_group, &$form_state) {
 /**
  * Helper validator for target group description.
  *
- * @param array $target_group
- *   Target group paragraph values.
+ * @param array $form
+ *   Submitted entity form.
  * @param \Drupal\Core\Form\FormStateInterface $form_state
  *   Form state object.
  *
  * @return void
  *   -
  */
-function _hel_tpm_forms_validate_target_group_description($target_group, &$form_state) {
-  $subform = $target_group[0]['subform'];
-  $value = $subform['field_description']['0']['value'];
+function _hel_tpm_forms_validate_target_group_description($form, &$form_state) {
+  $value = $form['field_target_group_description']['widget']['0']['value']['#value'] ?? NULL;
   if ((empty($value))) {
     $form_state->setErrorByName(
-      'field_target_group][0][subform][field_description',
+      'field_target_group_description',
       t("Target group description is required.")
     );
   }
