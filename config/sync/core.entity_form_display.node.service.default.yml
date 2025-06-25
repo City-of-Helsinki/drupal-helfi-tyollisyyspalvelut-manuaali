@@ -4,6 +4,8 @@ status: true
 dependencies:
   config:
     - field.field.node.service.field_accessibility
+    - field.field.node.service.field_age
+    - field.field.node.service.field_age_groups
     - field.field.node.service.field_attendance
     - field.field.node.service.field_attendance_text
     - field.field.node.service.field_career_markings
@@ -20,6 +22,7 @@ dependencies:
     - field.field.node.service.field_life_situations
     - field.field.node.service.field_measures_during_attendance
     - field.field.node.service.field_municipality_guidance
+    - field.field.node.service.field_municipality_irrelevant
     - field.field.node.service.field_municipality_specific
     - field.field.node.service.field_obligatoryness
     - field.field.node.service.field_obligatoryness_freetext
@@ -49,6 +52,8 @@ dependencies:
     - field.field.node.service.field_statements
     - field.field.node.service.field_statements_unemployment
     - field.field.node.service.field_target_group
+    - field.field.node.service.field_target_group_description
+    - field.field.node.service.field_target_group_municipality
     - node.type.service
     - workflows.workflow.service_moderation
   module:
@@ -65,6 +70,7 @@ dependencies:
     - markup
     - maxlength
     - paragraphs
+    - range
     - select2
     - text
 third_party_settings:
@@ -246,7 +252,11 @@ third_party_settings:
     group_basic_info_2:
       children:
         - field_life_situations
-        - field_target_group
+        - field_age_groups
+        - field_age
+        - field_municipality_irrelevant
+        - field_target_group_municipality
+        - field_target_group_description
       label: Kohderyhmä
       region: content
       parent_name: group_basic_information
@@ -551,6 +561,24 @@ content:
       match_operator: CONTAINS
       match_limit: 10
     third_party_settings: {  }
+  field_age:
+    type: range
+    weight: 12
+    region: content
+    settings:
+      label:
+        from: Ikävuodesta
+        to: Ikävuoteen
+      placeholder:
+        from: ''
+        to: ''
+    third_party_settings: {  }
+  field_age_groups:
+    type: options_buttons
+    weight: 11
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   field_attendance_text:
     type: text_textarea
     weight: 9
@@ -738,6 +766,13 @@ content:
     third_party_settings:
       ief_popup:
         ief_popup_enabled: '1'
+  field_municipality_irrelevant:
+    type: boolean_checkbox
+    weight: 13
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
   field_municipality_specific:
     type: municipality_specific_ief_widget
     weight: 8
@@ -989,17 +1024,23 @@ content:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
-  field_target_group:
-    type: entity_reference_paragraphs
-    weight: 11
+  field_target_group_description:
+    type: text_textarea
+    weight: 15
     region: content
     settings:
-      title: 'Paragraafi '
-      title_plural: Paragraafit
-      edit_mode: open
-      add_mode: dropdown
-      form_display_mode: default
-      default_paragraph_type: ''
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_target_group_municipality:
+    type: select2_entity_reference
+    weight: 14
+    region: content
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
     third_party_settings: {  }
   hel_tpm_service_help:
     weight: 0
@@ -1051,6 +1092,7 @@ hidden:
   field_attendance: true
   field_service_execution: true
   field_service_radioactivity: true
+  field_target_group: true
   path: true
   promote: true
   sticky: true

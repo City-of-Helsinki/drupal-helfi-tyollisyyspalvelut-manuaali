@@ -1,0 +1,24 @@
+uuid: 329409a3-1be4-43c6-8915-42b29d793174
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_body
+    - filter.format.filtered_html
+    - paragraphs.paragraphs_type.hero_lift
+  module:
+    - text
+id: paragraph.hero_lift.field_body
+field_name: field_body
+entity_type: paragraph
+bundle: hero_lift
+label: Body
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - filtered_html
+field_type: text_long
