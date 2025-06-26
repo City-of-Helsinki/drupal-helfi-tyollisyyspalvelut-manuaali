@@ -9,17 +9,16 @@ dependencies:
     - field.storage.node.field_age
     - field.storage.node.field_age_groups
     - field.storage.node.field_description
+    - field.storage.node.field_free_service
     - field.storage.node.field_implementation_extra_info
     - field.storage.node.field_life_situations
     - field.storage.node.field_municipality_irrelevant
     - field.storage.node.field_service_execution_text
     - field.storage.node.field_service_languages
-    - field.storage.node.field_service_price
     - field.storage.node.field_service_producer
     - field.storage.node.field_service_set
     - field.storage.node.field_service_time_and_location
     - field.storage.node.field_target_group_municipality
-    - field.storage.paragraph.field_free_service
     - field.storage.paragraph.field_language
     - field.storage.paragraph.field_level
     - field.storage.paragraph.field_service_location
@@ -145,16 +144,13 @@ field_settings:
       config:
         - field.storage.node.field_description
   field_free_service:
-    label: 'Service price » Paragraph » Palvelu on maksullinen'
+    label: 'Palvelu on maksullinen'
     datasource_id: 'entity:node'
-    property_path: 'field_service_price:entity:field_free_service'
+    property_path: field_free_service
     type: boolean
     dependencies:
       config:
-        - field.storage.node.field_service_price
-        - field.storage.paragraph.field_free_service
-      module:
-        - paragraphs
+        - field.storage.node.field_free_service
   field_implementation_extra_info:
     label: Toteutustapa
     datasource_id: 'entity:node'
