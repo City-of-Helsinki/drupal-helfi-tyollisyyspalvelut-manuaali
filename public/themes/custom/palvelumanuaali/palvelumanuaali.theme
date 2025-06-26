@@ -507,13 +507,6 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id) {
     if ($form_id == 'node_service_edit_form' || $form_id == 'node_service_form') {
       $node = $form_state->getFormObject()->getEntity();
       if (!($node->isDefaultTranslation())) {
-        $form['field_service_price']['widget'][0]['subform']['field_free_service']['#disabled'] = TRUE;
-        $form['field_service_price']['widget'][0]['subform']['field_price']['#disabled'] = TRUE;
-        $form['field_accessibility']['#disabled'] = TRUE;
-        $form['field_age']['#disabled'] = TRUE;
-        $form['field_age_groups']['#disabled'] = TRUE;
-        $form['field_municipality_irrelevant']['#disabled'] = TRUE;
-        $form['field_target_group_municipality']['#disabled'] = TRUE;
         $form['field_service_languages']['#disabled'] = TRUE;
       }
     }
