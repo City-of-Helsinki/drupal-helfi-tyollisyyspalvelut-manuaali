@@ -856,9 +856,37 @@ function hel_tpm_general_update_10117(&$sandbox) {
 }
 
 /**
- * Migrate field_service_price paragraph fields to node.
+ * Create new node service price fields.
  */
 function hel_tpm_general_update_10118(&$sandbox) {
+  $config_path = Settings::get('config_sync_directory');
+  $source = new FileStorage($config_path);
+  $fields = [
+    'field_price',
+    'field_free_service',
+    'field_price_description',
+  ];
+
+  foreach ($fields as $field) {
+    $storage_config = sprintf('field.storage.node.%s', $field);
+    $field_storage_config = \Drupal::entityTypeManager()->getStorage('field_storage_config');
+    if (!$field_storage_config->load('node.' . $field)) {
+      $field_entity = $field_storage_config->createFromStorageRecord($source->read($storage_config));
+      $field_entity->save();
+    }
+
+    $node_field_config = sprintf('field.field.node.service.%s', $field);
+    $field_config = \Drupal::entityTypeManager()->getStorage('field_config');
+    if (!$field_config->load('node.service.' . $field)) {
+      $field_config->create($source->read($node_field_config))->save();
+    }
+  }
+}
+
+/**
+ * Migrate field_service_price paragraph fields to node.
+ */
+function hel_tpm_general_update_10119(&$sandbox) {
   $node_paragraph_field = 'field_service_price';
 
   $migration_table = [
