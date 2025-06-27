@@ -5,10 +5,6 @@
  * Module file for hel_tpm_service_dates.
  */
 
-use Drupal\Component\Utility\NestedArray;
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\hel_tpm_service_dates\ServiceDatesAjaxDependency;
-
 /**
  * Implements hook_theme().
  */
@@ -18,76 +14,4 @@ function hel_tpm_service_dates_theme() {
       'render element' => 'widget',
     ],
   ];
-}
-
-/**
- * Implements hook_field_widget_complete_form_alter().
- */
-function hel_tpm_service_dates_field_widget_complete_form_alter(&$field_widget_complete_form, FormStateInterface $form_state, $context) {
-  if ($field_widget_complete_form['widget']['#field_name'] === 'field_service_time_and_location') {
-    $widget = &$field_widget_complete_form['widget'];
-    for ($i = 0; $i <= $widget['#max_delta']; $i++) {
-      $subform = &$widget[$i]['subform'];
-      _hel_tpm_service_dates_service_date_selection($subform, $form_state);
-    }
-  }
-}
-
-/**
- * Handles date selection for the service form and updates dependent fields.
- *
- * This method determines the selected value from user input or default values,
- * and dynamically adjusts the access to related form fields based on specified
- * dependencies.
- *
- * @param array &$form
- *   The structured array representing the form.
- * @param \Drupal\Core\Form\FormStateInterface $form_state
- *   The current state of the form. Provides access to user input and other
- *   state information.
- *
- * @return void
- *   void
- */
-function _hel_tpm_service_dates_service_date_selection(&$form, $form_state) {
-  $controller = 'field_date_selection';
-  $storage = $form_state->getStorage();
-
-  $parents = $form['#parents'];
-  $parents[] = $controller;
-  $user_input = $form_state->getUserInput();
-
-  $selected_value = $form[$controller]['widget']['#default_value'];
-
-  if (!empty($user_input) && $storage['entity_default_langcode'] === $storage['langcode']) {
-    $selected_value = NestedArray::getValue($user_input, $parents);
-  }
-
-  $dependencies = [
-    'field_time_additional_info' => [
-      'date_not_available',
-      'start_and_end_date',
-      'service_continous',
-      'separate_dates',
-    ],
-    'field_start_and_end_date' => [
-      'start_and_end_date',
-    ],
-    'field_weekday_and_time' => [
-      'start_and_end_date',
-      'service_continous',
-    ],
-    'field_date' => [
-      'separate_dates',
-    ],
-  ];
-
-  foreach ($dependencies as $dependent => $dependency) {
-    ServiceDatesAjaxDependency::widgetContentIf(
-        in_array($selected_value, $dependency),
-        $form['field_date_selection']['widget'],
-        $form[$dependent]['widget'],
-        $form_state
-      );
-  }
 }
