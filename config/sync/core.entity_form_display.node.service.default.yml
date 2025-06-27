@@ -240,7 +240,6 @@ third_party_settings:
         - field_description
         - field_service_set
         - field_service_languages
-        - field_service_price
         - field_free_service
         - field_price
         - field_price_description
@@ -954,18 +953,6 @@ content:
       collapsed: false
       revision: false
     third_party_settings: {  }
-  field_service_price:
-    type: hel_tpm_service_dates_service_time_and_place_widget
-    weight: 31
-    region: content
-    settings:
-      title: Paragraph
-      title_plural: Paragraphs
-      edit_mode: open
-      add_mode: dropdown
-      form_display_mode: default
-      default_paragraph_type: service_price
-    third_party_settings: {  }
   field_service_producer:
     type: select2_entity_reference
     weight: 18
@@ -1119,6 +1106,7 @@ content:
 hidden:
   field_attendance: true
   field_service_execution: true
+  field_service_price: true
   field_service_radioactivity: true
   field_target_group: true
   path: true
