@@ -152,7 +152,7 @@ final class WeekdayAndTimeFieldWidget extends WidgetBase {
     $parent_values = NestedArray::getValue($form_state->getValues(), $parents);
 
     // No need to validate time values.
-    if ($parent_values['selector'] !== 1) {
+    if (empty($parent_values['selector']) || $parent_values['selector'] !== 1) {
       $element['start']['#value'] = NULL;
       $element['end']['#value'] = NULL;
       return;
