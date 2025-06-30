@@ -1,0 +1,30 @@
+uuid: b97d0204-8864-4608-807d-a63d17087228
+langcode: fi
+status: true
+dependencies:
+  module:
+    - options
+    - paragraphs
+id: paragraph.field_alignment
+field_name: field_alignment
+entity_type: paragraph
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: left
+      label: Vasemmalla
+    -
+      value: right
+      label: Oikealla
+    -
+      value: full
+      label: 'Koko alue'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

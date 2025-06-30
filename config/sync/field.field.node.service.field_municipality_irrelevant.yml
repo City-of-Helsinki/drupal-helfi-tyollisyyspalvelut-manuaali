@@ -1,0 +1,21 @@
+uuid: 1698b2a2-282f-442f-b269-d4ebd809126d
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_municipality_irrelevant
+    - node.type.service
+id: node.service.field_municipality_irrelevant
+field_name: field_municipality_irrelevant
+entity_type: node
+bundle: service
+label: 'Kotikunnalla ei merkitystä'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: Käytössä
+  off_label: 'Pois päältä'
+field_type: boolean

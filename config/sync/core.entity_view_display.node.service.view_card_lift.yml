@@ -5,7 +5,10 @@ dependencies:
   config:
     - core.entity_view_mode.node.view_card_lift
     - field.field.node.service.field_accessibility
+    - field.field.node.service.field_age
+    - field.field.node.service.field_age_groups
     - field.field.node.service.field_attendance
+    - field.field.node.service.field_attendance_text
     - field.field.node.service.field_career_markings
     - field.field.node.service.field_client_consent
     - field.field.node.service.field_contact_info
@@ -20,6 +23,7 @@ dependencies:
     - field.field.node.service.field_life_situations
     - field.field.node.service.field_measures_during_attendance
     - field.field.node.service.field_municipality_guidance
+    - field.field.node.service.field_municipality_irrelevant
     - field.field.node.service.field_municipality_specific
     - field.field.node.service.field_obligatoryness
     - field.field.node.service.field_obligatoryness_freetext
@@ -32,6 +36,7 @@ dependencies:
     - field.field.node.service.field_service_coordination
     - field.field.node.service.field_service_exceptions
     - field.field.node.service.field_service_execution
+    - field.field.node.service.field_service_execution_text
     - field.field.node.service.field_service_implement
     - field.field.node.service.field_service_languages
     - field.field.node.service.field_service_other_info
@@ -48,6 +53,8 @@ dependencies:
     - field.field.node.service.field_statements
     - field.field.node.service.field_statements_unemployment
     - field.field.node.service.field_target_group
+    - field.field.node.service.field_target_group_description
+    - field.field.node.service.field_target_group_municipality
     - node.type.service
   module:
     - user
@@ -98,7 +105,10 @@ hidden:
   entity_print_view_word_docx: true
   entitygroupfield: true
   field_accessibility: true
+  field_age: true
+  field_age_groups: true
   field_attendance: true
+  field_attendance_text: true
   field_career_markings: true
   field_client_consent: true
   field_contact_info: true
@@ -112,6 +122,7 @@ hidden:
   field_life_situations: true
   field_measures_during_attendance: true
   field_municipality_guidance: true
+  field_municipality_irrelevant: true
   field_municipality_specific: true
   field_obligatoryness: true
   field_obligatoryness_freetext: true
@@ -124,6 +135,7 @@ hidden:
   field_service_coordination: true
   field_service_exceptions: true
   field_service_execution: true
+  field_service_execution_text: true
   field_service_implement: true
   field_service_languages: true
   field_service_other_info: true
@@ -139,6 +151,8 @@ hidden:
   field_statements: true
   field_statements_unemployment: true
   field_target_group: true
+  field_target_group_description: true
+  field_target_group_municipality: true
   flag_flag_list_template_1: true
   flag_lists: true
   langcode: true

@@ -24,10 +24,10 @@ final class TimeAndPlaceFormatter extends EntityReferenceRevisionsEntityFormatte
   public function viewElements(FieldItemListInterface $items, $langcode): array {
     $deltasToRemove = [];
     foreach ($this->getEntitiesToView($items, $langcode) as $delta => $entity) {
-      if (!$entity->hasField('field_service_location') || !$entity->hasField('field_dates')) {
+      if (!$entity->hasField('field_service_location') || !$entity->hasField('field_date_selection')) {
         continue;
       }
-      if ($entity->get('field_service_location')->isEmpty() && $entity->get('field_dates')->isEmpty()) {
+      if ($entity->get('field_service_location')->isEmpty() && $entity->get('field_date_selection')->isEmpty()) {
         $deltasToRemove[] = $delta;
       }
     }

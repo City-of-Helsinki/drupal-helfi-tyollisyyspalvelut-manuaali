@@ -1,0 +1,112 @@
+
+.full-width-lift-element {
+    display: flex;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    .field--name-field-lift-media   > div,
+    .field--name-field-media-image {
+      height: 100%;
+    }
+    .content-wrapper {
+      z-index: 1;
+    }
+  &.background {
+    &--blue {
+      background: clr(footer-color);
+      .content-wrapper,
+      .h3{
+        color: clr(text-inverse);
+      }
+    }
+    &--light_blue {
+      background: clr(light-border);
+    }
+    &--transparent {
+      background: transparent;
+    }
+    &--white {
+      background: clr(text-inverse);
+    }
+  }
+  &.alignment{
+    &--left{
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: column;
+      @include large {
+        flex-direction: row;
+      }
+      .field--name-field-lift-media {
+        order: 1;
+        border-top-left-radius: 16px;
+        border-bottom-left-radius: 16px;
+        width: 100%;
+        @include large {
+          width: 50%;
+        }
+      }
+      .content-wrapper {
+        order: 2;
+      }
+    }
+    &--right{
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        @include large {
+          flex-direction: row;
+        }
+        .field--name-field-lift-media {
+          order: 2;
+          border-top-right-radius: 16px;
+          border-bottom-right-radius: 16px;
+          width: 100%;
+          @include large {
+            width: 50%;
+          }
+        }
+        .content-wrapper {
+          order: 1;
+        }
+    }
+    &--full {
+      .field--name-field-lift-media {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+      }
+    }
+  }
+  .content-wrapper {
+    padding: 18px 16px 32px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    @include large {
+      padding: 80px;
+      width: 50%;
+    }
+    p {
+      max-width: 55ch;
+    }
+    ul {
+      @extend .bulleted-list;
+      li {
+        @extend .list-item;
+      }
+    }
+    ol {
+        @extend .custom-counter-list;
+      > li {
+        @extend .custom-counter-element;
+      }
+    }
+    ol li {
+      &::before {
+        @extend .custom-counter-number;
+      }
+    }
+  }
+
+}

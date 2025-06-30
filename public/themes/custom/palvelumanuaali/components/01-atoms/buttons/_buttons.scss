@@ -241,6 +241,20 @@ $button-colors: (
   }
 }
 
+//variation white
+@mixin arrow-right-white {
+  &::after {
+    background-image: url("../../assets/images/icons/arrow-right.svg");
+    content: "";
+    display: block;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    background-size: cover;
+  }
+}
+
 //button symbol variations
 @mixin  questionmark-left-background {
   &::before {
@@ -910,4 +924,17 @@ button {
 
 .js-media-library-open-button {
   margin-top: $space;
+}
+
+//full widh lift element link button
+.field--name-field-button-link {
+  max-width: fit-content;
+  a {
+    @extend .button;
+    @include arrow-right-white;
+    display: flex;
+    gap: $space;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
 }

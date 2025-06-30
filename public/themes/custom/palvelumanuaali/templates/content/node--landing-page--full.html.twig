@@ -64,15 +64,14 @@
  *   is an administrator.
  *
  * @see template_preprocess_node()
- *
- * @todo Remove the id attribute (or make it a class), because if that gets
- *   rendered twice on a page this is invalid CSS for example: two lists
- *   in different view modes.
  */
 #}
 {% if logged_in %}
   {% embed "@pages/content-types/landing-page.twig" with {
   } %}
+      {% block paragraph %}
+    {{ content.field_paragraph }}
+  {% endblock %}
 
     {% block greeting %}
     {% set greeting_text = 'Welcome to the Service Manual!'|t  %}

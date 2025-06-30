@@ -1,0 +1,33 @@
+uuid: 31417b2f-d5fb-4567-ac79-cffdb216b13f
+langcode: fi
+status: true
+dependencies:
+  module:
+    - options
+    - paragraphs
+id: paragraph.field_background_color
+field_name: field_background_color
+entity_type: paragraph
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: blue
+      label: Sininen
+    -
+      value: light_blue
+      label: Vaaleansininen
+    -
+      value: transparent
+      label: Läpinäkyvä
+    -
+      value: white
+      label: Valkoinen
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\hel_tpm_service_dates\Plugin\Field\FieldFormatter;
 
+use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Field\Attribute\FieldFormatter;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
@@ -58,20 +59,24 @@ final class WeekdayAndTimeFieldDefaultFormatter extends FormatterBase {
         return $element;
       }
 
-      foreach ($weekdays['value'] as $weekday => $value) {
+      foreach ($weekdays['value'] as $weekday => $values) {
+        $string_args = ['@day' => WeekdayAndTimeFieldWidget::$weekdays[$weekday]];
+        foreach ($values as $key => $value) {
+          $start_key = sprintf('@start%s', $key);
+          $end_key = sprintf('@end%s', $key);
+          if ($value['time']['start'] instanceof DrupalDateTime) {
+            $string_args[$start_key] = $value['time']['start']->format('H:i');
+          }
+          if ($value['time']['end'] instanceof DrupalDateTime) {
+            $string_args[$end_key] = $value['time']['end']->format('H:i');
+          }
+        }
         $markup[] = [
           '#type' => 'item',
           '#markup' => $this->stringTranslation->formatPlural(
-            count($value),
-            '@day at @start1 - @end1',
-            '@day at @start1 - @end1 and @start2 - @end2',
-            [
-              '@day' => WeekdayAndTimeFieldWidget::$weekdays[$weekday],
-              '@start1' => !empty($value[0]['time']['start']) ? $value[0]['time']['start']->format('H:i') : '',
-              '@end1' => !empty($value[0]['time']['end']) ? $value[0]['time']['end']->format('H:i') : '',
-              '@start2' => !empty($value[1]['time']['start']) ? $value[1]['time']['start']->format('H:i') : '',
-              '@end2' => !empty($value[1]['time']['end']) ? $value[1]['time']['end']->format('H:i') : '',
-            ]
+            count($values),
+            '@day at @start0 - @end0',
+            '@day at @start0 - @end0 and @start1 - @end1', $string_args
           ),
         ];
       }

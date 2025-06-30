@@ -415,6 +415,28 @@ function palvelumanuaali_theme_suggestions_field_alter(array &$suggestions, arra
 }
 
 /**
+ * Implements hook_preprocess_paragraph().
+ */
+function palvelumanuaali_preprocess_paragraph(&$variables) {
+  $paragraph = $variables['paragraph'];
+  $color = [];
+  $alignment = [];
+
+  // Turn user selected column width to a Bootstrap class.
+  if ($paragraph->hasField('field_alignment') && !$paragraph->get('field_alignment')->isEmpty()) {
+    $alignment = $paragraph->get('field_alignment')->getValue()[0]['value'];
+    $variables['alignment'] = 'alignment--' . $alignment;
+
+  }
+
+  // Check if the paragraph has a color field with a value.
+  if ($paragraph->hasField('field_background_color') && !$paragraph->get('field_background_color')->isEmpty()) {
+    $color = $paragraph->get('field_background_color')->getValue()[0]['value'];
+    $variables['color'] = 'background--' . $color;
+  }
+}
+
+/**
  * Add views unformatted template suggestions.
  */
 function palvelumanuaali_theme_suggestions_fieldset_alter(array &$suggestions, array $variables, $hook) {
@@ -488,10 +510,10 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id) {
         $form['field_service_price']['widget'][0]['subform']['field_free_service']['#disabled'] = TRUE;
         $form['field_service_price']['widget'][0]['subform']['field_price']['#disabled'] = TRUE;
         $form['field_accessibility']['#disabled'] = TRUE;
-        $form['field_target_group']['widget'][0]['subform']['field_age']['#disabled'] = TRUE;
-        $form['field_target_group']['widget'][0]['subform']['field_age_groups']['#disabled'] = TRUE;
-        $form['field_target_group']['widget'][0]['subform']['field_municipality_irrelevant']['#disabled'] = TRUE;
-        $form['field_target_group']['widget'][0]['subform']['field_target_group_municipality']['#disabled'] = TRUE;
+        $form['field_age']['#disabled'] = TRUE;
+        $form['field_age_groups']['#disabled'] = TRUE;
+        $form['field_municipality_irrelevant']['#disabled'] = TRUE;
+        $form['field_target_group_municipality']['#disabled'] = TRUE;
         $form['field_service_languages']['#disabled'] = TRUE;
       }
     }
