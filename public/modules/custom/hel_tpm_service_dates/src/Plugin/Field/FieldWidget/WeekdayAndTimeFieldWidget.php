@@ -153,13 +153,15 @@ final class WeekdayAndTimeFieldWidget extends WidgetBase {
 
     // No need to validate time values.
     if (empty($parent_values['selector']) || $parent_values['selector'] !== 1) {
-      $element['start']['#value'] = NULL;
-      $element['end']['#value'] = NULL;
       return;
     }
 
-    if (empty($element['start']['#value']['object']) || empty($element['end']['#value']['object'])) {
-      $form_state->setError($element, $this->t('Time is required.'));
+    if (empty($element['start']['#value']['object'])) {
+      $form_state->setError($element['start'], $this->t('Time is required.'));
+      return;
+    }
+    if (empty($element['end']['#value']['object'])) {
+      $form_state->setError($element['end'], $this->t('Time is required.'));
       return;
     }
 
