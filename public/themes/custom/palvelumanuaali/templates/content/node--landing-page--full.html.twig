@@ -66,15 +66,7 @@
  * @see template_preprocess_node()
  */
 #}
-{% embed "@pages/content-types/landing-page.twig" with {
-  hero_text__heading: content.field_hero_label,
-  hero_text__body: content.field_hero_text,
-  hero_text__button__url: content.field_hero_link[0]['#url'],
-  hero_text__button__text: content.field_hero_link[0]['#title'],
-  hero_text__content__modifiers: ['half', 'padding-top'],
-  hero_text__media: content.field_hero_image,
-  hero_text__image__modifiers: ['half', 'padding-top'],
-} %}
+{% embed "@pages/content-types/landing-page.twig" %}
   {% block paragraph %}
     {{ content.field_paragraph }}
   {% endblock %}
