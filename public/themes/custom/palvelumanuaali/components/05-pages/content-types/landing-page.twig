@@ -1,20 +1,4 @@
   {% block page_content %}
-    {% block greeting %}
-    {% endblock %}
-    {% include "@molecules/hero-text/hero-text.twig" with {
-      hero_text__content__modifiers: hero_text__content__modifiers,
-      hero_text__heading_level: 1,
-      hero_text__heading: hero_text__heading,
-      hero_text__body: hero_text__body,
-      hero_text__base_class: hero_text__base_class,
-      hero_text__body__modifiers: hero_text__body__modifiers,
-      hero_text__body__base_class: hero_text__body__base_class,
-      hero_text__button__url: hero_text__button__url,
-      hero_text__button__text: hero_text__button__text,
-      hero_text__heading__link_base_class: 'heading-link',
-      hero_text__media: hero_text__media,
-      hero_text__image__modifiers: hero_text__image__modifiers,
-    } %}
     {% block paragraph %}
     {% endblock %}
   {% endblock %}
