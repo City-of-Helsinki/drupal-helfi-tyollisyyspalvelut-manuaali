@@ -66,22 +66,6 @@
  * @see template_preprocess_node()
  */
 #}
-{% if logged_in %}
-  {% embed "@pages/content-types/landing-page.twig" with {
-  } %}
-      {% block paragraph %}
-    {{ content.field_paragraph }}
-  {% endblock %}
-
-    {% block greeting %}
-    {% set greeting_text = 'Welcome to the Service Manual!'|t  %}
-    <div class='welcome-text'>
-      <h1 class='h2 h2--semibold h2--margin-bottom-ninety text'>{{ greeting_text }}</h2>
-    </div>
-    {% endblock %}
-
-  {% endembed %}
-{% else %}
   {% embed "@pages/content-types/landing-page.twig" with {
     hero_text__heading: content.field_hero_label,
     hero_text__body: content.field_hero_text,
@@ -95,4 +79,3 @@
       {{ content.field_paragraph }}
     {% endblock %}
   {% endembed %}
-{% endif %}
