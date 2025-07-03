@@ -33,11 +33,6 @@ class ExposedEmbed extends Embed {
       $this->view->get_total_rows = TRUE;
     }
     $this->view->initHandlers();
-    if ($this->usesExposed()) {
-      /** @var \Drupal\views\Plugin\views\exposed_form\ExposedFormPluginInterface $exposed_form */
-      $exposed_form = $this->getPlugin('exposed_form');
-      $exposed_form->preExecute();
-    }
 
     $filters = $this->getDefaultFilters();
     if (!empty($filters)) {
@@ -45,9 +40,17 @@ class ExposedEmbed extends Embed {
         if (empty($this->view->filter[$field])) {
           continue;
         }
-        $this->view->exposed_data[$field] = $value;
         $this->view->filter[$field]->value = $value;
       }
+
+      $exposed_input = $this->view->getExposedInput();
+      $exposed_input = array_merge($exposed_input, $filters);
+      $this->view->setExposedInput($exposed_input);
+    }
+
+    if ($this->usesExposed()) {
+      $exposed_form = $this->getPlugin('exposed_form');
+      $exposed_form->preExecute();
     }
 
     foreach ($this->extenders as $extender) {
