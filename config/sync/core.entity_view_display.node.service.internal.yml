@@ -5,6 +5,8 @@ dependencies:
   config:
     - core.entity_view_mode.node.internal
     - field.field.node.service.field_accessibility
+    - field.field.node.service.field_age
+    - field.field.node.service.field_age_groups
     - field.field.node.service.field_attendance
     - field.field.node.service.field_attendance_text
     - field.field.node.service.field_career_markings
@@ -21,6 +23,7 @@ dependencies:
     - field.field.node.service.field_life_situations
     - field.field.node.service.field_measures_during_attendance
     - field.field.node.service.field_municipality_guidance
+    - field.field.node.service.field_municipality_irrelevant
     - field.field.node.service.field_municipality_specific
     - field.field.node.service.field_obligatoryness
     - field.field.node.service.field_obligatoryness_freetext
@@ -50,6 +53,8 @@ dependencies:
     - field.field.node.service.field_statements
     - field.field.node.service.field_statements_unemployment
     - field.field.node.service.field_target_group
+    - field.field.node.service.field_target_group_description
+    - field.field.node.service.field_target_group_municipality
     - node.type.service
   module:
     - entity_reference_revisions
@@ -270,7 +275,7 @@ content:
     region: content
   field_contact_info:
     type: entity_reference_entity_view
-    label: above
+    label: hidden
     settings:
       view_mode: default
       link: true
@@ -420,6 +425,8 @@ hidden:
   entity_print_view_pdf: true
   entity_print_view_word_docx: true
   field_accessibility: true
+  field_age: true
+  field_age_groups: true
   field_attendance: true
   field_attendance_text: true
   field_client_consent: true
@@ -430,6 +437,7 @@ hidden:
   field_implementation_extra_info: true
   field_instructions_markup: true
   field_life_situations: true
+  field_municipality_irrelevant: true
   field_other_services: true
   field_responsible_municipality: true
   field_responsible_updatee: true
@@ -450,6 +458,8 @@ hidden:
   field_service_time_and_location: true
   field_tags: true
   field_target_group: true
+  field_target_group_description: true
+  field_target_group_municipality: true
   flag_cart: true
   flag_flag_list_template_1: true
   flag_lists: true

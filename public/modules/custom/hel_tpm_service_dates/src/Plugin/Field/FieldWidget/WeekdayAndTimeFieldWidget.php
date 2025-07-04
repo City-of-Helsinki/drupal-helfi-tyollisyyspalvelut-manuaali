@@ -71,17 +71,15 @@ final class WeekdayAndTimeFieldWidget extends WidgetBase {
         $default_values = $values[$day];
       }
 
-      $selector = sprintf('%s-%s', $row_wrapper, 0);
-      $row[$day][0] = $this->createTimeSelectElement($name, $selector, $default_values[0], $form_state, $row_wrapper);
+      $parent_selector = sprintf('%s-%s', $row_wrapper, 0);
+      $row[$day][0] = $this->createTimeSelectElement($name, $parent_selector, $default_values[0], $form_state);
 
-      if ($this->showSecondTimeElement($default_values, $form_state, $selector)) {
-        $selector = sprintf('%s-%s', $row_wrapper, 1);
-        if (empty($default_values[1])) {
-          $default_values[1] = [];
-        }
-        $row[$day][1] = $this->createTimeSelectElement('Add', $selector, $default_values[1], $form_state, $row_wrapper);
-        $row[$day][1]['selector']['#attributes']['class'][] = 'add-time-button';
+      $selector = sprintf('%s-%s', $row_wrapper, 1);
+      if (empty($default_values[1])) {
+        $default_values[1] = [];
       }
+      $row[$day][1] = $this->createTimeSelectElement('Add', $selector, $default_values[1], $form_state, $parent_selector);
+      $row[$day][1]['selector']['#attributes']['class'][] = 'add-time-button';
     }
 
     $element['value'] = $row;
@@ -149,12 +147,21 @@ final class WeekdayAndTimeFieldWidget extends WidgetBase {
    *   the form state to record errors as needed.
    */
   public function validateTimeSelection(&$element, FormStateInterface $form_state, array &$complete_form) {
-    if (empty($element['start']['#value']['object']) && empty($element['end']['#value']['object'])) {
+    $parents = $element['#parents'];
+    array_pop($parents);
+    $parent_values = NestedArray::getValue($form_state->getValues(), $parents);
+
+    // No need to validate time values.
+    if (empty($parent_values['selector']) || $parent_values['selector'] !== 1) {
       return;
     }
 
-    if (empty($element['start']['#value']['object']) || empty($element['end']['#value']['object'])) {
-      $form_state->setError($element, $this->t('Time is required.'));
+    if (empty($element['start']['#value']['object'])) {
+      $form_state->setError($element['start'], $this->t('Time is required.'));
+      return;
+    }
+    if (empty($element['end']['#value']['object'])) {
+      $form_state->setError($element['end'], $this->t('Time is required.'));
       return;
     }
 
@@ -174,30 +181,6 @@ final class WeekdayAndTimeFieldWidget extends WidgetBase {
   }
 
   /**
-   * Determines if the second time element should be displayed.
-   *
-   * @param array $values
-   *   The array containing the values to check for the selector.
-   * @param object $form_state
-   *   The form state object providing state and triggering element data.
-   * @param string $parent_selector
-   *   The selector used to identify the triggering element.
-   *
-   * @return bool
-   *   TRUE if the second time element should be displayed, FALSE otherwise.
-   */
-  private function showSecondTimeElement($values, $form_state, $parent_selector) {
-    $triggering_element = $form_state->getTriggeringElement();
-    if (!empty($triggering_element) && !empty($triggering_element['#attributes']['data-selector']) && $triggering_element['#attributes']['data-selector'] === $parent_selector) {
-      return (bool) $triggering_element['#value'];
-    }
-    if (empty($values[0]['selector'])) {
-      return FALSE;
-    }
-    return (bool) $values[0]['selector'];
-  }
-
-  /**
    * Creates a time select element with a selector and AJAX functionality.
    *
    * @param string $label
@@ -208,13 +191,13 @@ final class WeekdayAndTimeFieldWidget extends WidgetBase {
    *   An array of default values for the element configuration.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   The form state object that carries the form's current state.
-   * @param string $ajax_wrapper
-   *   The identifier of the wrapper element for AJAX updates.
+   * @param string $parent
+   *   Time selection element parent if any.
    *
    * @return array
    *   An array structure defining the selector and associated time elements.
    */
-  private function createTimeSelectElement(string $label, string $selector, array $default_values, FormStateInterface $form_state, string $ajax_wrapper): array {
+  private function createTimeSelectElement(string $label, string $selector, array $default_values, FormStateInterface $form_state, ?string $parent = NULL): array {
     $default_value = !empty($default_values['selector']) ? $default_values['selector'] : NULL;
 
     $element = [
@@ -228,15 +211,15 @@ final class WeekdayAndTimeFieldWidget extends WidgetBase {
           'class' => [$default_value == 1 ? 'selected' : NULL],
         ],
         '#default_value' => $default_value,
-        '#ajax' => [
-          'wrapper' => Html::getId($ajax_wrapper),
-          'event' => 'change',
-          'callback' => [$this, 'toggleTimeAjax'],
-          'blocking' => TRUE,
-        ],
       ],
     ];
 
+    if (!empty($parent)) {
+      $input = sprintf(':input[data-selector="%s"]', $parent);
+      $element['selector']['#states'] = [
+        'visible' => [$input => ['checked' => TRUE]],
+      ];
+    }
     $element['time'] = $this->createTimeElement($default_values, $form_state, $selector);
 
     return $element;
@@ -249,31 +232,41 @@ final class WeekdayAndTimeFieldWidget extends WidgetBase {
    *   An array of values, which may include default times for the elements.
    * @param object $form_state
    *   The current state of the form object.
-   * @param string $ajax_wrapper_id
+   * @param string $element_id
    *   The ID of the AJAX wrapper element for dynamic re-rendering.
    *
    * @return array
    *   A renderable array structure containing start and end time elements.
    */
-  private function createTimeElement($values, $form_state, $ajax_wrapper_id): array {
-    $enabled = $this->showTimeElements($values, $form_state, $ajax_wrapper_id);
-
+  private function createTimeElement($values, $form_state, $element_id): array {
+    $input = sprintf(':input[data-selector="%s"]', $element_id);
     $time_element = [
       '#type' => 'datetime',
       '#label' => $this->t('Time'),
       '#date_date_element' => 'none',
       '#date_time_element' => 'text',
       '#date_increment' => '60',
-      '#access' => $enabled,
-      '#required' => $enabled,
+      '#states' => [
+        'empty' => [
+          $input => ['checked' => FALSE],
+        ],
+      ],
     ];
 
     $element = [
       '#type' => 'container',
-      '#attributes' => ['id' => $ajax_wrapper_id],
+      '#attributes' => ['id' => $element_id],
       'start' => $time_element,
       'end' => $time_element,
       '#element_validate' => [[$this, 'validateTimeSelection']],
+      '#states' => [
+        'visible' => [
+          $input => ['checked' => TRUE],
+        ],
+        'empty' => [
+          $input => ['checked' => FALSE],
+        ],
+      ],
     ];
 
     if (!empty($values['time']['start'])) {
@@ -284,49 +277,6 @@ final class WeekdayAndTimeFieldWidget extends WidgetBase {
       $element['end']['#default_value'] = $values['time']['end'];
     }
 
-    return $element;
-  }
-
-  /**
-   * Determines if time elements should be enabled based on provided values.
-   *
-   * @param array $values
-   *   An array of values used to determine the state of the time elements.
-   * @param object $form_state
-   *   The state object of the form, containing data and the triggering element.
-   * @param string $selector
-   *   The selector key used to identify the relevant data in
-   *   values or the triggering element.
-   *
-   * @return bool
-   *   TRUE if the time elements should be enabled, FALSE otherwise.
-   */
-  private function showTimeElements($values, $form_state, $selector) {
-    $enabled = FALSE;
-    if (!empty($values)) {
-      $enabled = (bool) $values['selector'];
-    }
-    $triggering_element = $form_state->getTriggeringElement();
-    if (!empty($triggering_element['data-selector']) && $triggering_element['data-selector'] === $selector) {
-      $enabled = (bool) $triggering_element['#value'];
-    }
-    return $enabled;
-  }
-
-  /**
-   * Toggles the time element via an AJAX callback.
-   *
-   * @param array $form
-   *   The complete form structure.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   An object that holds the current state of the form.
-   *
-   * @return array
-   *   The form element being toggled.
-   */
-  public function toggleTimeAjax(array &$form, FormStateInterface $form_state) {
-    $triggering_element = $form_state->getTriggeringElement();
-    $element = NestedArray::getValue($form, array_slice($triggering_element['#array_parents'], 0, -2));
     return $element;
   }
 
@@ -365,6 +315,30 @@ final class WeekdayAndTimeFieldWidget extends WidgetBase {
         }
       }
     }
+
+    // Make sure dates are in proper format. This fixes issue when field values
+    // are saved in incorrect format after failed validation.
+    if (!empty($values)) {
+      foreach ($values as &$value) {
+        if (empty($value['value'])) {
+          continue;
+        }
+        foreach ($value['value'] as &$rows) {
+          foreach ($rows as &$row) {
+            foreach ($row['time'] as &$time) {
+              if (!is_array($time)) {
+                continue;
+              }
+              if (empty($time['object']) || !$time['object'] instanceof DrupalDateTime) {
+                continue;
+              }
+              $time = $time['object'];
+            }
+          }
+        }
+      }
+    }
+
     return $values;
   }
 
