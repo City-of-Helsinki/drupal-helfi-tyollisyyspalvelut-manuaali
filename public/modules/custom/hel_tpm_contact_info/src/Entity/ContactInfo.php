@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Drupal\hel_tpm_contact_info\Entity;
 
-use Drupal\Core\Entity\EntityChangedTrait;
+use Drupal\Core\Entity\EditorialContentEntityBase;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
-use Drupal\Core\Entity\RevisionableContentEntityBase;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\hel_tpm_contact_info\ContactInfoInterface;
+use Drupal\user\EntityOwnerTrait;
 use Drupal\user\UserInterface;
 
 /**
@@ -37,6 +37,7 @@ use Drupal\user\UserInterface;
  *   base_table = "contact_info",
  *   data_table = "contact_info_field_data",
  *   revision_table = "contact_info_revision",
+ *   revision_data_table = "contact_info_field_revision",
  *   show_revision_ui = TRUE,
  *   admin_permission = "administer contact info",
  *   entity_keys = {
@@ -44,6 +45,8 @@ use Drupal\user\UserInterface;
  *     "revision" = "revision_id",
  *     "label" = "title",
  *     "uuid" = "uuid",
+ *     "published" = "status",
+ *     "status" = "status",
  *     "langcode" = "langcode",
  *     "default_langcode" = "default_langcode",
  *     "revision_translation_affected" = "revision_translation_affected"
@@ -64,9 +67,9 @@ use Drupal\user\UserInterface;
  *   field_ui_base_route = "entity.contact_info.settings"
  * )
  */
-class ContactInfo extends RevisionableContentEntityBase implements ContactInfoInterface {
+class ContactInfo extends EditorialContentEntityBase implements ContactInfoInterface {
 
-  use EntityChangedTrait;
+  use EntityOwnerTrait;
 
   /**
    * {@inheritdoc}
@@ -175,10 +178,11 @@ class ContactInfo extends RevisionableContentEntityBase implements ContactInfoIn
     $fields = parent::baseFieldDefinitions($entity_type);
 
     $fields['title'] = BaseFieldDefinition::create('string')
-      ->setRevisionable(TRUE)
       ->setLabel(t('Title'))
       ->setDescription(t('The title of the contact info entity.'))
       ->setRequired(TRUE)
+      ->setTranslatable(TRUE)
+      ->setRevisionable(TRUE)
       ->setSetting('max_length', 255)
       ->setDisplayOptions('form', [
         'type' => 'string_textfield',
@@ -221,6 +225,8 @@ class ContactInfo extends RevisionableContentEntityBase implements ContactInfoIn
       ->setLabel(t('Author'))
       ->setDescription(t('The user ID of the contact info author.'))
       ->setSetting('target_type', 'user')
+      ->setTranslatable(TRUE)
+      ->setRevisionable(TRUE)
       ->setDisplayOptions('form', [
         'type' => 'entity_reference_autocomplete',
         'settings' => [
@@ -241,6 +247,8 @@ class ContactInfo extends RevisionableContentEntityBase implements ContactInfoIn
     $fields['created'] = BaseFieldDefinition::create('created')
       ->setLabel(t('Authored on'))
       ->setDescription(t('The time that the contact info was created.'))
+      ->setRevisionable(TRUE)
+      ->setTranslatable(TRUE)
       ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'timestamp',
@@ -255,27 +263,9 @@ class ContactInfo extends RevisionableContentEntityBase implements ContactInfoIn
 
     $fields['changed'] = BaseFieldDefinition::create('changed')
       ->setLabel(t('Changed'))
+      ->setRevisionable(TRUE)
+      ->setTranslatable(TRUE)
       ->setDescription(t('The time that the contact info was last edited.'));
-
-    $fields['langcode'] = BaseFieldDefinition::create('language')
-      ->setLabel(t('Language code'))
-      ->setDescription(t('The language code for the entity.'))
-      ->setRevisionable(TRUE)
-      ->setTranslatable(TRUE)
-      ->setRequired(TRUE);
-
-    $fields['default_langcode'] = BaseFieldDefinition::create('boolean')
-      ->setLabel(t('Default translation'))
-      ->setDescription(t('A flag indicating whether this is the default translation.'))
-      ->setTranslatable(TRUE)
-      ->setRevisionable(TRUE);
-
-    $fields['revision_translation_affected'] = BaseFieldDefinition::create('boolean')
-      ->setLabel(t('Revision translation affected'))
-      ->setDescription(t('Indicates if the last edit of a translation belongs to current revision.'))
-      ->setReadOnly(TRUE)
-      ->setRevisionable(TRUE)
-      ->setTranslatable(TRUE);
 
     return $fields;
   }
