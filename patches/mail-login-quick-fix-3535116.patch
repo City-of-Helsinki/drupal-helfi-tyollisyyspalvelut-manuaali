@@ -1,0 +1,15 @@
+diff --git a/src/AuthDecorator.php b/src/AuthDecorator.php
+index 4c9df8c..6a39cb5 100644
+--- a/src/AuthDecorator.php
++++ b/src/AuthDecorator.php
+@@ -112,10 +112,6 @@ class AuthDecorator implements UserAuthInterface, UserAuthenticationInterface {
+       }
+       // Check if login by email only option is enabled.
+       elseif ($config->get('mail_login_email_only')) {
+-        // Display a custom login error message.
+-        $this->messenger->addError(
+-          $this->t('Login by username has been disabled. Use your email address instead.')
+-        );
+         return FALSE;
+       }
+       else {
