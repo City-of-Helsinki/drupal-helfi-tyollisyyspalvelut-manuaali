@@ -4,7 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.quick_link_row.field_quick_link_row
-    - field.field.paragraph.quick_link_row.field_voluntary_title
+    - field.field.paragraph.quick_link_row.field_optional_title
     - paragraphs.paragraphs_type.quick_link_row
   module:
     - hel_tpm_editorial
@@ -33,7 +33,7 @@ content:
         collapse_edit_all: 0
         add_above: 0
     third_party_settings: {  }
-  field_voluntary_title:
+  field_optional_title:
     type: string_textfield
     weight: 0
     region: content

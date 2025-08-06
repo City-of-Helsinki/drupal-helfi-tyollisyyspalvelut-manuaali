@@ -4,7 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.quick_link_row.field_quick_link_row
-    - field.field.paragraph.quick_link_row.field_voluntary_title
+    - field.field.paragraph.quick_link_row.field_optional_title
     - paragraphs.paragraphs_type.quick_link_row
   module:
     - entity_reference_revisions
@@ -22,7 +22,7 @@ content:
     third_party_settings: {  }
     weight: 1
     region: content
-  field_voluntary_title:
+  field_optional_title:
     type: string
     label: hidden
     settings:

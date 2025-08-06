@@ -5,7 +5,7 @@ dependencies:
   config:
     - field.field.paragraph.url_and_file.field_file
     - field.field.paragraph.url_and_file.field_link
-    - field.field.paragraph.url_and_file.field_voluntary_title
+    - field.field.paragraph.url_and_file.field_optional_title
     - paragraphs.paragraphs_type.url_and_file
   module:
     - file_download_link
@@ -40,7 +40,7 @@ content:
     third_party_settings: {  }
     weight: 2
     region: content
-  field_voluntary_title:
+  field_optional_title:
     type: string
     label: hidden
     settings:

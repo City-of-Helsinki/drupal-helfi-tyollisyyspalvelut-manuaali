@@ -5,7 +5,7 @@ dependencies:
   config:
     - field.field.paragraph.url_and_file.field_file
     - field.field.paragraph.url_and_file.field_link
-    - field.field.paragraph.url_and_file.field_voluntary_title
+    - field.field.paragraph.url_and_file.field_optional_title
     - paragraphs.paragraphs_type.url_and_file
   module:
     - field_group
@@ -48,7 +48,7 @@ content:
       placeholder_url: ''
       placeholder_title: ''
     third_party_settings: {  }
-  field_voluntary_title:
+  field_optional_title:
     type: string_textfield
     weight: 0
     region: content
