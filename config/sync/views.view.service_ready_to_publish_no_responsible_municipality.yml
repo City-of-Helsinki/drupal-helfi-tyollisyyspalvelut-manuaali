@@ -572,9 +572,10 @@ display:
         options:
           query_comment: ''
           disable_sql_rewrite: false
-          distinct: false
+          distinct: true
           replica: false
           query_tags: {  }
+          contextual_filters_or: false
       relationships:
         group_content:
           id: group_content
@@ -935,7 +936,8 @@ display:
           absolute: false
       defaults:
         fields: false
-      display_extenders: {  }
+      display_extenders:
+        ajax_history: {  }
     cache_metadata:
       max-age: -1
       contexts:
