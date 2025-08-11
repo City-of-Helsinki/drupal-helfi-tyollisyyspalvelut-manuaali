@@ -5,6 +5,7 @@
  * Provides a contact info entity type.
  */
 
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Render\Element;
 
 /**
@@ -33,4 +34,132 @@ function template_preprocess_contact_info(array &$variables) {
   foreach (Element::children($variables['elements']) as $key) {
     $variables['content'][$key] = $variables['elements'][$key];
   }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_postupdate().
+ */
+function hel_tpm_contact_info_node_postsave(EntityInterface $entity) {
+  if ($entity->bundle() !== 'service') {
+    return;
+  }
+
+  if (!$entity->isDefaultTranslation()) {
+    return;
+  }
+  $translation_languages = $entity->getTranslationLanguages(FALSE);
+  if (empty($translation_languages)) {
+    return;
+  }
+
+  $fields_to_sync = [
+    'field_contact_info',
+    'field_contact_info_external',
+  ];
+
+  $storage = \Drupal::service('entity_type.manager')->getStorage('node');
+  // Update contact info to translatinos.
+  foreach ($translation_languages as $langcode => $language) {
+    $vid = _hel_tpm_contact_info_get_latest_affected_revision_id($entity->id(), $langcode);
+
+    if (empty($vid)) {
+      continue;
+    }
+
+    $rev = $storage->loadRevision($vid);
+    $translation = $rev->getTranslation($langcode);
+
+    $translation_updated = FALSE;
+    foreach ($fields_to_sync as $field_key) {
+      $default_value = $entity->{$field_key}->getValue();
+      $translation_value = $translation->{$field_key}->getValue();
+
+      if (!_hel_tpm_contact_info_values_changed($default_value, $translation_value)) {
+        continue;
+      }
+
+      $translation->set($field_key, $default_value);
+      $translation_updated = TRUE;
+    }
+    if ($translation_updated) {
+      $translation->setNewRevision(FALSE);
+      $translation->setChangedTime($translation->getChangedTime() + 1);
+      $translation->setSyncing(TRUE);
+      $translation->save();
+    }
+  }
+}
+
+/**
+ * Retrieves the latest affected revision ID for a given node ID and language.
+ *
+ * @param int $nid
+ *   The node ID for which to fetch the latest affected revision.
+ * @param string $langcode
+ *   The language code of the node revision.
+ *
+ * @return int|null
+ *   The latest affected revision ID, or NULL if no matching revision is found.
+ */
+function _hel_tpm_contact_info_get_latest_affected_revision_id(int $nid, string $langcode): ?int {
+  $database = \Drupal::service('database');
+
+  $query = $database->select('node_field_revision', 'n')
+    ->fields('n', ['vid'])
+    ->condition('nid', $nid)
+    ->condition('langcode', $langcode)
+    ->condition('revision_translation_affected', 1)
+    ->orderBy('vid', 'DESC')
+    ->range(0, 1);
+
+  $vid = $query->execute()->fetchField();
+  return $vid === FALSE ? NULL : (int) $vid;
+}
+
+/**
+ * Checks if the given default values and translation values have changed.
+ *
+ * This method compares the counts and normalized sets of target IDs
+ * within the default and translation values to
+ * determine if there are any changes.
+ *
+ * @param array $default_value
+ *   The default value array containing target IDs to be checked.
+ * @param array $translation_value
+ *   The translation value array containing target IDs to be checked.
+ *
+ * @return bool
+ *   Returns TRUE if the values have changed or differ, otherwise FALSE.
+ */
+function _hel_tpm_contact_info_values_changed(array $default_value, array $translation_value): bool {
+  // If counts differ, the values have changed.
+  if (count($default_value) !== count($translation_value)) {
+    return TRUE;
+  }
+
+  $default_ids = _hel_tpm_contact_info_normalize_target_ids($default_value);
+  $translation_ids = _hel_tpm_contact_info_normalize_target_ids($translation_value);
+
+  // Return TRUE when the normalized sets differ (i.e., values changed).
+  return $default_ids !== $translation_ids;
+}
+
+/**
+ * Normalizes the target IDs from a list of items by extracting unique values.
+ *
+ * @param array $items
+ *   An array of associative arrays, each containing at least a 'target_id' key.
+ *
+ * @return array
+ *   A sorted array of unique target IDs extracted from the input items.
+ */
+function _hel_tpm_contact_info_normalize_target_ids(array $items): array {
+  // Extract target_id values.
+  $ids = array_column($items, 'target_id');
+
+  // Ensure uniqueness and stable order for reliable comparisons.
+  $ids = array_values(array_unique($ids, SORT_REGULAR));
+  sort($ids, SORT_REGULAR);
+
+  return $ids;
 }
