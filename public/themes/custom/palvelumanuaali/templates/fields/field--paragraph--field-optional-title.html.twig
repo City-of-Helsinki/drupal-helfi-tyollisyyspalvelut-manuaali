@@ -38,34 +38,12 @@
 
  @TODO: THIS CAN BE REMOVED IF BEM CLASSES CAN BE APPLIED IN WYSIWYG
 #}
-{%
-  set classes = [
-    'field',
-    'field--name-' ~ field_name|clean_class,
-    'field--type-' ~ field_type|clean_class,
-    'field--label-' ~ label_display,
-  ]
-%}
 
-{%
-  set title_classes = [
-    'field__label',
-    label_display == 'visually_hidden' ? 'visually-hidden',
-    'field__label--margin-bottom',
-  ]
-%}
-
-<div{{ attributes.addClass(classes) }}>
-  <div{{ title_attributes.addClass(title_classes) }}>
-    {# {% include "@atoms/text/headings/_heading.twig" with {
-      "heading_level": 4,
-      "heading": 'Services that are suitable for you:'|t,
-      "heading_modifiers": 'semibold',
-    } %} #}
-  </div>
-    <div class="field__items grid">
-    {% for item in items %}
-        {{item.content}}
-    {% endfor %}
-  </div>
-</div>
+{% for item in items %}
+  {% include "@atoms/text/headings/_heading.twig" with {
+    "heading_level": 3,
+    "heading": item.content,
+    "heading_modifiers": ['semibold','margin-bottom-extra'],
+    "heading_base_class": 'h5',
+  } %}
+{% endfor %}
