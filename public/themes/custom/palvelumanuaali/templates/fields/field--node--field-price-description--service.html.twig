@@ -38,20 +38,8 @@
 
  @TODO: THIS CAN BE REMOVED IF BEM CLASSES CAN BE APPLIED IN WYSIWYG
 #}
-{%
-  set classes = [
-    'field--name-' ~ field_name|clean_class,
-    'field--type-' ~ field_type|clean_class,
-    'field--content--margin-left-triple',
-    'field--content--blue',
-    'service-price',
-  ]
-%}
-
-<div{{ attributes.addClass(classes, 'field__items') }}>
+<div class="service-price-description-wrapper dsp-block small-font black-font no-spacing field--content--margin-left-triple">
   {% for item in items %}
-      <div{{ item.attributes.addClass('field__item') }}>
-       <span>{{"Service fees "|t}}</span> {{item.content}}
-      </div>
+    {{item.content}}
   {% endfor %}
 </div>
