@@ -1,19 +1,24 @@
-{% embed "@templates/without-content-sidebar.twig" with {
-    content_base_class: page_base_class,
-    main_content_id: main_content_id,
-} %}
+{% set layout_modifiers = [] %}
 
-{% block content %}
-  {{ content|without('field_other_services') }}
-{% endblock %}
-{% block page_content %}
-  {% include "@atoms/text/headings/_heading.twig" with {
-        heading_level: '1',
-        heading: node__label,
-        heading_base_class: 'page-heading',
-      }
-    %}
-  {% endblock %}
-{% endembed %}
+{% set main_base_class = main_base_class|default('main') %}
+{% set main_modifiers = [] %}
+
+{% set main_content_base_class = page_base_class|default('main-content') %}
+{% set main_content_modifiers = [] %}
+{% set main_content_id = main_content_id|default('main-content-id') %}
+
+  <div {{ bem('content-column', content_colum_modifiers, content_column_base_class, ['']) }}>
+    {% block content %}
+      {{ content|without('field_other_services') }}
+    {% endblock %}
+    {% block page_content %}
+      {% include "@atoms/text/headings/_heading.twig" with {
+            heading_level: '1',
+            heading: node__label,
+            heading_base_class: 'page-heading',
+          }
+        %}
+      {% endblock %}
+  </div>
 
 {{ content.field_other_services }}

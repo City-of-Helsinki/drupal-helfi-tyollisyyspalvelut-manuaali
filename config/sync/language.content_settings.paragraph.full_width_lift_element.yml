@@ -1,18 +1,18 @@
-uuid: e99ab885-09a2-48f5-a50b-3f1ee15481dc
-langcode: en
+uuid: 5531a51c-7483-45e1-9e3f-ec0815591340
+langcode: fi
 status: true
 dependencies:
   config:
-    - paragraphs.paragraphs_type.full_width_card_lift
+    - paragraphs.paragraphs_type.full_width_lift_element
   module:
     - content_translation
 third_party_settings:
   content_translation:
-    enabled: true
+    enabled: false
     bundle_settings:
       untranslatable_fields_hide: '0'
-id: paragraph.full_width_card_lift
+id: paragraph.full_width_lift_element
 target_entity_type_id: paragraph
-target_bundle: full_width_card_lift
+target_bundle: full_width_lift_element
 default_langcode: site_default
-language_alterable: true
+language_alterable: false

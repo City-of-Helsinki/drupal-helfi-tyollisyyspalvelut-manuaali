@@ -1,0 +1,22 @@
+uuid: 3bf50696-8ee8-43f0-934b-b4a7c7e5b579
+langcode: fi
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.hero_lift
+id: paragraph.hero_lift.status
+field_name: status
+entity_type: paragraph
+bundle: hero_lift
+label: Julkaistu
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: Käytössä
+  off_label: 'Pois päältä'
+field_type: boolean
