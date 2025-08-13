@@ -181,7 +181,6 @@ third_party_settings:
         - field_life_situations
         - field_service_set
         - field_service_languages
-        - field_service_price
         - field_price
         - field_free_service
         - field_price_description
@@ -701,15 +700,6 @@ content:
     third_party_settings: {  }
     weight: 14
     region: content
-  field_service_price:
-    type: entity_reference_revisions_entity_view
-    label: hidden
-    settings:
-      view_mode: default
-      link: ''
-    third_party_settings: {  }
-    weight: 39
-    region: content
   field_service_producer:
     type: entity_reference_label
     label: above
@@ -844,6 +834,7 @@ hidden:
   field_service_language: true
   field_service_links_external: true
   field_service_links_internal: true
+  field_service_price: true
   field_service_provider_updatee: true
   field_service_radioactivity: true
   field_target_group: true
