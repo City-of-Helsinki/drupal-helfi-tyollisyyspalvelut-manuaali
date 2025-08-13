@@ -13,6 +13,14 @@ targetEntityType: paragraph
 bundle: quick_link_row
 mode: default
 content:
+  field_optional_title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
   field_quick_link_row:
     type: hel_tpm_editorial_paragraphs_alt_custom
     weight: 1
@@ -32,14 +40,6 @@ content:
         duplicate: 0
         collapse_edit_all: 0
         add_above: 0
-    third_party_settings: {  }
-  field_optional_title:
-    type: string_textfield
-    weight: 0
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
     third_party_settings: {  }
   translation:
     weight: 2

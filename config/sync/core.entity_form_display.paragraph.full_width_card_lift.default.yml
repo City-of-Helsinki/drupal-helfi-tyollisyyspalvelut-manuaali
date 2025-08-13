@@ -11,6 +11,14 @@ targetEntityType: paragraph
 bundle: full_width_card_lift
 mode: default
 content:
+  field_optional_title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
   field_service_reference:
     type: entity_reference_autocomplete
     weight: 1
@@ -21,13 +29,10 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-  field_optional_title:
-    type: string_textfield
-    weight: 0
+  translation:
+    weight: 10
     region: content
-    settings:
-      size: 60
-      placeholder: ''
+    settings: {  }
     third_party_settings: {  }
 hidden:
   created: true

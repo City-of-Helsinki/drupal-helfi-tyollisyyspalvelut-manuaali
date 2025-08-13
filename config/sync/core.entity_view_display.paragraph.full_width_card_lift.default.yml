@@ -11,6 +11,14 @@ targetEntityType: paragraph
 bundle: full_width_card_lift
 mode: default
 content:
+  field_optional_title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
   field_service_reference:
     type: entity_reference_entity_view
     label: hidden
@@ -19,14 +27,6 @@ content:
       link: false
     third_party_settings: {  }
     weight: 1
-    region: content
-  field_optional_title:
-    type: string
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 0
     region: content
 hidden:
   entity_print_view_epub: true

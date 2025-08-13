@@ -3,6 +3,7 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - core.entity_form_mode.paragraph.service_form
     - field.field.node.service.field_accessibility
     - field.field.node.service.field_age
     - field.field.node.service.field_age_groups
@@ -918,7 +919,7 @@ content:
     weight: 16
     region: content
     settings:
-      form_mode: default
+      form_mode: service_form
       override_labels: false
       label_singular: ''
       label_plural: ''
