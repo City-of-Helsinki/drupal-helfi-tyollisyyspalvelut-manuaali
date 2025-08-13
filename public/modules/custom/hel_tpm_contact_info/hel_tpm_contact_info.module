@@ -47,6 +47,7 @@ function hel_tpm_contact_info_node_postsave(EntityInterface $entity) {
   if (!$entity->isDefaultTranslation()) {
     return;
   }
+
   $translation_languages = $entity->getTranslationLanguages(FALSE);
   if (empty($translation_languages)) {
     return;
@@ -58,16 +59,22 @@ function hel_tpm_contact_info_node_postsave(EntityInterface $entity) {
   ];
 
   $storage = \Drupal::service('entity_type.manager')->getStorage('node');
-  // Update contact info to translatinos.
+
+  // Update contact info to translations.
   foreach ($translation_languages as $langcode => $language) {
-    $vid = _hel_tpm_contact_info_get_latest_affected_revision_id($entity->id(), $langcode);
 
-    if (empty($vid)) {
-      continue;
+    $translation = $entity->getTranslation($langcode);
+
+    if (!$translation->isLatestTranslationAffectedRevision() && !$translation->isDefaultRevision()) {
+      $vid = _hel_tpm_contact_info_get_latest_affected_revision_id($entity->id(), $langcode);
+
+      if (empty($vid)) {
+        continue;
+      }
+
+      $rev = $storage->loadRevision($vid);
+      $translation = $rev->getTranslation($langcode);
     }
-
-    $rev = $storage->loadRevision($vid);
-    $translation = $rev->getTranslation($langcode);
 
     $translation_updated = FALSE;
     foreach ($fields_to_sync as $field_key) {
@@ -82,7 +89,6 @@ function hel_tpm_contact_info_node_postsave(EntityInterface $entity) {
       $translation_updated = TRUE;
     }
     if ($translation_updated) {
-      $translation->setNewRevision(FALSE);
       $translation->setChangedTime($translation->getChangedTime() + 1);
       $translation->setSyncing(TRUE);
       $translation->save();
@@ -104,12 +110,12 @@ function hel_tpm_contact_info_node_postsave(EntityInterface $entity) {
 function _hel_tpm_contact_info_get_latest_affected_revision_id(int $nid, string $langcode): ?int {
   $database = \Drupal::service('database');
 
-  $query = $database->select('node_field_revision', 'n')
-    ->fields('n', ['vid'])
-    ->condition('nid', $nid)
+  $query = $database->select('content_moderation_state_field_revision', 'n')
+    ->fields('n', ['content_entity_revision_id'])
+    ->condition('content_entity_id', $nid)
     ->condition('langcode', $langcode)
     ->condition('revision_translation_affected', 1)
-    ->orderBy('vid', 'DESC')
+    ->orderBy('content_entity_revision_id', 'DESC')
     ->range(0, 1);
 
   $vid = $query->execute()->fetchField();
