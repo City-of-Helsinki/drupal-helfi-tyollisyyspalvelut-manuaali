@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.full_width_card_lift.field_service_reference
+    - field.field.paragraph.full_width_card_lift.field_optional_title
     - paragraphs.paragraphs_type.full_width_card_lift
 id: paragraph.full_width_card_lift.default
 targetEntityType: paragraph
@@ -12,11 +13,19 @@ mode: default
 content:
   field_service_reference:
     type: entity_reference_autocomplete
-    weight: 0
+    weight: 1
     region: content
     settings:
       match_operator: CONTAINS
       match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_optional_title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }

@@ -279,6 +279,20 @@ function hel_tpm_forms_node_service_form_alter_helper(&$form, FormStateInterface
     ],
   ];
 
+  $form['field_service_price']['widget'][0]['subform']['field_price']['widget'][0]['value']['#states'] = [
+    'required' => [
+      ':input[name="field_service_price[0][subform][field_free_service][value]"]' => [
+        'checked' => TRUE,
+      ],
+    ],
+    'visible' => [
+      ':input[name="field_service_price[0][subform][field_free_service][value]"]' => [
+        'checked' => TRUE,
+      ],
+    ],
+  ];
+  $form['field_service_price']['widget'][0]['#element_validate'][] = '_hel_tpm_forms_field_price_required_validate';
+
   // Check if current service provider user is included in the options list. If
   // not, add a 'none' option so that when saving the form, a new user must be
   // chosen. This prevents accidentally saving with the first user in the list
@@ -322,6 +336,32 @@ function hel_tpm_forms_validate_service_form_helper(array &$form, FormStateInter
     if ($languages = $form_state->getValue('field_service_languages')) {
       _hel_tpm_forms_validate_paragraph_language_selection($form, $form_state, $languages, 'field_service_languages');
     }
+  }
+}
+
+/**
+ * Validates the required field for service price.
+ *
+ * @param array $element
+ *   The form element being validated.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The form state object.
+ *
+ * @return void
+ *   -
+ */
+function _hel_tpm_forms_field_price_required_validate($element, $form_state) {
+  $service_price_element = $form_state->getValue('field_service_price');
+  if (empty($service_price_element['0']['subform']['field_free_service'])) {
+    return;
+  }
+
+  if ($service_price_element['0']['subform']['field_free_service']['value'] == 0) {
+    return;
+  }
+
+  if (empty($service_price_element['0']['subform']['field_price'][0]['value'])) {
+    $form_state->setError($element['subform']['field_price']['widget'], 'Service price is required');
   }
 }
 

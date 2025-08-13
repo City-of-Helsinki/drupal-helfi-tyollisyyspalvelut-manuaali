@@ -944,10 +944,23 @@ function _hel_tpm_general_insert_field_row($field, $row) {
     $tables[] = 'node__' . $field;
   }
   foreach ($tables as $table) {
-    $database->insert($table)
-      ->fields(array_keys($row))
-      ->values($row)
-      ->execute();
+    $count = $database->select($table, 't')
+      ->fields('t', array_keys($row))
+      ->condition('t.entity_id', $row['entity_id'])
+      ->condition('t.revision_id', $row['revision_id'])
+      ->condition('t.langcode', $row['langcode'])
+      ->condition('t.delta', $row['delta'])
+      ->condition('t.bundle', $row['bundle'])
+      ->countQuery()
+      ->execute()
+      ->fetchField();
+
+    if ($count == 0) {
+      $database->insert($table)
+        ->fields(array_keys($row))
+        ->values($row)
+        ->execute();
+    }
   }
 }
 
