@@ -528,7 +528,7 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id) {
     }
 
     // Combinations of these will be used to adjust the details block.
-    $form['revision_information']['#access'] = FALSE;
+    $form['revision_information']['#attributes']['class'][] = 'visually-hidden';
     $form['meta']['published']['#access'] = FALSE;
     $form['menu']['#access'] = FALSE;
     $form['meta']['#type'] = 'container';
