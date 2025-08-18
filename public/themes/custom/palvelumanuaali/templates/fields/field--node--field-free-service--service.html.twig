@@ -1,0 +1,36 @@
+
+{% for item in items %}
+  {% if item.content['#markup'] == 0 %}
+  {%
+    set additional_classes = [
+    'field--content--margin-left-triple',
+    'field--content--inline',
+    'field--content--blue',
+    ]
+  %}
+  {{dump(item.content['#markup'])}}
+    {% include "@molecules/icon-textfield/icon-textfield.twig" with  {
+        price_field: TRUE,
+        field_header: 'Charges:'|t,
+        additional_classes: additional_classes,
+        icon_name: 'round-euro-1',
+      }
+    %}
+  {% else %}
+    {%
+      set additional_classes = [
+      'field--content--margin-left-triple',
+      'field--content--inline',
+      'field--content--blue',
+      'show-price'
+      ]
+    %}
+    {% include "@molecules/icon-textfield/icon-textfield.twig" with  {
+        items: [],
+        field_header: 'Charges:'|t,
+        additional_classes: additional_classes,
+        icon_name: 'round-euro-1',
+      }
+    %}
+  {% endif %}
+{% endfor %}
