@@ -86,6 +86,12 @@
           {% if not loop.last %}<span>,</span>{% endif %}
         {% endapply %}
       {% endfor %}
+     {% elseif price_field %}
+       {% apply spaceless %}
+         <div{{ item.attributes.addClass('field__item') }}>
+            <span class='price'>{{'The service is free of charge'|t}}</span>
+         </div>
+       {% endapply %}
      {% else %}
       {% for item in items %}
           {% apply spaceless %}

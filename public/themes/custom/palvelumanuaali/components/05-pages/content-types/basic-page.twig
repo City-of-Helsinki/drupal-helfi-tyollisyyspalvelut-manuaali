@@ -8,9 +8,6 @@
 {% set main_content_id = main_content_id|default('main-content-id') %}
 
   <div {{ bem('content-column', content_colum_modifiers, content_column_base_class, ['']) }}>
-    {% block content %}
-      {{ content|without('field_other_services') }}
-    {% endblock %}
     {% block page_content %}
       {% include "@atoms/text/headings/_heading.twig" with {
             heading_level: '1',
@@ -18,6 +15,9 @@
             heading_base_class: 'page-heading',
           }
         %}
+      {% endblock %}
+      {% block content %}
+        {{ content|without('field_other_services') }}
       {% endblock %}
   </div>
 
