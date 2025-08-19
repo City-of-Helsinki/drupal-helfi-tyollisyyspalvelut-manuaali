@@ -2,7 +2,6 @@
   Drupal.behaviors.hel_tpm_forms = {
     attach: function (context, settings) {
       addError();
-      togglePrice();
       toggleAgeRange();
       handleSelectedStatement();
       handleSelectedObligatoryness();
@@ -27,33 +26,6 @@
             $(this + ' .field-add-more-submit').css('background-position-x',backgroundPos);
           }
         })
-      }
-
-      /**
-       * Toggle price fields.
-       */
-      function togglePrice() {
-        let freeServiceCheckbox = '.field--name-field-free-service .form-checkbox';
-        togglePriceElements(freeServiceCheckbox);
-
-        $(once('toggle-price-event', freeServiceCheckbox, context)).each(function() {
-          $(this).click(function() {
-            togglePriceElements(this);
-          })
-        })
-      }
-
-      /**
-       * Toggle price elements.
-       */
-      function togglePriceElements(priceElement) {
-        let servicePrice = '.field--name-field-service-price .field--name-field-price';
-        if ($(priceElement).is(":checked") === false) {
-          $(servicePrice).hide();
-        }
-        else {
-          $(servicePrice).show();
-        }
       }
 
       // hide age range on the first a page of service entity form.

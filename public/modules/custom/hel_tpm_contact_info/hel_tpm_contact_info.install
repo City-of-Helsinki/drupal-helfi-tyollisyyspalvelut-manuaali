@@ -1,0 +1,117 @@
+<?php
+
+/**
+ * @file
+ * Contains installation functions for Contact info module.
+ */
+
+declare(strict_types=1);
+
+use Drupal\hel_tpm_contact_info\Entity\ContactInfo;
+use Drupal\Core\File\FileExists;
+use Drupal\Core\Config\FileStorage;
+use Drupal\Core\Site\Settings;
+
+/**
+ * Create contact info migration json.
+ */
+function hel_tpm_contact_info_update_10001(&$sandbox) {
+  $storage = \Drupal::entityTypeManager()->getStorage('contact_info');
+  $file_system = \Drupal::service('file_system');
+  $file_dir = $file_system->getTempDirectory() . '/contact-migration.json';
+  $contact_infos = $storage->loadByProperties([]);
+  if (empty($contact_infos)) {
+    throw new \Exception('Importable contact infos not found');
+  }
+  $json = \Drupal::service('serializer')->serialize($contact_infos, 'json');
+  $file_system->saveData($json, $file_dir, FileExists::Replace);
+  if (!file_exists($file_dir)) {
+    throw new \Exception('File not found');
+  }
+
+  if (filesize($file_dir) < 10) {
+    throw new \Exception('Generated file is empty');
+  }
+}
+
+/**
+ * Delete current contact_info entities and reinstall contact_info entity type.
+ */
+function hel_tpm_contact_info_update_10002(&$sandbox) {
+  $entity_type_manager = \Drupal::entityTypeManager();
+  $entity_type_id = 'contact_info';
+  $definition = $entity_type_manager->getDefinition($entity_type_id);
+  $file_system = \Drupal::service('file_system');
+  $file_dir = $file_system->getTempDirectory() . '/contact-migration.json';
+
+  if (!file_exists($file_dir)) {
+    throw new Exception('Import file not found');
+  }
+
+  try {
+    $storage = \Drupal::entityTypeManager()->getStorage($entity_type_id);
+    $storage->delete($storage->loadByProperties([]));
+  }
+  catch (\Exception $e) {
+  }
+
+  $entity_update_manager = \Drupal::entityDefinitionUpdateManager();
+  $entity_type = $entity_update_manager->getEntityType($entity_type_id);
+  if (!empty($entity_type)) {
+    $entity_update_manager->uninstallEntityType($entity_type);
+  }
+
+  $entity_update_manager->installEntityType($definition);
+
+  $config_path = Settings::get('config_sync_directory');
+  $source = new FileStorage($config_path);
+  $fields = [
+    'field_contact_name',
+    'field_contact_phone',
+    'field_contact_type',
+    'field_municipality',
+    'field_email',
+  ];
+
+  foreach ($fields as $field) {
+    $storage_config = sprintf('field.storage.contact_info.%s', $field);
+    $field_storage_config = \Drupal::entityTypeManager()->getStorage('field_storage_config');
+    if (!$field_storage_config->load('contact_info.' . $field)) {
+      $field_entity = $field_storage_config->createFromStorageRecord($source->read($storage_config));
+      $field_entity->save();
+    }
+
+    $entity_field_config = sprintf('field.field.contact_info.contact_info.%s', $field);
+    $field_config = \Drupal::entityTypeManager()->getStorage('field_config');
+    if (!$field_config->load('contact_info.contact_info.' . $field)) {
+      $field_config->create($source->read($entity_field_config))->save();
+    }
+  }
+}
+
+/**
+ * Re-create contact infos from json.
+ */
+function hel_tpm_contact_info_update_10003(&$sandbox) {
+  $file_system = \Drupal::service('file_system');
+  $file_dir = $file_system->getTempDirectory() . '/contact-migration.json';
+  $json = file_get_contents($file_dir, TRUE);
+  $serializer = \Drupal::service('serializer');
+
+  // Make sure old entities are deleted.
+  $storage = \Drupal::entityTypeManager()->getStorage('contact_info');
+  $storage->delete($storage->loadByProperties([]));
+
+  $contacts_array = $serializer->decode($json, 'json');
+
+  foreach ($contacts_array as $contact_arr) {
+    unset($contact_arr['content_translation_uid']);
+    unset($contact_arr['content_translation_created']);
+    unset($contact_arr['content_translation_changed']);
+
+    $contact = $serializer->denormalize($contact_arr, ContactInfo::class);
+    $contact->set('default_langcode', 1);
+    $contact->set('langcode', 'fi');
+    $contact->save();
+  }
+}
