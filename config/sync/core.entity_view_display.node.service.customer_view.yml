@@ -16,6 +16,7 @@ dependencies:
     - field.field.node.service.field_days_since_last_state_chan
     - field.field.node.service.field_description
     - field.field.node.service.field_field_client_consent_descr
+    - field.field.node.service.field_free_service
     - field.field.node.service.field_implementation_extra_info
     - field.field.node.service.field_instructions_markup
     - field.field.node.service.field_internal_files
@@ -29,6 +30,8 @@ dependencies:
     - field.field.node.service.field_obligatoryness_freetext
     - field.field.node.service.field_other_preferences
     - field.field.node.service.field_other_services
+    - field.field.node.service.field_price
+    - field.field.node.service.field_price_description
     - field.field.node.service.field_related_archive
     - field.field.node.service.field_responsible_municipality
     - field.field.node.service.field_responsible_updatee
@@ -76,7 +79,7 @@ third_party_settings:
       label: Osallistuminen
       parent_name: ''
       region: content
-      weight: 10
+      weight: 12
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--participation text-normal'
@@ -97,7 +100,7 @@ third_party_settings:
       label: Toteutustapa
       parent_name: ''
       region: content
-      weight: 11
+      weight: 13
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--execution text-normal'
@@ -117,7 +120,7 @@ third_party_settings:
       label: 'Missä ja milloin'
       parent_name: ''
       region: content
-      weight: 12
+      weight: 14
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--where-and-when text-normal'
@@ -139,7 +142,7 @@ third_party_settings:
       label: Kohderyhmä
       parent_name: ''
       region: content
-      weight: 9
+      weight: 11
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--target-group'
@@ -158,7 +161,7 @@ third_party_settings:
       label: 'Service navigation'
       parent_name: ''
       region: hidden
-      weight: 40
+      weight: 43
       format_type: tabs
       format_settings:
         classes: ''
@@ -178,7 +181,7 @@ third_party_settings:
       label: 'Work instructions'
       parent_name: ''
       region: hidden
-      weight: 41
+      weight: 44
       format_type: tab
       format_settings:
         classes: ''
@@ -321,7 +324,7 @@ third_party_settings:
       label: ' Täydentävä työnhakukeskustelu'
       parent_name: ''
       region: hidden
-      weight: 42
+      weight: 45
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--complementary-job-search'
@@ -369,7 +372,7 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 8
+    weight: 10
     region: content
   field_accessibility:
     type: entity_reference_label
@@ -377,7 +380,7 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 7
+    weight: 9
     region: content
   field_age_groups:
     type: hel_tpm_general_age_group_field_formatter
@@ -410,7 +413,7 @@ content:
       view_mode: default
       link: false
     third_party_settings: {  }
-    weight: 14
+    weight: 16
     region: content
   field_description:
     type: basic_string
@@ -425,6 +428,16 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 5
+    region: content
+  field_free_service:
+    type: boolean
+    label: above
+    settings:
+      format: boolean
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 6
     region: content
   field_implementation_extra_info:
     type: entity_reference_label
@@ -451,6 +464,24 @@ content:
     third_party_settings: {  }
     weight: 2
     region: content
+  field_price:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  field_price_description:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 8
+    region: content
   field_service_benefits:
     type: text_default
     label: above
@@ -470,7 +501,7 @@ content:
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 13
+    weight: 15
     region: content
   field_service_languages:
     type: entity_reference_revisions_entity_view
@@ -490,22 +521,13 @@ content:
     third_party_settings: {  }
     weight: 14
     region: content
-  field_service_price:
-    type: entity_reference_revisions_entity_view
-    label: hidden
-    settings:
-      view_mode: default
-      link: ''
-    third_party_settings: {  }
-    weight: 6
-    region: content
   field_service_producer:
     type: entity_reference_label
     label: above
     settings:
       link: false
     third_party_settings: {  }
-    weight: 15
+    weight: 17
     region: content
   field_service_requirements:
     type: text_default
@@ -549,7 +571,7 @@ content:
   flag_cart:
     settings: {  }
     third_party_settings: {  }
-    weight: 16
+    weight: 18
     region: content
   flag_lista:
     settings: {  }
@@ -591,6 +613,7 @@ hidden:
   field_service_language: true
   field_service_links_external: true
   field_service_links_internal: true
+  field_service_price: true
   field_service_provider_updatee: true
   field_service_radioactivity: true
   field_service_req_speacialist: true

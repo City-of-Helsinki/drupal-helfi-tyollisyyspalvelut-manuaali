@@ -856,6 +856,72 @@ function hel_tpm_general_update_10117(&$sandbox) {
 }
 
 /**
+ * Create new node service price fields.
+ */
+function hel_tpm_general_update_10118(&$sandbox) {
+  $config_path = Settings::get('config_sync_directory');
+  $source = new FileStorage($config_path);
+  $fields = [
+    'field_price',
+    'field_free_service',
+    'field_price_description',
+  ];
+
+  foreach ($fields as $field) {
+    $storage_config = sprintf('field.storage.node.%s', $field);
+    $field_storage_config = \Drupal::entityTypeManager()->getStorage('field_storage_config');
+    if (!$field_storage_config->load('node.' . $field)) {
+      $field_entity = $field_storage_config->createFromStorageRecord($source->read($storage_config));
+      $field_entity->save();
+    }
+
+    $node_field_config = sprintf('field.field.node.service.%s', $field);
+    $field_config = \Drupal::entityTypeManager()->getStorage('field_config');
+    if (!$field_config->load('node.service.' . $field)) {
+      $field_config->create($source->read($node_field_config))->save();
+    }
+  }
+}
+
+/**
+ * Migrate field_service_price paragraph fields to node.
+ */
+function hel_tpm_general_update_10119(&$sandbox) {
+  $node_paragraph_field = 'field_service_price';
+
+  $migration_table = [
+    'field_price' => 'field_price',
+    'field_free_service' => 'field_free_service',
+    'field_description' => 'field_price_description',
+  ];
+
+  $node_paragraph_rows = _hel_tpm_general_get_node_paragraph_rows($node_paragraph_field);
+
+  foreach ($node_paragraph_rows as $paragraph_row) {
+    foreach ($migration_table as $paragraph_field => $node_field) {
+      $p_field_values = _hel_tpm_general_get_paragraph_field_content($paragraph_field, $paragraph_row->{$node_paragraph_field . '_target_revision_id'}, $paragraph_row->langcode);
+      if (empty($p_field_values)) {
+        continue;
+      }
+      foreach ($p_field_values as $p_field_value) {
+        $n_field_value = clone $p_field_value;
+        $n_field_value->bundle = $paragraph_row->bundle;
+        $n_field_value->entity_id = $paragraph_row->entity_id;
+        $n_field_value->revision_id = $paragraph_row->revision_id;
+
+        if ($paragraph_field !== $node_field) {
+          $n_field_value->{$node_field . '_value'} = $p_field_value->{$paragraph_field . '_value'};
+          $n_field_value->{$node_field . '_format'} = $p_field_value->{$paragraph_field . '_format'};
+          unset($n_field_value->{$paragraph_field . '_value'});
+          unset($n_field_value->{$paragraph_field . '_format'});
+        }
+        _hel_tpm_general_insert_field_row($node_field, (array) $n_field_value);
+      }
+    }
+  }
+}
+
+/**
  * Inserts a row into the specified field's database tables.
  *
  * This function inserts values for a given field into the appropriate database
