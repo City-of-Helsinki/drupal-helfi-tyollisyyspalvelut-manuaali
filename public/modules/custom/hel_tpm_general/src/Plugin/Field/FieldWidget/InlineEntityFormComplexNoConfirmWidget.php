@@ -25,10 +25,87 @@ class InlineEntityFormComplexNoConfirmWidget extends InlineEntityFormComplex {
   /**
    * {@inheritdoc}
    */
+  public static function defaultSettings() {
+    $defaults = parent::defaultSettings();
+    $defaults += [
+      'prevent_translation_deletion' => FALSE,
+    ];
+
+    return $defaults;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function settingsForm(array $form, FormStateInterface $form_state) {
+    $element = parent::settingsForm($form, $form_state);
+    $element['prevent_translation_deletion'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Prevent reference deletion from translations'),
+      '#default_value' => $this->getSetting('prevent_translation_deletion'),
+    ];
+    return $element;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function settingsSummary() {
+    $summary = parent::settingsSummary();
+    if ($this->getSetting('prevent_translation_deletion')) {
+      $summary[] = $this->t('Prevent reference deletion from translations');
+    }
+    return $summary;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
     $element = parent::formElement($items, $delta, $element, $form, $form_state);
     $this->alterEntityRemove($element, $items, $form_state);
+    $this->doPreventTranslationReferenceDeletion($element, $items);
     return $element;
+  }
+
+  /**
+   * Prevents the deletion of entity references in non-default translations.
+   *
+   * @param array $element
+   *   The render array for the field.
+   * @param \Drupal\Core\Field\FieldItemListInterface $items
+   *   The field item list interface containing the field's items.
+   *
+   * @return void
+   *   No return value as the method modifies the passed array by reference.
+   */
+  protected function doPreventTranslationReferenceDeletion(array &$element, FieldItemListInterface $items): void {
+    if (empty($this->getSetting('prevent_translation_deletion'))) {
+      return;
+    }
+
+    $entity = $items->getEntity();
+    if (!$entity || $entity->isDefaultTranslation()) {
+      return;
+    }
+
+    if (empty($element['entities']) || !is_array($element['entities'])) {
+      return;
+    }
+
+    foreach ($element['entities'] as &$entity_element) {
+      if (!isset($entity_element['actions']) || !is_array($entity_element['actions'])) {
+        continue;
+      }
+      // Handle common IEF action button keys.
+      if (isset($entity_element['actions']['ief_entity_remove'])) {
+        $entity_element['actions']['ief_entity_remove']['#access'] = FALSE;
+      }
+      if (isset($entity_element['actions']['remove'])) {
+        $entity_element['actions']['remove']['#access'] = FALSE;
+      }
+    }
+    unset($entity_element);
   }
 
   /**

@@ -617,17 +617,18 @@ content:
     region: content
     settings:
       form_mode: default
-      override_labels: false
       label_singular: ''
       label_plural: ''
-      allow_new: true
-      allow_existing: false
+      allow_new: '1'
       match_operator: CONTAINS
-      allow_duplicate: false
-      collapsible: false
-      collapsed: false
-      revision: false
       removed_reference: optional
+      prevent_translation_deletion: '1'
+      revision: 0
+      override_labels: 0
+      collapsible: 0
+      collapsed: 0
+      allow_existing: 0
+      allow_duplicate: 0
     third_party_settings:
       ief_popup:
         ief_popup_enabled: '1'
@@ -637,17 +638,18 @@ content:
     region: content
     settings:
       form_mode: default
-      override_labels: false
       label_singular: ''
       label_plural: ''
-      allow_new: true
-      allow_existing: false
+      allow_new: '1'
       match_operator: CONTAINS
-      allow_duplicate: false
-      collapsible: false
-      collapsed: false
-      revision: false
       removed_reference: optional
+      prevent_translation_deletion: '1'
+      revision: 0
+      override_labels: 0
+      collapsible: 0
+      collapsed: 0
+      allow_existing: 0
+      allow_duplicate: 0
     third_party_settings:
       ief_popup:
         ief_popup_enabled: '1'
@@ -775,6 +777,7 @@ content:
       collapsed: 0
       allow_existing: 0
       allow_duplicate: 0
+      prevent_translation_deletion: false
     third_party_settings:
       ief_popup:
         ief_popup_enabled: '1'
@@ -802,6 +805,7 @@ content:
       collapsed: 0
       allow_existing: 0
       allow_duplicate: 0
+      prevent_translation_deletion: false
     third_party_settings:
       ief_popup:
         ief_popup_enabled: '1'
