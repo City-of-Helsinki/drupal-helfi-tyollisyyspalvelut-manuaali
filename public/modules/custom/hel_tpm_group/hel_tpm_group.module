@@ -327,32 +327,58 @@ function hel_tpm_group_form_group_role_edit_form_alter(&$form, &$form_state) {
 
 /**
  * Implements hook_node_access_records().
+ *
+ * Allow group members to see unpublished services in their group.
  */
-function hel_tpm_group_node_access_records(NodeInterface $node) {
+function hel_tpm_group_node_access_records(NodeInterface $node): array {
+  // Only alter access for unpublished services.
+  if ($node->isPublished() || $node->bundle() !== 'service') {
+    return [];
+  }
+  // Only alter access if the service belongs to group.
+  if (empty($groups = \Drupal::service('hel_tpm_group.group_relationship_helper')->getGroupsByNode($node))) {
+    return [];
+  }
+
   $grants = [];
-  // Other grants.
-  if (!$node->isPublished()) {
+  $allowedUserIds = [];
+
+  /** @var \Drupal\group\Entity\Group[] $groups */
+  foreach ($groups as $group) {
+    foreach ($group->getMembers() as $member) {
+      $user = $member->getUser();
+      if (!$user->isBlocked()) {
+        $userId = $user->id();
+        $allowedUserIds[$userId] = $userId;
+      }
+    }
+  }
+
+  foreach ($allowedUserIds as $allowedUserId) {
     $grants[] = [
       'realm' => 'hel_tpm_group_unpublished_realm',
-      'gid' => 1,
+      'gid' => $allowedUserId,
       'grant_view' => 1,
       'grant_update' => 0,
       'grant_delete' => 0,
       'priority' => 1,
     ];
   }
+
   return $grants;
 }
 
 /**
  * Implements hook_node_grants().
+ *
+ * Use unpublished realm for logged-in node view operations.
  */
-function hel_tpm_group_node_grants(AccountInterface $account, $op) {
-  if ($op !== 'view') {
+function hel_tpm_group_node_grants(AccountInterface $account, $op): array {
+  if ($op !== 'view' || !$account->isAuthenticated()) {
     return [];
   }
   $grants = [];
-  $grants['hel_tpm_group_unpublished_realm'][] = 1;
+  $grants['hel_tpm_group_unpublished_realm'][] = $account->id();
   return $grants;
 }
 
