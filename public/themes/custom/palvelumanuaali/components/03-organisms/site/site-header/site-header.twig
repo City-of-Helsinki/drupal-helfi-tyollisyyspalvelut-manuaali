@@ -4,7 +4,7 @@
 
 <header id="page-header" {{ bem(header__base_class) }}>
   <div {{ bem('inner', [], header__base_class) }}>
-    {# <a href="#" id="toggle-expand" class="toggle-expand hide-desktop" aria-haspopup="true" aria-expanded="false">
+    <a href="#" id="toggle-expand" class="toggle-expand hide-desktop" aria-haspopup="true" aria-expanded="false">
       <span class="toggle-expand__open">
         {% include "@atoms/images/icons/_icon.twig" with {
           icon_base_class: "icon",
@@ -12,8 +12,8 @@
           icon_name: "menu",
         } %}
       </span>
-    </a> #}
-    <div {{ bem('primary', [], header__base_class, ['d--flex']) }}>
+    </a>
+    <div {{ bem('primary', [], header__base_class, ['d--flex--dsk', 'flex-wrap--dsk']) }}>
   {% block header__branding %} {% endblock %}
       {% block header__menu %}
         {% include "@molecules/menus/main-menu/main-menu.twig" %}
