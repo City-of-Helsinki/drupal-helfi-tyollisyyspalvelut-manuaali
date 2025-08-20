@@ -13,6 +13,14 @@ targetEntityType: paragraph
 bundle: quick_link_row
 mode: default
 content:
+  field_optional_title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
   field_quick_link_row:
     type: entity_reference_revisions_entity_view
     label: visually_hidden
@@ -21,14 +29,6 @@ content:
       link: ''
     third_party_settings: {  }
     weight: 1
-    region: content
-  field_optional_title:
-    type: string
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 0
     region: content
 hidden:
   entity_print_view_epub: true
