@@ -1,3 +1,5 @@
+
+$main-menu-desktop-padding: calc(207px + $space-double);
 /* LI */
 .main-menu__item {
   display: flex;
@@ -61,11 +63,16 @@
   }
 }
 
+.menu--main {
+  @include xl {
+    margin-left: -$space-double;
+  }
+}
+
 .main-menu > .main-menu__item {
   >.main-menu--sub {
     @include xl {
       display: none;
-      padding-left: calc(207px + $space-double);
     }
   }
   &--active {

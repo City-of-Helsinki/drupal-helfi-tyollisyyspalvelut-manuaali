@@ -1,0 +1,60 @@
+uuid: fbd0945d-bf1c-4091-970e-bd01cb5e4ee8
+langcode: fi
+status: true
+dependencies:
+  config:
+    - core.entity_form_mode.paragraph.service_form
+    - field.field.paragraph.url_and_file.field_file
+    - field.field.paragraph.url_and_file.field_link
+    - field.field.paragraph.url_and_file.field_optional_title
+    - paragraphs.paragraphs_type.url_and_file
+  module:
+    - field_group
+    - file
+    - link
+third_party_settings:
+  field_group:
+    group_url_file:
+      children:
+        - field_link
+        - field_file
+      label: ''
+      region: content
+      parent_name: ''
+      weight: 0
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        description: ''
+        required_fields: false
+id: paragraph.url_and_file.service_form
+targetEntityType: paragraph
+bundle: url_and_file
+mode: service_form
+content:
+  field_file:
+    type: file_generic
+    weight: 3
+    region: content
+    settings:
+      progress_indicator: throbber
+    third_party_settings: {  }
+  field_link:
+    type: link_default
+    weight: 2
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+  translation:
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  created: true
+  field_optional_title: true
+  status: true
