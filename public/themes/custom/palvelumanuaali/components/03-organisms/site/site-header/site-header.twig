@@ -13,7 +13,7 @@
         } %}
       </span>
     </a>
-    <div {{ bem('primary', [], header__base_class, ['d--flex--dsk']) }}>
+    <div {{ bem('primary', [], header__base_class, ['d--flex--dsk', 'flex-wrap--dsk']) }}>
   {% block header__branding %} {% endblock %}
       {% block header__menu %}
         {% include "@molecules/menus/main-menu/main-menu.twig" %}

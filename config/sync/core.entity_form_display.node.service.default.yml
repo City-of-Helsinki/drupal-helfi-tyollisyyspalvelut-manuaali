@@ -3,6 +3,7 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - core.entity_form_mode.paragraph.service_form
     - field.field.node.service.field_accessibility
     - field.field.node.service.field_age
     - field.field.node.service.field_age_groups
@@ -15,6 +16,7 @@ dependencies:
     - field.field.node.service.field_days_since_last_state_chan
     - field.field.node.service.field_description
     - field.field.node.service.field_field_client_consent_descr
+    - field.field.node.service.field_free_service
     - field.field.node.service.field_implementation_extra_info
     - field.field.node.service.field_instructions_markup
     - field.field.node.service.field_internal_files
@@ -28,6 +30,8 @@ dependencies:
     - field.field.node.service.field_obligatoryness_freetext
     - field.field.node.service.field_other_preferences
     - field.field.node.service.field_other_services
+    - field.field.node.service.field_price
+    - field.field.node.service.field_price_description
     - field.field.node.service.field_related_archive
     - field.field.node.service.field_responsible_municipality
     - field.field.node.service.field_responsible_updatee
@@ -237,7 +241,9 @@ third_party_settings:
         - field_description
         - field_service_set
         - field_service_languages
-        - field_service_price
+        - field_free_service
+        - field_price
+        - field_price_description
       label: Perustiedot
       region: content
       parent_name: group_basic_information
@@ -260,7 +266,7 @@ third_party_settings:
       label: Kohderyhmä
       region: content
       parent_name: group_basic_information
-      weight: 2
+      weight: 3
       format_type: fieldset
       format_settings:
         classes: 'form-background--white form-background--regular-padding'
@@ -274,7 +280,7 @@ third_party_settings:
       label: Saavutettavuus
       region: content
       parent_name: group_basic_information
-      weight: 3
+      weight: 4
       format_type: fieldset
       format_settings:
         classes: 'form-background--white form-background--regular-padding'
@@ -697,6 +703,13 @@ content:
         maxlength_js: null
         maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
         maxlength_js_enforce: false
+  field_free_service:
+    type: boolean_checkbox
+    weight: 32
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
   field_implementation_extra_info:
     type: select2_entity_reference
     weight: 16
@@ -827,6 +840,21 @@ content:
       match_operator: CONTAINS
       match_limit: 10
     third_party_settings: {  }
+  field_price:
+    type: number
+    weight: 33
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_price_description:
+    type: text_textarea
+    weight: 34
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
   field_related_archive:
     type: options_buttons
     weight: 10
@@ -918,25 +946,13 @@ content:
     weight: 16
     region: content
     settings:
-      form_mode: default
+      form_mode: service_form
       override_labels: false
       label_singular: ''
       label_plural: ''
       collapsible: false
       collapsed: false
       revision: false
-    third_party_settings: {  }
-  field_service_price:
-    type: hel_tpm_service_dates_paragraph_asymmetric_widget
-    weight: 31
-    region: content
-    settings:
-      title: Paragraph
-      title_plural: Paragraphs
-      edit_mode: open
-      add_mode: dropdown
-      form_display_mode: default
-      default_paragraph_type: service_price
     third_party_settings: {  }
   field_service_producer:
     type: select2_entity_reference
@@ -1091,6 +1107,7 @@ content:
 hidden:
   field_attendance: true
   field_service_execution: true
+  field_service_price: true
   field_service_radioactivity: true
   field_target_group: true
   path: true

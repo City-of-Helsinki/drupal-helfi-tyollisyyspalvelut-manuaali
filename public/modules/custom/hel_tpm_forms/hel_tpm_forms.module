@@ -5,6 +5,7 @@
  * This module creates various additional contents.
  */
 
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -44,6 +45,65 @@ function hel_tpm_forms_form_node_form_alter(&$form, FormStateInterface &$form_st
   hel_tpm_forms_node_service_location_form_alter_helper($form, $form_state);
   hel_tpm_forms_disable_untranslatable_paragraph_fields($form, $form_state);
   hel_tpm_forms_time_and_location_form_helper($form, $form_state);
+  hel_tpm_forms_service_price_form_alter_helper($form, $form_state);
+}
+
+/**
+ * Add form states logic to field_price.
+ *
+ * @param array $form
+ *   Form array.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   Form state object.
+ *
+ * @return void
+ *   Void.
+ */
+function hel_tpm_forms_service_price_form_alter_helper(array &$form, FormStateInterface &$form_state) {
+  $bundle = $form_state->getStorage()['form_display']->getTargetBundle();
+  // Check that we alter only service bundle.
+  if ($bundle != 'service') {
+    return;
+  }
+  if (empty($form['field_price']) || empty($form['field_free_service'])) {
+    return;
+  }
+
+  $form['field_price']['#states'] = [
+    'visible' => [
+      ':input[name="field_free_service[value]"]' => ['checked' => TRUE],
+    ],
+  ];
+
+  $form['field_price']['widget'][0]['value']['#states'] = [
+    'required' => [
+      ':input[name="field_free_service[value]"]' => ['checked' => TRUE],
+    ],
+  ];
+
+  $form['#validate'][] = 'hel_tpm_forms_field_price_required_validate';
+}
+
+/**
+ * Validate field_price required.
+ *
+ * @param array $form
+ *   Form array.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   Form state object.
+ *
+ * @return void
+ *   -
+ */
+function hel_tpm_forms_field_price_required_validate(array $form, FormStateInterface &$form_state) {
+  $field_free_service_value = $form_state->getValue('field_free_service', NULL);
+  if (empty($field_free_service_value) || $field_free_service_value['value'] != 1) {
+    return;
+  }
+  $price_value = $form_state->getValue('field_price');
+  if (empty($price_value[0]['value'])) {
+    $form_state->setError($form['field_price']['widget'][0], new TranslatableMarkup('@name field is required.', ['@name' => $form['field_price']['widget']['#title']]));
+  }
 }
 
 /**

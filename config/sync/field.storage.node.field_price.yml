@@ -1,19 +1,19 @@
-uuid: 110ec662-05cf-43cc-862c-897bd53093f2
+uuid: c4c965aa-8f19-4d4f-a464-83790e02ff78
 langcode: fi
 status: true
 dependencies:
   module:
     - node
-    - taxonomy
-id: node.field_accessibility
-field_name: field_accessibility
+id: node.field_price
+field_name: field_price
 entity_type: node
-type: entity_reference
+type: decimal
 settings:
-  target_type: taxonomy_term
+  precision: 10
+  scale: 2
 module: core
 locked: false
-cardinality: -1
+cardinality: 1
 translatable: true
 indexes: {  }
 persist_with_no_fields: false
