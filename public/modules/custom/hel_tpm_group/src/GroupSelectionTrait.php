@@ -48,7 +48,7 @@ trait GroupSelectionTrait {
         $groups[] = $this->routeMatch->getParameter('group');
       }
     }
-    else {
+    elseif (!empty($node->entitygroupfield)) {
       // Get groups from node.
       foreach ($node->entitygroupfield->referencedEntities() as $group) {
         if (empty($group)) {
