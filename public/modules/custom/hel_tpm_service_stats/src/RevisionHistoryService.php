@@ -179,8 +179,8 @@ final class RevisionHistoryService {
       ->execute()->fetchAll();
 
     foreach ($revisions as $revision) {
+      $last_revision = $revision;
       if ($revision->moderation_state === $state) {
-        $last_revision = $revision;
         continue;
       }
       break;
