@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\hel_tpm_group\Kernel;
 
+use Drupal\Tests\user\Traits\UserCreationTrait;
 use Drupal\Tests\views\Kernel\ViewsKernelTestBase;
 use Drupal\node\Entity\Node;
 use Drupal\views\Views;
@@ -16,6 +17,10 @@ use Drupal\views\Views;
  * @group hel_tpm_group
  */
 class ViewsModerationStateExcludeArchivedTest extends ViewsKernelTestBase {
+
+  use UserCreationTrait {
+    setUpCurrentUser as drupalSetUpCurrentUser;
+  }
 
   /**
    * {@inheritdoc}
@@ -71,8 +76,13 @@ class ViewsModerationStateExcludeArchivedTest extends ViewsKernelTestBase {
 
   /**
    * Tests views result when applying filter options.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function testViewResults() {
+    // This test is not testing node access permissions.
+    $this->drupalSetUpCurrentUser(['uid' => 1]);
+
     $node_published = Node::create([
       'type' => 'service',
       'title' => 'Test 1',

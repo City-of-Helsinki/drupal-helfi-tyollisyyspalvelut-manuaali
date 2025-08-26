@@ -18,6 +18,7 @@ class SiteWideGroupRoleTest extends GroupKernelTestBase {
   protected static $modules = [
     'hel_tpm_group',
     'group',
+    'ggroup',
     'options',
     'entity',
     'variationcache',

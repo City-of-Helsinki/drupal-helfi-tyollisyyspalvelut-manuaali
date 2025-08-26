@@ -19,6 +19,10 @@ services:
     class: Drupal\hel_tpm_group\CurrentGroup
     arguments: ['@current_route_match']
 
+  hel_tpm_group.group_relationship_helper:
+    class: Drupal\hel_tpm_group\GroupRelationshipHelper
+    arguments: ['@ggroup.group_hierarchy_manager']
+
   hel_tpm_group.groups_without_admins:
     class: Drupal\hel_tpm_group\GroupsWithoutAdmins
     arguments: ['@entity_type.manager','@database']

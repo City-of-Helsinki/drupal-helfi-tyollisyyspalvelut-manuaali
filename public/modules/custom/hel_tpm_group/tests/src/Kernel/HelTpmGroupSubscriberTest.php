@@ -22,6 +22,7 @@ class HelTpmGroupSubscriberTest extends GroupKernelTestBase {
   protected static $modules = [
     'hel_tpm_group',
     'group',
+    'ggroup',
     'message',
     'message_notify',
   ];
