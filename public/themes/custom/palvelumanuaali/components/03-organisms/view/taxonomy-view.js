@@ -3,7 +3,7 @@
   Drupal.behaviors.searchPageFilters = {
     attach(context, settings) {
 
-      const FILTER_WRAPPER = '.view-taxonomy-term .bef-nested .highlight + .filter-buttons';
+      const FILTER_WRAPPER = '.municipality-taxonomy-view-filters .bef-nested .highlight + .filter-buttons';
       // /**
       // //  * Calculate filter rows from element widths.
       // //  *
