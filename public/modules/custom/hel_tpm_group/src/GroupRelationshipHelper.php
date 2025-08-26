@@ -2,6 +2,7 @@
 
 namespace Drupal\hel_tpm_group;
 
+use Drupal\ggroup\GroupHierarchyManagerInterface;
 use Drupal\node\NodeInterface;
 
 /**
@@ -12,16 +13,35 @@ class GroupRelationshipHelper {
   use GroupSelectionTrait;
 
   /**
-   * Get groups from node.
+   * The group hierarchy manager.
+   *
+   * @var \Drupal\ggroup\GroupHierarchyManager
+   */
+  protected $groupHierarchyManager;
+
+  /**
+   * Constructs a InheritGroupPermissionCalculator object.
+   *
+   * @param \Drupal\ggroup\GroupHierarchyManager $hierarchy_manager
+   *   The group hierarchy manager.
+   */
+  public function __construct(GroupHierarchyManagerInterface $hierarchy_manager) {
+    $this->groupHierarchyManager = $hierarchy_manager;
+  }
+
+  /**
+   * Get group IDs from node.
    *
    * @param \Drupal\node\NodeInterface $node
    *   Node object.
+   * @param bool $include_supergroups
+   *   Boolean to determine if super groups should be returned.
    *
    * @return array
    *   Array of groups.
    */
-  public function getGroupsByNode(NodeInterface $node): array {
-    return $this->getGroups($node, FALSE, TRUE);
+  public function getGroupIdsByNode(NodeInterface $node, bool $include_supergroups = FALSE): array {
+    return $this->getGroups($node, $include_supergroups, FALSE);
   }
 
 }

@@ -23,6 +23,7 @@ class NodeAccessTest extends BrowserTestBase {
     'node',
     'group',
     'group_test_config',
+    'ggroup',
     'hel_tpm_group',
     'message_notify',
     'views',

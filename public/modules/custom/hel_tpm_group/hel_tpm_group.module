@@ -328,57 +328,52 @@ function hel_tpm_group_form_group_role_edit_form_alter(&$form, &$form_state) {
 /**
  * Implements hook_node_access_records().
  *
- * Allow group members to see unpublished services in their group.
+ * Add group based grants to give view access for unpublished services.
  */
 function hel_tpm_group_node_access_records(NodeInterface $node): array {
   // Only alter access for unpublished services.
   if ($node->isPublished() || $node->bundle() !== 'service') {
     return [];
   }
-  // Only alter access if the service belongs to group.
-  if (empty($groups = \Drupal::service('hel_tpm_group.group_relationship_helper')->getGroupsByNode($node))) {
+  // Get groups, including super groups, the node belongs to. Only alter access
+  // if the node belongs to group.
+  if (empty($group_ids = \Drupal::service('hel_tpm_group.group_relationship_helper')->getGroupIdsByNode($node, TRUE))) {
     return [];
   }
 
   $grants = [];
-  $allowedUserIds = [];
-
-  /** @var \Drupal\group\Entity\Group[] $groups */
-  foreach ($groups as $group) {
-    foreach ($group->getMembers() as $member) {
-      $user = $member->getUser();
-      if (!$user->isBlocked()) {
-        $userId = $user->id();
-        $allowedUserIds[$userId] = $userId;
-      }
-    }
-  }
-
-  foreach ($allowedUserIds as $allowedUserId) {
+  foreach ($group_ids as $group_id) {
     $grants[] = [
       'realm' => 'hel_tpm_group_unpublished_realm',
-      'gid' => $allowedUserId,
+      'gid' => $group_id,
       'grant_view' => 1,
       'grant_update' => 0,
       'grant_delete' => 0,
       'priority' => 1,
     ];
   }
-
   return $grants;
 }
 
 /**
  * Implements hook_node_grants().
  *
- * Use unpublished realm for logged-in node view operations.
+ * Use unpublished realm for node view operations for group members.
  */
 function hel_tpm_group_node_grants(AccountInterface $account, $op): array {
   if ($op !== 'view' || !$account->isAuthenticated()) {
     return [];
   }
+
+  /** @var \Drupal\group\GroupMembership[] $memberships */
+  if (empty($memberships = \Drupal::service('group.membership_loader')->loadByUser($account))) {
+    return [];
+  }
+
   $grants = [];
-  $grants['hel_tpm_group_unpublished_realm'][] = $account->id();
+  foreach ($memberships as $membership) {
+    $grants['hel_tpm_group_unpublished_realm'][] = $membership->getGroup()->id();
+  }
   return $grants;
 }
 

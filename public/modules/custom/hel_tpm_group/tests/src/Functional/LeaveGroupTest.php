@@ -25,6 +25,7 @@ class LeaveGroupTest extends GroupBrowserTestBase {
   protected static $modules = [
     'group',
     'group_test_config',
+    'ggroup',
     'hel_tpm_group',
     'message_notify',
     'views',
