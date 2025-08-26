@@ -9,9 +9,6 @@ Drupal.behaviors.mainMenu = {
       let header = $('.header__primary');
       let additionalMenu = $('.header__primary .additional-links-menu-nav');
       let body = $('body');
-      console.log(toggleExpand);
-      console.log(menu);
-      console.log(typeof menu !== 'undefined' || menu == null);
     if (typeof menu !== 'undefined' || menu == null) {
       let expandMenu = menu[0].getElementsByClassName('expand-sub');
 
