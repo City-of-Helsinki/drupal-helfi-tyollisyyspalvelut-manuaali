@@ -65,7 +65,7 @@ $main-menu-desktop-padding: calc(207px + $space-double);
 
 .menu--main {
   @include xl {
-    margin-left: -$space-double;
+    margin-left: -$space;
   }
 }
 
@@ -78,6 +78,7 @@ $main-menu-desktop-padding: calc(207px + $space-double);
   &--active {
     >.main-menu--sub {
       @include xl {
+        padding-left: $space;
         display: flex;
       }
     }
