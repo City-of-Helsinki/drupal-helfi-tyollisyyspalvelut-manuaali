@@ -34,7 +34,6 @@ body {
  * Remove this and uncomment Grid code below to use CSS Grid.
 */
 .layout-column {
-  width: 100%;
   min-height: 100vh;
 }
 
@@ -106,7 +105,9 @@ body {
     order: 2;
     &--with-sidebar {
       .region-content {
-
+        #block-system-main-block {
+          width: 100%;
+        }
       }
     }
   }
