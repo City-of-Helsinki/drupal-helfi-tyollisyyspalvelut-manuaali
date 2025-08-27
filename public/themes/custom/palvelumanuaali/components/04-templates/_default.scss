@@ -106,9 +106,7 @@ body {
     order: 2;
     &--with-sidebar {
       .region-content {
-        #block-system-main-block {
-          max-width: 1464px;
-        }
+
       }
     }
   }
@@ -117,6 +115,7 @@ body {
       .region-content {
         margin-right: $space-quadruple;
         margin-left: $space-quadruple;
+
       }
     }
   }
@@ -125,9 +124,10 @@ body {
     &--with-sidebar {
         .region-content {
           margin:auto;
-           #block-system-main-block {
-             margin: auto;
-           }
+          #block-system-main-block {
+            margin:auto;
+            max-width: 1464px;
+          }
         }
       }
     }
