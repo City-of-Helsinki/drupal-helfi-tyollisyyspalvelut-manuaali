@@ -8,11 +8,6 @@ dependencies:
     - paragraphs.paragraphs_type.municipality_guide
   module:
     - entity_reference_revisions
-    - epp
-third_party_settings:
-  epp:
-    value: ''
-    on_update: 0
 id: node.service.field_municipality_specific
 field_name: field_municipality_specific
 entity_type: node
@@ -20,7 +15,7 @@ bundle: service
 label: 'Kuntakohtainen poikkeus '
 description: 'Kun kunnan oma ohje poikkeaa poikkeustilanteen yleisestä ohjeesta, valitse <i>Lisää kuntakohtainen ohje</i>. Valitse ensin kunta, jota poikkeus koskee (etsi kirjoittamalla) ja kirjoita ohjeistus <i>Sisältö</i>-kenttään.'
 required: false
-translatable: true
+translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
@@ -36,6 +31,9 @@ settings:
       content:
         weight: 15
         enabled: false
+      content_alt_editor:
+        weight: 26
+        enabled: false
       content_card_lift:
         weight: 19
         enabled: false
@@ -48,11 +46,23 @@ settings:
       full_width_card_lift:
         weight: 22
         enabled: false
+      full_width_lift_element:
+        weight: 31
+        enabled: false
       header_description_link:
         weight: 23
         enabled: false
+      hero_lift:
+        weight: 33
+        enabled: false
       link:
         weight: 19
+        enabled: false
+      link_card_row:
+        weight: 35
+        enabled: false
+      link_card_with_image:
+        weight: 36
         enabled: false
       long_text_field_with_toolbar:
         weight: 20
@@ -63,8 +73,14 @@ settings:
       quick_link:
         weight: 27
         enabled: false
+      quick_link_row:
+        weight: 40
+        enabled: false
       service_language:
         weight: 22
+        enabled: false
+      service_list:
+        weight: 42
         enabled: false
       service_price:
         weight: 23
