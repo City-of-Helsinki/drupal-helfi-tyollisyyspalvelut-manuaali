@@ -356,6 +356,10 @@ table > :not(caption) > * > * {
       &:last-child {
         margin-right: $space-double;
       }
+      &:disabled {
+        color: $gray-light;
+        cursor: default;
+      }
     }
   }
   fieldset > div.container-inline input {
@@ -370,6 +374,12 @@ table > :not(caption) > * > * {
     background-position-x: calc(50% + 14ch - 0.5rem);
     border-radius: 8px;
     height: 58px;
+    &:disabled {
+      background-color: $near-white;
+      background-image: none;
+      color: $gray-light;
+      cursor: default;
+    }
   }
   &.field--name-field-municipality-specific fieldset > div.container-inline input {
       background-position-x: calc(50% + 19ch - 0.5rem);
