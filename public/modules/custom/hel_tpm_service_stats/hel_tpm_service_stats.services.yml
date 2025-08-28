@@ -14,3 +14,12 @@ services:
     arguments: ['@hel_tpm_service_stats.revision_history']
     tags:
       - { name: event_subscriber }
+
+  hel_tpm_service_stats.cron:
+    class: Drupal\hel_tpm_service_stats\HelTpmServiceStatsCron
+    arguments: [
+      '@datetime.time',
+      '@entity_type.manager',
+      '@state',
+      '@queue'
+    ]

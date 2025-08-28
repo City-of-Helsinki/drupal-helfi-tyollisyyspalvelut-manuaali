@@ -214,6 +214,9 @@ function service_manual_workflow_entity_update(EntityInterface $entity) {
   if (empty($entity->original)) {
     return;
   }
+  if ($entity->getRevisionId() === $entity->original->getRevisionId()) {
+    return;
+  }
   $original_state = _service_manual_workflow_entity_previous_revision($entity);
   $state = $entity->moderation_state->value;
   $transition = sprintf('service_manual_workflow.%s.to.%s', $original_state, $state);
