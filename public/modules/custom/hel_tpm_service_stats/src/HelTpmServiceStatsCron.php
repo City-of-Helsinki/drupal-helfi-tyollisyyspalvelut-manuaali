@@ -95,7 +95,7 @@ final class HelTpmServiceStatsCron {
    * task should run.
    *
    * @return bool
-   *    True if the task should run, false otherwise.
+   *   True if the task should run, false otherwise.
    */
   public function shouldRun() {
     $now = $this->datetimeTime->getRequestTime();
