@@ -79,6 +79,7 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
    * @param \Drupal\message_notify\MessageNotifier $message_notifier
    *   Message notifier service.
    * @param \Drupal\Component\Datetime\Time $time
+   *   Drupal time service.
    */
   public function __construct(
     array $configuration,
@@ -86,7 +87,7 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
     $plugin_definition,
     EntityTypeManagerInterface $entity_type_manager,
     MessageNotifier $message_notifier,
-    Time $time
+    Time $time,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->entityTypeManager = $entity_type_manager;
@@ -211,8 +212,8 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
     }
 
     if ($serviceProviderInformed || $responsibleInformed) {
-      $service->setChangedTime(\Drupal::time()->getCurrentTime());
-      $service->setRevisionCreationTime(\Drupal::time()->getCurrentTime());
+      $service->setChangedTime($this->time->getRequestTime());
+      $service->setRevisionCreationTime($this->time->getRequestTime());
       $service->set('moderation_state', 'outdated');
       $service->save();
       $this->logger->info('Service "%service_title" (ID: %service_id) automatically marked as outdated.', [
