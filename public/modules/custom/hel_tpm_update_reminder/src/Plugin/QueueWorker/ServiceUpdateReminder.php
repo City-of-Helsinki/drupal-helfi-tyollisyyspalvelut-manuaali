@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\hel_tpm_update_reminder\Plugin\QueueWorker;
 
+use Drupal\Component\Datetime\Time;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Logger\LoggerChannelTrait;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
@@ -58,6 +59,13 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
   protected int $serviceId;
 
   /**
+   * Time service.
+   *
+   * @var \Drupal\Component\Datetime\TimeInterface
+   */
+  protected $time;
+
+  /**
    * Constructor.
    *
    * @param array $configuration
@@ -70,6 +78,7 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
    *   Entity type manager.
    * @param \Drupal\message_notify\MessageNotifier $message_notifier
    *   Message notifier service.
+   * @param \Drupal\Component\Datetime\Time $time
    */
   public function __construct(
     array $configuration,
@@ -77,6 +86,7 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
     $plugin_definition,
     EntityTypeManagerInterface $entity_type_manager,
     MessageNotifier $message_notifier,
+    Time $time
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->entityTypeManager = $entity_type_manager;
@@ -93,7 +103,8 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
       $plugin_id,
       $plugin_definition,
       $container->get('entity_type.manager'),
-      $container->get('message_notify.sender')
+      $container->get('message_notify.sender'),
+      $containser->get('time')
     );
   }
 
@@ -200,6 +211,8 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
     }
 
     if ($serviceProviderInformed || $responsibleInformed) {
+      $service->setChangedTime(\Drupal::time()->getCurrentTime());
+      $service->setRevisionCreationTime(\Drupal::time()->getCurrentTime());
       $service->set('moderation_state', 'outdated');
       $service->save();
       $this->logger->info('Service "%service_title" (ID: %service_id) automatically marked as outdated.', [
