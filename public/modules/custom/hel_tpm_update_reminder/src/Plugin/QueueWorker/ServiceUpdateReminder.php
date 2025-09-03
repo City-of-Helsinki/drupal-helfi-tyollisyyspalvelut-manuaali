@@ -14,6 +14,7 @@ use Drupal\message\Entity\Message;
 use Drupal\message_notify\MessageNotifier;
 use Drupal\node\NodeInterface;
 use Drupal\user\Entity\User;
+use Drupal\user\UserInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -66,6 +67,13 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
   protected $time;
 
   /**
+   * Admin user entity.
+   *
+   * @var \Drupal\user\UserInterface|\Drupal\Core\Entity\EntityInterface|null
+   */
+  private UserInterface $adminUser;
+
+  /**
    * Constructor.
    *
    * @param array $configuration
@@ -93,6 +101,8 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
     $this->entityTypeManager = $entity_type_manager;
     $this->messageNotifier = $message_notifier;
     $this->logger = $this->getLogger('hel_tpm_update_reminder');
+    $this->time = $time;
+    $this->adminUser = $this->entityTypeManager->getStorage('user')->load(1);
   }
 
   /**
@@ -105,7 +115,9 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
       $plugin_definition,
       $container->get('entity_type.manager'),
       $container->get('message_notify.sender'),
-      $containser->get('time')
+      $container->get('datetime.time'),
+      $container->get('current_user')
+
     );
   }
 
@@ -214,6 +226,7 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
     if ($serviceProviderInformed || $responsibleInformed) {
       $service->setChangedTime($this->time->getRequestTime());
       $service->setRevisionCreationTime($this->time->getRequestTime());
+      $service->setRevisionUser($this->adminUser);
       $service->set('moderation_state', 'outdated');
       $service->save();
       $this->logger->info('Service "%service_title" (ID: %service_id) automatically marked as outdated.', [
