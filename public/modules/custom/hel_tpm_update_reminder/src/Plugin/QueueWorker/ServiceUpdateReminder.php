@@ -115,9 +115,7 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
       $plugin_definition,
       $container->get('entity_type.manager'),
       $container->get('message_notify.sender'),
-      $container->get('datetime.time'),
-      $container->get('current_user')
-
+      $container->get('datetime.time')
     );
   }
 
