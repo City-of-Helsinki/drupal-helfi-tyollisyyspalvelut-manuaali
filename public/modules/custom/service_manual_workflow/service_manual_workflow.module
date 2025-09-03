@@ -64,6 +64,7 @@ function _service_manual_workflow_queue_services_for_archival($time_limit = "-2 
 
   $nids = $storage->getQuery()
     ->condition('changed', $date->format('U'), '<')
+    ->condition('default_langcode', 1)
     ->accessCheck(FALSE)
     ->latestRevision()
     ->addTag('outdated_services')
