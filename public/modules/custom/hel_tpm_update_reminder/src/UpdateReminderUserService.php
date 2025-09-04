@@ -12,6 +12,13 @@ use Drupal\node\NodeInterface;
 class UpdateReminderUserService {
 
   /**
+   * The machine name for the service provider field.
+   *
+   * @var string
+   */
+  protected $serviceProducerField = 'field_service_producer';
+
+  /**
    * The database connection.
    *
    * @var \Drupal\Core\Database\Connection
@@ -37,7 +44,6 @@ class UpdateReminderUserService {
    *   An array of processed service provider updaters.
    */
   public function getServicesToRemind(): array {
-    $fieldUpdater = 'field_service_provider_updatee';
 
     // Get published service nodes.
     $serviceIds = $this->fetchPublishedServiceIds();
@@ -45,14 +51,91 @@ class UpdateReminderUserService {
       return [];
     }
 
-    // Fetch services containing updaters.
-    $servicesWithUpdaters = $this->fetchUpdatersForRevisions($fieldUpdater, $serviceIds);
-    if (empty($servicesWithUpdaters)) {
+    $services_with_updaters = $this->fetchServiceProviderUpdaters($serviceIds);
+
+    // Process services to find due reminders.
+    return $this->processUpdaters($services_with_updaters);
+  }
+
+  /**
+   * Fetches service provider updaters for the provided service revision IDs.
+   *
+   * @param array $serviceIds
+   *   An associative array of service revision IDs where keys are revision IDs
+   *   and values can be any associated data or metadata.
+   *
+   * @return array
+   *   An array of producer rows. Each row contains producer information along
+   *   with a list of updaters associated with the producer's group. If a group
+   *   has no updaters or does not exist, an empty list will be returned for
+   *   that producer's updaters key.
+   */
+  public function fetchServiceProviderUpdaters($serviceIds) {
+    if (empty($serviceIds)) {
       return [];
     }
 
-    // Process services to find due reminders.
-    return $this->processUpdaters($servicesWithUpdaters, $fieldUpdater);
+    $producerTargetField = 'gid';
+
+    // Fetch producers for the given service revision IDs.
+    $producerRows = $this->database
+      ->select('group_relationship_field_data', 'f')
+      ->condition('f.entity_id', $serviceIds, 'IN')
+      ->condition('f.plugin_id', 'group_node:service')
+      ->fields('f', ['entity_id', $producerTargetField])
+      ->execute()
+      ->fetchAll(\PDO::FETCH_ASSOC);
+
+    if (empty($producerRows)) {
+      return [];
+    }
+
+    // Collect unique group IDs referenced by producers.
+    $groupIds = [];
+    foreach ($producerRows as $row) {
+      if (isset($row[$producerTargetField])) {
+        $groupIds[$row[$producerTargetField]] = TRUE;
+      }
+    }
+    $groupIds = array_keys($groupIds);
+
+    if (empty($groupIds)) {
+      // No groups found; return producers with empty updaters lists.
+      foreach ($producerRows as &$row) {
+        $row['updaters'] = [];
+      }
+      return $producerRows;
+    }
+
+    // Fetch members for the relevant groups.
+    $groupMemberRows = $this->database
+      ->select('group_relationship_field_data', 'gr')
+      ->fields('gr', ['gid', 'entity_id'])
+      ->condition('gr.plugin_id', 'group_membership')
+      ->condition('gr.gid', $groupIds, 'IN')
+      ->execute()
+      ->fetchAll(\PDO::FETCH_ASSOC);
+
+    // Index members by group ID for fast lookup.
+    $groupMembersByGroupId = [];
+    foreach ($groupMemberRows as $member) {
+      $gid = $member['gid'] ?? NULL;
+      $uid = $member['entity_id'] ?? NULL;
+      if ($gid !== NULL && $uid !== NULL) {
+        $groupMembersByGroupId[$gid][] = $uid;
+      }
+    }
+
+    // Attach updaters to each producer row without mutating by reference.
+    $result = [];
+    foreach ($producerRows as $row) {
+      $gid = $row[$producerTargetField] ?? NULL;
+      $row['updaters'] = ($gid !== NULL) ? ($groupMembersByGroupId[$gid] ?? []) : [];
+      $result[] = $row;
+    }
+
+    return $result;
+
   }
 
   /**
@@ -89,22 +172,25 @@ class UpdateReminderUserService {
   }
 
   /**
-   * Processes services with updaters and finds those due for reminders.
+   * Processes services to identify updaters and determines reminder services.
    *
    * @param array $services
-   *   The services with updaters.
-   * @param string $field
-   *   The updater field name.
+   *   An array of services, each containing details such as entity ID,
+   *   updaters, and revision data.
    *
    * @return array
-   *   Services due for reminders.
+   *   An array of services that require update reminders. Each element contains
+   *   service entity IDs and their associated revision details.
    */
-  protected function processUpdaters(array $services, string $field): array {
+  protected function processUpdaters(array $services): array {
     $reminderServices = [];
     foreach ($services as $service) {
-      $latestRevision = $this->fetchLatestRevisionForUpdater(
+      if (empty($service['updaters'])) {
+        continue;
+      }
+      $latestRevision = $this->fetchLatestRevision(
         $service['entity_id'],
-        $service[$field . '_target_id']
+        $service['updaters']
       );
 
       if (empty($latestRevision)) {
@@ -122,22 +208,26 @@ class UpdateReminderUserService {
   }
 
   /**
-   * Fetches the latest revision for a specific updater.
+   * Fetches the latest revision for the specified node ID by given updaters.
    *
    * @param int $nodeId
-   *   The parent service node ID.
-   * @param int $updaterUserId
-   *   The updater user ID.
+   *   The ID of the node to fetch the latest revision for.
+   * @param array $updaters
+   *   An array of user IDs to filter revisions by.
    *
    * @return array|null
-   *   The latest revision data or NULL if none found.
+   *   An associative array containing the latest revision details,
+   *   or NULL if no matching revisions are found.
    */
-  protected function fetchLatestRevisionForUpdater(int $nodeId, int $updaterUserId): ?array {
+  protected function fetchLatestRevision(int $nodeId, array $updaters): ?array {
+    if (empty($updaters)) {
+      return NULL;
+    }
     $result = $this->database->select('node_revision', 'nr')
       ->fields('nr', ['nid', 'vid', 'revision_uid', 'revision_timestamp'])
       ->condition('nr.nid', $nodeId)
-      ->condition('nr.revision_uid', $updaterUserId)
-      ->orderBy('nr.revision_timestamp', 'DESC')
+      ->condition('nr.revision_uid', $updaters, 'IN')
+      ->orderBy('nr.vid', 'DESC')
       ->range(0, 1)
       ->execute()
       ->fetchAll(\PDO::FETCH_ASSOC);

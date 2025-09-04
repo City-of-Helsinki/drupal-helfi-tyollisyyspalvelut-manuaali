@@ -7,7 +7,9 @@ namespace Drupal\Tests\hel_tpm_update_reminder\Kernel;
 use Drupal\Core\Database\Database;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Test\AssertMailTrait;
-use Drupal\KernelTests\Core\Entity\EntityKernelTestBase;
+use Drupal\group\Entity\Group;
+use Drupal\Tests\group\Kernel\GroupKernelTestBase;
+use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
 use Drupal\Tests\user\Traits\UserCreationTrait;
 use Drupal\hel_tpm_general\PreventMailUtility;
 use Drupal\hel_tpm_update_reminder\UpdateReminderUtility;
@@ -18,10 +20,12 @@ use Drupal\node\Entity\Node;
  *
  * @group hel_tpm_update_reminder
  */
-final class ServiceUpdateReminderTest extends EntityKernelTestBase {
+final class ServiceUpdateReminderTest extends GroupKernelTestBase {
 
   use UserCreationTrait;
   use AssertMailTrait;
+  use ContentTypeCreationTrait;
+
 
   /**
    * {@inheritdoc}
@@ -31,13 +35,14 @@ final class ServiceUpdateReminderTest extends EntityKernelTestBase {
     'workflows',
     'node',
     'flexible_permissions',
-    'gcontent_moderation',
     'message',
     'message_notify',
     'message_notify_test',
     'service_manual_workflow',
     'group',
     'ggroup',
+    'gnode',
+    'gcontent_moderation',
     'hel_tpm_update_reminder',
     'hel_tpm_update_reminder_test',
     'hel_tpm_general',
@@ -66,6 +71,20 @@ final class ServiceUpdateReminderTest extends EntityKernelTestBase {
   protected $queue;
 
   /**
+   * The group entity.
+   *
+   * @var \Drupal\group\Entity\Group
+   */
+  private Group $group;
+
+  /**
+   * Represents the second group of entities or configurations.
+   *
+   * @var mixed
+   */
+  private Group $group2;
+
+  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {
@@ -74,6 +93,8 @@ final class ServiceUpdateReminderTest extends EntityKernelTestBase {
     $this->installEntitySchema('user');
     $this->installEntitySchema('content_moderation_state');
     $this->installEntitySchema('message');
+    $this->installEntitySchema('group');
+    $this->installEntitySchema('group_content');
     $this->installSchema('node', ['node_access']);
     $this->installConfig(['field', 'node', 'system']);
     $this->installConfig([
@@ -84,6 +105,14 @@ final class ServiceUpdateReminderTest extends EntityKernelTestBase {
     $this->cron = \Drupal::service('cron');
     $this->connection = Database::getConnection();
     $this->queue = $this->container->get('queue')->get('hel_tpm_update_reminder_service');
+
+    $group_type = $this->createGroupType();
+    $storage = $this->entityTypeManager->getStorage('group_content_type');
+    $storage->createFromPlugin($group_type, 'group_node:service', [])->save();
+
+    $this->group = $this->createGroup(['type' => $group_type->id()]);
+    $this->group2 = $this->createGroup(['type' => $group_type->id()]);
+
   }
 
   /**
@@ -474,24 +503,29 @@ final class ServiceUpdateReminderTest extends EntityKernelTestBase {
     $update_reminder_service = \Drupal::service('hel_tpm_update_reminder.update_reminder_user');
 
     $user1 = $this->createUser([], NULL, TRUE);
+    $this->group->addMember($user1);
 
     $user2 = $this->createUser([], NULL, TRUE);
+    $this->group->addMember($user2);
 
     $user3 = $this->createUser([], NULL, TRUE);
+    $this->group->addMember($user3);
 
     // Optionally, add assertions to validate
     // that the users were created successfully.
     $this->assertNotNull($user1->id(), 'User 1 was created successfully.');
     $this->assertNotNull($user2->id(), 'User 2 was created successfully.');
+    $this->assertNotNull($user3->id(), 'User 2 was created successfully.');
 
     // Create 1 draft service.
     $this->setCurrentUser($user1);
     $service = $this->createService([
       'moderation_state' => 'draft',
-      'field_service_provider_updatee' => $user1,
       'created' => strtotime('-130 days '),
       'changed' => strtotime('-130 days '),
     ]);
+
+    $this->group->addRelationship($service, 'group_node:service');
 
     $this->updateService((int) $service->id(), ['moderation_state' => 'published'], 129);
     $remind_service = $update_reminder_service->getServicesToRemind();
@@ -499,7 +533,7 @@ final class ServiceUpdateReminderTest extends EntityKernelTestBase {
 
     $this->setCurrentUser($user2);
 
-    $this->updateService((int) $service->id(), ['moderation_state' => 'published'], 10);
+    $this->updateService((int) $service->id(), ['moderation_state' => 'published'], 128);
     $remind_service = $update_reminder_service->getServicesToRemind();
     $this->assertCount(1, $remind_service);
 
@@ -511,14 +545,9 @@ final class ServiceUpdateReminderTest extends EntityKernelTestBase {
 
     $this->updateService((int) $service->id(), [
       'moderation_state' => 'draft',
-      'field_service_provider_updatee' => $user3->id(),
     ], 1);
     $remind_service = $update_reminder_service->getServicesToRemind();
     $this->assertCount(0, $remind_service);
-
-    $this->updateService((int) $service->id(), ['moderation_state' => 'published'], 0);
-    $remind_service = $update_reminder_service->getServicesToRemind();
-    $this->assertCount(1, $remind_service);
   }
 
   /**
@@ -663,6 +692,7 @@ final class ServiceUpdateReminderTest extends EntityKernelTestBase {
         'mail' => $this->randomMachineName(8) . '@tpm.test',
         'status' => 1,
       ]);
+      $this->group->addMember($user);
     }
     $service = $this->createService([
       'field_service_provider_updatee' => $user,
@@ -671,6 +701,8 @@ final class ServiceUpdateReminderTest extends EntityKernelTestBase {
     if ($addUser) {
       $service->setOwner($user);
     }
+    $this->group->addRelationship($service, 'group_node:service');
+
     return $this->updateService((int) $service->id(), [
       'moderation_state' => $toState,
     ], $days);
