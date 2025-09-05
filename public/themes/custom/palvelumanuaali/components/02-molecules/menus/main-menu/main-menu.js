@@ -11,6 +11,21 @@ Drupal.behaviors.mainMenu = {
       let body = $('body');
     if (typeof menu !== 'undefined' || menu == null) {
       let expandMenu = menu[0].getElementsByClassName('expand-sub');
+      let menuSub = menu[0].getElementsByClassName('main-menu__item--with-sub');
+
+      // Loop through main-menu items for active element and open them
+      Array.from(menuSub).forEach((menuItem) => {
+        if (menuItem.classList.contains('main-menu__item--active')){
+          const activeExpand = menuItem.querySelector('.expand-sub');
+          const activeMenu = activeExpand.nextElementSibling;
+          if (activeExpand) {
+            activeExpand.classList.toggle('expand-sub--open');
+          }
+          if (activeMenu) {
+            activeMenu.classList.toggle('main-menu--sub-open');
+          }
+        }
+      });
 
       // Expose mobile sub menu on click.
       Array.from(expandMenu).forEach((item) => {
@@ -78,6 +93,21 @@ Drupal.behaviors.mainMenu = {
 
     if (typeof menu !== 'undefined' || menu == null) {
       let expandMenu = menu[0].getElementsByClassName('expand-sub');
+      let menuSub = menu[0].getElementsByClassName('main-menu__item--with-sub');
+
+      // Loop through main-menu items for active element and open them
+      Array.from(menuSub).forEach((menuItem) => {
+        if (menuItem.classList.contains('main-menu__item--active')){
+          const activeExpand = menuItem.querySelector('.expand-sub');
+          const activeMenu = activeExpand.nextElementSibling;
+          if (activeExpand) {
+            activeExpand.classList.toggle('expand-sub--open');
+          }
+          if (activeMenu) {
+            activeMenu.classList.toggle('main-menu--sub-open');
+          }
+        }
+      });
 
       // Expose mobile sub menu on click.
       Array.from(expandMenu).forEach((item) => {
