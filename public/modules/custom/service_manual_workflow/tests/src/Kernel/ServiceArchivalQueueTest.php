@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\service_manual_workflow\Kernel;
 
+use Drupal\language\Entity\ConfigurableLanguage;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\Tests\service_manual_workflow\Traits\ServiceManualWorkflowTestTrait;
 use Drupal\Tests\user\Traits\UserCreationTrait;
@@ -26,6 +27,8 @@ class ServiceArchivalQueueTest extends GroupKernelTestBase {
     'gnode',
     'service_manual_workflow',
     'content_moderation',
+    'content_translation',
+    'language',
     'gcontent_moderation',
     'message_notify',
     'group',
@@ -39,6 +42,13 @@ class ServiceArchivalQueueTest extends GroupKernelTestBase {
   use UserCreationTrait;
 
   use ServiceManualWorkflowTestTrait;
+
+  /**
+   * Holds the language code for translations.
+   *
+   * @var string
+   */
+  protected string $translationLangcode = 'fi';
 
   /**
    * {@inheritdoc}
@@ -56,6 +66,8 @@ class ServiceArchivalQueueTest extends GroupKernelTestBase {
       'service_manual_workflow_service_test',
       'content_moderation',
     ]);
+    ConfigurableLanguage::createFromLangcode($this->translationLangcode)->save();
+
   }
 
   /**
@@ -68,6 +80,7 @@ class ServiceArchivalQueueTest extends GroupKernelTestBase {
       'moderation_state' => 'outdated',
     ]);
 
+    $translation = $node->addTranslation($this->translationLangcode);
     _service_manual_workflow_queue_services_for_archival("now");
 
     $queue_factory = \Drupal::service('queue');
@@ -82,6 +95,10 @@ class ServiceArchivalQueueTest extends GroupKernelTestBase {
     $node = $this->reloadEntity($node);
     $this->assertEquals('archived', $node->get('moderation_state')->value);
     $this->assertFalse($node->isPublished());
+
+    $translation = $this->reloadEntity($translation);
+    $this->assertEquals('archived', $translation->get('moderation_state')->value);
+    $this->assertFalse($translation->isPublished());
   }
 
 }

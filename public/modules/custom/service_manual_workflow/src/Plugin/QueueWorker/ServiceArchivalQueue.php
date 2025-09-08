@@ -49,14 +49,18 @@ final class ServiceArchivalQueue extends QueueWorkerBase implements ContainerFac
    */
   public function processItem($data): void {
     $node = $this->entityTypeManager->getStorage('node')->loadRevision($data['vid']);
-    $node->set('moderation_state', 'archived');
-    if ($node->isPublished()) {
-      $node->set('status', 0);
+    $languages = $node->getTranslationLanguages();
+    foreach ($languages as $language) {
+      $translation = $node->getTranslation($language->getId());
+      $translation->set('moderation_state', 'archived');
+      if ($translation->isPublished()) {
+        $translation->set('status', 0);
+      }
+      $translation->setNewRevision(TRUE);
+      $translation->setRevisionCreationTime(\Drupal::time()->getRequestTime());
+      $translation->setRevisionUserId(1);
+      $translation->save();
     }
-    $node->setNewRevision(TRUE);
-    $node->setRevisionCreationTime(\Drupal::time()->getRequestTime());
-    $node->setRevisionUserId(1);
-    $node->save();
   }
 
 }
