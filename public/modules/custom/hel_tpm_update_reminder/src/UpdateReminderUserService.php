@@ -153,25 +153,6 @@ class UpdateReminderUserService {
   }
 
   /**
-   * Fetches services with updaters from the database.
-   *
-   * @param string $field
-   *   The field containing updater references.
-   * @param array $serviceIds
-   *   Published service node IDs.
-   *
-   * @return array
-   *   Services with updaters.
-   */
-  protected function fetchUpdatersForRevisions(string $field, array $serviceIds): array {
-    return $this->database->select('node_revision__' . $field, 'f')
-      ->condition('f.revision_id', array_keys($serviceIds), 'IN')
-      ->fields('f', ['entity_id', 'revision_id', $field . '_target_id'])
-      ->execute()
-      ->fetchAll(\PDO::FETCH_ASSOC);
-  }
-
-  /**
    * Processes services to identify updaters and determines reminder services.
    *
    * @param array $services
@@ -185,22 +166,12 @@ class UpdateReminderUserService {
   protected function processUpdaters(array $services): array {
     $reminderServices = [];
     foreach ($services as $service) {
-      if (empty($service['updaters'])) {
-        continue;
-      }
       $latestRevision = $this->fetchLatestRevision(
         $service['entity_id'],
         $service['updaters']
       );
 
-      if (empty($latestRevision)) {
-        $reminderServices[$service['entity_id']] = [
-          'nid' => $service['entity_id'],
-          'revision_id' => $service['revision_id'],
-        ];
-        continue;
-      }
-      if ($latestRevision['revision_timestamp'] < UpdateReminderUtility::getFirstLimitTimestamp()) {
+      if ($latestRevision['changed'] < UpdateReminderUtility::getFirstLimitTimestamp()) {
         $reminderServices[$service['entity_id']] = $latestRevision;
       }
     }
@@ -220,13 +191,16 @@ class UpdateReminderUserService {
    *   or NULL if no matching revisions are found.
    */
   protected function fetchLatestRevision(int $nodeId, array $updaters): ?array {
-    if (empty($updaters)) {
-      return NULL;
+    $query = $this->database->select('node_field_revision', 'nr')
+      ->fields('nr', ['nid', 'vid', 'uid', 'changed'])
+      ->condition('nr.status', 1)
+      ->condition('nr.nid', $nodeId);
+
+    if (!empty($updaters)) {
+      $query->condition('nr.uid', $updaters, 'IN');
     }
-    $result = $this->database->select('node_revision', 'nr')
-      ->fields('nr', ['nid', 'vid', 'revision_uid', 'revision_timestamp'])
-      ->condition('nr.nid', $nodeId)
-      ->condition('nr.revision_uid', $updaters, 'IN')
+
+    $result = $query->condition('nr.default_langcode', 1)
       ->orderBy('nr.vid', 'DESC')
       ->range(0, 1)
       ->execute()

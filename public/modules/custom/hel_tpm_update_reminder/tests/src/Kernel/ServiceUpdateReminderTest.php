@@ -8,6 +8,7 @@ use Drupal\Core\Database\Database;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Test\AssertMailTrait;
 use Drupal\group\Entity\Group;
+use Drupal\group\Entity\GroupInterface;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
 use Drupal\Tests\user\Traits\UserCreationTrait;
@@ -470,11 +471,11 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
     $update_reminder_service = \Drupal::service('hel_tpm_update_reminder.update_reminder_user');
 
     // Create 2 published nodes.
-    $publishedService1 = $this->createService(['moderation_state' => 'published']);
-    $publishedService2 = $this->createService(['moderation_state' => 'published']);
+    $publishedService1 = $this->createService(['moderation_state' => 'published'], $this->group);
+    $publishedService2 = $this->createService(['moderation_state' => 'published'], $this->group);
 
     // Create 1 unpublished node.
-    $unpublishedService = $this->createService(['moderation_state' => 'draft']);
+    $unpublishedService = $this->createService(['moderation_state' => 'draft'], $this->group);
 
     // Fetch published node IDs.
     $publishedServiceIds = $update_reminder_service->fetchPublishedServiceIds();
@@ -523,7 +524,7 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
       'moderation_state' => 'draft',
       'created' => strtotime('-130 days '),
       'changed' => strtotime('-130 days '),
-    ]);
+    ], $this->group);
 
     $this->group->addRelationship($service, 'group_node:service');
 
@@ -612,22 +613,27 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
    *
    * @param array $values
    *   Array of values for service node.
+   * @param \Drupal\group\Entity\GroupInterface $group
+   *   Group interface.
    *
    * @return \Drupal\Core\Entity\EntityInterface
    *   Node entity interface.
    *
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  protected function createService(array $values): EntityInterface {
+  protected function createService(array $values, GroupInterface $group): EntityInterface {
     $values += [
       'type' => 'service',
       'title' => $this->randomMachineName(8),
     ];
     $node = Node::create($values);
-    if (!empty($values['changed'])) {
-      $node->setRevisionCreationTime($values['changed']);
-    }
     $node->save();
+    $group->addRelationship($node, 'group_node:service');
+
+    // Ensure revisions have proper changed date after group relationship.
+    if (!empty($values['changed'])) {
+      $this->ensureChangedDate($node, $values['changed']);
+    }
     return $this->reloadEntity($node);
   }
 
@@ -694,18 +700,40 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
       ]);
       $this->group->addMember($user);
     }
+    // Make sure newly created services are behind new ones.
+    $changed = strtotime('-' . $days + 10 . ' days', \Drupal::time()->getRequestTime());
     $service = $this->createService([
       'field_service_provider_updatee' => $user,
       'moderation_state' => $fromState,
-    ]);
-    if ($addUser) {
-      $service->setOwner($user);
-    }
+      'changed' => $changed,
+      'uid' => $addUser ? $user->id() : 0,
+    ], $this->group);
     $this->group->addRelationship($service, 'group_node:service');
 
     return $this->updateService((int) $service->id(), [
       'moderation_state' => $toState,
     ], $days);
+  }
+
+  /**
+   * Ensures the service's changed date is updated to the provided timestamp.
+   *
+   * @param \Drupal\node\NodeInterface $service
+   *   The service node whose changed date needs to be updated.
+   * @param int $timestamp
+   *   The timestamp to set for the changed date.
+   *
+   * @return void
+   *   -
+   */
+  protected function ensureChangedDate($service, $timestamp) {
+    $tables = ['node_revision' => 'revision_timestamp', 'node_field_revision' => 'changed'];
+    foreach ($tables as $table => $column) {
+      \Drupal::database()->update($table)
+        ->fields([$column => $timestamp])
+        ->condition('nid', $service->id())
+        ->execute();
+    }
   }
 
   /**
