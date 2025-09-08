@@ -62,6 +62,14 @@ final class DaysSinceStateChangeItem extends IntegerItem {
    * Calculate days since last state change.
    */
   protected function calculateDaysSinceLastStateChange(EntityInterface $entity) {
+    if (!$entity->isRevisionTranslationAffected()) {
+      foreach ($entity->getTranslationLanguages() as $language) {
+        $entity = $entity->getTranslation($language->getId());
+        if ($entity->isRevisionTranslationAffected()) {
+          break;
+        }
+      }
+    }
     $service = \Drupal::service('hel_tpm_service_stats.revision_history');
     return $service->getTimeSinceLastStateChange($entity);
   }
