@@ -203,6 +203,9 @@ body:not(.admin-toolbar-enabled) {
         margin-right: auto;
       }
     }
+    @include large {
+      width: 100%;
+    }
     @include xl {
       display: flex;
       background-color: clr(text-inverse);
