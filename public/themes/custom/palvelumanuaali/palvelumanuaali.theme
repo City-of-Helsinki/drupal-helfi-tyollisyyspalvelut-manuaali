@@ -522,17 +522,18 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id) {
 
     // Combinations of these will be used to adjust the details block.
     $form['revision_information']['#attributes']['class'][] = 'visually-hidden';
-    $form['meta']['published']['#access'] = FALSE;
+    $form['revision_information']['#weight'] = 0;
     $form['menu']['#access'] = FALSE;
+    $form['meta']['published']['#access'] = FALSE;
     $form['meta']['#type'] = 'container';
     $form['meta']['#group'] = 'group_details_sidebar';
     $form['meta']['changed']['#title'] = t('Updated:');
     $form['meta']['author']['#title'] = t('Created by:');
+    $form['meta']['#weight'] = 10;
     $form['langcode']['widget'][0]['value']['#title'] = t('Language version:');
     $form['moderation_state']['widget'][0]['current']['#title'] = t('Status of service:');
     $form['moderation_state']['widget'][0]['state']['#title'] = t('Change status:');
     $form['actions']['delete']['#access'] = FALSE;
     $form['actions']['cancel']['#access'] = FALSE;
-
   }
 }
