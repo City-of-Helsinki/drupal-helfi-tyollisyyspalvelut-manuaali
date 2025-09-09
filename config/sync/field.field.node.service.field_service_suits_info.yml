@@ -6,12 +6,7 @@ dependencies:
     - field.storage.node.field_service_suits_info
     - node.type.service
   module:
-    - epp
     - text
-third_party_settings:
-  epp:
-    value: ''
-    on_update: 0
 id: node.service.field_service_suits_info
 field_name: field_service_suits_info
 entity_type: node
@@ -19,8 +14,9 @@ bundle: service
 label: 'Lisätiedot palvelun soveltuvuudesta täydentäväksi työnhakukeskusteluksi:'
 description: 'Ohjeista, kuinka monta täydentävää työnhakukeskustelua palvelulla voi korvata, missä tilanteessa palvelu korvaa täydentävän työhakukeskustelun ja mitä toimintaohjeita tähän liittyy.   '
 required: false
-translatable: true
+translatable: false
 default_value: {  }
 default_value_callback: ''
-settings: {  }
+settings:
+  allowed_formats: {  }
 field_type: text_long
