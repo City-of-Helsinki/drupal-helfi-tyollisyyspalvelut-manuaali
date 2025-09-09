@@ -55,7 +55,7 @@ final class EntityReferenceTranslatedLabelFormatter extends EntityReferenceLabel
   public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, LanguageManagerInterface $language_manager) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
 
-    $this->languageMmanager = $language_manager;
+    $this->languageManager = $language_manager;
   }
 
   /**
