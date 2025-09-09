@@ -636,3 +636,9 @@ article ul,
     height: 100%;
   }
 }
+
+.text-maxwidth {
+  @include large {
+    max-width: 80ch;
+  }
+}
