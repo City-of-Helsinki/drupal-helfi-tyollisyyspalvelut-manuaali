@@ -64,6 +64,7 @@ dependencies:
     - entity_reference_revisions
     - entitygroupfield
     - field_group
+    - hel_tpm_forms
     - hel_tpm_general
     - text
     - user
@@ -375,7 +376,7 @@ content:
     weight: 10
     region: content
   field_accessibility:
-    type: entity_reference_label
+    type: entity_reference_translated_label
     label: hidden
     settings:
       link: false
@@ -440,7 +441,7 @@ content:
     weight: 6
     region: content
   field_implementation_extra_info:
-    type: entity_reference_label
+    type: entity_reference_translated_label
     label: hidden
     settings:
       link: false
@@ -448,7 +449,7 @@ content:
     weight: 1
     region: content
   field_life_situations:
-    type: entity_reference_label
+    type: entity_reference_translated_label
     label: hidden
     settings:
       link: false
@@ -522,7 +523,7 @@ content:
     weight: 14
     region: content
   field_service_producer:
-    type: entity_reference_label
+    type: entity_reference_translated_label
     label: above
     settings:
       link: false
@@ -537,7 +538,7 @@ content:
     weight: 2
     region: content
   field_service_set:
-    type: entity_reference_label
+    type: entity_reference_translated_label
     label: hidden
     settings:
       link: false
