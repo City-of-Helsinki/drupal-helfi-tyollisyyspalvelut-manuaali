@@ -6,13 +6,9 @@ dependencies:
     - field.storage.node.field_statements_unemployment
     - node.type.service
   module:
-    - epp
     - require_on_publish
     - text
 third_party_settings:
-  epp:
-    value: ''
-    on_update: 0
   require_on_publish:
     require_on_publish: true
 id: node.service.field_statements_unemployment
@@ -22,8 +18,9 @@ bundle: service
 label: 'Sisältö:'
 description: 'Kuvaa, mitä palveluun osallistumisesta lausutaan ja mitä vaikutuksia sillä on asiakkaan työllisyysstatukseen ja etuuksiin. '
 required: false
-translatable: true
+translatable: false
 default_value: {  }
 default_value_callback: ''
-settings: {  }
+settings:
+  allowed_formats: {  }
 field_type: text_long

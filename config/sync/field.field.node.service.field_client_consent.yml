@@ -5,12 +5,6 @@ dependencies:
   config:
     - field.storage.node.field_client_consent
     - node.type.service
-  module:
-    - epp
-third_party_settings:
-  epp:
-    value: ''
-    on_update: 0
 id: node.service.field_client_consent
 field_name: field_client_consent
 entity_type: node
@@ -18,7 +12,7 @@ bundle: service
 label: 'Participating in the service requires the customer to consent to the disclosure of their personal data.'
 description: "Choose whether the customer's consent is required to participate in the service. If consent is required, add instructions."
 required: false
-translatable: true
+translatable: false
 default_value:
   -
     value: 0

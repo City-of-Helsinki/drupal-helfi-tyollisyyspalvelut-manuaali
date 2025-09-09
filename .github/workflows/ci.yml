@@ -69,6 +69,6 @@ jobs:
 
       - name: SonarQube Scan
         if: ${{ env.SONARCLOUD_TOKEN }}
-        uses: SonarSource/sonarqube-scan-action@v4
+        uses: SonarSource/sonarqube-scan-action@v5
         env:
           SONAR_TOKEN: ${{ secrets.sonarcloud_token }}
