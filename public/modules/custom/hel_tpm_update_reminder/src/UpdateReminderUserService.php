@@ -206,6 +206,18 @@ class UpdateReminderUserService {
       ->execute()
       ->fetchAll(\PDO::FETCH_ASSOC);
 
+    // If results is empty fetch latest published revision.
+    if (empty($result)) {
+      $result = $this->database->select('node_field_revision', 'nr')
+        ->fields('nr', ['nid', 'vid', 'uid', 'changed'])
+        ->condition('nr.status', 1)
+        ->condition('nr.nid', $nodeId)
+        ->condition('nr.default_langcode', 1)
+        ->orderBy('nr.vid', 'DESC')
+        ->range(0, 1)
+        ->execute()
+        ->fetchAll(\PDO::FETCH_ASSOC);
+    }
     return !empty($result) ? $result[0] : NULL;
   }
 
