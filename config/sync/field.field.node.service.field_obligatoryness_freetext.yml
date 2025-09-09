@@ -6,13 +6,9 @@ dependencies:
     - field.storage.node.field_obligatoryness_freetext
     - node.type.service
   module:
-    - epp
     - require_on_publish
     - text
 third_party_settings:
-  epp:
-    value: ''
-    on_update: 0
   require_on_publish:
     require_on_publish: true
 id: node.service.field_obligatoryness_freetext
@@ -22,8 +18,9 @@ bundle: service
 label: Sisältö
 description: 'Kuvaa, mitä palvelun velvoittavuus tarkoittaa. Voit avata tekemääsi valintaa ja kuvata esim. milloin osallistuminen on velvoittavaa tai mitä suunnitelman noudattamatta jättämisestä voi asiakkaalle seurata. '
 required: false
-translatable: true
+translatable: false
 default_value: {  }
 default_value_callback: ''
-settings: {  }
+settings:
+  allowed_formats: {  }
 field_type: text_long

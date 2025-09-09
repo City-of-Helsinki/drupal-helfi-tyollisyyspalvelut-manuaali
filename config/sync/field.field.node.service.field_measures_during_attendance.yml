@@ -6,12 +6,7 @@ dependencies:
     - field.storage.node.field_measures_during_attendance
     - node.type.service
   module:
-    - epp
     - text
-third_party_settings:
-  epp:
-    value: ''
-    on_update: 0
 id: node.service.field_measures_during_attendance
 field_name: field_measures_during_attendance
 entity_type: node
@@ -19,8 +14,9 @@ bundle: service
 label: 'Sisältö:'
 description: 'Ohjeista, mitä asiantuntijan tulee huomioida ja tehdä sillä välin, kun asiakas on palvelussa ja tarvitaanko osallistumisen aikana tai sen jälkeen jotakin tietoa asiakkaalta tai palveluntuottajalta.'
 required: false
-translatable: true
+translatable: false
 default_value: {  }
 default_value_callback: ''
-settings: {  }
+settings:
+  allowed_formats: {  }
 field_type: text_long
