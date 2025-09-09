@@ -76,6 +76,11 @@
 
   }
   &--favorites {
+    >.content {
+      @include large {
+        display: flex;
+      }
+    }
     .menu__link {
       width: 44px;
       height: 44px;

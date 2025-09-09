@@ -40,12 +40,10 @@
     width: calc(100% - 42px);
   }
   &--active {
-    @include xl {
-      text-decoration-line: underline;
-      text-decoration-color: $blue100;
-      text-decoration-thickness: 4px;
-      text-underline-offset: 5px;
-    }
+    text-decoration-line: underline;
+    text-decoration-color: $blue100;
+    text-decoration-thickness: 4px;
+    text-underline-offset: 5px;
   }
 
   @include xl {
