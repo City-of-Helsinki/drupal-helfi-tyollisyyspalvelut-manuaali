@@ -71,6 +71,9 @@ $main-menu-desktop-padding: calc(207px + $space-double);
 
 .main-menu > .main-menu__item {
   >.main-menu--sub {
+    >li {
+      margin-bottom: unset;
+    }
     @include xl {
       display: none;
     }
