@@ -171,6 +171,12 @@ class UpdateReminderUserService {
         $service['updaters']
       );
 
+      if (empty($latestRevision)) {
+        $reminderServices[$service['entity_id']] = [
+          'nid' => $service['entity_id'],
+        ];
+        continue;
+      }
       if ($latestRevision['changed'] < UpdateReminderUtility::getFirstLimitTimestamp()) {
         $reminderServices[$service['entity_id']] = $latestRevision;
       }
@@ -191,33 +197,22 @@ class UpdateReminderUserService {
    *   or NULL if no matching revisions are found.
    */
   protected function fetchLatestRevision(int $nodeId, array $updaters): ?array {
-    $query = $this->database->select('node_field_revision', 'nr')
-      ->fields('nr', ['nid', 'vid', 'uid', 'changed'])
-      ->condition('nr.status', 1)
-      ->condition('nr.nid', $nodeId);
+    $query = $this->database->select('node_field_revision', 'nfr')
+      ->fields('nfr', ['nid', 'vid', 'changed'])
+      ->condition('nfr.status', 1)
+      ->condition('nfr.nid', $nodeId);
 
     if (!empty($updaters)) {
-      $query->condition('nr.uid', $updaters, 'IN');
+      $query->join('node_revision', 'nr', 'nr.nid = nfr.nid');
+      $query->condition('nr.revision_uid', $updaters, 'IN');
     }
 
-    $result = $query->condition('nr.default_langcode', 1)
-      ->orderBy('nr.vid', 'DESC')
+    $result = $query->condition('nfr.default_langcode', 1)
+      ->orderBy('nfr.vid', 'DESC')
       ->range(0, 1)
       ->execute()
       ->fetchAll(\PDO::FETCH_ASSOC);
 
-    // If results is empty fetch latest published revision.
-    if (empty($result)) {
-      $result = $this->database->select('node_field_revision', 'nr')
-        ->fields('nr', ['nid', 'vid', 'uid', 'changed'])
-        ->condition('nr.status', 1)
-        ->condition('nr.nid', $nodeId)
-        ->condition('nr.default_langcode', 1)
-        ->orderBy('nr.vid', 'DESC')
-        ->range(0, 1)
-        ->execute()
-        ->fetchAll(\PDO::FETCH_ASSOC);
-    }
     return !empty($result) ? $result[0] : NULL;
   }
 
