@@ -71,6 +71,7 @@ function palvelumanuaali_preprocess_node(&$variables) {
   if (!isset($variables['is_front'])) {
     $variables['is_front'] = \Drupal::service('path.matcher')->isFrontPage();
   }
+  _palvelumanuaali_preprocess_card_liftup($variables);
   _palvelumanuaali_preprocess_view_card_liftup($variables);
   _palvelumanuaali_preprocess_taxonomy_card($variables);
 }
@@ -102,6 +103,28 @@ function palvelumanuaali_preprocess_field(&$variables) {
     foreach ($variables['items'] as $key => $item) {
       $variables['items'][$key]['attributes']->setAttribute('class', 'margin-bottom-double-space');
     }
+  }
+}
+
+/**
+ * Preprocess function for card liftup.
+ *
+ * Hide cards which are not translated to current language.
+ *
+ * @param array $variables
+ *   Variable array.
+ *
+ * @return void
+ *   -
+ */
+function _palvelumanuaali_preprocess_card_liftup(&$variables) {
+  if (empty($variables['view_mode']) || $variables['view_mode'] !== 'card_lift') {
+    return;
+  }
+
+  if (!$variables['node']?->hasTranslation(\Drupal::languageManager()->getCurrentLanguage()->getId())) {
+    // Hide cards by hiding the field they use at the template.
+    unset($variables['content']['field_description']);
   }
 }
 
