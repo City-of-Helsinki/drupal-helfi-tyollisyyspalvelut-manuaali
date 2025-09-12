@@ -1,0 +1,24 @@
+{#
+/**
+ * @file
+ * Theme override for a main other services view template.
+ *
+ * @see views-view.html.twig for documentation.
+ */
+#}
+{%
+  set classes = [
+    'view',
+    'view-' ~ id|clean_class,
+    'view-id-' ~ id,
+    'view-display-id-' ~ display_id,
+    dom_id ? 'js-view-dom-id-' ~ dom_id,
+  ]
+%}
+<div{{ attributes.addClass(classes) }}>
+  {% if rows %}
+    <div class="view-content grid field__items">
+      {{ rows }}
+    </div>
+  {% endif %}
+</div>
