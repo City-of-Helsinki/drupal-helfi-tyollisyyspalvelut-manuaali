@@ -9,6 +9,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Logger\LoggerChannelTrait;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueWorkerBase;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\hel_tpm_update_reminder\UpdateReminderUtility;
 use Drupal\message\Entity\Message;
 use Drupal\message_notify\MessageNotifier;
@@ -30,6 +31,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFactoryPluginInterface {
 
   use LoggerChannelTrait;
+
+  use StringTranslationTrait;
 
   /**
    * Entity type manager service.
@@ -69,7 +72,7 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
   /**
    * Admin user entity.
    *
-   * @var \Drupal\user\UserInterface|\Drupal\Core\Entity\EntityInterface|null
+   * @var \Drupal\user\UserInterface
    */
   private UserInterface $adminUser;
 
@@ -100,8 +103,8 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->entityTypeManager = $entity_type_manager;
     $this->messageNotifier = $message_notifier;
-    $this->logger = $this->getLogger('hel_tpm_update_reminder');
     $this->time = $time;
+    $this->logger = $this->getLogger('hel_tpm_update_reminder');
     $this->adminUser = $this->entityTypeManager->getStorage('user')->load(1);
   }
 
@@ -203,10 +206,16 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
    * @throws \Drupal\message_notify\Exception\MessageNotifyException
    */
   protected function outdate(): bool {
+    /** @var \Drupal\Core\Entity\RevisionableStorageInterface $storage */
     $storage = $this->entityTypeManager->getStorage('node');
     /** @var \Drupal\node\NodeInterface $service */
     if (empty($service = $storage->load($this->serviceId))) {
       return FALSE;
+    }
+
+    if (!$service->isLatestRevision()) {
+      $vid = $storage->getLatestRevisionId($service->id());
+      $service = $storage->loadRevision($vid);
     }
 
     $serviceProviderInformed = FALSE;
@@ -222,11 +231,14 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
     }
 
     if ($serviceProviderInformed || $responsibleInformed) {
-      $service->setChangedTime($this->time->getRequestTime());
-      $service->setRevisionCreationTime($this->time->getRequestTime());
-      $service->setRevisionUser($this->adminUser);
-      $service->set('moderation_state', 'outdated');
-      $service->save();
+
+      $languages = $service->getTranslationLanguages();
+
+      foreach ($languages as $langcode => $language) {
+        $translation = $service->getTranslation($langcode);
+        $this->setServiceOutDated($translation);
+      }
+
       $this->logger->info('Service "%service_title" (ID: %service_id) automatically marked as outdated.', [
         '%service_title' => $service->getTitle(),
         '%service_id' => $this->serviceId,
@@ -236,6 +248,30 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
     }
 
     return FALSE;
+  }
+
+  /**
+   * Marks the service node as outdated by updating its moderation state.
+   *
+   * @param \Drupal\node\NodeInterface $node
+   *   The node entity to be updated.
+   *
+   * @return void
+   *   -
+   */
+  protected function setServiceOutDated(NodeInterface $node): void {
+    $node->setNewRevision();
+
+    if ($node->isDefaultTranslation()) {
+      $node->setRevisionUser($this->adminUser);
+      $node->setChangedTime($this->time->getRequestTime());
+      $node->setRevisionLogMessage($this->t('Set automatically to outdated'));
+      $node->setRevisionCreationTime($this->time->getRequestTime());
+    }
+
+    $node->setRevisionTranslationAffected(TRUE);
+    $node->set('moderation_state', 'outdated');
+    $node->save();
   }
 
   /**

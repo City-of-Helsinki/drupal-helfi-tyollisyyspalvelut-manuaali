@@ -9,6 +9,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Test\AssertMailTrait;
 use Drupal\group\Entity\Group;
 use Drupal\group\Entity\GroupInterface;
+use Drupal\language\Entity\ConfigurableLanguage;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
 use Drupal\Tests\user\Traits\UserCreationTrait;
@@ -33,6 +34,8 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
    */
   protected static $modules = [
     'content_moderation',
+    'content_translation',
+    'language',
     'workflows',
     'node',
     'flexible_permissions',
@@ -48,6 +51,8 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
     'hel_tpm_update_reminder_test',
     'hel_tpm_general',
     'purge',
+    'dblog',
+    'system',
   ];
 
   /**
@@ -86,6 +91,13 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
   private Group $group2;
 
   /**
+   * Translation langcode.
+   *
+   * @var string
+   */
+  private $translationLangcode = 'fi';
+
+  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {
@@ -97,6 +109,7 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
     $this->installEntitySchema('group');
     $this->installEntitySchema('group_content');
     $this->installSchema('node', ['node_access']);
+    $this->installSchema('dblog', ['watchdog']);
     $this->installConfig(['field', 'node', 'system']);
     $this->installConfig([
       'content_moderation',
@@ -114,6 +127,7 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
     $this->group = $this->createGroup(['type' => $group_type->id()]);
     $this->group2 = $this->createGroup(['type' => $group_type->id()]);
 
+    ConfigurableLanguage::createFromLangcode($this->translationLangcode)->save();
   }
 
   /**
@@ -218,6 +232,10 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
     // Test with service that is not checked for long time and ensure the first
     // reminder is sent.
     $service = $this->createServiceWithTransition('ready_to_publish', 'published', UpdateReminderUtility::LIMIT_1 + 1, TRUE);
+    $translation = $service->addTranslation($this->translationLangcode);
+    $translation->setTitle($this->randomString());
+    $translation->save();
+
     $this->cron->run();
     $this->assertEquals(1, count($this->getReminderMails()));
 
@@ -254,6 +272,9 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
     $this->assertEquals(1, count($this->getOutdatedMails()));
     $service = $this->reloadEntity($service);
     $this->assertEquals('outdated', $service->get('moderation_state')->value);
+
+    $translation = $this->reloadEntity($translation);
+    $this->assertEquals('outdated', $translation->get('moderation_state')->value);
 
     // Ensure no further messages are sent.
     $this->cronRunHelper();
