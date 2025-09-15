@@ -100,7 +100,7 @@
           services += '<span class="suggestion-item"><a href="' + data[i]['url'].escapeHTML() + '">' + data[i]['value'].escapeHTML() + "</a></span>";
         }
         else {
-          suggestions += '<span class="suggestion-item search-word-suggestion" value="' + data[i]['value'].escapeHTML() + '">' + data[i]['label'].replace(/<\!--.*?-->/g, "") + '</span>';
+          suggestions += '<span class="suggestion-item word-suggestion" value="' + data[i]['value'].escapeHTML() + '">' + data[i]['label'].replace(/<\!--.*?-->/g, "") + '</span>';
         }
         i++;
       }
