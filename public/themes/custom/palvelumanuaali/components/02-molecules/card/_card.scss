@@ -14,6 +14,7 @@ $card-font-small-heading: 15px;
     &:hover {
       box-shadow: 0px 8px 16px 0px rgba(30, 64, 182, 0.20);
       transition-duration: 100ms;
+      border-bottom: 4px clr(alt-header-color) solid;
     }
   }
   &.padded {
@@ -175,11 +176,19 @@ $card-font-small-heading: 15px;
   &:hover {
     box-shadow: 0px 8px 16px 0px rgba(30, 64, 182, 0.20);
     transition-duration: 100ms;
-    @include xl {
-      transform: translateY(-3px);
+  }
+}
+
+.card--arrow-icon-hover {
+  &:hover,
+  &:focus,
+  &:focus-within {
+    .arrow-icon {
+      background-color: clr(alt-header-color);
     }
   }
 }
+
 
 .card--view-card {
   background-color: clr(sidebar-color);
@@ -251,7 +260,6 @@ $card-font-small-heading: 15px;
   &:hover {
     transition-delay: 100ms;
     @include xl {
-      transform: translateY(-3px);
       z-index: $zi-above-content;
     }
   }
@@ -279,6 +287,7 @@ $card-font-small-heading: 15px;
     &:focus,
     &:focus-within  {
       box-shadow: 0px 8px 16px 0px rgba(30, 64, 182, 0.20);
+      transition-duration: 100ms;
     }
   }
 }
@@ -812,6 +821,7 @@ $card-font-small-heading: 15px;
 body:not(.edit-create-form) .field--name-field-linklist-card {
   width: 100%;
 }
+
 .link-card-with-image {
   background-color: clr(sidebar-color);
   border-radius: 16px;
