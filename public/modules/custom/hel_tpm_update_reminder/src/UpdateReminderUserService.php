@@ -83,6 +83,7 @@ class UpdateReminderUserService {
       ->condition('f.entity_id', $serviceIds, 'IN')
       ->condition('f.plugin_id', 'group_node:service')
       ->fields('f', ['entity_id', $producerTargetField])
+      ->distinct()
       ->execute()
       ->fetchAll(\PDO::FETCH_ASSOC);
 
