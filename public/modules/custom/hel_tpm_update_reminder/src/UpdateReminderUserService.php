@@ -199,7 +199,6 @@ class UpdateReminderUserService {
   protected function fetchLatestRevision(int $nodeId, array $updaters): ?array {
     $query = $this->database->select('node_field_revision', 'nfr')
       ->fields('nfr', ['nid', 'vid', 'changed'])
-      ->condition('nfr.status', 1)
       ->condition('nfr.nid', $nodeId);
 
     if (!empty($updaters)) {
