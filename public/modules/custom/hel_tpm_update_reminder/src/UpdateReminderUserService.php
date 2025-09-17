@@ -203,7 +203,7 @@ class UpdateReminderUserService {
       ->condition('nfr.nid', $nodeId);
 
     if (!empty($updaters)) {
-      $query->join('node_revision', 'nr', 'nr.nid = nfr.nid');
+      $query->join('node_revision', 'nr', 'nr.vid = nfr.vid');
       $query->condition('nr.revision_uid', $updaters, 'IN');
     }
     $query->join('content_moderation_state_field_revision', 'cmsfr', 'nfr.vid = cmsfr.content_entity_revision_id');
