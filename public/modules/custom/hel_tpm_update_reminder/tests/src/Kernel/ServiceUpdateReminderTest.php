@@ -537,7 +537,7 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
     // that the users were created successfully.
     $this->assertNotNull($user1->id(), 'User 1 was created successfully.');
     $this->assertNotNull($user2->id(), 'User 2 was created successfully.');
-    $this->assertNotNull($user3->id(), 'User 2 was created successfully.');
+    $this->assertNotNull($user3->id(), 'User 3 was created successfully.');
 
     // Create 1 draft service.
     $this->setCurrentUser($user1);
