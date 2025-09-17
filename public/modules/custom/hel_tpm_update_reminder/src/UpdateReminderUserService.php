@@ -83,6 +83,7 @@ class UpdateReminderUserService {
       ->condition('f.entity_id', $serviceIds, 'IN')
       ->condition('f.plugin_id', 'group_node:service')
       ->fields('f', ['entity_id', $producerTargetField])
+      ->distinct()
       ->execute()
       ->fetchAll(\PDO::FETCH_ASSOC);
 
@@ -205,6 +206,8 @@ class UpdateReminderUserService {
       $query->join('node_revision', 'nr', 'nr.nid = nfr.nid');
       $query->condition('nr.revision_uid', $updaters, 'IN');
     }
+    $query->join('content_moderation_state_field_revision', 'cmsfr', 'nfr.vid = cmsfr.content_entity_revision_id');
+    $query->condition('cmsfr.moderation_state', ['ready_to_publish', 'published'], 'IN');
 
     $result = $query->condition('nfr.default_langcode', 1)
       ->orderBy('nfr.vid', 'DESC')
