@@ -2,6 +2,32 @@
 
   const resultCount = 5;
 
+
+  var beforeSend = Drupal.Ajax.prototype.beforeSend;
+
+  /**
+   * Callback function that is executed before an Ajax request is sent.
+   *
+   * This method is typically used to modify the XMLHttpRequest (jqXHR) object,
+   * customize request headers, or handle operations that need to be done
+   * immediately before sending an Ajax request to the server.
+   *
+   * @function
+   * @param {XMLHttpRequest} xhr
+   *   The XMLHttpRequest (jqXHR) object used for the Ajax request.
+   * @param {Object} settings
+   *   A plain object containing settings for the Ajax request. This object can
+   *   be modified to customize the request.
+   */
+  Drupal.Ajax.prototype.beforeSend = function(xmlhttprequest, options) {
+    beforeSend.call(this, xmlhttprequest, options);
+   if (options.extraData != undefined && options.extraData.view_name != undefined) {
+     if (options.extraData.view_name === 'solr_service_search') {
+       Drupal.behaviors.hel_tpm_search_autocomplete.appendSearchHistory(options.extraData.search_api_fulltext)
+     }
+    }
+  }
+
   Drupal.behaviors.hel_tpm_search_autocomplete = {
 
     arrowNavigation: function(form) {
@@ -30,8 +56,7 @@
     setSearchHistory: function(value) {
       localStorage.setItem('hel_search_history', JSON.stringify(value));
     },
-    appendSearchHistory: function(form) {
-      let value = $.trim($('input[name="search_api_fulltext"]', form).val());
+    appendSearchHistory: function(value) {
       if (value.length <= 0) {
         return;
       }
@@ -163,7 +188,6 @@
     attach: function (context, settings) {
       let form = $('.search-autocomplete-wrapper');
       let searchField = 'input[name="search_api_fulltext"]';
-      let searchForm = $(form).closest('form');
       let selectedMultiselect = '.filters-wrapper .multi-select-container.active';
 
       if ($(searchField).val().length === 0) {
@@ -178,10 +202,6 @@
         } else {
           $('.control-wrapper input[id^="edit-reset--"]').hide();
         }
-
-        searchForm.on('submit', function(e) {
-          Drupal.behaviors.hel_tpm_search_autocomplete.appendSearchHistory(form);
-        });
 
         $('.text-search-wrapper input[id^="edit-reset--"]').click (function (event) {
           event.preventDefault();
