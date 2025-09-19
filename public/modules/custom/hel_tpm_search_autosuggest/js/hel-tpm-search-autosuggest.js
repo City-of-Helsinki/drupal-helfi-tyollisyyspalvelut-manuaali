@@ -83,7 +83,7 @@
       if (history != null && history.length > 0) {
         $.each(history, function(key, value) {
           let val = value.escapeHTML();
-          content +='<span class="suggestion-item" tabindex="' + i + '" value="' + val + '">' + val + '</span>';
+          content +='<span class="suggestion-item word-suggestion" tabindex="' + i + '" value="' + val + '">' + val + '</span>';
           i++;
         });
       }
@@ -92,7 +92,7 @@
 
     handleSelectionEvents: function(form) {
       let context = $(form).closest('form');
-      $('.suggestion-item', form)
+      $('.word-suggestion', form)
         .keypress(function (ev) {
           let keycode = (ev.keyCode ? ev.keyCode : ev.which);
           if (keycode === '13') {
@@ -125,7 +125,7 @@
           services += '<span class="suggestion-item"><a href="' + data[i]['url'].escapeHTML() + '">' + data[i]['value'].escapeHTML() + "</a></span>";
         }
         else {
-          suggestions += '<span class="suggestion-item" value="' + data[i]['value'].escapeHTML() + '">' + data[i]['label'].replace(/<\!--.*?-->/g, "") + '</span>';
+          suggestions += '<span class="suggestion-item word-suggestion" value="' + data[i]['value'].escapeHTML() + '">' + data[i]['label'].replace(/<\!--.*?-->/g, "") + '</span>';
         }
         i++;
       }
