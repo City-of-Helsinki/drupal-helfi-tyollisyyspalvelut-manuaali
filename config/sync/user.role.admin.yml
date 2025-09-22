@@ -49,12 +49,14 @@ dependencies:
     - shortcut
     - system
     - taxonomy
+    - tmgmt
     - toolbar
 id: admin
 label: Admin
 weight: 3
 is_admin: null
 permissions:
+  - 'accept translation jobs'
   - 'access administration pages'
   - 'access contact info overview'
   - 'access content overview'
@@ -144,6 +146,7 @@ permissions:
   - 'create terms in service_implementation_type'
   - 'create terms in service_languages'
   - 'create terms in service_set'
+  - 'create translation jobs'
   - 'delete all revisions'
   - 'delete any basic_page content'
   - 'delete contact info'
@@ -248,6 +251,7 @@ permissions:
   - 'flag lists'
   - 'grant node permissions'
   - 'revert all revisions'
+  - 'submit translation jobs'
   - 'translate editable entities'
   - 'translate interface'
   - 'unflag lists'

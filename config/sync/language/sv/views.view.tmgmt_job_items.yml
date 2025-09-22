@@ -1,4 +1,3 @@
-label: Meddelande
 display:
   default:
     display_title: Huvud
@@ -22,33 +21,39 @@ display:
             first: '« första'
             last: 'sista »'
       fields:
-        message_bulk_form_1:
-          label: 'Meddelandefunktioner för massformulär'
-          action_title: 'Med urval'
-        mid:
-          label: 'ID-nummer för meddelande'
+        state:
+          label: Läge
+        label:
+          label: Etikett
+        type:
+          label: Typ
+        progress:
+          label: Framsteg
+        word_count:
           separator: ', '
-        template:
-          label: 'Message template'
+        tags_count:
+          label: Etiketter
           separator: ', '
-        get_text:
-          label: Meddelandetext
-        uid:
-          label: Författare
-          separator: ', '
-        created:
-          label: Julkaisupäivämäärä
-      filters:
-        template:
-          expose:
-            label: Mall
-      title: Meddelande
-      empty:
-        area:
-          content:
-            value: 'No messages created yet'
-  page_1:
-    display_title: Sida
+        changed:
+          label: Ändrad
+        operations:
+          label: Funktioner
+      arguments:
+        tjid:
+          exception:
+            title: Alla
+  checkout:
+    display_title: Kassan
     display_options:
-      menu:
-        title: Meddelande
+      fields:
+        label:
+          label: Etikett
+        type:
+          label: Typ
+        word_count:
+          separator: ', '
+        changed:
+          label: Ändrad
+          separator: ', '
+  submitted:
+    display_title: Skickad

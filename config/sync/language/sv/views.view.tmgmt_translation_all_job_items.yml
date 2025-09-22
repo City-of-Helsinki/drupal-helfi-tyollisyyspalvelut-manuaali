@@ -1,0 +1,63 @@
+display:
+  default:
+    display_title: Huvud
+    display_options:
+      exposed_form:
+        options:
+          submit_button: Applicera
+          reset_button_label: Återställ
+          exposed_sorts_label: 'Sortera efter'
+          sort_asc_label: Stigande
+          sort_desc_label: Fallande
+      pager:
+        options:
+          expose:
+            items_per_page_label: 'Inlägg per sida'
+            items_per_page_options_all_label: '- Alla -'
+            offset_label: Kompensera
+          tags:
+            previous: '‹ Föregående'
+            next: 'Nästa ›'
+            first: '« Första'
+            last: 'Sista »'
+      fields:
+        state:
+          label: Läge
+        label:
+          label: Etikett
+        type:
+          label: Typ
+        source_language:
+          label: Från
+          separator: ', '
+        target_language:
+          label: Till
+          separator: ', '
+        progress:
+          label: Framsteg
+        word_count:
+          separator: ', '
+        tags_count:
+          label: Etiketter
+          separator: ', '
+        changed:
+          label: Ändrad
+          separator: ', '
+        operations:
+          label: Funktioner
+      filters:
+        state:
+          expose:
+            label: Lägen
+          group_info:
+            label: Läge
+        source_language:
+          expose:
+            label: Källspråk
+        job_type:
+          group_info:
+            group_items:
+              1:
+                title: Normal
+  page_1:
+    display_title: Sida

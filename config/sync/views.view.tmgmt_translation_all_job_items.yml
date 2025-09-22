@@ -1,20 +1,20 @@
-uuid: 676269d8-8f24-4431-b5f3-661381293b32
+uuid: 2edfabe1-0fa4-4e8a-820a-d38d54df1d5b
 langcode: fi
 status: true
 dependencies:
+  config:
+    - system.menu.admin
   module:
-    - better_exposed_filters
-    - ggroup
-    - group
+    - tmgmt
 _core:
-  default_config_hash: N3ns6qbzpWOxDydJhE1SlVVNRgHAEgBinAJm5E8Dmxo
-id: subgroups
-label: Palveluntuottajat
-module: ggroup
-description: 'Lists all of the subgroups that have been added to a group.'
+  default_config_hash: cgVpfZ9kESndXtn3A_cvyl71krium1lcTfyeOZmhsTo
+id: tmgmt_translation_all_job_items
+label: 'Translation All Job Items'
+module: views
+description: ''
 tag: ''
-base_table: groups_field_data
-base_field: id
+base_table: tmgmt_job_item
+base_field: tjiid
 display:
   default:
     id: default
@@ -22,19 +22,176 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: Palveluntuottajat
+      title: 'Job Items'
       fields:
+        state:
+          id: state
+          table: tmgmt_job_item
+          field: state
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: tmgmt_job_item
+          plugin_id: tmgmt_job_item_state
+          label: Tila
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
         label:
           id: label
-          table: groups_field_data
+          table: tmgmt_job_item
           field: label
           relationship: none
           group_type: group
           admin_label: ''
-          entity_type: null
-          entity_field: label
+          entity_type: tmgmt_job_item
+          plugin_id: tmgmt_entity_label
+          label: 'Aihe '
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+        tjid:
+          id: tjid
+          table: tmgmt_job_item
+          field: tjid
+          entity_type: tmgmt_job_item
+          entity_field: tjid
           plugin_id: field
-          label: Title
+        type:
+          id: type
+          table: tmgmt_job_item
+          field: type
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: tmgmt_job_item
+          plugin_id: tmgmt_job_item_type
+          label: Tyyppi
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+        source_language:
+          id: source_language
+          table: tmgmt_job
+          field: source_language
+          relationship: tjid
+          group_type: group
+          admin_label: ''
+          entity_type: tmgmt_job
+          entity_field: source_language
+          plugin_id: field
+          label: Lähettäjä
           exclude: false
           alter:
             alter_text: false
@@ -76,9 +233,10 @@ display:
           empty_zero: false
           hide_alter_empty: true
           click_sort_column: value
-          type: string
+          type: language
           settings:
-            link_to_entity: true
+            link_to_entity: false
+            native_language: false
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -89,17 +247,17 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-        status:
-          id: status
-          table: groups_field_data
-          field: status
-          relationship: none
+        target_language:
+          id: target_language
+          table: tmgmt_job
+          field: target_language
+          relationship: tjid
           group_type: group
           admin_label: ''
-          entity_type: group
-          entity_field: status
+          entity_type: tmgmt_job
+          entity_field: target_language
           plugin_id: field
-          label: 'Ryhmän tila'
+          label: Osoitteeseen
           exclude: false
           alter:
             alter_text: false
@@ -141,11 +299,192 @@ display:
           empty_zero: false
           hide_alter_empty: true
           click_sort_column: value
-          type: boolean
+          type: language
           settings:
-            format: custom
-            format_custom_false: Arkistoitu
-            format_custom_true: Julkaistu
+            link_to_entity: false
+            native_language: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        progress:
+          id: progress
+          table: tmgmt_job_item
+          field: progress
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: tmgmt_job_item
+          plugin_id: tmgmt_progress
+          label: Progress
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+        word_count:
+          id: word_count
+          table: tmgmt_job_item
+          field: word_count
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: tmgmt_job_item
+          entity_field: word_count
+          plugin_id: field
+          label: Word
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: number_integer
+          settings:
+            thousand_separator: ''
+            prefix_suffix: true
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        tags_count:
+          id: tags_count
+          table: tmgmt_job_item
+          field: tags_count
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: tmgmt_job_item
+          entity_field: tags_count
+          plugin_id: field
+          label: Tagit
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: number_integer
+          settings:
+            thousand_separator: ''
+            prefix_suffix: true
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -158,15 +497,15 @@ display:
           field_api_classes: false
         changed:
           id: changed
-          table: groups_field_data
+          table: tmgmt_job_item
           field: changed
           relationship: none
           group_type: group
           admin_label: ''
-          entity_type: group
+          entity_type: tmgmt_job_item
           entity_field: changed
           plugin_id: field
-          label: Updated
+          label: Muuttunut
           exclude: false
           alter:
             alter_text: false
@@ -210,7 +549,7 @@ display:
           click_sort_column: value
           type: timestamp
           settings:
-            date_format: short
+            date_format: medium
             custom_date_format: ''
             timezone: ''
             tooltip:
@@ -222,7 +561,6 @@ display:
               past_format: '@interval ago'
               granularity: 2
               refresh: 60
-              description: ''
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -233,121 +571,16 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-        view_group_content:
-          id: view_group_content
-          table: group_relationship
-          field: view_group_content
-          relationship: group_content
+        operations:
+          id: operations
+          table: tmgmt_job_item
+          field: operations
+          relationship: none
           group_type: group
-          admin_label: 'View relation link'
-          entity_type: group_content
-          plugin_id: entity_link
-          label: 'Linkki ryhmäsisältöön'
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          text: Näytä
-          output_url_as_text: false
-          absolute: false
-        edit_group_content:
-          id: edit_group_content
-          table: group_relationship
-          field: edit_group_content
-          relationship: group_content
-          group_type: group
-          admin_label: 'Edit relation link'
-          entity_type: group_content
-          plugin_id: entity_link_edit
-          label: 'Linkki ryhmärelaation muokkaukseen'
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          text: 'Muokkaa relaatiota'
-          output_url_as_text: false
-          absolute: false
-        delete_group_content:
-          id: delete_group_content
-          table: group_relationship
-          field: delete_group_content
-          relationship: group_content
-          group_type: group
-          admin_label: 'Delete relation link'
-          entity_type: group_content
-          plugin_id: entity_link_delete
+          admin_label: ''
+          entity_type: null
+          entity_field: null
+          plugin_id: entity_operations
           label: Toiminnot
           exclude: false
           alter:
@@ -389,121 +622,13 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          text: 'Poista palveluntuottajista'
-          output_url_as_text: false
-          absolute: false
-        edit_group:
-          id: edit_group
-          table: groups
-          field: edit_group
-          relationship: none
-          group_type: group
-          admin_label: 'Edit subgroup link'
-          entity_type: group
-          plugin_id: entity_link_edit
-          label: 'Link to edit Group'
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          text: 'Edit subgroup'
-          output_url_as_text: false
-          absolute: false
-        delete_group:
-          id: delete_group
-          table: groups
-          field: delete_group
-          relationship: none
-          group_type: group
-          admin_label: 'Delete subgroup link'
-          entity_type: group
-          plugin_id: entity_link_delete
-          label: 'Poista palveluntuottaja '
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          text: 'Poista palveluntuottaja '
-          output_url_as_text: false
-          absolute: false
+          destination: false
       pager:
         type: full
         options:
           offset: 0
           pagination_heading_level: h4
-          items_per_page: 50
+          items_per_page: 10
           total_pages: null
           id: 0
           tags:
@@ -519,8 +644,9 @@ display:
             items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
+          quantity: 9
       exposed_form:
-        type: bef
+        type: basic
         options:
           submit_button: Apply
           reset_button: false
@@ -529,32 +655,11 @@ display:
           expose_sort_order: true
           sort_asc_label: Asc
           sort_desc_label: Desc
-          text_input_required: 'Select any filter and click on Apply to see results'
-          text_input_required_format: null
-          bef:
-            general:
-              autosubmit: false
-              autosubmit_exclude_textfield: false
-              autosubmit_textfield_delay: 500
-              autosubmit_hide: false
-              input_required: false
-              allow_secondary: false
-              secondary_label: 'Advanced options'
-              secondary_open: false
-              reset_button_always_show: false
-            sort:
-              plugin_id: default
-            filter:
-              type:
-                plugin_id: default
-              label:
-                plugin_id: default
       access:
-        type: group_permission
-        options:
-          group_permission: 'access subgroup overview'
+        type: tmgmt_job
+        options: {  }
       cache:
-        type: tag
+        type: none
         options: {  }
       empty:
         area_text_custom:
@@ -566,81 +671,78 @@ display:
           admin_label: ''
           plugin_id: text_custom
           empty: true
-          content: 'Ei palveluntuottajia'
+          content: 'No job items for the current selection.'
           tokenize: false
       sorts: {  }
-      arguments:
-        gid:
-          id: gid
-          table: group_relationship_field_data
-          field: gid
-          relationship: group_content
-          group_type: group
-          admin_label: ''
-          entity_type: group_content
-          entity_field: gid
-          plugin_id: group_id
-          default_action: 'access denied'
-          exception:
-            value: all
-            title_enable: false
-            title: All
-          title_enable: true
-          title: '{{ arguments.gid|placeholder }} subgroups'
-          default_argument_type: fixed
-          default_argument_options:
-            argument: ''
-          summary_options:
-            base_path: ''
-            count: true
-            override: false
-            items_per_page: 25
-          summary:
-            sort_order: asc
-            number_of_records: 0
-            format: default_summary
-          specify_validation: false
-          validate:
-            type: none
-            fail: 'not found'
-          validate_options: {  }
-          break_phrase: false
-          not: false
+      arguments: {  }
       filters:
-        type:
-          id: type
-          table: groups_field_data
-          field: type
+        state:
+          id: state
+          table: tmgmt_job_item
+          field: state
           relationship: none
           group_type: group
           admin_label: ''
-          entity_type: group
-          entity_field: type
-          plugin_id: bundle
+          entity_type: tmgmt_job_item
+          plugin_id: tmgmt_job_item_filter
+          operator: job_item_state
+          value:
+            2: '2'
+          group: 1
+          exposed: true
+          expose:
+            operator_id: state_op
+            label: Tilat
+            description: ''
+            use_operator: false
+            operator: state_op
+            identifier: state
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: Tila
+            description: ''
+            identifier: state
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: ''
+            default_group_multiple: {  }
+            group_items: {  }
+        source_language:
+          id: source_language
+          table: tmgmt_job
+          field: source_language
+          relationship: tjid
+          group_type: group
+          admin_label: ''
+          entity_type: tmgmt_job
+          entity_field: source_language
+          plugin_id: language
           operator: in
           value: {  }
           group: 1
           exposed: true
           expose:
-            operator_id: type_op
-            label: 'Ryhmän tyyppi '
+            operator_id: source_language_op
+            label: Lähdekieli
             description: ''
             use_operator: false
-            operator: type_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: type
+            operator: source_language_op
+            identifier: source_language
             required: false
             remember: false
             multiple: false
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
-              root: '0'
-              admin: '0'
-              editor: '0'
-              specialist: '0'
-              specialist_editor: '0'
+              administrator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -654,87 +756,35 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-        status:
-          id: status
-          table: groups_field_data
-          field: status
-          relationship: none
+        target_language:
+          id: target_language
+          table: tmgmt_job
+          field: target_language
+          relationship: tjid
           group_type: group
           admin_label: ''
-          entity_type: group
-          entity_field: status
-          plugin_id: boolean
-          operator: '='
-          value: '1'
+          entity_type: tmgmt_job
+          entity_field: target_language
+          plugin_id: language
+          operator: in
+          value: {  }
           group: 1
           exposed: true
           expose:
-            operator_id: ''
-            label: 'Ryhmän tila'
+            operator_id: target_language_op
+            label: 'Target language'
             description: ''
             use_operator: false
-            operator: status_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: status
-            required: true
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              root: '0'
-              admin: '0'
-              editor: '0'
-              specialist: '0'
-              specialist_editor: '0'
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-        label:
-          id: label
-          table: groups_field_data
-          field: label
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: group
-          entity_field: label
-          plugin_id: string
-          operator: contains
-          value: ''
-          group: 1
-          exposed: true
-          expose:
-            operator_id: label_op
-            label: 'Suodatus:'
-            description: ''
-            use_operator: false
-            operator: label_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: filter
+            operator: target_language_op
+            identifier: target_language
             required: false
             remember: false
             multiple: false
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
-              root: '0'
-              admin: '0'
-              editor: '0'
-              specialist: '0'
-              specialist_editor: '0'
-            placeholder: 'Suodata hakusanalla'
+              administrator: '0'
+            reduce: false
           is_grouped: false
           group_info:
             label: ''
@@ -747,6 +797,53 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
+        job_type:
+          id: job_type
+          table: tmgmt_job
+          field: job_type
+          relationship: tjid
+          group_type: group
+          admin_label: ''
+          entity_type: tmgmt_job
+          plugin_id: tmgmt_job_type_filter
+          operator: '='
+          group: 1
+          exposed: true
+          expose:
+            operator_id: job_type_op
+            label: 'Job Type (Custom)'
+            description: null
+            use_operator: false
+            operator: job_type_op
+            identifier: job_type
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            hide_no_continuous: true
+          is_grouped: true
+          group_info:
+            label: 'Job type'
+            description: ''
+            identifier: job_type
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items:
+              1:
+                title: Normaali
+                operator: '='
+                value:
+                  value: normal
+              2:
+                title: Continuous
+                operator: '='
+                value:
+                  value: continuous
       filter_groups:
         operator: AND
         groups:
@@ -759,14 +856,16 @@ display:
           default_row_class: true
           columns:
             label: label
-            status: status
+            type: type
+            source_language: source_language
+            target_language: target_language
+            state: state
+            progress: progress
+            word_count: word_count
+            tags_count: tags_count
             changed: changed
-            view_group_content: view_group_content
-            edit_group_content: edit_group_content
-            delete_group_content: delete_group_content
-            edit_group: edit_group
-            delete_group: delete_group
-          default: label
+            operations: operations
+          default: changed
           info:
             label:
               sortable: true
@@ -775,8 +874,50 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
-            status:
+            type:
               sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            source_language:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            target_language:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            state:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            progress:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            word_count:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            tags_count:
+              sortable: false
               default_sort_order: asc
               align: ''
               separator: ''
@@ -784,40 +925,12 @@ display:
               responsive: ''
             changed:
               sortable: true
-              default_sort_order: asc
+              default_sort_order: desc
               align: ''
               separator: ''
               empty_column: false
               responsive: ''
-            view_group_content:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            edit_group_content:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            delete_group_content:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            edit_group:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            delete_group:
+            operations:
               sortable: false
               default_sort_order: asc
               align: ''
@@ -827,7 +940,7 @@ display:
           override: true
           sticky: false
           summary: ''
-          empty_table: true
+          empty_table: false
           caption: ''
           description: ''
       row:
@@ -841,31 +954,37 @@ display:
           replica: false
           query_tags: {  }
       relationships:
-        group_content:
-          id: group_content
-          table: groups_field_data
-          field: group_content
+        tjid:
+          id: tjid
+          table: tmgmt_job_item
+          field: tjid
           relationship: none
           group_type: group
-          admin_label: 'Subgroup relation'
-          entity_type: group
-          plugin_id: group_content_to_entity_reverse
+          admin_label: 'Translation Job'
+          entity_type: tmgmt_job_item
+          entity_field: tjid
+          plugin_id: standard
           required: true
-          group_content_plugins:
-            'subgroup:fut_open': '0'
-      use_ajax: true
       header: {  }
-      footer: {  }
+      footer:
+        footer:
+          id: footer
+          table: tmgmt_job_item
+          field: footer
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: tmgmt_job_item
+          plugin_id: tmgmt_job_item_legend
+          empty: true
       display_extenders: {  }
     cache_metadata:
-      max-age: -1
+      max-age: 0
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
-        - route.group
         - url
         - url.query_args
-        - user.group_permissions
       tags: {  }
   page_1:
     id: page_1
@@ -873,79 +992,22 @@ display:
     display_plugin: page
     position: 1
     display_options:
-      exposed_form:
-        type: bef
-        options:
-          submit_button: Apply
-          reset_button: false
-          reset_button_label: Reset
-          exposed_sorts_label: 'Sort by'
-          expose_sort_order: true
-          sort_asc_label: Asc
-          sort_desc_label: Desc
-          text_input_required: 'Select any filter and click on Apply to see results'
-          text_input_required_format: filtered_html
-          bef:
-            general:
-              autosubmit: true
-              autosubmit_exclude_textfield: false
-              autosubmit_textfield_delay: 1000
-              autosubmit_hide: false
-              input_required: false
-              allow_secondary: false
-              secondary_label: 'Advanced options'
-              secondary_open: false
-              reset_button_always_show: false
-            filter:
-              type:
-                plugin_id: bef_select2
-                advanced:
-                  sort_options: false
-                  placeholder_text: '- None -'
-                  rewrite:
-                    filter_rewrite_values: ''
-                  collapsible: false
-                  is_secondary: false
-              status:
-                plugin_id: bef_select2
-                advanced:
-                  sort_options: false
-                  placeholder_text: '- Ei mikään -'
-                  rewrite:
-                    filter_rewrite_values: "Tosi|Julkaistu\r\nEpätosi|Arkistoitu"
-                  collapsible: false
-                  is_secondary: false
-              label:
-                plugin_id: default
-                advanced:
-                  placeholder_text: ''
-                  collapsible: false
-                  is_secondary: false
-                options_show_only_used: false
-                options_show_only_used_filtered: false
-                options_hide_when_empty: false
-                options_show_items_count: false
-      defaults:
-        exposed_form: false
-      display_extenders:
-        ajax_history: {  }
-      path: group/%group/subgroups
+      display_extenders: {  }
+      path: admin/tmgmt/job_items
       menu:
-        type: tab
-        title: Palveluntuottajat
-        description: ''
-        weight: 26
+        type: normal
+        title: 'Job Items'
+        description: 'Overview of existing job items.'
+        weight: 5
         expanded: false
-        menu_name: main
-        parent: ''
+        menu_name: admin
+        parent: tmgmt.admin_tmgmt
         context: '0'
     cache_metadata:
-      max-age: -1
+      max-age: 0
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
-        - route.group
         - url
         - url.query_args
-        - user.group_permissions
       tags: {  }
