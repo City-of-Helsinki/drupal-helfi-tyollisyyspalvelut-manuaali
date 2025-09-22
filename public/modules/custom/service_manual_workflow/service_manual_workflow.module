@@ -28,7 +28,7 @@ function service_manual_workflow_cron() {
  */
 function service_manual_workflow_node_presave(EntityInterface $entity) {
 
-  if ($entity instanceof NodeInterface && $entity->isTranslatable() && !$entity->isNew() && !$entity->isDefaultTranslation()) {
+  if ($entity instanceof NodeInterface && $entity->isTranslatable() && !$entity->isNew()) {
     $active_langcode = $entity->language()->getId();
     $translations = $entity->getTranslationLanguages();
     foreach ($translations as $translation_langcode => $translation_language) {
@@ -64,6 +64,7 @@ function _service_manual_workflow_queue_services_for_archival($time_limit = "-2 
 
   $nids = $storage->getQuery()
     ->condition('changed', $date->format('U'), '<')
+    ->condition('default_langcode', 1)
     ->accessCheck(FALSE)
     ->latestRevision()
     ->addTag('outdated_services')
