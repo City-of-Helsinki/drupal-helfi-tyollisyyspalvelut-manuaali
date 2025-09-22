@@ -215,6 +215,10 @@
       .form-item__dropdown {
         align-self: flex-end;
         grid-row: 1 / 2;
+        min-width: 220px;
+        @include large {
+          min-width: unset;
+        }
         .select2-container--palvelumanuaali {
           box-shadow: inset 0px 0px 0px 2px clr(form-border);
           padding: 0;

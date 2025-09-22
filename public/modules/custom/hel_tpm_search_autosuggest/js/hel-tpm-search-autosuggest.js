@@ -2,6 +2,32 @@
 
   const resultCount = 5;
 
+
+  var beforeSend = Drupal.Ajax.prototype.beforeSend;
+
+  /**
+   * Callback function that is executed before an Ajax request is sent.
+   *
+   * This method is typically used to modify the XMLHttpRequest (jqXHR) object,
+   * customize request headers, or handle operations that need to be done
+   * immediately before sending an Ajax request to the server.
+   *
+   * @function
+   * @param {XMLHttpRequest} xhr
+   *   The XMLHttpRequest (jqXHR) object used for the Ajax request.
+   * @param {Object} settings
+   *   A plain object containing settings for the Ajax request. This object can
+   *   be modified to customize the request.
+   */
+  Drupal.Ajax.prototype.beforeSend = function(xmlhttprequest, options) {
+    beforeSend.call(this, xmlhttprequest, options);
+   if (options.extraData != undefined && options.extraData.view_name != undefined) {
+     if (options.extraData.view_name === 'solr_service_search') {
+       Drupal.behaviors.hel_tpm_search_autocomplete.appendSearchHistory(options.extraData.search_api_fulltext)
+     }
+    }
+  }
+
   Drupal.behaviors.hel_tpm_search_autocomplete = {
 
     arrowNavigation: function(form) {
@@ -30,8 +56,7 @@
     setSearchHistory: function(value) {
       localStorage.setItem('hel_search_history', JSON.stringify(value));
     },
-    appendSearchHistory: function(form) {
-      let value = $.trim($('input[name="search_api_fulltext"]', form).val());
+    appendSearchHistory: function(value) {
       if (value.length <= 0) {
         return;
       }
@@ -58,7 +83,7 @@
       if (history != null && history.length > 0) {
         $.each(history, function(key, value) {
           let val = value.escapeHTML();
-          content +='<span class="suggestion-item" tabindex="' + i + '" value="' + val + '">' + val + '</span>';
+          content +='<span class="suggestion-item word-suggestion" tabindex="' + i + '" value="' + val + '">' + val + '</span>';
           i++;
         });
       }
@@ -67,7 +92,7 @@
 
     handleSelectionEvents: function(form) {
       let context = $(form).closest('form');
-      $('.suggestion-item', form)
+      $('.word-suggestion', form)
         .keypress(function (ev) {
           let keycode = (ev.keyCode ? ev.keyCode : ev.which);
           if (keycode === '13') {
@@ -100,7 +125,7 @@
           services += '<span class="suggestion-item"><a href="' + data[i]['url'].escapeHTML() + '">' + data[i]['value'].escapeHTML() + "</a></span>";
         }
         else {
-          suggestions += '<span class="suggestion-item" value="' + data[i]['value'].escapeHTML() + '">' + data[i]['label'].replace(/<\!--.*?-->/g, "") + '</span>';
+          suggestions += '<span class="suggestion-item word-suggestion" value="' + data[i]['value'].escapeHTML() + '">' + data[i]['label'].replace(/<\!--.*?-->/g, "") + '</span>';
         }
         i++;
       }
@@ -163,7 +188,6 @@
     attach: function (context, settings) {
       let form = $('.search-autocomplete-wrapper');
       let searchField = 'input[name="search_api_fulltext"]';
-      let searchForm = $(form).closest('form');
       let selectedMultiselect = '.filters-wrapper .multi-select-container.active';
 
       if ($(searchField).val().length === 0) {
@@ -178,10 +202,6 @@
         } else {
           $('.control-wrapper input[id^="edit-reset--"]').hide();
         }
-
-        searchForm.on('submit', function(e) {
-          Drupal.behaviors.hel_tpm_search_autocomplete.appendSearchHistory(form);
-        });
 
         $('.text-search-wrapper input[id^="edit-reset--"]').click (function (event) {
           event.preventDefault();
