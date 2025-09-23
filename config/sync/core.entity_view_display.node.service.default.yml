@@ -613,15 +613,6 @@ content:
     third_party_settings: {  }
     weight: 16
     region: content
-  field_other_services:
-    type: entity_reference_entity_view
-    label: hidden
-    settings:
-      view_mode: card_lift
-      link: false
-    third_party_settings: {  }
-    weight: 7
-    region: content
   field_price:
     type: number_decimal
     label: above
@@ -826,6 +817,7 @@ hidden:
   field_instructions_markup: true
   field_links_and_attachments: true
   field_municipality_irrelevant: true
+  field_other_services: true
   field_poma_applicable: true
   field_poma_applicable_descriptio: true
   field_responsible_municipality: true
