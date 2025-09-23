@@ -1,0 +1,11 @@
+{#
+/**
+ * @file
+ * Theme override to display a other services view of unformatted rows.
+ *
+ * @see /views-view-unformatted.html.twig for documentation.
+ */
+#}
+{% for row in rows %}
+    {{- row.content -}}
+{% endfor %}
