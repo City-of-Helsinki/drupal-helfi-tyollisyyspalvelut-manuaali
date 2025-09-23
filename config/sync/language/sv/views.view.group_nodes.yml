@@ -13,7 +13,7 @@ display:
         status:
           label: Status
           settings:
-            format_custom_false: Opublicerad
+            format_custom_false: 'Ej publicerad'
             format_custom_true: Publicerad
           separator: ', '
         changed:
@@ -42,10 +42,6 @@ display:
         dropbutton:
           label: Funktioner
       filters:
-        combine:
-          expose:
-            label: Filtrera
-            placeholder: 'Filtrera efter namn eller ID'
         status:
           expose:
             label: 'Status för publicering'
@@ -55,16 +51,18 @@ display:
               1:
                 title: Publicerad
               2:
-                title: Opublicerad
+                title: 'Ej publicerad'
         type:
           expose:
             label: Typ
+        combine:
+          expose:
+            label: Filtrera
+            placeholder: 'Filtrera efter namn eller ID'
       title: Innehåll
       pager:
         options:
           tags:
-            next: ››
-            previous: ‹‹
             first: '« Första'
             last: 'Sista »'
           expose:
@@ -73,7 +71,7 @@ display:
             offset_label: Kompensera
       exposed_form:
         options:
-          submit_button: Applicera
+          submit_button: Verkställ
           reset_button_label: Återställ
           exposed_sorts_label: 'Sortera efter'
           sort_asc_label: Stigande
