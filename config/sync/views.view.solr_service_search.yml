@@ -847,10 +847,10 @@ display:
             show_numbers: true
             processor_configs:
               list_item:
+                processor_id: list_item
                 weights:
                   build: 5
                 settings: {  }
-                processor_id: list_item
       filter_groups:
         operator: AND
         groups:
@@ -982,6 +982,7 @@ display:
         type: load_more
         options:
           offset: 0
+          pagination_heading_level: h4
           items_per_page: 8
           total_pages: null
           id: 0
@@ -993,7 +994,7 @@ display:
             items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
-          more_button_text: 'Load more'
+          more_button_text: 'Näytä lisää'
           end_text: ''
           advanced:
             content_selector: ''
