@@ -14,8 +14,10 @@ use Drupal\hel_tpm_update_reminder\UpdateReminderUtility;
 use Drupal\message\Entity\Message;
 use Drupal\message_notify\MessageNotifier;
 use Drupal\node\NodeInterface;
+use Drupal\service_manual_workflow\Event\SetServiceOutdatedEvent;
 use Drupal\user\Entity\User;
 use Drupal\user\UserInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -76,6 +78,8 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
    */
   private UserInterface $adminUser;
 
+  private EventDispatcherInterface $eventDispatcher;
+
   /**
    * Constructor.
    *
@@ -91,6 +95,9 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
    *   Message notifier service.
    * @param \Drupal\Component\Datetime\Time $time
    *   Drupal time service.
+   * @param \Psr\EventDispatcher\EventDispatcherInterface $event_dispatcher
+   *   Event dispatcher service.
+   *
    */
   public function __construct(
     array $configuration,
@@ -99,10 +106,12 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
     EntityTypeManagerInterface $entity_type_manager,
     MessageNotifier $message_notifier,
     Time $time,
+    EventDispatcherInterface $event_dispatcher,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->entityTypeManager = $entity_type_manager;
     $this->messageNotifier = $message_notifier;
+    $this->eventDispatcher = $event_dispatcher;
     $this->time = $time;
     $this->logger = $this->getLogger('hel_tpm_update_reminder');
     $this->adminUser = $this->entityTypeManager->getStorage('user')->load(1);
@@ -118,7 +127,8 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
       $plugin_definition,
       $container->get('entity_type.manager'),
       $container->get('message_notify.sender'),
-      $container->get('datetime.time')
+      $container->get('datetime.time'),
+      $container->get('event_dispatcher')
     );
   }
 
@@ -232,12 +242,13 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
 
     if ($serviceProviderInformed || $responsibleInformed) {
 
-      $languages = $service->getTranslationLanguages();
+      $event = new SetServiceOutdatedEvent($service,
+        $this->adminUser,
+        TRUE,
+        'Set automatically to outdated.'
+      );
 
-      foreach ($languages as $langcode => $language) {
-        $translation = $service->getTranslation($langcode);
-        $this->setServiceOutDated($translation);
-      }
+      $this->eventDispatcher->dispatch($event, 'service_manual_workflow.set_service_outdated');
 
       $this->logger->info('Service "%service_title" (ID: %service_id) automatically marked as outdated.', [
         '%service_title' => $service->getTitle(),
@@ -248,30 +259,6 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
     }
 
     return FALSE;
-  }
-
-  /**
-   * Marks the service node as outdated by updating its moderation state.
-   *
-   * @param \Drupal\node\NodeInterface $node
-   *   The node entity to be updated.
-   *
-   * @return void
-   *   -
-   */
-  protected function setServiceOutDated(NodeInterface $node): void {
-    $node->setNewRevision();
-
-    if ($node->isDefaultTranslation()) {
-      $node->setRevisionUser($this->adminUser);
-      $node->setChangedTime($this->time->getRequestTime());
-      $node->setRevisionLogMessage($this->t('Set automatically to outdated'));
-      $node->setRevisionCreationTime($this->time->getRequestTime());
-    }
-
-    $node->setRevisionTranslationAffected(TRUE);
-    $node->set('moderation_state', 'outdated');
-    $node->save();
   }
 
   /**

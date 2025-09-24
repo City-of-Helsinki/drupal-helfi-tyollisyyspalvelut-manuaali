@@ -27,7 +27,6 @@ function service_manual_workflow_cron() {
  * Implements hook_ENTITY_presave().
  */
 function service_manual_workflow_node_presave(EntityInterface $entity) {
-
   if ($entity instanceof NodeInterface && $entity->isTranslatable() && !$entity->isNew()) {
     $active_langcode = $entity->language()->getId();
     $translations = $entity->getTranslationLanguages();

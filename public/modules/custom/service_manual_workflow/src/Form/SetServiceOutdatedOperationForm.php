@@ -8,6 +8,8 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\node\NodeInterface;
 use Drupal\service_manual_workflow\Access\ServiceOutdatedAccess;
+use Drupal\service_manual_workflow\Event\SetServiceOutdatedEvent;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -37,11 +39,19 @@ class SetServiceOutdatedOperationForm extends ConfirmFormBase {
   private mixed $node;
 
   /**
+   * Event dispatcher.
+   *
+   * @var \Psr\EventDispatcher\EventDispatcherInterface
+   */
+  private EventDispatcherInterface $eventDispatcher;
+
+  /**
    * {@inheritdoc}
    */
-  public function __construct(EntityTypeManager $entity_type_manager, ServiceOutdatedAccess $service_outdated_access) {
+  public function __construct(EntityTypeManager $entity_type_manager, ServiceOutdatedAccess $service_outdated_access, EventDispatcherInterface $event_dispatcher) {
     $this->entityTypeManager = $entity_type_manager;
     $this->serviceOutdatedAccess = $service_outdated_access;
+    $this->eventDispatcher = $event_dispatcher;
   }
 
   /**
@@ -50,7 +60,8 @@ class SetServiceOutdatedOperationForm extends ConfirmFormBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('entity_type.manager'),
-      $container->get('service_manual_workflow.set_outdated_access')
+      $container->get('service_manual_workflow.set_outdated_access'),
+      $container->get('event_dispatcher')
     );
   }
 
@@ -82,18 +93,17 @@ class SetServiceOutdatedOperationForm extends ConfirmFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $node = $form_state->getStorage()['node'];
+
     // Only current language is set as outdated.
     $this->node = $node;
-    if (!$form_state->getValue('all_translations_outdated')) {
-      $this->setNodeOutdated($node);
-      $form_state->setRedirectUrl($this->getCancelUrl());
-      return;
+    $all_translations_outadated = FALSE;
+    if ($form_state->getValue('all_translations_outdated')) {
+      $all_translations_outadated = TRUE;
     }
 
-    foreach ($node->getTranslationLanguages() as $id => $language) {
-      $translation = $node->getTranslation($id);
-      $this->setNodeOutdated($translation);
-    }
+    $event = new SetServiceOutdatedEvent($node, NULL, $all_translations_outadated);
+    $this->eventDispatcher->dispatch($event, 'service_manual_workflow.set_service_outdated');
+
     $form_state->setRedirectUrl($this->getCancelUrl());
   }
 
