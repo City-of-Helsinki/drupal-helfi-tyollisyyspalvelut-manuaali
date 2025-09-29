@@ -136,6 +136,8 @@ class SetServiceOutdatedOperationForm extends ConfirmFormBase {
     $form['all_translations_outdated'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Set all translations as outdated'),
+      '#disabled' => $this->node->isDefaultTranslation(),
+      '#default_value' => $this->node->isDefaultTranslation(),
     ];
     return $form;
   }
