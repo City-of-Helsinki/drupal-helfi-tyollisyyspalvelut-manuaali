@@ -8,8 +8,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\node\NodeInterface;
 use Drupal\service_manual_workflow\Access\ServiceOutdatedAccess;
-use Drupal\service_manual_workflow\Event\SetServiceOutdatedEvent;
-use Psr\EventDispatcher\EventDispatcherInterface;
+use Drupal\service_manual_workflow\ModerationTransition;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -39,19 +38,19 @@ class SetServiceOutdatedOperationForm extends ConfirmFormBase {
   private mixed $node;
 
   /**
-   * Event dispatcher.
+   * Moderation transition manager.
    *
-   * @var \Psr\EventDispatcher\EventDispatcherInterface
+   * @var \Drupal\service_manual_workflow\ModerationTransition
    */
-  private EventDispatcherInterface $eventDispatcher;
+  private ModerationTransition $moderationTransition;
 
   /**
    * {@inheritdoc}
    */
-  public function __construct(EntityTypeManager $entity_type_manager, ServiceOutdatedAccess $service_outdated_access, EventDispatcherInterface $event_dispatcher) {
+  public function __construct(EntityTypeManager $entity_type_manager, ServiceOutdatedAccess $service_outdated_access, ModerationTransition $moderation_transition) {
     $this->entityTypeManager = $entity_type_manager;
     $this->serviceOutdatedAccess = $service_outdated_access;
-    $this->eventDispatcher = $event_dispatcher;
+    $this->moderationTransition = $moderation_transition;
   }
 
   /**
@@ -61,7 +60,7 @@ class SetServiceOutdatedOperationForm extends ConfirmFormBase {
     return new static(
       $container->get('entity_type.manager'),
       $container->get('service_manual_workflow.set_outdated_access'),
-      $container->get('event_dispatcher')
+      $container->get('service_manual_workflow.moderation_transition')
     );
   }
 
@@ -96,31 +95,32 @@ class SetServiceOutdatedOperationForm extends ConfirmFormBase {
 
     // Only current language is set as outdated.
     $this->node = $node;
-    $all_translations_outadated = FALSE;
+    $all_translations_outdated = FALSE;
     if ($form_state->getValue('all_translations_outdated')) {
-      $all_translations_outadated = TRUE;
+      $all_translations_outdated = TRUE;
     }
 
-    $event = new SetServiceOutdatedEvent($node, NULL, $all_translations_outadated);
-    $this->eventDispatcher->dispatch($event, 'service_manual_workflow.set_service_outdated');
+    $this->setNodeOutdated($node, $all_translations_outdated);
 
     $form_state->setRedirectUrl($this->getCancelUrl());
   }
 
   /**
-   * Set node outdated method.
+   * Sets the specified node or its translations to an outdated state.
    *
    * @param \Drupal\node\NodeInterface $node
-   *   Node object.
+   *   The node to set as outdated.
+   * @param bool $set_all_translations_outdated
+   *   Whether to set all translations of the node as outdated.
    *
    * @return void
-   *   -
-   *
-   * @throws \Drupal\Core\Entity\EntityStorageException
+   *   Returns nothing.
    */
-  protected function setNodeOutdated(NodeInterface $node) {
-    $node->set('moderation_state', 'outdated');
-    $node->save();
+  protected function setNodeOutdated(NodeInterface $node, bool $set_all_translations_outdated) {
+    if (!$node->isDefaultTranslation() && $set_all_translations_outdated) {
+      $node = $node->getTranslation('x-default');
+    }
+    $this->moderationTransition->setNodeModerationState($node, 'outdated', 'Outdated with outdate service form');
   }
 
   /**

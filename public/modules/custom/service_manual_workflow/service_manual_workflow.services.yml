@@ -23,8 +23,12 @@ services:
     class: Drupal\service_manual_workflow\Access\ServiceOutdatedAccess
     arguments: ['@gcontent_moderation.state_transition_validation', '@content_moderation.moderation_information']
 
-  service_manual_workflow.service_outdated_subscriber:
-    class: Drupal\service_manual_workflow\EventSubscriber\ServiceOutdatedSubscriber
-    arguments: ['@entity_type.manager', '@datetime.time']
+  service_manual_workflow.service_state_outdated_subscriber:
+    class: Drupal\service_manual_workflow\EventSubscriber\ServiceStateOutdatedSubscriber
+    arguments: ['@entity_type.manager', '@service_manual_workflow.moderation_transition']
     tags:
       - { name: event_subscriber }
+
+  service_manual_workflow.moderation_transition:
+    class: Drupal\service_manual_workflow\ModerationTransition
+    arguments: ['@entity_type.manager', '@datetime.time', '@current_user']

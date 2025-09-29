@@ -14,10 +14,9 @@ use Drupal\hel_tpm_update_reminder\UpdateReminderUtility;
 use Drupal\message\Entity\Message;
 use Drupal\message_notify\MessageNotifier;
 use Drupal\node\NodeInterface;
-use Drupal\service_manual_workflow\Event\SetServiceOutdatedEvent;
+use Drupal\service_manual_workflow\ModerationTransition;
 use Drupal\user\Entity\User;
 use Drupal\user\UserInterface;
-use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -78,26 +77,33 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
    */
   private UserInterface $adminUser;
 
-  private EventDispatcherInterface $eventDispatcher;
+  /**
+   * Moderation transition entity.
+   *
+   * @var \Drupal\service_manual_workflow\ModerationTransition
+   */
+  private ModerationTransition $moderationTransition;
 
   /**
-   * Constructor.
+   * Constructs a new instance.
    *
    * @param array $configuration
-   *   Configuration array.
+   *   A configuration array containing information about the plugin instance.
    * @param string $plugin_id
-   *   Plugin id string.
-   * @param array $plugin_definition
-   *   Plugin definition array.
+   *   The plugin ID of the instance.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   Entity type manager.
+   *   The entity type manager service.
    * @param \Drupal\message_notify\MessageNotifier $message_notifier
-   *   Message notifier service.
+   *   The message notifier service.
    * @param \Drupal\Component\Datetime\Time $time
-   *   Drupal time service.
-   * @param \Psr\EventDispatcher\EventDispatcherInterface $event_dispatcher
-   *   Event dispatcher service.
+   *   The time service.
+   * @param \Drupal\service_manual_workflow\ModerationTransition $moderation_transition
+   *   The moderation transition service.
    *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public function __construct(
     array $configuration,
@@ -106,13 +112,13 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
     EntityTypeManagerInterface $entity_type_manager,
     MessageNotifier $message_notifier,
     Time $time,
-    EventDispatcherInterface $event_dispatcher,
+    ModerationTransition $moderation_transition,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->entityTypeManager = $entity_type_manager;
     $this->messageNotifier = $message_notifier;
-    $this->eventDispatcher = $event_dispatcher;
     $this->time = $time;
+    $this->moderationTransition = $moderation_transition;
     $this->logger = $this->getLogger('hel_tpm_update_reminder');
     $this->adminUser = $this->entityTypeManager->getStorage('user')->load(1);
   }
@@ -128,7 +134,7 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
       $container->get('entity_type.manager'),
       $container->get('message_notify.sender'),
       $container->get('datetime.time'),
-      $container->get('event_dispatcher')
+      $container->get('service_manual_workflow.moderation_transition')
     );
   }
 
@@ -241,14 +247,10 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
     }
 
     if ($serviceProviderInformed || $responsibleInformed) {
-
-      $event = new SetServiceOutdatedEvent($service,
-        $this->adminUser,
-        TRUE,
-        'Set automatically to outdated.'
-      );
-
-      $this->eventDispatcher->dispatch($event, 'service_manual_workflow.set_service_outdated');
+      if (!$service->isDefaultTranslation()) {
+        $service = $service->getTranslation('x-default');
+      }
+      $this->moderationTransition->setServiceOutdated($service, 'Outdated by update reminder');
 
       $this->logger->info('Service "%service_title" (ID: %service_id) automatically marked as outdated.', [
         '%service_title' => $service->getTitle(),
