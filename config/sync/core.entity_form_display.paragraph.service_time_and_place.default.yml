@@ -7,6 +7,7 @@ dependencies:
     - field.field.paragraph.service_time_and_place.field_date_selection
     - field.field.paragraph.service_time_and_place.field_dates
     - field.field.paragraph.service_time_and_place.field_location_additional_info
+    - field.field.paragraph.service_time_and_place.field_multiple_dates
     - field.field.paragraph.service_time_and_place.field_separate_time
     - field.field.paragraph.service_time_and_place.field_service_language
     - field.field.paragraph.service_time_and_place.field_service_location
@@ -44,6 +45,7 @@ third_party_settings:
         - field_date_selection
         - field_start_and_end_date
         - field_date
+        - field_multiple_dates
         - field_weekday_and_time
         - field_time_additional_info
       label: Ajankohta
@@ -111,6 +113,14 @@ content:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
+  field_multiple_dates:
+    type: hel_tpm_service_dates_date_range
+    weight: 16
+    region: content
+    settings:
+      disable_end_date: false
+      display_time_label: 0
+    third_party_settings: {  }
   field_service_language:
     type: select2_entity_reference
     weight: 5
@@ -141,7 +151,7 @@ content:
     third_party_settings: {  }
   field_time_additional_info:
     type: string_textarea
-    weight: 17
+    weight: 18
     region: content
     settings:
       rows: 5
@@ -149,7 +159,7 @@ content:
     third_party_settings: {  }
   field_weekday_and_time:
     type: hel_tpm_service_dates_weekday_and_time_field
-    weight: 16
+    weight: 17
     region: content
     settings: {  }
     third_party_settings: {  }

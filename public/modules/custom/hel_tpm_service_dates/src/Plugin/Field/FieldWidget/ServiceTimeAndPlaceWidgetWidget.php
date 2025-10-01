@@ -36,6 +36,9 @@ class ServiceTimeAndPlaceWidgetWidget extends ParagraphsClassicAsymmetricWidget 
     'field_date' => [
       'separate_dates',
     ],
+    'field_multiple_dates' => [
+      'multiple_dates',
+    ],
   ];
 
   /**
