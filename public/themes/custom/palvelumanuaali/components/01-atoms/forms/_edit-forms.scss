@@ -159,7 +159,9 @@ position: relative;
       text-decoration: unset;
       padding: 0;
       margin-bottom: $space-double;
-      display: none;
+      &.last {
+        display: none;
+      }
     }
 
     details {
