@@ -42,8 +42,17 @@
     paragraph.bundle|clean_class
   ]
 %}
+{% set date_fields = [
+    'field_separate_time',
+    'field_weekday_and_time',
+    'field_date_selection',
+    'field_start_and_end_date',
+    'field_date',
+    'field_multiple_dates'
+  ]
+%}
 <div{{ attributes.addClass(classes) }}>
-  {{content|without('field_separate_time','field_weekday_and_time','field_date_selection','field_start_and_end_date','field_date')}}
+  {{content|without(date_fields)}}
   {% if (content.field_date_selection['0']['#markup']) %}
     <div class='date-wrapper o--five d--flex'>
       {% include "@atoms/images/icons/_icon.twig" with {
@@ -53,10 +62,9 @@
       } %}
       <div class='text-wrapper'>
         <div class='field__label'>{{ 'Weekday and time'|t }}</div>
-        {{content.field_date_selection}}
-        {{content.field_start_and_end_date}}
-        {{content.field_date}}
-        {{content.field_weekday_and_time}}
+        {% for field in date_fields %}
+          {{ attribute(content, field) }}
+        {% endfor %}
       </div>
     </div>
   {% endif %}
