@@ -419,23 +419,6 @@ function _hel_tpm_forms_validate_paragraph_language_selection(array $form, FormS
     return;
   }
 
-  $is_empty = TRUE;
-  foreach ($languages as $language) {
-    if (!empty($language['subform']['field_language'])) {
-      $is_empty = FALSE;
-    }
-    break;
-  }
-
-  if ($is_empty) {
-    $field_key = 'field_service_languages';
-    $form_state->setErrorByName(
-      $field_key,
-      t("@field_label field is required when publishing..", ['@field_label' => sprintf("%s:", $form[$field]['widget']['#title'])])
-    );
-    return;
-  }
-
   foreach ($languages as $delta => $paragraph) {
     if (empty($paragraph['subform'])) {
       continue;
