@@ -321,21 +321,16 @@ function hel_tpm_forms_node_service_form_alter_helper(&$form, FormStateInterface
  * Extra server-side validation for editing service nodes.
  */
 function hel_tpm_forms_validate_service_form_helper(array &$form, FormStateInterface &$form_state): void {
-  // Check extra required fields only when form is publishing ready.
-  $require_fields = FALSE;
-  if ($moderation_state = $form_state->getValue('moderation_state')[0]['value']) {
-    if ($moderation_state === 'published' || $moderation_state === 'ready_to_publish') {
-      $require_fields = TRUE;
-    }
-  }
-
-  if ($require_fields) {
+  // Use extra required fields only with publishing-ready services.
+  $moderation_state = $form_state->getValue('moderation_state')[0]['value'];
+  if ($moderation_state === 'published' || $moderation_state === 'ready_to_publish') {
     _hel_tpm_forms_validate_age_groups($form, $form_state);
     _hel_tpm_forms_validate_municipality($form, $form_state);
     _hel_tpm_forms_validate_target_group_description($form, $form_state);
-    if ($languages = $form_state->getValue('field_service_languages')) {
-      _hel_tpm_forms_validate_paragraph_language_selection($form, $form_state, $languages, 'field_service_languages');
-    }
+  }
+
+  if ($languages = $form_state->getValue('field_service_languages')) {
+    _hel_tpm_forms_validate_paragraph_language_selection($form, $form_state, $languages);
   }
 }
 
@@ -405,13 +400,11 @@ function _hel_tpm_forms_validate_required_paragraph_long_texts_with_editor(array
  *   Form state interface.
  * @param array $languages
  *   Array of selected languages.
- * @param string $field
- *   Validated field key.
  *
  * @return void
  *   -
  */
-function _hel_tpm_forms_validate_paragraph_language_selection(array $form, FormStateInterface &$form_state, array $languages, $field): void {
+function _hel_tpm_forms_validate_paragraph_language_selection(array $form, FormStateInterface &$form_state, array $languages): void {
   $lang = [];
   $build_info = $form_state->getBuildInfo();
   $entity = $build_info['callback_object']->getEntity();
@@ -426,10 +419,7 @@ function _hel_tpm_forms_validate_paragraph_language_selection(array $form, FormS
     foreach ($paragraph['subform']['field_language'] as $value) {
       if (!empty($lang[$value['target_id']])) {
         $field_key = sprintf('field_service_languages][%s][subform][field_language', $delta);
-        $form_state->setErrorByName(
-          $field_key,
-          t("Select each language only once and set minimum language level.")
-        );
+        $form_state->setErrorByName($field_key, t("Select each language only once."));
       }
       $lang[$value['target_id']] = $value['target_id'];
     }
