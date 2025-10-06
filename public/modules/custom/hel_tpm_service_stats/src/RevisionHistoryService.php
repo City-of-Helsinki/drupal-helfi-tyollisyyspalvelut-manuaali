@@ -203,7 +203,7 @@ final class RevisionHistoryService {
     $elapsed_time = $this->time->getRequestTime() - $last_revision->getRevisionCreationTime();
     $days = $elapsed_time / 86400;
 
-    return intval(round($days));
+    return intval(round($days, 0, PHP_ROUND_HALF_UP));
   }
 
 }
