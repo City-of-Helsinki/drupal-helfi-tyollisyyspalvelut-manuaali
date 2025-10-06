@@ -3,12 +3,8 @@ langcode: fi
 status: true
 dependencies:
   config:
-    - core.date_format.medium
-    - core.date_format.time
-    - date_recur.interpreter.default_interpreter
     - field.field.paragraph.service_time_and_place.field_date
     - field.field.paragraph.service_time_and_place.field_date_selection
-    - field.field.paragraph.service_time_and_place.field_dates
     - field.field.paragraph.service_time_and_place.field_location_additional_info
     - field.field.paragraph.service_time_and_place.field_separate_time
     - field.field.paragraph.service_time_and_place.field_service_language
@@ -18,7 +14,6 @@ dependencies:
     - field.field.paragraph.service_time_and_place.field_weekday_and_time
     - paragraphs.paragraphs_type.service_time_and_place
   module:
-    - date_recur
     - datetime_range
     - hel_tpm_service_dates
     - options
@@ -44,22 +39,6 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 6
-    region: content
-  field_dates:
-    type: date_recur_basic_formatter
-    label: hidden
-    settings:
-      timezone_override: ''
-      format_type: medium
-      from_to: both
-      separator: '-'
-      show_next: 5
-      count_per_item: true
-      occurrence_format_type: medium
-      same_end_date_format_type: time
-      interpreter: default_interpreter
-    third_party_settings: {  }
-    weight: 0
     region: content
   field_location_additional_info:
     type: basic_string
