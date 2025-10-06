@@ -383,6 +383,13 @@
       padding-bottom: 0.8rem;
       margin-bottom: $space-double;
       @include xl {
+        @media (max-width: 1302px) {
+          overflow: scroll;
+          flex-wrap: nowrap;
+        }
+        @media (min-width: 1302px) and (max-width: 1420px) {
+          column-gap:4px;
+        }
         overflow: auto;
         margin: $space-two-and-half auto 0 auto;
         display: flex;
@@ -453,6 +460,10 @@
       .form-item-checkbox {
         margin-left: 0.5rem;
         margin-right: 0.5rem;
+        @media (min-width: 1220px) and (max-width: 1420px) {
+          margin-left: 0.25rem;
+          margin-right: 0.25rem;
+        }
         &.highlight ~ ul  {
            display: flex;
            flex-wrap: nowrap;
