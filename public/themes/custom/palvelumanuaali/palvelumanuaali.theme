@@ -79,7 +79,6 @@ function palvelumanuaali_preprocess_node(&$variables) {
  * Implements hook_preprocess_HOOK().
  */
 function palvelumanuaali_preprocess_field(&$variables) {
-
   if ($variables['field_name'] == 'field_field_client_consent_descr') {
     $node = $variables['element']['#object'];
     if ($node->hasField('field_client_consent')) {
@@ -88,19 +87,33 @@ function palvelumanuaali_preprocess_field(&$variables) {
       }
     }
   }
+
   if ($variables['field_name'] == 'field_short_description' && $variables['element']['#bundle'] == 'quick_link') {
     $variables['attributes']['class'] = [];
     $variables['attributes']['class'][] = 'font-size--small';
   }
+
   if ($variables['field_name'] == 'field_title' && $variables['element']['#bundle'] == 'quick_link') {
     $variables['attributes']['class'] = [];
     $variables['attributes']['class'][] = 'font-color--blue';
     $variables['attributes']['class'][] = 'font-spacing--spaced';
     $variables['attributes']['class'][] = 'font-weight--bold';
   }
+
   if ($variables['field_name'] == 'field_paragraph' && $variables['element']['#bundle'] == 'basic_page') {
     foreach ($variables['items'] as $key => $item) {
       $variables['items'][$key]['attributes']->setAttribute('class', 'margin-bottom-double-space');
+    }
+  }
+
+  // Add paid service information for price field template.
+  if ($variables['field_name'] === 'field_price'
+    && $variables['element']['#bundle'] == 'service'
+    && $variables['element']['#object']->hasField('field_free_service')) {
+    // Field value is actually 1 if paid service, 0 otherwise.
+    $paid_service = $variables['element']['#object']->get('field_free_service')->value;
+    if ($paid_service) {
+      $variables['is_paid_service'] = TRUE;
     }
   }
 }
