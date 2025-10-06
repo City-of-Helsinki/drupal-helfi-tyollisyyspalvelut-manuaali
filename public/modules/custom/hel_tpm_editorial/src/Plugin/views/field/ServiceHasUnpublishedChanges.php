@@ -103,15 +103,17 @@ class ServiceHasUnpublishedChanges extends FieldPluginBase {
 
     if (!$entity->isLatestTranslationAffectedRevision()) {
       $latest_translation_affected = $this->getLatestTranslationAffectedRevision($entity);
-      if ($entity->get('moderation_state')->value !== $latest_translation_affected->get('moderation_state')->value) {
-        $moderation_state = $this->getLatestRevisionModerationState($entity);
-        return [
-          '#theme' => 'service_has_changes_field',
-          '#link' => $this->linkGenerator()->generate('Unpublished changes', $this->latestRevisionUrl($entity)),
-          '#state' => $moderation_state,
-        ];
+      if (!empty($latest_translation_affected)) {
+        if ($entity->get('moderation_state')->value !== $latest_translation_affected->get('moderation_state')->value) {
+          $moderation_state = $this->getLatestRevisionModerationState($entity);
+          return [
+            '#theme' => 'service_has_changes_field',
+            '#link' => $this->linkGenerator()
+              ->generate('Unpublished changes', $this->latestRevisionUrl($entity)),
+            '#state' => $moderation_state,
+          ];
+        }
       }
-
     }
     return ['#markup' => $this->t('Up to date')];
   }
