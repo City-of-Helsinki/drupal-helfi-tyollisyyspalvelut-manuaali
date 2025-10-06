@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\hel_tpm_user_expiry\Kernel;
 
 use Drupal\Core\Database\Database;
+use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Test\AssertMailTrait;
 use Drupal\KernelTests\Core\Entity\EntityKernelTestBase;
@@ -69,7 +70,6 @@ final class UnactivatedUserDeleteTest extends EntityKernelTestBase {
     $this->installConfig(['field', 'system']);
     $this->cron = \Drupal::service('cron');
     $this->connection = Database::getConnection();
-
     // Set up our custom test config.
     $config = $this->config('user.settings');
     $config->set('password_reset_timeout', '604800');
@@ -98,8 +98,9 @@ final class UnactivatedUserDeleteTest extends EntityKernelTestBase {
 
     $this->resetCronLastRun();
 
+    $date = new DrupalDateTime('-8 days');
     // Set user2 created to -8 days.
-    $user2->set('created', strtotime('-8 days'));
+    $user2->set('created', $date->getTimestamp());
     $user2->save();
 
     $this->cron->run();
@@ -132,24 +133,26 @@ final class UnactivatedUserDeleteTest extends EntityKernelTestBase {
    */
   protected function createLastAccessUser(
     int $uid = 1,
-    string $created = '-7 days -1 minute',
+    string $created = '-7 days -3 hours',
     ?string $access = NULL,
     int $status = 1,
   ): UserInterface {
-    $access = !empty($access) ? strtotime($access) : 0;
-    $created = strtotime($created);
+    if (!empty($access)) {
+      $access = new DrupalDateTime($access);
+    }
+    $created = new DrupalDateTime($created);
     $user = $this->createUser([], NULL, FALSE, [
       'uid' => $uid,
       'mail' => 'test-' . $uid . 'tpm.test',
-      'created' => $created,
-      'access' => $access,
+      'created' => $created->getTimestamp(),
+      'access' => !empty($access) ? $access->getTimestamp() : 0,
       'status' => $status,
     ]);
     $this->connection->update('users_field_data')
       ->condition('uid', $user->id())
       ->fields([
-        'access' => $access,
-        'created' => $created,
+        'access' => !empty($access) ? $access->getTimestamp() : 0,
+        'created' => $created->getTimestamp(),
       ])
       ->execute();
 
