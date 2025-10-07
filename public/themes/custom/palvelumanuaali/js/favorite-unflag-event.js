@@ -50,7 +50,7 @@
         triggeringElement = triggeringElement.split('.').join("");
         let popupId =  `popup-${triggeringElement}`;
         let title = $.trim($('.card__heading', card).text());
-        let message = Drupal.t('@title removed from favorites', {'@title': title});
+        let message = Drupal.t('@title removed from favourites', {'@title': title});
 
         // HTML structure for the popup
         let popupHTML = `

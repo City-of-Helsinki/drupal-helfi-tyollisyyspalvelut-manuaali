@@ -1,4 +1,4 @@
-label: Favorites
+label: Favourites
 display:
   page_1:
     display_options:
@@ -7,17 +7,34 @@ display:
           content: '<strong>Results:</strong> <span class="total-number">@total</span>'
         area:
           content:
-            value: "<h1 class=\"page-header h3 h3--margin-bottom-double\">Favorites</h1>\r\n"
+            value: '<h1 class="page-header h3 h3--margin-bottom-double">Favourites</h1>'
             format: full_html
       menu:
-        title: Favorites
-      title: Favorites
+        title: Favourites
+      title: Favourites
+      empty:
+        area_text_custom:
+          content: "<h4 class='margin-bottom-one-space font-weight--bold font-size--h4'>No services have yet been added to favourites.</h4>\r\n<p class='margin--bottom-two-and-half'>Go to the search to find suitable services.</p>\r\n<p><a class='button button--line-height-24 button--no-color button--round-corners font-size--small position--relative button--padding-right-quadruple' href='/en/search'>Go to the search page <span class='link__arrow icon--arrow-right-2 position--absolute position--right-zero margin--right-one-and-half'></span></a></p>"
+      sorts:
+        title:
+          expose:
+            label: Alphabetical
+        changed:
+          expose:
+            label: 'Recently updated'
+      exposed_form:
+        options:
+          bef:
+            sort:
+              advanced:
+                combine_rewrite: "Recently updated Asc|\r\nRecently updated Desc|Recently updated\r\nAlphabetical Asc|Alphabetical A to Z\r\nAlphabetical Desc|Alphabetical Z to A"
+          exposed_sorts_label: 'Sort by:'
   default:
     display_options:
-      title: Favorites
+      title: Favourites
   favorites_block:
     display_options:
-      title: 'Recently added favorites'
+      title: 'Recently added favourites'
       fields:
         title:
           label: 'Name of service'
@@ -27,4 +44,4 @@ display:
           label: 'Service provider'
       empty:
         area_text_custom:
-          content: "<p><b>No recently added favorites</b><br>\r\n<a class='button button--no-color button--round-corners' href='/haku'>Search services</a></p>"
+          content: "<p><b>No recently added favourites</b><br>\r\n<a class='button button--no-color button--round-corners' href='/en/search'>Search services</a></p>"
