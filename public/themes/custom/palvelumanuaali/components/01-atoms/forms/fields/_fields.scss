@@ -233,6 +233,21 @@
           background-color: $blue100;
           color: $white;
         }
+        &:disabled +label {
+          border-color: $gray-light;
+          color: $gray-light;
+          &:hover {
+            cursor: default;
+            background-color: inherit;
+          }
+        }
+        &:checked:disabled +label {
+          background-color: $gray-light;
+          color:clr(text-inverse);
+          &:hover {
+            cursor: default;
+          }
+        }
 
       }
       &:nth-child(3) {
@@ -256,6 +271,18 @@
         &:checked +label {
           @include round-icon-button;
           background-image: url("../../assets/images/icons/minus.svg");
+        }
+        &:disabled +label {
+          border-color: $gray-light;
+          background-color: $gray-light;
+          color: transparent;
+          &:hover {
+            cursor: default;
+            background-color: $gray-light;
+          }
+        }
+        &:checked:disabled +label {
+          background-color: $gray-light;
         }
       }
       label {
@@ -408,6 +435,11 @@
   }
   input[type="radio"] {
     display: none;
+    &:disabled +label {
+      &::before {
+        border: 1px solid $gray-light;
+      }
+    }
   }
   input[type="radio"]:checked + label::before {
     background-image: url('../../assets/images/icons/check-black.svg');
