@@ -8,6 +8,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\node\NodeInterface;
 use Drupal\service_manual_workflow\Access\ServiceOutdatedAccess;
+use Drupal\service_manual_workflow\ModerationTransition;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -37,11 +38,19 @@ class SetServiceOutdatedOperationForm extends ConfirmFormBase {
   private mixed $node;
 
   /**
+   * Moderation transition manager.
+   *
+   * @var \Drupal\service_manual_workflow\ModerationTransition
+   */
+  private ModerationTransition $moderationTransition;
+
+  /**
    * {@inheritdoc}
    */
-  public function __construct(EntityTypeManager $entity_type_manager, ServiceOutdatedAccess $service_outdated_access) {
+  public function __construct(EntityTypeManager $entity_type_manager, ServiceOutdatedAccess $service_outdated_access, ModerationTransition $moderation_transition) {
     $this->entityTypeManager = $entity_type_manager;
     $this->serviceOutdatedAccess = $service_outdated_access;
+    $this->moderationTransition = $moderation_transition;
   }
 
   /**
@@ -50,7 +59,8 @@ class SetServiceOutdatedOperationForm extends ConfirmFormBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('entity_type.manager'),
-      $container->get('service_manual_workflow.set_outdated_access')
+      $container->get('service_manual_workflow.set_outdated_access'),
+      $container->get('service_manual_workflow.moderation_transition')
     );
   }
 
@@ -82,35 +92,35 @@ class SetServiceOutdatedOperationForm extends ConfirmFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $node = $form_state->getStorage()['node'];
+
     // Only current language is set as outdated.
     $this->node = $node;
-    if (!$form_state->getValue('all_translations_outdated')) {
-      $this->setNodeOutdated($node);
-      $form_state->setRedirectUrl($this->getCancelUrl());
-      return;
+    $all_translations_outdated = FALSE;
+    if ($form_state->getValue('all_translations_outdated')) {
+      $all_translations_outdated = TRUE;
     }
 
-    foreach ($node->getTranslationLanguages() as $id => $language) {
-      $translation = $node->getTranslation($id);
-      $this->setNodeOutdated($translation);
-    }
+    $this->setNodeOutdated($node, $all_translations_outdated);
+
     $form_state->setRedirectUrl($this->getCancelUrl());
   }
 
   /**
-   * Set node outdated method.
+   * Sets the specified node or its translations to an outdated state.
    *
    * @param \Drupal\node\NodeInterface $node
-   *   Node object.
+   *   The node to set as outdated.
+   * @param bool $set_all_translations_outdated
+   *   Whether to set all translations of the node as outdated.
    *
    * @return void
-   *   -
-   *
-   * @throws \Drupal\Core\Entity\EntityStorageException
+   *   Returns nothing.
    */
-  protected function setNodeOutdated(NodeInterface $node) {
-    $node->set('moderation_state', 'outdated');
-    $node->save();
+  protected function setNodeOutdated(NodeInterface $node, bool $set_all_translations_outdated) {
+    if (!$node->isDefaultTranslation() && $set_all_translations_outdated) {
+      $node = $node->getTranslation('x-default');
+    }
+    $this->moderationTransition->setNodeModerationState($node, 'outdated', 'Outdated with outdate service form');
   }
 
   /**
@@ -126,6 +136,8 @@ class SetServiceOutdatedOperationForm extends ConfirmFormBase {
     $form['all_translations_outdated'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Set all translations as outdated'),
+      '#disabled' => $this->node->isDefaultTranslation(),
+      '#default_value' => $this->node->isDefaultTranslation(),
     ];
     return $form;
   }

@@ -14,6 +14,7 @@ use Drupal\hel_tpm_update_reminder\UpdateReminderUtility;
 use Drupal\message\Entity\Message;
 use Drupal\message_notify\MessageNotifier;
 use Drupal\node\NodeInterface;
+use Drupal\service_manual_workflow\ModerationTransition;
 use Drupal\user\Entity\User;
 use Drupal\user\UserInterface;
 use Psr\Log\LoggerInterface;
@@ -77,20 +78,32 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
   private UserInterface $adminUser;
 
   /**
-   * Constructor.
+   * Moderation transition entity.
+   *
+   * @var \Drupal\service_manual_workflow\ModerationTransition
+   */
+  private ModerationTransition $moderationTransition;
+
+  /**
+   * Constructs a new instance.
    *
    * @param array $configuration
-   *   Configuration array.
+   *   A configuration array containing information about the plugin instance.
    * @param string $plugin_id
-   *   Plugin id string.
-   * @param array $plugin_definition
-   *   Plugin definition array.
+   *   The plugin ID of the instance.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   Entity type manager.
+   *   The entity type manager service.
    * @param \Drupal\message_notify\MessageNotifier $message_notifier
-   *   Message notifier service.
+   *   The message notifier service.
    * @param \Drupal\Component\Datetime\Time $time
-   *   Drupal time service.
+   *   The time service.
+   * @param \Drupal\service_manual_workflow\ModerationTransition $moderation_transition
+   *   The moderation transition service.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public function __construct(
     array $configuration,
@@ -99,11 +112,13 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
     EntityTypeManagerInterface $entity_type_manager,
     MessageNotifier $message_notifier,
     Time $time,
+    ModerationTransition $moderation_transition,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->entityTypeManager = $entity_type_manager;
     $this->messageNotifier = $message_notifier;
     $this->time = $time;
+    $this->moderationTransition = $moderation_transition;
     $this->logger = $this->getLogger('hel_tpm_update_reminder');
     $this->adminUser = $this->entityTypeManager->getStorage('user')->load(1);
   }
@@ -118,7 +133,8 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
       $plugin_definition,
       $container->get('entity_type.manager'),
       $container->get('message_notify.sender'),
-      $container->get('datetime.time')
+      $container->get('datetime.time'),
+      $container->get('service_manual_workflow.moderation_transition')
     );
   }
 
@@ -231,13 +247,10 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
     }
 
     if ($serviceProviderInformed || $responsibleInformed) {
-
-      $languages = $service->getTranslationLanguages();
-
-      foreach ($languages as $langcode => $language) {
-        $translation = $service->getTranslation($langcode);
-        $this->setServiceOutDated($translation);
+      if (!$service->isDefaultTranslation()) {
+        $service = $service->getTranslation('x-default');
       }
+      $this->moderationTransition->setServiceOutdated($service, 'Outdated by update reminder');
 
       $this->logger->info('Service "%service_title" (ID: %service_id) automatically marked as outdated.', [
         '%service_title' => $service->getTitle(),
@@ -248,30 +261,6 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
     }
 
     return FALSE;
-  }
-
-  /**
-   * Marks the service node as outdated by updating its moderation state.
-   *
-   * @param \Drupal\node\NodeInterface $node
-   *   The node entity to be updated.
-   *
-   * @return void
-   *   -
-   */
-  protected function setServiceOutDated(NodeInterface $node): void {
-    $node->setNewRevision();
-
-    if ($node->isDefaultTranslation()) {
-      $node->setRevisionUser($this->adminUser);
-      $node->setChangedTime($this->time->getRequestTime());
-      $node->setRevisionLogMessage($this->t('Set automatically to outdated'));
-      $node->setRevisionCreationTime($this->time->getRequestTime());
-    }
-
-    $node->setRevisionTranslationAffected(TRUE);
-    $node->set('moderation_state', 'outdated');
-    $node->save();
   }
 
   /**

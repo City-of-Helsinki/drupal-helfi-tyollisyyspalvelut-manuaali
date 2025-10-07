@@ -27,7 +27,6 @@ function service_manual_workflow_cron() {
  * Implements hook_ENTITY_presave().
  */
 function service_manual_workflow_node_presave(EntityInterface $entity) {
-
   if ($entity instanceof NodeInterface && $entity->isTranslatable() && !$entity->isNew()) {
     $active_langcode = $entity->language()->getId();
     $translations = $entity->getTranslationLanguages();
@@ -209,20 +208,20 @@ function service_manual_workflow_require_on_publish_is_published_alter(&$is_publ
  * Implements hook_entity_update().
  */
 function service_manual_workflow_entity_update(EntityInterface $entity) {
-  if (!$entity instanceof ContentModerationStateInterface) {
-    return;
+  if ($entity instanceof ContentModerationStateInterface) {
+    if (empty($entity->original)) {
+      return;
+    }
+    if ($entity->getRevisionId() === $entity->original->getRevisionId()) {
+      return;
+    }
+    $original_state = _service_manual_workflow_entity_previous_revision($entity);
+    $state = $entity->moderation_state->value;
+    $transition = sprintf('service_manual_workflow.%s.to.%s', $original_state, $state);
+    $event = new ServiceModerationEvent($entity, \Drupal::currentUser());
+    Drupal::service('event_dispatcher')->dispatch($event, $transition);
   }
-  if (empty($entity->original)) {
-    return;
-  }
-  if ($entity->getRevisionId() === $entity->original->getRevisionId()) {
-    return;
-  }
-  $original_state = _service_manual_workflow_entity_previous_revision($entity);
-  $state = $entity->moderation_state->value;
-  $transition = sprintf('service_manual_workflow.%s.to.%s', $original_state, $state);
-  $event = new ServiceModerationEvent($entity, \Drupal::currentUser());
-  Drupal::service('event_dispatcher')->dispatch($event, $transition);
+
 }
 
 /**
