@@ -525,6 +525,7 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id) {
       if (!($node->isDefaultTranslation())) {
         $form['field_service_languages']['#disabled'] = TRUE;
       }
+      $form['content_translation']['#access'] = FALSE;
     }
 
     if ($form_id == 'node_basic_page_form' || $form_id == 'node_basic_page_edit_form') {
