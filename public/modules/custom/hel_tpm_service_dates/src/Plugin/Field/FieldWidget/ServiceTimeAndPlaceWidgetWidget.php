@@ -49,6 +49,7 @@ class ServiceTimeAndPlaceWidgetWidget extends ParagraphsClassicAsymmetricWidget 
     $element['top']['links']['remove_button']['#paragraphs_mode'] = 'removed';
 
     $this->createFieldStatesRules($element);
+    $element['#after_build'][] = [get_class($this), 'removeTranslatabilityClue'];
 
     return $element;
   }
@@ -88,6 +89,48 @@ class ServiceTimeAndPlaceWidgetWidget extends ParagraphsClassicAsymmetricWidget 
     $this->clearUnselectedDateFields($element, $form_state);
     $this->validateRequiredDependencyFields($element, $form_state);
     parent::elementValidate($element, $form_state, $form);
+  }
+
+  /**
+   * Removes "(all languages)" suffix from the weekday checkbox titles.
+   *
+   * The title is replaced with a value from '#original_title' item.
+   *
+   * @param array $element
+   *   The form element.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current state of the form.
+   *
+   * @return array
+   *   The form element.
+   */
+  public static function removeTranslatabilityClue(array $element, FormStateInterface $form_state): array {
+    if (empty($element['subform']['field_weekday_and_time']) || empty($element['subform']['field_weekday_and_time']['widget'])) {
+      return $element;
+    }
+
+    $weekdayAndTimeValues = $element['subform']['field_weekday_and_time']['widget'][0]['value'];
+    $replacedWithOriginal = FALSE;
+
+    foreach ($weekdayAndTimeValues as $key => $value) {
+      // Unlike other keys, weekday keys are not prefixed with a hashtag symbol.
+      if (str_starts_with($key, '#')) {
+        continue;
+      }
+      if (!isset($value[0]['selector']['#title']) || !isset($value[0]['selector']['#original_title'])) {
+        continue;
+      }
+      if ($value[0]['selector']['#title'] !== $value[0]['selector']['#original_title']) {
+        $weekdayAndTimeValues[$key][0]['selector']['#title'] = $value[0]['selector']['#original_title'];
+        $replacedWithOriginal = TRUE;
+      }
+    }
+
+    if ($replacedWithOriginal) {
+      $element['subform']['field_weekday_and_time']['widget'][0]['value'] = $weekdayAndTimeValues;
+    }
+
+    return $element;
   }
 
   /**

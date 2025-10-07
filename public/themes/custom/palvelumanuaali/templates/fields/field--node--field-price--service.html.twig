@@ -32,6 +32,7 @@
  * - field_name: The name of the field.
  * - field_type: The type of the field.
  * - label_display: The display settings for the label.
+ * - is_paid_service: TRUE if service is paid service.
  *
  * @see template_preprocess_field()
  */
@@ -47,11 +48,12 @@
     'service-price',
   ]
 %}
-
-<div{{ attributes.addClass(classes, 'field__items') }}>
-  {% for item in items %}
+{% if is_paid_service %}
+  <div{{ attributes.addClass(classes, 'field__items') }}>
+    {% for item in items %}
       <div{{ item.attributes.addClass('field__item') }}>
-       <span>{{"Service fees "|t}}</span> {{item.content}}
+        <span>{{"Service fees "|t}}</span> {{item.content}}
       </div>
-  {% endfor %}
-</div>
+    {% endfor %}
+  </div>
+{%  endif %}

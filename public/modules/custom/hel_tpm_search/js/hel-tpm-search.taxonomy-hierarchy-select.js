@@ -4,7 +4,7 @@
       // Handles clicking of unchecked taxonomy checkbox
       $(document).ready(function () {
         let nestingLevel = ".hierarchy-select-buttons .form-checkboxes ul";
-        let allInput = "<li><div class='form-item form-item-checkbox select-all'>" +
+        let allInput = "<li class='select-all-item'><div class='form-item form-item-checkbox select-all'>" +
           "<label>" +  Drupal.t("Show all") + "</label>" +
           "</div></li>";
         $(once("nesting-all", nestingLevel)).prepend(allInput);
