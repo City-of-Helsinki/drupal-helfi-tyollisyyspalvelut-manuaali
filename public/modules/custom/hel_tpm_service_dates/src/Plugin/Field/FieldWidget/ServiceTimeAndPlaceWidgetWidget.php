@@ -46,9 +46,37 @@ class ServiceTimeAndPlaceWidgetWidget extends ParagraphsClassicAsymmetricWidget 
     $element['top']['links']['remove_button']['#paragraphs_mode'] = 'removed';
 
     $this->createFieldStatesRules($element);
+    $this->disableUntranslatableFields($element);
     $element['#after_build'][] = [get_class($this), 'removeTranslatabilityClue'];
 
     return $element;
+  }
+
+  /**
+   * Disables untranslatable fields in the provided form element.
+   *
+   * Iterates through the 'subform' array of the provided element and modifies
+   * the access and disabled properties of each untranslatable field.
+   *
+   * @param array &$element
+   *   The form element array to be processed. Fields within the 'subform'
+   *   array will be checked and adjusted as necessary.
+   *
+   * @return void
+   *   Return nothing.
+   */
+  protected function disableUntranslatableFields(&$element) {
+    foreach ($element['subform'] as &$field) {
+      if (!is_array($field)) {
+        continue;
+      }
+      if (empty($field['#type']) || !empty($field['#access'])) {
+        continue;
+      }
+
+      $field['#access'] = TRUE;
+      $field['#disabled'] = TRUE;
+    }
   }
 
   /**
