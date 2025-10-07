@@ -118,6 +118,7 @@
         let toggler = ".collapse-toggler";
         $(toggler).text(label);
       }
+
       /**
        * Set aria-expanded value for collapse-toggler.
        *
@@ -126,7 +127,11 @@
        */
       function setAriaExpanded(isCollapsed) {
         let toggler = ".collapse-toggler";
-        $(toggler).attr('aria-expanded', isCollapsed);
+        let expanded = "false";
+        if (isCollapsed === "false") {
+          expanded = "true";
+        }
+        $(toggler).attr('aria-expanded', expanded);
       }
 
       /**
