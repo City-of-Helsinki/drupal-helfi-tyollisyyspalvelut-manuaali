@@ -1,18 +1,37 @@
-label: Favorit
+label: Favoriter
 display:
   page_1:
     display_options:
-      title: Favorit
+      title: Favoriter
       menu:
-        title: Favorit
+        title: Favoriter
       header:
         area:
           content:
-            value: "<h1 class=\"page-header h3 h3--margin-bottom-double\">Favorit</h1>\r\n"
+            value: '<h1 class="page-header h3 h3--margin-bottom-double">Favoriter</h1>'
             format: full_html
+        result:
+          content: '<strong class="margin--right-one-space font-weight--bold font-size--select-label">Favoriter:</strong> <span class="total-number padding--view-summary font-color--light-blue d--inline-block background-color--white width--min-content border-radius--eight">@total</span>'
+      empty:
+        area_text_custom:
+          content: "<h4 class='margin-bottom-one-space font-weight--bold font-size--h4'>Inga tjänster har ännu lagts till i favoriter.</h4>\r\n<p class='margin--bottom-two-and-half'>Gå till sökningen och sök lämpliga tjänster.</p>\r\n<p><a class='button button--line-height-24 button--no-color button--round-corners font-size--small position--relative button--padding-right-quadruple' href='/sv/search'>Gå till söksidan <span class='link__arrow icon--arrow-right-2 position--absolute position--right-zero margin--right-one-and-half'></span></a></p>"
+      sorts:
+        title:
+          expose:
+            label: Alfabetiskt
+        changed:
+          expose:
+            label: 'Senast uppdaterade'
+      exposed_form:
+        options:
+          bef:
+            sort:
+              advanced:
+                combine_rewrite: "Senast uppdaterade Asc|\r\nSenast uppdaterade Desc|Senast uppdaterade\r\nAlfabetiskt Asc|Alfabetiskt A -> Ö\r\nAlfabetiskt Desc|Alfabetiskt Ö -> A"
+          exposed_sorts_label: 'Sortera:'
   default:
     display_options:
-      title: Favorit
+      title: Favoriter
   favorites_block:
     display_options:
       title: 'Nyligen tillagda favoriter'
@@ -25,4 +44,4 @@ display:
           label: Tjänsteproducent
       empty:
         area_text_custom:
-          content: "<p><b>Inga nyligen tillagda favoriter</b><br>\r\n<a class='button button--no-color button--round-corners' href='/haku'>Sök tjänster</a></p>"
+          content: "<p><b>Inga nyligen tillagda favoriter</b><br>\r\n<a class='button button--no-color button--round-corners' href='/sv/search'>Sök tjänster</a></p>"

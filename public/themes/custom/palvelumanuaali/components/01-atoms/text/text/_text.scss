@@ -57,6 +57,14 @@
   }
 }
 
+.wb {
+  &--bw-mb {
+    @media only screen and (max-width: $large) {
+      word-break: break-word;
+    }
+  }
+}
+
 .text-align-center {
   text-align: center;
 }

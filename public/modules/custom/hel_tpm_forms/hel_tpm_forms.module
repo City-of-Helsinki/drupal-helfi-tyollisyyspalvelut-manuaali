@@ -62,7 +62,7 @@ function hel_tpm_forms_form_node_form_alter(&$form, FormStateInterface &$form_st
 function hel_tpm_forms_service_price_form_alter_helper(array &$form, FormStateInterface &$form_state) {
   $bundle = $form_state->getStorage()['form_display']->getTargetBundle();
   // Check that we alter only service bundle.
-  if ($bundle != 'service') {
+  if ($bundle !== 'service') {
     return;
   }
   if (empty($form['field_price']) || empty($form['field_free_service'])) {
@@ -195,7 +195,26 @@ function hel_tpm_forms_disable_untranslatable_paragraph_fields(&$form, FormState
  * Implements hook_entity_presave().
  */
 function hel_tpm_forms_entity_presave(EntityInterface $entity) {
+  hel_tpm_forms_service_empty_price_field($entity);
   hel_tpm_forms_service_location_generate_title_helper($entity);
+}
+
+/**
+ * Empty service's hidden price field when saving.
+ */
+function hel_tpm_forms_service_empty_price_field(EntityInterface &$entity) {
+  if ($entity->bundle() !== 'service'
+    || !$entity->hasField('field_free_service')
+    || !$entity->hasField('field_price')) {
+    return;
+  }
+
+  // Field value is actually 1 if paid service, 0 otherwise.
+  $paid_service = $entity->get('field_free_service')->value;
+  if (!$paid_service) {
+    // Empty the price information if service is not paid service.
+    $entity->set('field_price', NULL);
+  }
 }
 
 /**
@@ -416,23 +435,6 @@ function _hel_tpm_forms_validate_paragraph_language_selection(array $form, FormS
   $build_info = $form_state->getBuildInfo();
   $entity = $build_info['callback_object']->getEntity();
   if (!$entity->isDefaultTranslation()) {
-    return;
-  }
-
-  $is_empty = TRUE;
-  foreach ($languages as $language) {
-    if (!empty($language['subform']['field_language'])) {
-      $is_empty = FALSE;
-    }
-    break;
-  }
-
-  if ($is_empty) {
-    $field_key = 'field_service_languages';
-    $form_state->setErrorByName(
-      $field_key,
-      t("@field_label field is required when publishing..", ['@field_label' => sprintf("%s:", $form[$field]['widget']['#title'])])
-    );
     return;
   }
 
