@@ -118,6 +118,7 @@
         let toggler = ".collapse-toggler";
         $(toggler).text(label);
       }
+
       /**
        * Set aria-expanded value for collapse-toggler.
        *
