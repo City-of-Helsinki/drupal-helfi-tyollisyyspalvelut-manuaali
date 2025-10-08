@@ -8,7 +8,6 @@ use Drupal\language\Entity\ConfigurableLanguage;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\Tests\service_manual_workflow\Traits\ServiceManualWorkflowTestTrait;
 use Drupal\Tests\user\Traits\UserCreationTrait;
-use Drupal\node\NodeInterface;
 
 /**
  * Test description.
@@ -63,7 +62,7 @@ final class ModerationTransitionTest extends GroupKernelTestBase {
   /**
    * Moderation transition service.
    *
-   * @var \Drupal\service_manual_workflow\ModerationTransitionService
+   * @var \Drupal\content_moderation\Service\ModerationTransitionService
    */
   private mixed $moderationTransitionService;
 
@@ -88,62 +87,67 @@ final class ModerationTransitionTest extends GroupKernelTestBase {
   }
 
   /**
-   * Tests the transition of a service node's moderation state to 'outdated'.
-   *
-   * This method creates nodes of the 'service' content type with different
-   * initial moderation states and tests their transitions to the 'outdated'
-   * state.
+   * Tests the transition of a service node to the "outdated" state.
    *
    * @return void
-   *   Returns nothing.
+   *   Return nothing.
    */
   public function testSetServiceOutdated(): void {
+    $transition_state = 'outdated';
     $node = $this->createNode([
       'type' => 'service',
       'moderation_state' => 'draft',
     ]);
-    $this->testModerationTransition($node, 'outdated');
+    $translation = $node->addTranslation($this->translationLangcode, ['title' => $this->randomString()]);
+    $this->moderationTransitionService->setServiceOutdated($node);
+    $node = $this->reloadEntity($node);
+    $this->assertEquals($transition_state, $node->get('moderation_state')->value);
+    $translation = $this->reloadEntity($translation);
+    $this->assertEquals($transition_state, $translation->get('moderation_state')->value);
 
     $node = $this->createNode([
       'type' => 'service',
       'moderation_state' => 'published',
     ]);
-    $this->testModerationTransition($node, 'outdated');
+
+    $translation = $node->addTranslation($this->translationLangcode, ['title' => $this->randomString()]);
+    $this->moderationTransitionService->setServiceOutdated($node);
+    $node = $this->reloadEntity($node);
+    $this->assertEquals($transition_state, $node->get('moderation_state')->value);
+    $translation = $this->reloadEntity($translation);
+    $this->assertEquals($transition_state, $translation->get('moderation_state')->value);
   }
 
   /**
-   * Tests the process of setting a service node's moderation state to archived.
+   * Tests the transition of a service node to the "archived" state.
    *
    * @return void
-   *   Returns nothing.
+   *   Return nothing.
    */
   public function testSetServiceArchived(): void {
+    $transition_state = 'archived';
     $node = $this->createNode([
       'type' => 'service',
       'moderation_state' => 'draft',
     ]);
-    $this->testModerationTransition($node, 'archived');
-  }
-
-  /**
-   * Tests the moderation transition of a node and its translation to a state.
-   *
-   * @param \Drupal\node\NodeInterface $node
-   *   The content node for which the moderation state transition is tested.
-   * @param string $state
-   *   The intended moderation state to which the node and
-   *   its translation should be transitioned.
-   *
-   * @return void
-   *   Returns nothing.
-   */
-  protected function testModerationTransition(NodeInterface $node, string $state) {
     $translation = $node->addTranslation($this->translationLangcode, ['title' => $this->randomString()]);
-    $this->moderationTransitionService->setServiceOutdated($node);
+    $this->moderationTransitionService->setServiceArchived($node);
     $node = $this->reloadEntity($node);
-    $this->assertEquals('archived', $node->get('moderation_state')->value);
+    $this->assertEquals($transition_state, $node->get('moderation_state')->value);
     $translation = $this->reloadEntity($translation);
-    $this->assertEquals('archived', $translation->get('moderation_state')->value);
+    $this->assertEquals($transition_state, $translation->get('moderation_state')->value);
+
+    $node = $this->createNode([
+      'type' => 'service',
+      'moderation_state' => 'published',
+    ]);
+
+    $translation = $node->addTranslation($this->translationLangcode, ['title' => $this->randomString()]);
+    $this->moderationTransitionService->setServiceArchived($node);
+    $node = $this->reloadEntity($node);
+    $this->assertEquals($transition_state, $node->get('moderation_state')->value);
+    $translation = $this->reloadEntity($translation);
+    $this->assertEquals($transition_state, $translation->get('moderation_state')->value);
   }
 
 }
