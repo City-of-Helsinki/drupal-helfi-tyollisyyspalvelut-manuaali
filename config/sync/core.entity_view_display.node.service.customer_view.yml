@@ -32,6 +32,8 @@ dependencies:
     - field.field.node.service.field_other_services
     - field.field.node.service.field_price
     - field.field.node.service.field_price_description
+    - field.field.node.service.field_public_files
+    - field.field.node.service.field_public_links
     - field.field.node.service.field_related_archive
     - field.field.node.service.field_responsible_municipality
     - field.field.node.service.field_responsible_updatee
@@ -64,8 +66,10 @@ dependencies:
     - entity_reference_revisions
     - entitygroupfield
     - field_group
+    - file_download_link
     - hel_tpm_forms
     - hel_tpm_general
+    - link
     - text
     - user
 third_party_settings:
@@ -98,6 +102,7 @@ third_party_settings:
       children:
         - field_service_execution_text
         - field_service_other_info
+        - group_public_links_and_files
       label: Toteutustapa
       parent_name: ''
       region: content
@@ -358,6 +363,27 @@ third_party_settings:
         effect: none
         speed: fast
         description: ''
+    group_public_links_and_files:
+      children:
+        - field_public_files
+        - field_public_links
+      label: 'Liitteet (aukeavat uuteen välilehteen)'
+      parent_name: group_execution
+      region: content
+      weight: 15
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h5
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
   entity_print:
     pdf_label: 'Katsele PDF'
     epub_label: 'Katsele EPub'
@@ -482,6 +508,31 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 8
+    region: content
+  field_public_files:
+    type: file_download_link
+    label: hidden
+    settings:
+      link_text: ''
+      link_title: ''
+      new_tab: true
+      force_download: false
+      custom_classes: ''
+      aria_label: 'Avaa [file:name] uudessa välilehdessä'
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_public_links:
+    type: link
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 1
     region: content
   field_service_benefits:
     type: text_default

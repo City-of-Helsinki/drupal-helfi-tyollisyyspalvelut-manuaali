@@ -922,6 +922,60 @@ function hel_tpm_general_update_10119(&$sandbox) {
 }
 
 /**
+ * Import selected configurations.
+ */
+function hel_tpm_general_update_10120(&$sandbox) {
+  $config_storage = \Drupal::service('config.storage');
+  $config_path = Settings::get('config_sync_directory');
+  $source = new FileStorage($config_path);
+
+  // Import field storages.
+  $field_storage_conf = [
+    'field.storage.node.field_public_files',
+    'field.storage.node.field_public_links',
+  ];
+  $field_storage_config = \Drupal::entityTypeManager()->getStorage('field_storage_config');
+  foreach ($field_storage_conf as $config) {
+    $field_storage_config->create($source->read($config))->save();
+  }
+
+  // Import node field configs.
+  $field_configs = [
+    'field.field.node.service.field_public_files',
+    'field.field.node.service.field_public_links',
+  ];
+  $field_config_storage = \Drupal::entityTypeManager()->getStorage('field_config');
+  foreach ($field_configs as $config) {
+    $field_config_storage->create($source->read($config))->save();
+  }
+
+}
+
+/**
+ * Migrate additional service info paragraph field_file field to node field.
+ */
+function hel_tpm_general_update_10121(&$sandbox) {
+  $paragraph_field_name = 'field_service_other_info';
+  $node_field = 'field_public_files';
+  $data_field = 'field_file';
+  $col_suffix = ['target_id', 'display', 'description'];
+  _hel_tpm_general_migrate_paragraph_content_field_to_node_field('node_revision', $paragraph_field_name, $node_field, $data_field, $col_suffix);
+  _hel_tpm_general_migrate_paragraph_content_field_to_node_field('node', $paragraph_field_name, $node_field, $data_field, $col_suffix);
+}
+
+/**
+ * Migrate additional service info paragraph field_link field to node field.
+ */
+function hel_tpm_general_update_10122(&$sandbox) {
+  $paragraph_field_name = 'field_service_other_info';
+  $node_field = 'field_public_links';
+  $data_field = 'field_link';
+  $col_suffix = ['uri', 'title', 'options'];
+  _hel_tpm_general_migrate_paragraph_content_field_to_node_field('node_revision', $paragraph_field_name, $node_field, $data_field, $col_suffix);
+  _hel_tpm_general_migrate_paragraph_content_field_to_node_field('node', $paragraph_field_name, $node_field, $data_field, $col_suffix);
+}
+
+/**
  * Inserts a row into the specified field's database tables.
  *
  * This function inserts values for a given field into the appropriate database
@@ -962,6 +1016,81 @@ function _hel_tpm_general_insert_field_row($field, $row) {
         ->execute();
     }
   }
+}
+
+/**
+ * Migrate a paragraph content field to a corresponding node field.
+ *
+ * This function retrieves data from a specified paragraph content field and
+ * migrates it to a corresponding node field. It processes the field data,
+ * performs transformations, and inserts the resulting data into the target
+ * node field database table.
+ *
+ * @param string $table_prefix
+ *   The prefix of the database table being queried or manipulated.
+ * @param string $paragraph_field_name
+ *   The name of the paragraph content field that will be migrated.
+ * @param string $node_field
+ *   The target node field where the paragraph data will be migrated.
+ * @param string $paragraph_data_field
+ *   The field containing the data to be migrated within the paragraph entity.
+ * @param array $col_suffix
+ *   An array of column suffixes for additional
+ *   fields to be processed and migrated.
+ *
+ * @return void
+ *   No return value. The function performs operations directly on the database.
+ */
+function _hel_tpm_general_migrate_paragraph_content_field_to_node_field(string $table_prefix, string $paragraph_field_name, string $node_field, string $paragraph_data_field, array $col_suffix): void {
+  $database = \Drupal::service('database');
+  $result_set = [];
+  $query = $database->select($table_prefix . '__' . $paragraph_field_name, 'fr');
+  $query->join('paragraph_revision__' . $paragraph_data_field, 'prf', 'prf.revision_id = fr.' . $paragraph_field_name . '_target_revision_id');
+
+  $paragraph_field_cols = ['delta'];
+  // Build paragraph field columns array.
+  foreach ($col_suffix as $suffix) {
+    $paragraph_field_cols[] = $paragraph_data_field . '_' . $suffix;
+  }
+
+  // Fetch field data to be migrated.
+  $result = $query->fields('fr')
+    ->fields('fr', [
+      'bundle',
+      'deleted',
+      'entity_id',
+      'revision_id',
+      'langcode',
+    ])
+    ->fields('prf', $paragraph_field_cols)
+    ->execute()
+    ->fetchAll(PDO::FETCH_ASSOC);
+
+  foreach ($result as $row) {
+    // Create primary key.
+    $primary_key = sprintf('%s-%s-%s-%s-%s', $row['entity_id'], $row['revision_id'], $row['deleted'], $row['delta'], $row['langcode']);
+
+    // Create proper column mapping and remove old columns from array.
+    foreach ($col_suffix as $suffix) {
+      $row[$node_field . '_' . $suffix] = $row[$paragraph_data_field . '_' . $suffix];
+      unset($row[$paragraph_data_field . '_' . $suffix]);
+    }
+
+    // Remove useless columns.
+    unset($row[$paragraph_field_name . '_target_id']);
+    unset($row[$paragraph_field_name . '_target_revision_id']);
+
+    // Add row to result set mapped with primary key to remove duplicates.
+    $result_set[$primary_key] = $row;
+  }
+
+  // Insert result set to proper table.
+  $insert_query = $database->insert($table_prefix . '__' . $node_field);
+  $insert_query->fields(array_keys(reset($result_set)));
+  foreach ($result_set as $row) {
+    $insert_query->values($row);
+  }
+  $insert_query->execute();
 }
 
 /**
