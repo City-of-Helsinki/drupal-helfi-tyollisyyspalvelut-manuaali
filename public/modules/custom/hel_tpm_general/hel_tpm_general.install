@@ -925,7 +925,6 @@ function hel_tpm_general_update_10119(&$sandbox) {
  * Import selected configurations.
  */
 function hel_tpm_general_update_10120(&$sandbox) {
-  $config_storage = \Drupal::service('config.storage');
   $config_path = Settings::get('config_sync_directory');
   $source = new FileStorage($config_path);
 
