@@ -1,0 +1,26 @@
+{#
+/**
+ * @file
+ * Theme override to display an other services block.
+ *
+ * @see block.html.twig for documentation.
+ */
+#}
+<div {{ bem('block') }}>
+  {{ title_prefix }}
+  {% if label %}
+    {%
+      set title_classes = [
+        'h4',
+        'h4--semibold',
+      ]
+    %}
+    <div class="field__label--margin-bottom">
+      <h2{{ title_attributes.addClass(title_classes) }}>{{ label }}</h2>
+    </div>
+  {% endif %}
+  {{ title_suffix }}
+  {% block content %}
+    {{ content }}
+  {% endblock %}
+</div>

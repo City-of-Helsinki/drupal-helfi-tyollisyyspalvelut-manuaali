@@ -100,7 +100,23 @@
           localStorage.setItem('searchFiltersIsCollapsed', isCollapsed);
           showHideAdditionalFilters(filterWrapper, isCollapsed);
           setAriaExpanded(isCollapsed);
+          setTogglerLabel(isCollapsed);
         });
+      }
+
+      /**
+       * Updates the label text of a toggler based on its collapsed state.
+       *
+       * @param {string} isCollapsed
+       *    A string that determines the state of the toggler.
+       *    Should be "true" for collapsed or any other value for expanded.
+       * @return {void}
+       *    This function does not return a value.
+       */
+      function setTogglerLabel(isCollapsed) {
+        let label = isCollapsed === "true" ? Drupal.t("Show more") : Drupal.t("Show less");
+        let toggler = ".collapse-toggler";
+        $(toggler).text(label);
       }
 
       /**
@@ -110,10 +126,12 @@
        * @param isCollapsed
        */
       function setAriaExpanded(isCollapsed) {
-        let expanded = "true";
-        if (isCollapsed === "true")
-          expanded = "false"
-        $(".collapse-toggler").attr('aria-expanded', expanded);
+        let toggler = ".collapse-toggler";
+        let expanded = "false";
+        if (isCollapsed === "false") {
+          expanded = "true";
+        }
+        $(toggler).attr('aria-expanded', expanded);
       }
 
       /**

@@ -1,0 +1,21 @@
+uuid: e7bda354-305f-4dfb-9a9c-24671fa84be8
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_free_service
+    - node.type.service
+id: node.service.field_free_service
+field_name: field_free_service
+entity_type: node
+bundle: service
+label: 'Palvelu on maksullinen'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: Käytössä
+  off_label: 'Pois päältä'
+field_type: boolean

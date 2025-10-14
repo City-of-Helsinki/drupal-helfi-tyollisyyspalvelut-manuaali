@@ -42,21 +42,30 @@
     paragraph.bundle|clean_class
   ]
 %}
-  <div{{ attributes.addClass(classes) }}>
-      {{content|without('field_separate_time','field_weekday_and_time','field_date_selection','field_start_and_end_date','field_date')}}
-      <div class='date-wrapper o--five d--flex'>
-        {% include "@atoms/images/icons/_icon.twig" with {
-          icon_base_class: 'icon',
-          icon_name: 'calendar-dark-blue',
-          icon_modifiers: ['small'],
-        } %}
+{% set date_fields = [
+    'field_date_selection',
+    'field_start_and_end_date',
+    'field_date',
+    'field_multiple_dates',
+    'field_separate_time',
+    'field_weekday_and_time'
+  ]
+%}
+<div{{ attributes.addClass(classes) }}>
+  {{content|without(date_fields)}}
+  {% if (content.field_date_selection['0']['#markup']) %}
+    <div class='date-wrapper o--five d--flex'>
+      {% include "@atoms/images/icons/_icon.twig" with {
+      icon_base_class: 'icon',
+      icon_name: 'calendar-dark-blue',
+      icon_modifiers: ['small'],
+      } %}
       <div class='text-wrapper'>
-      <div class='field__label'>{{ 'Weekday and time'|t }}</div>
-        {{content.field_date_selection}}
-        {{content.field_start_and_end_date}}
-        {{content.field_date}}
-        {{content.field_weekday_and_time}}
+        <div class='field__label'>{{ 'Weekday and time'|t }}</div>
+        {% for field in date_fields %}
+          {{ attribute(content, field) }}
+        {% endfor %}
       </div>
-      </div>
-
-  </div>
+    </div>
+  {% endif %}
+</div>

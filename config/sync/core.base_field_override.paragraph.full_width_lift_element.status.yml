@@ -1,0 +1,22 @@
+uuid: 9d799347-eb03-4d0a-802d-eaf23747816d
+langcode: fi
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.full_width_lift_element
+id: paragraph.full_width_lift_element.status
+field_name: status
+entity_type: paragraph
+bundle: full_width_lift_element
+label: Julkaistu
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: Käytössä
+  off_label: 'Pois päältä'
+field_type: boolean

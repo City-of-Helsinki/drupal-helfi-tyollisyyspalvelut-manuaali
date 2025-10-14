@@ -327,14 +327,25 @@ function hel_tpm_group_form_group_role_edit_form_alter(&$form, &$form_state) {
 
 /**
  * Implements hook_node_access_records().
+ *
+ * Add group based grants to give view access for unpublished services.
  */
-function hel_tpm_group_node_access_records(NodeInterface $node) {
+function hel_tpm_group_node_access_records(NodeInterface $node): array {
+  // Only alter access for unpublished services.
+  if ($node->isPublished() || $node->bundle() !== 'service') {
+    return [];
+  }
+  // Get groups, including super groups, the node belongs to. Only alter access
+  // if the node belongs to group.
+  if (empty($group_ids = \Drupal::service('hel_tpm_group.group_relationship_helper')->getGroupIdsByNode($node, TRUE))) {
+    return [];
+  }
+
   $grants = [];
-  // Other grants.
-  if (!$node->isPublished()) {
+  foreach ($group_ids as $group_id) {
     $grants[] = [
       'realm' => 'hel_tpm_group_unpublished_realm',
-      'gid' => 1,
+      'gid' => $group_id,
       'grant_view' => 1,
       'grant_update' => 0,
       'grant_delete' => 0,
@@ -346,13 +357,23 @@ function hel_tpm_group_node_access_records(NodeInterface $node) {
 
 /**
  * Implements hook_node_grants().
+ *
+ * Use unpublished realm for node view operations for group members.
  */
-function hel_tpm_group_node_grants(AccountInterface $account, $op) {
-  if ($op !== 'view') {
+function hel_tpm_group_node_grants(AccountInterface $account, $op): array {
+  if ($op !== 'view' || !$account->isAuthenticated()) {
     return [];
   }
+
+  /** @var \Drupal\group\GroupMembership[] $memberships */
+  if (empty($memberships = \Drupal::service('group.membership_loader')->loadByUser($account))) {
+    return [];
+  }
+
   $grants = [];
-  $grants['hel_tpm_group_unpublished_realm'][] = 1;
+  foreach ($memberships as $membership) {
+    $grants['hel_tpm_group_unpublished_realm'][] = $membership->getGroup()->id();
+  }
   return $grants;
 }
 

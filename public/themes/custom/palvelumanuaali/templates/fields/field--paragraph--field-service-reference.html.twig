@@ -57,11 +57,11 @@
 
 <div{{ attributes.addClass(classes) }}>
   <div{{ title_attributes.addClass(title_classes) }}>
-    {% include "@atoms/text/headings/_heading.twig" with {
+    {# {% include "@atoms/text/headings/_heading.twig" with {
       "heading_level": 4,
       "heading": 'Services that are suitable for you:'|t,
       "heading_modifiers": 'semibold',
-    } %}
+    } %} #}
   </div>
     <div class="field__items grid">
     {% for item in items %}

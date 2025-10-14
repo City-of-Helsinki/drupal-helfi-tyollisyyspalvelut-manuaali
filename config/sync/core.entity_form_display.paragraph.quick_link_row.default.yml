@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.quick_link_row.field_quick_link_row
+    - field.field.paragraph.quick_link_row.field_optional_title
     - paragraphs.paragraphs_type.quick_link_row
   module:
     - hel_tpm_editorial
@@ -12,9 +13,17 @@ targetEntityType: paragraph
 bundle: quick_link_row
 mode: default
 content:
+  field_optional_title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
   field_quick_link_row:
     type: hel_tpm_editorial_paragraphs_alt_custom
-    weight: 0
+    weight: 1
     region: content
     settings:
       title: Pikalinkki
@@ -33,7 +42,7 @@ content:
         add_above: 0
     third_party_settings: {  }
   translation:
-    weight: 10
+    weight: 2
     region: content
     settings: {  }
     third_party_settings: {  }

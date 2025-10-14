@@ -15,6 +15,7 @@ dependencies:
     - field.field.node.service.field_days_since_last_state_chan
     - field.field.node.service.field_description
     - field.field.node.service.field_field_client_consent_descr
+    - field.field.node.service.field_free_service
     - field.field.node.service.field_implementation_extra_info
     - field.field.node.service.field_instructions_markup
     - field.field.node.service.field_internal_files
@@ -28,6 +29,8 @@ dependencies:
     - field.field.node.service.field_obligatoryness_freetext
     - field.field.node.service.field_other_preferences
     - field.field.node.service.field_other_services
+    - field.field.node.service.field_price
+    - field.field.node.service.field_price_description
     - field.field.node.service.field_related_archive
     - field.field.node.service.field_responsible_municipality
     - field.field.node.service.field_responsible_updatee
@@ -78,7 +81,7 @@ third_party_settings:
       label: Osallistuminen
       parent_name: group_customer_view
       region: content
-      weight: 42
+      weight: 45
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--participation text-normal'
@@ -99,7 +102,7 @@ third_party_settings:
       label: Toteutustapa
       parent_name: group_customer_view
       region: content
-      weight: 43
+      weight: 46
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--execution'
@@ -119,7 +122,7 @@ third_party_settings:
       label: 'Missä ja milloin'
       parent_name: group_customer_view
       region: content
-      weight: 44
+      weight: 47
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--where-and-when'
@@ -142,7 +145,7 @@ third_party_settings:
       label: Kohderyhmä
       parent_name: group_customer_view
       region: content
-      weight: 41
+      weight: 44
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--target-group'
@@ -178,7 +181,9 @@ third_party_settings:
         - field_life_situations
         - field_service_set
         - field_service_languages
-        - field_service_price
+        - field_price
+        - field_free_service
+        - field_price_description
         - field_accessibility
         - group_target_group
         - group_participation
@@ -395,7 +400,7 @@ third_party_settings:
       label: sidebar-public
       parent_name: group_customer_view
       region: content
-      weight: 45
+      weight: 48
       format_type: html_element
       format_settings:
         classes: ''
@@ -451,7 +456,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 40
+    weight: 43
     region: content
   field_age_groups:
     type: hel_tpm_general_age_group_field_formatter
@@ -515,6 +520,16 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 20
+    region: content
+  field_free_service:
+    type: boolean
+    label: above
+    settings:
+      format: boolean
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 41
     region: content
   field_implementation_extra_info:
     type: entity_reference_label
@@ -598,14 +613,23 @@ content:
     third_party_settings: {  }
     weight: 16
     region: content
-  field_other_services:
-    type: entity_reference_entity_view
-    label: hidden
+  field_price:
+    type: number_decimal
+    label: above
     settings:
-      view_mode: card_lift
-      link: false
+      thousand_separator: ''
+      decimal_separator: ','
+      scale: 2
+      prefix_suffix: true
     third_party_settings: {  }
-    weight: 7
+    weight: 40
+    region: content
+  field_price_description:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 42
     region: content
   field_related_archive:
     type: list_key
@@ -666,15 +690,6 @@ content:
       link: ''
     third_party_settings: {  }
     weight: 14
-    region: content
-  field_service_price:
-    type: entity_reference_revisions_entity_view
-    label: hidden
-    settings:
-      view_mode: default
-      link: ''
-    third_party_settings: {  }
-    weight: 39
     region: content
   field_service_producer:
     type: entity_reference_label
@@ -802,6 +817,7 @@ hidden:
   field_instructions_markup: true
   field_links_and_attachments: true
   field_municipality_irrelevant: true
+  field_other_services: true
   field_poma_applicable: true
   field_poma_applicable_descriptio: true
   field_responsible_municipality: true
@@ -810,6 +826,7 @@ hidden:
   field_service_language: true
   field_service_links_external: true
   field_service_links_internal: true
+  field_service_price: true
   field_service_provider_updatee: true
   field_service_radioactivity: true
   field_target_group: true

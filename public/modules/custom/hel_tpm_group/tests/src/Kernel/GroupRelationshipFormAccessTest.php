@@ -31,6 +31,7 @@ class GroupRelationshipFormAccessTest extends GroupKernelTestBase {
   protected static $modules = [
     'hel_tpm_group',
     'group',
+    'ggroup',
     'message',
     'message_notify',
     'group_test_plugin',

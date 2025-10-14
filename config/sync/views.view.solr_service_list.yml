@@ -116,7 +116,7 @@ display:
             offset: false
             offset_label: Offset
           views_infinite_scroll:
-            button_text: 'Load More'
+            button_text: 'Näytä lisää'
             automatically_load_content: false
             initially_load_all_pages: false
       exposed_form:
@@ -248,7 +248,7 @@ display:
                   collapsible: false
                   is_secondary: false
                 select_all_none: 0
-                select_all_none_nested: false
+                select_all_none_nested: 0
                 display_inline: 1
                 options_show_only_used: 0
                 options_show_only_used_filtered: 0
@@ -821,7 +821,7 @@ display:
           reduce_duplicates: false
           vid: municipality
           type: select
-          hierarchy: false
+          hierarchy: true
           limit: true
           error_message: true
         field_municipality_irrelevant:

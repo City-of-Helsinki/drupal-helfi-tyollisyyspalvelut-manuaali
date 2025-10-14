@@ -38,9 +38,9 @@
 
  @TODO: THIS CAN BE REMOVED IF BEM CLASSES CAN BE APPLIED IN WYSIWYG
 #}
-<div class="form-text-wrapper">
+<div class="form-text-wrapper text-maxwidth">
 {% for item in items %}
-  <strong>{{"Conditions for participating in the service:"|t}}</strong>
+  <h3 class='h4'>{{"Conditions for participating in the service:"|t}}</h3>
   {{item.content}}
 {% endfor %}
 </div>

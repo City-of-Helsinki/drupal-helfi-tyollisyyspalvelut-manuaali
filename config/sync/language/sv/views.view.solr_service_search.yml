@@ -15,6 +15,9 @@ display:
           content:
             value: '<p>Inga resultat hittades för sökningen.</p>'
             format: filtered_html
+      pager:
+        options:
+          more_button_text: 'Visa mer'
   default:
     display_options:
       exposed_form:
@@ -29,6 +32,8 @@ display:
                 title: Avgiftsbelagd
               2:
                 title: Avgiftsfri
+          expose:
+            description: ''
         field_service_set:
           expose:
             label: Tjänstekategori

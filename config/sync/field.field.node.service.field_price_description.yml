@@ -1,0 +1,22 @@
+uuid: 992f86b2-de50-4a1b-8a90-1d99a68666c0
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_price_description
+    - node.type.service
+  module:
+    - text
+id: node.service.field_price_description
+field_name: field_price_description
+entity_type: node
+bundle: service
+label: 'Lisätietoa maksuista (valinnainen)'
+description: 'Kuvaa maksullisuuteen liittyvät tarkennukset ja poikkeukset. Kerro esimerkiksi, jos palvelu on maksullinen vain tietylle kohderyhmälle tai palvelussa on alennus- tai palvelusetelikäytäntöjä.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

@@ -5,6 +5,7 @@
  * This module creates various additional contents.
  */
 
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -44,6 +45,65 @@ function hel_tpm_forms_form_node_form_alter(&$form, FormStateInterface &$form_st
   hel_tpm_forms_node_service_location_form_alter_helper($form, $form_state);
   hel_tpm_forms_disable_untranslatable_paragraph_fields($form, $form_state);
   hel_tpm_forms_time_and_location_form_helper($form, $form_state);
+  hel_tpm_forms_service_price_form_alter_helper($form, $form_state);
+}
+
+/**
+ * Add form states logic to field_price.
+ *
+ * @param array $form
+ *   Form array.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   Form state object.
+ *
+ * @return void
+ *   Void.
+ */
+function hel_tpm_forms_service_price_form_alter_helper(array &$form, FormStateInterface &$form_state) {
+  $bundle = $form_state->getStorage()['form_display']->getTargetBundle();
+  // Check that we alter only service bundle.
+  if ($bundle !== 'service') {
+    return;
+  }
+  if (empty($form['field_price']) || empty($form['field_free_service'])) {
+    return;
+  }
+
+  $form['field_price']['#states'] = [
+    'visible' => [
+      ':input[name="field_free_service[value]"]' => ['checked' => TRUE],
+    ],
+  ];
+
+  $form['field_price']['widget'][0]['value']['#states'] = [
+    'required' => [
+      ':input[name="field_free_service[value]"]' => ['checked' => TRUE],
+    ],
+  ];
+
+  $form['#validate'][] = 'hel_tpm_forms_field_price_required_validate';
+}
+
+/**
+ * Validate field_price required.
+ *
+ * @param array $form
+ *   Form array.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   Form state object.
+ *
+ * @return void
+ *   -
+ */
+function hel_tpm_forms_field_price_required_validate(array $form, FormStateInterface &$form_state) {
+  $field_free_service_value = $form_state->getValue('field_free_service', NULL);
+  if (empty($field_free_service_value) || $field_free_service_value['value'] != 1) {
+    return;
+  }
+  $price_value = $form_state->getValue('field_price');
+  if (empty($price_value[0]['value'])) {
+    $form_state->setError($form['field_price']['widget'][0], new TranslatableMarkup('@name field is required.', ['@name' => $form['field_price']['widget']['#title']]));
+  }
 }
 
 /**
@@ -135,7 +195,26 @@ function hel_tpm_forms_disable_untranslatable_paragraph_fields(&$form, FormState
  * Implements hook_entity_presave().
  */
 function hel_tpm_forms_entity_presave(EntityInterface $entity) {
+  hel_tpm_forms_service_empty_price_field($entity);
   hel_tpm_forms_service_location_generate_title_helper($entity);
+}
+
+/**
+ * Empty service's hidden price field when saving.
+ */
+function hel_tpm_forms_service_empty_price_field(EntityInterface &$entity) {
+  if ($entity->bundle() !== 'service'
+    || !$entity->hasField('field_free_service')
+    || !$entity->hasField('field_price')) {
+    return;
+  }
+
+  // Field value is actually 1 if paid service, 0 otherwise.
+  $paid_service = $entity->get('field_free_service')->value;
+  if (!$paid_service) {
+    // Empty the price information if service is not paid service.
+    $entity->set('field_price', NULL);
+  }
 }
 
 /**
@@ -219,6 +298,20 @@ function hel_tpm_forms_node_service_form_alter_helper(&$form, FormStateInterface
     ],
   ];
 
+  $form['field_service_price']['widget'][0]['subform']['field_price']['widget'][0]['value']['#states'] = [
+    'required' => [
+      ':input[name="field_service_price[0][subform][field_free_service][value]"]' => [
+        'checked' => TRUE,
+      ],
+    ],
+    'visible' => [
+      ':input[name="field_service_price[0][subform][field_free_service][value]"]' => [
+        'checked' => TRUE,
+      ],
+    ],
+  ];
+  $form['field_service_price']['widget'][0]['#element_validate'][] = '_hel_tpm_forms_field_price_required_validate';
+
   // Check if current service provider user is included in the options list. If
   // not, add a 'none' option so that when saving the form, a new user must be
   // chosen. This prevents accidentally saving with the first user in the list
@@ -247,21 +340,42 @@ function hel_tpm_forms_node_service_form_alter_helper(&$form, FormStateInterface
  * Extra server-side validation for editing service nodes.
  */
 function hel_tpm_forms_validate_service_form_helper(array &$form, FormStateInterface &$form_state): void {
-  // Check extra required fields only when form is publishing ready.
-  $require_fields = FALSE;
-  if ($moderation_state = $form_state->getValue('moderation_state')[0]['value']) {
-    if ($moderation_state === 'published' || $moderation_state === 'ready_to_publish') {
-      $require_fields = TRUE;
-    }
-  }
-
-  if ($require_fields) {
+  // Use extra required fields only with publishing-ready services.
+  $moderation_state = $form_state->getValue('moderation_state')[0]['value'];
+  if ($moderation_state === 'published' || $moderation_state === 'ready_to_publish') {
     _hel_tpm_forms_validate_age_groups($form, $form_state);
     _hel_tpm_forms_validate_municipality($form, $form_state);
     _hel_tpm_forms_validate_target_group_description($form, $form_state);
-    if ($languages = $form_state->getValue('field_service_languages')) {
-      _hel_tpm_forms_validate_paragraph_language_selection($form, $form_state, $languages, 'field_service_languages');
-    }
+  }
+
+  if ($languages = $form_state->getValue('field_service_languages')) {
+    _hel_tpm_forms_validate_paragraph_language_selection($form, $form_state, $languages);
+  }
+}
+
+/**
+ * Validates the required field for service price.
+ *
+ * @param array $element
+ *   The form element being validated.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The form state object.
+ *
+ * @return void
+ *   -
+ */
+function _hel_tpm_forms_field_price_required_validate($element, $form_state) {
+  $service_price_element = $form_state->getValue('field_service_price');
+  if (empty($service_price_element['0']['subform']['field_free_service'])) {
+    return;
+  }
+
+  if ($service_price_element['0']['subform']['field_free_service']['value'] == 0) {
+    return;
+  }
+
+  if (empty($service_price_element['0']['subform']['field_price'][0]['value'])) {
+    $form_state->setError($element['subform']['field_price']['widget'], 'Service price is required');
   }
 }
 
@@ -305,34 +419,15 @@ function _hel_tpm_forms_validate_required_paragraph_long_texts_with_editor(array
  *   Form state interface.
  * @param array $languages
  *   Array of selected languages.
- * @param string $field
- *   Validated field key.
  *
  * @return void
  *   -
  */
-function _hel_tpm_forms_validate_paragraph_language_selection(array $form, FormStateInterface &$form_state, array $languages, $field): void {
+function _hel_tpm_forms_validate_paragraph_language_selection(array $form, FormStateInterface &$form_state, array $languages): void {
   $lang = [];
   $build_info = $form_state->getBuildInfo();
   $entity = $build_info['callback_object']->getEntity();
   if (!$entity->isDefaultTranslation()) {
-    return;
-  }
-
-  $is_empty = TRUE;
-  foreach ($languages as $language) {
-    if (!empty($language['subform']['field_language'])) {
-      $is_empty = FALSE;
-    }
-    break;
-  }
-
-  if ($is_empty) {
-    $field_key = 'field_service_languages';
-    $form_state->setErrorByName(
-      $field_key,
-      t("@field_label field is required when publishing..", ['@field_label' => sprintf("%s:", $form[$field]['widget']['#title'])])
-    );
     return;
   }
 
@@ -343,10 +438,7 @@ function _hel_tpm_forms_validate_paragraph_language_selection(array $form, FormS
     foreach ($paragraph['subform']['field_language'] as $value) {
       if (!empty($lang[$value['target_id']])) {
         $field_key = sprintf('field_service_languages][%s][subform][field_language', $delta);
-        $form_state->setErrorByName(
-          $field_key,
-          t("Select each language only once and set minimum language level.")
-        );
+        $form_state->setErrorByName($field_key, t("Select each language only once."));
       }
       $lang[$value['target_id']] = $value['target_id'];
     }

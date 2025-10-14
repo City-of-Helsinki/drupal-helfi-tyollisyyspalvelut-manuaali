@@ -205,6 +205,8 @@ final class WeekdayAndTimeFieldWidget extends WidgetBase {
         '#type' => 'checkbox',
         // phpcs:ignore
         '#title' => $this->t($label),
+        // phpcs:ignore
+        '#original_title' => $this->t($label),
         '#attributes' => [
           'data-selector' => $selector,
           'autocomplete' => 'off',

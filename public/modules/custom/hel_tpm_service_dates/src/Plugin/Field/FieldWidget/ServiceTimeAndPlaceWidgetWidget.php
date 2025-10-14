@@ -36,6 +36,9 @@ class ServiceTimeAndPlaceWidgetWidget extends ParagraphsClassicAsymmetricWidget 
     'field_date' => [
       'separate_dates',
     ],
+    'field_multiple_dates' => [
+      'multiple_dates',
+    ],
   ];
 
   /**
@@ -46,8 +49,37 @@ class ServiceTimeAndPlaceWidgetWidget extends ParagraphsClassicAsymmetricWidget 
     $element['top']['links']['remove_button']['#paragraphs_mode'] = 'removed';
 
     $this->createFieldStatesRules($element);
+    $this->disableUntranslatableFields($element);
+    $element['#after_build'][] = [get_class($this), 'removeTranslatabilityClue'];
 
     return $element;
+  }
+
+  /**
+   * Disables untranslatable fields in the provided form element.
+   *
+   * Iterates through the 'subform' array of the provided element and modifies
+   * the access and disabled properties of each untranslatable field.
+   *
+   * @param array &$element
+   *   The form element array to be processed. Fields within the 'subform'
+   *   array will be checked and adjusted as necessary.
+   *
+   * @return void
+   *   Return nothing.
+   */
+  protected function disableUntranslatableFields(&$element) {
+    foreach ($element['subform'] as &$field) {
+      if (!is_array($field)) {
+        continue;
+      }
+      if (empty($field['#type']) || !empty($field['#access'])) {
+        continue;
+      }
+
+      $field['#access'] = TRUE;
+      $field['#disabled'] = TRUE;
+    }
   }
 
   /**
@@ -85,6 +117,48 @@ class ServiceTimeAndPlaceWidgetWidget extends ParagraphsClassicAsymmetricWidget 
     $this->clearUnselectedDateFields($element, $form_state);
     $this->validateRequiredDependencyFields($element, $form_state);
     parent::elementValidate($element, $form_state, $form);
+  }
+
+  /**
+   * Removes "(all languages)" suffix from the weekday checkbox titles.
+   *
+   * The title is replaced with a value from '#original_title' item.
+   *
+   * @param array $element
+   *   The form element.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current state of the form.
+   *
+   * @return array
+   *   The form element.
+   */
+  public static function removeTranslatabilityClue(array $element, FormStateInterface $form_state): array {
+    if (empty($element['subform']['field_weekday_and_time']) || empty($element['subform']['field_weekday_and_time']['widget'])) {
+      return $element;
+    }
+
+    $weekdayAndTimeValues = $element['subform']['field_weekday_and_time']['widget'][0]['value'];
+    $replacedWithOriginal = FALSE;
+
+    foreach ($weekdayAndTimeValues as $key => $value) {
+      // Unlike other keys, weekday keys are not prefixed with a hashtag symbol.
+      if (str_starts_with($key, '#')) {
+        continue;
+      }
+      if (!isset($value[0]['selector']['#title']) || !isset($value[0]['selector']['#original_title'])) {
+        continue;
+      }
+      if ($value[0]['selector']['#title'] !== $value[0]['selector']['#original_title']) {
+        $weekdayAndTimeValues[$key][0]['selector']['#title'] = $value[0]['selector']['#original_title'];
+        $replacedWithOriginal = TRUE;
+      }
+    }
+
+    if ($replacedWithOriginal) {
+      $element['subform']['field_weekday_and_time']['widget'][0]['value'] = $weekdayAndTimeValues;
+    }
+
+    return $element;
   }
 
   /**

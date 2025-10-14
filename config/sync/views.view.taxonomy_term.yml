@@ -287,6 +287,7 @@ display:
           admin_label: 'field_target_group_municipality: Luokittelutermi'
           plugin_id: standard
           required: false
+      group_by: true
       link_display: page_1
       link_url: ''
       header:
@@ -361,10 +362,19 @@ display:
     display_plugin: page
     position: 1
     display_options:
+      enabled: false
+      pager:
+        type: some
+        options:
+          offset: 0
+          items_per_page: 10
       query:
         type: views_query
         options: {  }
-      display_extenders: {  }
+      defaults:
+        pager: false
+      display_extenders:
+        ajax_history: {  }
       path: taxonomy/term/%
     cache_metadata:
       max-age: -1

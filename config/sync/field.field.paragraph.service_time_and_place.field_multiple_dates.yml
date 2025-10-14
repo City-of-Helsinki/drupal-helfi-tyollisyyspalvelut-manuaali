@@ -1,0 +1,25 @@
+uuid: 5d400673-a8e1-40ec-b0f0-d537a2b766d6
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_multiple_dates
+    - paragraphs.paragraphs_type.service_time_and_place
+  module:
+    - datetime_range
+    - tmgmt_content
+third_party_settings:
+  tmgmt_content:
+    excluded: false
+id: paragraph.service_time_and_place.field_multiple_dates
+field_name: field_multiple_dates
+entity_type: paragraph
+bundle: service_time_and_place
+label: 'Multiple dates'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: daterange

@@ -21,8 +21,11 @@ body {
 
 .main {
   display: block; /* Fix for IE weirdness */
-  max-width: $content-max-width;
+  max-width: 100%;
   flex: 1;
+  @include xxl {
+    max-width: 2000px;
+  }
   .main-content {
     @include make-col();
   }
@@ -182,6 +185,7 @@ article ul,
 .layout-column {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .placeholder {
@@ -339,6 +343,9 @@ article ul,
   &--bottom-zero {
     margin-bottom: 0!important;
   }
+  &--bottom-double {
+    margin-bottom: $space-double;
+  }
   &--bottom-two-and-half {
     margin-bottom: $space-two-and-half;
   }
@@ -354,6 +361,9 @@ article ul,
   &--top-two-half,
   &--top-two-and-half {
     margin-top: $space-two-and-half;
+  }
+  &--right-auto {
+    margin-right: auto;
   }
   &--right-one-space {
     margin-right: $space;
@@ -630,5 +640,11 @@ article ul,
     align-items: center;
     overflow: hidden;
     height: 100%;
+  }
+}
+
+.text-maxwidth {
+  @include large {
+    max-width: 80ch;
   }
 }

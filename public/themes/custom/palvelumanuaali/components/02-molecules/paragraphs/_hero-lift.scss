@@ -15,12 +15,11 @@
       color: clr(text-inverse);
     }
   .field--name-field-lift-media {
-    width: 33%;
-    position: absolute;
-    right: 0;
-    bottom: 0;
+    display: none;
     @include large {
+      display: block;
       position: relative;
+      width: 33%;
     }
   }
   .content-wrapper {
@@ -36,7 +35,7 @@
       width: 50%;
     }
     .long-text {
-      max-width: 60%;
+      max-width: 100%;
       @include large {
         max-width: unset;
       }

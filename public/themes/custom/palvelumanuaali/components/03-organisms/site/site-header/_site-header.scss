@@ -200,7 +200,11 @@ body:not(.admin-toolbar-enabled) {
     .logo-link {
       @include large {
         display: inherit;
+        margin-right: auto;
       }
+    }
+    @include large {
+      width: 100%;
     }
     @include xl {
       display: flex;

@@ -1,0 +1,18 @@
+uuid: 5531a51c-7483-45e1-9e3f-ec0815591340
+langcode: fi
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.full_width_lift_element
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: false
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: paragraph.full_width_lift_element
+target_entity_type_id: paragraph
+target_bundle: full_width_lift_element
+default_langcode: site_default
+language_alterable: false

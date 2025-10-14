@@ -4,15 +4,19 @@ declare(strict_types=1);
 
 namespace Drupal\hel_tpm_update_reminder\Plugin\QueueWorker;
 
+use Drupal\Component\Datetime\Time;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Logger\LoggerChannelTrait;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueWorkerBase;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\hel_tpm_update_reminder\UpdateReminderUtility;
 use Drupal\message\Entity\Message;
 use Drupal\message_notify\MessageNotifier;
 use Drupal\node\NodeInterface;
+use Drupal\service_manual_workflow\ModerationTransition;
 use Drupal\user\Entity\User;
+use Drupal\user\UserInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -28,6 +32,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFactoryPluginInterface {
 
   use LoggerChannelTrait;
+
+  use StringTranslationTrait;
 
   /**
    * Entity type manager service.
@@ -58,18 +64,46 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
   protected int $serviceId;
 
   /**
-   * Constructor.
+   * Time service.
+   *
+   * @var \Drupal\Component\Datetime\TimeInterface
+   */
+  protected $time;
+
+  /**
+   * Admin user entity.
+   *
+   * @var \Drupal\user\UserInterface
+   */
+  private UserInterface $adminUser;
+
+  /**
+   * Moderation transition entity.
+   *
+   * @var \Drupal\service_manual_workflow\ModerationTransition
+   */
+  private ModerationTransition $moderationTransition;
+
+  /**
+   * Constructs a new instance.
    *
    * @param array $configuration
-   *   Configuration array.
+   *   A configuration array containing information about the plugin instance.
    * @param string $plugin_id
-   *   Plugin id string.
-   * @param array $plugin_definition
-   *   Plugin definition array.
+   *   The plugin ID of the instance.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   Entity type manager.
+   *   The entity type manager service.
    * @param \Drupal\message_notify\MessageNotifier $message_notifier
-   *   Message notifier service.
+   *   The message notifier service.
+   * @param \Drupal\Component\Datetime\Time $time
+   *   The time service.
+   * @param \Drupal\service_manual_workflow\ModerationTransition $moderation_transition
+   *   The moderation transition service.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public function __construct(
     array $configuration,
@@ -77,11 +111,16 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
     $plugin_definition,
     EntityTypeManagerInterface $entity_type_manager,
     MessageNotifier $message_notifier,
+    Time $time,
+    ModerationTransition $moderation_transition,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->entityTypeManager = $entity_type_manager;
     $this->messageNotifier = $message_notifier;
+    $this->time = $time;
+    $this->moderationTransition = $moderation_transition;
     $this->logger = $this->getLogger('hel_tpm_update_reminder');
+    $this->adminUser = $this->entityTypeManager->getStorage('user')->load(1);
   }
 
   /**
@@ -93,7 +132,9 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
       $plugin_id,
       $plugin_definition,
       $container->get('entity_type.manager'),
-      $container->get('message_notify.sender')
+      $container->get('message_notify.sender'),
+      $container->get('datetime.time'),
+      $container->get('service_manual_workflow.moderation_transition')
     );
   }
 
@@ -181,10 +222,16 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
    * @throws \Drupal\message_notify\Exception\MessageNotifyException
    */
   protected function outdate(): bool {
+    /** @var \Drupal\Core\Entity\RevisionableStorageInterface $storage */
     $storage = $this->entityTypeManager->getStorage('node');
     /** @var \Drupal\node\NodeInterface $service */
     if (empty($service = $storage->load($this->serviceId))) {
       return FALSE;
+    }
+
+    if (!$service->isLatestRevision()) {
+      $vid = $storage->getLatestRevisionId($service->id());
+      $service = $storage->loadRevision($vid);
     }
 
     $serviceProviderInformed = FALSE;
@@ -200,8 +247,11 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
     }
 
     if ($serviceProviderInformed || $responsibleInformed) {
-      $service->set('moderation_state', 'outdated');
-      $service->save();
+      if (!$service->isDefaultTranslation()) {
+        $service = $service->getTranslation('x-default');
+      }
+      $this->moderationTransition->setServiceOutdated($service, 'Outdated by update reminder');
+
       $this->logger->info('Service "%service_title" (ID: %service_id) automatically marked as outdated.', [
         '%service_title' => $service->getTitle(),
         '%service_id' => $this->serviceId,

@@ -34,6 +34,11 @@ function _hel_tpm_update_reminder_service_reminders(): void {
 
   $reminder_service_ids = $service->getServicesToRemind();
 
+  if (empty($reminder_service_ids)) {
+    UpdateReminderUtility::updateLastRunTimestamp();
+    return;
+  }
+
   $queue = Drupal::queue('hel_tpm_update_reminder_service');
   foreach ($reminder_service_ids as $row) {
     if (!empty($checked = UpdateReminderUtility::getCheckedTimestamp($row['nid']))) {

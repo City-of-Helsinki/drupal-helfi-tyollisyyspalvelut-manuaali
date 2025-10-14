@@ -387,17 +387,24 @@
   .field--name-field-implementation-extra-info,
   .field--name-field-service-price,
   .field--name-field-service-languages,
-  .field--name-field-service-language {
-    @extend .text-normal;
+  .field--name-field-service-language  {
     margin-bottom: $space-double;
     @include large {
       margin-bottom: $space-two-and-half;
     }
+    .field__items {
+      @extend .text-normal;
+    }
   }
+
+
+
   .field--name-field-life-situations,
   .field--name-field-service-set,
   .field--name-field-client-consent {
-    @extend .text-normal;
+    .field__items {
+      @extend .text-normal;
+    }
   }
 
 
@@ -481,8 +488,7 @@
   .field__item {
     margin-bottom: $space-one-and-half;
     a {
-      text-decoration: none;
-      color: clr(background-section);
+      font-weight: 600;
       @extend .text-normal;
     }
   }
@@ -537,6 +543,7 @@
   margin-bottom: $space-two-and-half;
   @include large {
     margin-bottom: $space-triple;
+    margin-top: $space-double;
   }
   @include xl {
     margin-bottom: $space-three-and-half;
@@ -552,7 +559,7 @@
       margin-bottom: $space-one-half;
     }
   }
-  .field--name-field-other-services {  
+  .field--name-field-other-services {
     .card__heading  {
       margin-bottom: 24px;
       span {

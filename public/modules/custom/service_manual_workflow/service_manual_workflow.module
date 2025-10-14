@@ -27,8 +27,7 @@ function service_manual_workflow_cron() {
  * Implements hook_ENTITY_presave().
  */
 function service_manual_workflow_node_presave(EntityInterface $entity) {
-
-  if ($entity instanceof NodeInterface && $entity->isTranslatable() && !$entity->isNew() && !$entity->isDefaultTranslation()) {
+  if ($entity instanceof NodeInterface && $entity->isTranslatable() && !$entity->isNew()) {
     $active_langcode = $entity->language()->getId();
     $translations = $entity->getTranslationLanguages();
     foreach ($translations as $translation_langcode => $translation_language) {
@@ -64,6 +63,7 @@ function _service_manual_workflow_queue_services_for_archival($time_limit = "-2 
 
   $nids = $storage->getQuery()
     ->condition('changed', $date->format('U'), '<')
+    ->condition('default_langcode', 1)
     ->accessCheck(FALSE)
     ->latestRevision()
     ->addTag('outdated_services')
@@ -208,17 +208,20 @@ function service_manual_workflow_require_on_publish_is_published_alter(&$is_publ
  * Implements hook_entity_update().
  */
 function service_manual_workflow_entity_update(EntityInterface $entity) {
-  if (!$entity instanceof ContentModerationStateInterface) {
-    return;
+  if ($entity instanceof ContentModerationStateInterface) {
+    if (empty($entity->original)) {
+      return;
+    }
+    if ($entity->getRevisionId() === $entity->original->getRevisionId()) {
+      return;
+    }
+    $original_state = _service_manual_workflow_entity_previous_revision($entity);
+    $state = $entity->moderation_state->value;
+    $transition = sprintf('service_manual_workflow.%s.to.%s', $original_state, $state);
+    $event = new ServiceModerationEvent($entity, \Drupal::currentUser());
+    Drupal::service('event_dispatcher')->dispatch($event, $transition);
   }
-  if (empty($entity->original)) {
-    return;
-  }
-  $original_state = _service_manual_workflow_entity_previous_revision($entity);
-  $state = $entity->moderation_state->value;
-  $transition = sprintf('service_manual_workflow.%s.to.%s', $original_state, $state);
-  $event = new ServiceModerationEvent($entity, \Drupal::currentUser());
-  Drupal::service('event_dispatcher')->dispatch($event, $transition);
+
 }
 
 /**

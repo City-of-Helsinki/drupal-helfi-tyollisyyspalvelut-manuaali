@@ -30,6 +30,22 @@ function hel_tpm_general_theme($existing, $type, $theme, $path) {
 }
 
 /**
+ * Implements hook_entity_bundle_info_alter().
+ */
+function hel_tpm_general_entity_bundle_info_alter(&$bundles) {
+  $bundle_list = [
+    'paragraph' => [
+      'service_time_and_place',
+    ],
+  ];
+  foreach ($bundle_list as $entity_type_id => $bundle_arr) {
+    foreach ($bundle_arr as $bundle) {
+      $bundles[$entity_type_id][$bundle]["untranslatable_fields.default_translation_affected"] = TRUE;
+    }
+  }
+}
+
+/**
  * Implements hook_entity_extra_field_info().
  */
 function hel_tpm_general_entity_extra_field_info() {

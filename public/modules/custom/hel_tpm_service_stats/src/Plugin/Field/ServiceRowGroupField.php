@@ -19,6 +19,9 @@ class ServiceRowGroupField extends EntityReferenceFieldItemList {
     $storage = \Drupal::entityTypeManager()->getStorage('node');
     $entity = $this->getEntity();
     $node_revision = $storage->loadRevision($entity->getPublishVid());
+    if (empty($node_revision)) {
+      return;
+    }
     $group_memberships = GroupMembership::loadByEntity($node_revision);
     foreach ($group_memberships as $membership) {
       $this->list[] = $this->createItem(0, $membership->getGroup());
