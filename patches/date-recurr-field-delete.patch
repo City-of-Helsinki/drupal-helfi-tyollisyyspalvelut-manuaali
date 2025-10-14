@@ -1,0 +1,20 @@
+diff --git a/src/DateRecurOccurrences.php b/src/DateRecurOccurrences.php
+index 796da8e..44e1396 100644
+--- a/src/DateRecurOccurrences.php
++++ b/src/DateRecurOccurrences.php
+@@ -147,15 +147,6 @@ class DateRecurOccurrences implements EventSubscriberInterface, EntityTypeListen
+    *   The date recur event.
+    */
+   public function onEntityDelete(DateRecurValueEvent $event): void {
+-    $list = $event->getField();
+-    $fieldDefinition = $list->getFieldDefinition();
+-    $tableName = static::getOccurrenceCacheStorageTableName($fieldDefinition->getFieldStorageDefinition());
+-    $delete = $this->database
+-      ->delete($tableName);
+-    /** @var string|int $entityId */
+-    $entityId = $list->getEntity()->id();
+-    $delete->condition('entity_id', (string) $entityId);
+-    $delete->execute();
+   }
+ 
+   /**
