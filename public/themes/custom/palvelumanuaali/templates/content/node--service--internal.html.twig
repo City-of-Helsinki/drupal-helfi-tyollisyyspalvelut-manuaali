@@ -128,7 +128,7 @@
           } %}
           {{ content.field_contact_info }}
         </div>
-      {% endif %}  
+      {% endif %}
       {{ content.field_responsible_updatee }}
       {% if content.field_related_archive['0']['#markup'] == 'yes' %}
         <div class="archiving-guides">
@@ -140,7 +140,7 @@
           <a class="small-font" href="/node/275">{{ 'Archiving guide'|t }}</a>
         </div>
       {% endif %}
-     <div class="sharing-options">
+     <div class="sharing-options rounded-icon-parent">
        <button onclick="window.print();" class="btn" title="{{ 'Print'|t }}" aria-label="{{ 'Print'|t }}">
          {% include "@atoms/images/icons/_icon.twig" with {
            icon_base_class: 'icon',
