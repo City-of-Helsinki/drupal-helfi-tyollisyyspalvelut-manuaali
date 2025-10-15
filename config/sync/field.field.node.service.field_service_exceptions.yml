@@ -6,7 +6,15 @@ dependencies:
     - field.storage.node.field_service_exceptions
     - node.type.service
   module:
+    - linkchecker
     - text
+    - tmgmt_content
+third_party_settings:
+  linkchecker:
+    scan: true
+    extractor: html_link_extractor
+  tmgmt_content:
+    excluded: false
 id: node.service.field_service_exceptions
 field_name: field_service_exceptions
 entity_type: node
