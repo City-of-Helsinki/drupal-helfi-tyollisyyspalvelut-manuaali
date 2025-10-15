@@ -13,7 +13,7 @@ final class RevisionListAccessController {
   /**
    * Checks if the user has update access to the given node.
    *
-   * @param NodeInterface $node
+   * @param \Drupal\node\NodeInterface $node
    *   The node to check access for.
    *
    * @return \Drupal\Core\Access\AccessResult
@@ -23,4 +23,5 @@ final class RevisionListAccessController {
     $access = $node->access('update');
     return AccessResult::allowedIf($access);
   }
+
 }
