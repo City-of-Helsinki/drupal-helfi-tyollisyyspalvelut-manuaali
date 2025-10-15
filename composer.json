@@ -1,3 +1,4 @@
+
 {
     "name": "drupal-composer/drupal-project",
     "description": "Project template for Drupal 9 projects with Composer",
@@ -381,7 +382,11 @@
             },
             "drupal/linkcker": {
                 "Fix broken link list when field_permission module is installed": "patches/link-checker-field-permission-fix.patch"
+            },
+            "drupal/date_recur": {
+              "Temporary fix for field deletion": "patches/date-recurr-field-delete.patch"
             }
+
         }
     }
 }
