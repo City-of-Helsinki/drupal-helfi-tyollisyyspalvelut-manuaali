@@ -11,7 +11,7 @@ services:
       -  { name: drush.command }
   sanitize.contact-info-entity-fields.commands:
     class: Drupal\hel_tpm_general\Drush\Commands\sql\ContactInfoFieldSanitizeCommands
-    arguments: ['@database', '@entity_field.manager', '@entity_type.manager']
+    arguments: ['@database', '@entity_field.manager', '@entity_type.manager', '@plugin.manager.field.field_type']
     tags:
       -  { name: drush.command }
   sanitize.group-relationship-entity.commands:
