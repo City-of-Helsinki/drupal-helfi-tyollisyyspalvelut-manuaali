@@ -560,6 +560,53 @@ $button-colors: (
   }
 }
 
+.logged-in {
+  .sharing-options {
+    top: 33px;
+  }
+}
+
+.rounded-icon-parent {
+  height: 48px;
+  width: 48px;
+}
+
+.sharing-options {
+  position: absolute;
+  top: 18px;
+  right: 75px;
+  .btn {
+    width: 46px;
+    overflow: hidden;
+    height: 46px;
+    font-size: 0;
+    padding: 0;
+    position: absolute;
+    border: 2px solid $blue40;
+    border-radius: 50%;
+    &:focus-visible {
+      outline: 2px solid clr(accent-high);
+      border-radius: 0;
+    }
+    &:hover {
+      border: 2px solid $blue100;
+    }
+    &::after {
+      width: 24px;
+      height: 24px;
+      top: 0;
+      left: 0;
+      font-size: 0;
+      margin-left: 0;
+      background-size: 24px 20px;
+    }
+    .icon {
+      height: 18px;
+      width: 23px;
+    }
+  }
+}
+
 .flag {
   .ajax-progress {
     display: none;
