@@ -42,7 +42,7 @@ class SetServiceOutdatedOperationForm extends ConfirmFormBase {
    *
    * @var \Drupal\service_manual_workflow\ModerationTransition
    */
-  private ModerationTransition $moderationTransition;
+  protected ModerationTransition $moderationTransition;
 
   /**
    * {@inheritdoc}
