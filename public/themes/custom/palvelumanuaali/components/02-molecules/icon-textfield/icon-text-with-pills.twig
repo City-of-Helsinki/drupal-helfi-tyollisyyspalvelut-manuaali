@@ -44,24 +44,64 @@
     'field--name-' ~ field_name|clean_class,
     'field--type-' ~ field_type|clean_class,
     'field--label-' ~ label_display,
-    label_display == 'inline' ? 'clearfix',
-    'field--content--inline',
-    'text-maxwidth',
+  ]
+%}
+
+{% set classes = classes|merge(additional_classes) %}
+
+{%
+  set title_classes = [
+    'field__label',
+    label_display == 'visually_hidden' ? 'visually-hidden',
   ]
 %}
 
 {%
   set item_classes = [
-  'field__item',
-  'tag-pill',
-  'tag-pill--primary',
+  '',
 ]
 %}
 
-<div{{ attributes.addClass(classes, 'field__items') }}>
-  {% for item in items %}
-    <div{{ item.attributes.addClass(item_classes) }}>
-        {{ item.content }}
+{% set item_classes = item_classes|merge(items_additional_classes) %}
+
+<div class='icon-wrapper'>
+  {% include "@atoms/images/icons/_icon.twig" with {
+    icon_base_class: 'icon',
+    icon_name: icon_name,
+    icon_modifiers: ['small'],
+  } %}
+  <div{{ attributes.addClass(classes) }}>
+    <div{{ title_attributes.addClass(title_classes) }}>
+    {% include "@atoms/text/headings/_heading.twig" with {
+      "heading_level": 5,
+      "heading": field_header,
+      "heading_modifiers": 'semibold',
+    } %}
     </div>
-  {% endfor %}
+    <div class="field__items">
+     {% if combined_field %}
+       {% for item in items %}
+         <div{{ item.attributes.addClass(item_classes) }}>
+           {{item.content|render }}
+         </div>
+       {% endfor %}
+     {% elseif spaceless %}
+       {% for item in items %}
+         {% apply spaceless %}
+           <div{{ item.attributes.addClass(item_classes) }}>
+             {{item.content}}
+           </div>
+         {% endapply %}
+       {% endfor %}
+     {% else %}
+      {% for item in items %}
+          {% apply spaceless %}
+            <div{{ item.attributes.addClass(item_classes) }}>
+              {{item.content }}
+            </div>
+          {% endapply %}
+        {% endfor %}
+     {% endif %}
+    </div>
+  </div>
 </div>
