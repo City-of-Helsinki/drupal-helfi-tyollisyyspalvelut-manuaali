@@ -2,6 +2,7 @@
 
 namespace Drupal\hel_tpm_general\Drush\Commands\sql;
 
+use Drupal\Component\Utility\Random;
 use Drupal\Core\Database\Connection;
 use Consolidation\AnnotatedCommand\CommandData;
 use Consolidation\AnnotatedCommand\Hooks\HookManager;
@@ -66,6 +67,10 @@ final class ContactInfoFieldSanitizeCommands extends DrushCommands {
       unset($field_definitions[$key], $field_storage[$key]);
     }
 
+    $contact_info_ids = $this->database->select('contact_info', 'ci')
+      ->fields('ci', ['id'])
+      ->execute()
+      ->fetchAll();
     foreach ($field_definitions as $key => $def) {
       $execute = FALSE;
       if (!isset($field_storage[$key]) || $field_storage[$key]->isBaseField()) {
@@ -76,73 +81,75 @@ final class ContactInfoFieldSanitizeCommands extends DrushCommands {
         'contact_info__' . $key,
         'contact_info_revision__' . $key,
       ];
-      foreach ($tables as $table) {
-        $query = $conn->update($table);
-        $name = $def->getName();
-        $field_type_class = $this->fieldTypePluginManager->getPluginClass($def->getType());
-        $supported_field_types = [
-          'email',
-          'string',
-          'string_long',
-          'telephone',
-          'text',
-          'text_long',
-          'text_with_summary',
-        ];
-        if (in_array($def->getType(), $supported_field_types)) {
-          $value_array = $field_type_class::generateSampleValue($def);
-          $value = $value_array['value'];
-        }
-        switch ($def->getType()) {
-          case 'email':
-            $query->fields([$name . '_value' => $value]);
-            $execute = TRUE;
-            break;
+      foreach ($contact_info_ids as $row) {
 
-          case 'string':
-            $query->fields([$name . '_value' => $value]);
-            $execute = TRUE;
-            break;
+        foreach ($tables as $table) {
+          $query = $conn->update($table);
+          $query->condition('entity_id', $row->id);
+          $name = $def->getName();
+          $field_type_class = $this->fieldTypePluginManager->getPluginClass($def->getType());
+          $supported_field_types = [
+            'email',
+            'string_long',
+            'telephone',
+            'text',
+            'text_long',
+            'text_with_summary',
+          ];
+          $generator = new Random();
+          if (in_array($def->getType(), $supported_field_types)) {
+            $value_array = $field_type_class::generateSampleValue($def);
+            $value = substr($value_array['value'], 0, 30);
+          }
+          switch ($def->getType()) {
+            case 'email':
+              $query->fields([$name . '_value' => $value]);
+              $execute = TRUE;
+              break;
 
-          case 'string_long':
-            $query->fields([$name . '_value' => $value]);
-            $execute = TRUE;
-            break;
+            case 'string':
+              $query->fields([$name . '_value' => $generator->name()]);
+              $execute = TRUE;
+              break;
 
-          case 'telephone':
-            $query->fields([$name . '_value' => '15555555555']);
-            $execute = TRUE;
-            break;
+            case 'string_long':
+              $query->fields([$name . '_value' => $value]);
+              $execute = TRUE;
+              break;
 
-          case 'text':
-            $query->fields([$name . '_value' => $value]);
-            $execute = TRUE;
-            break;
+            case 'telephone':
+              $query->fields([$name . '_value' => '15555555555']);
+              $execute = TRUE;
+              break;
 
-          case 'text_long':
-            $query->fields([$name . '_value' => $value]);
-            $execute = TRUE;
-            break;
+            case 'text':
+              $query->fields([$name . '_value' => $value]);
+              $execute = TRUE;
+              break;
 
-          case 'text_with_summary':
-            $query->fields([
-              $name . '_value' => $value,
-              $name . '_summary' => $value_array['summary'],
-            ]);
-            $execute = TRUE;
-            break;
-        }
-        if ($execute) {
-          $query->execute();
-          $this->entityTypeManager->getStorage('contact_info')->resetCache();
-          $this->logger()
-            ->success(dt('!table table sanitized.', ['!table' => $table]));
-        }
-        else {
-          $this->logger()
-            ->success(dt('No text fields for users need sanitizing.', ['!table' => $table]));
+            case 'text_long':
+              $query->fields([$name . '_value' => $value]);
+              $execute = TRUE;
+              break;
+
+            case 'text_with_summary':
+              $query->fields([
+                $name . '_value' => $value,
+                $name . '_summary' => $value_array['summary'],
+              ]);
+              $execute = TRUE;
+              break;
+          }
+          if ($execute) {
+            $query->execute();
+            $this->entityTypeManager->getStorage('contact_info')->resetCache();
+          }
+          else {
+          }
         }
       }
+      $this->logger()
+        ->success(dt('Contact info field !field', ['!field' => $key]));
     }
   }
 
