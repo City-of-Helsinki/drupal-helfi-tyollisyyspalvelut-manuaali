@@ -251,13 +251,20 @@ $pill-colors: (
   &--primary {
     background-color: $blue10;
     color: $blue130;
+    a {
+      color: $blue130;
+    }
   }
   &--alt {
     background-color: $blue150;
     color: clr(text-inverse);
+    a {
+      color: clr(text-inverse);
+    }
   }
   .field__item {
     margin-bottom: 0;
   }
+
 }
 
