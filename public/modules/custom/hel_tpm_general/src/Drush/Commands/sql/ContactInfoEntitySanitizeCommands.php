@@ -37,20 +37,27 @@ final class ContactInfoEntitySanitizeCommands extends DrushCommands {
   public function sanitize($result, CommandData $commandData): void {
     $tables = ['contact_info_field_data', 'contact_info_field_revision'];
     $generator = new Random();
-    foreach ($tables as $table) {
-      $query = $this->database->update($table);
-      $messages = [];
-      $value = $generator->name();
-      $query->fields(['title' => $value]);
-      $messages[] = dt('Contact info sanitized.');
+    $contact_info_ids = $this->database->select($tables[0], 'ci')
+      ->fields('ci', ['id'])
+      ->execute()
+      ->fetchAll();
+    foreach ($contact_info_ids as $row) {
+      foreach ($tables as $table) {
+        $query = $this->database->update($table);
+        $messages = [];
+        $query->condition('id', $row->id);
+        $query->fields(['title' => $generator->name()]);
+        $messages[] = dt('Contact info sanitized.');
 
-      if ($messages) {
-        $query->execute();
-        $this->entityTypeManager->getStorage('contact_info')->resetCache();
-        foreach ($messages as $message) {
-          $this->logger()->success($message);
+        if ($messages) {
+          $query->execute();
         }
       }
+    }
+    $this->entityTypeManager->getStorage('contact_info')->resetCache();
+
+    foreach ($messages as $message) {
+      $this->logger()->success($message);
     }
   }
 
