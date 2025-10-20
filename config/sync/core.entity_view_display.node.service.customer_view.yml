@@ -80,7 +80,7 @@ third_party_settings:
       label: Osallistuminen
       parent_name: ''
       region: content
-      weight: 12
+      weight: 8
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--participation text-normal'
@@ -101,7 +101,7 @@ third_party_settings:
       label: Toteutustapa
       parent_name: ''
       region: content
-      weight: 13
+      weight: 9
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--execution text-normal'
@@ -121,7 +121,7 @@ third_party_settings:
       label: 'Missä ja milloin'
       parent_name: ''
       region: content
-      weight: 14
+      weight: 10
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--where-and-when text-normal'
@@ -143,7 +143,7 @@ third_party_settings:
       label: Kohderyhmä
       parent_name: ''
       region: content
-      weight: 11
+      weight: 7
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--target-group'
@@ -162,7 +162,7 @@ third_party_settings:
       label: 'Service navigation'
       parent_name: ''
       region: hidden
-      weight: 43
+      weight: 39
       format_type: tabs
       format_settings:
         classes: ''
@@ -182,7 +182,7 @@ third_party_settings:
       label: 'Work instructions'
       parent_name: ''
       region: hidden
-      weight: 44
+      weight: 40
       format_type: tab
       format_settings:
         classes: ''
@@ -325,7 +325,7 @@ third_party_settings:
       label: ' Täydentävä työnhakukeskustelu'
       parent_name: ''
       region: hidden
-      weight: 45
+      weight: 41
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--complementary-job-search'
@@ -358,6 +358,70 @@ third_party_settings:
         effect: none
         speed: fast
         description: ''
+    group_first:
+      children:
+        - group_left
+        - group_right
+      label: First
+      parent_name: ''
+      region: content
+      weight: 0
+      format_type: html_element
+      format_settings:
+        classes: group-border
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_left:
+      children:
+        - field_implementation_extra_info
+        - field_life_situations
+        - field_service_set
+        - field_service_languages
+      label: Left
+      parent_name: group_first
+      region: content
+      weight: 1
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_right:
+      children:
+        - field_description
+      label: Right
+      parent_name: group_first
+      region: content
+      weight: 2
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
   entity_print:
     pdf_label: 'Katsele PDF'
     epub_label: 'Katsele EPub'
@@ -373,7 +437,7 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 10
+    weight: 6
     region: content
   field_accessibility:
     type: entity_reference_translated_label
@@ -381,14 +445,14 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 9
+    weight: 5
     region: content
   field_age_groups:
     type: hel_tpm_general_age_group_field_formatter
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 17
+    weight: 18
     region: content
   field_attendance_text:
     type: text_default
@@ -414,14 +478,14 @@ content:
       view_mode: default
       link: false
     third_party_settings: {  }
-    weight: 16
+    weight: 12
     region: content
   field_description:
     type: basic_string
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 0
+    weight: 1
     region: content
   field_field_client_consent_descr:
     type: text_default
@@ -438,7 +502,7 @@ content:
       format_custom_false: ''
       format_custom_true: ''
     third_party_settings: {  }
-    weight: 6
+    weight: 2
     region: content
   field_implementation_extra_info:
     type: entity_reference_translated_label
@@ -446,7 +510,7 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 1
+    weight: 2
     region: content
   field_life_situations:
     type: entity_reference_translated_label
@@ -454,7 +518,7 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 3
+    weight: 4
     region: content
   field_other_services:
     type: entity_reference_entity_view
@@ -463,7 +527,7 @@ content:
       view_mode: card_lift
       link: false
     third_party_settings: {  }
-    weight: 2
+    weight: 1
     region: content
   field_price:
     type: number_decimal
@@ -474,14 +538,14 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 7
+    weight: 3
     region: content
   field_price_description:
     type: text_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 8
+    weight: 4
     region: content
   field_service_benefits:
     type: text_default
@@ -502,7 +566,7 @@ content:
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 15
+    weight: 11
     region: content
   field_service_languages:
     type: entity_reference_revisions_entity_view
@@ -511,7 +575,7 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 5
+    weight: 6
     region: content
   field_service_other_info:
     type: entity_reference_revisions_entity_view
@@ -528,7 +592,7 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 17
+    weight: 13
     region: content
   field_service_requirements:
     type: text_default
@@ -543,7 +607,7 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 4
+    weight: 5
     region: content
   field_service_time_and_location:
     type: hel_tpm_general_time_and_place_formatter
@@ -572,7 +636,7 @@ content:
   flag_cart:
     settings: {  }
     third_party_settings: {  }
-    weight: 18
+    weight: 14
     region: content
   flag_lista:
     settings: {  }

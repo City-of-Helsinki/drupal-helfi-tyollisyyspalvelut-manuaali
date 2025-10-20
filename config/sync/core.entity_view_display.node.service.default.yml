@@ -81,7 +81,7 @@ third_party_settings:
       label: Osallistuminen
       parent_name: group_customer_view
       region: content
-      weight: 45
+      weight: 49
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--participation text-normal'
@@ -102,7 +102,7 @@ third_party_settings:
       label: Toteutustapa
       parent_name: group_customer_view
       region: content
-      weight: 46
+      weight: 50
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--execution'
@@ -122,7 +122,7 @@ third_party_settings:
       label: 'Missä ja milloin'
       parent_name: group_customer_view
       region: content
-      weight: 47
+      weight: 51
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--where-and-when'
@@ -138,17 +138,15 @@ third_party_settings:
         speed: fast
     group_target_group:
       children:
-        - field_description
-        - field_target_group_description
-        - field_target_group_municipality
-        - field_age_groups
+        - group_left
+        - group_right
       label: Kohderyhmä
       parent_name: group_customer_view
       region: content
-      weight: 44
+      weight: 48
       format_type: html_element
       format_settings:
-        classes: 'service-group service-group--target-group'
+        classes: 'service-group service-group--target-group group-border'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -177,14 +175,6 @@ third_party_settings:
         width_breakpoint: 300
     group_customer_view:
       children:
-        - field_implementation_extra_info
-        - field_life_situations
-        - field_service_set
-        - field_service_languages
-        - field_price
-        - field_free_service
-        - field_price_description
-        - field_accessibility
         - group_target_group
         - group_participation
         - group_execution
@@ -276,7 +266,7 @@ third_party_settings:
       label: 'Lausunnot ja työttömyysetuus'
       parent_name: group_work_instructions
       region: content
-      weight: 25
+      weight: 24
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--statements-and-jobprofits'
@@ -296,7 +286,7 @@ third_party_settings:
       label: 'Merkinnät asiakastietojärjestelmään'
       parent_name: group_work_instructions
       region: content
-      weight: 24
+      weight: 23
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--markings-to-system'
@@ -400,7 +390,7 @@ third_party_settings:
       label: sidebar-public
       parent_name: group_customer_view
       region: content
-      weight: 48
+      weight: 53
       format_type: html_element
       format_settings:
         classes: ''
@@ -456,21 +446,21 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 43
+    weight: 15
     region: content
   field_age_groups:
     type: hel_tpm_general_age_group_field_formatter
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 37
+    weight: 31
     region: content
   field_attendance_text:
     type: text_default
     label: visually_hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 16
+    weight: 26
     region: content
   field_career_markings:
     type: text_default
@@ -487,7 +477,7 @@ content:
       format_custom_false: "Participation  doesn't require customer consent."
       format_custom_true: 'Participation requires customer consent.'
     third_party_settings: {  }
-    weight: 19
+    weight: 29
     region: content
   field_contact_info:
     type: entity_reference_entity_view
@@ -505,21 +495,21 @@ content:
       view_mode: default
       link: false
     third_party_settings: {  }
-    weight: 25
+    weight: 26
     region: content
   field_description:
     type: basic_string
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 33
+    weight: 27
     region: content
   field_field_client_consent_descr:
     type: text_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 20
+    weight: 30
     region: content
   field_free_service:
     type: boolean
@@ -529,7 +519,7 @@ content:
       format_custom_false: ''
       format_custom_true: ''
     third_party_settings: {  }
-    weight: 41
+    weight: 12
     region: content
   field_implementation_extra_info:
     type: entity_reference_label
@@ -537,7 +527,7 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 35
+    weight: 7
     region: content
   field_internal_files:
     type: file_default
@@ -565,14 +555,14 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 36
+    weight: 8
     region: content
   field_measures_during_attendance:
     type: text_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 31
+    weight: 15
     region: content
   field_municipality_guidance:
     type: entity_reference_revisions_entity_view
@@ -597,21 +587,21 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 10
+    weight: 8
     region: content
   field_obligatoryness_freetext:
     type: text_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 11
+    weight: 9
     region: content
   field_other_preferences:
     type: list_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 16
+    weight: 17
     region: content
   field_price:
     type: number_decimal
@@ -622,14 +612,14 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 40
+    weight: 11
     region: content
   field_price_description:
     type: text_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 42
+    weight: 13
     region: content
   field_related_archive:
     type: list_key
@@ -643,7 +633,7 @@ content:
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 18
+    weight: 28
     region: content
   field_service_coordination:
     type: text_default
@@ -664,7 +654,7 @@ content:
     label: visually_hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 13
+    weight: 8
     region: content
   field_service_implement:
     type: basic_string
@@ -680,7 +670,7 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 38
+    weight: 10
     region: content
   field_service_other_info:
     type: entity_reference_revisions_entity_view
@@ -689,7 +679,7 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 14
+    weight: 9
     region: content
   field_service_producer:
     type: entity_reference_label
@@ -697,7 +687,7 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 26
+    weight: 27
     region: content
   field_service_req_speacialist:
     type: text_default
@@ -711,7 +701,7 @@ content:
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 17
+    weight: 27
     region: content
   field_service_set:
     type: entity_reference_label
@@ -719,7 +709,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 37
+    weight: 9
     region: content
   field_service_suits_info:
     type: text_default
@@ -742,7 +732,7 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 10
+    weight: 26
     region: content
   field_statements:
     type: list_key
@@ -763,7 +753,7 @@ content:
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 35
+    weight: 30
     region: content
   field_target_group_municipality:
     type: hel_tpm_general_municipality_field_formatter
@@ -771,7 +761,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 36
+    weight: 29
     region: content
   flag_cart:
     settings: {  }
