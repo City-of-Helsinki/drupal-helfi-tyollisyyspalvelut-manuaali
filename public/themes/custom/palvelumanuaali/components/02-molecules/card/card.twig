@@ -144,12 +144,22 @@
                                       } %}
                                     {% endif %}
                                     {% if card__price %}
-                                      {% include "@atoms/text/text/01-paragraph.twig" with {
-                                      paragraph_base_class: card__price__base_class|default('price'),
-                                      paragraph_modifiers: card__price__modifiers,
-                                      paragraph_blockname: card__base_class,
-                                      paragraph_content: card__price,
-                                      } %}
+                                      <div {{ bem(card__price__base_class|default('price')) }}>
+                                        <div class='icon-wrapper'>
+                                            {% include "@atoms/images/icons/_icon.twig" with {
+                                              icon_base_class: 'icon',
+                                              icon_name: 'round-euro-1',
+                                              icon_modifiers: ['small'],
+                                            } %}
+                                          <div class="field__item">
+                                            {% if card__price['#items'].value %}
+                                              <span>{{'The service is chargeable'|t}}</span>
+                                            {% else %}
+                                              <span>{{'The service is free of charge'|t}}</span>
+                                            {% endif %}
+                                          </div>
+                                        </div>
+                                      </div>
                                     {% endif %}
                                   </div>
                                 {% endif %}
@@ -255,12 +265,22 @@
                         } %}
                       {% endif %}
                       {% if card__price %}
-                        {% include "@atoms/text/text/01-paragraph.twig" with {
-                        paragraph_base_class: card__price__base_class|default('price'),
-                        paragraph_modifiers: card__price__modifiers,
-                        paragraph_blockname: card__base_class,
-                        paragraph_content: card__price,
-                        } %}
+                        <div {{ bem(card__price__base_class|default('price')) }}>
+                          <div class='icon-wrapper'>
+                            {% include "@atoms/images/icons/_icon.twig" with {
+                              icon_base_class: 'icon',
+                              icon_name: 'round-euro-1',
+                              icon_modifiers: ['small'],
+                            } %}
+                            <div class="field__item">
+                              {% if card__price['#items'].value %}
+                                <span>{{'The service is chargeable'|t}}</span>
+                              {% else %}
+                                <span>{{'The service is free of charge'|t}}</span>
+                              {% endif %}
+                            </div>
+                          </div>
+                        </div>
                       {% endif %}
                     </div>
                   {% endif %}
