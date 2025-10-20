@@ -8,7 +8,6 @@ dependencies:
     - field.field.paragraph.service_time_and_place.field_location_additional_info
     - field.field.paragraph.service_time_and_place.field_multiple_dates
     - field.field.paragraph.service_time_and_place.field_separate_time
-    - field.field.paragraph.service_time_and_place.field_service_language
     - field.field.paragraph.service_time_and_place.field_service_location
     - field.field.paragraph.service_time_and_place.field_start_and_end_date
     - field.field.paragraph.service_time_and_place.field_time_additional_info
@@ -58,14 +57,6 @@ content:
       separator: '-'
     third_party_settings: {  }
     weight: 9
-    region: content
-  field_service_language:
-    type: entity_reference_label
-    label: above
-    settings:
-      link: false
-    third_party_settings: {  }
-    weight: 3
     region: content
   field_service_location:
     type: entity_reference_entity_view
