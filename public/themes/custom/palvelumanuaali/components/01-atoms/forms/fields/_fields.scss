@@ -264,6 +264,7 @@
           background-color: $blue100;
           @include round-icon-button;
           background-image: url("../../assets/images/icons/plus.svg");
+          text-indent: -9999px;
           &:hover {
             color: transparent;
           }
@@ -283,6 +284,7 @@
         }
         &:checked:disabled +label {
           background-color: $gray-light;
+          color: transparent;
         }
       }
       label {

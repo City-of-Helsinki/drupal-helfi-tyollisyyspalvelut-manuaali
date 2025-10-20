@@ -29,19 +29,35 @@ use Symfony\Component\Validator\ConstraintViolationInterface;
 final class WeekdayAndTimeFieldWidget extends WidgetBase {
 
   /**
-   * Weekday array.
+   * Gets translated weekdays.
    *
-   * @var string[]
+   * @return string[]
+   *   Translated weekday array.
    */
-  public static array $weekdays = [
-    'monday' => 'Mon',
-    'tuesday' => 'Tue',
-    'wednesday' => 'Wed',
-    'thursday' => 'Thu',
-    'friday' => 'Fri',
-    'saturday' => 'Sat',
-    'sunday' => 'Sun',
-  ];
+  public static function getTranslatedWeekdays(): array {
+    return [
+      'monday' => t('Mon'),
+      'tuesday' => t('Tue'),
+      'wednesday' => t('Wed'),
+      'thursday' => t('Thu'),
+      'friday' => t('Fri'),
+      'saturday' => t('Sat'),
+      'sunday' => t('Sun'),
+    ];
+  }
+
+  /**
+   * Gets untranslated weekdays.
+   *
+   * @return string[]
+   *   Untranslated weekday array.
+   */
+  public function getUntranslatedWeekdays(): array {
+    return array_map(function ($value) {
+      /** @var \Drupal\Core\StringTranslation\TranslatableMarkup $value */
+      return $value->getUntranslatedString();
+    }, self::getTranslatedWeekdays());
+  }
 
   /**
    * {@inheritdoc}
@@ -57,7 +73,7 @@ final class WeekdayAndTimeFieldWidget extends WidgetBase {
       $values = reset($values);
     }
 
-    foreach (self::$weekdays as $day => $name) {
+    foreach ($this->getUntranslatedWeekdays() as $day => $name) {
       $row_wrapper = sprintf('%s-%s', $wrapper_base, $day);
 
       // Initialize weekday container.
@@ -115,7 +131,7 @@ final class WeekdayAndTimeFieldWidget extends WidgetBase {
   public function validateWeekdayAndTimeFieldWidget(&$element, FormStateInterface $form_state, array &$complete_form) {
     if ($element['#required']) {
       $empty = TRUE;
-      foreach (self::$weekdays as $day => $name) {
+      foreach ($this->getUntranslatedWeekdays() as $day => $name) {
         if ($element['value'][$day][0]['selector']['#value'] == 1) {
           $empty = FALSE;
         }
