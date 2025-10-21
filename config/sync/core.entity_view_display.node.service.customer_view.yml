@@ -72,46 +72,43 @@ third_party_settings:
   field_group:
     group_participation:
       children:
-        - field_attendance_text
-        - field_service_requirements
-        - field_service_benefits
-        - field_client_consent
-        - field_field_client_consent_descr
+        - group_participation_left
+        - group_participation_right
       label: Osallistuminen
       parent_name: ''
       region: content
-      weight: 8
+      weight: 5
       format_type: html_element
       format_settings:
-        classes: 'service-group service-group--participation text-normal'
+        classes: 'service-group service-group--participation text-normal group-border d--flex--dsk column-gap-two flex-wrap--dsk'
         show_empty_fields: false
         id: ''
         label_as_html: false
         element: div
         show_label: true
         label_element: h2
-        label_element_classes: 'group-label--h3 h3 group-label'
+        label_element_classes: 'group-label--h3 h3 group-label width--full'
         attributes: ''
         effect: none
         speed: fast
     group_execution:
       children:
-        - field_service_execution_text
-        - field_service_other_info
+        - group_implementation_left
+        - group_implementation_right
       label: Toteutustapa
       parent_name: ''
       region: content
-      weight: 9
+      weight: 6
       format_type: html_element
       format_settings:
-        classes: 'service-group service-group--execution text-normal'
+        classes: 'service-group service-group--execution text-normal group-border d--flex--dsk column-gap-two flex-wrap--dsk'
         show_empty_fields: false
         id: ''
         label_as_html: false
         element: div
         show_label: true
         label_element: h2
-        label_element_classes: 'group-label--h3 h3 group-label'
+        label_element_classes: 'group-label--h3 h3 group-label width--full'
         attributes: ''
         effect: none
         speed: fast
@@ -121,10 +118,10 @@ third_party_settings:
       label: 'Missä ja milloin'
       parent_name: ''
       region: content
-      weight: 10
+      weight: 7
       format_type: html_element
       format_settings:
-        classes: 'service-group service-group--where-and-when text-normal'
+        classes: 'service-group service-group--where-and-when text-normal group-border d--flex--dsk column-gap-two flex-wrap--dsk'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -137,23 +134,22 @@ third_party_settings:
         speed: fast
     group_target_group:
       children:
-        - field_target_group_description
-        - field_target_group_municipality
-        - field_age_groups
+        - group_target_group_left
+        - group_target_group_right
       label: Kohderyhmä
       parent_name: ''
       region: content
-      weight: 7
+      weight: 4
       format_type: html_element
       format_settings:
-        classes: 'service-group service-group--target-group'
+        classes: 'service-group service-group--target-group group-border d--flex--dsk column-gap-two flex-wrap--dsk'
         show_empty_fields: false
         id: ''
         label_as_html: false
         element: div
         show_label: true
         label_element: h2
-        label_element_classes: 'group-label--h3 h3 group-label'
+        label_element_classes: 'group-label--h3 h3 group-label width--full'
         attributes: ''
         effect: none
         speed: fast
@@ -162,7 +158,7 @@ third_party_settings:
       label: 'Service navigation'
       parent_name: ''
       region: hidden
-      weight: 39
+      weight: 43
       format_type: tabs
       format_settings:
         classes: ''
@@ -182,7 +178,7 @@ third_party_settings:
       label: 'Work instructions'
       parent_name: ''
       region: hidden
-      weight: 40
+      weight: 44
       format_type: tab
       format_settings:
         classes: ''
@@ -325,7 +321,7 @@ third_party_settings:
       label: ' Täydentävä työnhakukeskustelu'
       parent_name: ''
       region: hidden
-      weight: 41
+      weight: 45
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--complementary-job-search'
@@ -358,17 +354,17 @@ third_party_settings:
         effect: none
         speed: fast
         description: ''
-    group_first:
+    group_description:
       children:
-        - group_left
-        - group_right
+        - group_description_left
+        - group_description_right
       label: First
       parent_name: ''
       region: content
       weight: 0
       format_type: html_element
       format_settings:
-        classes: 'group-border d--flex--dsk column-gap-two'
+        classes: 'service-group group-border d--flex--dsk column-gap-two flex-wrap--dsk'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -379,16 +375,159 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-    group_left:
+    group_description_left:
       children:
         - field_implementation_extra_info
         - field_life_situations
         - field_service_set
         - field_service_languages
       label: Left
-      parent_name: group_first
+      parent_name: group_description
       region: content
       weight: 1
+      format_type: html_element
+      format_settings:
+        classes: group-left
+        show_empty_fields: true
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_description_right:
+      children:
+        - field_description
+      label: Right
+      parent_name: group_description
+      region: content
+      weight: 2
+      format_type: html_element
+      format_settings:
+        classes: group-right
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_price:
+      children:
+        - group_price_left
+        - group_price_right
+      label: Second
+      parent_name: ''
+      region: content
+      weight: 1
+      format_type: html_element
+      format_settings:
+        classes: ' service-group group-border d--flex--dsk column-gap-two flex-wrap--dsk '
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_price_left:
+      children:
+        - field_free_service
+        - field_price
+      label: Left
+      parent_name: group_price
+      region: content
+      weight: 4
+      format_type: html_element
+      format_settings:
+        classes: group-left
+        show_empty_fields: true
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_price_right:
+      children:
+        - field_price_description
+      label: 'Price right'
+      parent_name: group_price
+      region: content
+      weight: 5
+      format_type: html_element
+      format_settings:
+        classes: group-right
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_target_group_left:
+      children:
+        - field_target_group_municipality
+        - field_age_groups
+      label: 'Target group left'
+      parent_name: group_target_group
+      region: content
+      weight: 16
+      format_type: html_element
+      format_settings:
+        classes: group-left
+        show_empty_fields: true
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_target_group_right:
+      children:
+        - field_target_group_description
+      label: 'Target group right'
+      parent_name: group_target_group
+      region: content
+      weight: 17
+      format_type: html_element
+      format_settings:
+        classes: group-right
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_participation_left:
+      children:
+        - field_attendance_text
+      label: 'Participation left'
+      parent_name: group_participation
+      region: content
+      weight: 15
       format_type: html_element
       format_settings:
         classes: group-left
@@ -402,13 +541,56 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-    group_right:
+    group_participation_right:
       children:
-        - field_description
-      label: Right
-      parent_name: group_first
+        - field_service_requirements
+        - field_service_benefits
+        - field_field_client_consent_descr
+        - field_client_consent
+      label: 'Participation right'
+      parent_name: group_participation
       region: content
-      weight: 2
+      weight: 16
+      format_type: html_element
+      format_settings:
+        classes: group-right
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_implementation_left:
+      children:
+        - field_service_execution_text
+      label: 'Implementation left'
+      parent_name: group_execution
+      region: content
+      weight: 17
+      format_type: html_element
+      format_settings:
+        classes: group-left
+        show_empty_fields: true
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_implementation_right:
+      children:
+        - field_service_other_info
+      label: 'Implementation right'
+      parent_name: group_execution
+      region: content
+      weight: 18
       format_type: html_element
       format_settings:
         classes: group-right
@@ -437,7 +619,7 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 6
+    weight: 3
     region: content
   field_accessibility:
     type: entity_reference_translated_label
@@ -445,21 +627,21 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 5
+    weight: 2
     region: content
   field_age_groups:
     type: hel_tpm_general_age_group_field_formatter
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 18
+    weight: 20
     region: content
   field_attendance_text:
     type: text_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 0
+    weight: 17
     region: content
   field_client_consent:
     type: boolean
@@ -469,7 +651,7 @@ content:
       format_custom_false: ''
       format_custom_true: 'Palveluun osallistuminen edellyttää asiakkaan suostumusta hänen henkilötietojensa luovuttamiseen.'
     third_party_settings: {  }
-    weight: 4
+    weight: 21
     region: content
   field_contact_info_external:
     type: entity_reference_entity_view
@@ -478,7 +660,7 @@ content:
       view_mode: default
       link: false
     third_party_settings: {  }
-    weight: 12
+    weight: 9
     region: content
   field_description:
     type: basic_string
@@ -492,7 +674,7 @@ content:
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 5
+    weight: 20
     region: content
   field_free_service:
     type: boolean
@@ -502,7 +684,7 @@ content:
       format_custom_false: ''
       format_custom_true: ''
     third_party_settings: {  }
-    weight: 2
+    weight: 5
     region: content
   field_implementation_extra_info:
     type: entity_reference_translated_label
@@ -527,7 +709,7 @@ content:
       view_mode: card_lift
       link: false
     third_party_settings: {  }
-    weight: 1
+    weight: 11
     region: content
   field_price:
     type: number_decimal
@@ -538,35 +720,35 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 3
+    weight: 6
     region: content
   field_price_description:
     type: text_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 4
+    weight: 6
     region: content
   field_service_benefits:
     type: text_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 3
+    weight: 19
     region: content
   field_service_execution_text:
     type: text_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 13
+    weight: 19
     region: content
   field_service_implement:
     type: basic_string
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 11
+    weight: 8
     region: content
   field_service_languages:
     type: entity_reference_revisions_entity_view
@@ -584,7 +766,7 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 14
+    weight: 20
     region: content
   field_service_producer:
     type: entity_reference_translated_label
@@ -592,14 +774,14 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 13
+    weight: 10
     region: content
   field_service_requirements:
     type: text_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 2
+    weight: 18
     region: content
   field_service_set:
     type: entity_reference_translated_label
@@ -623,7 +805,7 @@ content:
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 15
+    weight: 18
     region: content
   field_target_group_municipality:
     type: hel_tpm_general_municipality_field_formatter
@@ -631,12 +813,12 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 16
+    weight: 19
     region: content
   flag_cart:
     settings: {  }
     third_party_settings: {  }
-    weight: 14
+    weight: 12
     region: content
   flag_lista:
     settings: {  }
