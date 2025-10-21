@@ -32,6 +32,8 @@ dependencies:
     - field.field.node.service.field_other_services
     - field.field.node.service.field_price
     - field.field.node.service.field_price_description
+    - field.field.node.service.field_public_files
+    - field.field.node.service.field_public_links
     - field.field.node.service.field_related_archive
     - field.field.node.service.field_responsible_municipality
     - field.field.node.service.field_responsible_updatee
@@ -126,6 +128,7 @@ third_party_settings:
         - group_participation_concent
         - field_field_client_consent_descr
         - field_service_execution_text
+        - group_public_links_and_files
         - field_service_other_info
       label: Asiakasnäkymä
       region: content
@@ -534,6 +537,28 @@ third_party_settings:
         effect: none
         speed: fast
         required_fields: true
+    group_public_links_and_files:
+      children:
+        - field_public_links
+        - field_public_files
+      label: 'Liitteet ja linkit'
+      region: content
+      parent_name: group_customer
+      weight: 15
+      format_type: html_element
+      format_settings:
+        classes: fieldset-internal-files-and-attachments
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: true
+        label_element: legend
+        label_element_classes: field-group--title
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: true
 id: node.service.default
 targetEntityType: node
 bundle: service
@@ -857,6 +882,21 @@ content:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
+  field_public_files:
+    type: file_generic
+    weight: 17
+    region: content
+    settings:
+      progress_indicator: throbber
+    third_party_settings: {  }
+  field_public_links:
+    type: link_default
+    weight: 16
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
   field_related_archive:
     type: options_buttons
     weight: 10
@@ -913,7 +953,7 @@ content:
     third_party_settings: {  }
   field_service_execution_text:
     type: text_textarea
-    weight: 15
+    weight: 14
     region: content
     settings:
       rows: 5
