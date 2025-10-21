@@ -42,7 +42,6 @@ dependencies:
     - field.field.node.service.field_service_exceptions
     - field.field.node.service.field_service_execution
     - field.field.node.service.field_service_execution_text
-    - field.field.node.service.field_service_implement
     - field.field.node.service.field_service_languages
     - field.field.node.service.field_service_other_info
     - field.field.node.service.field_service_price
@@ -170,7 +169,6 @@ third_party_settings:
       children:
         - field_implementation_extra_info
         - field_service_time_and_location
-        - field_service_implement
       label: 'Aika ja paikka'
       region: content
       parent_name: ''
@@ -961,18 +959,6 @@ content:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
-  field_service_implement:
-    type: string_textarea
-    weight: 19
-    region: content
-    settings:
-      rows: 5
-      placeholder: ''
-    third_party_settings:
-      maxlength:
-        maxlength_js: null
-        maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
-        maxlength_js_enforce: false
   field_service_languages:
     type: entity_reference_paragraphs
     weight: 30

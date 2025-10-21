@@ -27,7 +27,7 @@
   }
 }
 
-.service-page {
+.page-node-type-service {
   .block--main-block {
     @include large {
       display: flex;
@@ -393,9 +393,6 @@
     @include large {
       margin-bottom: $space-two-and-half;
     }
-    .field__items {
-      @extend .text-normal;
-    }
   }
 
 
@@ -448,7 +445,9 @@
         margin-bottom: 40px;
       }
     }
-
+    .field {
+      margin-bottom: 0;
+    }
     .field--name-field-municipality-name {
       font-weight: 600;
       font-size: 18px;
@@ -552,7 +551,7 @@
   }
 }
 
-.service-page {
+.page-node-type-service {
   .field--content--margin-left-triple,
   .field--name-field-service-set {
     margin-left: $space-triple;
