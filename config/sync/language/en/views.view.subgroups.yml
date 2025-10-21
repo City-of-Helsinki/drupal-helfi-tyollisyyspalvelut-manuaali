@@ -6,71 +6,46 @@ display:
           expose:
             label: 'Filter:'
             placeholder: 'Filter by search term'
-        status:
-          expose:
-            label: 'Group status'
         type:
           expose:
             label: 'Subgroup type'
-      fields:
         status:
-          settings:
-            format_custom_false: Archived
-            format_custom_true: Published
-          label: 'Group status'
-        label:
-          label: Title
-          separator: ', '
-        changed:
-          label: Updated
-          separator: ', '
-        view_group_content:
-          admin_label: 'View relation link'
-          label: 'Link to Group content'
-          text: 'view relation'
-        edit_group_content:
-          admin_label: 'Edit relation link'
-          label: 'Link to edit Group content'
-          text: 'Edit relation'
-        delete_group_content:
-          admin_label: 'Delete relation link'
-          label: 'Link to delete Group content'
-          text: 'Delete relation'
-        edit_group:
-          admin_label: 'Edit subgroup link'
-          label: 'Link to edit Group'
-          text: 'Edit subgroup'
-        delete_group:
-          admin_label: 'Delete subgroup link'
-          label: 'Link to delete Group'
-          text: 'Delete subgroup'
-      exposed_form:
-        options:
-          submit_button: Apply
-          reset_button_label: Reset
-          exposed_sorts_label: 'Sort by'
-          sort_asc_label: Asc
-          sort_desc_label: Desc
+          expose:
+            label: 'Group status'
       pager:
         options:
-          expose:
-            items_per_page_label: 'Items per page'
-            items_per_page_options_all_label: '- All -'
-            offset_label: Offset
           tags:
             next: 'Next ›'
             previous: '‹ Previous'
             first: '« First'
             last: 'Last »'
-      title: Subgroups
-      arguments:
-        gid:
-          exception:
-            title: All
-          title: '{{ arguments.gid|placeholder }} subgroups'
-    display_title: Master
+      fields:
+        label:
+          label: 'Group name'
+        changed:
+          label: 'Group updated'
+        view_group_content:
+          label: 'Link to Group content'
+          text: 'view relation'
+        edit_group_content:
+          label: 'Link to edit Group content'
+          text: 'Edit relation'
+        delete_group_content:
+          label: Actions
+          text: 'Remove from service providers'
+        delete_group:
+          label: 'Link to delete Group'
+          text: 'Delete subgroup'
+        status:
+          settings:
+            format_custom_false: Archived
+            format_custom_true: Published
+          label: 'Group status'
+      title: 'Service providers'
   page_1:
     display_options:
+      menu:
+        title: Subgroups
       exposed_form:
         options:
           bef:
@@ -79,8 +54,4 @@ display:
                 advanced:
                   rewrite:
                     filter_rewrite_values: "True|Published\r\nFalse|Archived"
-      menu:
-        title: Subgroups
-    display_title: Page
 label: Subgroups
-description: 'Lists all of the subgroups that have been added to a group.'
