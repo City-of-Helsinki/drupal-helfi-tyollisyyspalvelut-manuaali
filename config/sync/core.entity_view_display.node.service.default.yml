@@ -41,7 +41,6 @@ dependencies:
     - field.field.node.service.field_service_exceptions
     - field.field.node.service.field_service_execution
     - field.field.node.service.field_service_execution_text
-    - field.field.node.service.field_service_implement
     - field.field.node.service.field_service_languages
     - field.field.node.service.field_service_other_info
     - field.field.node.service.field_service_price
@@ -396,7 +395,6 @@ third_party_settings:
         speed: fast
     group_sidebar_public:
       children:
-        - field_service_implement
         - field_contact_info_external
         - field_service_producer
       label: sidebar-public
@@ -668,13 +666,6 @@ content:
     third_party_settings: {  }
     weight: 13
     region: content
-  field_service_implement:
-    type: basic_string
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    weight: 24
-    region: content
   field_service_languages:
     type: entity_reference_revisions_entity_view
     label: above
@@ -827,7 +818,6 @@ hidden:
   field_responsible_municipality: true
   field_responsible_updatee: true
   field_service_execution: true
-  field_service_language: true
   field_service_links_external: true
   field_service_links_internal: true
   field_service_price: true

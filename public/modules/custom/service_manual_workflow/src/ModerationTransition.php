@@ -8,6 +8,7 @@ use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Session\AccountProxyInterface;
+use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
 
 /**
@@ -44,24 +45,56 @@ final class ModerationTransition {
   }
 
   /**
-   * Marks all translations as outdated when the default translation is changed.
+   * Marks the given service node and all its translations as outdated.
    *
-   * @param \Drupal\node\NodeInterface $node
-   *   The node whose translations are to be set as outdated.
+   * @param \Drupal\node\Entity\NodeInterface $node
+   *   The service node to be marked as outdated.
    * @param string $message
-   *   Optional message explaining the reason for the status update.
+   *   (optional) A message to associate with the outdated state.
+   *
+   * @return void
+   *   No return value.
+   */
+  public function setServiceOutdated(NodeInterface $node, string $message = '') : void {
+    $this->setServiceStateAllTranslations($node, 'outdated', $message);
+  }
+
+  /**
+   * Sets the service state and all its translations to 'archived'.
+   *
+   * @param \Drupal\node\Entity\Node $node
+   *   The node entity for which the service state will be updated.
+   * @param string $message
+   *   An optional message to include with the state change.
    *
    * @return void
    *   Does not return any value.
    */
-  public function setServiceOutdated(NodeInterface $node, string $message = '') : void {
-    // Move all translations to outdated when default translation is changed.
+  public function setServiceArchived(Node $node, string $message = '') {
+    $this->setServiceStateAllTranslations($node, 'archived', $message);
+  }
+
+  /**
+   * Sets the service state for all translations of the given node.
+   *
+   * @param \Drupal\node\Entity\Node $node
+   *   The node entity whose translations' service state will be updated.
+   * @param string $state
+   *   The desired service state to be set.
+   * @param string $message
+   *   An optional message associated with the state change.
+   *   Defaults to an empty string.
+   *
+   * @return void
+   *   No return value.
+   */
+  public function setServiceStateAllTranslations(Node $node, string $state, string $message = '') {
     $update_default_translation = FALSE;
     if ($node->isDefaultTranslation()) {
-      if ($node->moderation_state->value !== 'outdated') {
+      if ($node->moderation_state->value !== $state) {
         $update_default_translation = TRUE;
       }
-      $this->setModerationStateToTranslations($node, 'outdated', $message, $update_default_translation);
+      $this->setModerationStateToTranslations($node, $state, $message, $update_default_translation);
     }
   }
 
