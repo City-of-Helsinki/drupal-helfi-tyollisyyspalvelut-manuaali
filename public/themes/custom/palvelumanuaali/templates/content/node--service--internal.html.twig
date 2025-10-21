@@ -72,7 +72,7 @@
 #}
 
   {% set greeting_text = 'Updated '|t  %}
-  {% embed "@templates/with-content-sidebar.twig" with {
+  {% embed "@templates/without-content-sidebar.twig" with {
     main_content_id: 'service-page-full',
     hero_text__heading: content.field_hero_label,
     hero_text__body: content.field_hero_text,
@@ -87,10 +87,43 @@
     service_blockname:service_blockname,
     service__updated: greeting_text ~ " " ~ node.changed.value|date("d.m.Y"),
     node__label: label,
+    default: 'yes',
   } %}
 
   {% block content %}
-   {{ content|without('flag_cart', 'flag_lists', 'view_mode_switcher', 'field_contact_info', 'field_other_services', 'field_contact_info_external', 'entitygroupfield', 'field_municipality_specific', 'field_related_archive', 'field_responsible_updatee') }}{% endblock %}
+   {{ content|without('flag_cart', 'flag_lists', 'view_mode_switcher', 'field_contact_info', 'field_other_services', 'field_contact_info_external', 'entitygroupfield', 'field_municipality_specific', 'field_related_archive', 'field_responsible_updatee') }}
+    {{ content.field_municipality_specific }}
+    {% if content.field_contact_info|render %}
+      <div class="contact-info-wrapper">
+        {% include "@atoms/text/headings/_heading.twig" with {
+          "heading_level": 5,
+          "heading": 'Sisäiset yhteystiedot'|t,
+          "heading_modifiers": ['margin-bottom-two', 'blue-desktop'],
+        } %}
+        {{ content.field_contact_info }}
+      </div>
+    {% endif %}
+    {{ content.field_responsible_updatee }}
+    {% if content.field_related_archive['0']['#markup'] == 'yes' %}
+      <div class="archiving-guides">
+        {% include "@atoms/text/headings/_heading.twig" with {
+          "heading_level": 5,
+          "heading": 'Archiving guides:'|t,
+          "heading_modifiers": ['semibold','margin-bottom-two', 'blue-desktop'],
+        } %}
+        <a class="small-font" href="/node/275">{{ 'Archiving guide'|t }}</a>
+      </div>
+    {% endif %}
+    <div class="sharing-options rounded-icon-parent">
+      <button onclick="window.print();" class="btn" title="{{ 'Print'|t }}" aria-label="{{ 'Print'|t }}">
+        {% include "@atoms/images/icons/_icon.twig" with {
+          icon_base_class: 'icon',
+          icon_name: 'print',
+          icon_modifiers: ['small'],
+        } %}
+      </button>
+    </div>
+  {% endblock %}
    {% block page_content %}
      <div class="service-header-wrapper">
        {% if content.entitygroupfield %}
@@ -116,38 +149,5 @@
          heading_base_class: 'page-heading',
        }
      %}
-   {% endblock %}
-   {% block page_sidebar %}
-      {{ content.field_municipality_specific }}
-      {% if content.field_contact_info|render %}
-        <div class="contact-info-wrapper">
-          {% include "@atoms/text/headings/_heading.twig" with {
-            "heading_level": 5,
-            "heading": 'Sisäiset yhteystiedot'|t,
-            "heading_modifiers": ['margin-bottom-two', 'blue-desktop'],
-          } %}
-          {{ content.field_contact_info }}
-        </div>
-      {% endif %}  
-      {{ content.field_responsible_updatee }}
-      {% if content.field_related_archive['0']['#markup'] == 'yes' %}
-        <div class="archiving-guides">
-          {% include "@atoms/text/headings/_heading.twig" with {
-            "heading_level": 5,
-            "heading": 'Archiving guides:'|t,
-            "heading_modifiers": ['semibold','margin-bottom-two', 'blue-desktop'],
-          } %}
-          <a class="small-font" href="/node/275">{{ 'Archiving guide'|t }}</a>
-        </div>
-      {% endif %}
-     <div class="sharing-options">
-       <button onclick="window.print();" class="btn" title="{{ 'Print'|t }}" aria-label="{{ 'Print'|t }}">
-         {% include "@atoms/images/icons/_icon.twig" with {
-           icon_base_class: 'icon',
-           icon_name: 'print',
-           icon_modifiers: ['small'],
-         } %}
-       </button>
-     </div>
    {% endblock %}
  {% endembed %}

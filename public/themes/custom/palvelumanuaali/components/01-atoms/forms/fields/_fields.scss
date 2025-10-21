@@ -264,6 +264,7 @@
           background-color: $blue100;
           @include round-icon-button;
           background-image: url("../../assets/images/icons/plus.svg");
+          text-indent: -9999px;
           &:hover {
             color: transparent;
           }
@@ -283,6 +284,7 @@
         }
         &:checked:disabled +label {
           background-color: $gray-light;
+          color: transparent;
         }
       }
       label {
@@ -387,7 +389,9 @@
   .field--name-field-service-languages {
     margin-bottom: $space-two-and-half;
   }
-
+  .field-group-html-element.event-times {
+    margin-top: $space-double;
+  }
   .field-service-time-and-location-values > tbody > tr > .table__cell {
     margin-bottom: $space;
   }
