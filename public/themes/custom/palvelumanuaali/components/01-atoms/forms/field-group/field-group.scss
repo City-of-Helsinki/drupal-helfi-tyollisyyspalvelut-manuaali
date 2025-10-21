@@ -8,3 +8,28 @@
     margin-bottom: $space-three-and-half;
   }
 }
+
+.group-border {
+  border-bottom: 1px solid clr(alt-header-color);
+  margin-bottom: $space-double;
+  padding-bottom: $space-double;
+}
+
+
+
+.group-left {
+  @include xl {
+    max-width: 400px;
+  }
+  @include xxl {
+    max-width: 500px;
+  }
+}
+.group-right {
+  @include xl {
+    width: calc(100% - 400px);
+  }
+  @include xxl {
+    width: calc(100% - 500px);
+  }
+}
