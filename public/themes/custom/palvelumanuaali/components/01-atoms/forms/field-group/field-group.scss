@@ -15,21 +15,27 @@
   padding-bottom: $space-double;
 }
 
-
-
 .group-left {
   @include xl {
-    max-width: 400px;
+    width: 350px;
   }
   @include xxl {
-    max-width: 500px;
+    width: 400px;
   }
 }
 .group-right {
   @include xl {
-    width: calc(100% - 400px);
+    width: calc(100% - 382px);
   }
   @include xxl {
-    width: calc(100% - 500px);
+    width: calc(100% - 432px);
   }
+}
+
+.group-label.width--full {
+  width: 100%;
+}
+
+.service-group {
+  @extend .m-hght--service-grp;
 }

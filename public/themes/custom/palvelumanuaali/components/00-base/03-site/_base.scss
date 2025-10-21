@@ -261,6 +261,16 @@ article ul,
   }
 }
 
+//min-height
+.m-hght {
+  &--service-grp {
+    min-height: 200px;
+    @include xl {
+      min-height: 300px;
+    }
+  }
+}
+
 //Border-color
 .border-color {
   &--light-blue {
