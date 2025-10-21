@@ -376,6 +376,7 @@
     }
   }
 
+  .field--name-field-public-files,
   .field--name-field-internal-files,
   .field--name-field-file  {
     margin-bottom: $space-one-and-half;
@@ -392,9 +393,6 @@
     margin-bottom: $space-double;
     @include large {
       margin-bottom: $space-two-and-half;
-    }
-    .field__items {
-      @extend .text-normal;
     }
   }
 
@@ -481,6 +479,7 @@
 
 }
 
+.field--name-field-public-links,
 .field--name-field-internal-links,
 .field--name-field-service-links-external,
 .field--name-field-link {

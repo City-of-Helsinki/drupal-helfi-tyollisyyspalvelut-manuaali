@@ -264,6 +264,7 @@ $printColors: (
   /* Long link urls are truncated and some links use text, which doesn't work well with printed content. Thus, the
   href content is also shown. */
   .url-and-file,
+  .field--name-field-public-links,
   .field--name-field-internal-links {
     .field__item {
       a {
@@ -276,6 +277,7 @@ $printColors: (
 
   /* Hide file download icons. */
   .field--name-field-file,
+  .field--name-field-public-files,
   .field--name-field-internal-files {
     .icon--absolute-right-regular {
       display: none;
