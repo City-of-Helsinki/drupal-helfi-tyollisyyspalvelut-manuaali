@@ -38,30 +38,7 @@
 
  @TODO: THIS CAN BE REMOVED IF BEM CLASSES CAN BE APPLIED IN WYSIWYG
 #}
-{%
-  set classes = [
-    'field',
-    'field--name-' ~ field_name|clean_class,
-    'field--type-' ~ field_type|clean_class,
-    'field--label-' ~ label_display,
-    label_display == 'inline' ? 'clearfix',
-    'field--content--inline',
-    'text-maxwidth',
-  ]
-%}
 
-{%
-  set item_classes = [
-  'field__item',
-  'tag-pill',
-  'tag-pill--primary',
-]
-%}
-
-<div{{ attributes.addClass(classes, 'field__items') }}>
-  {% for item in items %}
-    <div{{ item.attributes.addClass(item_classes) }}>
-        {{ item.content }}
-    </div>
-  {% endfor %}
-</div>
+{% for item in items %}
+  {{item.content}}
+{% endfor %}
