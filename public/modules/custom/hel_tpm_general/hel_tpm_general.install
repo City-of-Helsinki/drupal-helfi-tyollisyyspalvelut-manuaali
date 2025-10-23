@@ -982,7 +982,6 @@ function hel_tpm_general_update_20123(&$sandbox) {
   $latest_translations = $database->select('node_field_revision', 'nfd')
     ->fields('nfd', ['nid', 'vid', 'langcode', 'default_langcode'])
     ->condition('nfd.revision_translation_affected', 1)
-    ->condition('nfd.nid', 284)
     ->orderBy('vid', 'ASC')
     ->execute()
     ->fetchAllAssoc('langcode');
