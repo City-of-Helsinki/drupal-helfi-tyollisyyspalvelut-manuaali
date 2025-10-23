@@ -6,6 +6,7 @@ namespace Drupal\hel_tpm_general\Plugin\Filter;
 
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\filter\Attribute\Filter;
 use Drupal\filter\FilterProcessResult;
@@ -30,6 +31,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
   weight: 999
 )]
 final class ExternalLinksToNewTab extends FilterBase implements ContainerFactoryPluginInterface {
+
+  use StringTranslationTrait;
 
   /**
    * Constructs a new ExternalLinksToNewTab instance.
@@ -75,6 +78,9 @@ final class ExternalLinksToNewTab extends FilterBase implements ContainerFactory
     $dom = Html::load($text);
     foreach ($dom->getElementsByTagName('a') as $link) {
       $href = $link->getAttribute('href');
+      if (!$this->validateUrl($href)) {
+        continue;
+      }
       if ($this->isExternal($href)) {
         $this->setExternalLinkAttributes($link, $dom);
       }
@@ -84,6 +90,21 @@ final class ExternalLinksToNewTab extends FilterBase implements ContainerFactory
       }
     }
     return new FilterProcessResult(Html::serialize($dom));
+  }
+
+  /**
+   * Validates whether the given URL uses an allowed scheme.
+   *
+   * @param string $href
+   *   The URL to be validated.
+   *
+   * @return bool
+   *   TRUE if the URL uses an allowed scheme, FALSE otherwise.
+   */
+  protected function validateUrl($href) {
+    $schemes = ['http', 'https'];
+    $url = parse_url($href);
+    return in_array($url['scheme'], $schemes);
   }
 
   /**
@@ -103,7 +124,7 @@ final class ExternalLinksToNewTab extends FilterBase implements ContainerFactory
     $link->setAttribute('rel', 'noopener');
     $accessible_label = $dom->createElement(
       'span',
-      'external link, opens in a new tab'
+      $this->t('external link, opens in a new tab')->render()
     );
     $accessible_label->setAttribute('class', 'visually-hidden');
     $link->appendChild($accessible_label);
