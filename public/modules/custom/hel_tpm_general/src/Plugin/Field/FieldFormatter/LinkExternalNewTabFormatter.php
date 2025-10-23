@@ -46,6 +46,8 @@ final class LinkExternalNewTabFormatter extends LinkFormatter {
     // Add target _blank only for external urls.
     if (!empty($settings['target']) && $url->isExternal()) {
       $options['attributes']['target'] = $settings['target'];
+      $options['attributes']['rel'][] = 'noopener';
+      $options['attributes']['class'][] = 'ext-link';
     }
 
     if (!empty($options['attributes'])) {
