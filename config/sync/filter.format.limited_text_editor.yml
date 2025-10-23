@@ -1,11 +1,19 @@
 uuid: 7b7472af-2aab-4147-8e52-09b9b6484a48
 langcode: fi
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - hel_tpm_general
 name: 'Perussivujen sisällönsyöttö'
 format: limited_text_editor
 weight: 0
 filters:
+  external_links_to_new_tab:
+    id: external_links_to_new_tab
+    provider: hel_tpm_general
+    status: true
+    weight: 0
+    settings: {  }
   filter_autop:
     id: filter_autop
     provider: filter

@@ -1,0 +1,137 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Drupal\hel_tpm_general\Plugin\Filter;
+
+use Drupal\Component\Utility\Html;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\filter\Attribute\Filter;
+use Drupal\filter\FilterProcessResult;
+use Drupal\filter\Plugin\FilterBase;
+use Drupal\filter\Plugin\FilterInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
+
+/**
+ * Provides a text filter to convert external links to open in a new tab.
+ *
+ * This filter scans anchor links in the provided HTML text. It modifies their
+ * attributes based on whether the links point to external or internal
+ * destinations. External links are updated to open in a new browser tab, while
+ * internal links may have their URLs changed to relative paths.
+ */
+#[Filter(
+  id: "external_links_to_new_tab",
+  title: new TranslatableMarkup("Convert External links to open in new tab"),
+  type: FilterInterface::TYPE_MARKUP_LANGUAGE,
+  description: new TranslatableMarkup("Convert external links to open in new tab and change absolute internal links to relative."),
+  weight: 999
+)]
+final class ExternalLinksToNewTab extends FilterBase implements ContainerFactoryPluginInterface {
+
+  /**
+   * Constructs a new ExternalLinksToNewTab instance.
+   */
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    private readonly RequestStack $requestStack,
+  ) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): self {
+    return new self(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $container->get('request_stack'),
+    );
+  }
+
+  /**
+   * Processes the given text, updating anchor links based on their attributes.
+   *
+   * If a link is determined to be external, it adds a 'target' attribute with
+   * the value '_blank'. For internal links, it modifies the 'href' attribute
+   * to remove protocol and domain segments.
+   *
+   * @param string $text
+   *   The text to be processed, expected to contain HTML content.
+   * @param string $langcode
+   *   The language code indicating the language of the text.
+   *
+   * @return \Drupal\filter\FilterProcessResult
+   *   The result of the text processing, encapsulated in a FilterProcessResult
+   *   object.
+   */
+  public function process($text, $langcode): FilterProcessResult {
+    $dom = Html::load($text);
+    foreach ($dom->getElementsByTagName('a') as $link) {
+      $href = $link->getAttribute('href');
+      if ($this->isExternal($href)) {
+        $this->setExternalLinkAttributes($link, $dom);
+      }
+      else {
+        // Convert absolute internal links to relative.
+        $link->setAttribute('href', preg_replace('/^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/\n]+)(:\d+)?/i', '', $href));
+      }
+    }
+    return new FilterProcessResult(Html::serialize($dom));
+  }
+
+  /**
+   * Sets attributes for external links to open in a new tab with.
+   *
+   * @param \DOMElement $link
+   *   The DOM element representing the link to modify.
+   * @param \DOMDocument $dom
+   *   The DOMDocument instance used to create new elements.
+   *
+   * @return void
+   *   This method does not return a value.
+   */
+  protected function setExternalLinkAttributes(&$link, $dom) {
+    $link->setAttribute('target', '_blank');
+    $link->setAttribute('class', 'ext-link');
+    $link->setAttribute('rel', 'noopener');
+    $accessible_label = $dom->createElement(
+      'span',
+      'external link, opens in a new tab'
+    );
+    $accessible_label->setAttribute('class', 'visually-hidden');
+    $link->appendChild($accessible_label);
+  }
+
+  /**
+   * Determines if a given URL is external.
+   *
+   * @param string $href
+   *   The URL to evaluate.
+   *
+   * @return bool
+   *   TRUE if the URL is external, FALSE otherwise.
+   */
+  protected function isExternal($href) {
+    $current_host = $this->requestStack->getMainRequest()->getHttpHost();
+    $url = parse_url($href);
+    if (isset($url['host']) && preg_replace('/^www\./', '', mb_strtolower($url['host'])) === $current_host) {
+      return FALSE;
+    }
+    return TRUE;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function tips($long = FALSE): string {
+    return (string) $this->t('Converts links to external sources to always open in new tab.');
+  }
+
+}
