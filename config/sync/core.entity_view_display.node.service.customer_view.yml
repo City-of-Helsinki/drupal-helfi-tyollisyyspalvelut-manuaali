@@ -68,7 +68,6 @@ dependencies:
     - file_download_link
     - hel_tpm_forms
     - hel_tpm_general
-    - link
     - text
     - user
 third_party_settings:
@@ -521,14 +520,14 @@ content:
     weight: 0
     region: content
   field_public_links:
-    type: link
+    type: link_external_new_tab
     label: hidden
     settings:
-      trim_length: 80
+      trim_length: '80'
+      target: _blank
       url_only: false
       url_plain: false
-      rel: ''
-      target: ''
+      rel: 0
     third_party_settings: {  }
     weight: 1
     region: content
