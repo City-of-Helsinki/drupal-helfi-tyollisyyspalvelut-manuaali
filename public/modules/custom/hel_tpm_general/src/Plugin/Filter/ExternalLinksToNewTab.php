@@ -27,8 +27,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
   id: "external_links_to_new_tab",
   title: new TranslatableMarkup("Convert External links to open in new tab"),
   type: FilterInterface::TYPE_MARKUP_LANGUAGE,
-  description: new TranslatableMarkup("Convert external links to open in new tab and change absolute internal links to relative."),
-  weight: 999
+  description: new TranslatableMarkup("Convert external links to open in new tab and change absolute internal links to relative.")
 )]
 final class ExternalLinksToNewTab extends FilterBase implements ContainerFactoryPluginInterface {
 
