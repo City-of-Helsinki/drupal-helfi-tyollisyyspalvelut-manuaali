@@ -22,18 +22,35 @@
   @include xxl {
     width: 400px;
   }
+  + .group-right {
+    @include xl {
+      margin-left: unset;
+    }
+    @include xxl {
+      margin-left: unset;
+    }
+  }
 }
 .group-right {
   @include xl {
     width: calc(100% - 382px);
+    margin-left: 382px;
   }
   @include xxl {
     width: calc(100% - 432px);
+    margin-left: 432px;
   }
 }
 
-.group-label.width--full {
-  width: 100%;
+.group-label.width--service-group-header {
+  @include xl {
+    width: 350px;
+    margin-right: calc(100% - 382px);
+  }
+  @include xxl {
+    width: 400px;
+    margin-right: calc(100% - 432px);
+  }
 }
 
 .service-group {

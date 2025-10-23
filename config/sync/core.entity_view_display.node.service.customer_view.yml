@@ -80,7 +80,7 @@ third_party_settings:
       label: Osallistuminen
       parent_name: ''
       region: content
-      weight: 5
+      weight: 4
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--participation text-normal group-border d--flex--dsk column-gap-two flex-wrap--dsk'
@@ -90,7 +90,7 @@ third_party_settings:
         element: div
         show_label: true
         label_element: h2
-        label_element_classes: 'group-label--h3 h3 group-label width--full'
+        label_element_classes: 'group-label--h3 h3 group-label width--service-group-header'
         attributes: ''
         effect: none
         speed: fast
@@ -98,11 +98,10 @@ third_party_settings:
       children:
         - group_implementation_left
         - group_implementation_right
-        - group_public_links_and_files
       label: Toteutustapa
       parent_name: ''
       region: content
-      weight: 6
+      weight: 5
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--execution text-normal group-border d--flex--dsk column-gap-two flex-wrap--dsk'
@@ -112,7 +111,7 @@ third_party_settings:
         element: div
         show_label: true
         label_element: h2
-        label_element_classes: 'group-label--h3 h3 group-label width--full'
+        label_element_classes: 'group-label--h3 h3 group-label width--service-group-header'
         attributes: ''
         effect: none
         speed: fast
@@ -122,7 +121,7 @@ third_party_settings:
       label: 'Missä ja milloin'
       parent_name: ''
       region: content
-      weight: 7
+      weight: 6
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--where-and-when text-normal group-border d--flex--dsk column-gap-two flex-wrap--dsk'
@@ -143,7 +142,7 @@ third_party_settings:
       label: Kohderyhmä
       parent_name: ''
       region: content
-      weight: 4
+      weight: 3
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--target-group group-border d--flex--dsk column-gap-two flex-wrap--dsk'
@@ -153,7 +152,7 @@ third_party_settings:
         element: div
         show_label: true
         label_element: h2
-        label_element_classes: 'group-label--h3 h3 group-label width--full'
+        label_element_classes: 'group-label--h3 h3 group-label width--service-group-header'
         attributes: ''
         effect: none
         speed: fast
@@ -162,7 +161,7 @@ third_party_settings:
       label: 'Service navigation'
       parent_name: ''
       region: hidden
-      weight: 43
+      weight: 37
       format_type: tabs
       format_settings:
         classes: ''
@@ -182,7 +181,7 @@ third_party_settings:
       label: 'Work instructions'
       parent_name: ''
       region: hidden
-      weight: 44
+      weight: 38
       format_type: tab
       format_settings:
         classes: ''
@@ -325,7 +324,7 @@ third_party_settings:
       label: ' Täydentävä työnhakukeskustelu'
       parent_name: ''
       region: hidden
-      weight: 45
+      weight: 39
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--complementary-job-search'
@@ -360,15 +359,16 @@ third_party_settings:
         description: ''
     group_public_links_and_files:
       children:
-        - field_public_files
+        - group_links_and_files_left
+        - group_links_and_files_right
         - field_public_links
       label: 'Liitteet (aukeavat uuteen välilehteen)'
-      parent_name: group_execution
+      parent_name: ''
       region: content
-      weight: 15
+      weight: 7
       format_type: html_element
       format_settings:
-        classes: ''
+        classes: 'service-group service-group--links-and-files group-border d--flex--dsk column-gap-two flex-wrap--dsk'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -547,8 +547,7 @@ third_party_settings:
         effect: none
         speed: fast
     group_participation_left:
-      children:
-        - field_attendance_text
+      children: {  }
       label: 'Participation left'
       parent_name: group_participation
       region: content
@@ -556,7 +555,7 @@ third_party_settings:
       format_type: html_element
       format_settings:
         classes: group-left
-        show_empty_fields: false
+        show_empty_fields: true
         id: ''
         label_as_html: false
         element: div
@@ -568,6 +567,7 @@ third_party_settings:
         speed: fast
     group_participation_right:
       children:
+        - field_attendance_text
         - field_service_requirements
         - field_service_benefits
         - field_field_client_consent_descr
@@ -590,8 +590,7 @@ third_party_settings:
         effect: none
         speed: fast
     group_implementation_left:
-      children:
-        - field_service_execution_text
+      children: {  }
       label: 'Implementation left'
       parent_name: group_execution
       region: content
@@ -611,11 +610,111 @@ third_party_settings:
         speed: fast
     group_implementation_right:
       children:
+        - field_service_execution_text
         - field_service_other_info
       label: 'Implementation right'
       parent_name: group_execution
       region: content
+      weight: 19
+      format_type: html_element
+      format_settings:
+        classes: group-right
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_links_and_files_left:
+      children: {  }
+      label: 'Links and files left'
+      parent_name: group_public_links_and_files
+      region: content
+      weight: 17
+      format_type: html_element
+      format_settings:
+        classes: group-left
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_links_and_files_right:
+      children:
+        - field_public_files
+      label: 'Links and files right'
+      parent_name: group_public_links_and_files
+      region: content
       weight: 18
+      format_type: html_element
+      format_settings:
+        classes: group-right
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_contacts:
+      children:
+        - group_contacts_left
+        - group_contacts_right
+      label: Contacts
+      parent_name: ''
+      region: content
+      weight: 8
+      format_type: html_element
+      format_settings:
+        classes: 'service-group service-group--contacts group-border d--flex--dsk column-gap-two flex-wrap--dsk'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_contacts_left:
+      children: {  }
+      label: 'Contacts left'
+      parent_name: group_contacts
+      region: content
+      weight: 12
+      format_type: html_element
+      format_settings:
+        classes: group-left
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_contacts_right:
+      children:
+        - field_contact_info_external
+      label: 'Contacts right'
+      parent_name: group_contacts
+      region: content
+      weight: 13
       format_type: html_element
       format_settings:
         classes: group-right
@@ -644,7 +743,7 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 3
+    weight: 9
     region: content
   field_accessibility:
     type: entity_reference_translated_label
@@ -659,14 +758,14 @@ content:
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 20
+    weight: 21
     region: content
   field_attendance_text:
     type: text_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 17
+    weight: 21
     region: content
   field_client_consent:
     type: boolean
@@ -676,7 +775,7 @@ content:
       format_custom_false: ''
       format_custom_true: 'Palveluun osallistuminen edellyttää asiakkaan suostumusta hänen henkilötietojensa luovuttamiseen.'
     third_party_settings: {  }
-    weight: 21
+    weight: 25
     region: content
   field_contact_info_external:
     type: entity_reference_entity_view
@@ -685,7 +784,7 @@ content:
       view_mode: default
       link: false
     third_party_settings: {  }
-    weight: 9
+    weight: 12
     region: content
   field_description:
     type: basic_string
@@ -699,7 +798,7 @@ content:
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 20
+    weight: 24
     region: content
   field_free_service:
     type: boolean
@@ -765,7 +864,7 @@ content:
       custom_classes: ''
       aria_label: 'Avaa [file:name] uudessa välilehdessä'
     third_party_settings: {  }
-    weight: 0
+    weight: 19
     region: content
   field_public_links:
     type: link
@@ -777,14 +876,14 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
-    weight: 1
+    weight: 20
     region: content
   field_service_benefits:
     type: text_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 19
+    weight: 23
     region: content
   field_service_execution_text:
     type: text_default
@@ -815,7 +914,7 @@ content:
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 18
+    weight: 22
     region: content
   field_service_set:
     type: entity_reference_translated_label
