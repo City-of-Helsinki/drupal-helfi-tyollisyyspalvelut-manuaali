@@ -1,0 +1,20 @@
+diff --git a/src/LinkCheckerLinkAccessControlHandler.php b/src/LinkCheckerLinkAccessControlHandler.php
+index 4eee9aa..658b6d2 100644
+--- a/src/LinkCheckerLinkAccessControlHandler.php
++++ b/src/LinkCheckerLinkAccessControlHandler.php
+@@ -89,7 +89,14 @@ class LinkCheckerLinkAccessControlHandler extends EntityAccessControlHandler {
+ 
+     // If user does not have access to field where link is stored - forbidden.
+     $parentEntityField = $parentEntity->get($entity->getParentEntityFieldName());
+-    if (!$parentEntityField->access($operation, $account)) {
++
++    // Skip parent field validation if field_permissions module is installed
++    // and $operation is not view or edit.
++    $skip_parent_field_validation = FALSE;
++    if (\Drupal::moduleHandler()->moduleExists('field_permissions')) {
++      $skip_parent_field_validation = !in_array($operation, ['view', 'edit']);
++    }
++    if (!$skip_parent_field_validation && !$parentEntityField->access($operation, $account)) {
+       return AccessResult::forbidden()
+         ->addCacheableDependency($parentEntity)
+         ->cachePerPermissions();

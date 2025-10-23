@@ -7,8 +7,12 @@ dependencies:
     - node.type.service
   module:
     - link
+    - linkchecker
     - tmgmt_content
 third_party_settings:
+  linkchecker:
+    scan: true
+    extractor: link_link_extractor
   tmgmt_content:
     excluded: false
 id: node.service.field_public_links

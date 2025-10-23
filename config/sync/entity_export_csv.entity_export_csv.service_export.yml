@@ -303,6 +303,18 @@ fields:
         property_separator: '|'
         property_separate_column: 0
         format: ''
+  field_free_service:
+    enable: true
+    order: 0
+    exporter: default_export
+    form:
+      options:
+        header: label
+        property:
+          value: value
+        property_separator: '|'
+        property_separate_column: 0
+        format: ''
   field_instructions_markup:
     enable: false
     order: 0
@@ -331,16 +343,15 @@ fields:
         format: ''
         explode: ''
         separator: '|'
-  field_service_radioactivity:
-    enable: false
+  field_municipality_irrelevant:
+    enable: true
     order: 0
     exporter: default_export
     form:
       options:
         header: label
         property:
-          energy: energy
-          timestamp: '0'
+          value: value
         property_separator: '|'
         property_separate_column: 0
         format: ''
@@ -386,6 +397,329 @@ fields:
     enable: true
     order: 4
     exporter: group_reference_export
+    form:
+      options:
+        header: label
+        property:
+          target_id: target_id
+        property_separator: '|'
+        property_separate_column: 0
+        format: entity_reference_label
+        explode: ''
+        separator: '|'
+  field_life_situations:
+    enable: true
+    order: 9
+    exporter: entity_reference_export
+    form:
+      options:
+        header: label
+        property:
+          target_id: target_id
+        property_separator: '|'
+        property_separate_column: 0
+        format: entity_reference_label
+        explode: ''
+        separator: '|'
+  field_implementation_extra_info:
+    enable: true
+    order: 10
+    exporter: entity_reference_export
+    form:
+      options:
+        header: label
+        property:
+          target_id: target_id
+        property_separator: '|'
+        property_separate_column: 0
+        format: entity_reference_label
+        explode: ''
+        separator: '|'
+  field_accessibility:
+    enable: true
+    order: 15
+    exporter: entity_reference_export
+    form:
+      options:
+        header: label
+        property:
+          target_id: target_id
+        property_separator: '|'
+        property_separate_column: 0
+        format: entity_reference_label
+        explode: ''
+        separator: '|'
+  field_description:
+    enable: true
+    order: 16
+    exporter: default_export
+    form:
+      options:
+        header: label
+        property:
+          value: value
+        property_separator: '|'
+        property_separate_column: 0
+        format: ''
+  field_attendance:
+    enable: true
+    order: 17
+    exporter: paragraph_export
+    form:
+      options:
+        header: label
+        property:
+          target_id: target_id
+          target_revision_id: '0'
+        property_separator: '|'
+        property_separate_column: 0
+        format: paragraph_fields
+  field_client_consent:
+    enable: true
+    order: 20
+    exporter: default_export
+    form:
+      options:
+        header: label
+        property:
+          value: value
+        property_separator: '|'
+        property_separate_column: 0
+        format: ''
+  field_field_client_consent_descr:
+    enable: true
+    order: 21
+    exporter: plaintext_export
+    form:
+      options:
+        header: label
+        property:
+          value: value
+          format: '0'
+        property_separator: '|'
+        property_separate_column: 0
+        format: ''
+  field_contact_info_external:
+    enable: true
+    order: 25
+    exporter: contact_info_reference_export
+    form:
+      options:
+        header: label
+        property:
+          target_id: target_id
+        property_separator: '|'
+        property_separate_column: 0
+        format: contact_info_fields
+        explode: ''
+        separator: '|'
+  field_other_services:
+    enable: true
+    order: 26
+    exporter: entity_reference_export
+    form:
+      options:
+        header: label
+        property:
+          target_id: target_id
+        property_separator: '|'
+        property_separate_column: 0
+        format: entity_reference_label
+        explode: ''
+        separator: '|'
+  field_municipality_guidance:
+    enable: true
+    order: 28
+    exporter: paragraph_export
+    form:
+      options:
+        header: label
+        property:
+          target_id: target_id
+          target_revision_id: '0'
+        property_separator: '|'
+        property_separate_column: 0
+        format: paragraph_fields
+        explode: ''
+        separator: '|'
+  field_obligatoryness:
+    enable: true
+    order: 29
+    exporter: list_export
+    form:
+      options:
+        header: label
+        property:
+          value: value
+        property_separator: '|'
+        property_separate_column: 0
+        format: ''
+  field_obligatoryness_freetext:
+    enable: true
+    order: 30
+    exporter: plaintext_export
+    form:
+      options:
+        header: field_name
+        property:
+          value: value
+          format: '0'
+        property_separator: '|'
+        property_separate_column: 0
+        format: ''
+  field_career_markings:
+    enable: true
+    order: 31
+    exporter: plaintext_export
+    form:
+      options:
+        header: label
+        property:
+          value: value
+          format: '0'
+        property_separator: '|'
+        property_separate_column: 0
+        format: ''
+  field_municipality_specific:
+    enable: true
+    order: 33
+    exporter: paragraph_export
+    form:
+      options:
+        header: label
+        property:
+          target_id: target_id
+          target_revision_id: '0'
+        property_separator: '|'
+        property_separate_column: 0
+        format: paragraph_fields
+        explode: ''
+        separator: '|'
+  field_other_preferences:
+    enable: true
+    order: 37
+    exporter: list_export
+    form:
+      options:
+        header: label
+        property:
+          value: value
+        property_separator: '|'
+        property_separate_column: 0
+        format: list_label
+        explode: ''
+        separator: '|'
+  field_measures_during_attendance:
+    enable: true
+    order: 40
+    exporter: plaintext_export
+    form:
+      options:
+        header: field_name
+        property:
+          value: value
+          format: '0'
+        property_separator: '|'
+        property_separate_column: 0
+        format: ''
+  field_contact_info:
+    enable: true
+    order: 42
+    exporter: contact_info_reference_export
+    form:
+      options:
+        header: label
+        property:
+          target_id: target_id
+        property_separator: '|'
+        property_separate_column: 0
+        format: contact_info_fields
+        explode: ''
+        separator: '|'
+  field_internal_links:
+    enable: true
+    order: 43
+    exporter: link_export
+    form:
+      options:
+        header: label
+        property:
+          uri: uri
+          title: '0'
+          options: '0'
+        property_separator: '|'
+        property_separate_column: 0
+        format: ''
+        explode: ''
+        separator: '|'
+  field_price:
+    enable: true
+    order: 0
+    exporter: default_export
+    form:
+      options:
+        header: label
+        property:
+          value: value
+        property_separator: '|'
+        property_separate_column: 0
+        format: ''
+  field_price_description:
+    enable: true
+    order: 0
+    exporter: default_export
+    form:
+      options:
+        header: label
+        property:
+          value: value
+          format: '0'
+        property_separator: '|'
+        property_separate_column: 0
+        format: ''
+  field_service_execution_text:
+    enable: true
+    order: 0
+    exporter: default_export
+    form:
+      options:
+        header: label
+        property:
+          value: value
+          format: '0'
+        property_separator: '|'
+        property_separate_column: 0
+        format: ''
+  field_service_radioactivity:
+    enable: false
+    order: 0
+    exporter: default_export
+    form:
+      options:
+        header: label
+        property:
+          energy: energy
+          timestamp: '0'
+        property_separator: '|'
+        property_separate_column: 0
+        format: ''
+  field_target_group_description:
+    enable: true
+    order: 0
+    exporter: default_export
+    form:
+      options:
+        header: label
+        property:
+          value: value
+          format: '0'
+        property_separator: '|'
+        property_separate_column: 0
+        format: ''
+  field_target_group_municipality:
+    enable: true
+    order: 0
+    exporter: entity_reference_export
     form:
       options:
         header: label
@@ -448,34 +782,6 @@ fields:
         property_separator: '|'
         property_separate_column: 0
         format: entity_reference_label
-  field_life_situations:
-    enable: true
-    order: 9
-    exporter: entity_reference_export
-    form:
-      options:
-        header: label
-        property:
-          target_id: target_id
-        property_separator: '|'
-        property_separate_column: 0
-        format: entity_reference_label
-        explode: ''
-        separator: '|'
-  field_implementation_extra_info:
-    enable: true
-    order: 10
-    exporter: entity_reference_export
-    form:
-      options:
-        header: label
-        property:
-          target_id: target_id
-        property_separator: '|'
-        property_separate_column: 0
-        format: entity_reference_label
-        explode: ''
-        separator: '|'
   field_service_set:
     enable: true
     order: 11
@@ -531,45 +837,6 @@ fields:
         property_separator: '|'
         property_separate_column: 0
         format: paragraph_fields
-  field_accessibility:
-    enable: true
-    order: 15
-    exporter: entity_reference_export
-    form:
-      options:
-        header: label
-        property:
-          target_id: target_id
-        property_separator: '|'
-        property_separate_column: 0
-        format: entity_reference_label
-        explode: ''
-        separator: '|'
-  field_description:
-    enable: true
-    order: 16
-    exporter: default_export
-    form:
-      options:
-        header: label
-        property:
-          value: value
-        property_separator: '|'
-        property_separate_column: 0
-        format: ''
-  field_attendance:
-    enable: true
-    order: 17
-    exporter: paragraph_export
-    form:
-      options:
-        header: label
-        property:
-          target_id: target_id
-          target_revision_id: '0'
-        property_separator: '|'
-        property_separate_column: 0
-        format: paragraph_fields
   field_service_benefits:
     enable: true
     order: 18
@@ -590,31 +857,6 @@ fields:
     form:
       options:
         header: field_name
-        property:
-          value: value
-          format: '0'
-        property_separator: '|'
-        property_separate_column: 0
-        format: ''
-  field_client_consent:
-    enable: true
-    order: 20
-    exporter: default_export
-    form:
-      options:
-        header: label
-        property:
-          value: value
-        property_separator: '|'
-        property_separate_column: 0
-        format: ''
-  field_field_client_consent_descr:
-    enable: true
-    order: 21
-    exporter: plaintext_export
-    form:
-      options:
-        header: label
         property:
           value: value
           format: '0'
@@ -649,102 +891,9 @@ fields:
         format: paragraph_fields
         explode: ''
         separator: '|'
-  field_contact_info_external:
-    enable: true
-    order: 25
-    exporter: contact_info_reference_export
-    form:
-      options:
-        header: label
-        property:
-          target_id: target_id
-        property_separator: '|'
-        property_separate_column: 0
-        format: contact_info_fields
-        explode: ''
-        separator: '|'
-  field_other_services:
-    enable: true
-    order: 26
-    exporter: entity_reference_export
-    form:
-      options:
-        header: label
-        property:
-          target_id: target_id
-        property_separator: '|'
-        property_separate_column: 0
-        format: entity_reference_label
-        explode: ''
-        separator: '|'
   field_service_coordination:
     enable: true
     order: 27
-    exporter: plaintext_export
-    form:
-      options:
-        header: label
-        property:
-          value: value
-          format: '0'
-        property_separator: '|'
-        property_separate_column: 0
-        format: ''
-  field_municipality_guidance:
-    enable: true
-    order: 28
-    exporter: paragraph_export
-    form:
-      options:
-        header: label
-        property:
-          target_id: target_id
-          target_revision_id: '0'
-        property_separator: '|'
-        property_separate_column: 0
-        format: paragraph_fields
-        explode: ''
-        separator: '|'
-  field_municipality_irrelevant:
-    enable: true
-    order: 0
-    exporter: default_export
-    form:
-      options:
-        header: label
-        property:
-          value: value
-        property_separator: '|'
-        property_separate_column: 0
-        format: ''
-  field_obligatoryness:
-    enable: true
-    order: 29
-    exporter: list_export
-    form:
-      options:
-        header: label
-        property:
-          value: value
-        property_separator: '|'
-        property_separate_column: 0
-        format: ''
-  field_obligatoryness_freetext:
-    enable: true
-    order: 30
-    exporter: plaintext_export
-    form:
-      options:
-        header: field_name
-        property:
-          value: value
-          format: '0'
-        property_separator: '|'
-        property_separate_column: 0
-        format: ''
-  field_career_markings:
-    enable: true
-    order: 31
     exporter: plaintext_export
     form:
       options:
@@ -762,34 +911,6 @@ fields:
     form:
       options:
         header: field_name
-        property:
-          value: value
-          format: '0'
-        property_separator: '|'
-        property_separate_column: 0
-        format: ''
-  field_municipality_specific:
-    enable: true
-    order: 33
-    exporter: paragraph_export
-    form:
-      options:
-        header: label
-        property:
-          target_id: target_id
-          target_revision_id: '0'
-        property_separator: '|'
-        property_separate_column: 0
-        format: paragraph_fields
-        explode: ''
-        separator: '|'
-  field_service_execution_text:
-    enable: true
-    order: 0
-    exporter: default_export
-    form:
-      options:
-        header: label
         property:
           value: value
           format: '0'
@@ -834,20 +955,6 @@ fields:
         property_separator: '|'
         property_separate_column: 0
         format: ''
-  field_other_preferences:
-    enable: true
-    order: 37
-    exporter: list_export
-    form:
-      options:
-        header: label
-        property:
-          value: value
-        property_separator: '|'
-        property_separate_column: 0
-        format: list_label
-        explode: ''
-        separator: '|'
   field_service_suits_job_search:
     enable: true
     order: 38
@@ -873,19 +980,6 @@ fields:
         property_separator: '|'
         property_separate_column: 0
         format: ''
-  field_measures_during_attendance:
-    enable: true
-    order: 40
-    exporter: plaintext_export
-    form:
-      options:
-        header: field_name
-        property:
-          value: value
-          format: '0'
-        property_separator: '|'
-        property_separate_column: 0
-        format: ''
   field_related_archive:
     enable: true
     order: 41
@@ -898,36 +992,6 @@ fields:
         property_separator: '|'
         property_separate_column: 0
         format: list_label
-        explode: ''
-        separator: '|'
-  field_contact_info:
-    enable: true
-    order: 42
-    exporter: contact_info_reference_export
-    form:
-      options:
-        header: label
-        property:
-          target_id: target_id
-        property_separator: '|'
-        property_separate_column: 0
-        format: contact_info_fields
-        explode: ''
-        separator: '|'
-  field_internal_links:
-    enable: true
-    order: 43
-    exporter: link_export
-    form:
-      options:
-        header: label
-        property:
-          uri: uri
-          title: '0'
-          options: '0'
-        property_separator: '|'
-        property_separate_column: 0
-        format: ''
         explode: ''
         separator: '|'
   field_service_other_info:
@@ -943,30 +1007,3 @@ fields:
         property_separator: '|'
         property_separate_column: 0
         format: paragraph_fields
-  field_target_group_description:
-    enable: true
-    order: 0
-    exporter: default_export
-    form:
-      options:
-        header: label
-        property:
-          value: value
-          format: '0'
-        property_separator: '|'
-        property_separate_column: 0
-        format: ''
-  field_target_group_municipality:
-    enable: true
-    order: 0
-    exporter: entity_reference_export
-    form:
-      options:
-        header: label
-        property:
-          target_id: target_id
-        property_separator: '|'
-        property_separate_column: 0
-        format: ''
-        explode: ''
-        separator: '|'
