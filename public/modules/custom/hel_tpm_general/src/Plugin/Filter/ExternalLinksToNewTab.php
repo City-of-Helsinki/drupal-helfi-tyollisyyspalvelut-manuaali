@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Drupal\hel_tpm_general\Plugin\Filter;
 
 use Drupal\Component\Utility\Html;
+use Drupal\Component\Utility\Xss;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
@@ -26,8 +28,11 @@ use Symfony\Component\HttpFoundation\RequestStack;
 #[Filter(
   id: "external_links_to_new_tab",
   title: new TranslatableMarkup("Convert External links to open in new tab"),
-  type: FilterInterface::TYPE_MARKUP_LANGUAGE,
-  description: new TranslatableMarkup("Convert external links to open in new tab and change absolute internal links to relative.")
+  type: FilterInterface::TYPE_TRANSFORM_IRREVERSIBLE,
+  description: new TranslatableMarkup("Convert external links to open in new tab and change absolute internal links to relative."),
+  settings: [
+    "internal_hosts" => "",
+  ]
 )]
 final class ExternalLinksToNewTab extends FilterBase implements ContainerFactoryPluginInterface {
 
@@ -55,6 +60,19 @@ final class ExternalLinksToNewTab extends FilterBase implements ContainerFactory
       $plugin_definition,
       $container->get('request_stack'),
     );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function settingsForm(array $form, FormStateInterface $form_state) {
+    $form['internal_hosts'] = [
+      '#type' => 'textarea',
+      '#title' => $this->t('Internal hosts'),
+      '#default_value' => $this->settings['internal_hosts'],
+      '#description' => $this->t('List of domains considered internal. One host per row.'),
+    ];
+    return $form;
   }
 
   /**
@@ -139,12 +157,29 @@ final class ExternalLinksToNewTab extends FilterBase implements ContainerFactory
    *   TRUE if the URL is external, FALSE otherwise.
    */
   protected function isExternal($href) {
-    $current_host = $this->requestStack->getMainRequest()->getHttpHost();
+    $hosts = $this->getSettingInternlHosts();
+    $hosts[] = $this->requestStack->getMainRequest()->getHttpHost();
     $url = parse_url($href);
-    if (isset($url['host']) && preg_replace('/^www\./', '', mb_strtolower($url['host'])) === $current_host) {
+    if (isset($url['host']) && in_array(preg_replace('/^www\./', '', mb_strtolower($url['host'])), $hosts)) {
       return FALSE;
     }
     return TRUE;
+  }
+
+  /**
+   * Retrieves the internal hosts setting.
+   *
+   * @return array
+   *   An array of internal hosts defined in the settings. If no internal hosts
+   *   are set, an empty array is returned.
+   */
+  protected function getSettingInternlHosts() {
+    if (empty($this->settings['internal_hosts'])) {
+      return [];
+    }
+    $hosts = Xss::filter($this->settings['internal_hosts']);
+    return explode("\r\n", $hosts);
+
   }
 
   /**
