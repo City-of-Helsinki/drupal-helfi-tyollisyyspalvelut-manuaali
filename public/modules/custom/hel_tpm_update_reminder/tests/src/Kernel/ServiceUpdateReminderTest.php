@@ -550,25 +550,25 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
     $this->group->addRelationship($service, 'group_node:service');
 
     $this->updateService((int) $service->id(), ['moderation_state' => 'published'], 129);
-    $remind_service = $update_reminder_service->getServicesToRemind();
+    $remind_service = $update_reminder_service->getServiceIdsToRemind();
     $this->assertCount(1, $remind_service);
 
     $this->setCurrentUser($user2);
 
     $this->updateService((int) $service->id(), ['moderation_state' => 'published'], 128);
-    $remind_service = $update_reminder_service->getServicesToRemind();
+    $remind_service = $update_reminder_service->getServiceIdsToRemind();
     $this->assertCount(1, $remind_service);
 
     $this->setCurrentUser($user1);
 
     $this->updateService((int) $service->id(), ['moderation_state' => 'published'], 2);
-    $remind_service = $update_reminder_service->getServicesToRemind();
+    $remind_service = $update_reminder_service->getServiceIdsToRemind();
     $this->assertCount(0, $remind_service);
 
     $this->updateService((int) $service->id(), [
       'moderation_state' => 'draft',
     ], 1);
-    $remind_service = $update_reminder_service->getServicesToRemind();
+    $remind_service = $update_reminder_service->getServiceIdsToRemind();
     $this->assertCount(0, $remind_service);
   }
 

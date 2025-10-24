@@ -12,25 +12,18 @@ use Drupal\node\NodeInterface;
 class UpdateReminderUserService {
 
   /**
-   * The machine name for the service provider field.
-   *
-   * @var string
-   */
-  protected $serviceProducerField = 'field_service_producer';
-
-  /**
    * The database connection.
    *
    * @var \Drupal\Core\Database\Connection
    */
-  protected $database;
+  protected Connection $database;
 
   /**
    * The entity type manager service.
    *
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  protected $entityTypeManager;
+  protected EntityTypeManagerInterface $entityTypeManager;
 
   public function __construct(Connection $database, EntityTypeManagerInterface $entityTypeManager) {
     $this->database = $database;
@@ -38,13 +31,14 @@ class UpdateReminderUserService {
   }
 
   /**
-   * Retrieves service provider updaters for published services with reminders.
+   * Retrieves service IDs for reminders.
    *
    * @return array
-   *   An array of processed service provider updaters.
+   *   An array of service IDs.
+   *
+   * @throws \Exception
    */
-  public function getServicesToRemind(): array {
-
+  public function getServiceIdsToRemind(): array {
     // Get published service nodes.
     $serviceIds = $this->fetchPublishedServiceIds();
     if (empty($serviceIds)) {
@@ -69,8 +63,10 @@ class UpdateReminderUserService {
    *   with a list of updaters associated with the producer's group. If a group
    *   has no updaters or does not exist, an empty list will be returned for
    *   that producer's updaters key.
+   *
+   * @throws \Exception
    */
-  public function fetchServiceProviderUpdaters($serviceIds) {
+  public function fetchServiceProviderUpdaters(array $serviceIds): array {
     if (empty($serviceIds)) {
       return [];
     }
@@ -136,7 +132,6 @@ class UpdateReminderUserService {
     }
 
     return $result;
-
   }
 
   /**
@@ -161,8 +156,9 @@ class UpdateReminderUserService {
    *   updaters, and revision data.
    *
    * @return array
-   *   An array of services that require update reminders. Each element contains
-   *   service entity IDs and their associated revision details.
+   *   An array of service IDs that require update reminders.
+   *
+   * @throws \Exception
    */
   protected function processUpdaters(array $services): array {
     $reminderServices = [];
@@ -182,7 +178,10 @@ class UpdateReminderUserService {
         $reminderServices[$service['entity_id']] = $latestRevision;
       }
     }
-    return $reminderServices;
+
+    return array_map(function ($service) {
+      return $service['nid'];
+    }, $reminderServices);
   }
 
   /**
@@ -196,6 +195,8 @@ class UpdateReminderUserService {
    * @return array|null
    *   An associative array containing the latest revision details,
    *   or NULL if no matching revisions are found.
+   *
+   * @throws \Exception
    */
   protected function fetchLatestRevision(int $nodeId, array $updaters): ?array {
     $query = $this->database->select('node_field_revision', 'nfr')
