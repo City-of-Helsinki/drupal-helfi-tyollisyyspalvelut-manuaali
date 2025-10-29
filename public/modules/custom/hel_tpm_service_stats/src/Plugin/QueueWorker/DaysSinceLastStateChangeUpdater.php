@@ -90,7 +90,6 @@ final class DaysSinceLastStateChangeUpdater extends QueueWorkerBase implements C
    */
   protected function getTranslationRevisions($nid) {
     $node_revisions = [];
-
     $node = $this->storage->load($nid);
     $languages = $node->getTranslationLanguages();
     foreach ($languages as $language) {
