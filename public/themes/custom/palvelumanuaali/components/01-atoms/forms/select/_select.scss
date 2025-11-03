@@ -120,7 +120,10 @@
           content:"";
           left: 0;
           top: 0;
-          background-position: top 10px right 4px;
+          background-position: top 8px right 4px;
+          @include xl-zoom {
+            background-position: top 10px right 4px;
+          }
         }
       }
     &.multi-select-container--open {
@@ -264,6 +267,9 @@
   font-weight: 600;
   white-space: normal;
   word-wrap: anywhere;
+  @include xl-zoom {
+    font-size: 14px;
+  }
   &:nth-last-child(2) {
     margin-bottom: 0 !important;
   }

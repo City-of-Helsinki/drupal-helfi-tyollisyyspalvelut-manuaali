@@ -237,9 +237,12 @@
           }
           .select2-selection--single .select2-selection__rendered {
             background: transparent !important;
-            font-size: 14px !important;
+            font-size: 12px !important;
             line-height: 24px !important;
             padding: 0 !important;
+            @include xl-zoom {
+              font-size: 14px !important;
+            }
           }
           .select2-selection__arrow {
             display: none;
@@ -316,7 +319,10 @@
     .select2,
     .multi-select-button {
       z-index: 0;
+      padding: 6px 12px 6px 16px;
+      @include xl-zoom {
         padding: 8px 12px 8px 16px;
+      }
     }
   }
 }

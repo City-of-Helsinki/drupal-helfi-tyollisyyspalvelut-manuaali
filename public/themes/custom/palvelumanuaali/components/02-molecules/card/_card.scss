@@ -271,13 +271,13 @@ $card-font-small-heading: 15px;
     flex-grow: 1;
     max-width: calc(50% - 11px);
   }
-  @include xl {
+  @include large {
     width: calc(33% - 16px);
     flex-basis: calc(33% - 16px);
     flex-grow: 1;
     max-width: calc(33% - 11px);
   }
-  @media (min-width: 1640px) {
+  @include xl {
     width: calc(25% - 18px);
     flex-basis: calc(25% - 18px);
     flex-grow: 1;
@@ -749,10 +749,16 @@ $card-font-small-heading: 15px;
     margin: $space;
     height: auto;
     @include xl {
+      margin: $space-one-and-half;
+      display: flex;
+      flex-direction: column;
+    }
+    @include xl-zoom {
       margin: $space-double;
       display: flex;
       flex-direction: column;
     }
+
   }
   .card__body {
     display: block;
@@ -842,12 +848,12 @@ body:not(.edit-create-form) .field--name-field-linklist-card {
     margin-bottom: unset;
     max-width: 325px;
   }
-  @include xl {
+  @include large {
     width: calc(33% - 16px);
     flex-basis: calc(33% - 16px);
     flex-grow: 1;
   }
-  @media (min-width: 1640px) {
+  @include xl {
     width: calc(25% - 18px);
     flex-basis: calc(25% - 36px);
     flex-grow: 1;
@@ -861,15 +867,21 @@ body:not(.edit-create-form) .field--name-field-linklist-card {
   .arrow-icon {
     background-image: url("../../assets/images/icons/arrow-right-1.svg");
     background-color: clr(background-section);
-    width: 62px;
-    height: 62px;
+    width: 40px;
+    height: 40px;
     display: block;
     background-repeat: no-repeat;
     background-position: center;
     border-top-left-radius: 16px;
+    background-size: 30px;
     position: absolute;
     bottom: 0;
     right: 0;
+    @include xl-zoom {
+      width: 62px;
+      height: 62px;
+      background-size: 41px;
+    }
   }
 }
 
@@ -878,13 +890,21 @@ body:not(.edit-create-form) .field--name-field-linklist-card {
   margin-bottom: 48px;
   .field--name-field-title {
     margin-bottom: 12px;
-    font-size: 18px;
     font-weight: 600;
+    @include heading-xs;
     color: clr(alt-header-color);
+
   }
   .field--name-field-short-description {
-    font-size: 16px;
+    font-size: 12px;
     font-weight: 600;
     color: clr(text);
+    @include xl-zoom {
+      font-size: 14px;
+    }
+    @include xl-zoom {
+      font-size: 14px;
+    }
+
   }
 }
