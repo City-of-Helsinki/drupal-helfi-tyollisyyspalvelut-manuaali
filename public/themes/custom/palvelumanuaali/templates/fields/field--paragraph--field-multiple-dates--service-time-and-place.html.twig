@@ -58,15 +58,15 @@
       <div class="field-items-wrapper">
         {% for item in items %}
           {% if loop.index < 3 %}
-            <div{{ item.attributes.addClass('field__item').addClass('margin--bottom-zero')}}>{{ item.content }}</div>
+            <div{{ item.attributes.addClass('field__item').addClass('margin--bottom-zero') }}>{{ item.content }}</div>
           {% else %}
-            <div{{ item.attributes.addClass('field__item').addClass('collapse').addClass('multi-collapse').addClass('margin--bottom-zero')}}>{{ item.content }}</div>
+            <div{{ item.attributes.addClass('field__item').addClass('collapse').addClass('multi-collapse').addClass('margin--bottom-zero') }}>{{ item.content }}</div>
           {% endif %}
         {% endfor %}
       </div>
       {% if items|length > 2 %}
         <div class="button-wrapper">
-          <button class="button--no-color-no-border button--dropdown-button" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">{{"Show more"|t}}</button>
+          <button class="button--no-color-no-border button--dropdown-button" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="multi-collapse">{{"Show more"|t}}</button>
         </div>
       {% endif %}
   </div>
