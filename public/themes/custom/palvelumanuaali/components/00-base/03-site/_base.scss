@@ -241,6 +241,10 @@ article ul,
   gap: 3px;
 }
 
+.column-gap-two {
+  column-gap: $space-double;
+}
+
 //Boxsizing
 .bs {
   &--bb{
@@ -255,6 +259,16 @@ article ul,
   }
   &--min-content {
     width: min-content;
+  }
+}
+
+//min-height
+.m-hght {
+  &--service-grp {
+    min-height: 200px;
+    @include xl {
+      min-height: 300px;
+    }
   }
 }
 
