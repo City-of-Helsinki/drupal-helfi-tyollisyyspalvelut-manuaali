@@ -12,7 +12,7 @@ use Drupal\views_infinite_scroll\Plugin\views\pager\InfiniteScroll;
 /**
  * Implements hook_preprocess_html().
  */
-function palvelumanuaali_preprocess_html(&$variables) {
+function palvelumanuaali_preprocess_html(&$variables): void {
   $route = \Drupal::routeMatch()->getRouteName();
   switch ($route) {
     case 'entity.user.edit_form':
@@ -24,7 +24,7 @@ function palvelumanuaali_preprocess_html(&$variables) {
 /**
  * Implements hook_preprocess_breadcrumb().
  */
-function palvelumanuaali_preprocess_breadcrumb(&$variables) {
+function palvelumanuaali_preprocess_breadcrumb(&$variables): void {
   $request = \Drupal::request();
   $route = \Drupal::routeMatch()->getRouteObject();
   if ($variables['breadcrumb']) {
@@ -36,7 +36,7 @@ function palvelumanuaali_preprocess_breadcrumb(&$variables) {
 /**
  * Implements hook_preprocess_block__language_switcher().
  */
-function palvelumanuaali_preprocess_block__language_block(&$variables) {
+function palvelumanuaali_preprocess_block__language_block(&$variables): void {
   // Set force lang count.
   $variables['lang_count'] = 3;
 }
@@ -44,7 +44,7 @@ function palvelumanuaali_preprocess_block__language_block(&$variables) {
 /**
  * Implements hook_preprocess_links__language_block().
  */
-function palvelumanuaali_preprocess_links__language_block(&$variables) {
+function palvelumanuaali_preprocess_links__language_block(&$variables): void {
   $language_manager = \Drupal::languageManager();
   $current_langcode = $language_manager->getCurrentLanguage('language_url')->getId();
 
@@ -68,7 +68,7 @@ function palvelumanuaali_preprocess_links__language_block(&$variables) {
 /**
  * Implements hook__preprocess_node().
  */
-function palvelumanuaali_preprocess_node(&$variables) {
+function palvelumanuaali_preprocess_node(&$variables): void {
   if (!isset($variables['is_front'])) {
     $variables['is_front'] = \Drupal::service('path.matcher')->isFrontPage();
   }
@@ -79,7 +79,7 @@ function palvelumanuaali_preprocess_node(&$variables) {
 /**
  * Implements hook_preprocess_HOOK().
  */
-function palvelumanuaali_preprocess_field(&$variables) {
+function palvelumanuaali_preprocess_field(&$variables): void {
   if ($variables['field_name'] == 'field_field_client_consent_descr') {
     $node = $variables['element']['#object'];
     if ($node->hasField('field_client_consent')) {
@@ -128,7 +128,7 @@ function palvelumanuaali_preprocess_field(&$variables) {
  * @return void
  *   -
  */
-function _palvelumanuaali_preprocess_view_card_liftup(&$variables) {
+function _palvelumanuaali_preprocess_view_card_liftup(&$variables): void {
   if (empty($variables['view_mode']) || $variables['view_mode'] !== 'view_card_lift') {
     return;
   }
@@ -169,7 +169,7 @@ function _palvelumanuaali_preprocess_view_card_liftup(&$variables) {
  * @return void
  *   -
  */
-function _palvelumanuaali_preprocess_taxonomy_card(&$variables) {
+function _palvelumanuaali_preprocess_taxonomy_card(&$variables): void {
   if (empty($variables['view_mode']) || $variables['view_mode'] !== 'taxonomy_card') {
     return;
   }
@@ -194,7 +194,7 @@ function _palvelumanuaali_preprocess_taxonomy_card(&$variables) {
 /**
  * Implements hook__preprocess_fieldset().
  */
-function palvelumanuaali_preprocess_fieldset(&$variables) {
+function palvelumanuaali_preprocess_fieldset(&$variables): void {
   $element = $variables['element'];
   if (empty($element['#field_name'])) {
     return;
@@ -223,7 +223,7 @@ function palvelumanuaali_preprocess_fieldset(&$variables) {
 /**
  * Implements hook__preprocess_table().
  */
-function palvelumanuaali_preprocess_table(&$variables) {
+function palvelumanuaali_preprocess_table(&$variables): void {
   if (empty($variables['attributes']['id'])) {
     return;
   }
@@ -236,7 +236,7 @@ function palvelumanuaali_preprocess_table(&$variables) {
 /**
  * Implements theme_preprocess_textarea().
  */
-function palvelumanuaali_preprocess_textarea(&$variables) {
+function palvelumanuaali_preprocess_textarea(&$variables): void {
   if (empty($variables['element'])) {
     return;
   }
@@ -249,7 +249,7 @@ function palvelumanuaali_preprocess_textarea(&$variables) {
 /**
  * Implements hook_theme_suggestions_HOOK_alter().
  */
-function palvelumanuaali_theme_suggestions_form_element_alter(array &$suggestions, array $variables, $hook) {
+function palvelumanuaali_theme_suggestions_form_element_alter(array &$suggestions, array $variables, $hook): void {
   if (isset($variables['element']['#id'])) {
     $id = str_replace("-", "_", $variables['element']['#id']);
     $suggestions[] = $hook . '__' . $id;
@@ -259,7 +259,7 @@ function palvelumanuaali_theme_suggestions_form_element_alter(array &$suggestion
 /**
  * Implements hook_theme_suggestions_HOOK_alter().
  */
-function palvelumanuaali_theme_suggestions_form_alter(array &$suggestions, array $variables, $hook) {
+function palvelumanuaali_theme_suggestions_form_alter(array &$suggestions, array $variables, $hook): void {
   if (isset($variables['element']['#id'])) {
     $id = str_replace("-", "_", $variables['element']['#id']);
     $suggestions[] = 'form__' . $id;
@@ -269,7 +269,7 @@ function palvelumanuaali_theme_suggestions_form_alter(array &$suggestions, array
 /**
  * Implements hook_theme_suggestions_HOOK_alter().
  */
-function palvelumanuaali_theme_suggestions_select_alter(array &$suggestions, array $variables, $hook) {
+function palvelumanuaali_theme_suggestions_select_alter(array &$suggestions, array $variables, $hook): void {
 
   if (isset($variables['element']['#name'])) {
     $id = str_replace("-", "_", $variables['element']['#name']);
@@ -294,7 +294,7 @@ function palvelumanuaali_theme_suggestions_select_alter(array &$suggestions, arr
 /**
  * Implements hook_theme_suggestions_HOOK_alter().
  */
-function palvelumanuaali_theme_suggestions_details_alter(array &$suggestions, array $variables, $hook) {
+function palvelumanuaali_theme_suggestions_details_alter(array &$suggestions, array $variables, $hook): void {
 
   if (isset($variables['element']['#type']) && isset($variables['element']['#form_id'])) {
 
@@ -315,7 +315,7 @@ function palvelumanuaali_theme_suggestions_details_alter(array &$suggestions, ar
 /**
  * Implements hook_preprocess_HOOK().
  */
-function palvelumanuaali_preprocess_details(&$variables) {
+function palvelumanuaali_preprocess_details(&$variables): void {
   if ($node = \Drupal::request()->attributes->get('node')) {
     if ($node->bundle() !== 'service') {
       return;
@@ -332,7 +332,7 @@ function palvelumanuaali_preprocess_details(&$variables) {
 /**
  * Implements hook_preprocess_views_view().
  */
-function palvelumanuaali_preprocess_views_view(&$vars) {
+function palvelumanuaali_preprocess_views_view(&$vars): void {
   $view = $vars['view'];
   if ($view->getDisplay()->isPagerEnabled() && !empty($vars['rows'])) {
     $pager = $view->getPager();
@@ -348,7 +348,7 @@ function palvelumanuaali_preprocess_views_view(&$vars) {
 /**
  * Implements hook_preprocess_eva_display_entity_view().
  */
-function palvelumanuaali_preprocess_eva_display_entity_view(&$vars) {
+function palvelumanuaali_preprocess_eva_display_entity_view(&$vars): void {
   palvelumanuaali_preprocess_views_view($vars);
   $style_plugin = $vars['view']->style_plugin->options;
   if (!empty($style_plugin['empty_table']) && $style_plugin['empty_table'] === TRUE) {
@@ -357,9 +357,9 @@ function palvelumanuaali_preprocess_eva_display_entity_view(&$vars) {
 }
 
 /**
- * Implements hook_theme_suggestions_taxonomy_term_alter().
+ * Implements hook_theme_suggestions_HOOK_alter().
  */
-function palvelumanuaali_theme_suggestions_taxonomy_term_alter(array &$suggestions, array $variables) {
+function palvelumanuaali_theme_suggestions_taxonomy_term_alter(array &$suggestions, array $variables): void {
   /** @var \Drupal\taxonomy\TermInterface $term */
   $term = $variables['elements']['#taxonomy_term'];
   $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
@@ -373,10 +373,8 @@ function palvelumanuaali_theme_suggestions_taxonomy_term_alter(array &$suggestio
  * Implements hook_theme_suggestions_HOOK_alter().
  *
  * Add views unformatted template suggestions.
- *
- * @inheritdoc
  */
-function palvelumanuaali_theme_suggestions_views_view_alter(array &$suggestions, array $variables) {
+function palvelumanuaali_theme_suggestions_views_view_alter(array &$suggestions, array $variables): void {
   $suggestions[] = 'views_view__' . $variables['view']->id();
 }
 
@@ -384,10 +382,8 @@ function palvelumanuaali_theme_suggestions_views_view_alter(array &$suggestions,
  * Implements hook_theme_suggestions_HOOK_alter().
  *
  * Add views unformatted template suggestions.
- *
- * @inheritdoc
  */
-function palvelumanuaali_theme_suggestions_views_view_unformatted_alter(array &$suggestions, array $variables) {
+function palvelumanuaali_theme_suggestions_views_view_unformatted_alter(array &$suggestions, array $variables): void {
   $suggestions[] = 'views_view_unformatted__' . $variables['view']->id();
 }
 
@@ -395,17 +391,15 @@ function palvelumanuaali_theme_suggestions_views_view_unformatted_alter(array &$
  * Implements hook_theme_suggestions_HOOK().
  *
  * Add views field template suggestions.
- *
- * @inheritdoc
  */
-function palvelumanuaali_theme_suggestions_views_view_field(array $variables) {
+function palvelumanuaali_theme_suggestions_views_view_field(array $variables): void {
   $suggestions[] = 'views_view_field__' . $variables['field']->field;
 }
 
 /**
  * Implements hook_theme_suggestions_HOOK_alter().
  */
-function palvelumanuaali_theme_suggestions_input_alter(&$suggestions, array $variables) {
+function palvelumanuaali_theme_suggestions_input_alter(&$suggestions, array $variables): void {
   if (!empty($variables['element']['#form_id']) && $variables['theme_hook_original'] === "input__submit") {
     $suggestions[] = 'input__' . $variables['element']['#type'] . '__' . $variables['element']['#form_id'];
   }
@@ -414,7 +408,7 @@ function palvelumanuaali_theme_suggestions_input_alter(&$suggestions, array $var
 /**
  * Implements hook_theme_suggestions_HOOK_alter().
  */
-function palvelumanuaali_theme_suggestions_field_alter(array &$suggestions, array $variables) {
+function palvelumanuaali_theme_suggestions_field_alter(array &$suggestions, array $variables): void {
 
   $element = $variables['element'];
 
@@ -433,7 +427,7 @@ function palvelumanuaali_theme_suggestions_field_alter(array &$suggestions, arra
 /**
  * Implements hook_preprocess_paragraph().
  */
-function palvelumanuaali_preprocess_paragraph(&$variables) {
+function palvelumanuaali_preprocess_paragraph(&$variables): void {
   $paragraph = $variables['paragraph'];
   $color = [];
   $alignment = [];
@@ -455,7 +449,7 @@ function palvelumanuaali_preprocess_paragraph(&$variables) {
 /**
  * Add views unformatted template suggestions.
  */
-function palvelumanuaali_theme_suggestions_fieldset_alter(array &$suggestions, array $variables, $hook) {
+function palvelumanuaali_theme_suggestions_fieldset_alter(array &$suggestions, array $variables, $hook): void {
   if (isset($variables['element']['#group'])) {
     $id = str_replace("-", "_", $variables['element']['#group']);
     $suggestions[] = $hook . '__' . $id;
@@ -469,7 +463,7 @@ function palvelumanuaali_theme_suggestions_fieldset_alter(array &$suggestions, a
 /**
  * Implements hook_page_attachments_alter().
  */
-function palvelumanuaali_page_attachments_alter(array &$attachments) {
+function palvelumanuaali_page_attachments_alter(array &$attachments): void {
   _palvelumanuaali_attach_analytics($attachments);
 }
 
@@ -482,7 +476,7 @@ function palvelumanuaali_page_attachments_alter(array &$attachments) {
  * @return void
  *   Void.
  */
-function _palvelumanuaali_attach_analytics(array &$attachments) {
+function _palvelumanuaali_attach_analytics(array &$attachments): void {
   // Attach analytics only when user does not have admin or root role and the
   // path is not excluded with a path pattern.
   $roles = \Drupal::currentUser()->getRoles();
@@ -500,7 +494,7 @@ function _palvelumanuaali_attach_analytics(array &$attachments) {
 /**
  * Implements hook_form_alter().
  */
-function palvelumanuaali_form_alter(&$form, $form_state, $form_id) {
+function palvelumanuaali_form_alter(&$form, $form_state, $form_id): void {
   $forms = [
     'node_service_form',
     'node_service_edit_form',
