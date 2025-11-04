@@ -361,7 +361,6 @@ third_party_settings:
       children:
         - group_links_and_files_left
         - group_links_and_files_right
-        - field_public_links
       label: 'Liitteet (aukeavat uuteen välilehteen)'
       parent_name: ''
       region: content
@@ -651,6 +650,7 @@ third_party_settings:
     group_links_and_files_right:
       children:
         - field_public_files
+        - field_public_links
       label: 'Links and files right'
       parent_name: group_public_links_and_files
       region: content

@@ -577,6 +577,108 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+    group_contacts_and_attachment:
+      children:
+        - group_contacts_attachments_left
+        - group_contacts_attachments_right
+      label: 'Yhteystiedot ja liitteet'
+      parent_name: ''
+      region: content
+      weight: 13
+      format_type: html_element
+      format_settings:
+        classes: 'service-group service-group--contacts-and-attachments text-normal d--flex--dsk column-gap-two flex-wrap--dsk'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: true
+        label_element: h2
+        label_element_classes: ' group-label--h4 h4 group-label'
+        attributes: ''
+        effect: none
+        speed: fast
+    group_archive:
+      children:
+        - group_archive_right
+      label: Arkistointi
+      parent_name: ''
+      region: content
+      weight: 12
+      format_type: html_element
+      format_settings:
+        classes: 'service-group service-group--archive text-normal group-border d--flex--dsk column-gap-two flex-wrap--dsk'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: true
+        label_element: h2
+        label_element_classes: ' group-label--h4 h4 group-label'
+        attributes: ''
+        effect: none
+        speed: fast
+    group_archive_right:
+      children:
+        - field_related_archive
+      label: 'Archive right'
+      parent_name: group_archive
+      region: content
+      weight: 20
+      format_type: html_element
+      format_settings:
+        classes: group-right
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_contacts_attachments_right:
+      children:
+        - field_contact_info
+        - field_internal_files
+        - field_internal_links
+      label: 'Contacts attachments right'
+      parent_name: group_contacts_and_attachment
+      region: content
+      weight: 16
+      format_type: html_element
+      format_settings:
+        classes: group-right
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_contacts_attachments_left:
+      children: {  }
+      label: 'Contacts attachments left'
+      parent_name: group_contacts_and_attachment
+      region: content
+      weight: 15
+      format_type: html_element
+      format_settings:
+        classes: group-left
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
 id: node.service.internal
 targetEntityType: node
 bundle: service
@@ -612,7 +714,7 @@ content:
     settings:
       use_description_as_link_text: true
     third_party_settings: {  }
-    weight: 12
+    weight: 15
     region: content
   field_internal_links:
     type: link
@@ -624,7 +726,7 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
-    weight: 13
+    weight: 16
     region: content
   field_measures_during_attendance:
     type: text_default
@@ -677,7 +779,7 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 11
+    weight: 21
     region: content
   field_service_coordination:
     type: text_default
