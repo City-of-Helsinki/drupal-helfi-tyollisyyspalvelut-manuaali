@@ -1021,7 +1021,7 @@ function hel_tpm_general_update_20123(&$sandbox) {
     }
 
     $delta = 0;
-    foreach ($default_files as $fid => &$file) {
+    foreach ($default_files as $fid => $file) {
       $delta++;
       if ($file['langcode'] === $default_langcode) {
         unset($default_files[$fid]);
@@ -1030,7 +1030,11 @@ function hel_tpm_general_update_20123(&$sandbox) {
       $file['revision_id'] = $default_vid;
       $file['langcode'] = $default_langcode;
       $file['delta'] = (string) $delta;
-      unset($file);
+      $default_files[$fid] = $file;
+    }
+
+    if (empty($default_files)) {
+      continue;
     }
 
     $tables = ['node__field_public_files', 'node_revision__field_public_files'];
