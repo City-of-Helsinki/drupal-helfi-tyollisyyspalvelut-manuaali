@@ -1,0 +1,4 @@
+services:
+  hel_tpm_file_garbage_collector.collector:
+    class: Drupal\hel_tpm_file_garbage_collector\FileGarbageCollector
+    arguments: ['@database', '@entity_type.manager', '@entity_field.manager', '@queue']
