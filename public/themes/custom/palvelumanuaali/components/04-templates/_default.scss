@@ -61,10 +61,10 @@ body {
   position: relative;
   padding: 0;
   margin-bottom: 10em;
-  @media only screen and (max-width: $large) {
+  @media only screen and (max-width: $xl) {
     margin-top: 0 !important;
     margin-left: $space;
-    margin-right: $space;
+    margin-right: $space-one-and-half;
   }
 
   @include xs {
@@ -73,10 +73,8 @@ body {
 
   @include large {
     padding-top: $space-triple;
-    margin-right: $space-quadruple;
-    margin-left: $space-quadruple;
   }
-  @include xl {
+  @include xxl {
     margin: auto auto $space-triple auto;
   }
 }
