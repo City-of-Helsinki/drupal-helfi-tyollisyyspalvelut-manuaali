@@ -10,7 +10,9 @@ use Drupal\content_moderation\Entity\ContentModerationState;
 use Drupal\views_infinite_scroll\Plugin\views\pager\InfiniteScroll;
 
 /**
- * Implements hook_preprocess_html().
+ * Implements hook_preprocess_HOOK().
+ *
+ * Prepares variables for HTML document templates.
  */
 function palvelumanuaali_preprocess_html(&$variables): void {
   $route = \Drupal::routeMatch()->getRouteName();
@@ -22,7 +24,22 @@ function palvelumanuaali_preprocess_html(&$variables): void {
 }
 
 /**
- * Implements hook_preprocess_breadcrumb().
+ * Implements hook_preprocess_HOOK().
+ *
+ * Prepares variables for node templates.
+ */
+function palvelumanuaali_preprocess_node(&$variables): void {
+  if (!isset($variables['is_front'])) {
+    $variables['is_front'] = \Drupal::service('path.matcher')->isFrontPage();
+  }
+  _palvelumanuaali_preprocess_view_card_liftup($variables);
+  _palvelumanuaali_preprocess_taxonomy_card($variables);
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
+ * Prepares variables for breadcrumb templates.
  */
 function palvelumanuaali_preprocess_breadcrumb(&$variables): void {
   $request = \Drupal::request();
@@ -34,7 +51,9 @@ function palvelumanuaali_preprocess_breadcrumb(&$variables): void {
 }
 
 /**
- * Implements hook_preprocess_block__language_switcher().
+ * Implements hook_preprocess_HOOK().
+ *
+ * Prepares variables for 'Language switcher' block templates.
  */
 function palvelumanuaali_preprocess_block__language_block(&$variables): void {
   // Set force lang count.
@@ -42,7 +61,9 @@ function palvelumanuaali_preprocess_block__language_block(&$variables): void {
 }
 
 /**
- * Implements hook_preprocess_links__language_block().
+ * Implements hook_preprocess_HOOK().
+ *
+ * Prepares variables for rendering 'Language switcher' links.
  */
 function palvelumanuaali_preprocess_links__language_block(&$variables): void {
   $language_manager = \Drupal::languageManager();
@@ -66,18 +87,9 @@ function palvelumanuaali_preprocess_links__language_block(&$variables): void {
 }
 
 /**
- * Implements hook__preprocess_node().
- */
-function palvelumanuaali_preprocess_node(&$variables): void {
-  if (!isset($variables['is_front'])) {
-    $variables['is_front'] = \Drupal::service('path.matcher')->isFrontPage();
-  }
-  _palvelumanuaali_preprocess_view_card_liftup($variables);
-  _palvelumanuaali_preprocess_taxonomy_card($variables);
-}
-
-/**
  * Implements hook_preprocess_HOOK().
+ *
+ * Prepares variables for field templates.
  */
 function palvelumanuaali_preprocess_field(&$variables): void {
   if ($variables['field_name'] == 'field_field_client_consent_descr') {
@@ -120,79 +132,9 @@ function palvelumanuaali_preprocess_field(&$variables): void {
 }
 
 /**
- * Preprocess function for view card liftup.
+ * Implements hook_preprocess_HOOK().
  *
- * @param array $variables
- *   Variable array.
- *
- * @return void
- *   -
- */
-function _palvelumanuaali_preprocess_view_card_liftup(&$variables): void {
-  if (empty($variables['view_mode']) || $variables['view_mode'] !== 'view_card_lift') {
-    return;
-  }
-  $status_colors = [
-    'archived' => 'grey',
-    'draft' => 'warning',
-    'on_hold' => 'warning',
-    'outdated' => 'warning',
-    'published' => 'default',
-    'ready_to_publish' => 'warning',
-    'temporarily_archived' => 'grey',
-  ];
-  $node = $variables['node'];
-  $content_moderation_state = ContentModerationState::loadFromModeratedEntity($node);
-  if ($content_moderation_state) {
-    $state_name = $content_moderation_state->get('moderation_state')->value;
-    $workflow = $content_moderation_state->get('workflow')->entity;
-    $state_label = $workflow->get('type_settings')['states'][$state_name]['label'];
-    $variables['state_label'] = $state_label;
-    $variables['status_modifier'] = !empty($status_colors[$state_name]) ? $status_colors[$state_name] : '';
-  }
-
-  // Fetch organizing group value for liftup rendeging.
-  $entity_group_field = $variables['node']->entitygroupfield;
-  if ($entity_group_field->count() > 0) {
-    $group_content = $entity_group_field->get(0)->entity;
-    $variables['organizing_group'] = $group_content->getGroup()->label();
-  }
-
-}
-
-/**
- * Preprocess function for taxonomy cards.
- *
- * @param array $variables
- *   Variable array.
- *
- * @return void
- *   -
- */
-function _palvelumanuaali_preprocess_taxonomy_card(&$variables): void {
-  if (empty($variables['view_mode']) || $variables['view_mode'] !== 'taxonomy_card') {
-    return;
-  }
-
-  $node = $variables['node'];
-  $content_moderation_state = ContentModerationState::loadFromModeratedEntity($node);
-  if ($content_moderation_state) {
-    $state_name = $content_moderation_state->get('moderation_state')->value;
-    $workflow = $content_moderation_state->get('workflow')->entity;
-    $state_label = $workflow->get('type_settings')['states'][$state_name]['label'];
-    $variables['state_label'] = $state_label;
-  }
-
-  // Fetch organizing group value for liftup rendeging.
-  $entity_group_field = $node->entitygroupfield;
-  if ($entity_group_field->count() > 0) {
-    $group_content = $entity_group_field->get(0)->entity;
-    $variables['organizing_group'] = $group_content->getGroup()->label();
-  }
-}
-
-/**
- * Implements hook__preprocess_fieldset().
+ * Prepares variables for fieldset element templates.
  */
 function palvelumanuaali_preprocess_fieldset(&$variables): void {
   $element = $variables['element'];
@@ -217,11 +159,12 @@ function palvelumanuaali_preprocess_fieldset(&$variables): void {
   if ($element['#field_name'] == 'field_municipality_specific') {
     $variables['legend_span']['attributes']['class'] = 'form-item__label';
   }
-
 }
 
 /**
- * Implements hook__preprocess_table().
+ * Implements hook_preprocess_HOOK().
+ *
+ * Prepares variables for table templates.
  */
 function palvelumanuaali_preprocess_table(&$variables): void {
   if (empty($variables['attributes']['id'])) {
@@ -234,7 +177,9 @@ function palvelumanuaali_preprocess_table(&$variables): void {
 }
 
 /**
- * Implements theme_preprocess_textarea().
+ * Implements hook_preprocess_HOOK().
+ *
+ * Prepares variables for textarea templates.
  */
 function palvelumanuaali_preprocess_textarea(&$variables): void {
   if (empty($variables['element'])) {
@@ -243,6 +188,79 @@ function palvelumanuaali_preprocess_textarea(&$variables): void {
   $element = $variables['element'];
   if (!empty($element['#errors'])) {
     $variables['wrapper_attributes']->addClass('error');
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
+ * Prepares variables for details element templates.
+ */
+function palvelumanuaali_preprocess_details(&$variables): void {
+  if ($node = \Drupal::request()->attributes->get('node')) {
+    if ($node->bundle() !== 'service') {
+      return;
+    }
+    $variables['node__customer_view'] = \Drupal::service('entity_type.manager')
+      ->getViewBuilder('node')
+      ->view($node, 'customer_view');
+    $variables['node__internal_view'] = \Drupal::service('entity_type.manager')
+      ->getViewBuilder('node')
+      ->view($node, 'internal');
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
+ * Prepares variables for view templates.
+ */
+function palvelumanuaali_preprocess_views_view(&$variables): void {
+  $view = $variables['view'];
+  if ($view->getDisplay()->isPagerEnabled() && !empty($variables['rows'])) {
+    $pager = $view->getPager();
+    if ($pager && $pager instanceof InfiniteScroll) {
+      if (!isset($variables['rows']['#theme_wrappers'])) {
+        $variables['rows']['#theme_wrappers'] = [];
+      }
+      $variables['rows']['#theme_wrappers']['container']['#attributes']['class'][] = 'view-content';
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
+ * Prepares variables for eva main view template.
+ */
+function palvelumanuaali_preprocess_eva_display_entity_view(&$variables): void {
+  palvelumanuaali_preprocess_views_view($variables);
+  $style_plugin = $variables['view']->style_plugin->options;
+  if (!empty($style_plugin['empty_table']) && $style_plugin['empty_table'] === TRUE) {
+    $variables['empty_table'] = TRUE;
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
+ * Prepares variables for paragraph templates.
+ */
+function palvelumanuaali_preprocess_paragraph(&$variables): void {
+  $paragraph = $variables['paragraph'];
+  $color = [];
+  $alignment = [];
+
+  // Turn user selected column width to a Bootstrap class.
+  if ($paragraph->hasField('field_alignment') && !$paragraph->get('field_alignment')->isEmpty()) {
+    $alignment = $paragraph->get('field_alignment')->getValue()[0]['value'];
+    $variables['alignment'] = 'alignment--' . $alignment;
+  }
+
+  // Check if the paragraph has a color field with a value.
+  if ($paragraph->hasField('field_background_color') && !$paragraph->get('field_background_color')->isEmpty()) {
+    $color = $paragraph->get('field_background_color')->getValue()[0]['value'];
+    $variables['color'] = 'background--' . $color;
   }
 }
 
@@ -313,50 +331,6 @@ function palvelumanuaali_theme_suggestions_details_alter(array &$suggestions, ar
 }
 
 /**
- * Implements hook_preprocess_HOOK().
- */
-function palvelumanuaali_preprocess_details(&$variables): void {
-  if ($node = \Drupal::request()->attributes->get('node')) {
-    if ($node->bundle() !== 'service') {
-      return;
-    }
-    $variables['node__customer_view'] = \Drupal::service('entity_type.manager')
-      ->getViewBuilder('node')
-      ->view($node, 'customer_view');
-    $variables['node__internal_view'] = \Drupal::service('entity_type.manager')
-      ->getViewBuilder('node')
-      ->view($node, 'internal');
-  }
-}
-
-/**
- * Implements hook_preprocess_views_view().
- */
-function palvelumanuaali_preprocess_views_view(&$vars): void {
-  $view = $vars['view'];
-  if ($view->getDisplay()->isPagerEnabled() && !empty($vars['rows'])) {
-    $pager = $view->getPager();
-    if ($pager && $pager instanceof InfiniteScroll) {
-      if (!isset($vars['rows']['#theme_wrappers'])) {
-        $vars['rows']['#theme_wrappers'] = [];
-      }
-      $vars['rows']['#theme_wrappers']['container']['#attributes']['class'][] = 'view-content';
-    }
-  }
-}
-
-/**
- * Implements hook_preprocess_eva_display_entity_view().
- */
-function palvelumanuaali_preprocess_eva_display_entity_view(&$vars): void {
-  palvelumanuaali_preprocess_views_view($vars);
-  $style_plugin = $vars['view']->style_plugin->options;
-  if (!empty($style_plugin['empty_table']) && $style_plugin['empty_table'] === TRUE) {
-    $vars['empty_table'] = TRUE;
-  }
-}
-
-/**
  * Implements hook_theme_suggestions_HOOK_alter().
  */
 function palvelumanuaali_theme_suggestions_taxonomy_term_alter(array &$suggestions, array $variables): void {
@@ -372,7 +346,7 @@ function palvelumanuaali_theme_suggestions_taxonomy_term_alter(array &$suggestio
 /**
  * Implements hook_theme_suggestions_HOOK_alter().
  *
- * Add views unformatted template suggestions.
+ * Add template suggestions for views.
  */
 function palvelumanuaali_theme_suggestions_views_view_alter(array &$suggestions, array $variables): void {
   $suggestions[] = 'views_view__' . $variables['view']->id();
@@ -381,7 +355,7 @@ function palvelumanuaali_theme_suggestions_views_view_alter(array &$suggestions,
 /**
  * Implements hook_theme_suggestions_HOOK_alter().
  *
- * Add views unformatted template suggestions.
+ * Add template suggestions for unformatted views.
  */
 function palvelumanuaali_theme_suggestions_views_view_unformatted_alter(array &$suggestions, array $variables): void {
   $suggestions[] = 'views_view_unformatted__' . $variables['view']->id();
@@ -390,7 +364,7 @@ function palvelumanuaali_theme_suggestions_views_view_unformatted_alter(array &$
 /**
  * Implements hook_theme_suggestions_HOOK().
  *
- * Add views field template suggestions.
+ * Add template suggestions for views field.
  */
 function palvelumanuaali_theme_suggestions_views_view_field(array $variables): void {
   $suggestions[] = 'views_view_field__' . $variables['field']->field;
@@ -409,14 +383,11 @@ function palvelumanuaali_theme_suggestions_input_alter(&$suggestions, array $var
  * Implements hook_theme_suggestions_HOOK_alter().
  */
 function palvelumanuaali_theme_suggestions_field_alter(array &$suggestions, array $variables): void {
-
   $element = $variables['element'];
 
   if ($element['#field_type'] == 'entity_reference_revisions') {
-
     foreach ($element as $key => $value) {
       if (is_numeric($key) && isset($value['#paragraph'])) {
-
         $paragraph = $value;
         $suggestions[] = 'field__' . $element['#field_name'] . '__paragraph__' . $paragraph['#view_mode'];
       }
@@ -425,29 +396,9 @@ function palvelumanuaali_theme_suggestions_field_alter(array &$suggestions, arra
 }
 
 /**
- * Implements hook_preprocess_paragraph().
- */
-function palvelumanuaali_preprocess_paragraph(&$variables): void {
-  $paragraph = $variables['paragraph'];
-  $color = [];
-  $alignment = [];
-
-  // Turn user selected column width to a Bootstrap class.
-  if ($paragraph->hasField('field_alignment') && !$paragraph->get('field_alignment')->isEmpty()) {
-    $alignment = $paragraph->get('field_alignment')->getValue()[0]['value'];
-    $variables['alignment'] = 'alignment--' . $alignment;
-
-  }
-
-  // Check if the paragraph has a color field with a value.
-  if ($paragraph->hasField('field_background_color') && !$paragraph->get('field_background_color')->isEmpty()) {
-    $color = $paragraph->get('field_background_color')->getValue()[0]['value'];
-    $variables['color'] = 'background--' . $color;
-  }
-}
-
-/**
- * Add views unformatted template suggestions.
+ * Implements hook_theme_suggestions_HOOK_alter().
+ *
+ * Add template suggestions for fieldset.
  */
 function palvelumanuaali_theme_suggestions_fieldset_alter(array &$suggestions, array $variables, $hook): void {
   if (isset($variables['element']['#group'])) {
@@ -465,30 +416,6 @@ function palvelumanuaali_theme_suggestions_fieldset_alter(array &$suggestions, a
  */
 function palvelumanuaali_page_attachments_alter(array &$attachments): void {
   _palvelumanuaali_attach_analytics($attachments);
-}
-
-/**
- * Attach analytics to page if conditions are met.
- *
- * @param array $attachments
- *   Array of all attachments provided by hook_page_attachments().
- *
- * @return void
- *   Void.
- */
-function _palvelumanuaali_attach_analytics(array &$attachments): void {
-  // Attach analytics only when user does not have admin or root role and the
-  // path is not excluded with a path pattern.
-  $roles = \Drupal::currentUser()->getRoles();
-  if (in_array('admin', $roles) || in_array('root', $roles)) {
-    return;
-  }
-  $path = \Drupal::service('path.current')->getPath();
-  $exclude_pattern = "/admin/*\n/user/*";
-  if (\Drupal::service('path.matcher')->matchPath($path, $exclude_pattern)) {
-    return;
-  }
-  $attachments['#attached']['library'][] = 'palvelumanuaali/analytics';
 }
 
 /**
@@ -528,7 +455,6 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id): void {
     if ($form_id == 'node_landing_page_form' || $form_id == 'node_landing_page_edit_form') {
       $form['field_paragraph']['#attributes']['class'][] = 'hide-title';
       $form['field_quick_links']['#attributes']['class'][] = 'hide-title';
-
     }
 
     // Combinations of these will be used to adjust the details block.
@@ -547,4 +473,99 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id): void {
     $form['actions']['delete']['#access'] = FALSE;
     $form['actions']['cancel']['#access'] = FALSE;
   }
+}
+
+/**
+ * Helper function to preprocess variables for view card liftup.
+ *
+ * @param array $variables
+ *   Variable array.
+ *
+ * @return void
+ *   -
+ */
+function _palvelumanuaali_preprocess_view_card_liftup(array &$variables): void {
+  if (empty($variables['view_mode']) || $variables['view_mode'] !== 'view_card_lift') {
+    return;
+  }
+  $status_colors = [
+    'archived' => 'grey',
+    'draft' => 'warning',
+    'on_hold' => 'warning',
+    'outdated' => 'warning',
+    'published' => 'default',
+    'ready_to_publish' => 'warning',
+    'temporarily_archived' => 'grey',
+  ];
+  $node = $variables['node'];
+  $content_moderation_state = ContentModerationState::loadFromModeratedEntity($node);
+  if ($content_moderation_state) {
+    $state_name = $content_moderation_state->get('moderation_state')->value;
+    $workflow = $content_moderation_state->get('workflow')->entity;
+    $state_label = $workflow->get('type_settings')['states'][$state_name]['label'];
+    $variables['state_label'] = $state_label;
+    $variables['status_modifier'] = !empty($status_colors[$state_name]) ? $status_colors[$state_name] : '';
+  }
+
+  // Fetch organizing group value for liftup rendeging.
+  $entity_group_field = $variables['node']->entitygroupfield;
+  if ($entity_group_field->count() > 0) {
+    $group_content = $entity_group_field->get(0)->entity;
+    $variables['organizing_group'] = $group_content->getGroup()->label();
+  }
+}
+
+/**
+ * Helper function to preprocess variables for taxonomy cards.
+ *
+ * @param array $variables
+ *   Variable array.
+ *
+ * @return void
+ *   -
+ */
+function _palvelumanuaali_preprocess_taxonomy_card(array &$variables): void {
+  if (empty($variables['view_mode']) || $variables['view_mode'] !== 'taxonomy_card') {
+    return;
+  }
+
+  $node = $variables['node'];
+  $content_moderation_state = ContentModerationState::loadFromModeratedEntity($node);
+  if ($content_moderation_state) {
+    $state_name = $content_moderation_state->get('moderation_state')->value;
+    $workflow = $content_moderation_state->get('workflow')->entity;
+    $state_label = $workflow->get('type_settings')['states'][$state_name]['label'];
+    $variables['state_label'] = $state_label;
+  }
+
+  // Fetch organizing group value for liftup rendeging.
+  $entity_group_field = $node->entitygroupfield;
+  if ($entity_group_field->count() > 0) {
+    $group_content = $entity_group_field->get(0)->entity;
+    $variables['organizing_group'] = $group_content->getGroup()->label();
+  }
+}
+
+/**
+ * Attach analytics to page if conditions are met.
+ *
+ * @param array $attachments
+ *   Array of all attachments provided by hook_page_attachments().
+ *
+ * @return void
+ *   Void.
+ */
+function _palvelumanuaali_attach_analytics(array &$attachments): void {
+  // Attach analytics only when user does not have admin or root role and the
+  // path is not excluded with a path pattern.
+  $roles = \Drupal::currentUser()->getRoles();
+  if (in_array('admin', $roles) || in_array('root', $roles)) {
+    return;
+  }
+  $path = \Drupal::service('path.current')->getPath();
+  $exclude_pattern = "/admin/*\n/user/*";
+  if (\Drupal::service('path.matcher')->matchPath($path, $exclude_pattern)) {
+    return;
+  }
+  $attachments['#attached']['library'][] = 'palvelumanuaali/analytics';
 }
