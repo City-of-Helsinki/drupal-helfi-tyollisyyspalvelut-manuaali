@@ -214,8 +214,6 @@ function palvelumanuaali_preprocess_eva_display_entity_view(&$variables): void {
  */
 function palvelumanuaali_preprocess_paragraph(&$variables): void {
   $paragraph = $variables['paragraph'];
-  $color = [];
-  $alignment = [];
 
   // Turn user selected column width to a Bootstrap class.
   if ($paragraph->hasField('field_alignment') && !$paragraph->get('field_alignment')->isEmpty()) {
@@ -380,12 +378,11 @@ function palvelumanuaali_theme_suggestions_field_alter(array &$suggestions, arra
 function palvelumanuaali_theme_suggestions_fieldset_alter(array &$suggestions, array $variables, $hook): void {
   if (isset($variables['element']['#group'])) {
     $id = str_replace("-", "_", $variables['element']['#group']);
-    $suggestions[] = $hook . '__' . $id;
   }
   else {
     $id = str_replace("-", "_", $variables['element']['#parents'][0]);
-    $suggestions[] = $hook . '__' . $id;
   }
+  $suggestions[] = $hook . '__' . $id;
 }
 
 /**
@@ -484,7 +481,7 @@ function _palvelumanuaali_preprocess_view_card_liftup(array &$variables): void {
     $variables['status_modifier'] = !empty($status_colors[$state_name]) ? $status_colors[$state_name] : '';
   }
 
-  // Fetch organizing group value for liftup rendeging.
+  // Fetch organizing group value for liftup rendering.
   $entity_group_field = $variables['node']->entitygroupfield;
   if ($entity_group_field->count() > 0) {
     $group_content = $entity_group_field->get(0)->entity;
@@ -515,7 +512,7 @@ function _palvelumanuaali_preprocess_taxonomy_card(array &$variables): void {
     $variables['state_label'] = $state_label;
   }
 
-  // Fetch organizing group value for liftup rendeging.
+  // Fetch organizing group value for liftup rendering.
   $entity_group_field = $node->entitygroupfield;
   if ($entity_group_field->count() > 0) {
     $group_content = $entity_group_field->get(0)->entity;
