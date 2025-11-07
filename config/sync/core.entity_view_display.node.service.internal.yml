@@ -73,15 +73,15 @@ third_party_settings:
   field_group:
     group_guidance_to_server:
       children:
-        - field_service_coordination
-        - field_service_req_speacialist
+        - group_guidance_service_text_left
+        - group_guidance_service_text_righ
       label: 'Ohjaus palveluun'
       parent_name: ''
       region: content
       weight: 3
       format_type: html_element
       format_settings:
-        classes: 'service-group service-group--guidance-to-service text-normal'
+        classes: 'service-group service-group--guidance-to-service text-normal group-border d--flex--dsk column-gap-two flex-wrap--dsk'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -94,15 +94,15 @@ third_party_settings:
         speed: fast
     group_service_obligatoryness:
       children:
-        - field_obligatoryness
-        - field_obligatoryness_freetext
+        - group_service_requirement_left
+        - group_service_requirement_right
       label: 'Palvelun velvoittavuus'
       parent_name: ''
       region: content
       weight: 5
       format_type: html_element
       format_settings:
-        classes: 'service-group service-group--service-requirements text-normal'
+        classes: 'service-group service-group--service-requirements text-normal group-border d--flex--dsk column-gap-two flex-wrap--dsk'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -115,16 +115,15 @@ third_party_settings:
         speed: fast
     group_statements_unemploym:
       children:
-        - field_statements
-        - field_statements_unemployment
-        - field_other_preferences
+        - group_statements_left
+        - group_statements_right
       label: 'Lausunnot ja työttömyysetuus'
       parent_name: ''
       region: content
       weight: 7
       format_type: html_element
       format_settings:
-        classes: 'service-group service-group--statements-and-jobprofits text-normal'
+        classes: 'service-group service-group--statements-and-jobprofits text-normal group-border d--flex--dsk column-gap-two flex-wrap--dsk'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -137,14 +136,15 @@ third_party_settings:
         speed: fast
     group_career_marking:
       children:
-        - field_career_markings
+        - group_markings_to_system_left
+        - group_markings_to_system_right
       label: 'Merkinnät asiakastietojärjestelmään'
       parent_name: ''
       region: content
       weight: 6
       format_type: html_element
       format_settings:
-        classes: 'service-group service-group--markings-to-system text-normal'
+        classes: 'service-group service-group--markings-to-system text-normal group-border d--flex--dsk column-gap-two flex-wrap--dsk'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -157,14 +157,15 @@ third_party_settings:
         speed: fast
     group_measures_during:
       children:
-        - field_measures_during_attendance
+        - group_measures_left
+        - group_measures_right
       label: 'Toimenpiteet osallistumisen ajalta'
       parent_name: ''
       region: content
       weight: 8
       format_type: html_element
       format_settings:
-        classes: 'service-group service-group--measures-during text-normal'
+        classes: 'service-group service-group--measures-during text-normal group-border d--flex--dsk column-gap-two flex-wrap--dsk'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -177,7 +178,8 @@ third_party_settings:
         speed: fast
     group_exceptions:
       children:
-        - field_service_exceptions
+        - group_exceptions_left
+        - group_exceptions_right
         - group_municipality_exceptions
       label: Poikkeustilanteet
       parent_name: ''
@@ -185,7 +187,7 @@ third_party_settings:
       weight: 9
       format_type: html_element
       format_settings:
-        classes: 'service-group service-group--exceptions text-normal'
+        classes: 'service-group service-group--exceptions text-normal group-border d--flex--dsk column-gap-two flex-wrap--dsk'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -198,15 +200,15 @@ third_party_settings:
         speed: fast
     group_complementary_job_search:
       children:
-        - field_service_suits_job_search
-        - field_service_suits_info
+        - group_complementary_left
+        - group_complementary_right
       label: ' Täydentävät työnhakukeskustelut'
       parent_name: ''
       region: content
       weight: 10
       format_type: html_element
       format_settings:
-        classes: 'service-group service-group--complementary-job-search text-normal'
+        classes: 'service-group service-group--complementary-job-search text-normal group-border d--flex--dsk column-gap-two flex-wrap--dsk'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -219,14 +221,15 @@ third_party_settings:
         speed: fast
     group_municipal_guidance:
       children:
-        - field_municipality_guidance
+        - group_municipality_guide_left
+        - group_municipality_guide_right
       label: 'Kuntakohtaiset ohjeet'
       parent_name: ''
       region: content
       weight: 4
       format_type: html_element
       format_settings:
-        classes: 'service-group text-normal'
+        classes: 'service-group text-normal group-border d--flex--dsk column-gap-two flex-wrap--dsk'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -243,7 +246,7 @@ third_party_settings:
       label: 'Kuntakohtaiset poikkeukset'
       parent_name: group_exceptions
       region: content
-      weight: 9
+      weight: 80
       format_type: html_element
       format_settings:
         classes: 'service-group margin--top-double'
@@ -254,6 +257,425 @@ third_party_settings:
         show_label: true
         label_element: h3
         label_element_classes: 'group-label--h5 h5 group-label'
+        attributes: ''
+        effect: none
+        speed: fast
+    group_guidance_service_text_left:
+      children: {  }
+      label: 'Guidance service text left'
+      parent_name: group_guidance_to_server
+      region: content
+      weight: 15
+      format_type: html_element
+      format_settings:
+        classes: group-left
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_guidance_service_text_righ:
+      children:
+        - field_service_coordination
+        - field_service_req_speacialist
+      label: 'Guidance service text right'
+      parent_name: group_guidance_to_server
+      region: content
+      weight: 16
+      format_type: html_element
+      format_settings:
+        classes: group-right
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_municipality_guide_left:
+      children: {  }
+      label: 'Municipality guide left'
+      parent_name: group_municipal_guidance
+      region: content
+      weight: 64
+      format_type: html_element
+      format_settings:
+        classes: group-left
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_municipality_guide_right:
+      children:
+        - field_municipality_guidance
+      label: 'Municipality guide right'
+      parent_name: group_municipal_guidance
+      region: content
+      weight: 65
+      format_type: html_element
+      format_settings:
+        classes: group-right
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_service_requirement_left:
+      children: {  }
+      label: 'Service requirement left'
+      parent_name: group_service_obligatoryness
+      region: content
+      weight: 66
+      format_type: html_element
+      format_settings:
+        classes: service-group
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_service_requirement_right:
+      children:
+        - field_obligatoryness
+        - field_obligatoryness_freetext
+      label: 'Service requirement right'
+      parent_name: group_service_obligatoryness
+      region: content
+      weight: 67
+      format_type: html_element
+      format_settings:
+        classes: group-right
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_markings_to_system_left:
+      children: {  }
+      label: 'Markings to system left'
+      parent_name: group_career_marking
+      region: content
+      weight: 68
+      format_type: html_element
+      format_settings:
+        classes: group-left
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_markings_to_system_right:
+      children:
+        - field_career_markings
+      label: 'Markings to system right'
+      parent_name: group_career_marking
+      region: content
+      weight: 69
+      format_type: html_element
+      format_settings:
+        classes: group-right
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_statements_left:
+      children: {  }
+      label: 'Statements left'
+      parent_name: group_statements_unemploym
+      region: content
+      weight: 70
+      format_type: html_element
+      format_settings:
+        classes: group-left
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_statements_right:
+      children:
+        - field_statements
+        - field_statements_unemployment
+        - field_other_preferences
+      label: 'Statements right'
+      parent_name: group_statements_unemploym
+      region: content
+      weight: 71
+      format_type: html_element
+      format_settings:
+        classes: group-right
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_measures_left:
+      children: {  }
+      label: 'Measures left'
+      parent_name: group_measures_during
+      region: content
+      weight: 72
+      format_type: html_element
+      format_settings:
+        classes: group-left
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_measures_right:
+      children:
+        - field_measures_during_attendance
+      label: 'Measures right'
+      parent_name: group_measures_during
+      region: content
+      weight: 73
+      format_type: html_element
+      format_settings:
+        classes: group-right
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_exceptions_left:
+      children: {  }
+      label: 'Exceptions left'
+      parent_name: group_exceptions
+      region: content
+      weight: 78
+      format_type: html_element
+      format_settings:
+        classes: group-left
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_exceptions_right:
+      children:
+        - field_service_exceptions
+      label: 'Exceptions right'
+      parent_name: group_exceptions
+      region: content
+      weight: 79
+      format_type: html_element
+      format_settings:
+        classes: group-right
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_complementary_left:
+      children: {  }
+      label: 'Complementary left'
+      parent_name: group_complementary_job_search
+      region: content
+      weight: 81
+      format_type: html_element
+      format_settings:
+        classes: group-left
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_complementary_right:
+      children:
+        - field_service_suits_job_search
+        - field_service_suits_info
+      label: 'Complementary right'
+      parent_name: group_complementary_job_search
+      region: content
+      weight: 82
+      format_type: html_element
+      format_settings:
+        classes: group-right
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_contacts_and_attachment:
+      children:
+        - group_contacts_attachments_left
+        - group_contacts_attachments_right
+      label: 'Yhteystiedot ja liitteet'
+      parent_name: ''
+      region: content
+      weight: 13
+      format_type: html_element
+      format_settings:
+        classes: 'service-group service-group--contacts-and-attachments text-normal d--flex--dsk column-gap-two flex-wrap--dsk'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: true
+        label_element: h2
+        label_element_classes: ' group-label--h4 h4 group-label'
+        attributes: ''
+        effect: none
+        speed: fast
+    group_archive:
+      children:
+        - group_archive_right
+      label: Arkistointi
+      parent_name: ''
+      region: content
+      weight: 12
+      format_type: html_element
+      format_settings:
+        classes: 'service-group service-group--archive text-normal group-border d--flex--dsk column-gap-two flex-wrap--dsk'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: true
+        label_element: h2
+        label_element_classes: ' group-label--h4 h4 group-label'
+        attributes: ''
+        effect: none
+        speed: fast
+    group_archive_right:
+      children:
+        - field_related_archive
+      label: 'Archive right'
+      parent_name: group_archive
+      region: content
+      weight: 20
+      format_type: html_element
+      format_settings:
+        classes: group-right
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_contacts_attachments_right:
+      children:
+        - field_contact_info
+        - field_internal_files
+        - field_internal_links
+      label: 'Contacts attachments right'
+      parent_name: group_contacts_and_attachment
+      region: content
+      weight: 16
+      format_type: html_element
+      format_settings:
+        classes: group-right
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_contacts_attachments_left:
+      children: {  }
+      label: 'Contacts attachments left'
+      parent_name: group_contacts_and_attachment
+      region: content
+      weight: 15
+      format_type: html_element
+      format_settings:
+        classes: group-left
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
         attributes: ''
         effect: none
         speed: fast
@@ -275,7 +697,7 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 6
+    weight: 70
     region: content
   field_contact_info:
     type: entity_reference_entity_view
@@ -292,7 +714,7 @@ content:
     settings:
       use_description_as_link_text: true
     third_party_settings: {  }
-    weight: 12
+    weight: 15
     region: content
   field_internal_links:
     type: link_external_new_tab
@@ -304,14 +726,14 @@ content:
       url_plain: false
       rel: 0
     third_party_settings: {  }
-    weight: 13
+    weight: 16
     region: content
   field_measures_during_attendance:
     type: text_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 7
+    weight: 74
     region: content
   field_municipality_guidance:
     type: entity_reference_revisions_entity_view
@@ -320,7 +742,7 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 5
+    weight: 66
     region: content
   field_municipality_specific:
     type: entity_reference_revisions_entity_view
@@ -336,77 +758,77 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 6
+    weight: 68
     region: content
   field_obligatoryness_freetext:
     type: text_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 7
+    weight: 69
     region: content
   field_other_preferences:
     type: list_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 11
+    weight: 74
     region: content
   field_related_archive:
     type: list_key
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 11
+    weight: 21
     region: content
   field_service_coordination:
     type: text_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 0
+    weight: 17
     region: content
   field_service_exceptions:
     type: text_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 8
+    weight: 80
     region: content
   field_service_req_speacialist:
     type: text_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 2
+    weight: 18
     region: content
   field_service_suits_info:
     type: text_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 14
+    weight: 84
     region: content
   field_service_suits_job_search:
     type: list_key
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 13
+    weight: 83
     region: content
   field_statements:
     type: list_key
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 9
+    weight: 72
     region: content
   field_statements_unemployment:
     type: text_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 10
+    weight: 73
     region: content
   flag_lista:
     settings: {  }
