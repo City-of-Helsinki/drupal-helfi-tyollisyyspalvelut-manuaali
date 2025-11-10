@@ -110,10 +110,17 @@ final class FileGarbageCollector {
    *   TRUE if the file is actively in use; otherwise, FALSE.
    */
   protected function isActive($file) {
+
+    // If file is in default revision file is active.
+    if ($this->isFileInDefaultRevision($file)) {
+      return TRUE;
+    }
+
     // If file is referenced in latest revision assume file is in active use.
     if ($this->isFileInLatestRevision($file)) {
       return TRUE;
     }
+
     foreach ($file['tables'] as $field_name => $table_info) {
       $col = $field_name . '_target_id';
       $entity_type_data = $table_info['entity_type'];
@@ -137,6 +144,31 @@ final class FileGarbageCollector {
   }
 
   /**
+   * Determines whether a file exists in its default revision.
+   *
+   * @param array $file
+   *   An associative array representing the file, which includes its related
+   *   tables and file ID (fid).
+   *
+   * @return bool
+   *   TRUE if the file is present in its default revision, FALSE otherwise.
+   */
+  protected function isFileInDefaultRevision($file) {
+    foreach ($file['tables'] as $field => $table_data) {
+      $field_key = sprintf('%s_target_id', $field);
+      $count = $this->connection->select($table_data['field_entity_table'])
+        ->condition($field_key, $file['fid'])
+        ->countQuery()
+        ->execute()
+        ->fetchField();
+      if ($count > 0) {
+        return TRUE;
+      }
+    }
+    return FALSE;
+  }
+
+  /**
    * Determines if the given file exists in the latest entity revision.
    *
    * @param array $file
@@ -152,15 +184,19 @@ final class FileGarbageCollector {
     foreach ($file['tables'] as $field_name => $table_info) {
       $entity_type_data = $table_info['entity_type'];
       $col = $field_name . '_target_id';
-      $latest_revision = $this->getLatestRevision($entity_type_data['revision_table']);
-      // Fetch latest revision for langcode and check if it's published.
-      if (empty($latest_revision)) {
+
+      // Fetch latest revisions per langcode.
+      $latest_revisions = $this->getLatestRevisions($entity_type_data['revision_table']);
+      if (empty($latest_revisions)) {
         return FALSE;
       }
-      $file_usage = $this->getRevisionFileReferences($table_info['field_revision_table'], $latest_revision['vid'], $latest_revision['langcode']);
-      foreach ($file_usage as $row) {
-        if ($row[$col] === $file['fid']) {
-          return TRUE;
+      // Check if file is in use in any latest revision.
+      foreach ($latest_revisions as $revision) {
+        $file_usage = $this->getRevisionFileReferences($table_info['field_revision_table'], $revision->vid, $revision->langcode);
+        foreach ($file_usage as $row) {
+          if ($row[$col] === $file['fid']) {
+            return TRUE;
+          }
         }
       }
     }
@@ -199,18 +235,13 @@ final class FileGarbageCollector {
    *   An associative array containing data of the latest revision, or NULL if
    *   no affected revisions are found.
    */
-  protected function getLatestRevision($revision_table) {
-    $rev = $this->connection->select($revision_table, 'dt')
+  protected function getLatestRevisions($revision_table) {
+    return $this->connection->select($revision_table, 'dt')
       ->fields('dt')
       ->condition('dt.revision_translation_affected', 1)
-      ->orderBy('vid', 'DESC')
-      ->range(0, 1)
+      ->orderBy('vid', 'ASC')
       ->execute()
-      ->fetchAll(\PDO::FETCH_ASSOC);
-    if (empty($rev)) {
-      return NULL;
-    }
-    return reset($rev);
+      ->fetchAllAssoc('langcode');
   }
 
   /**
@@ -244,6 +275,7 @@ final class FileGarbageCollector {
           'revision_key' => $entity_type->getKey('revision'),
           'changed_key' => $changed_key,
         ],
+        'field_entity_table' => $table_mapping->getDedicatedDataTableName($field),
         'field_revision_table' => $table_mapping->getDedicatedRevisionTableName($field),
       ];
     }

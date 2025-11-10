@@ -39,6 +39,7 @@ final class FileGarbageCollectorTest extends EntityKernelTestBase {
     'workflows',
     'content_moderation',
     'content_translation',
+    'hel_tpm_file_garbage_collector_test',
   ];
 
   /**
@@ -74,7 +75,7 @@ final class FileGarbageCollectorTest extends EntityKernelTestBase {
    *
    * @var \Drupal\file\FileInterface
    */
-  private $file1;
+  private $file;
 
   /**
    * Test file 2.
@@ -108,8 +109,10 @@ final class FileGarbageCollectorTest extends EntityKernelTestBase {
       'type' => 'article',
       'name' => 'Article',
       'new_revision' => TRUE,
+      'translatable' => TRUE,
     ]);
     $article->save();
+    \Drupal::service('content_translation.manager')->setEnabled('node', 'article', TRUE);
 
     $this->createEditorialWorkflow();
 
@@ -133,6 +136,7 @@ final class FileGarbageCollectorTest extends EntityKernelTestBase {
       'entity_type' => 'node',
       'field_name' => 'file_test',
       'bundle' => 'article',
+      'translatable' => TRUE,
       'settings' => ['file_directory' => $this->directory],
     ])->save();
     file_put_contents('public://example.txt', $this->randomMachineName());
@@ -260,6 +264,7 @@ final class FileGarbageCollectorTest extends EntityKernelTestBase {
     $this->queue->deleteQueue();
     $this->garbageCollector->collect();
 
+    // No files removed.
     $this->assertEquals(0, $this->queue->numberOfItems());
 
     $datetime->add(\DateInterval::createFromDateString('3 months'));
@@ -270,6 +275,7 @@ final class FileGarbageCollectorTest extends EntityKernelTestBase {
     $this->setNodeValues($node, $values, $datetime->getTimestamp());
     $this->queue->deleteQueue();
     $this->garbageCollector->collect();
+    // File 1 should be removed.
     $this->assertEquals(1, $this->queue->numberOfItems());
 
     $values = [
@@ -283,6 +289,7 @@ final class FileGarbageCollectorTest extends EntityKernelTestBase {
     // Empty queue before running collection.
     $this->queue->deleteQueue();
     $this->garbageCollector->collect();
+    // File 1 should be removed.
     $this->assertEquals(1, $this->queue->numberOfItems());
   }
 
@@ -299,7 +306,7 @@ final class FileGarbageCollectorTest extends EntityKernelTestBase {
    * @return void
    *   Return nothing.
    */
-  protected function testFileGarbageCollectionTranslatedModeration() {
+  public function testFileGarbageCollectionTranslationsModeration() {
     $datetime = new DrupalDateTime('-12 months');
     $node = Node::create([
       'title' => $this->randomMachineName(8),
@@ -317,7 +324,11 @@ final class FileGarbageCollectorTest extends EntityKernelTestBase {
       'changed' => $datetime->getTimestamp(),
       'revision_timestamp' => $datetime->getTimestamp(),
     ]);
-    $values = [
+    // Create revision 1.
+    $node->save();
+    $node = $this->reloadEntity($node);
+
+    $translation_values = [
       'title' => $this->randomString(),
       'moderation_state' => 'draft',
       'file_test' => [
@@ -327,66 +338,89 @@ final class FileGarbageCollectorTest extends EntityKernelTestBase {
       'changed' => $datetime->getTimestamp(),
       'revision_timestamp' => $datetime->getTimestamp(),
     ];
-    $translation = $node->addTranslation($this->translationLangcode, $values);
+    $translation = $node->addTranslation($this->translationLangcode, $translation_values);
+
+    // Create revision 2.
     $translation->save();
 
     $this->garbageCollector->collect();
+    // No files removed.
     $this->assertEquals(0, $this->queue->numberOfItems());
 
     $datetime->add(\DateInterval::createFromDateString('4 months'));
-    $values = ['moderation_state' => 'published'];
-    $this->setNodeValues($node, $values, $datetime->getTimestamp());
-    $values = [
+    $translation_values = ['moderation_state' => 'published'];
+    // Create revision 3.
+    $this->setNodeValues($translation, $translation_values, $datetime->getTimestamp());
+
+    $node_values = [
       'moderation_state' => 'published',
       'file_test' => ['target_id' => $this->file->id()],
     ];
-    $this->setNodeValues($values, $node, $datetime->getTimestamp());
+    // Create revision 4.
+    $this->setNodeValues($node, $node_values, $datetime->getTimestamp());
 
     $this->queue->deleteQueue();
     $this->garbageCollector->collect();
+    // File 2 should be removed.
     $this->assertEquals(1, $this->queue->numberOfItems());
 
     $datetime->add(\DateInterval::createFromDateString('1 months'));
-    $values = [
-      'moderation_state' => 'draft',
-      'file_test' => [],
+    $translation_values = [
+      'moderation_state' => 'published',
+      'file_test' => ['target_id' => NULL],
     ];
+    // Create revision 5.
+    $translation->file_test = [];
+    $this->setNodeValues($translation, $translation_values, $datetime->getTimestamp());
+
+    $this->queue->deleteQueue();
+    $this->garbageCollector->collect();
+    // Files 2 and 3 should be removed.
+    $this->assertEquals(2, $this->queue->numberOfItems());
+
+    $datetime = new DrupalDateTime('now');
+
+    $values = [
+      'moderation_state' => 'published',
+      'file_test' => ['target_id' => NULL],
+    ];
+
+    // Create revision 6.
+    $this->setNodeValues($node, $values, $datetime->getTimestamp());
+    // Create revision 7.
     $this->setNodeValues($translation, $values, $datetime->getTimestamp());
 
     $this->queue->deleteQueue();
-    $this->garbageCollector->collect();
-    $this->assertEquals(0, $this->garbageCollector->numberOfItems());
 
-    $datetime = new DrupalDateTime('now');
-    $this->setNodeValues($node, ['moderation_state' => 'published', 'file_test' => []], $datetime->getTimestamp());
-    $this->setNodeValues($translation, [], $datetime->getTimestamp());
-
-    $this->queue->deleteQueue();
+    // All files should be removed at this point.
     $this->garbageCollector->collect();
-    $this->assertEquals(2, $this->queue->numberOfItems());
+    $this->assertEquals(3, $this->queue->numberOfItems());
 
   }
 
   /**
-   * Updates the values of a node entity and creates a new revision.
+   * Updates the values of a node and creates a new revision.
    *
-   * This method sets the specified field values on the provided node entity,
-   * updates its changed and revision creation timestamps, and ensures a new
-   * revision is created. After saving, the node entity is reloaded.
+   * This method modifies the specified field values of a given node entity,
+   * sets the revision to be marked as new, and updates the revision and change
+   * timestamps. The updated node entity is then saved with the provided values
+   * and a specified language code.
    *
-   * @param \Drupal\node\Entity\Node $node
-   *   The node entity being updated. Passed by reference to retain changes.
+   * @param \Drupal\node\NodeInterface $node
+   *   The node entity to update.
    * @param array $values
-   *   An associative array of field keys and their respective values
-   *   to be set on the node entity.
+   *   An associative array of field names and their corresponding values to set
+   *   on the node.
    * @param int $timestamp
-   *   A Unix timestamp to be used for the changed time and
-   *   revision creation time of the node.
+   *   The timestamp to set for the node's revision and change time.
+   * @param string $langcode
+   *   (optional) The language code for the translation.
    *
    * @return void
-   *   All modifications are applied directly to the input node.
+   *   Returns nothing.
    */
-  protected function setNodeValues(&$node, $values, $timestamp) {
+  protected function setNodeValues($node, $values, $timestamp, $langcode = 'x-default') {
+    $node = $this->reloadLatestTranslationAffected($node);
     foreach ($values as $key => $value) {
       $node->set($key, $value);
     }
@@ -394,7 +428,36 @@ final class FileGarbageCollectorTest extends EntityKernelTestBase {
     $node->setChangedTime($timestamp);
     $node->setRevisionCreationTime($timestamp);
     $node->save();
-    $node = $this->reloadEntity($node);
+  }
+
+  /**
+   * Reloads the latest affected translation of a node entity.
+   *
+   * This method retrieves the most recent revision of the given node
+   * in its current language and returns the corresponding translation.
+   * It is particularly useful in cases where the latest version
+   * of a node in a specific language needs to be accessed, ensuring
+   * that the most up-to-date translation is always used.
+   *
+   * @param \Drupal\node\Entity\Node $node
+   *   The node entity for which the latest translation is to be reloaded.
+   *
+   * @return \Drupal\node\Entity\Node
+   *   The latest translation of the node in the specified language.
+   */
+  protected function reloadLatestTranslationAffected($node) {
+    $node_langcode = $node->language()->getId();
+    $vid = $this->entityTypeManager->getStorage('node')->getQuery()
+      ->condition('type', 'article')
+      ->condition('nid', $node->id())
+      ->condition('langcode', $node_langcode)
+      ->accessCheck(FALSE)
+      ->sort('vid', 'DESC')
+      ->range(0, 1)
+      ->execute();
+    $vid = array_key_first($vid);
+    $node = \Drupal::entityTypeManager()->getStorage('node')->loadRevision($vid);
+    return $node->getTranslation($node_langcode);
   }
 
   /**
