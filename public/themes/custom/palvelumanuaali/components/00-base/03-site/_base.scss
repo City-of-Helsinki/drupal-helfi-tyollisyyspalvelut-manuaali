@@ -507,6 +507,11 @@ article ul,
 .d {
   &--inline-block {
     display: inline-block;
+    &--dsk{
+      @include xl {
+        display: inline-block;
+      }
+    }
   }
   &--inline {
     display: inline;
@@ -661,5 +666,22 @@ article ul,
 .text-maxwidth {
   @include large {
     max-width: 80ch;
+  }
+}
+
+.float{
+  &--l{
+    &--dsk {
+      @include xl {
+        float:left;
+      }
+    }
+  }
+  &--r{
+    &--dsk {
+      @include xl {
+        float:right;
+      }
+    }
   }
 }

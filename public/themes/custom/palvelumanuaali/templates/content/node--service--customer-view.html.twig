@@ -118,9 +118,8 @@
       </div>
     {% endif %}
     {% if content.entitygroupfield or content.field_service_producer %}
-      <div class="service-group service-group--additional-info text-normal d--flex--dsk column-gap-two flex-wrap--dsk">
+      <div class="service-group service-group--additional-info text-normal column-gap-two">
         <h2 class="group-label--h3 h3 group-label width--service-group-header">{{'Additional information'|t}}</h2>
-        <div class="group-left"></div>
         <div class="group-right">
           <div class="additional-info-wrapper">
             {% if (content.entitygroupfield['0'] is same as (content.field_service_producer['0'])) and content.field_service_producer['#items']|length is same as 1 %}
