@@ -75,8 +75,8 @@ third_party_settings:
   field_group:
     group_participation:
       children:
-        - group_participation_left
         - group_participation_right
+        - group_participation_left
       label: Osallistuminen
       parent_name: ''
       region: content
@@ -96,8 +96,8 @@ third_party_settings:
         speed: fast
     group_execution:
       children:
-        - group_implementation_left
         - group_implementation_right
+        - group_implementation_left
       label: Toteutustapa
       parent_name: ''
       region: content
@@ -137,22 +137,22 @@ third_party_settings:
         speed: fast
     group_target_group:
       children:
-        - group_target_group_left
         - group_target_group_right
+        - group_target_group_left
       label: Kohderyhmä
       parent_name: ''
       region: content
       weight: 2
       format_type: html_element
       format_settings:
-        classes: 'service-group service-group--target-group group-border d--flex--dsk column-gap-two flex-wrap--dsk'
+        classes: 'service-group service-group--target-group group-border column-gap-two d--inline-block--dsk'
         show_empty_fields: false
         id: ''
         label_as_html: false
         element: div
         show_label: true
         label_element: h2
-        label_element_classes: 'group-label--h3 h3 group-label width--service-group-header'
+        label_element_classes: 'group-label--h3 h3 group-label float--l--dsk width--service-group-header'
         attributes: ''
         effect: none
         speed: fast
@@ -359,8 +359,8 @@ third_party_settings:
         description: ''
     group_public_links_and_files:
       children:
-        - group_links_and_files_left
         - group_links_and_files_right
+        - group_links_and_files_left
       label: 'Liitteet ja linkit'
       parent_name: ''
       region: content
@@ -374,7 +374,7 @@ third_party_settings:
         element: div
         show_label: true
         label_element: h3
-        label_element_classes: 'group-label--h3 h3 group-label'
+        label_element_classes: 'group-label--h3 h3 group-label width--service-group-header'
         attributes: ''
         effect: none
         speed: fast
@@ -452,10 +452,10 @@ third_party_settings:
       label: 'Target group left'
       parent_name: group_target_group
       region: content
-      weight: 16
+      weight: 18
       format_type: html_element
       format_settings:
-        classes: group-left
+        classes: 'group-left float--l--dsk'
         show_empty_fields: true
         id: ''
         label_as_html: false
@@ -475,7 +475,7 @@ third_party_settings:
       weight: 17
       format_type: html_element
       format_settings:
-        classes: group-right
+        classes: 'group-right float--r--dsk'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -491,7 +491,7 @@ third_party_settings:
       label: 'Participation left'
       parent_name: group_participation
       region: content
-      weight: 15
+      weight: 17
       format_type: html_element
       format_settings:
         classes: group-left
@@ -534,7 +534,7 @@ third_party_settings:
       label: 'Implementation left'
       parent_name: group_execution
       region: content
-      weight: 17
+      weight: 20
       format_type: html_element
       format_settings:
         classes: group-left
@@ -574,7 +574,7 @@ third_party_settings:
       label: 'Links and files left'
       parent_name: group_public_links_and_files
       region: content
-      weight: 17
+      weight: 19
       format_type: html_element
       format_settings:
         classes: group-left
@@ -611,8 +611,8 @@ third_party_settings:
         speed: fast
     group_contacts:
       children:
-        - group_contacts_left
         - group_contacts_right
+        - group_contacts_left
       label: Yhteystiedot
       parent_name: ''
       region: content
@@ -626,7 +626,7 @@ third_party_settings:
         element: div
         show_label: true
         label_element: h3
-        label_element_classes: 'group-label--h3 h3 group-label'
+        label_element_classes: 'group-label--h3 h3 group-label width--service-group-header'
         attributes: ''
         effect: none
         speed: fast
@@ -635,7 +635,7 @@ third_party_settings:
       label: 'Contacts left'
       parent_name: group_contacts
       region: content
-      weight: 12
+      weight: 14
       format_type: html_element
       format_settings:
         classes: group-left
