@@ -33,10 +33,9 @@
  * - field_type: The type of the field.
  * - label_display: The display settings for the label.
  *
+ *
  * @see template_preprocess_field()
  */
-
- @TODO: THIS CAN BE REMOVED IF BEM CLASSES CAN BE APPLIED IN WYSIWYG
 #}
 {%
   set classes = [
@@ -45,22 +44,30 @@
     'field--type-' ~ field_type|clean_class,
     'field--label-' ~ label_display,
     label_display == 'inline' ? 'clearfix',
-    'field--content--inline',
-    'text-maxwidth',
+  ]
+%}
+{%
+  set title_classes = [
+    'field__label',
+    label_display == 'visually_hidden' ? 'visually-hidden',
   ]
 %}
 
-{%
-  set item_classes = [
-  'tag-pill',
-  'tag-pill--primary',
-]
-%}
-
-<div{{ attributes.addClass(classes, 'field__items') }}>
-  {% for item in items %}
-    <div{{ item.attributes.addClass(item_classes) }}>
-        {{ item.content }}
-    </div>
-  {% endfor %}
+<div{{ attributes.addClass(classes) }}>
+  <div class="field__items">
+      <div class="field-items-wrapper">
+        {% for item in items %}
+          {% if loop.index < 3 %}
+            <div{{ item.attributes.addClass('field__item').addClass('margin--bottom-zero') }}>{{ item.content }}</div>
+          {% else %}
+            <div{{ item.attributes.addClass('field__item').addClass('collapse').addClass('multi-collapse').addClass('margin--bottom-zero') }}>{{ item.content }}</div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      {% if items|length > 2 %}
+        <div class="button-wrapper">
+          <button class="button--no-color-no-border button--dropdown-button" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="multi-collapse">{{"Show more"|t}}</button>
+        </div>
+      {% endif %}
+  </div>
 </div>

@@ -15,6 +15,8 @@ $small: 480px;
 $medium: 720px;
 $large: 920px;
 $xl: 1080px;
+$xl-zoom: 1300px;
+$desktop: 1400px;
 $xxl: 1920px;
 
 
@@ -64,6 +66,22 @@ $grid-breakpoints: 12;
 /// Allows easier @include xl {} syntax
 @mixin xl {
   @include breakpoint($xl) {
+    @content;
+  }
+}
+
+/// Mixin - xl-zoom Breakpoint
+/// Allows easier @include xl-zoom {} syntax
+@mixin xl-zoom {
+  @include breakpoint($xl-zoom) {
+    @content;
+  }
+}
+
+/// Mixin - desktop Breakpoint
+/// Allows easier @include desktop {} syntax
+@mixin desktop {
+  @include breakpoint($desktop) {
     @content;
   }
 }

@@ -118,18 +118,24 @@
       </div>
     {% endif %}
     {% if content.entitygroupfield or content.field_service_producer %}
-      <div class="additional-info-wrapper">
-        {% include "@atoms/text/headings/_heading.twig" with {
-          "heading_level": 5,
-          "heading": 'Additional information'|t,
-          "heading_modifiers": ['margin-bottom-two', 'blue-desktop'],
-        } %}
-        {% if (content.entitygroupfield['0'] is same as (content.field_service_producer['0'])) and content.field_service_producer['#items']|length is same as 1 %}
-          {{ content.entitygroupfield }}
-        {% else %}
-          {{ content.entitygroupfield }}
-          {{ content.field_service_producer }}
-        {% endif %}
+      <div class="service-group service-group--additional-info text-normal d--flex--dsk column-gap-two flex-wrap--dsk">
+        <h2 class="group-label--h3 h3 group-label width--service-group-header">{{'Additional information'|t}}</h2>
+        <div class="group-left"></div>
+        <div class="group-right">
+          <div class="additional-info-wrapper">
+            {% include "@atoms/text/headings/_heading.twig" with {
+              "heading_level": 5,
+              "heading": 'Additional information'|t,
+              "heading_modifiers": ['margin-bottom-two', 'blue-desktop'],
+            } %}
+            {% if (content.entitygroupfield['0'] is same as (content.field_service_producer['0'])) and content.field_service_producer['#items']|length is same as 1 %}
+              {{ content.entitygroupfield }}
+            {% else %}
+              {{ content.entitygroupfield }}
+              {{ content.field_service_producer }}
+            {% endif %}
+          </div>
+        </div>
       </div>
     {% endif %}
     <div class="sharing-options rounded-icon-parent">

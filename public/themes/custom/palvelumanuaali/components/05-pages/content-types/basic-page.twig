@@ -9,15 +9,17 @@
 
   <div {{ bem('content-column', content_colum_modifiers, content_column_base_class, ['']) }}>
     {% block page_content %}
-      {% include "@atoms/text/headings/_heading.twig" with {
-            heading_level: '1',
-            heading: node__label,
-            heading_base_class: 'page-heading',
-          }
-        %}
+      {% if content.field_hide_header[0]['#markup'] == 0 or content.field_hide_header[0]['#markup'] is empty %}
+        {% include "@atoms/text/headings/_heading.twig" with {
+              heading_level: '1',
+              heading: node__label,
+              heading_base_class: 'page-heading',
+            }
+          %}
+      {% endif %}
       {% endblock %}
       {% block content %}
-        {{ content|without('field_other_services') }}
+        {{ content|without('field_other_services','field_hide_header') }}
       {% endblock %}
   </div>
 
