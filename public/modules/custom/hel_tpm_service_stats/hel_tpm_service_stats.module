@@ -13,7 +13,9 @@ use Drupal\Core\Database\Query\AlterableInterface;
  * Implements hook_cron().
  */
 function hel_tpm_service_stats_cron() {
-  \Drupal::service('hel_tpm_service_stats.cron')->cron();
+  // Disabled due to unforeseen translation_affected
+  // value changes in translations
+  // \Drupal::service('hel_tpm_service_stats.cron')->cron();
 }
 
 /**
