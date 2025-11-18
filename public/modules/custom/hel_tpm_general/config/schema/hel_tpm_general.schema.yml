@@ -46,3 +46,10 @@ field.formatter.settings.hel_tpm_general_municipality_field_formatter:
 field.formatter.settings.hel_tpm_general_time_and_place_formatter:
   type: mapping
   label: Time and Place formatter formatter settings
+
+filter_settings.external_links_to_new_tab:
+  type: mapping
+  mapping:
+    internal_hosts:
+      type: string
+      label: 'Internal hosts'
