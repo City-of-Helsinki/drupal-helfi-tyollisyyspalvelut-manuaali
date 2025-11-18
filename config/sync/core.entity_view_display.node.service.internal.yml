@@ -65,7 +65,7 @@ dependencies:
     - entitygroupfield
     - field_group
     - file
-    - link
+    - hel_tpm_general
     - options
     - text
     - user
@@ -717,14 +717,14 @@ content:
     weight: 15
     region: content
   field_internal_links:
-    type: link
+    type: link_external_new_tab
     label: above
     settings:
-      trim_length: 80
+      trim_length: '80'
+      target: _blank
       url_only: false
       url_plain: false
-      rel: ''
-      target: ''
+      rel: 0
     third_party_settings: {  }
     weight: 16
     region: content
