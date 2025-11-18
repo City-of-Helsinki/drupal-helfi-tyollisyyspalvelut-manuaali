@@ -121,6 +121,9 @@ final class ExternalLinksToNewTab extends FilterBase implements ContainerFactory
   protected function validateUrl($href) {
     $schemes = ['http', 'https'];
     $url = parse_url($href);
+    if (empty($url['scheme'])) {
+      return FALSE;
+    }
     return in_array($url['scheme'], $schemes);
   }
 
