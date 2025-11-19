@@ -1,0 +1,78 @@
+label: 'Rapport över trasiga länkar'
+display:
+  default:
+    display_title: Huvud
+    display_options:
+      exposed_form:
+        options:
+          submit_button: Applicera
+          reset_button_label: Återställ
+          exposed_sorts_label: 'Sortera efter'
+          sort_asc_label: Stigande
+          sort_desc_label: Fallande
+      pager:
+        options:
+          tags:
+            previous: ‹‹
+            next: ››
+            first: '« Första'
+            last: 'Sista »'
+          expose:
+            items_per_page_label: 'Inlägg per sida'
+            items_per_page_options_all_label: '- Alla -'
+            offset_label: Kompensera
+      fields:
+        entity_field:
+          separator: ', '
+        entity_langcode:
+          label: Entitetsspråk
+          separator: ', '
+        url:
+          label: URL
+          separator: ', '
+        last_check:
+          label: 'Senast kontrollerad'
+          separator: ', '
+        method:
+          label: Metod
+          separator: ', '
+        code:
+          label: Statuskoden
+          separator: ', '
+        error:
+          label: Fel
+          separator: ', '
+        fail_count:
+          separator: ', '
+        status:
+          separator: ', '
+        operations:
+          label: Funktioner
+      filters:
+        url:
+          expose:
+            label: URL
+        code_1:
+          expose:
+            label: Statuskoden
+          group_info:
+            label: Resultat
+            group_items:
+              1:
+                title: Misslyckades
+        code:
+          expose:
+            label: Statuskoden
+        entity_langcode:
+          expose:
+            label: Entitetsspråk
+      title: 'Rapport över trasiga länkar'
+      footer:
+        result:
+          content: 'Visar @start - @end av @total'
+  page_1:
+    display_title: Sida
+    display_options:
+      menu:
+        title: 'Trasiga länkar'
+        description: 'Visar en lista av trasiga länkar i innehåll.'

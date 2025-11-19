@@ -6,9 +6,16 @@ dependencies:
     - field.storage.node.field_statements_unemployment
     - node.type.service
   module:
+    - linkchecker
     - require_on_publish
     - text
+    - tmgmt_content
 third_party_settings:
+  linkchecker:
+    scan: true
+    extractor: html_link_extractor
+  tmgmt_content:
+    excluded: false
   require_on_publish:
     require_on_publish: true
 id: node.service.field_statements_unemployment

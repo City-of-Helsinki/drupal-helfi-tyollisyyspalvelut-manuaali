@@ -26,7 +26,7 @@ $color-heading: clr(accent);
   line-height: $line-height-mobile;
   margin: $margin;
   width: auto;
-  @include large {
+  @include xl-zoom {
     font-size: $font-size;
     line-height: $line-height;
   }
@@ -59,7 +59,7 @@ $color-heading: clr(accent);
   line-height: $line-height-mobile;
   margin: $margin;
   width: auto;
-  @include large {
+  @include xl-zoom {
     font-size: $font-size;
     line-height: $line-height;
   }
@@ -93,7 +93,7 @@ $color-heading: clr(accent);
   line-height: $line-height-mobile;
   margin: $margin;
   width: auto;
-  @include large {
+  @include xl-zoom {
     font-size: $font-size;
     line-height: $line-height;
   }
@@ -127,7 +127,7 @@ $color-heading: clr(accent);
   line-height: $line-height-mobile;
   margin: $margin;
   width: auto;
-  @include large {
+  @include xl-zoom {
     font-size: $font-size;
     line-height: $line-height;
   }
@@ -161,7 +161,7 @@ $color-heading: clr(accent);
   line-height: $line-height-mobile;
   margin: $margin;
   width: auto;
-  @include large {
+  @include xl-zoom {
     font-size: $font-size;
     line-height: $line-height;
   }
@@ -194,7 +194,7 @@ $color-heading: clr(accent);
   line-height: $line-height-mobile;
   margin: $margin;
   width: auto;
-  @include large {
+  @include xl-zoom {
     font-size: $font-size;
     line-height: $line-height;
   }
@@ -232,7 +232,7 @@ $color-heading: clr(accent);
   @include heading-medium;
   &--margin-bottom-ninety {
       margin-bottom: $space-quintuple;
-    @include xl {
+    @include xl-zoom {
       margin-bottom: $space-sextuple;
     }
   }
@@ -245,7 +245,7 @@ $color-heading: clr(accent);
   @include heading-small;
   &--margin-bottom-triple-half {
       margin-bottom: $space-two-and-half;
-    @include xl {
+    @include xl-zoom {
       margin-bottom: $space-three-and-half;
     }
   }
@@ -254,7 +254,7 @@ $color-heading: clr(accent);
     font-weight: 600;
     line-height: 24px;
     margin-bottom: 0;
-    @include xl {
+    @include xl-zoom {
       font-size: 18px;
     }
   }
@@ -276,7 +276,7 @@ $color-heading: clr(accent);
   }
   &--margin-bottom-triple-half {
       margin-bottom: $space-two-and-half;
-    @include xl {
+    @include xl-zoom {
       margin-bottom: $space-three-and-half;
     }
   }
@@ -359,7 +359,7 @@ $color-heading: clr(accent);
 }
 
 .field-group--title {
-  font-size: 18px; 
+  font-size: 18px;
   line-height: 24px;
   font-weight: 600;
   margin-bottom: $space-one-and-half;

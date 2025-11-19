@@ -8,3 +8,7 @@ services:
   hel_tpm_url_shortener.short_url_service:
     class: Drupal\hel_tpm_url_shortener\ShortUrlService
     arguments: ['@entity_type.manager', '@request_stack']
+
+  hel_tpm_url_shortener.garbage_collector:
+    class: Drupal\hel_tpm_url_shortener\GarbageCollector
+    arguments: ['@entity_type.manager', '@queue', '@database']

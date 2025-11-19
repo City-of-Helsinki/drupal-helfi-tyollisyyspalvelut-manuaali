@@ -61,7 +61,7 @@
       icon_modifiers: ['small'],
       } %}
       <div class='text-wrapper'>
-        <div class='field__label'>{{ 'Weekday and time'|t }}</div>
+        <div class='field__label'>{{ "Time"|t({}, {'context' : 'Weekday and time display'}) }}</div>
         {% for field in date_fields %}
           {{ attribute(content, field) }}
         {% endfor %}

@@ -1,0 +1,39 @@
+<?php
+
+/**
+ * @file
+ * Module file for hel_tpm_url_shortener.
+ */
+
+use Drupal\Core\Datetime\DrupalDateTime;
+
+/**
+ * Implements hook_cron().
+ */
+function hel_tpm_url_shortener_cron() {
+  _hel_tpm_url_shortener_garbage_collection();
+}
+
+/**
+ * Executes the garbage collection process for the URL shortener service.
+ *
+ * This function ensures the garbage collection process for
+ * the hel_tpm_url_shortener is not executed more frequently than once per day.
+ * It checks the last execution time stored in the state system and proceeds
+ * with garbage collection if the last run was more than 24 hours ago.
+ *
+ * @return void
+ *   No return value. Executes garbage collection and updates the last run time.
+ */
+function _hel_tpm_url_shortener_garbage_collection() {
+  $last_run_state = 'hel_tpm_url_shortener_garbage_collector_last_run';
+  $last_run = \Drupal::state()->get($last_run_state);
+  $limit = new DrupalDateTime('-1 day');
+
+  if ($last_run >= $limit->getTimestamp()) {
+    return;
+  }
+
+  \Drupal::service('hel_tpm_url_shortener.garbage_collector')->collect();
+  \Drupal::state()->set($last_run_state, \Drupal::time()->getCurrentTime());
+}

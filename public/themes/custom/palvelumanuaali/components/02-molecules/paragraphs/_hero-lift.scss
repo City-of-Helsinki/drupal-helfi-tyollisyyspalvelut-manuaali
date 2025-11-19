@@ -30,9 +30,12 @@
     z-index: 1;
     flex: 1;
     @include large {
-      padding: 80px;
+      padding: 35px;
       max-width: unset;
       width: 50%;
+    }
+    @include xl-zoom {
+      padding: 80px;
     }
     .long-text {
       max-width: 100%;

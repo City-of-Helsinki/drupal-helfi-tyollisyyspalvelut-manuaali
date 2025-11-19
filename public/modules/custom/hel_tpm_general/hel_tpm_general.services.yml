@@ -8,3 +8,9 @@ services:
     decorates: purge.queue.txbuffer
     decoration_priority: 9
     arguments: ['@plugin.manager.purge.queue', '@database', '@config.factory']
+
+  hel_tpm_general.revision_list_route_event_subscriber:
+    class: Drupal\hel_tpm_general\EventSubscriber\RevisionListRouteSubscriber
+    arguments: ['@entity_type.manager']
+    tags:
+      - { name: event_subscriber }

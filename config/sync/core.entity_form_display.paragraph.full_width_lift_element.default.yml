@@ -7,6 +7,7 @@ dependencies:
     - field.field.paragraph.full_width_lift_element.field_background_color
     - field.field.paragraph.full_width_lift_element.field_body
     - field.field.paragraph.full_width_lift_element.field_button_link
+    - field.field.paragraph.full_width_lift_element.field_is_site_header
     - field.field.paragraph.full_width_lift_element.field_lift_media
     - field.field.paragraph.full_width_lift_element.field_title
     - paragraphs.paragraphs_type.full_width_lift_element
@@ -24,7 +25,7 @@ third_party_settings:
       label: 'Button group'
       region: content
       parent_name: ''
-      weight: 3
+      weight: 4
       format_type: tab
       format_settings:
         classes: ''
@@ -45,7 +46,7 @@ third_party_settings:
       label: 'Kuva ja asemointi'
       region: content
       parent_name: ''
-      weight: 2
+      weight: 3
       format_type: tab
       format_settings:
         classes: ''
@@ -68,13 +69,13 @@ content:
     third_party_settings: {  }
   field_background_color:
     type: options_select
-    weight: 2
+    weight: 3
     region: content
     settings: {  }
     third_party_settings: {  }
   field_body:
     type: text_textarea
-    weight: 1
+    weight: 2
     region: content
     settings:
       rows: 5
@@ -91,6 +92,13 @@ content:
     settings:
       placeholder_url: ''
       placeholder_title: ''
+    third_party_settings: {  }
+  field_is_site_header:
+    type: boolean_checkbox
+    weight: 1
+    region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   field_lift_media:
     type: media_library_widget

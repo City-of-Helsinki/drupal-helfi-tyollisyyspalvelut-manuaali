@@ -1,17 +1,16 @@
 
 {%
   set additional_classes = [
-  'field--content--inline',
-  'field--content--blue',
   'field--content--margin-left-triple',
   ]
 %}
 
-{% include "@molecules/icon-textfield/icon-textfield.twig" with  {
+{% include "@molecules/icon-textfield/icon-text-with-pills.twig" with  {
     items: items,
     field_header: 'Service language:'|t,
     additional_classes: additional_classes,
     icon_name: 'speech-bubble-dark-blue',
-    language_field: TRUE,
+    spaceless: TRUE,
+    items_additional_classes: ['tag-pill', 'tag-pill--alt']
   }
 %}

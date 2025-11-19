@@ -1,0 +1,26 @@
+uuid: 31ec97e3-62c6-4194-a75b-a537bf533841
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_hide_header
+    - node.type.basic_page
+  module:
+    - tmgmt_content
+third_party_settings:
+  tmgmt_content:
+    excluded: false
+id: node.basic_page.field_hide_header
+field_name: field_hide_header
+entity_type: node
+bundle: basic_page
+label: 'Hide header'
+description: 'Piilottaa sivun otsikon, käytä silloin kun haluat käyttää täysleveän noston otsikkoa sivun otsikkona.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: Piillotettu
+  off_label: Näkyvissä
+field_type: boolean

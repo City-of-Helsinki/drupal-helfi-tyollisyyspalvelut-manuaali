@@ -7,6 +7,10 @@ dependencies:
     - node.type.service
   module:
     - hel_tpm_service_stats
+    - tmgmt_content
+third_party_settings:
+  tmgmt_content:
+    excluded: true
 id: node.service.field_days_since_last_state_chan
 field_name: field_days_since_last_state_chan
 entity_type: node
@@ -14,7 +18,7 @@ bundle: service
 label: 'Days since last state change'
 description: ''
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:

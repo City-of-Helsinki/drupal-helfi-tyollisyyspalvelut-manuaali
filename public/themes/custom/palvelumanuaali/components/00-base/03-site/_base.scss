@@ -240,6 +240,10 @@ article ul,
   gap: 3px;
 }
 
+.column-gap-two {
+  column-gap: $space-double;
+}
+
 //Boxsizing
 .bs {
   &--bb{
@@ -254,6 +258,16 @@ article ul,
   }
   &--min-content {
     width: min-content;
+  }
+}
+
+//min-height
+.m-hght {
+  &--service-grp {
+    min-height: 200px;
+    @include xl {
+      min-height: 300px;
+    }
   }
 }
 
@@ -492,6 +506,11 @@ article ul,
 .d {
   &--inline-block {
     display: inline-block;
+    &--dsk{
+      @include xl {
+        display: inline-block;
+      }
+    }
   }
   &--inline {
     display: inline;
@@ -646,5 +665,22 @@ article ul,
 .text-maxwidth {
   @include large {
     max-width: 80ch;
+  }
+}
+
+.float{
+  &--l{
+    &--dsk {
+      @include xl {
+        float:left;
+      }
+    }
+  }
+  &--r{
+    &--dsk {
+      @include xl {
+        float:right;
+      }
+    }
   }
 }

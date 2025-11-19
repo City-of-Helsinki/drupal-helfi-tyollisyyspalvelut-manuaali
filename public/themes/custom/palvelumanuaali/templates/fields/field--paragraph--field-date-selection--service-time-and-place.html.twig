@@ -56,8 +56,8 @@
       {% for item in items %}
         {% if item.content['#markup'] == 'date_not_available' %}
           <div{{ attributes.addClass(classes, 'field__items') }}>
-              <div class='text-wrapper'>
-            <div class='field__item'}}>{{ 'To be agreed upon'|t }}</div>
+            <div class='text-wrapper'>
+              <div class='field__item'>{{ 'The time of the service is agreed upon separately.'|t }}</div>
             </div>
           </div>
         {% endif %}

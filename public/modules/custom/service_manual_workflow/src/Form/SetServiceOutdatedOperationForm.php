@@ -42,7 +42,7 @@ class SetServiceOutdatedOperationForm extends ConfirmFormBase {
    *
    * @var \Drupal\service_manual_workflow\ModerationTransition
    */
-  private ModerationTransition $moderationTransition;
+  protected ModerationTransition $moderationTransition;
 
   /**
    * {@inheritdoc}
@@ -75,9 +75,6 @@ class SetServiceOutdatedOperationForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function getDescription() {
-    return $this->t('Are you sure you want to change @node as Outdated and unpublish it?', [
-      '@node' => $this->node->getTitle(),
-    ]);
   }
 
   /**
@@ -85,6 +82,35 @@ class SetServiceOutdatedOperationForm extends ConfirmFormBase {
    */
   public function getFormId() {
     return 'service_workflow_set_outdated_operation_confirm';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function buildForm(array $form, FormStateInterface $form_state, $node = NULL) {
+    if (!$node instanceof NodeInterface) {
+      return [];
+    }
+    $form_state->setStorage(['node' => $node]);
+    $this->node = $node;
+    $form = parent::buildForm($form, $form_state);
+    if ($this->node->getTranslationLanguages(FALSE)) {
+      $form['all_translations_outdated'] = [
+        '#type' => 'checkbox',
+        '#title' => $this->t('Set all translations as outdated'),
+        '#disabled' => $this->node->isDefaultTranslation(),
+        '#default_value' => $this->node->isDefaultTranslation(),
+        '#ajax' => [
+          'wrapper' => 'description-wrapper',
+          'event' => 'change',
+          'callback' => '::updateDescriptionAjax',
+        ],
+      ];
+    }
+    $form['description']['#prefix'] = '<div id="description-wrapper">';
+    $form['description']['#suffix'] = '</div>';
+    $form['description']['#markup'] = $this->getDescriptionDynamic($form, $form_state);
+    return $form;
   }
 
   /**
@@ -106,6 +132,34 @@ class SetServiceOutdatedOperationForm extends ConfirmFormBase {
   }
 
   /**
+   * Generates a dynamic description message based on node state and form input.
+   *
+   * @param array $form
+   *   The form structure array.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The state of the form.
+   *
+   * @return string
+   *   The generated description message.
+   */
+  public function getDescriptionDynamic(array $form, FormStateInterface $form_state) {
+    $default_message = $this->t("You are about to change @node to Outdated and unpublished. After this the service won't show as published in Palvelumanuaali selections.", ['@node' => $this->node->getTitle()]);
+    $additional_message = $this->t('All translations will be moved to Outdated state.');
+    $message = sprintf('%s', $default_message);
+
+    if ($this->node->getTranslationLanguages(FALSE)) {
+      $show_additional = $form_state->getValue('all_translations_outdated');
+      if (empty($show_additional)) {
+        $show_additional = $form['all_translations_outdated']['#default_value'];
+      }
+      if ($show_additional) {
+        $message = sprintf('%s %s', $default_message, $additional_message);
+      }
+    }
+    return $message;
+  }
+
+  /**
    * Sets the specified node or its translations to an outdated state.
    *
    * @param \Drupal\node\NodeInterface $node
@@ -124,22 +178,18 @@ class SetServiceOutdatedOperationForm extends ConfirmFormBase {
   }
 
   /**
-   * {@inheritdoc}
+   * Updates and retrieves the description from the form.
+   *
+   * @param array $form
+   *   The form structure to extract the description from.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current state of the form.
+   *
+   * @return mixed
+   *   The description element of the form.
    */
-  public function buildForm(array $form, FormStateInterface $form_state, $node = NULL) {
-    if (!$node instanceof NodeInterface) {
-      return [];
-    }
-    $form_state->setStorage(['node' => $node]);
-    $this->node = $node;
-    $form = parent::buildForm($form, $form_state);
-    $form['all_translations_outdated'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Set all translations as outdated'),
-      '#disabled' => $this->node->isDefaultTranslation(),
-      '#default_value' => $this->node->isDefaultTranslation(),
-    ];
-    return $form;
+  public function updateDescriptionAjax($form, $form_state) {
+    return $form['description'];
   }
 
   /**

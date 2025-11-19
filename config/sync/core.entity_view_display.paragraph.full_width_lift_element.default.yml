@@ -7,6 +7,7 @@ dependencies:
     - field.field.paragraph.full_width_lift_element.field_background_color
     - field.field.paragraph.full_width_lift_element.field_body
     - field.field.paragraph.full_width_lift_element.field_button_link
+    - field.field.paragraph.full_width_lift_element.field_is_site_header
     - field.field.paragraph.full_width_lift_element.field_lift_media
     - field.field.paragraph.full_width_lift_element.field_title
     - paragraphs.paragraphs_type.full_width_lift_element
@@ -51,6 +52,16 @@ content:
       target: ''
     third_party_settings: {  }
     weight: 3
+    region: content
+  field_is_site_header:
+    type: boolean
+    label: hidden
+    settings:
+      format: boolean
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 5
     region: content
   field_lift_media:
     type: entity_reference_entity_view

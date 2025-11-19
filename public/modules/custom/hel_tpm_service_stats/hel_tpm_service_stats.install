@@ -45,6 +45,10 @@ function hel_tpm_service_stats_update_10001(&$sandbox) {
  * Create field_days_since_last_state_chan and set default values.
  */
 function hel_tpm_service_stats_update_10002() {
+  $content_types = \Drupal::service('entity_type.manager')->getStorage('node_type')->loadMultiple();
+  if (empty($content_types)) {
+    return;
+  }
   _hel_tpm_general_ensure_entity_fields('node', 'service', ['field_days_since_last_state_chan']);
 }
 
@@ -56,6 +60,9 @@ function hel_tpm_service_stats_update_10003() {
   $storage = Drupal::service('entity_type.manager')->getStorage('node');
   $nodes = $storage->loadByProperties(['type' => 'service']);
 
+  if (empty($nodes)) {
+    return;
+  }
   foreach ($nodes as $node) {
     $languages = $node->getTranslationLanguages();
     $revision_ids = $storage->revisionIds($node);
@@ -105,6 +112,65 @@ function hel_tpm_service_stats_update_10004() {
       }
     }
   }
+}
+
+/**
+ * Update translation-affected statuses for node revisions and data.
+ */
+function hel_tpm_service_stats_update_10005() {
+  $database = \Drupal::service('database');
+  $cm_field_revision = $database->select('content_moderation_state_field_revision', 'cm')
+    ->fields('cm')
+    ->condition('cm.revision_translation_affected', 1)
+    ->execute()
+    ->fetchAll();
+  $count = 0;
+  foreach ($cm_field_revision as $row) {
+    $node_revision_rows = $database->select('node_field_revision', 'nfr')
+      ->fields('nfr')
+      ->condition('nfr.vid', $row->content_entity_revision_id)
+      ->condition('nfr.revision_translation_affected', $row->revision_translation_affected, '!=')
+      ->condition('nfr.langcode', $row->langcode)
+      ->execute()
+      ->fetchAll();
+    if (empty($node_revision_rows)) {
+      continue;
+    }
+    foreach ($node_revision_rows as $node_revision_row) {
+      $database->update('node_field_revision')
+        ->condition('vid', $node_revision_row->vid)
+        ->condition('langcode', $node_revision_row->langcode)
+        ->fields(['revision_translation_affected' => $row->revision_translation_affected])
+        ->execute();
+    }
+    $database->update('node_field_data')
+      ->condition('nid', $row->content_entity_id)
+      ->condition('langcode', $row->langcode)
+      ->fields(['revision_translation_affected' => $row->revision_translation_affected])
+      ->execute();
+
+    // Fix other languages.
+    $node_update = $database->update('node_field_data')
+      ->condition('nid', $row->content_entity_id)
+      ->condition('langcode', $row->langcode, '!=')
+      ->condition('revision_translation_affected', 1)
+      ->fields(['revision_translation_affected' => 0])
+      ->execute();
+
+    $count++;
+    if ($node_update > 0) {
+      \Drupal::messenger()->addMessage(t("Fixed @count rows node_field_data for nid @nid", [
+        '@count' => $node_update,
+        '@nid' => $row->content_entity_id,
+      ]));
+    }
+    \Drupal::messenger()->addMessage(t("Fixed node @nid revision @vid language @lang", [
+      '@nid' => $row->content_entity_id,
+      '@vid' => $row->content_entity_revision_id,
+      '@lang' => $row->langcode,
+    ]));
+  }
+  \Drupal::messenger()->addMessage(t("Fixed @count nodes", ['@count' => $count]));
 }
 
 /**

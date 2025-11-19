@@ -80,7 +80,7 @@ class ServiceArchivalQueueTest extends GroupKernelTestBase {
       'moderation_state' => 'outdated',
     ]);
 
-    $translation = $node->addTranslation($this->translationLangcode);
+    $translation = $node->addTranslation($this->translationLangcode, ['title' => $this->randomString()]);
     _service_manual_workflow_queue_services_for_archival("now");
 
     $queue_factory = \Drupal::service('queue');

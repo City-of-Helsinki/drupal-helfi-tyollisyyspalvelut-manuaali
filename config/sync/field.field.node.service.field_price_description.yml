@@ -6,7 +6,15 @@ dependencies:
     - field.storage.node.field_price_description
     - node.type.service
   module:
+    - linkchecker
     - text
+    - tmgmt_content
+third_party_settings:
+  linkchecker:
+    scan: true
+    extractor: html_link_extractor
+  tmgmt_content:
+    excluded: false
 id: node.service.field_price_description
 field_name: field_price_description
 entity_type: node

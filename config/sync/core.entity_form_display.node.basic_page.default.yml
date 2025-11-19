@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.node.basic_page.field_description
+    - field.field.node.basic_page.field_hide_header
     - field.field.node.basic_page.field_media_image
     - field.field.node.basic_page.field_other_services
     - field.field.node.basic_page.field_paragraph
@@ -19,6 +20,7 @@ third_party_settings:
     group_left_column:
       children:
         - title
+        - field_hide_header
         - field_description
         - field_media_image
         - field_paragraph
@@ -43,7 +45,7 @@ third_party_settings:
       label: 'Lisätiedot:'
       region: content
       parent_name: ''
-      weight: 1
+      weight: 2
       format_type: details_sidebar
       format_settings:
         classes: details-sidebar
@@ -60,15 +62,22 @@ mode: default
 content:
   field_description:
     type: string_textarea
-    weight: 2
+    weight: 3
     region: content
     settings:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
+  field_hide_header:
+    type: boolean_checkbox
+    weight: 2
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
   field_media_image:
     type: media_library_widget
-    weight: 3
+    weight: 4
     region: content
     settings:
       media_types: {  }

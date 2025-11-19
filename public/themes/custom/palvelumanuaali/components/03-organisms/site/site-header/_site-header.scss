@@ -552,7 +552,7 @@ body:not(.admin-toolbar-enabled) {
 .menu--account {
   display: flex;
   align-items: start;
-  z-index: 10;
+  z-index: $zi-account-menu;
   .btn--hide-on-mobile {
     display: none;
     @include large {

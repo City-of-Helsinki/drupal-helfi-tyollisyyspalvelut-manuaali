@@ -8,16 +8,15 @@ dependencies:
     - paragraphs.paragraphs_type.url_and_file
   module:
     - entity_reference_revisions
-    - epp
+    - tmgmt_content
 third_party_settings:
-  epp:
-    value: ''
-    on_update: 0
+  tmgmt_content:
+    excluded: false
 id: node.service.field_service_other_info
 field_name: field_service_other_info
 entity_type: node
 bundle: service
-label: 'Liitteet ja linkit'
+label: 'Liitteet ja linkit (obsolete)'
 description: 'Jos palvelusta on liitteitä tai tietoa muualla verkossa, lisää ne tähän kohtaan. Nimeä linkit ja tiedostot selkeästi ja kuvaavasti. Nimi näkyy palvelukuvauksessa verkkosivuosoitteen (URL) ja tiedostonimen sijasta.   '
 required: false
 translatable: true
@@ -36,6 +35,9 @@ settings:
       content:
         weight: 12
         enabled: false
+      content_alt_editor:
+        weight: 26
+        enabled: false
       content_card_lift:
         weight: 19
         enabled: false
@@ -48,11 +50,23 @@ settings:
       full_width_card_lift:
         weight: 22
         enabled: false
+      full_width_lift_element:
+        weight: 31
+        enabled: false
       header_description_link:
         weight: 23
         enabled: false
+      hero_lift:
+        weight: 33
+        enabled: false
       link:
         weight: 15
+        enabled: false
+      link_card_row:
+        weight: 35
+        enabled: false
+      link_card_with_image:
+        weight: 36
         enabled: false
       long_text_field_with_toolbar:
         weight: 25
@@ -63,8 +77,14 @@ settings:
       quick_link:
         weight: 27
         enabled: false
+      quick_link_row:
+        weight: 40
+        enabled: false
       service_language:
         weight: 16
+        enabled: false
+      service_list:
+        weight: 42
         enabled: false
       service_price:
         weight: 17

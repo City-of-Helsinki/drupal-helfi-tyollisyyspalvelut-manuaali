@@ -29,6 +29,12 @@ services:
     tags:
       - { name: event_subscriber }
 
+  service_manual_workflow.service_state_archived_subscriber:
+    class: Drupal\service_manual_workflow\EventSubscriber\ServiceStateArchivedSubscriber
+    arguments: ['@entity_type.manager', '@service_manual_workflow.moderation_transition']
+    tags:
+      - { name: event_subscriber }
+
   service_manual_workflow.moderation_transition:
     class: Drupal\service_manual_workflow\ModerationTransition
     arguments: ['@entity_type.manager', '@datetime.time', '@current_user']

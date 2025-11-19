@@ -11,7 +11,6 @@ dependencies:
   module:
     - field_group
     - hel_tpm_general
-    - link
 third_party_settings:
   field_group:
     group_container:
@@ -48,14 +47,14 @@ content:
     weight: 0
     region: content
   field_link:
-    type: link
+    type: link_external_new_tab
     label: hidden
     settings:
-      trim_length: 80
+      trim_length: '80'
+      target: _blank
       url_only: false
       url_plain: false
-      rel: ''
-      target: ''
+      rel: 0
     third_party_settings: {  }
     weight: 4
     region: content

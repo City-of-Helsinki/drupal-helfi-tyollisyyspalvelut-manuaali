@@ -1,0 +1,93 @@
+label: 'Broken links report'
+display:
+  default:
+    display_title: Master
+    display_options:
+      exposed_form:
+        options:
+          submit_button: Apply
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      pager:
+        options:
+          tags:
+            previous: ‹‹
+            next: ››
+            first: '« First'
+            last: 'Last »'
+          expose:
+            items_per_page_label: 'Items per page'
+            items_per_page_options_all_label: '- All -'
+            offset_label: Offset
+      fields:
+        entity_field:
+          label: 'Entity field'
+          separator: ', '
+        entity_langcode:
+          label: 'Entity language'
+          separator: ', '
+        url:
+          label: URL
+          separator: ', '
+        last_check:
+          label: 'Last checked'
+          separator: ', '
+        method:
+          label: Method
+          separator: ', '
+        code:
+          label: 'Status code'
+          separator: ', '
+        error:
+          label: Error
+          separator: ', '
+        fail_count:
+          label: 'Fail count'
+          separator: ', '
+        nothing:
+          label: 'Found here'
+          alter:
+            text: "<b>Entity:</b> {{ linkcheckerlink_page_entity_label }}<br />\r\n<b>Field:</b> {{ entity_field }}<br />\r\n<b>Language:</b> {{ entity_langcode }}"
+        status:
+          label: 'Test link'
+          separator: ', '
+        operations:
+          label: Operations
+      filters:
+        url:
+          expose:
+            label: URL
+        code_1:
+          expose:
+            label: 'Status code'
+          group_info:
+            label: Result
+            group_items:
+              1:
+                title: Failed
+              2:
+                title: 'Success (2xx)'
+              3:
+                title: 'Redirect (3xx)'
+              4:
+                title: 'Client error (4xx)'
+              5:
+                title: 'Server error (5xx)'
+        code:
+          expose:
+            label: 'Status code'
+        entity_langcode:
+          expose:
+            label: 'Entity language'
+      title: 'Broken links report'
+      footer:
+        result:
+          content: 'Displaying @start - @end of @total'
+  page_1:
+    display_title: Page
+    display_options:
+      menu:
+        title: 'Broken links'
+        description: 'Shows a list of broken links in content.'

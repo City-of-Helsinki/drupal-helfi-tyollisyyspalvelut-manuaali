@@ -7,19 +7,18 @@ dependencies:
     - node.type.service
     - taxonomy.vocabulary.life_situation
   module:
-    - epp
     - require_on_publish
+    - tmgmt_content
 third_party_settings:
-  epp:
-    value: ''
-    on_update: 0
+  tmgmt_content:
+    excluded: false
   require_on_publish:
     require_on_publish: true
 id: node.service.field_life_situations
 field_name: field_life_situations
 entity_type: node
 bundle: service
-label: 'Life situation'
+label: 'Client’s situation'
 description: ''
 required: false
 translatable: false
