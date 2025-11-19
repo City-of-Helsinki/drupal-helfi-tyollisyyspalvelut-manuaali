@@ -101,7 +101,9 @@ function service_manual_workflow_form_node_form_alter(&$form, FormStateInterface
     // Create custom save button for confirm dialog.
     $form['actions']['submit_popup'] = [
       '#type' => 'button',
+      '#submit_button' => FALSE,
       '#value' => t('Save'),
+      '#name' => 'submit_popup',
     ];
 
     // Hide submit button.
