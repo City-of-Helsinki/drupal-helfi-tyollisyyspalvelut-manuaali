@@ -36,6 +36,18 @@ export function applySassLoaderConfig(config) {
           .map(file => `@import "${file}";`)
           .join('\n        ');
 
+        // Silence deprecation warnings from Emulsify dependencies.
+        const existingDeprecations = sassLoader.options.sassOptions?.silenceDeprecations || [];
+        sassLoader.options.sassOptions = {
+          ...sassLoader.options.sassOptions,
+          silenceDeprecations: [
+            ...existingDeprecations,
+            'global-builtin',
+            'color-functions',
+            'import',
+          ]
+        };
+
         sassLoader.options.additionalData = `
         @import "~normalize.css/normalize";
         @import "~breakpoint-sass/stylesheets/breakpoint";

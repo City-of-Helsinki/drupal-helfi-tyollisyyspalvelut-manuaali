@@ -12,4 +12,3 @@ config = applySassLoaderConfig(config);
 config = applyCleanPluginConfig(config);
 
 export default config;
-
