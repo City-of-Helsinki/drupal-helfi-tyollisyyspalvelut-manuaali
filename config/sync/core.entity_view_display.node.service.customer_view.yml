@@ -129,7 +129,7 @@ third_party_settings:
         label_as_html: false
         element: div
         show_label: true
-        label_element: h3
+        label_element: h2
         label_element_classes: 'group-label--h3 h3 group-label width--service-group-header'
         attributes: ''
         effect: none
@@ -363,7 +363,7 @@ third_party_settings:
       label: 'Liitteet ja linkit'
       parent_name: ''
       region: content
-      weight: 9
+      weight: 10
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--links-and-files group-border d--flex--dsk column-gap-two flex-wrap--dsk'
@@ -372,7 +372,7 @@ third_party_settings:
         label_as_html: false
         element: div
         show_label: true
-        label_element: h3
+        label_element: h2
         label_element_classes: 'group-label--h3 h3 group-label width--service-group-header'
         attributes: ''
         effect: none
@@ -401,11 +401,11 @@ third_party_settings:
     group_description_left:
       children:
         - field_implementation_extra_info
-        - field_life_situations
-        - field_service_set
         - field_service_languages
         - field_free_service
         - field_price
+        - entitygroupfield
+        - field_service_producer
       label: Left
       parent_name: group_description
       region: content
@@ -448,6 +448,7 @@ third_party_settings:
       children:
         - field_target_group_municipality
         - field_age_groups
+        - field_life_situations
       label: 'Target group left'
       parent_name: group_target_group
       region: content
@@ -507,10 +508,10 @@ third_party_settings:
     group_participation_right:
       children:
         - field_attendance_text
-        - field_service_requirements
         - field_service_benefits
-        - field_field_client_consent_descr
+        - field_service_requirements
         - field_client_consent
+        - field_field_client_consent_descr
       label: 'Participation right'
       parent_name: group_participation
       region: content
@@ -529,7 +530,8 @@ third_party_settings:
         effect: none
         speed: fast
     group_implementation_left:
-      children: {  }
+      children:
+        - field_accessibility
       label: 'Implementation left'
       parent_name: group_execution
       region: content
@@ -589,8 +591,8 @@ third_party_settings:
         speed: fast
     group_links_and_files_right:
       children:
-        - field_public_files
         - field_public_links
+        - field_public_files
       label: 'Links and files right'
       parent_name: group_public_links_and_files
       region: content
@@ -615,7 +617,7 @@ third_party_settings:
       label: Yhteystiedot
       parent_name: ''
       region: content
-      weight: 10
+      weight: 9
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--contacts group-border d--flex--dsk column-gap-two flex-wrap--dsk'
@@ -624,7 +626,7 @@ third_party_settings:
         label_as_html: false
         element: div
         show_label: true
-        label_element: h3
+        label_element: h2
         label_element_classes: 'group-label--h3 h3 group-label width--service-group-header'
         attributes: ''
         effect: none
@@ -689,8 +691,7 @@ third_party_settings:
         effect: none
         speed: fast
     group_accessibility:
-      children:
-        - group_accessibility_right
+      children: {  }
       label: 'Palvelun saavutettavuus'
       parent_name: ''
       region: content
@@ -708,11 +709,51 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-    group_accessibility_right:
+    group_service_category:
       children:
-        - field_accessibility
-      label: 'Accessibility right'
-      parent_name: group_accessibility
+        - group_service_category_right
+        - group_service_category_left
+      label: Palvelukategoria
+      parent_name: ''
+      region: content
+      weight: 13
+      format_type: html_element
+      format_settings:
+        classes: 'service-group service-group--service-categories d--flex--dsk column-gap-two flex-wrap--dsk'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: true
+        label_element: h2
+        label_element_classes: 'group-label--h3 h3 group-label width--service-group-header margin-right-full'
+        attributes: ''
+        effect: none
+        speed: fast
+    group_service_category_left:
+      children:
+        - field_service_set
+      label: 'Service category left'
+      parent_name: group_service_category
+      region: content
+      weight: 21
+      format_type: html_element
+      format_settings:
+        classes: group-left
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_service_category_right:
+      children: {  }
+      label: 'Service category right'
+      parent_name: group_service_category
       region: content
       weight: 20
       format_type: html_element
@@ -775,7 +816,7 @@ content:
       format_custom_false: ''
       format_custom_true: 'Palveluun osallistuminen edellyttää asiakkaan suostumusta hänen henkilötietojensa luovuttamiseen.'
     third_party_settings: {  }
-    weight: 25
+    weight: 24
     region: content
   field_contact_info_external:
     type: entity_reference_entity_view
@@ -798,7 +839,7 @@ content:
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 24
+    weight: 25
     region: content
   field_free_service:
     type: boolean
@@ -824,7 +865,7 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 3
+    weight: 22
     region: content
   field_other_services:
     type: entity_reference_entity_view
@@ -833,7 +874,7 @@ content:
       view_mode: card_lift
       link: false
     third_party_settings: {  }
-    weight: 13
+    weight: 14
     region: content
   field_price:
     type: number_decimal
@@ -864,7 +905,7 @@ content:
       custom_classes: ''
       aria_label: 'Avaa [file:name] uudessa välilehdessä'
     third_party_settings: {  }
-    weight: 19
+    weight: 20
     region: content
   field_public_links:
     type: link_external_new_tab
@@ -876,14 +917,14 @@ content:
       url_plain: false
       rel: 0
     third_party_settings: {  }
-    weight: 20
+    weight: 19
     region: content
   field_service_benefits:
     type: text_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 23
+    weight: 22
     region: content
   field_service_execution_text:
     type: text_default
@@ -914,7 +955,7 @@ content:
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 22
+    weight: 23
     region: content
   field_service_set:
     type: entity_reference_translated_label
