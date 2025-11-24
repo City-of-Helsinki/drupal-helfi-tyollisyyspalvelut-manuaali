@@ -23,7 +23,6 @@ body {
   display: block; /* Fix for IE weirdness */
   max-width: 100%;
   flex: 1;
-  width:100%;
   @include xxl {
     max-width: 2000px;
   }
@@ -507,6 +506,11 @@ article ul,
 .d {
   &--inline-block {
     display: inline-block;
+    &--dsk{
+      @include xl {
+        display: inline-block;
+      }
+    }
   }
   &--inline {
     display: inline;
@@ -661,5 +665,22 @@ article ul,
 .text-maxwidth {
   @include large {
     max-width: 80ch;
+  }
+}
+
+.float{
+  &--l{
+    &--dsk {
+      @include xl {
+        float:left;
+      }
+    }
+  }
+  &--r{
+    &--dsk {
+      @include xl {
+        float:right;
+      }
+    }
   }
 }

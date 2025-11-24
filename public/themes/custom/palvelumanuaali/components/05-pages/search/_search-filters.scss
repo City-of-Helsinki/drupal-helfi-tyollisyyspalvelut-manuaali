@@ -23,10 +23,12 @@
         justify-content: left;
       }
       label {
-        font-weight: bold;
+        font-weight: 600;
         margin-left: 0;
+        height: 40px;
         .text {
-          padding: 6px 10px 6px 0px;
+          padding: 8px 10px 8px 0px;
+          font-size: 15px;
         }
         .count {
           padding: 6px 10px;
@@ -191,7 +193,7 @@
       flex: unset;
       margin-top: $space-double;
       gap: 8px;
-      @include xl {
+      @media (min-width: 1130px) {
         margin-top: calc(-1 * $space-two-and-half);
         flex-direction: row;
         gap: 0;
@@ -216,9 +218,6 @@
         align-self: flex-end;
         grid-row: 1 / 2;
         min-width: 220px;
-        @include large {
-          min-width: unset;
-        }
         .select2-container--palvelumanuaali {
           box-shadow: inset 0px 0px 0px 2px clr(form-border);
           padding: 0;
@@ -231,9 +230,6 @@
             height: unset;
             text-overflow: ellipsis;
             padding: 8px 44px 8px $space-one-and-half;
-              &::after {
-                background-position: top 9px right 8px;
-              }
           }
           .select2-selection--single .select2-selection__rendered {
             background: transparent !important;
