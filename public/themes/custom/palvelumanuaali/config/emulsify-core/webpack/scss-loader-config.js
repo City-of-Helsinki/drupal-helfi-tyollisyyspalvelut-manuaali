@@ -29,12 +29,10 @@ export function applySassLoaderConfig(config) {
 
       if (sassLoader && sassLoader.options) {
         // Find all underscore-prefixed SCSS files in components directory
-        // Exclude _style.scss and _print.scss as they are entry files, not partials
         const componentPartials = globSync(`${projectRoot}/components/**/_*.scss`)
-          .filter(file => !file.endsWith('/_style.scss') && !file.endsWith('/_print.scss'))
-          .sort() // Sort to ensure consistent order (00-base comes first, then 01-atoms, etc.)
+          .sort()
           .map(file => `@import "${file}";`)
-          .join('\n        ');
+          .join('\n');
 
         // Silence deprecation warnings from Emulsify dependencies.
         const existingDeprecations = sassLoader.options.sassOptions?.silenceDeprecations || [];
