@@ -56,17 +56,25 @@
 <div{{ attributes.addClass(classes) }}>
   <div class="field__items">
       <div class="field-items-wrapper">
+        {% if items|length > 2 %}
+          {% set randId = random() %}
+          {% set multicollapseId = 'multi-collapse-' ~ randId %}
+          {% set multicollapseIdClass = '.' ~ multicollapseId %}
+        {% endif %}
         {% for item in items %}
           {% if loop.index < 3 %}
+
             <div{{ item.attributes.addClass('field__item').addClass('margin--bottom-zero')}}>{{ item.content }}</div>
           {% else %}
-            <div{{ item.attributes.addClass('field__item').addClass('collapse').addClass('multi-collapse').addClass('margin--bottom-zero')}}>{{ item.content }}</div>
+            <div{{ item.attributes.addClass('field__item').addClass('collapse').addClass(multicollapseId).addClass('margin--bottom-zero')}}>{{ item.content }}</div>
           {% endif %}
         {% endfor %}
       </div>
       {% if items|length > 2 %}
+
+
         <div class="button-wrapper">
-          <button class="button--no-color-no-border button--dropdown-button" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">{{"Show more"|t}}</button>
+          <button class="button--no-color-no-border button--dropdown-button" type="button" data-bs-toggle="collapse" data-bs-target={{ multicollapseIdClass }} aria-expanded="false" aria-controls={{ multicollapseId }}>{{"Show more"|t}}</button>
         </div>
       {% endif %}
   </div>
