@@ -45,6 +45,16 @@
   }
 }
 
+
+.group-label.margin-right-full {
+  @include xl {
+    margin-right: calc(100% - 382px);
+  }
+  @include xxl {
+    margin-right: calc(100% - 432px);
+  }
+}
+
 .group-label.width--service-group-header {
   @include xl {
     width: 350px;
