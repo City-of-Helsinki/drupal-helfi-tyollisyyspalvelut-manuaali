@@ -92,7 +92,25 @@
     default: 'yes',
   } %}
   {% block content %}
-  {{ content|without('flag_cart', 'flag_lists', 'view_mode_switcher', 'field_other_services', 'field_contact_info_external', 'field_service_producer', 'entitygroupfield') }}
+
+<div class="service-group group-border d--flex--dsk column-gap-two flex-wrap--dsk">
+  <div class="first-group-top">
+    {{ content.field_description }}
+  </div>
+  <div class="first-group-bottom">
+    {{ content.field_implementation_extra_info }}
+    {{ content.field_descritip }}
+    <div class="cost-wrapper">
+
+    </div>
+    {{ content.field_descritip }}
+    {{ content.field_descritip }}
+
+
+
+  </div>
+</div>
+{{ content|without('flag_cart', 'flag_lists', 'view_mode_switcher', 'field_other_services', 'field_contact_info_external', 'field_service_producer', 'entitygroupfield') }}
     {% if content.flag_cart  %}
       <div class='small-message-wrapper small-message-wrapper--service'>
         {{ content.flag_cart }}
