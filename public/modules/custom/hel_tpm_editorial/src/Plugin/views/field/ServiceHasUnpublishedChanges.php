@@ -111,6 +111,7 @@ class ServiceHasUnpublishedChanges extends FieldPluginBase {
             '#link' => $this->linkGenerator()
               ->generate('Unpublished changes', $this->latestRevisionUrl($entity)),
             '#state' => $moderation_state,
+            '#changed' => $this->getLatestChanged($entity),
           ];
         }
       }
@@ -184,7 +185,7 @@ class ServiceHasUnpublishedChanges extends FieldPluginBase {
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  protected function getLatestRevision($node) {
+  protected function getLatestRevision($node) : NodeInterface {
     $storage = $this->entityTypeManager->getStorage($node->getEntityTypeId());
     $langcode = $node->language()->getId();
     // Load latest node revision.
@@ -221,6 +222,20 @@ class ServiceHasUnpublishedChanges extends FieldPluginBase {
   protected function latestRevisionUrl(NodeInterface $entity) {
     $url = sprintf('/node/%s/latest', $entity->id());
     return Url::fromUserInput($url);
+  }
+
+  /**
+   * Retrieves the latest changed time for the provided entity.
+   *
+   * @param \NodeInterface $entity
+   *   The entity for which the latest changed time is being retrieved.
+   *
+   * @return int
+   *   The timestamp of the latest changed time.
+   */
+  protected function getLatestChanged(NodeInterface $entity) {
+    $revision = $this->getLatestRevision($entity);
+    return $revision->getChangedTime();
   }
 
 }
