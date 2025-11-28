@@ -79,7 +79,7 @@ third_party_settings:
       label: Osallistuminen
       parent_name: ''
       region: content
-      weight: 3
+      weight: 4
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--participation text-normal group-border d--flex--dsk column-gap-two flex-wrap--dsk'
@@ -120,7 +120,7 @@ third_party_settings:
       label: 'Missä ja milloin'
       parent_name: ''
       region: content
-      weight: 7
+      weight: 6
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--where-and-when text-normal group-border d--flex--dsk column-gap-two flex-wrap--dsk'
@@ -141,7 +141,7 @@ third_party_settings:
       label: Kohderyhmä
       parent_name: ''
       region: content
-      weight: 2
+      weight: 3
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--target-group group-border column-gap-two d--inline-block--dsk'
@@ -160,7 +160,7 @@ third_party_settings:
       label: 'Service navigation'
       parent_name: ''
       region: hidden
-      weight: 39
+      weight: 37
       format_type: tabs
       format_settings:
         classes: ''
@@ -180,7 +180,7 @@ third_party_settings:
       label: 'Work instructions'
       parent_name: ''
       region: hidden
-      weight: 40
+      weight: 38
       format_type: tab
       format_settings:
         classes: ''
@@ -323,7 +323,7 @@ third_party_settings:
       label: ' Täydentävä työnhakukeskustelu'
       parent_name: ''
       region: hidden
-      weight: 41
+      weight: 39
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--complementary-job-search'
@@ -363,7 +363,7 @@ third_party_settings:
       label: 'Liitteet ja linkit'
       parent_name: ''
       region: content
-      weight: 10
+      weight: 9
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--links-and-files group-border d--flex--dsk column-gap-two flex-wrap--dsk'
@@ -379,12 +379,18 @@ third_party_settings:
         speed: fast
     group_description:
       children:
+        - field_implementation_extra_info
+        - field_service_languages
+        - field_free_service
+        - field_price
+        - field_description
+        - field_price_description
         - group_description_left
         - group_description_right
       label: First
       parent_name: ''
       region: content
-      weight: 0
+      weight: 2
       format_type: html_element
       format_settings:
         classes: 'service-group group-border d--flex--dsk column-gap-two flex-wrap--dsk'
@@ -399,17 +405,11 @@ third_party_settings:
         effect: none
         speed: fast
     group_description_left:
-      children:
-        - field_implementation_extra_info
-        - field_service_languages
-        - field_free_service
-        - field_price
-        - entitygroupfield
-        - field_service_producer
+      children: {  }
       label: Left
       parent_name: group_description
       region: content
-      weight: 1
+      weight: 18
       format_type: html_element
       format_settings:
         classes: group-left
@@ -424,13 +424,11 @@ third_party_settings:
         effect: none
         speed: fast
     group_description_right:
-      children:
-        - field_description
-        - field_price_description
+      children: {  }
       label: Right
       parent_name: group_description
       region: content
-      weight: 2
+      weight: 19
       format_type: html_element
       format_settings:
         classes: group-right
@@ -617,7 +615,7 @@ third_party_settings:
       label: Yhteystiedot
       parent_name: ''
       region: content
-      weight: 9
+      weight: 8
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--contacts group-border d--flex--dsk column-gap-two flex-wrap--dsk'
@@ -695,7 +693,7 @@ third_party_settings:
       label: 'Palvelun saavutettavuus'
       parent_name: ''
       region: content
-      weight: 8
+      weight: 7
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--accessibility group-border d--flex--dsk column-gap-two flex-wrap--dsk'
@@ -716,7 +714,7 @@ third_party_settings:
       label: Palvelukategoria
       parent_name: ''
       region: content
-      weight: 13
+      weight: 10
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--service-categories d--flex--dsk column-gap-two flex-wrap--dsk'
@@ -784,7 +782,7 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 11
+    weight: 0
     region: content
   field_accessibility:
     type: entity_reference_translated_label
@@ -832,7 +830,7 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 1
+    weight: 16
     region: content
   field_field_client_consent_descr:
     type: text_default
@@ -849,7 +847,7 @@ content:
       format_custom_false: ''
       format_custom_true: ''
     third_party_settings: {  }
-    weight: 6
+    weight: 14
     region: content
   field_implementation_extra_info:
     type: entity_reference_translated_label
@@ -857,7 +855,7 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 2
+    weight: 12
     region: content
   field_life_situations:
     type: entity_reference_translated_label
@@ -874,7 +872,7 @@ content:
       view_mode: card_lift
       link: false
     third_party_settings: {  }
-    weight: 14
+    weight: 11
     region: content
   field_price:
     type: number_decimal
@@ -885,14 +883,14 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 7
+    weight: 15
     region: content
   field_price_description:
     type: text_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 2
+    weight: 17
     region: content
   field_public_files:
     type: file_download_link
@@ -940,7 +938,7 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 5
+    weight: 13
     region: content
   field_service_producer:
     type: entity_reference_translated_label
@@ -948,7 +946,7 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 12
+    weight: 1
     region: content
   field_service_requirements:
     type: text_default
@@ -992,7 +990,7 @@ content:
   flag_cart:
     settings: {  }
     third_party_settings: {  }
-    weight: 14
+    weight: 12
     region: content
   flag_lista:
     settings: {  }
