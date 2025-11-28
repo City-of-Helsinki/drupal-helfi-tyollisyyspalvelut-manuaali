@@ -92,7 +92,7 @@
     default: 'yes',
   } %}
   {% block content %}
-  {{ content|without('flag_cart', 'flag_lists', 'view_mode_switcher', 'field_other_services', 'field_contact_info_external', 'field_service_producer', 'entitygroupfield') }}
+  {{ content|without('flag_cart', 'flag_lists', 'view_mode_switcher', 'field_other_services', 'field_contact_info_external') }}
     {% if content.flag_cart  %}
       <div class='small-message-wrapper small-message-wrapper--service'>
         {{ content.flag_cart }}
@@ -117,21 +117,22 @@
         {{ content.field_contact_info_external }}
       </div>
     {% endif %}
-    {% if content.entitygroupfield or content.field_service_producer %}
-      <div class="service-group service-group--additional-info text-normal column-gap-two">
-        <h2 class="group-label--h3 h3 group-label width--service-group-header">{{'Additional information'|t}}</h2>
-        <div class="group-right">
-          <div class="additional-info-wrapper">
-            {% if (content.entitygroupfield['0'] is same as (content.field_service_producer['0'])) and content.field_service_producer['#items']|length is same as 1 %}
-              {{ content.entitygroupfield }}
-            {% else %}
-              {{ content.entitygroupfield }}
-              {{ content.field_service_producer }}
-            {% endif %}
-          </div>
-        </div>
-      </div>
-    {% endif %}
+{#   Leaving this here for ticket following this: #}
+{#    {% if content.entitygroupfield or content.field_service_producer %}#}
+{#      <div class="service-group service-group--additional-info text-normal column-gap-two">#}
+{#        <h2 class="group-label--h3 h3 group-label width--service-group-header">{{'Additional information'|t}}</h2>#}
+{#        <div class="group-right">#}
+{#          <div class="additional-info-wrapper">#}
+{#            {% if (content.entitygroupfield['0'] is same as (content.field_service_producer['0'])) and content.field_service_producer['#items']|length is same as 1 %}#}
+{#              {{ content.entitygroupfield }}#}
+{#            {% else %}#}
+{#              {{ content.entitygroupfield }}#}
+{#              {{ content.field_service_producer }}#}
+{#            {% endif %}#}
+{#          </div>#}
+{#        </div>#}
+{#      </div>#}
+{#    {% endif %}#}
     <div class="sharing-options rounded-icon-parent">
       <button onclick="window.print();" class="btn" title="{{ 'Print'|t }}" aria-label="{{ 'Print'|t }}">
         {% include "@atoms/images/icons/_icon.twig" with {
