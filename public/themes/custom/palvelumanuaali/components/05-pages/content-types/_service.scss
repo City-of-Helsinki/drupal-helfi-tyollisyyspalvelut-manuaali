@@ -328,9 +328,6 @@
   .content-column {
     padding-right: $space;
     width: 100%;
-    @include large {
-      padding-right: $space-quadruple;
-    }
     >.field {
       margin-bottom: $space-two-and-half;
     }
@@ -407,25 +404,8 @@
     }
   }
 
-
   .service-language {
     display: inline-flex;
-  }
-  .service-price {
-    display: flex;
-    flex-wrap: wrap;
-    .field__item {
-      color: clr(alt-header-color);
-      letter-spacing: 0.01em;
-      width: 100%;
-      span {
-        font-weight: 400;
-      }
-      font-weight: 700;
-    }
-    p {
-      letter-spacing: 0.01em;
-    }
   }
 
   .field--name-field-responsible-updatee .field__item {
@@ -579,6 +559,11 @@
       @extend .text-small;
     }
   }
+  .page-heading {
+    @include xl {
+      max-width: 90%;
+    }
+  }
 }
 
 .icon-wrapper {
@@ -612,3 +597,8 @@
   font-weight: 600;
 }
 
+.first-group-bottom {
+  >div {
+    flex: 1;
+  }
+}

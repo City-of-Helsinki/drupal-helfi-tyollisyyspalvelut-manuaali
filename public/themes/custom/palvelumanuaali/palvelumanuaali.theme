@@ -22,6 +22,36 @@ function palvelumanuaali_preprocess_html(&$variables) {
 }
 
 /**
+ * Implements hook_preprocess().
+ */
+function palvelumanuaali_preprocess_links__dropbutton(&$variables) {
+  _palvelumanuaali_dropbutton_add_icon_classes($variables['links']);
+}
+
+/**
+ * Implements hook_preprocess().
+ */
+function palvelumanuaali_preprocess_links__dropbutton__operations(&$variables) {
+  _palvelumanuaali_dropbutton_add_icon_classes($variables['links']);
+}
+
+/**
+ * Adds icon-related classes to dropbutton links.
+ *
+ * @param array $links
+ *   An array of dropbutton links, each containing link attributes.
+ *
+ * @return void
+ *   Void.
+ */
+function _palvelumanuaali_dropbutton_add_icon_classes(&$links) {
+  foreach ($links as $key => $link) {
+    $class = sprintf('%s-link', $key);
+    $link['attributes']->addClass($class);
+  }
+}
+
+/**
  * Implements hook_preprocess_breadcrumb().
  */
 function palvelumanuaali_preprocess_breadcrumb(&$variables) {

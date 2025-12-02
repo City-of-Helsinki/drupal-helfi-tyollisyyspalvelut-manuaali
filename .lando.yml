@@ -51,6 +51,8 @@ services:
     portforward: true
     config:
       dir: ./.solr/core
+  node:
+    type: node:20
   database:
     portforward: 37001
 tooling:
@@ -97,3 +99,5 @@ tooling:
   cghooks:
     service: appserver
     cmd: cghooks
+  npm:
+    service: node

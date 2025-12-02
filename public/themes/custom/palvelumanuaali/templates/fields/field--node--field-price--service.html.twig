@@ -44,14 +44,13 @@
     'field--name-' ~ field_name|clean_class,
     'field--type-' ~ field_type|clean_class,
     'field--content--margin-left-triple',
-    'field--content--blue',
     'service-price',
   ]
 %}
 {% if is_paid_service %}
   <div{{ attributes.addClass(classes, 'field__items') }}>
     {% for item in items %}
-      <div{{ item.attributes.addClass('field__item') }}>
+      <div{{ item.attributes.addClass('field__item').addClass('tag-pill').addClass('tag-pill--alt') }}>
         <span>{{"Service fees "|t}}</span> {{item.content}}
       </div>
     {% endfor %}
