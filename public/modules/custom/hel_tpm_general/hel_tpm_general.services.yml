@@ -14,3 +14,14 @@ services:
     arguments: ['@entity_type.manager']
     tags:
       - { name: event_subscriber }
+
+  hel_tpm_general.content_lock_theme_subscriber:
+    class: Drupal\hel_tpm_general\EventSubscriber\ContentLockThemeSubscriber
+    arguments: [
+      '@theme.manager',
+      '@theme.initialization',
+      '@router.no_access_checks',
+      '@config.factory'
+    ]
+    tags:
+      - { name: event_subscriber }

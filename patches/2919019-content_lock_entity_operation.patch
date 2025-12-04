@@ -1,0 +1,44 @@
+From b7ece4ec80992206ff6422fda077cf72a44475d9 Mon Sep 17 00:00:00 2001
+From: Stephen Mustgrave <smustgrave@gmail.com>
+Date: Wed, 27 Mar 2024 11:53:17 -0400
+Subject: [PATCH] Issue #2919019: content_lock_entity_operation doesn't work if
+ the entity list is cached
+
+---
+ src/ContentLock/ContentLock.php | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/src/ContentLock/ContentLock.php b/src/ContentLock/ContentLock.php
+index f38e8f2..04f3a0d 100644
+--- a/src/ContentLock/ContentLock.php
++++ b/src/ContentLock/ContentLock.php
+@@ -16,6 +16,7 @@ use Drupal\Core\Link;
+ use Drupal\Core\Session\AccountProxyInterface;
+ use Drupal\Core\Url;
+ use Symfony\Component\HttpFoundation\RequestStack;
++use Drupal\Core\Cache\Cache;
+ 
+ /**
+  * Class ContentLock.
+@@ -211,6 +212,8 @@ class ContentLock implements ContentLockInterface {
+     // Delete locking item from database.
+     $this->lockingDelete($entity_id, $langcode, $form_op, $uid, $entity_type);
+ 
++    Cache::invalidateTags([$entity_type . ':' . $entity_id, $entity_type . '_list']);
++
+     $this->moduleHandler->invokeAll(
+       'content_lock_release',
+       [$entity_id, $langcode, $form_op, $entity_type]
+@@ -345,6 +348,9 @@ class ContentLock implements ContentLockInterface {
+           $this->messenger->addStatus($this->t('This content is now locked against simultaneous editing. This content will remain locked if you navigate away from this page without saving or unlocking it.'));
+         }
+       }
++
++      Cache::invalidateTags([$entity_type . ':' . $entity_id, $entity_type . '_list']);
++
+       // Post locking hook.
+       $this->moduleHandler->invokeAll('content_lock_locked', [
+         $entity_id,
+-- 
+GitLab
+
