@@ -65,6 +65,7 @@ dependencies:
     - content_moderation
     - field_group
     - file
+    - hel_tpm_forms
     - hel_tpm_general
     - hel_tpm_group
     - hel_tpm_service_dates
@@ -914,14 +915,10 @@ content:
       match_limit: 10
     third_party_settings: {  }
   field_responsible_updatee:
-    type: select2_entity_reference
+    type: hel_tpm_forms_simple_select2
     weight: 21
     region: content
-    settings:
-      width: 100%
-      autocomplete: false
-      match_operator: CONTAINS
-      match_limit: 10
+    settings: {  }
     third_party_settings: {  }
   field_service_benefits:
     type: text_textarea
