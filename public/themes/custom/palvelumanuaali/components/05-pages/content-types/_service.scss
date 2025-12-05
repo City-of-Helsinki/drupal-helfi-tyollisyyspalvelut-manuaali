@@ -167,16 +167,6 @@
       background-color: clr(background);
       border: 0;
       align-items: end;
-      &::after {
-        border-top: $space-double solid clr(text-inverse);
-        border-top-right-radius: 16px;
-        content: "";
-        display: block;
-        position: absolute;
-        bottom:-32px;
-        width: 100%;
-        height: $space-double;
-      }
       .horizontal-tab-button {
         border-right: 0;
         padding: 0;
@@ -563,6 +553,71 @@
     @include xl {
       max-width: 90%;
     }
+  }
+}
+
+.page-node-type-service .work-guidance {
+  .group-right {
+    .toc-anchor:before {
+      content: '';
+      display: block;
+      height: 110px;
+      margin-top: -110px;
+      visibility: hidden;
+    }
+  }
+  .group-left {
+    border-right: 2px solid $blue10;
+    @include xl {
+      height: calc(100% - 141px);
+    }
+    .group-left-inner {
+
+    }
+  }
+  .toc-js {
+    border-left: 6px solid $accent-pink;
+    nav {
+      margin-left: 2em;
+    }
+    ul {
+      padding-left: 0;
+    }
+    li {
+      margin-bottom: 0.5rem;
+      @include xl {
+        margin-bottom: 1rem;
+      }
+      &.toc-h2 {
+        padding-left: 0;
+        > ul {
+          margin-bottom: 0.5rem;
+          li {
+            margin-bottom: 0.5rem;
+          }
+        }
+      }
+      &:before {
+        content: none;
+      }
+      a {
+        @include desktop {
+          font-size: 18px;
+        }
+        color: $black;
+        font-weight: 600;
+        &:hover {
+          font-weight: bold;
+        }
+      }
+      &.toc-active {
+        > a {
+          font-weight: bold;
+          border-bottom: 1px solid $black;
+        }
+      }
+    }
+
   }
 }
 

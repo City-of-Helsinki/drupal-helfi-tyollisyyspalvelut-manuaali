@@ -4,10 +4,46 @@ status: true
 dependencies:
   module:
     - menu_ui
+    - toc_js
 third_party_settings:
   menu_ui:
     available_menus: {  }
     parent: ''
+  toc_js:
+    toc_js_active: 1
+    title: 'This page'
+    title_tag: div
+    title_classes: 'toc-title,h3'
+    selectors: '.group-label,h3,h4,h5'
+    selectors_minimum: '1'
+    container: .work-guidance
+    prefix: toc
+    list_type: ul
+    list_classes: ''
+    li_classes: ''
+    inheritable_classes: ''
+    classes: ''
+    heading_classes: toc-anchor
+    skip_invisible_headings: 0
+    use_heading_html: 0
+    heading_cleanup_selector: '.visually-hidden, .sr-only'
+    collapsible_items: 0
+    collapsible_expanded: 1
+    back_to_top: 0
+    back_to_top_label: 'Back to top'
+    back_to_top_selector: ''
+    heading_focus: 1
+    back_to_toc: 0
+    back_to_toc_label: 'Back to ToC'
+    smooth_scrolling: 1
+    scroll_to_offset: ''
+    highlight_on_scroll: 1
+    highlight_offset: '100'
+    sticky: 1
+    sticky_offset: 102px
+    toc_container: .group-left-inner
+    ajax_page_updates: 0
+    observable_selector: ''
 name: Service
 type: service
 description: null
