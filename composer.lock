@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "511e47c193c2ddf38213ca3f9dc36f1b",
+    "content-hash": "ad0fe9384ffa34d714280a3317941a19",
     "packages": [
         {
             "name": "ajgl/breakpoint-twig-extension",
@@ -6998,6 +6998,40 @@
                 "source": "https://git.drupalcode.org/project/mail_login",
                 "issues": "http://drupal.org/project/issues/mail_login",
                 "email": "mqanneh@gmail.com"
+            }
+        },
+        {
+            "name": "drupal/mailer_transport",
+            "version": "1.6.2",
+            "require": {
+                "drupal/core": "^10.3 || ^11",
+                "drupal/symfony_mailer": "^1"
+            },
+            "type": "metapackage",
+            "extra": {
+                "drupal": {
+                    "version": "1.6.2",
+                    "datestamp": "1751013031",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "adamps",
+                    "homepage": "https://www.drupal.org/user/2650563"
+                }
+            ],
+            "description": "Placeholder to support upgrade to v2.x",
+            "homepage": "https://www.drupal.org/project/symfony_mailer",
+            "support": {
+                "source": "https://git.drupalcode.org/project/symfony_mailer"
             }
         },
         {
@@ -23332,6 +23366,7 @@
     "stability-flags": {
         "drupal/block_breakpoint": 15,
         "drupal/elasticsearch_connector": 15,
+        "drupal/entity_export_csv": 10,
         "drupal/entitygroupfield": 15,
         "drupal/field_group": 20,
         "drupal/flag": 10,
