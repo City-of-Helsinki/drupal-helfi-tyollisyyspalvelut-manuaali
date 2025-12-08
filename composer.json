@@ -63,7 +63,7 @@
     ],
     "require": {
         "php": ">=8.1",
-        "composer/installers": "^1.9",
+        "composer/installers": "^2.3",
         "cweagans/composer-patches": "~1.0",
         "drupal/address": "^1.10",
         "drupal/admin_toolbar": "^3.0",
@@ -309,7 +309,8 @@
                 "Concurrent ajax submits cause user data loss (https://www.drupal.org/project/drupal/issues/2830295#comment-15685036)": "https://www.drupal.org/files/issues/2024-07-16/2830295-71.patch",
                 "Link to latest revision (https://www.drupal.org/i/2906455#comment-15996236)": "https://www.drupal.org/files/issues/2025-02-20/2906455-45.patch",
                 "Ajax exposed filters not working for multiple instances (https://www.drupal.org/i/3163299#comment-15829959)": "https://www.drupal.org/files/issues/2024-10-24/3163299_120_d10.3.5.patch",
-                "Cannot save or publish originating node or translations. error \"The content has either been modified by another user, or you have already submitted modifications \"(https://www.drupal.org/project/drupal/issues/3285657)": "https://www.drupal.org/files/issues/2022-06-14/core9.2-node-lock-translations-2744851.patch"
+                "Cannot save or publish originating node or translations. error \"The content has either been modified by another user, or you have already submitted modifications \"(https://www.drupal.org/project/drupal/issues/3285657)": "https://www.drupal.org/files/issues/2022-06-14/core9.2-node-lock-translations-2744851.patch",
+                "Entity operations lack cacheability support, resulting in incorrect dropbuttons (https://www.drupal.org/project/drupal/issues/2473873#comment-15911985)": "https://www.drupal.org/files/issues/2024-12-20/2473873-134-reroll.patch"
             },
             "drupal/message": {
                 "https://www.drupal.org/files/issues/2018-06-24/allow_token_contexts-3.patch": "https://www.drupal.org/files/issues/2018-06-24/allow_token_contexts-3.patch"
@@ -391,6 +392,10 @@
             },
             "drupal/token_views_filter": {
                 "WSOD when filtering by Date field (https://www.drupal.org/project/token_views_filter/issues/3499480#comment-16167091)": "https://www.drupal.org/files/issues/2025-06-26/token_view_filer-wsod-when-filtering-by-date-field_3499480-7.patch"
+            },
+            "drupal/content_lock": {
+                "Break lock operation not showing for user who created the lock (https://www.drupal.org/project/content_lock/issues/3559775)": "https://www.drupal.org/files/issues/2025-11-25/break-lock-operation-permission-3559775-1.patch",
+                "content_lock_entity_operation doesn't work if the entity list is cached (https://git.drupalcode.org/project/content_lock/-/merge_requests/38/diffs)": "patches/2919019-content_lock_entity_operation.patch"
             }
         }
     }
