@@ -44,10 +44,20 @@
 %}
 
 <div class="quick-link add--break-word add--hyphen card--default-hover">
+  {% set is_external = content['group_container']['field_link'].0['#url'].external %}
   {{ content }}
-  {% include "@atoms/images/icons/_icon.twig" with {
-    icon_base_class: 'icon',
-    icon_name: 'arrow-left',
-    icon_modifiers: ['small', 'rotate'],
-  } %}
+  {% if is_external %}
+    <use xlink:href="/assets{{ icon_url }}icons.svg#{{ icon_name }}"></use>
+    {% include "@atoms/images/icons/_icon.twig" with {
+      icon_base_class: 'icon',
+      icon_name: 'arrow-right-ext-blue',
+      icon_modifiers: ['small'],
+    } %}
+  {% else %}
+    {% include "@atoms/images/icons/_icon.twig" with {
+      icon_base_class: 'icon',
+      icon_name: 'arrow-left',
+      icon_modifiers: ['small', 'rotate'],
+    } %}
+  {% endif %}
 </div>
