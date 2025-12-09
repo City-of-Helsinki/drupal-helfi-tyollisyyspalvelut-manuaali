@@ -156,6 +156,13 @@
         }
       }
     }
+    // Change background color if service work instruction tab is selected
+    .main:has(.service-tabs .horizontal-tab-button-1.selected) {
+      background-color: clr(service-instruction-bg);
+    }
+    &:has(.service-tabs .horizontal-tab-button-1.selected) {
+      background-color: clr(service-instruction-bg);
+    }
   }
   //needs to be split to a separate file
   .horizontal-tabs {
@@ -167,6 +174,9 @@
       background-color: clr(background);
       border: 0;
       align-items: end;
+      &:has(.horizontal-tab-button-1.selected) {
+        background-color: clr(service-instruction-bg);
+      }
       .horizontal-tab-button {
         border-right: 0;
         padding: 0;
