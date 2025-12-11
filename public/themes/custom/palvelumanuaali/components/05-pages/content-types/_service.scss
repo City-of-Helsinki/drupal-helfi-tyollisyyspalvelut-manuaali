@@ -156,6 +156,13 @@
         }
       }
     }
+    // Change background color if service work instruction tab is selected
+    .main:has(.service-tabs .horizontal-tab-button-1.selected) {
+      background-color: clr(service-instruction-bg);
+    }
+    &:has(.service-tabs .horizontal-tab-button-1.selected) {
+      background-color: clr(service-instruction-bg);
+    }
   }
   //needs to be split to a separate file
   .horizontal-tabs {
@@ -167,15 +174,8 @@
       background-color: clr(background);
       border: 0;
       align-items: end;
-      &::after {
-        border-top: $space-double solid clr(text-inverse);
-        border-top-right-radius: 16px;
-        content: "";
-        display: block;
-        position: absolute;
-        bottom:-32px;
-        width: 100%;
-        height: $space-double;
+      &:has(.horizontal-tab-button-1.selected) {
+        background-color: clr(service-instruction-bg);
       }
       .horizontal-tab-button {
         border-right: 0;
@@ -328,9 +328,6 @@
   .content-column {
     padding-right: $space;
     width: 100%;
-    @include large {
-      padding-right: $space-quadruple;
-    }
     >.field {
       margin-bottom: $space-two-and-half;
     }
@@ -407,25 +404,8 @@
     }
   }
 
-
   .service-language {
     display: inline-flex;
-  }
-  .service-price {
-    display: flex;
-    flex-wrap: wrap;
-    .field__item {
-      color: clr(alt-header-color);
-      letter-spacing: 0.01em;
-      width: 100%;
-      span {
-        font-weight: 400;
-      }
-      font-weight: 700;
-    }
-    p {
-      letter-spacing: 0.01em;
-    }
   }
 
   .field--name-field-responsible-updatee .field__item {
@@ -579,6 +559,76 @@
       @extend .text-small;
     }
   }
+  .page-heading {
+    @include xl {
+      max-width: 90%;
+    }
+  }
+}
+
+.page-node-type-service .work-guidance {
+  .group-right {
+    .toc-anchor:before {
+      content: '';
+      display: block;
+      height: 110px;
+      margin-top: -110px;
+      visibility: hidden;
+    }
+  }
+  .group-left {
+    border-right: 2px solid $blue10;
+    @include xl {
+      height: calc(100% - 141px);
+    }
+    .group-left-inner {
+
+    }
+  }
+  .toc-js {
+    border-left: 6px solid $accent-pink;
+    nav {
+      margin-left: 2em;
+    }
+    ul {
+      padding-left: 0;
+    }
+    li {
+      margin-bottom: 0.5rem;
+      @include xl {
+        margin-bottom: 1rem;
+      }
+      &.toc-h2 {
+        padding-left: 0;
+        > ul {
+          margin-bottom: 0.5rem;
+          li {
+            margin-bottom: 0.5rem;
+          }
+        }
+      }
+      &:before {
+        content: none;
+      }
+      a {
+        @include desktop {
+          font-size: 18px;
+        }
+        color: $black;
+        font-weight: 600;
+        &:hover {
+          font-weight: bold;
+        }
+      }
+      &.toc-active {
+        > a {
+          font-weight: bold;
+          border-bottom: 1px solid $black;
+        }
+      }
+    }
+
+  }
 }
 
 .icon-wrapper {
@@ -612,3 +662,8 @@
   font-weight: 600;
 }
 
+.first-group-bottom {
+  >div {
+    flex: 1;
+  }
+}

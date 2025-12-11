@@ -89,6 +89,24 @@ function palvelumanuaali_preprocess_links__language_block(&$variables): void {
 /**
  * Implements hook_preprocess_HOOK().
  *
+ * Prepares variables for rendering dropbutton links.
+ */
+function palvelumanuaali_preprocess_links__dropbutton(&$variables): void {
+  _palvelumanuaali_dropbutton_add_icon_classes($variables['links']);
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
+ * PPrepares variables for rendering dropbutton link operations.
+ */
+function palvelumanuaali_preprocess_links__dropbutton__operations(&$variables): void {
+  _palvelumanuaali_dropbutton_add_icon_classes($variables['links']);
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
  * Prepares variables for field templates.
  */
 function palvelumanuaali_preprocess_field(&$variables): void {
@@ -630,4 +648,20 @@ function _palvelumanuaali_attach_analytics(array &$attachments): void {
     return;
   }
   $attachments['#attached']['library'][] = 'palvelumanuaali/analytics';
+}
+
+/**
+ * Adds icon-related classes to dropbutton links.
+ *
+ * @param array $links
+ *   An array of dropbutton links, each containing link attributes.
+ *
+ * @return void
+ *   Void.
+ */
+function _palvelumanuaali_dropbutton_add_icon_classes(array &$links): void {
+  foreach ($links as $key => $link) {
+    $class = sprintf('%s-link', $key);
+    $link['attributes']->addClass($class);
+  }
 }

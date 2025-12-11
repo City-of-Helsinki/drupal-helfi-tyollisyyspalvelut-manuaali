@@ -21,6 +21,13 @@ global:
     - core/drupalSettings
     - eu_cookie_compliance/eu_cookie_compliance
 
+dropbutton:
+  version: VERSION
+  js:
+    js/dropbutton.js: {}
+  dependencies:
+    - core/drupal
+
 main-menu:
   js:
     dist/components/02-molecules/menus/main-menu/main-menu.js: {}
