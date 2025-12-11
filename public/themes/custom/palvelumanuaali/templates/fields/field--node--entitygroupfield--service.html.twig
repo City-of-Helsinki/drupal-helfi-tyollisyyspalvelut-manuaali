@@ -55,9 +55,9 @@
   ]
 %}
 <div{{ attributes.addClass(classes, 'field__items') }}>
-  <h5{{ attributes.addClass(title_classes) }}>
-    {{"Service organizer"|t}}
-  </h5>
+  <div{{ attributes.addClass(title_classes) }}>
+    {{"Service organiser"|t}}
+  </div>
   {% for item in items %}
     <div{{ item.attributes.addClass('field__item').addClass('tag-pill').addClass('tag-pill--alt') }}>
       {{ item.content }}
