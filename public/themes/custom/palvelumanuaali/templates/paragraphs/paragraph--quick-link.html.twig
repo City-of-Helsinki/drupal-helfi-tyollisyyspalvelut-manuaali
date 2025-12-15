@@ -42,12 +42,17 @@
     paragraph.bundle|clean_class
   ]
 %}
+{% if content['group_container']['field_link'].0['#url'].external %}
+  {% set icon_name = 'arrow-right-2-ext' %}
+{% else %}
+  {% set icon_name = 'arrow-right-2' %}
+{% endif %}
 
 <div class="quick-link add--break-word add--hyphen card--default-hover">
   {{ content }}
   {% include "@atoms/images/icons/_icon.twig" with {
     icon_base_class: 'icon',
-    icon_name: 'arrow-left',
-    icon_modifiers: ['small', 'rotate'],
+    icon_name: icon_name,
+    icon_modifiers: ['small'],
   } %}
 </div>
