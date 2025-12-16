@@ -1050,6 +1050,37 @@ function hel_tpm_general_update_20123(&$sandbox) {
 }
 
 /**
+ * Deletes flagging entries associated with anonymous users.
+ */
+function hel_tpm_general_update_20124(&$sandbox) {
+  $limit = 1000;
+  $database = \Drupal::database();
+  if (!isset($sandbox['progress'])) {
+    $max = \Drupal::database()->select('flagging', 'f')
+      ->fields('f')
+      ->condition('f.uid', 0)
+      ->countQuery()
+      ->execute()->fetchField();
+    $sandbox['progress'] = 0;
+    $sandbox['current'] = 0;
+    $sandbox['max'] = (int) $max;
+  }
+  $flags = $database->select('flagging', 'f')
+    ->fields('f', ['id'])
+    ->condition('f.uid', 0)
+    ->range(0, $limit)
+    ->execute()
+    ->fetchAllAssoc('id');
+
+  $database->delete('flagging')
+    ->condition('id', array_keys($flags), 'IN')
+    ->execute();
+
+  $sandbox['progress'] = $sandbox['progress'] + $limit;
+  $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
+}
+
+/**
  * Inserts a row into the specified field's database tables.
  *
  * This function inserts values for a given field into the appropriate database
