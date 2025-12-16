@@ -71,7 +71,7 @@
         let margin = array.length * 34;
         let marginpx = margin+'px';
         let browserWidth = getWidth();
-        if  (browserWidth < 1280) {
+        if  (browserWidth < 1080) {
           $('.form-checkboxes').css("margin-bottom", '0px');
         } else {
           $('.form-checkboxes').css("margin-bottom", marginpx);
