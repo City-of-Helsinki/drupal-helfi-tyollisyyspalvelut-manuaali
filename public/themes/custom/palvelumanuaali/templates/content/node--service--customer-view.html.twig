@@ -92,7 +92,48 @@
     default: 'yes',
   } %}
   {% block content %}
-  {{ content|without('flag_cart', 'flag_lists', 'view_mode_switcher', 'field_other_services', 'field_contact_info_external', 'field_service_producer', 'entitygroupfield') }}
+
+<div class="service-group group-border d--flex--dsk column-gap-two flex-wrap--dsk">
+  <div class="first-group-top margin-bottom-double-space">
+    {{ content.group_description.field_description }}
+  </div>
+  <div class="first-group-bottom column-gap-two d--flex--dsk">
+    <div class="producer-wrapper">
+      <div class="icon-wrapper">
+        {% if (content.entitygroupfield['0']['#plain_text'] is same as (content.field_service_producer['0']['#plain_text'])) and content.field_service_producer['#items']|length is same as 1 %}
+          {% include "@atoms/images/icons/_icon.twig" with {
+            icon_base_class: 'icon',
+            icon_name: 'keyboard-mouse-1',
+            icon_modifiers: ['small'],
+          } %}
+      <div class="field--content--margin-left-triple">
+      {{ content.entitygroupfield }}
+      </div>
+    {% else %}
+      {% include "@atoms/images/icons/_icon.twig" with {
+        icon_base_class: 'icon',
+        icon_name: 'keyboard-mouse-1',
+        icon_modifiers: ['small'],
+      } %}
+        <div class="field--content--margin-left-triple">
+        {{ content.entitygroupfield }}
+        {{ content.field_service_producer }}
+        </div>
+    {% endif %}
+      </div>
+    </div>
+    {{ content.group_description.field_service_languages }}
+    <div class="cost-wrapper">
+      {{ content.group_description.field_free_service }}
+      {{ content.group_description.field_price }}
+      <div class="field--content--margin-left-triple">
+      {{ content.group_description.field_price_description }}
+      </div>
+    </div>
+    {{ content.group_description.field_implementation_extra_info }}
+  </div>
+</div>
+    {{ content|without('flag_cart', 'flag_lists', 'view_mode_switcher', 'field_other_services', 'field_contact_info_external','field_implementation_extra_info','group_description','field_service_producer','entitygroupfield') }}
     {% if content.flag_cart  %}
       <div class='small-message-wrapper small-message-wrapper--service'>
         {{ content.flag_cart }}
@@ -115,21 +156,6 @@
           "heading_modifiers": ['margin-bottom-two', 'blue-desktop'],
         } %}
         {{ content.field_contact_info_external }}
-      </div>
-    {% endif %}
-    {% if content.entitygroupfield or content.field_service_producer %}
-      <div class="service-group service-group--additional-info text-normal column-gap-two">
-        <h2 class="group-label--h3 h3 group-label width--service-group-header">{{'Additional information'|t}}</h2>
-        <div class="group-right">
-          <div class="additional-info-wrapper">
-            {% if (content.entitygroupfield['0'] is same as (content.field_service_producer['0'])) and content.field_service_producer['#items']|length is same as 1 %}
-              {{ content.entitygroupfield }}
-            {% else %}
-              {{ content.entitygroupfield }}
-              {{ content.field_service_producer }}
-            {% endif %}
-          </div>
-        </div>
       </div>
     {% endif %}
     <div class="sharing-options rounded-icon-parent">
