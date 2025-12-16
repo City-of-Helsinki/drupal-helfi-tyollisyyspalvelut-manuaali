@@ -33,14 +33,28 @@
  * - field_type: The type of the field.
  * - label_display: The display settings for the label.
  *
+ *
  * @see template_preprocess_field()
  */
-
- @TODO: THIS CAN BE REMOVED IF BEM CLASSES CAN BE APPLIED IN WYSIWYG
 #}
-<div class="form-text-wrapper text-maxwidth">
-{% for item in items %}
-  <h3 class='h4'>{{"Palveluun osallistumisen edellytykset"}}</h3>
-  {{item.content}}
-{% endfor %}
+{%
+  set classes = [
+    'field',
+    'field--name-' ~ field_name|clean_class,
+    'field--type-' ~ field_type|clean_class,
+    'field--label-' ~ label_display,
+    label_display == 'inline' ? 'clearfix',
+  ]
+%}
+{%
+  set title_classes = [
+    'field__label',
+    'field__label--flex',
+    label_display == 'visually_hidden' ? 'visually-hidden',
+  ]
+%}
+
+
+<div class="archiving-guides margin-bottom-one-space">
+  <a class="small-font" href="/node/275">{{ 'Arkistointiohje' }}</a>
 </div>
