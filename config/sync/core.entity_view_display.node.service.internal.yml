@@ -75,7 +75,6 @@ third_party_settings:
       children:
         - field_service_coordination
         - field_service_req_speacialist
-        - group_municipal_guidance
       label: 'Ohjaus palveluun'
       parent_name: group_content_right
       region: content
@@ -100,7 +99,7 @@ third_party_settings:
       label: 'Palvelun velvoittavuus'
       parent_name: group_content_right
       region: content
-      weight: 7
+      weight: 8
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--service-requirements text-normal group-border d--flex--dsk column-gap-two flex-wrap--dsk'
@@ -142,7 +141,7 @@ third_party_settings:
       label: 'Merkinnät asiakastietojärjestelmään'
       parent_name: group_content_right
       region: content
-      weight: 8
+      weight: 10
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--markings-to-system text-normal group-border d--flex--dsk column-gap-two flex-wrap--dsk'
@@ -162,7 +161,7 @@ third_party_settings:
       label: 'Toimenpiteet osallistumisen ajalta'
       parent_name: group_content_right
       region: content
-      weight: 10
+      weight: 12
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--measures-during text-normal group-border d--flex--dsk column-gap-two flex-wrap--dsk'
@@ -179,11 +178,11 @@ third_party_settings:
     group_exceptions:
       children:
         - field_service_exceptions
-        - group_municipality_exceptions
+        - field_municipality_specific
       label: Poikkeustilanteet
       parent_name: group_content_right
       region: content
-      weight: 11
+      weight: 13
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--exceptions text-normal group-border d--flex--dsk column-gap-two flex-wrap--dsk'
@@ -204,7 +203,7 @@ third_party_settings:
       label: ' Täydentävät työnhakukeskustelut'
       parent_name: group_content_right
       region: content
-      weight: 12
+      weight: 7
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--complementary-job-search text-normal group-border d--flex--dsk column-gap-two flex-wrap--dsk'
@@ -222,9 +221,9 @@ third_party_settings:
       children:
         - field_municipality_guidance
       label: 'Kuntakohtaiset ohjeet'
-      parent_name: group_guidance_to_server
+      parent_name: group_content_right
       region: content
-      weight: 20
+      weight: 6
       format_type: html_element
       format_settings:
         classes: 'service-group text-normal group-border d--flex--dsk column-gap-two flex-wrap--dsk'
@@ -233,40 +232,19 @@ third_party_settings:
         label_as_html: false
         element: div
         show_label: true
-        label_element: h5
-        label_element_classes: 'group-label--h5 h5 group-label'
-        attributes: ''
-        effect: none
-        speed: fast
-    group_municipality_exceptions:
-      children:
-        - field_municipality_specific
-      label: 'Kuntakohtaiset poikkeukset'
-      parent_name: group_exceptions
-      region: content
-      weight: 83
-      format_type: html_element
-      format_settings:
-        classes: 'service-group margin--top-double'
-        show_empty_fields: false
-        id: ''
-        label_as_html: false
-        element: div
-        show_label: true
-        label_element: h3
-        label_element_classes: 'group-label--h5 h5 group-label'
+        label_element: h2
+        label_element_classes: 'group-label--h4 h4 group-label'
         attributes: ''
         effect: none
         speed: fast
     group_contacts_and_attachment:
       children:
-        - field_contact_info
-        - field_internal_files
         - field_internal_links
-      label: 'Yhteystiedot ja liitteet'
+        - field_internal_files
+      label: 'Linkit ja liitteet'
       parent_name: group_content_right
       region: content
-      weight: 14
+      weight: 15
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--contacts-and-attachments text-normal d--flex--dsk column-gap-two flex-wrap--dsk'
@@ -283,10 +261,10 @@ third_party_settings:
     group_archive:
       children:
         - field_related_archive
-      label: Arkistointi
+      label: Arkistointiohje
       parent_name: group_content_right
       region: content
-      weight: 13
+      weight: 11
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--archive text-normal group-border d--flex--dsk column-gap-two flex-wrap--dsk'
@@ -303,13 +281,15 @@ third_party_settings:
     group_content_right:
       children:
         - group_guidance_to_server
+        - group_municipal_guidance
+        - group_complementary_job_search
         - group_service_obligatoryness
-        - group_career_marking
         - group_statements_unemploym
+        - group_career_marking
+        - group_archive
         - group_measures_during
         - group_exceptions
-        - group_complementary_job_search
-        - group_archive
+        - group_internal_contacts
         - group_contacts_and_attachment
       label: 'Content right'
       parent_name: ''
@@ -368,6 +348,26 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+    group_internal_contacts:
+      children:
+        - field_contact_info
+      label: 'Sisäiset yhteystiedot'
+      parent_name: group_content_right
+      region: content
+      weight: 14
+      format_type: html_element
+      format_settings:
+        classes: 'service-group service-group--internal-contacts text-normal group-border d--flex--dsk column-gap-two flex-wrap--dsk'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: true
+        label_element: h2
+        label_element_classes: 'group-label--h4 h4 group-label'
+        attributes: ''
+        effect: none
+        speed: fast
 id: node.service.internal
 targetEntityType: node
 bundle: service
@@ -395,7 +395,7 @@ content:
       view_mode: default
       link: true
     third_party_settings: {  }
-    weight: 14
+    weight: 17
     region: content
   field_internal_files:
     type: file_default
@@ -403,7 +403,7 @@ content:
     settings:
       use_description_as_link_text: true
     third_party_settings: {  }
-    weight: 15
+    weight: 18
     region: content
   field_internal_links:
     type: link_external_new_tab
@@ -440,7 +440,7 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 82
+    weight: 81
     region: content
   field_obligatoryness:
     type: list_key

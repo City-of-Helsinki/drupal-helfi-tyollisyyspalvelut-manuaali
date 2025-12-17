@@ -20,3 +20,10 @@ taxonomy_hierarchy_select:
     - core/jquery
     - core/drupal
     - core/drupalSettings
+
+filter_ajax_watcher:
+  js:
+    js/filterAjaxWatcher.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal.ajax
