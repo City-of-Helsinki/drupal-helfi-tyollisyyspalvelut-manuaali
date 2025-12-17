@@ -38,43 +38,19 @@
  */
 #}
 {%
-  set classes = [
-    'field',
-    'field--name-' ~ field_name|clean_class,
-    'field--type-' ~ field_type|clean_class,
-    'field--label-' ~ label_display,
-    label_display == 'inline' ? 'clearfix',
-  ]
-%}
-{%
-  set title_classes = [
-    'field__label',
-    label_display == 'visually_hidden' ? 'visually-hidden',
-  ]
+  set additional_classes = [
+  'field--content--margin-left-triple',
+  'field--content--margin-bottom-two',
+]
 %}
 
-  {% embed "@molecules/card/card.twig" with {
-    card__modifiers: ['bg-blue', 'bottom-gutter-large', 'padded', 'service-accessibility']
-  } %}
-    {% block card__content %}
-      <div{{ attributes.addClass(classes) }}>
-        <div{{ title_attributes.addClass(title_classes) }}><h4 class='.h4'>{{ 'Service accessibility'|t}}<h4></div>
-        {% if multiple %}
-          <div class="field__items">
-        {% endif %}
-        {% for item in items %}
-          <div{{ item.attributes.addClass('field__item col-12 col-xl-6 text-small') }}>
-            {% include "@atoms/images/icons/_icon.twig" with {
-              icon_base_class: 'icon',
-              icon_name: 'check',
-              icon_modifiers: ['tiny'],
-            } %}
-              {{ item.content }}
-          </div>
-        {% endfor %}
-        {% if multiple %}
-          </div>
-        {% endif %}
-      </div>
-    {% endblock %}
-  {% endembed %}
+{% include "@molecules/icon-textfield/icon-text-with-pills.twig" with  {
+  items: items,
+  field_header: 'Service accessibility'|t,
+  additional_classes: additional_classes,
+  icon_name: 'property-location',
+  items_additional_classes: ['tag-pill', 'tag-pill--alt'],
+
+}
+%}
+

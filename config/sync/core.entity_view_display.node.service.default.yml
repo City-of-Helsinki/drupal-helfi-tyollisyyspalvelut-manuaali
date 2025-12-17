@@ -170,7 +170,7 @@ third_party_settings:
       weight: 6
       format_type: tabs
       format_settings:
-        classes: width--full
+        classes: 'width--full service-tabs'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -211,20 +211,21 @@ third_party_settings:
         - group_statements_unemploym
         - group_measures_during
         - group_exceptions
-        - group_complementary_job_search
         - field_related_archive
         - field_internal_files
         - field_internal_links
         - field_contact_info
+        - group_complementary_job_search
       label: Työohje
       parent_name: group_service_navigation
       region: content
       weight: 5
       format_type: tab
       format_settings:
-        classes: ''
+        classes: work-guidance
         show_empty_fields: false
         id: ''
+        label_as_html: false
         formatter: closed
         description: ''
     group_guidance_to_server:
@@ -358,7 +359,7 @@ third_party_settings:
         - field_service_suits_info
       label: ' Täydentävä työnhakukeskustelu'
       parent_name: group_work_instructions
-      region: content
+      region: hidden
       weight: 28
       format_type: html_element
       format_settings:
@@ -826,4 +827,5 @@ hidden:
   field_target_group: true
   langcode: true
   search_api_excerpt: true
+  toc_js: true
   view_mode_switcher: true

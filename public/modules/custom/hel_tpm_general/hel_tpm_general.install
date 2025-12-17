@@ -975,6 +975,112 @@ function hel_tpm_general_update_10122(&$sandbox) {
 }
 
 /**
+ * Update references across all translation revisions for field_public_files.
+ */
+function hel_tpm_general_update_20123(&$sandbox) {
+  $database = \Drupal::database();
+
+  $nids = $database->select('node', 'n')
+    ->fields('n', ['nid'])
+    ->condition('n.type', 'service')
+    ->execute()
+    ->fetchAll(PDO::FETCH_ASSOC);
+  foreach ($nids as $nid) {
+    $latest_translations = $database->select('node_field_revision', 'nfd')
+      ->fields('nfd', ['nid', 'vid', 'langcode', 'default_langcode'])
+      ->condition('nfd.revision_translation_affected', 1)
+      ->condition('nfd.nid', $nid['nid'])
+      ->orderBy('vid', 'ASC')
+      ->execute()
+      ->fetchAllAssoc('langcode');
+
+    $file_array = [];
+    $default_langcode = NULL;
+    $default_vid = NULL;
+
+    foreach ($latest_translations as $revision) {
+      if ($revision->default_langcode == 1) {
+        $default_langcode = $revision->langcode;
+        $default_vid = $revision->vid;
+      }
+      $file_array[$revision->langcode] = $database->select('node_revision__field_public_files', 'nr')
+        ->fields('nr')
+        ->condition('nr.revision_id', $revision->vid)
+        ->condition('nr.langcode', $revision->langcode)
+        ->execute()
+        ->fetchAllAssoc('field_public_files_target_id', PDO::FETCH_ASSOC);
+    }
+
+    $default_files = $file_array[$default_langcode];
+    foreach ($file_array as $langcode => $files) {
+      // Skip default langcode.
+      if ($langcode === $default_langcode) {
+        continue;
+      }
+      $default_files = $default_files + $files;
+    }
+
+    $delta = 0;
+    foreach ($default_files as $fid => $file) {
+      $delta++;
+      if ($file['langcode'] === $default_langcode) {
+        unset($default_files[$fid]);
+        continue;
+      }
+      $file['revision_id'] = $default_vid;
+      $file['langcode'] = $default_langcode;
+      $file['delta'] = (string) $delta;
+      $default_files[$fid] = $file;
+    }
+
+    if (empty($default_files)) {
+      continue;
+    }
+
+    $tables = ['node__field_public_files', 'node_revision__field_public_files'];
+    foreach ($tables as $table) {
+      $insert = $database->insert($table)
+        ->fields(array_keys(reset($default_files)));
+      foreach ($default_files as $file) {
+        $insert->values($file);
+      }
+      $insert->execute();
+    }
+  }
+}
+
+/**
+ * Deletes flagging entries associated with anonymous users.
+ */
+function hel_tpm_general_update_20124(&$sandbox) {
+  $limit = 1000;
+  $database = \Drupal::database();
+  if (!isset($sandbox['progress'])) {
+    $max = \Drupal::database()->select('flagging', 'f')
+      ->fields('f')
+      ->condition('f.uid', 0)
+      ->countQuery()
+      ->execute()->fetchField();
+    $sandbox['progress'] = 0;
+    $sandbox['current'] = 0;
+    $sandbox['max'] = (int) $max;
+  }
+  $flags = $database->select('flagging', 'f')
+    ->fields('f', ['id'])
+    ->condition('f.uid', 0)
+    ->range(0, $limit)
+    ->execute()
+    ->fetchAllAssoc('id');
+
+  $database->delete('flagging')
+    ->condition('id', array_keys($flags), 'IN')
+    ->execute();
+
+  $sandbox['progress'] = $sandbox['progress'] + $limit;
+  $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
+}
+
+/**
  * Inserts a row into the specified field's database tables.
  *
  * This function inserts values for a given field into the appropriate database

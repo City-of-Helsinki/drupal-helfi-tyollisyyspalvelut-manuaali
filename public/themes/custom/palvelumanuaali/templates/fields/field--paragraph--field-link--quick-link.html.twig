@@ -58,8 +58,12 @@
       <div class="field__items">
     {% endif %}
     {% for item in items %}
+      {% set is_external = item.content['#url'].external %}
       <div{{ item.attributes.addClass('field__item') }}>
-        <a class="zi--high" href={{ item.content['#url'] }}></a>
+        <a class="zi--high"
+           href="{{ item.content['#url'] }}"
+           {% if is_external %} target="_blank" rel="noopener" aria-label="{{ 'Opens in a new tab'|t }}" {% endif %}>
+        </a>
       </div>
     {% endfor %}
     {% if multiple %}

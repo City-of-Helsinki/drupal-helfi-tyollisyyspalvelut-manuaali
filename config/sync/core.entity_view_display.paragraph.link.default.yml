@@ -6,21 +6,21 @@ dependencies:
     - field.field.paragraph.link.field_link
     - paragraphs.paragraphs_type.link
   module:
-    - link
+    - hel_tpm_general
 id: paragraph.link.default
 targetEntityType: paragraph
 bundle: link
 mode: default
 content:
   field_link:
-    type: link
+    type: link_external_new_tab
     label: visually_hidden
     settings:
-      trim_length: 80
+      trim_length: '80'
+      target: _blank
       url_only: false
       url_plain: false
-      rel: ''
-      target: ''
+      rel: 0
     third_party_settings: {  }
     weight: 0
     region: content

@@ -11,6 +11,16 @@ hel_tpm_forms:
     - core/drupalSettings
     - core/once
 
+simple_select2:
+  version: 0.0.1
+  js:
+    js/hel_tpm_forms_simple_select2.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings
+    - select2/select2
+
 service_custom_submit:
   version: 2.0.1
   js:

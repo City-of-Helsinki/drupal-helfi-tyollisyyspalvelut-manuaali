@@ -215,30 +215,86 @@ table.sticky-header thead {
   min-height: 24px;
 }
 
-.dropbutton-multiple .dropbutton-widget {
-  background: white;
-  border: 2px solid clr(form-border);
-  border-radius: 8px;
-  padding-left: 8px;
-}
-.dropbutton-multiple .dropbutton-toggle {
-  bottom: unset;
+.dropbutton-widget {
+  a {
+    margin-bottom: 5px;
+    margin-top: 5px;
+  }
+
+  a:before {
+    display: inline-block;
+    width: 20px;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: 16px;
+    margin-top: 1px;
+  }
+
+  .edit_node-link,
+  .edit-link {
+    a:before {
+      content: url('../../assets/images/icons/edit.svg');
+    }
+  }
+
+  .break_lock-link a:before {
+  }
+
+  .translate-link a:before {
+    content: url('../../assets/images/icons/translate.svg');
+  }
+
+  .set_outdated-link a:before {
+    content: url('../../assets/images/icons/set-outdated.svg');
+  }
+
+  .delete_node-link,
+  .delete-link {
+    a:before {
+      content: url('../../assets/images/icons/trash-can.svg');
+    }
+  }
 }
 
-.dropbutton-multiple .dropbutton-arrow {
-  border: unset;
-  width: 24px;
-  height: 24px;
-  background-image: url('../../assets/images/icons/arrow-sm-down-light-blue.svg');
-  top: 0;
-  right: unset;
-  margin-top: 0;
+.js td .dropbutton-multiple {
+  margin-right: 0;
+  padding-right: 0;
+  .dropbutton-toggle {
+    position: relative;
+    margin-bottom: 2em;
+  }
+  &.open ul.dropbutton {
+  }
+  .dropbutton-widget {
+    padding-right: 0;
+    margin-left: 25%;
+  }
+  ul.dropbutton {
+    border-radius: 8px;
+    box-shadow: 0px 8px 16px 0px rgba(30, 64, 182, 0.2);
+    background-color: #fff;
+    margin-left: -90px;
+    .secondary-action {
+      padding: 0.5em 1.5em;
+      min-width: 225px;
+      &:hover {
+        background-color: $blue10;
+      }
+    }
+
+  }
+
+  .dropbutton-arrow {
+    border: unset;
+    width: 24px;
+    height: 24px;
+    background: url('../../assets/images/icons/dots.svg') no-repeat center center;
+    top: 0;
+    right: unset;
+    margin-top: 0;
+  }
 }
-.dropbutton-multiple.open .dropbutton-arrow {
-  transform: rotate(180deg);
-  border: unset;
-  top: 0;
-}
+
 
 //override bootstrap
 .table > :not(caption) > * > *,
@@ -635,6 +691,11 @@ table {
           font-size: 12px;
           line-height: 24px;
           padding: 0;
+          &:disabled {
+            display: none;
+            color: transparent;
+            background: transparent;
+          }
           &:hover {
             background: transparent;
             color: clr(background-color);
