@@ -100,7 +100,6 @@
        padding-left: $space-one-half;
      }
   }
-
   &.logged-in {
     .horizontal-tabs {
       .horizontal-tabs-list {
@@ -162,6 +161,18 @@
     }
     &:has(.service-tabs .horizontal-tab-button-1.selected) {
       background-color: clr(service-instruction-bg);
+    }
+  }
+  &.logged-in.edit-create-form {
+    &.logged-in {
+      .horizontal-tabs {
+        .horizontal-tabs-list {
+          position: relative;
+          &:has(.horizontal-tab-button-1.selected) {
+            background-color: transparent;
+          }
+        }
+      }
     }
   }
   //needs to be split to a separate file
