@@ -41,11 +41,6 @@
 %}
 {{ attach_library('palvelumanuaali/taxonomy-filters') }}
 <div{{ attributes.addClass(classes) }}>
-  {{ title_prefix }}
-  {% if title %}
-    {{ title }}
-  {% endif %}
-  {{ title_suffix }}
   {% if header %}
     <div class="view-header">
       {{ header }}

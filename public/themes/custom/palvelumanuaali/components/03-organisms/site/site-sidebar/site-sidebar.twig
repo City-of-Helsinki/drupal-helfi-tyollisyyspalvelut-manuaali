@@ -2,7 +2,7 @@
 {# If `directory` is defined, set the path relative for Drupal.
  # Otherwise, set the path relative to the Component Library. #}
 {% set sidebar__logo_src = directory ? '/' ~ directory ~ '/assets/images/logo.svg' : 'logo.svg' %}
-{% set sidebar__logo_small_src = directory ? '/' ~ directory ~ '/assets/images/icons/logo-small.svg' : 'logo-small.svg' %}
+{% set sidebar__logo_small_src = directory ? '/' ~ directory ~ '/assets/icons/logo-small.svg' : 'logo-small.svg' %}
 <div {{ bem('branding', [], sidebar__base_class) }}>
   {% block sidebar__branding %}
     {% include "@organisms/site/site-sidebar/_site-sidebar-branding.twig" with {

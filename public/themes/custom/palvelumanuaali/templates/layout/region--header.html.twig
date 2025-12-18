@@ -16,7 +16,7 @@
 {# If `directory` is defined, set the path relative for Drupal.
  # Otherwise, set the path relative to the Component Library. #}
 {% set sidebar__logo_src = directory ? '/' ~ directory ~ '/assets/images/logo.svg' : 'logo.svg' %}
-{% set sidebar__logo_small_src = directory ? '/' ~ directory ~ '/assets/images/icons/logo-small.svg' : 'logo-small.svg' %}
+{% set sidebar__logo_small_src = directory ? '/' ~ directory ~ '/assets/icons/logo-small.svg' : 'logo-small.svg' %}
 {% set link_url = url('<front>') %}
 
 {% extends "@organisms/site/site-header/site-header.twig" %}

@@ -1,2 +1,0 @@
-(()=>{var a,e;a=jQuery,e=Drupal,drupalSettings,e.behaviors.smallMessage={attach:function(){var e=a(".action-flag .use-ajax"),s=a(".action-unflag .use-ajax");a(e).click((function(){var e=a(this).closest(".small-message-wrapper").children(".pill--small-message--add");e.fadeIn("2000ms"),setTimeout((function(){e.fadeOut("2000ms")}),3e3)})),a(s).click((function(){var e=a(this).closest(".small-message-wrapper").children(".pill--small-message--remove");e.fadeIn("2000ms"),setTimeout((function(){e.fadeOut("2000ms")}),3e3)}))}}})();
-//# sourceMappingURL=small-message.js.map
