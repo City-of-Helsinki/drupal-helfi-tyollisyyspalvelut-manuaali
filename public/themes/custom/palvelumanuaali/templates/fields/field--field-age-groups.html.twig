@@ -2,12 +2,13 @@
 {%
   set additional_classes = [
   'field--content--margin-left-triple',
+  'field--content--margin-bottom-two'
   ]
 %}
 
 {% include "@molecules/icon-textfield/icon-text-with-pills.twig" with  {
     items: items,
-    field_header: 'Age:'|t,
+    field_header: 'Age'|t,
     additional_classes: additional_classes,
     icon_name: 'parent-1',
     items_additional_classes: ['tag-pill', 'tag-pill--alt']

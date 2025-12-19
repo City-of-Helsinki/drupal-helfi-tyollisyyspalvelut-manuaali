@@ -156,6 +156,13 @@
         }
       }
     }
+    // Change background color if service work instruction tab is selected
+    .main:has(.service-tabs .horizontal-tab-button-1.selected) {
+      background-color: clr(service-instruction-bg);
+    }
+    &:has(.service-tabs .horizontal-tab-button-1.selected) {
+      background-color: clr(service-instruction-bg);
+    }
   }
   //needs to be split to a separate file
   .horizontal-tabs {
@@ -167,15 +174,8 @@
       background-color: clr(background);
       border: 0;
       align-items: end;
-      &::after {
-        border-top: $space-double solid clr(text-inverse);
-        border-top-right-radius: 16px;
-        content: "";
-        display: block;
-        position: absolute;
-        bottom:-32px;
-        width: 100%;
-        height: $space-double;
+      &:has(.horizontal-tab-button-1.selected) {
+        background-color: clr(service-instruction-bg);
       }
       .horizontal-tab-button {
         border-right: 0;
@@ -300,9 +300,9 @@
   padding-bottom: 40px;
   padding-left: $space-one-and-half;
   @include large {
-   padding-left: $space-quadruple;
-   padding-top: 35px;
-   padding-right: $space-double;
+   padding-left: $space-triple;
+   padding-top: 25px;
+   padding-right: $space-triple;
    padding-bottom: 37px;
   }
   .field {
@@ -327,9 +327,7 @@
 
   .content-column {
     padding-right: $space;
-    @include large {
-      padding-right: $space-quadruple;
-    }
+    width: 100%;
     >.field {
       margin-bottom: $space-two-and-half;
     }
@@ -388,7 +386,8 @@
   .field--name-field-implementation-extra-info,
   .field--name-field-service-price,
   .field--name-field-service-languages,
-  .field--name-field-service-language  {
+  .field--name-field-service-language,
+  .icon-wrapper.sibling-margin-bottom + .field--name-field-service-set{
     margin-bottom: $space-double;
     @include large {
       margin-bottom: $space-two-and-half;
@@ -405,25 +404,8 @@
     }
   }
 
-
   .service-language {
     display: inline-flex;
-  }
-  .service-price {
-    display: flex;
-    flex-wrap: wrap;
-    .field__item {
-      color: clr(alt-header-color);
-      letter-spacing: 0.01em;
-      width: 100%;
-      span {
-        font-weight: 400;
-      }
-      font-weight: 700;
-    }
-    p {
-      letter-spacing: 0.01em;
-    }
   }
 
   .field--name-field-responsible-updatee .field__item {
@@ -544,7 +526,6 @@
   margin-bottom: $space-two-and-half;
   @include large {
     margin-bottom: $space-triple;
-    margin-top: $space-double;
   }
   @include xl {
     margin-bottom: $space-three-and-half;
@@ -578,6 +559,76 @@
       @extend .text-small;
     }
   }
+  .page-heading {
+    @include xl {
+      max-width: 90%;
+    }
+  }
+}
+
+.page-node-type-service .work-guidance {
+  .group-right {
+    .toc-anchor:before {
+      content: '';
+      display: block;
+      height: 110px;
+      margin-top: -110px;
+      visibility: hidden;
+    }
+  }
+  .group-left {
+    border-right: 2px solid $blue10;
+    @include xl {
+      height: calc(100% - 141px);
+    }
+    .group-left-inner {
+
+    }
+  }
+  .toc-js {
+    border-left: 6px solid $accent-pink;
+    nav {
+      margin-left: 2em;
+    }
+    ul {
+      padding-left: 0;
+    }
+    li {
+      margin-bottom: 0.5rem;
+      @include xl {
+        margin-bottom: 1rem;
+      }
+      &.toc-h2 {
+        padding-left: 0;
+        > ul {
+          margin-bottom: 0.5rem;
+          li {
+            margin-bottom: 0.5rem;
+          }
+        }
+      }
+      &:before {
+        content: none;
+      }
+      a {
+        @include desktop {
+          font-size: 18px;
+        }
+        color: $black;
+        font-weight: 600;
+        &:hover {
+          font-weight: bold;
+        }
+      }
+      &.toc-active {
+        > a {
+          font-weight: bold;
+          border-bottom: 1px solid $black;
+        }
+      }
+    }
+
+  }
 }
 
 .icon-wrapper {
@@ -609,4 +660,10 @@
 
 .field--name-field-contact-name {
   font-weight: 600;
+}
+
+.first-group-bottom {
+  >div {
+    flex: 1;
+  }
 }

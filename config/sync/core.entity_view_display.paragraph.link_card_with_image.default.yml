@@ -9,7 +9,7 @@ dependencies:
     - field.field.paragraph.link_card_with_image.field_title
     - paragraphs.paragraphs_type.link_card_with_image
   module:
-    - link
+    - hel_tpm_general
 id: paragraph.link_card_with_image.default
 targetEntityType: paragraph
 bundle: link_card_with_image
@@ -33,14 +33,14 @@ content:
     weight: 2
     region: content
   field_single_link:
-    type: link
+    type: link_external_new_tab
     label: above
     settings:
-      trim_length: 80
+      trim_length: '80'
+      target: _blank
       url_only: false
       url_plain: false
-      rel: ''
-      target: ''
+      rel: 0
     third_party_settings: {  }
     weight: 3
     region: content

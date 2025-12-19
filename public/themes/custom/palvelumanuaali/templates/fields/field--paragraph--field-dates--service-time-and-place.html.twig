@@ -71,20 +71,23 @@
       {% endfor %}
     {% else %}
       <div class="field-items-wrapper">
+          {% set randId = random() %}
+          {% set multicollapseId = 'multi-collapse-' ~ randId %}
+          {% set multicollapseIdClass = '.' ~ multicollapseId %}
         {% for item in items %}
           {% if loop.index < 4 %}
             <div{{ item.attributes.addClass('field__item').addClass('with-comma') }}>{{ item.content }}{{","}}</div>
           {% else %}
             {% if not loop.last %}
-              <div{{ item.attributes.addClass('field__item').addClass('collapse').addClass('with-comma').addClass('multi-collapse') }}>{{ item.content }}</div>
+              <div{{ item.attributes.addClass('field__item').addClass('collapse').addClass('with-comma').addClass(multicollapseId) }}>{{ item.content }}</div>
             {% else %}
-              <div{{ item.attributes.addClass('field__item').addClass('collapse').addClass('multi-collapse') }}>{{ item.content }}</div>
+              <div{{ item.attributes.addClass('field__item').addClass('collapse').addClass(multicollapseId) }}>{{ item.content }}</div>
             {% endif %}
           {% endif %}
         {% endfor %}
       </div>
       <div class="button-wrapper">
-        <button class="button--no-color-no-border button--dropdown-button" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">{{"Show more"|t}}</button>
+        <button class="button--no-color-no-border button--dropdown-button" type="button" data-bs-toggle="collapse" data-bs-target={{ multicollapseIdClass }} aria-expanded="false" aria-controls={{ multicollapseId }}>{{"Show more"|t}}</button>
       </div>
     {% endif %}
   </div>

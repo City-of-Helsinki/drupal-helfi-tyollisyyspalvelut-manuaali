@@ -64,7 +64,16 @@
 
 {% set item_classes = item_classes|merge(items_additional_classes) %}
 
-<div class='icon-wrapper'>
+{%
+  set icon_wrapper_classes = [
+  'icon-wrapper',
+]
+%}
+
+{% set icon_wrapper_additional_classes = icon_wrapper_additional_classes|default(['']) %}
+{% set icon_wrapper_classes = icon_wrapper_classes|merge(icon_wrapper_additional_classes) %}
+
+<div {{ attributes.addClass(icon_wrapper_classes) }}>
   {% include "@atoms/images/icons/_icon.twig" with {
     icon_base_class: 'icon',
     icon_name: icon_name,
