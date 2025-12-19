@@ -1,7 +1,7 @@
 services:
   hel_tpm_update_reminder.service_state_changed_subscriber:
     class: Drupal\hel_tpm_update_reminder\EventSubscriber\ServiceStateChangedSubscriber
-    arguments: ['@entity_type.manager']
+    arguments: ['@entity_type.manager', '@hel_tpm_update_reminder.update_reminder_user']
     tags:
       - { name: event_subscriber }
   hel_tpm_update_reminder.update_reminder_user:
