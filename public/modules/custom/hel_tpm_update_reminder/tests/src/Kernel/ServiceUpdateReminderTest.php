@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\hel_tpm_update_reminder\Kernel;
 
 use Drupal\Core\Database\Database;
+use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Test\AssertMailTrait;
 use Drupal\group\Entity\Group;
@@ -572,9 +573,13 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
   public function testFetchPublishedServiceIds(): void {
     $update_reminder_service = \Drupal::service('hel_tpm_update_reminder.update_reminder_user');
 
+    $created = new DrupalDateTime('-121 days');
     // Create 2 published nodes.
     $publishedService1 = $this->createService(['moderation_state' => 'published'], $this->group);
-    $publishedService2 = $this->createService(['moderation_state' => 'published'], $this->group);
+    $publishedService2 = $this->createService([
+      'moderation_state' => 'published',
+      'created' => $created->getTimestamp(),
+    ], $this->group);
 
     // Create 1 unpublished node.
     $unpublishedService = $this->createService(['moderation_state' => 'draft'], $this->group);
@@ -584,8 +589,8 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
 
     // Assert the IDs of published nodes are returned and the unpublished node
     // is not included.
-    $this->assertCount(2, $publishedServiceIds);
-    $this->assertContains($publishedService1->id(), $publishedServiceIds);
+    $this->assertCount(1, $publishedServiceIds);
+    $this->assertNotContains($publishedService1->id(), $publishedServiceIds);
     $this->assertContains($publishedService2->id(), $publishedServiceIds);
     $this->assertNotContains($unpublishedService->id(), $publishedServiceIds);
   }
@@ -789,6 +794,7 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
     $service = $this->createService([
       'field_service_provider_updatee' => $user,
       'moderation_state' => $fromState,
+      'created' => $changed,
       'changed' => $changed,
       'uid' => $addUser ? $user->id() : 0,
     ], $this->group);

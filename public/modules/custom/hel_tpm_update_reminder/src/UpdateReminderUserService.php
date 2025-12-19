@@ -144,6 +144,7 @@ class UpdateReminderUserService {
     return $this->entityTypeManager->getStorage('node')->getQuery()
       ->condition('type', 'service')
       ->condition('status', NodeInterface::PUBLISHED)
+      ->condition('created', UpdateReminderUtility::getFirstLimitTimestamp(), '<')
       ->accessCheck(FALSE)
       ->execute();
   }
@@ -163,19 +164,19 @@ class UpdateReminderUserService {
   protected function processUpdaters(array $services): array {
     $reminderServices = [];
     foreach ($services as $service) {
-      $latestRevision = $this->fetchLatestRevision(
+      $latestRevisionByUpdater = $this->fetchLatestRevisionByUpdaters(
         $service['entity_id'],
         $service['updaters']
       );
 
-      if (empty($latestRevision)) {
+      if (empty($latestRevisionByUpdater)) {
         $reminderServices[$service['entity_id']] = [
           'nid' => $service['entity_id'],
         ];
         continue;
       }
-      if ($latestRevision['changed'] < UpdateReminderUtility::getFirstLimitTimestamp()) {
-        $reminderServices[$service['entity_id']] = $latestRevision;
+      if ($latestRevisionByUpdater['changed'] < UpdateReminderUtility::getFirstLimitTimestamp()) {
+        $reminderServices[$service['entity_id']] = $latestRevisionByUpdater;
       }
     }
 
@@ -198,7 +199,7 @@ class UpdateReminderUserService {
    *
    * @throws \Exception
    */
-  protected function fetchLatestRevision(int $nodeId, array $updaters): ?array {
+  protected function fetchLatestRevisionByUpdaters(int $nodeId, array $updaters): ?array {
     $query = $this->database->select('node_field_revision', 'nfr')
       ->fields('nfr', ['nid', 'vid', 'changed'])
       ->condition('nfr.nid', $nodeId);
