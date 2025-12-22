@@ -186,13 +186,13 @@ final class FileGarbageCollector {
       $col = $field_name . '_target_id';
 
       // Fetch latest revisions per langcode.
-      $latest_revisions = $this->getLatestRevisions($entity_type_data['revision_table']);
+      $latest_revisions = $this->getLatestRevisions($entity_type_data['revision_table'], $entity_type_data['revision_key']);
       if (empty($latest_revisions)) {
         return FALSE;
       }
       // Check if file is in use in any latest revision.
       foreach ($latest_revisions as $revision) {
-        $file_usage = $this->getRevisionFileReferences($table_info['field_revision_table'], $revision->vid, $revision->langcode);
+        $file_usage = $this->getRevisionFileReferences($table_info['field_revision_table'], $revision->{$entity_type_data['revision_key']}, $revision->langcode);
         foreach ($file_usage as $row) {
           if ($row[$col] === $file['fid']) {
             return TRUE;
@@ -226,20 +226,21 @@ final class FileGarbageCollector {
   }
 
   /**
-   * Retrieves the latest revision from the specified revision table.
+   * Retrieves the latest revisions for a specified revision table.
    *
    * @param string $revision_table
-   *   The name of the database table storing revisions.
+   *   The name of the revision table to query.
+   * @param string $revision_key
+   *   The key used to order the revisions.
    *
-   * @return array|null
-   *   An associative array containing data of the latest revision, or NULL if
-   *   no affected revisions are found.
+   * @return array
+   *   An associative array of the latest revisions, indexed by language code.
    */
-  protected function getLatestRevisions($revision_table) {
+  protected function getLatestRevisions($revision_table, $revision_key) {
     return $this->connection->select($revision_table, 'dt')
       ->fields('dt')
       ->condition('dt.revision_translation_affected', 1)
-      ->orderBy('vid', 'ASC')
+      ->orderBy($revision_key, 'ASC')
       ->execute()
       ->fetchAllAssoc('langcode');
   }

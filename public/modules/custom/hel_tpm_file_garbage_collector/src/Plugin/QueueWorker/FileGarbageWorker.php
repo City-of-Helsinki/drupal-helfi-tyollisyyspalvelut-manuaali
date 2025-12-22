@@ -50,6 +50,9 @@ final class FileGarbageWorker extends QueueWorkerBase implements ContainerFactor
   public function processItem($data): void {
     $storage = $this->entityTypeManager->getStorage('file');
     $file = $storage->load($data['fid']);
+    if (empty($file)) {
+      return;
+    }
     $file->delete();
   }
 
