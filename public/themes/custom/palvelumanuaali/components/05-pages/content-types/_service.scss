@@ -588,10 +588,12 @@
   .toc-js {
     border-left: 6px solid $accent-pink;
     nav {
-      overflow: auto;
-      margin-left: 2em;
-      margin-right: 1rem;
-      max-height: calc(100vh - 190px);
+      @include xl {
+        overflow: auto;
+        margin-left: 2em;
+        margin-right: 1rem;
+        max-height: calc(100vh - 190px);
+      }
     }
     ul {
       padding-left: 0;
