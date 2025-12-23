@@ -104,8 +104,7 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
     }
 
     // Dispatch messages to group administration.
-    $user = reset($accounts);
-    if (!empty($user)) {
+    foreach ($accounts as $user) {
       $this->dispatchMessage($entity, $user, 'group_ready_to_publish_notificat');
       $this->messenger->addStatus($this->t('Notified @group administration', ['@group' => $group->label()]));
     }

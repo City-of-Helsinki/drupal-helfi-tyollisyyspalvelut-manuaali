@@ -77,6 +77,13 @@ class ServiceStateChangedNotificationSubscriberTest extends GroupKernelTestBase 
   private $orgUser2;
 
   /**
+   * Organisation user instance.
+   *
+   * @var \Drupal\Core\Entity\EntityInterface|\Drupal\user\Entity\User
+   */
+  private $orgUser3;
+
+  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {
@@ -112,6 +119,9 @@ class ServiceStateChangedNotificationSubscriberTest extends GroupKernelTestBase 
 
     $this->orgUser2 = $this->createUserWithRoles(['specialist editor', 'editor']);
     $this->orgGroup->addMember($this->orgUser2, ['group_roles' => ['organisation-editor']]);
+
+    $this->orgUser3 = $this->createUserWithRoles(['specialist editor', 'editor']);
+    $this->orgGroup->addMember($this->orgUser3, ['group_roles' => ['organisation-administrator']]);
 
     // Add service provider to organisation group as subgroup.
     $this->orgGroup->addRelationship($this->spGroup, 'subgroup:service_provider');
@@ -209,6 +219,8 @@ class ServiceStateChangedNotificationSubscriberTest extends GroupKernelTestBase 
     // has been sent to group administration.
     $this->assertEquals('message_notify_group_ready_to_publish_notificat', $mails[0]['id']);
     $this->assertEquals($this->orgUser->getEmail(), $mails[0]['to']);
+    $this->assertEquals('message_notify_group_ready_to_publish_notificat', $mails[1]['id']);
+    $this->assertEquals($this->orgUser3->getEmail(), $mails[1]['to']);
   }
 
   /**

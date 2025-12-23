@@ -93,10 +93,8 @@ trait ServiceNotificationTrait {
       if (empty($allowed['publish'])) {
         continue;
       }
-      $accounts[$account->getLastAccessedTime()] = $account;
+      $accounts[] = $account;
     }
-
-    ksort($accounts);
 
     return $accounts;
   }
