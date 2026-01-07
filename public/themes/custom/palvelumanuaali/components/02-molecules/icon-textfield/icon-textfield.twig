@@ -89,7 +89,7 @@
      {% elseif price_field %}
        {% apply spaceless %}
          <div{{ item.attributes.addClass('field__item') }}>
-            <span class='price'>{{'The service is free of charge'|t}}</span>
+            <span class='price tag-pill tag-pill--alt'>{{'The service is free of charge'|t}}</span>
          </div>
        {% endapply %}
      {% else %}

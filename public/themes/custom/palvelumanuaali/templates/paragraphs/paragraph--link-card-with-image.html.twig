@@ -51,16 +51,22 @@
     content.field_lift_image['0'] is null ? 'margin--top-auto',
   ]
 %}
+{% set is_external = content['field_single_link'].0['#url'].external %}
 
 <div{{ attributes.addClass(classes) }}>
   {% do attributes.removeAttribute('class') %}
-  <a {{ attributes.addClass(link_classes) }} href={{ content.field_single_link['0']['#url'] }} title='{{content.field_single_link['0']['#title'] }}'>
+  <a {{ attributes.addClass(link_classes) }}
+    href="{{ content.field_single_link['0']['#url'] }}"
+    title="{{ content.field_single_link['0']['#title'] }}"
+    {% if is_external %} target="_blank" rel="noopener" aria-label="{{ 'Opens in a new tab'|t }}" {% endif %}>
     {{ content.field_lift_image }}
     <div class='card-text-wrapper'>
       {{ content|without('field_lift_image','field_single_link') }}
     </div>
-    <span class="arrow-icon">
-
-    </span>
+    {% if is_external %}
+      <span class="arrow-icon external"></span>
+    {% else %}
+      <span class="arrow-icon"></span>
+    {% endif %}
   </a>
 </div>
