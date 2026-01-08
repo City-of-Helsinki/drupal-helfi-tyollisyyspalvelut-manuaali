@@ -297,6 +297,7 @@ third_party_settings:
         - moderation_state
         - created
         - status
+        - field_search_boost
       label: Lisätiedot
       region: content
       parent_name: ''
@@ -923,7 +924,7 @@ content:
     third_party_settings: {  }
   field_search_boost:
     type: number
-    weight: 35
+    weight: 14
     region: content
     settings:
       placeholder: ''
@@ -1113,7 +1114,7 @@ content:
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 14
+    weight: 13
     region: content
     settings:
       display_label: true
