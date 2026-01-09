@@ -1,7 +1,14 @@
-const { merge } = require('webpack-merge');
-const common = require('./webpack.common.js');
+// webpack.prod.js
+import { merge } from 'webpack-merge';
+import common from '../../../node_modules/@emulsify/core/config/webpack/webpack.common.js';
+import { applySassLoaderConfig } from './scss-loader-config.js';
+import { applyCleanPluginConfig } from './clean-plugin-config.js';
 
-module.exports = merge(common, {
+let config = merge(common, {
   mode: 'production',
-  devtool: 'source-map',
 });
+
+config = applySassLoaderConfig(config);
+config = applyCleanPluginConfig(config);
+
+export default config;
