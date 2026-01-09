@@ -33,10 +33,9 @@
  * - field_type: The type of the field.
  * - label_display: The display settings for the label.
  *
+ *
  * @see template_preprocess_field()
  */
-
- @TODO: THIS CAN BE REMOVED IF BEM CLASSES CAN BE APPLIED IN WYSIWYG
 #}
 {%
   set classes = [
@@ -44,12 +43,9 @@
     'field--name-' ~ field_name|clean_class,
     'field--type-' ~ field_type|clean_class,
     'field--label-' ~ label_display,
-    'field--content--inline',
-    'field--content--blue',
-    'margin-bottom-one-space',
+    label_display == 'inline' ? 'clearfix',
   ]
 %}
-
 {%
   set title_classes = [
     'field__label',
@@ -57,30 +53,14 @@
   ]
 %}
 
-<div{{ attributes.addClass(classes) }}>
-  <div{{ title_attributes.addClass(title_classes) }}>
-  {% include "@atoms/text/headings/_heading.twig" with {
-    "heading_level": 5,
-    "heading": 'Attachments'|t,
-    "heading_modifiers": ['semibold','margin-bottom-extra'],
-    "heading_base_class": 'h5',
-  } %}
-  </div>
-  <div class="field__items">
+  <div{{ attributes.addClass(classes) }}>
+    {% if multiple %}
+      <div class="field__items">
+    {% endif %}
     {% for item in items %}
-      <div{{ item.attributes.addClass('field__item') }}>
-      {% include "@atoms/images/icons/_icon.twig" with {
-        icon_base_class: 'icon',
-        icon_name: 'file_1',
-        icon_modifiers: ['small','absolute-left-regular'],
-      } %}
-        {{item.content}}
-        {% include "@atoms/images/icons/_icon.twig" with {
-          icon_base_class: 'icon',
-          icon_name: 'download_1',
-          icon_modifiers: ['small','absolute-right-regular'],
-        } %}
-      </div>
+      <div{{ item.attributes.addClass('field__item').addClass('tag-pill').addClass('tag-pill--alt') }}>{{ item.content }}</div>
     {% endfor %}
+    {% if multiple %}
+      </div>
+    {% endif %}
   </div>
-</div>

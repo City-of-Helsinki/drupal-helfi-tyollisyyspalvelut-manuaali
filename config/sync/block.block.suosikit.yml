@@ -7,6 +7,7 @@ dependencies:
   module:
     - block_class
     - system
+    - user
   theme:
     - palvelumanuaali
 third_party_settings:
@@ -26,4 +27,11 @@ settings:
   level: 1
   depth: 0
   expand_all_items: false
-visibility: {  }
+visibility:
+  user_role:
+    id: user_role
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      authenticated: authenticated
