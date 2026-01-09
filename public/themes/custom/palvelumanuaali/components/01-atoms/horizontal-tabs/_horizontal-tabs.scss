@@ -1,0 +1,197 @@
+//add basic theming for sidebar horizontal-tabs, following structure require to override default themes
+.horizontal-tabs {
+  position: unset;
+  .horizontal-tabs-list {
+    display: none;
+    top: -71px;
+    left: 0;
+    border: 0;
+    align-items: end;
+    background-color: unset;
+    &:has(.horizontal-tab-button-1.selected) {
+      background-color: clr(service-instruction-bg);
+    }
+    .horizontal-tab-button {
+      border-radius: 16px 16px 0 0;
+      border: unset;
+      padding: 0;
+
+      &::before {
+        display: none;
+      }
+
+      &:first-child {
+        margin-right: 4px;
+
+        strong::before {
+          background-image: url("../../assets/images/icons/contact-list.svg");
+          display: none;
+          @include medium {
+            display: block;
+          }
+        }
+      }
+
+      &:nth-child(2) {
+        strong::before {
+          background-image: url("../../assets/images/icons/checklist2.svg");
+          display: none;
+          @include medium {
+            display: block;
+          }
+        }
+      }
+
+      strong {
+        display: flex;
+        flex-wrap: wrap;
+        font-weight: 600;
+
+        &::before {
+          content: "";
+          display: block;
+          margin-right: $space;
+          width: 24px;
+          height: 24px;
+        }
+      }
+      a {
+        background-color: clr(text-inverse);
+        padding: 12px 48px;
+        border-bottom: 2px solid clr(background-border);
+        font-size: 14px;
+        color: clr(text);
+        border-radius: 16px 16px 0 0;
+        line-height: 24px;
+        @include medium {
+          font-size: 18px;
+          padding: 14px 56px 16px 48px;
+        }
+        &:hover {
+          background-color: clr(background-border);
+        }
+      }
+
+      &.selected {
+        a {
+          background: clr(footer-color);
+          color: clr(text-inverse);
+          padding: 18px 56px 22px 48px;
+          border-bottom: unset;
+        }
+
+        &:first-child {
+          strong::before {
+            background-image: url("../../assets/images/icons/contact-list-selected.svg");
+          }
+        }
+
+        &:nth-child(2) {
+          strong::before {
+            background-image: url("../../assets/images/icons/checklist2-selected.svg");
+          }
+        }
+      }
+    }
+  }
+}
+
+.logged-in {
+  .horizontal-tabs {
+    .horizontal-tabs-list {
+      display: flex;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding-top: $space-double;
+    }
+  }
+  .link-wrapper {
+    @include large {
+      margin-bottom: -23px;
+      top: -23px;
+    }
+  }
+  // Change background color if service work instruction tab is selected
+  .main:has(.service-tabs .horizontal-tab-button-1.selected) {
+    background-color: clr(service-instruction-bg);
+  }
+  &:has(.service-tabs .horizontal-tab-button-1.selected) {
+    background-color: clr(service-instruction-bg);
+  }
+}
+
+//adjust placement of the service toolbar in relation to different toolbar settings
+.toolbar-fixed{
+  &.toolbar-horizontal {
+    .horizontal-tabs {
+      .horizontal-tabs-list {
+        top: 38px;
+      }
+    }
+    .link-wrapper {
+      @include large {
+        margin-bottom: unset;
+      }
+    }
+    &.toolbar-tray-open {
+      .horizontal-tabs {
+        .horizontal-tabs-list {
+          top: 75px;
+          padding-top: $space-double;
+        }
+      }
+      .link-wrapper {
+        @include large {
+          top: 15px;
+        }
+      }
+    }
+  }
+  &.toolbar-vertical {
+    .horizontal-tabs {
+      .horizontal-tabs-list {
+        padding-top: $space-double;
+        top: 40px;
+      }
+    }
+    .link-wrapper {
+      top: -21px;
+      @include large {
+        top: 0;
+      }
+    }
+  }
+}
+
+// Overrides for service forms
+.logged-in.edit-create-form {
+  &.logged-in {
+    .horizontal-tabs {
+      .horizontal-tabs-list {
+        position: relative;
+        top: 0;
+        border-bottom: 2px solid clr(form-border);
+        &:has(.horizontal-tab-button-1.selected) {
+          background-color: transparent;
+        }
+
+      }
+    }
+    .horizontal-tab-button {
+      a {
+        border-bottom: 0;
+        background-color: clr(background);
+        &:hover {
+          background-color: clr(background-border);
+        }
+      }
+      &.selected {
+        a {
+          background-color: clr(footer-color);
+        }
+      }
+    }
+  }
+}
+

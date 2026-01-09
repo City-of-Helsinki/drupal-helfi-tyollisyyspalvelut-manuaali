@@ -72,38 +72,6 @@
         }
       }
   }
-
-  //add basic theming for sidebar horizontal-tabs
-  .horizontal-tabs {
-    .horizontal-tabs-list {
-        border-bottom: 2px solid clr(form-border);
-        padding-left: 16px;
-        background-color: unset;
-        margin-bottom: $space-triple;
-    }
-
-    .horizontal-tab-button {
-      border-radius: 8px 8px 0px 0px;
-      background-color: clr(background);
-      color: clr(background-section);
-      border: unset;
-      a {
-        padding: 12px 48px;
-      }
-      &.selected {
-        border-bottom: unset;
-        background-color: clr(background-section);
-        a {
-          color: clr(text-inverse);
-          &:hover {
-            background-color: clr(alt-header-color);
-            border-radius: 8px 8px 0px 0px;
-          }
-        }
-      }
-    }
-  }
-
   .h2 {
     font-weight: 600;
     font-size: 24px;
