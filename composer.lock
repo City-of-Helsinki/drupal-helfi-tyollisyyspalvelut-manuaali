@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "28abb582eb4701d9afab0584a4aad131",
+    "content-hash": "0acf1b3a1c00ad0223b46a17aa3b18b6",
     "packages": [
         {
             "name": "ajgl/breakpoint-twig-extension",
@@ -4321,29 +4321,29 @@
         },
         {
             "name": "drupal/entity_export_csv",
-            "version": "2.0.0-beta1",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/entity_export_csv.git",
-                "reference": "2.0.0-beta1"
+                "reference": "2.1.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/entity_export_csv-2.0.0-beta1.zip",
-                "reference": "2.0.0-beta1",
-                "shasum": "a4dfc637a9b0098a613e8fee9172b4e9f0b20423"
+                "url": "https://ftp.drupal.org/files/projects/entity_export_csv-2.1.0.zip",
+                "reference": "2.1.0",
+                "shasum": "4662e69e45fb3f446ffcf01436096cdd35a21ed0"
             },
             "require": {
-                "drupal/core": "^9.3 || ^10"
+                "drupal/core": "^10.3 || ^11"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "2.0.0-beta1",
-                    "datestamp": "1699451709",
+                    "version": "2.1.0",
+                    "datestamp": "1743596586",
                     "security-coverage": {
-                        "status": "not-covered",
-                        "message": "Beta releases are not covered by Drupal security advisories."
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
                     }
                 }
             },
@@ -5168,26 +5168,26 @@
         },
         {
             "name": "drupal/flag",
-            "version": "4.0.0-beta5",
+            "version": "4.0.0-beta7",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/flag.git",
-                "reference": "8.x-4.0-beta5"
+                "reference": "8.x-4.0-beta7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/flag-8.x-4.0-beta5.zip",
-                "reference": "8.x-4.0-beta5",
-                "shasum": "da40eefe0f3a5603fff25f8f4626c462bb75cf7a"
+                "url": "https://ftp.drupal.org/files/projects/flag-8.x-4.0-beta7.zip",
+                "reference": "8.x-4.0-beta7",
+                "shasum": "6f74fcaec0db3c54934cdf8f25acb67c0c2d7f07"
             },
             "require": {
-                "drupal/core": "^9.1 || ^10 || ^11"
+                "drupal/core": "^10.3 || ^11"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-4.0-beta5",
-                    "datestamp": "1724579446",
+                    "version": "8.x-4.0-beta7",
+                    "datestamp": "1743851261",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Beta releases are not covered by Drupal security advisories."
@@ -5212,20 +5212,16 @@
                     "homepage": "https://www.drupal.org/user/761344"
                 },
                 {
+                    "name": "ivnish",
+                    "homepage": "https://www.drupal.org/user/3547706"
+                },
+                {
                     "name": "joachim",
                     "homepage": "https://www.drupal.org/user/107701"
                 },
                 {
                     "name": "mandclu",
                     "homepage": "https://www.drupal.org/user/52136"
-                },
-                {
-                    "name": "merlinofchaos",
-                    "homepage": "https://www.drupal.org/user/26979"
-                },
-                {
-                    "name": "mooffie",
-                    "homepage": "https://www.drupal.org/user/78454"
                 },
                 {
                     "name": "quicksketch",
@@ -5248,27 +5244,30 @@
         },
         {
             "name": "drupal/flag_lists",
-            "version": "4.0.2",
+            "version": "4.0.3",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/flag_lists.git",
-                "reference": "4.0.2"
+                "reference": "4.0.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/flag_lists-4.0.2.zip",
-                "reference": "4.0.2",
-                "shasum": "708d024dd5c75fe9eea9998350004a7c0ee634f8"
+                "url": "https://ftp.drupal.org/files/projects/flag_lists-4.0.3.zip",
+                "reference": "4.0.3",
+                "shasum": "e938391f54de3eb668b9de520bb34543c40a74c0"
             },
             "require": {
-                "drupal/core": "^9 || ^10",
+                "drupal/core": "^9 || ^10 || ^11",
                 "drupal/flag": "^4.0"
+            },
+            "require-dev": {
+                "drupal/action": "*"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "4.0.2",
-                    "datestamp": "1712137036",
+                    "version": "4.0.3",
+                    "datestamp": "1739876841",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -7451,7 +7450,7 @@
                     "homepage": "https://www.drupal.org/user/208732"
                 },
                 {
-                    "name": "RoySegall",
+                    "name": "roysegall",
                     "homepage": "https://www.drupal.org/user/1812910"
                 }
             ],
@@ -7463,17 +7462,17 @@
         },
         {
             "name": "drupal/message_notify",
-            "version": "1.4.0",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/message_notify.git",
-                "reference": "8.x-1.4"
+                "reference": "8.x-1.5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/message_notify-8.x-1.4.zip",
-                "reference": "8.x-1.4",
-                "shasum": "e26a36ed2cb84be6ef1825a392d85429a45a0de1"
+                "url": "https://ftp.drupal.org/files/projects/message_notify-8.x-1.5.zip",
+                "reference": "8.x-1.5",
+                "shasum": "04fe85e508750806b31acc99b417227b93837dd6"
             },
             "require": {
                 "drupal/core": "^9 || ^10 || ^11",
@@ -7486,8 +7485,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-1.4",
-                    "datestamp": "1725912818",
+                    "version": "8.x-1.5",
+                    "datestamp": "1739804809",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
