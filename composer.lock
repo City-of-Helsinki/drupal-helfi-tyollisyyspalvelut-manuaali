@@ -5164,26 +5164,26 @@
         },
         {
             "name": "drupal/flag",
-            "version": "4.0.0-beta5",
+            "version": "4.0.0-beta7",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/flag.git",
-                "reference": "8.x-4.0-beta5"
+                "reference": "8.x-4.0-beta7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/flag-8.x-4.0-beta5.zip",
-                "reference": "8.x-4.0-beta5",
-                "shasum": "da40eefe0f3a5603fff25f8f4626c462bb75cf7a"
+                "url": "https://ftp.drupal.org/files/projects/flag-8.x-4.0-beta7.zip",
+                "reference": "8.x-4.0-beta7",
+                "shasum": "6f74fcaec0db3c54934cdf8f25acb67c0c2d7f07"
             },
             "require": {
-                "drupal/core": "^9.1 || ^10 || ^11"
+                "drupal/core": "^10.3 || ^11"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-4.0-beta5",
-                    "datestamp": "1724579446",
+                    "version": "8.x-4.0-beta7",
+                    "datestamp": "1743851261",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Beta releases are not covered by Drupal security advisories."
@@ -5208,20 +5208,16 @@
                     "homepage": "https://www.drupal.org/user/761344"
                 },
                 {
+                    "name": "ivnish",
+                    "homepage": "https://www.drupal.org/user/3547706"
+                },
+                {
                     "name": "joachim",
                     "homepage": "https://www.drupal.org/user/107701"
                 },
                 {
                     "name": "mandclu",
                     "homepage": "https://www.drupal.org/user/52136"
-                },
-                {
-                    "name": "merlinofchaos",
-                    "homepage": "https://www.drupal.org/user/26979"
-                },
-                {
-                    "name": "mooffie",
-                    "homepage": "https://www.drupal.org/user/78454"
                 },
                 {
                     "name": "quicksketch",
@@ -5244,27 +5240,30 @@
         },
         {
             "name": "drupal/flag_lists",
-            "version": "4.0.2",
+            "version": "4.0.3",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/flag_lists.git",
-                "reference": "4.0.2"
+                "reference": "4.0.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/flag_lists-4.0.2.zip",
-                "reference": "4.0.2",
-                "shasum": "708d024dd5c75fe9eea9998350004a7c0ee634f8"
+                "url": "https://ftp.drupal.org/files/projects/flag_lists-4.0.3.zip",
+                "reference": "4.0.3",
+                "shasum": "e938391f54de3eb668b9de520bb34543c40a74c0"
             },
             "require": {
-                "drupal/core": "^9 || ^10",
+                "drupal/core": "^9 || ^10 || ^11",
                 "drupal/flag": "^4.0"
+            },
+            "require-dev": {
+                "drupal/action": "*"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "4.0.2",
-                    "datestamp": "1712137036",
+                    "version": "4.0.3",
+                    "datestamp": "1739876841",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -6932,40 +6931,6 @@
                 "source": "https://git.drupalcode.org/project/mail_login",
                 "issues": "http://drupal.org/project/issues/mail_login",
                 "email": "mqanneh@gmail.com"
-            }
-        },
-        {
-            "name": "drupal/mailer_transport",
-            "version": "1.6.2",
-            "require": {
-                "drupal/core": "^10.3 || ^11",
-                "drupal/symfony_mailer": "^1"
-            },
-            "type": "metapackage",
-            "extra": {
-                "drupal": {
-                    "version": "1.6.2",
-                    "datestamp": "1751013031",
-                    "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "adamps",
-                    "homepage": "https://www.drupal.org/user/2650563"
-                }
-            ],
-            "description": "Placeholder to support upgrade to v2.x",
-            "homepage": "https://www.drupal.org/project/symfony_mailer",
-            "support": {
-                "source": "https://git.drupalcode.org/project/symfony_mailer"
             }
         },
         {
