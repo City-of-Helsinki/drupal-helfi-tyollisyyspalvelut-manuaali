@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2ca22f5a8a31ef6201fbc543b628caf7",
+    "content-hash": "0b3c1137d12d173cd542029af323bc9e",
     "packages": [
         {
             "name": "ajgl/breakpoint-twig-extension",
@@ -4317,29 +4317,29 @@
         },
         {
             "name": "drupal/entity_export_csv",
-            "version": "2.0.0-beta1",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/entity_export_csv.git",
-                "reference": "2.0.0-beta1"
+                "reference": "2.1.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/entity_export_csv-2.0.0-beta1.zip",
-                "reference": "2.0.0-beta1",
-                "shasum": "a4dfc637a9b0098a613e8fee9172b4e9f0b20423"
+                "url": "https://ftp.drupal.org/files/projects/entity_export_csv-2.1.0.zip",
+                "reference": "2.1.0",
+                "shasum": "4662e69e45fb3f446ffcf01436096cdd35a21ed0"
             },
             "require": {
-                "drupal/core": "^9.3 || ^10"
+                "drupal/core": "^10.3 || ^11"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "2.0.0-beta1",
-                    "datestamp": "1699451709",
+                    "version": "2.1.0",
+                    "datestamp": "1743596586",
                     "security-coverage": {
-                        "status": "not-covered",
-                        "message": "Beta releases are not covered by Drupal security advisories."
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
                     }
                 }
             },
@@ -6932,6 +6932,40 @@
                 "source": "https://git.drupalcode.org/project/mail_login",
                 "issues": "http://drupal.org/project/issues/mail_login",
                 "email": "mqanneh@gmail.com"
+            }
+        },
+        {
+            "name": "drupal/mailer_transport",
+            "version": "1.6.2",
+            "require": {
+                "drupal/core": "^10.3 || ^11",
+                "drupal/symfony_mailer": "^1"
+            },
+            "type": "metapackage",
+            "extra": {
+                "drupal": {
+                    "version": "1.6.2",
+                    "datestamp": "1751013031",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "adamps",
+                    "homepage": "https://www.drupal.org/user/2650563"
+                }
+            ],
+            "description": "Placeholder to support upgrade to v2.x",
+            "homepage": "https://www.drupal.org/project/symfony_mailer",
+            "support": {
+                "source": "https://git.drupalcode.org/project/symfony_mailer"
             }
         },
         {
@@ -23453,5 +23487,5 @@
     "platform-overrides": {
         "php": "8.3"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
