@@ -36,6 +36,7 @@ dependencies:
     - field.field.node.service.field_related_archive
     - field.field.node.service.field_responsible_municipality
     - field.field.node.service.field_responsible_updatee
+    - field.field.node.service.field_search_boost
     - field.field.node.service.field_service_benefits
     - field.field.node.service.field_service_coordination
     - field.field.node.service.field_service_exceptions
@@ -638,6 +639,15 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 29
+    region: content
+  field_search_boost:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 49
     region: content
   field_service_benefits:
     type: text_default
