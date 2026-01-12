@@ -91,7 +91,10 @@ function hel_tpm_general_node_view(array &$build, EntityInterface $entity, Entit
     ];
   }
   if ($display->getComponent('feedback_button')) {
-    $url = Drupal::config('hel_tpm_general.settings')->get('feedback_link_url');
+    $url = Drupal::state()->get('hel_tpm_general.feedback_link_url');
+    if (empty($url)) {
+      return;
+    }
     $build['feedback_button'] = [
       '#theme' => 'hel_tpm_general_link_with_icon',
       '#url' => $url,
