@@ -13,6 +13,7 @@ dependencies:
     - field.storage.node.field_implementation_extra_info
     - field.storage.node.field_life_situations
     - field.storage.node.field_municipality_irrelevant
+    - field.storage.node.field_search_boost
     - field.storage.node.field_service_execution_text
     - field.storage.node.field_service_languages
     - field.storage.node.field_service_producer
@@ -208,6 +209,14 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_municipality_irrelevant
+  field_search_boost:
+    label: 'Nosta hakutuloksissa'
+    datasource_id: 'entity:node'
+    property_path: field_search_boost
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_search_boost
   field_service_execution_text:
     label: Toteutustapa
     datasource_id: 'entity:node'
@@ -374,7 +383,9 @@ processor_settings:
       - entitygroupfield_labels
       - field_age_groups
       - field_description
+      - field_service_execution_text
       - field_service_producer_labels
+      - langcode
       - locality
       - rendered_item
       - title
@@ -437,6 +448,13 @@ processor_settings:
       - Po
       - Ps
   language_with_fallback: {  }
+  number_field_boost:
+    weights:
+      preprocess_index: 0
+    boosts:
+      field_search_boost:
+        boost_factor: 21.0
+        aggregation: first
   rendered_item: {  }
   service_processor: {  }
   solr_date_range:
