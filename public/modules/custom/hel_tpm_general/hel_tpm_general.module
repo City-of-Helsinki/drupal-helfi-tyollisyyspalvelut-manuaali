@@ -26,6 +26,14 @@ function hel_tpm_general_theme($existing, $type, $theme, $path) {
         'icon' => '',
       ],
     ],
+    "hel_tpm_general_link_with_icon" => [
+      'template' => 'link-with-icon',
+      'variables' => [
+        'title' => '',
+        'url' => '',
+        'attributes' => [],
+      ],
+    ],
   ];
 }
 
@@ -58,6 +66,13 @@ function hel_tpm_general_entity_extra_field_info() {
     'visible' => TRUE,
   ];
 
+  $extra['node']['service']['display']['feedback_button'] = [
+    'label' => t('Feedback button'),
+    'description' => t('Provides feedback button'),
+    'weight' => 101,
+    'visible' => FALSE,
+  ];
+
   return $extra;
 }
 
@@ -73,6 +88,18 @@ function hel_tpm_general_node_view(array &$build, EntityInterface $entity, Entit
     $build['view_mode_switcher'] = [
       '#type' => 'markup',
       '#markup' => $link->toString(),
+    ];
+  }
+  if ($display->getComponent('feedback_button')) {
+    $url = Drupal::config('hel_tpm_general.settings')->get('feedback_link_url');
+    $build['feedback_button'] = [
+      '#theme' => 'hel_tpm_general_link_with_icon',
+      '#url' => $url,
+      '#title' => 'Provide feedback',
+      '#attributes' => [
+        'class' => ['button-feedback', 'button'],
+        'target' => '_blank',
+      ],
     ];
   }
 }
