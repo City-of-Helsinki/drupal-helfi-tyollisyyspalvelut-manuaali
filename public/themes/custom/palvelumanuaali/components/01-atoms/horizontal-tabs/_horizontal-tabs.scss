@@ -7,7 +7,7 @@
     left: 0;
     border: 0;
     align-items: end;
-    background-color: unset;
+    background-color: clr(background);
     &:has(.horizontal-tab-button-1.selected) {
       background-color: clr(service-instruction-bg);
     }
@@ -24,7 +24,7 @@
         margin-right: 4px;
 
         strong::before {
-          background-image: url("../../assets/images/icons/contact-list.svg");
+          background-image: url("../../assets/icons/contact-list.svg");
           display: none;
           @include medium {
             display: block;
@@ -34,7 +34,7 @@
 
       &:nth-child(2) {
         strong::before {
-          background-image: url("../../assets/images/icons/checklist2.svg");
+          background-image: url("../../assets/icons/checklist2.svg");
           display: none;
           @include medium {
             display: block;
@@ -82,13 +82,13 @@
 
         &:first-child {
           strong::before {
-            background-image: url("../../assets/images/icons/contact-list-selected.svg");
+            background-image: url("../../assets/icons/contact-list-selected.svg");
           }
         }
 
         &:nth-child(2) {
           strong::before {
-            background-image: url("../../assets/images/icons/checklist2-selected.svg");
+            background-image: url("../../assets/icons/checklist2-selected.svg");
           }
         }
       }
@@ -172,6 +172,7 @@
         position: relative;
         top: 0;
         border-bottom: 2px solid clr(form-border);
+        background-color: transparent;
         &:has(.horizontal-tab-button-1.selected) {
           background-color: transparent;
         }
