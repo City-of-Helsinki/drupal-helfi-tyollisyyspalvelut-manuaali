@@ -640,15 +640,6 @@ content:
     third_party_settings: {  }
     weight: 29
     region: content
-  field_search_boost:
-    type: number_integer
-    label: above
-    settings:
-      thousand_separator: ''
-      prefix_suffix: true
-    third_party_settings: {  }
-    weight: 49
-    region: content
   field_service_benefits:
     type: text_default
     label: above
@@ -828,6 +819,7 @@ hidden:
   field_public_links: true
   field_responsible_municipality: true
   field_responsible_updatee: true
+  field_search_boost: true
   field_service_execution: true
   field_service_links_external: true
   field_service_links_internal: true
