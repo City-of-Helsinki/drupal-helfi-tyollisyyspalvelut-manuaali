@@ -32,9 +32,12 @@ dependencies:
     - field.field.node.service.field_other_services
     - field.field.node.service.field_price
     - field.field.node.service.field_price_description
+    - field.field.node.service.field_public_files
+    - field.field.node.service.field_public_links
     - field.field.node.service.field_related_archive
     - field.field.node.service.field_responsible_municipality
     - field.field.node.service.field_responsible_updatee
+    - field.field.node.service.field_search_boost
     - field.field.node.service.field_service_benefits
     - field.field.node.service.field_service_coordination
     - field.field.node.service.field_service_exceptions
@@ -116,6 +119,7 @@ hidden:
   entity_print_view_pdf: true
   entity_print_view_word_docx: true
   entitygroupfield: true
+  feedback_button: true
   field_accessibility: true
   field_age: true
   field_age_groups: true
@@ -147,6 +151,7 @@ hidden:
   field_related_archive: true
   field_responsible_municipality: true
   field_responsible_updatee: true
+  field_search_boost: true
   field_service_benefits: true
   field_service_coordination: true
   field_service_exceptions: true
@@ -173,4 +178,5 @@ hidden:
   links: true
   notifications_entity_view_1: true
   search_api_excerpt: true
+  toc_js: true
   view_mode_switcher: true

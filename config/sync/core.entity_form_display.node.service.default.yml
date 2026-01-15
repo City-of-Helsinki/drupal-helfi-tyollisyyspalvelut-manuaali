@@ -37,6 +37,7 @@ dependencies:
     - field.field.node.service.field_related_archive
     - field.field.node.service.field_responsible_municipality
     - field.field.node.service.field_responsible_updatee
+    - field.field.node.service.field_search_boost
     - field.field.node.service.field_service_benefits
     - field.field.node.service.field_service_coordination
     - field.field.node.service.field_service_exceptions
@@ -296,6 +297,7 @@ third_party_settings:
         - moderation_state
         - created
         - status
+        - field_search_boost
       label: Lisätiedot
       region: content
       parent_name: ''
@@ -920,6 +922,13 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_search_boost:
+    type: number
+    weight: 14
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
   field_service_benefits:
     type: text_textarea
     weight: 10
@@ -1105,7 +1114,7 @@ content:
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 14
+    weight: 13
     region: content
     settings:
       display_label: true

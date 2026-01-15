@@ -100,161 +100,6 @@
        padding-left: $space-one-half;
      }
   }
-
-  &.logged-in {
-    .horizontal-tabs {
-      .horizontal-tabs-list {
-        display: flex;
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        padding-top: $space-double;
-      }
-    }
-    .link-wrapper {
-      @include large {
-        margin-bottom: -23px;
-        top: -23px;
-      }
-    }
-    &.toolbar-fixed.toolbar-horizontal {
-      .horizontal-tabs {
-        .horizontal-tabs-list {
-          top: 38px;
-        }
-      }
-      .link-wrapper {
-        @include large {
-          margin-bottom: unset;
-        }
-      }
-    }
-    &.toolbar-fixed.toolbar-horizontal.toolbar-tray-open {
-      .horizontal-tabs {
-        .horizontal-tabs-list {
-          top: 75px;
-          padding-top: $space-double;
-        }
-      }
-      .link-wrapper {
-        @include large {
-          top: 15px;
-        }
-      }
-    }
-    &.toolbar-fixed.toolbar-vertical {
-      .horizontal-tabs {
-        .horizontal-tabs-list {
-          padding-top: $space-double;
-          top: 40px;
-        }
-      }
-      .link-wrapper {
-        top: -21px;
-        @include large {
-          top: 0;
-        }
-      }
-    }
-    // Change background color if service work instruction tab is selected
-    .main:has(.service-tabs .horizontal-tab-button-1.selected) {
-      background-color: clr(service-instruction-bg);
-    }
-    &:has(.service-tabs .horizontal-tab-button-1.selected) {
-      background-color: clr(service-instruction-bg);
-    }
-  }
-  //needs to be split to a separate file
-  .horizontal-tabs {
-    position: unset;
-    .horizontal-tabs-list {
-      display: none;
-      top: -71px;
-      left: 0;
-      background-color: clr(background);
-      border: 0;
-      align-items: end;
-      &:has(.horizontal-tab-button-1.selected) {
-        background-color: clr(service-instruction-bg);
-      }
-      .horizontal-tab-button {
-        border-right: 0;
-        padding: 0;
-        border-radius: 16px 16px 0 0;
-        &::before {
-          display: none;
-        }
-        strong {
-          display: flex;
-          flex-wrap: wrap;
-          font-weight: 600;
-          &::before {
-            content: "";
-            display: block;
-            margin-right: $space;
-            width: 24px;
-            height: 24px;
-          }
-        }
-        &:first-child {
-          margin-right: 4px;
-          strong::before {
-            background-image: url("../../assets/icons/contact-list.svg");
-            display: none;
-            @include medium {
-              display: block;
-            }
-          }
-        }
-        &:nth-child(2) {
-          strong::before {
-            background-image: url("../../assets/icons/checklist2.svg");
-            display: none;
-            @include medium {
-              display: block;
-            }
-          }
-        }
-        a {
-          padding: 14px 32px 18px 32px;
-          border-bottom: 2px solid clr(background-border);
-          font-size: 14px;
-          color: clr(text);
-          background-color: clr(text-inverse);
-          border-radius: 16px 16px 0 0;
-          line-height: 24px;
-          @include medium {
-            font-size: 18px;
-            padding: 14px 56px 18px 48px;
-          }
-          &:hover {
-            background-color: clr(background-border);
-          }
-        }
-        &.selected {
-          a {
-            border-bottom: 0;
-            color: clr(text-inverse);
-            background: clr(footer-color);
-            &:hover {
-              background-color: clr(footer-color);
-            }
-          }
-          &:first-child {
-            margin-right: 4px;
-            strong::before {
-              background-image: url("../../assets/icons/contact-list-selected.svg");
-            }
-          }
-          &:nth-child(2) {
-            strong::before {
-              background-image: url("../../assets/icons/checklist2-selected.svg");
-            }
-          }
-        }
-      }
-    }
-  }
 }
 
 #service-page-full {
@@ -588,22 +433,28 @@
   .toc-js {
     border-left: 6px solid $accent-pink;
     nav {
-      margin-left: 2em;
+      @include xl {
+        overflow: auto;
+        margin-left: 2em;
+        margin-right: 1rem;
+        max-height: calc(100vh - 190px);
+      }
     }
     ul {
       padding-left: 0;
+      margin-bottom: 0;
     }
     li {
-      margin-bottom: 0.5rem;
+      margin-bottom: 0;
       @include xl {
-        margin-bottom: 1rem;
+        margin-bottom: 0;
       }
       &.toc-h2 {
         padding-left: 0;
         > ul {
-          margin-bottom: 0.5rem;
+          margin-bottom: 0;
           li {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0;
           }
         }
       }
@@ -616,6 +467,8 @@
         }
         color: $black;
         font-weight: 600;
+        display: block;
+        margin-bottom: 0.2rem;
         &:hover {
           font-weight: bold;
         }

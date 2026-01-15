@@ -1804,29 +1804,29 @@
         },
         {
             "name": "drupal/admin_toolbar",
-            "version": "3.5.0",
+            "version": "3.6.3",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/admin_toolbar.git",
-                "reference": "3.5.0"
+                "reference": "3.6.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/admin_toolbar-3.5.0.zip",
-                "reference": "3.5.0",
-                "shasum": "099e8d4dc98e1d551b4f9cffdc39599eb8ad04e8"
+                "url": "https://ftp.drupal.org/files/projects/admin_toolbar-3.6.3.zip",
+                "reference": "3.6.3",
+                "shasum": "9dfd1088a96464237998c3606b63c2d71644a1bf"
             },
             "require": {
                 "drupal/core": "^9.5 || ^10 || ^11"
             },
-            "require-dev": {
-                "drupal/admin_toolbar_tools": "*"
+            "conflict": {
+                "drupal/project_browser": "<2.1.0"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "3.5.0",
-                    "datestamp": "1722639094",
+                    "version": "3.6.3",
+                    "datestamp": "1767318997",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -1857,6 +1857,11 @@
                 {
                     "name": "Mohamed Anis Taktak (matio89)",
                     "homepage": "https://www.drupal.org/u/matio89",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "David Suissa (DYdave)",
+                    "homepage": "https://www.drupal.org/u/dydave",
                     "role": "Maintainer"
                 },
                 {
@@ -2982,7 +2987,7 @@
         },
         {
             "name": "drupal/core-composer-scaffold",
-            "version": "10.6.1",
+            "version": "10.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal/core-composer-scaffold.git",
@@ -3026,7 +3031,7 @@
                 "drupal"
             ],
             "support": {
-                "source": "https://github.com/drupal/core-composer-scaffold/tree/10.6.1"
+                "source": "https://github.com/drupal/core-composer-scaffold/tree/10.6.2"
             },
             "time": "2024-08-22T14:31:30+00:00"
         },
@@ -8910,27 +8915,28 @@
         },
         {
             "name": "drupal/search_api",
-            "version": "1.38.0",
+            "version": "1.40.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/search_api.git",
-                "reference": "8.x-1.38"
+                "reference": "8.x-1.40"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/search_api-8.x-1.38.zip",
-                "reference": "8.x-1.38",
-                "shasum": "d1c83ba74e553eca07d3ea4b15e5d9c7f009a496"
+                "url": "https://ftp.drupal.org/files/projects/search_api-8.x-1.40.zip",
+                "reference": "8.x-1.40",
+                "shasum": "64ac71887786da63ced27a43e37342ea3b765a88"
             },
             "require": {
-                "drupal/core": "^10.2 || ^11"
+                "drupal/core": "^10.3 || ^11"
             },
             "conflict": {
                 "drupal/search_api_solr": "2.* || 3.0 || 3.1"
             },
             "require-dev": {
-                "drupal/language_fallback_fix": "@dev",
-                "drupal/search_api_autocomplete": "@dev",
+                "drupal/config_readonly": "1.x-dev",
+                "drupal/language_fallback_fix": "1.x-dev",
+                "drupal/search_api_autocomplete": "1.x-dev",
                 "drupal/search_api_db": "*"
             },
             "suggest": {
@@ -8941,12 +8947,15 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-1.38",
-                    "datestamp": "1740298961",
+                    "version": "8.x-1.40",
+                    "datestamp": "1762031191",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
                     }
+                },
+                "branch-alias": {
+                    "dev-8.x-1.x": "1.x-dev"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -23447,5 +23456,5 @@
     "platform-overrides": {
         "php": "8.3"
     },
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.6.0"
 }

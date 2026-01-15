@@ -196,6 +196,19 @@ display:
             format: plain_text_format
           tokenize: false
       sorts:
+        search_api_relevance:
+          id: search_api_relevance
+          table: search_api_index_service_search_solr_index
+          field: search_api_relevance
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: ''
+          exposed: false
         title:
           id: title
           table: search_api_index_service_search_solr_index
@@ -463,7 +476,6 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
-        - user
         - 'user.node_grants:view'
         - user.permissions
       tags:
@@ -529,7 +541,6 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
-        - user
         - 'user.node_grants:view'
         - user.permissions
       tags:

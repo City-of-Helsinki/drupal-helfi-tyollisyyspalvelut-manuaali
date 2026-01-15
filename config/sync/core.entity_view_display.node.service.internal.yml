@@ -37,6 +37,7 @@ dependencies:
     - field.field.node.service.field_related_archive
     - field.field.node.service.field_responsible_municipality
     - field.field.node.service.field_responsible_updatee
+    - field.field.node.service.field_search_boost
     - field.field.node.service.field_service_benefits
     - field.field.node.service.field_service_coordination
     - field.field.node.service.field_service_exceptions
@@ -331,6 +332,7 @@ third_party_settings:
     group_left_inner:
       children:
         - toc_js
+        - feedback_button
       label: 'Group left inner'
       parent_name: group_content_left
       region: content
@@ -380,6 +382,11 @@ content:
       link: false
     third_party_settings: {  }
     weight: 2
+    region: content
+  feedback_button:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 22
     region: content
   field_career_markings:
     type: text_default
@@ -566,6 +573,7 @@ hidden:
   field_public_links: true
   field_responsible_municipality: true
   field_responsible_updatee: true
+  field_search_boost: true
   field_service_benefits: true
   field_service_execution: true
   field_service_execution_text: true
