@@ -2,6 +2,7 @@
 
 namespace Drupal\Tests\service_manual_workflow\Traits;
 
+use Drupal\group\Entity\GroupInterface;
 use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
 
@@ -19,7 +20,7 @@ trait ServiceManualWorkflowTestTrait {
    * @return \Drupal\group\Entity\GroupInterface
    *   The created group entity.
    */
-  protected function createGroup(array $values = []) {
+  protected function createGroup(array $values = []): GroupInterface {
     $storage = $this->entityTypeManager->getStorage('group');
     $group = $storage->create($values + [
       'label' => $this->randomString(),

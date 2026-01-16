@@ -46,7 +46,6 @@ class ViewsModerationStateExcludeArchivedTest extends ViewsKernelTestBase {
     'field_permissions',
     'flexible_permissions',
     'service_manual_workflow',
-    'variationcache',
     'service_manual_workflow_service_test',
   ];
 
