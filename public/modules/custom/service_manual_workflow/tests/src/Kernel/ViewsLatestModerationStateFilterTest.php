@@ -41,7 +41,6 @@ class ViewsLatestModerationStateFilterTest extends ViewsKernelTestBase {
     'flexible_permissions',
     'gcontent_moderation',
     'message_notify',
-    'variationcache',
   ];
 
   /**

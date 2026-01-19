@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0acf1b3a1c00ad0223b46a17aa3b18b6",
+    "content-hash": "24f10a6a22b50f0df8ae883bc93e584f",
     "packages": [
         {
             "name": "ajgl/breakpoint-twig-extension",
@@ -5317,27 +5317,29 @@
         },
         {
             "name": "drupal/flexible_permissions",
-            "version": "1.1.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/flexible_permissions.git",
-                "reference": "1.1.0"
+                "reference": "2.0.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/flexible_permissions-1.1.0.zip",
-                "reference": "1.1.0",
-                "shasum": "cfda615388131e96a5cf3fce1f24b1c220f91fce"
+                "url": "https://ftp.drupal.org/files/projects/flexible_permissions-2.0.1.zip",
+                "reference": "2.0.1",
+                "shasum": "382ad20c674a6c07974d411e767310166851a0a8"
             },
             "require": {
-                "drupal/core": "^9.5 || ^10",
-                "drupal/variationcache": "^1.0"
+                "drupal/core": "^10.3 || ^11"
+            },
+            "require-dev": {
+                "jangregor/phpstan-prophecy": "^1.0"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "1.1.0",
-                    "datestamp": "1697027409",
+                    "version": "2.0.1",
+                    "datestamp": "1726835397",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -5717,27 +5719,27 @@
         },
         {
             "name": "drupal/ginvite",
-            "version": "3.0.0",
+            "version": "3.0.4",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/ginvite.git",
-                "reference": "3.0.0"
+                "reference": "3.0.4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/ginvite-3.0.0.zip",
-                "reference": "3.0.0",
-                "shasum": "25848751db1599378cc7e2ad17068b6be490f2b5"
+                "url": "https://ftp.drupal.org/files/projects/ginvite-3.0.4.zip",
+                "reference": "3.0.4",
+                "shasum": "21623f59b51f64bb716e3f2c945943630b74afea"
             },
             "require": {
-                "drupal/core": "^9 || ^10",
+                "drupal/core": "^10.5 || ^11",
                 "drupal/group": "^2.0"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "3.0.0",
-                    "datestamp": "1736957876",
+                    "version": "3.0.4",
+                    "datestamp": "1768413100",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -5799,28 +5801,32 @@
         },
         {
             "name": "drupal/group",
-            "version": "2.2.2",
+            "version": "2.3.2",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/group.git",
-                "reference": "2.2.2"
+                "reference": "2.3.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/group-2.2.2.zip",
-                "reference": "2.2.2",
-                "shasum": "5089d715ac1cdcfae994c3c8d2290fe3e5679f99"
+                "url": "https://ftp.drupal.org/files/projects/group-2.3.2.zip",
+                "reference": "2.3.2",
+                "shasum": "56e6cf3acbf776564ccb77b0924987ac807d3dbe"
             },
             "require": {
-                "drupal/core": "^9.5 || ^10",
+                "drupal/core": "^10.3 || ^11",
                 "drupal/entity": "^1.2",
-                "drupal/flexible_permissions": "^1.0"
+                "drupal/flexible_permissions": "^2.0"
+            },
+            "require-dev": {
+                "drupal/variationcache": "^1.5",
+                "jangregor/phpstan-prophecy": "^1.0"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "2.2.2",
-                    "datestamp": "1701886934",
+                    "version": "2.3.2",
+                    "datestamp": "1746519483",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -10238,57 +10244,6 @@
             }
         },
         {
-            "name": "drupal/variationcache",
-            "version": "1.5.0",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupalcode.org/project/variationcache.git",
-                "reference": "8.x-1.5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/variationcache-8.x-1.5.zip",
-                "reference": "8.x-1.5",
-                "shasum": "6165baee8c6fe5a7773f3499896e8fb464607a32"
-            },
-            "require": {
-                "drupal/core": "^9.5 || ^10"
-            },
-            "type": "drupal-module",
-            "extra": {
-                "drupal": {
-                    "version": "8.x-1.5",
-                    "datestamp": "1705485386",
-                    "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "authors": [
-                {
-                    "name": "Kristiaan Van den Eynde",
-                    "homepage": "https://www.drupal.org/u/kristiaanvandeneynde",
-                    "role": "Maintainer"
-                },
-                {
-                    "name": "Brad Jones",
-                    "homepage": "https://www.drupal.org/u/bradjones1",
-                    "role": "Maintainer"
-                }
-            ],
-            "description": "This project provides VariationCache, a redirect-aware caching implementation.",
-            "homepage": "http://drupal.org/project/variationcache",
-            "support": {
-                "source": "https://git.drupalcode.org/project/variationcache",
-                "issues": "https://drupal.org/project/issues/variationcache"
-            }
-        },
-        {
             "name": "drupal/varnish_purge",
             "version": "2.2.0",
             "source": {
@@ -13639,16 +13594,16 @@
         },
         {
             "name": "phpstan/phpdoc-parser",
-            "version": "2.3.0",
+            "version": "2.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "1e0cd5370df5dd2e556a36b9c62f62e555870495"
+                "reference": "16dbf9937da8d4528ceb2145c9c7c0bd29e26374"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/1e0cd5370df5dd2e556a36b9c62f62e555870495",
-                "reference": "1e0cd5370df5dd2e556a36b9c62f62e555870495",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/16dbf9937da8d4528ceb2145c9c7c0bd29e26374",
+                "reference": "16dbf9937da8d4528ceb2145c9c7c0bd29e26374",
                 "shasum": ""
             },
             "require": {
@@ -13680,9 +13635,9 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/2.3.0"
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/2.3.1"
             },
-            "time": "2025-08-30T15:50:23+00:00"
+            "time": "2026-01-12T11:33:04+00:00"
         },
         {
             "name": "phpstan/phpstan",
@@ -23431,7 +23386,6 @@
         "drupal/field_group": 20,
         "drupal/flag": 10,
         "drupal/flag_lists": 5,
-        "drupal/flexible_permissions": 10,
         "drupal/gcontent_moderation": 10,
         "drupal/gdpr": 10,
         "drupal/ggroup": 20,
@@ -23456,5 +23410,5 @@
     "platform-overrides": {
         "php": "8.3"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
