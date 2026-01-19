@@ -1,0 +1,39 @@
+uuid: 78a416d5-0f95-42ed-bb08-39c849dbeef0
+langcode: fi
+status: true
+dependencies:
+  config:
+    - filter.format.limited_filtered_html
+  module:
+    - ckeditor5
+format: limited_filtered_html
+editor: ckeditor5
+settings:
+  toolbar:
+    items:
+      - bold
+      - '|'
+      - link
+      - '|'
+      - bulletedList
+      - numberedList
+      - Accordion
+      - '|'
+      - undo
+      - redo
+      - '|'
+      - italic
+      - blockQuote
+      - sourceEditing
+  plugins:
+    ckeditor5_list:
+      properties:
+        reversed: true
+        startIndex: true
+      multiBlock: true
+    ckeditor5_sourceEditing:
+      allowed_tags: {  }
+    editor_advanced_link_link:
+      enabled_attributes: {  }
+image_upload:
+  status: false

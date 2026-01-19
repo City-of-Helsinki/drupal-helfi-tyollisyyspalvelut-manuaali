@@ -1081,6 +1081,67 @@ function hel_tpm_general_update_20124(&$sandbox) {
 }
 
 /**
+ * Install field_body_limited_html.
+ */
+function hel_tpm_general_update_10125(&$sandbox) {
+  $config_path = Settings::get('config_sync_directory');
+  $source = new FileStorage($config_path);
+
+  // Import field storages.
+  $field_storage_conf = [
+    'field.storage.paragraph.field_body_limited_html',
+  ];
+  $field_storage_config = \Drupal::entityTypeManager()->getStorage('field_storage_config');
+  foreach ($field_storage_conf as $config) {
+    $field_storage_config->create($source->read($config))->save();
+  }
+
+  // Import node field configs.
+  $field_configs = [
+    'field.field.paragraph.municipality_guide.field_body_limited_html',
+  ];
+  $field_config_storage = \Drupal::entityTypeManager()->getStorage('field_config');
+  foreach ($field_configs as $config) {
+    $field_config_storage->create($source->read($config))->save();
+  }
+
+}
+
+/**
+ * Migrate municipality guide body field to new with limited html.
+ */
+function hel_tpm_general_update_20126(&$sandbox) {
+  $database = \Drupal::database();
+  $tables = [
+    'paragraph__field_body' => 'paragraph__field_body_limited_html',
+    'paragraph_revision__field_body' => 'paragraph_revision__field_body_limited_html',
+  ];
+
+  foreach ($tables as $original_table => $new_table) {
+    $body_rows = $database->select($original_table, 'b')
+      ->fields('b')
+      ->condition('b.bundle', 'municipality_guide')
+      ->execute()
+      ->fetchAllAssoc('revision_id');
+    $new_body_rows = [];
+    foreach ($body_rows as $body_row) {
+      $body_row->field_body_limited_html_format = 'limited_filtered_html';
+      $body_row->field_body_limited_html_value = $body_row->field_body_value;
+      unset($body_row->field_body_format);
+      unset($body_row->field_body_value);
+      $new_body_rows[] = (array) $body_row;
+    }
+
+    $insert = $database->insert($new_table)
+      ->fields(array_keys(reset($new_body_rows)));
+    foreach ($new_body_rows as $body_row) {
+      $insert->values(array_values($body_row));
+    }
+    $insert->execute();
+  }
+}
+
+/**
  * Inserts a row into the specified field's database tables.
  *
  * This function inserts values for a given field into the appropriate database

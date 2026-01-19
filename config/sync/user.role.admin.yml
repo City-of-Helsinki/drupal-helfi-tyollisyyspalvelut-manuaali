@@ -6,6 +6,7 @@ dependencies:
     - entity_browser.browser.entity_browser
     - filter.format.filtered_html
     - filter.format.full_html
+    - filter.format.limited_filtered_html
     - media.type.image
     - node.type.basic_page
     - node.type.landing_page
@@ -284,6 +285,7 @@ permissions:
   - 'use service_moderation transition publish'
   - 'use text format filtered_html'
   - 'use text format full_html'
+  - 'use text format limited_filtered_html'
   - 'view all revisions'
   - 'view any unpublished content'
   - 'view field_age'
