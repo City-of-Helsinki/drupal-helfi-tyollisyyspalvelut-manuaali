@@ -89,10 +89,10 @@ $printColors: (
   }
   .font-size--default,
   .blue-padded-round-corners-card,
-  .service-page .field--name-field-other-preferences,
-  .service-page .field--name-field-obligatoryness,
-  .service-page .field--name-field-statements,
-  .service-page .field--name-field-service-suits-job-search {
+  .page-node-type-service .field--name-field-other-preferences,
+  .page-node-type-service .field--name-field-obligatoryness,
+  .page-node-type-service .field--name-field-statements,
+  .page-node-type-service .field--name-field-service-suits-job-search {
     font-size: 14px;
     line-height: 17px;
   }
@@ -229,10 +229,10 @@ $printColors: (
   .card,
   .field--name-field-municipality-guidance,
   .blue-padded-round-corners-card,
-  .service-page .field--name-field-other-preferences,
-  .service-page .field--name-field-obligatoryness,
-  .service-page .field--name-field-statements,
-  .service-page .field--name-field-service-suits-job-search {
+  .page-node-type-service .field--name-field-other-preferences,
+  .page-node-type-service .field--name-field-obligatoryness,
+  .page-node-type-service .field--name-field-statements,
+  .page-node-type-service .field--name-field-service-suits-job-search {
     break-inside: avoid;
   }
   .field__items {
@@ -264,6 +264,7 @@ $printColors: (
   /* Long link urls are truncated and some links use text, which doesn't work well with printed content. Thus, the
   href content is also shown. */
   .url-and-file,
+  .field--name-field-public-links,
   .field--name-field-internal-links {
     .field__item {
       a {
@@ -276,6 +277,7 @@ $printColors: (
 
   /* Hide file download icons. */
   .field--name-field-file,
+  .field--name-field-public-files,
   .field--name-field-internal-files {
     .icon--absolute-right-regular {
       display: none;

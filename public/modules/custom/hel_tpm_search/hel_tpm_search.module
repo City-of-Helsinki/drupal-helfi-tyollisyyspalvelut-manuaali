@@ -84,6 +84,13 @@ function hel_tpm_search_views_pre_build(ViewExecutable $view) {
 }
 
 /**
+ * Implements hook_preprocess_views_exposed_form().
+ */
+function hel_tpm_search_preprocess_views_exposed_form(&$variables) {
+  $variables['#attached']['library'][] = 'hel_tpm_search/filter_ajax_watcher';
+}
+
+/**
  * Implements hook_theme().
  */
 function hel_tpm_search_theme() {

@@ -23,6 +23,11 @@
  * @see template_preprocess_html()
  */
 #}
+{%
+  set body_classes = [
+  node_type ? 'page-node-type-' ~ node_type|clean_class,
+]
+%}
 <!DOCTYPE html>
 <html{{ html_attributes }}>
   <head>
@@ -49,7 +54,7 @@
     <meta name="msapplication-TileImage" content="/{{ directory }}/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
   </head>
-  <body{{ attributes }}>
+  <body{{ attributes.addClass(body_classes) }}>
     {#
       Keyboard navigation/accessibility link to main content section in
       page.html.twig.

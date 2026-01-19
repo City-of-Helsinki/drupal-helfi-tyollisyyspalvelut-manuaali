@@ -7,11 +7,15 @@ dependencies:
     - paragraphs.paragraphs_type.service_time_and_place
   module:
     - hel_tpm_service_dates
+    - tmgmt_content
+third_party_settings:
+  tmgmt_content:
+    excluded: false
 id: paragraph.service_time_and_place.field_weekday_and_time
 field_name: field_weekday_and_time
 entity_type: paragraph
 bundle: service_time_and_place
-label: 'Weekday and time'
+label: 'Viikonpäivä ja kellonaika'
 description: ''
 required: false
 translatable: false

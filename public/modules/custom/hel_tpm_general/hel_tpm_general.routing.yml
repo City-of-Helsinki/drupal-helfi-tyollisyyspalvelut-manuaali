@@ -23,3 +23,11 @@ hel_tpm_general.prevent_mail_form:
     _permission: 'access site configuration'
   options:
     _admin_route: TRUE
+
+hel_tpm_general.feedback_link_settings:
+  path: '/admin/config/system/feedback-link-settings'
+  defaults:
+    _title: 'Feedback link settings'
+    _form: 'Drupal\hel_tpm_general\Form\FeedbackLinkSettingsForm'
+  requirements:
+    _permission: 'administer site configuration'

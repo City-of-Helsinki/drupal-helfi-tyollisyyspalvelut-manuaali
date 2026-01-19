@@ -1,0 +1,26 @@
+uuid: c6567b50-f01c-43ec-aef5-d10c8753a98b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_is_site_header
+    - paragraphs.paragraphs_type.full_width_lift_element
+  module:
+    - tmgmt_content
+third_party_settings:
+  tmgmt_content:
+    excluded: false
+id: paragraph.full_width_lift_element.field_is_site_header
+field_name: field_is_site_header
+entity_type: paragraph
+bundle: full_width_lift_element
+label: 'Is site header'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

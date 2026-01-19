@@ -46,19 +46,21 @@
     'field--label-' ~ label_display,
     label_display == 'inline' ? 'clearfix',
     'field--content--inline',
-    'field--content--blue',
     'text-maxwidth',
   ]
 %}
 
+{%
+  set item_classes = [
+  'tag-pill',
+  'tag-pill--alt',
+]
+%}
+
 <div{{ attributes.addClass(classes, 'field__items') }}>
   {% for item in items %}
-    <div{{ item.attributes.addClass('field__item') }}>
-      {% if loop.index < loop.length %}
-        {{ item.content }}{{ not loop.last ? ',' }}
-      {% else %}
+    <div{{ item.attributes.addClass(item_classes) }}>
         {{ item.content }}
-      {% endif %}
     </div>
   {% endfor %}
 </div>

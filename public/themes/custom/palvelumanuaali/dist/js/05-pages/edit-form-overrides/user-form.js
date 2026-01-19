@@ -1,2 +1,0 @@
-(()=>{var e,r;e=jQuery,r=Drupal,drupalSettings,r.behaviors.userForm={attach:function(){e(document).ready((function(){e("#edit-preferred-langcode").select2()}))}}})();
-//# sourceMappingURL=user-form.js.map

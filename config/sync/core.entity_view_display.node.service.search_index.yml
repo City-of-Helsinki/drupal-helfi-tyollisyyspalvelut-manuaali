@@ -32,15 +32,17 @@ dependencies:
     - field.field.node.service.field_other_services
     - field.field.node.service.field_price
     - field.field.node.service.field_price_description
+    - field.field.node.service.field_public_files
+    - field.field.node.service.field_public_links
     - field.field.node.service.field_related_archive
     - field.field.node.service.field_responsible_municipality
     - field.field.node.service.field_responsible_updatee
+    - field.field.node.service.field_search_boost
     - field.field.node.service.field_service_benefits
     - field.field.node.service.field_service_coordination
     - field.field.node.service.field_service_exceptions
     - field.field.node.service.field_service_execution
     - field.field.node.service.field_service_execution_text
-    - field.field.node.service.field_service_implement
     - field.field.node.service.field_service_languages
     - field.field.node.service.field_service_other_info
     - field.field.node.service.field_service_price
@@ -227,13 +229,6 @@ content:
     third_party_settings: {  }
     weight: 12
     region: content
-  field_service_implement:
-    type: basic_string
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    weight: 15
-    region: content
   field_service_other_info:
     type: entity_reference_revisions_entity_view
     label: hidden
@@ -297,6 +292,7 @@ hidden:
   entity_print_view_pdf: true
   entity_print_view_word_docx: true
   entitygroupfield: true
+  feedback_button: true
   field_age: true
   field_age_groups: true
   field_attendance_text: true
@@ -317,9 +313,12 @@ hidden:
   field_other_services: true
   field_price: true
   field_price_description: true
+  field_public_files: true
+  field_public_links: true
   field_related_archive: true
   field_responsible_municipality: true
   field_responsible_updatee: true
+  field_search_boost: true
   field_service_coordination: true
   field_service_exceptions: true
   field_service_execution_text: true
@@ -341,4 +340,5 @@ hidden:
   links: true
   notifications_entity_view_1: true
   search_api_excerpt: true
+  toc_js: true
   view_mode_switcher: true

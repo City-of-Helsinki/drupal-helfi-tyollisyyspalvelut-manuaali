@@ -84,8 +84,11 @@
     flex-direction: column;
     justify-content: center;
     @include large {
-      padding: 80px;
+      padding: 40px;
       width: 50%;
+    }
+    @include xl-zoom {
+      padding: 80px;
     }
     .h3 {
       margin-bottom: $space-one-and-half;

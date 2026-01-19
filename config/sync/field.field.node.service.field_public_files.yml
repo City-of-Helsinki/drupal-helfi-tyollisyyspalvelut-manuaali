@@ -1,0 +1,37 @@
+uuid: 4653b9d7-0f7d-4335-84c5-7564d09c7d88
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_public_files
+    - node.type.service
+  module:
+    - content_translation
+    - file
+    - tmgmt_content
+third_party_settings:
+  content_translation:
+    translation_sync:
+      target_id: target_id
+      display: display
+      description: description
+  tmgmt_content:
+    excluded: false
+id: node.service.field_public_files
+field_name: field_public_files
+entity_type: node
+bundle: service
+label: 'Liitetiedostot (valinnainen)'
+description: "Suurin sallittu tiedoston koko on 50 Mb.\r\nTätä suuremmat videotiedostot on linkitettävä jonkin toisen videopalvelun kautta. \r\nHuomioithan, että palvelun tietojen tulee olla saavutettavia. Saavutettavissa videotallenteissa on tekstitykset sekä sisällön kuvailu."
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:file'
+  handler_settings: {  }
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  file_extensions: 'docx doc pdf ppt pptx jpg png mp4 xls xlsx'
+  max_filesize: '50 MB'
+  description_field: false
+field_type: file

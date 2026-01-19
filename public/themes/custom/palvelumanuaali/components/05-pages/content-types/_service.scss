@@ -19,7 +19,7 @@
     width: 24px;
     height: 24px;
 
-    background-image:url("../../assets/images/icons/info.svg");
+    background-image:url("../../assets/icons/info.svg");
     margin-right: $space-one-and-half;
     padding-right: $space-one-and-half;
     background-size: cover;
@@ -27,7 +27,7 @@
   }
 }
 
-.service-page {
+.page-node-type-service {
   .block--main-block {
     @include large {
       display: flex;
@@ -81,7 +81,7 @@
       width: 24px;
       height: 24px;
 
-      background-image:url("../../assets/images/icons/info.svg");
+      background-image:url("../../assets/icons/info.svg");
       margin-right: $space-one-and-half;
       padding-right: $space-one-and-half;
       background-size: cover;
@@ -99,161 +99,6 @@
        margin-left: $space-triple;
        padding-left: $space-one-half;
      }
-  }
-
-  &.logged-in {
-    .horizontal-tabs {
-      .horizontal-tabs-list {
-        display: flex;
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        padding-top: $space-double;
-      }
-    }
-    .link-wrapper {
-      @include large {
-        margin-bottom: -23px;
-        top: -23px;
-      }
-    }
-    &.toolbar-fixed.toolbar-horizontal {
-      .horizontal-tabs {
-        .horizontal-tabs-list {
-          top: 38px;
-        }
-      }
-      .link-wrapper {
-        @include large {
-          margin-bottom: unset;
-        }
-      }
-    }
-    &.toolbar-fixed.toolbar-horizontal.toolbar-tray-open {
-      .horizontal-tabs {
-        .horizontal-tabs-list {
-          top: 75px;
-          padding-top: $space-double;
-        }
-      }
-      .link-wrapper {
-        @include large {
-          top: 15px;
-        }
-      }
-    }
-    &.toolbar-fixed.toolbar-vertical {
-      .horizontal-tabs {
-        .horizontal-tabs-list {
-          padding-top: $space-double;
-          top: 40px;
-        }
-      }
-      .link-wrapper {
-        top: -21px;
-        @include large {
-          top: 0;
-        }
-      }
-    }
-  }
-  //needs to be split to a separate file
-  .horizontal-tabs {
-    position: unset;
-    .horizontal-tabs-list {
-      display: none;
-      top: -71px;
-      left: 0;
-      background-color: clr(background);
-      border: 0;
-      align-items: end;
-      &::after {
-        border-top: $space-double solid clr(text-inverse);
-        border-top-right-radius: 16px;
-        content: "";
-        display: block;
-        position: absolute;
-        bottom:-32px;
-        width: 100%;
-        height: $space-double;
-      }
-      .horizontal-tab-button {
-        border-right: 0;
-        padding: 0;
-        border-radius: 16px 16px 0 0;
-        &::before {
-          display: none;
-        }
-        strong {
-          display: flex;
-          flex-wrap: wrap;
-          font-weight: 600;
-          &::before {
-            content: "";
-            display: block;
-            margin-right: $space;
-            width: 24px;
-            height: 24px;
-          }
-        }
-        &:first-child {
-          margin-right: 4px;
-          strong::before {
-            background-image: url("../../assets/images/icons/contact-list.svg");
-            display: none;
-            @include medium {
-              display: block;
-            }
-          }
-        }
-        &:nth-child(2) {
-          strong::before {
-            background-image: url("../../assets/images/icons/checklist2.svg");
-            display: none;
-            @include medium {
-              display: block;
-            }
-          }
-        }
-        a {
-          padding: 14px 32px 18px 32px;
-          border-bottom: 2px solid clr(background-border);
-          font-size: 14px;
-          color: clr(text);
-          background-color: clr(text-inverse);
-          border-radius: 16px 16px 0 0;
-          line-height: 24px;
-          @include medium {
-            font-size: 18px;
-            padding: 14px 56px 18px 48px;
-          }
-          &:hover {
-            background-color: clr(background-border);
-          }
-        }
-        &.selected {
-          a {
-            border-bottom: 0;
-            color: clr(text-inverse);
-            background: clr(footer-color);
-            &:hover {
-              background-color: clr(footer-color);
-            }
-          }
-          &:first-child {
-            margin-right: 4px;
-            strong::before {
-              background-image: url("../../assets/images/icons/contact-list-selected.svg");
-            }
-          }
-          &:nth-child(2) {
-            strong::before {
-              background-image: url("../../assets/images/icons/checklist2-selected.svg");
-            }
-          }
-        }
-      }
-    }
   }
 }
 
@@ -300,9 +145,9 @@
   padding-bottom: 40px;
   padding-left: $space-one-and-half;
   @include large {
-   padding-left: $space-quadruple;
-   padding-top: 35px;
-   padding-right: $space-double;
+   padding-left: $space-triple;
+   padding-top: 25px;
+   padding-right: $space-triple;
    padding-bottom: 37px;
   }
   .field {
@@ -327,9 +172,7 @@
 
   .content-column {
     padding-right: $space;
-    @include large {
-      padding-right: $space-quadruple;
-    }
+    width: 100%;
     >.field {
       margin-bottom: $space-two-and-half;
     }
@@ -375,6 +218,7 @@
     }
   }
 
+  .field--name-field-public-files,
   .field--name-field-internal-files,
   .field--name-field-file  {
     margin-bottom: $space-one-and-half;
@@ -387,13 +231,11 @@
   .field--name-field-implementation-extra-info,
   .field--name-field-service-price,
   .field--name-field-service-languages,
-  .field--name-field-service-language  {
+  .field--name-field-service-language,
+  .icon-wrapper.sibling-margin-bottom + .field--name-field-service-set{
     margin-bottom: $space-double;
     @include large {
       margin-bottom: $space-two-and-half;
-    }
-    .field__items {
-      @extend .text-normal;
     }
   }
 
@@ -407,25 +249,8 @@
     }
   }
 
-
   .service-language {
     display: inline-flex;
-  }
-  .service-price {
-    display: flex;
-    flex-wrap: wrap;
-    .field__item {
-      color: clr(alt-header-color);
-      letter-spacing: 0.01em;
-      width: 100%;
-      span {
-        font-weight: 400;
-      }
-      font-weight: 700;
-    }
-    p {
-      letter-spacing: 0.01em;
-    }
   }
 
   .field--name-field-responsible-updatee .field__item {
@@ -447,7 +272,9 @@
         margin-bottom: 40px;
       }
     }
-
+    .field {
+      margin-bottom: 0;
+    }
     .field--name-field-municipality-name {
       font-weight: 600;
       font-size: 18px;
@@ -478,6 +305,7 @@
 
 }
 
+.field--name-field-public-links,
 .field--name-field-internal-links,
 .field--name-field-service-links-external,
 .field--name-field-link {
@@ -543,14 +371,13 @@
   margin-bottom: $space-two-and-half;
   @include large {
     margin-bottom: $space-triple;
-    margin-top: $space-double;
   }
   @include xl {
     margin-bottom: $space-three-and-half;
   }
 }
 
-.service-page {
+.page-node-type-service {
   .field--content--margin-left-triple,
   .field--name-field-service-set {
     margin-left: $space-triple;
@@ -576,6 +403,84 @@
     .field--name-field-description {
       @extend .text-small;
     }
+  }
+  .page-heading {
+    @include xl {
+      max-width: 90%;
+    }
+  }
+}
+
+.page-node-type-service .work-guidance {
+  .group-right {
+    .toc-anchor:before {
+      content: '';
+      display: block;
+      height: 110px;
+      margin-top: -110px;
+      visibility: hidden;
+    }
+  }
+  .group-left {
+    border-right: 2px solid $blue10;
+    @include xl {
+      height: calc(100% - 141px);
+    }
+    .group-left-inner {
+
+    }
+  }
+  .toc-js {
+    border-left: 6px solid $accent-pink;
+    nav {
+      @include xl {
+        overflow: auto;
+        margin-left: 2em;
+        margin-right: 1rem;
+        max-height: calc(100vh - 190px);
+      }
+    }
+    ul {
+      padding-left: 0;
+      margin-bottom: 0;
+    }
+    li {
+      margin-bottom: 0;
+      @include xl {
+        margin-bottom: 0;
+      }
+      &.toc-h2 {
+        padding-left: 0;
+        > ul {
+          margin-bottom: 0;
+          li {
+            margin-bottom: 0;
+          }
+        }
+      }
+      &:before {
+        content: none;
+      }
+      a {
+        @include desktop {
+          font-size: 18px;
+        }
+        color: $black;
+        font-weight: 600;
+        display: block;
+        margin-bottom: 0.2rem;
+        &:hover {
+          font-weight: bold;
+        }
+      }
+      &.toc-active {
+        > a {
+          font-weight: bold;
+          border-bottom: 1px solid $black;
+        }
+      }
+    }
+
   }
 }
 
@@ -608,4 +513,10 @@
 
 .field--name-field-contact-name {
   font-weight: 600;
+}
+
+.first-group-bottom {
+  >div {
+    flex: 1;
+  }
 }

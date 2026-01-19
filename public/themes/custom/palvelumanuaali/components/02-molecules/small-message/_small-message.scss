@@ -1,0 +1,27 @@
+.small-message-wrapper {
+  &--taxonomy-card {
+    width: 72px;
+    height: 60px;
+    right: 0;
+    position: absolute;
+  }
+  &--view-card {
+    width: 102px;
+    height: 68px;
+    position: absolute;
+    right: 0;
+  }
+  &--service {
+    width: 102px;
+    height: 48px;
+    position: absolute;
+    top: 25px;
+    right: 48px;
+  }
+}
+
+.logged-in {
+  .small-message-wrapper--service {
+    top: 33px;
+  }
+}

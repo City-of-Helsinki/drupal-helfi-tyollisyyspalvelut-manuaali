@@ -9,8 +9,11 @@
 
 @mixin body-copy {
   font-family: $font-body;
-  font-size: 1rem;
+  font-size: 0.85rem;
   line-height: 1.7;
+  @include xl-zoom {
+    font-size: 1rem;
+  }
 }
 
 @mixin basic-text {
@@ -123,7 +126,7 @@ $outer-container-break: $small;
   background-color: transparent;
   border: 0;
   border-radius: 0;
-  background-image: url("../../assets/images/icons/close.svg");
+  background-image: url("../../assets/icons/close.svg");
   padding: 0;
   background-size: 18px;
   &:hover {

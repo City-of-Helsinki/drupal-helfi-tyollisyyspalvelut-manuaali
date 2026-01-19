@@ -263,14 +263,15 @@
         & + label {
           background-color: $blue100;
           @include round-icon-button;
-          background-image: url("../../assets/images/icons/plus.svg");
+          background-image: url("../../assets/icons//plus.svg");
+          text-indent: -9999px;
           &:hover {
             color: transparent;
           }
         }
         &:checked +label {
           @include round-icon-button;
-          background-image: url("../../assets/images/icons/minus.svg");
+          background-image: url("../../assets/icons//minus.svg");
         }
         &:disabled +label {
           border-color: $gray-light;
@@ -283,6 +284,7 @@
         }
         &:checked:disabled +label {
           background-color: $gray-light;
+          color: transparent;
         }
       }
       label {
@@ -387,7 +389,9 @@
   .field--name-field-service-languages {
     margin-bottom: $space-two-and-half;
   }
-
+  .field-group-html-element.event-times {
+    margin-top: $space-double;
+  }
   .field-service-time-and-location-values > tbody > tr > .table__cell {
     margin-bottom: $space;
   }
@@ -442,7 +446,7 @@
     }
   }
   input[type="radio"]:checked + label::before {
-    background-image: url('../../assets/images/icons/check-black.svg');
+    background-image: url('../../assets/icons//check-black.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: 14px 11px;
@@ -479,7 +483,7 @@
 
     input[data-drupal-selector*="inline-entity-form-field-links-add-more-add-more-button-link"] {
       @include round-icon-button;
-      background-image: url("../../assets/images/icons/plus.svg");
+      background-image: url("../../assets/icons//plus.svg");
     }
   }
 }
@@ -488,6 +492,7 @@
 .fieldset-internal-files-and-attachments,
 .field--name-field-service-other-info,
 .field--name-field-links-and-attachments {
+  .field--name-field-public-links,
   .field--name-field-internal-links,
   .field--name-field-link {
     margin-bottom: $space-double;
@@ -546,6 +551,7 @@
   }
 }
 
+.field--name-field-public-files,
 .field--name-field-internal-files,
 .field--name-field-file {
   > .field__items{
@@ -599,7 +605,11 @@
     gap: 1.5rem;
     justify-content: center;
   }
-  @include xl {
+  @include desktop {
     gap: 3rem;
   }
+}
+
+.field--name-field-level {
+  display: flex;
 }
