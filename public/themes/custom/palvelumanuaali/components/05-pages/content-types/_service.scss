@@ -224,10 +224,6 @@
     margin-bottom: $space-one-and-half;
   }
 
-  .field--name-field-description {
-    @extend .text-large;
-  }
-
   .field--name-field-implementation-extra-info,
   .field--name-field-service-price,
   .field--name-field-service-languages,
@@ -378,10 +374,10 @@
 }
 
 .page-node-type-service {
-  .field--content--margin-left-triple,
+  .field--content--margin-left-two-and-half,
   .field--name-field-service-set {
-    margin-left: $space-triple;
-    .h5 {
+    margin-left: $space-two-and-half;
+    .h6 {
       margin-left: 0;
       margin-bottom: $space-one-half;
     }
@@ -488,7 +484,7 @@
   position: relative;
   >.icon {
     position: absolute;
-    margin-top: $space;
+    margin-top: 9px;
   }
 }
 
