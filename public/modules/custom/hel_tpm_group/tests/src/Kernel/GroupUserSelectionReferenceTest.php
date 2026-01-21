@@ -130,9 +130,9 @@ class GroupUserSelectionReferenceTest extends GroupKernelTestBase {
     $storage->save($storage->createFromPlugin($groupType, 'node_as_content:article'));
     $storage->save($storage->createFromPlugin($groupType, 'user_as_content'));
 
-    $this->createGroupRole([
+    $group_role = $this->createGroupRole([
       'group_type' => $groupType->id(),
-      'scope' => PermissionScopeInterface::INSIDER_ID,
+      'scope' => PermissionScopeInterface::INDIVIDUAL_ID,
       'global_role' => RoleInterface::AUTHENTICATED_ID,
       'id' => 'foo-editor',
     ]);
@@ -181,11 +181,11 @@ class GroupUserSelectionReferenceTest extends GroupKernelTestBase {
 
     $this->user1 = $this->createUser([], 'TestA');
     $this->user1->save();
-    $this->group->addMember($this->user1, ['group_roles' => ['foo-editor']]);
+    $this->group->addMember($this->user1, ['group_roles' => [$group_role->id()]]);
 
     $this->user2 = $this->createUser([], 'TestB');
     $this->user2->save();
-    $this->subgroup->addMember($this->user2, ['group_roles' => ['foo-editor']]);
+    $this->subgroup->addMember($this->user2, ['group_roles' => [$group_role->id()]]);
 
     $this->user3 = $this->createUser([], 'TestC');
     $this->user3->save();
