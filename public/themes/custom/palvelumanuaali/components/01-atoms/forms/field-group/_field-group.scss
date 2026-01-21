@@ -20,7 +20,6 @@
   @include xl {
     width: 350px;
     float:left;
-    margin-right: 100%;
   }
   @include xxl {
     width: 400px;
@@ -40,6 +39,7 @@
   @include xl {
     width: calc(100% - 382px);
     float: right;
+    min-height: 150px;
   }
   @include xxl {
     width: calc(100% - 432px);
