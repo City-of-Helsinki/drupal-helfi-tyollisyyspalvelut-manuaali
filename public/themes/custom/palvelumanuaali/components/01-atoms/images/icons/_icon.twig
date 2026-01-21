@@ -15,13 +15,7 @@
  # Otherwise, set the path relative to the Component Library. #}
 {% set icon_url = directory ? '/' ~ directory ~ '/dist/' %}
 
-{# IE 11 support for SVG use - remove if not needed.
-## See also palvelumanuaali.libraries.yml to remove library.
-#}
-{{ attach_library('palvelumanuaali/sprite') }}
-
 <svg {{ bem(icon_base_class, icon_modifiers, icon_blockname, icon_extra_class) }}
-
   {% if icon_decorative %}
     aria-hidden="true" role="img"
   {% elseif icon_role %}

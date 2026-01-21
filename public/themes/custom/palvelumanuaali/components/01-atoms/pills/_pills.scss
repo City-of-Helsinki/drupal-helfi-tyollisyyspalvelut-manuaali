@@ -191,6 +191,7 @@ $pill-colors: (
     right: 0;
     bottom: -32px;
     z-index: $zi-pill-small-message;
+    left: -3%;
   }
   &--small-message-service {
     position: absolute;
@@ -239,3 +240,33 @@ $pill-colors: (
     }
   }
 }
+
+.tag-pill {
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 8px;
+  margin-right: 4px;
+  margin-bottom: 8px;
+  line-height:24px;
+  display:inline-block;
+  &--primary {
+    background-color: $blue10;
+    color: $blue130;
+    a {
+      color: $blue130;
+    }
+  }
+  &--alt {
+    background-color: $blue150;
+    color: clr(text-inverse);
+    a {
+      color: clr(text-inverse);
+    }
+  }
+  .field__item {
+    margin-bottom: 0;
+  }
+
+}
+

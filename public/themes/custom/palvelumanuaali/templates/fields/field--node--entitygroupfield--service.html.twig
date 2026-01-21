@@ -50,15 +50,16 @@
 
 {%
   set title_classes = [
-    'field__label',
+    'h5',
+    'h5--semibold',
   ]
 %}
 <div{{ attributes.addClass(classes, 'field__items') }}>
   <div{{ attributes.addClass(title_classes) }}>
-    {{"Service organizer"|t}}
+    {{"Service organiser"|t}}
   </div>
   {% for item in items %}
-    <div{{ item.attributes.addClass('field__item') }}>
+    <div{{ item.attributes.addClass('field__item').addClass('tag-pill').addClass('tag-pill--alt') }}>
       {{ item.content }}
     </div>
   {% endfor %}

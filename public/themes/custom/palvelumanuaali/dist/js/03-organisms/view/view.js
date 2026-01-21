@@ -1,2 +1,0 @@
-!function(r){"use strict";Drupal.behaviors.pagerItem={attach:function(){var e;r(".pager--load-more a")&&r(".view-solr-service-search .taxonomy-card")&&r(".pager--load-more a").on("click",(function(){(e=r(".view-solr-service-search .taxonomy-card").length)&&setTimeout((function(){var o=r(".view-solr-service-search .taxonomy-card")[e],a=r(o).children(".card")[0],c=r(a).children(".card__link")[0];r(c).focus(),r(o).scrollIntoView({behavior:"smooth",block:"start"})}),1e3)}))}}}(jQuery);
-//# sourceMappingURL=view.js.map

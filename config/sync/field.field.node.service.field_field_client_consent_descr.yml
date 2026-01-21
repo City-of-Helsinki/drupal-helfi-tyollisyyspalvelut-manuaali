@@ -6,7 +6,15 @@ dependencies:
     - field.storage.node.field_field_client_consent_descr
     - node.type.service
   module:
+    - linkchecker
     - text
+    - tmgmt_content
+third_party_settings:
+  linkchecker:
+    scan: true
+    extractor: html_link_extractor
+  tmgmt_content:
+    excluded: false
 id: node.service.field_field_client_consent_descr
 field_name: field_field_client_consent_descr
 entity_type: node

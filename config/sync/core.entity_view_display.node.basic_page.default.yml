@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.node.basic_page.field_description
+    - field.field.node.basic_page.field_hide_header
     - field.field.node.basic_page.field_media_image
     - field.field.node.basic_page.field_other_services
     - field.field.node.basic_page.field_paragraph
@@ -22,6 +23,16 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 1
+    region: content
+  field_hide_header:
+    type: boolean
+    label: hidden
+    settings:
+      format: boolean
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 4
     region: content
   field_media_image:
     type: entity_reference_entity_view

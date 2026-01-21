@@ -552,7 +552,7 @@ body:not(.admin-toolbar-enabled) {
 .menu--account {
   display: flex;
   align-items: start;
-  z-index: 10;
+  z-index: $zi-account-menu;
   .btn--hide-on-mobile {
     display: none;
     @include large {
@@ -575,13 +575,13 @@ body:not(.admin-toolbar-enabled) {
         display: block;
         margin-right: 14px;
         background-color: clr(background-border);
-        background-image: url("../../assets/images/icons/user-blue.svg");
+        background-image: url("../../assets/icons//user-blue.svg");
         background-position: center;
         background-size: 16px;
         border-radius: 50%;
         @include large {
           background-color: clr(background-section);
-          background-image: url("../../assets/images/icons/user-white.svg");
+          background-image: url("../../assets/icons//user-white.svg");
         }
       }
     }
@@ -634,7 +634,7 @@ body:not(.admin-toolbar-enabled) {
     &:first-child {
       .dropdown-menu-inner__link {
         &::before {
-          background-image: url("../../assets/images/icons/cogwheel.svg");
+          background-image: url("../../assets/icons//cogwheel.svg");
           content: "";
           width: 20px;
           height: 20px;
@@ -648,7 +648,7 @@ body:not(.admin-toolbar-enabled) {
     &:nth-child(2) {
       .dropdown-menu-inner__link {
         &::before {
-          background-image: url("../../assets/images/icons/door.svg");
+          background-image: url("../../assets/icons//door.svg");
           content: "";
           width: 20px;
           height: 20px;
@@ -956,7 +956,7 @@ body:not(.admin-toolbar-enabled) {
       &:first-child {
         .menu__link {
           &::before {
-            background-image: url("../../assets/images/icons/cogwheel.svg");
+            background-image: url("../../assets/icons//cogwheel.svg");
             content: "";
             width: 20px;
             height: 20px;
@@ -970,7 +970,7 @@ body:not(.admin-toolbar-enabled) {
       &:nth-child(2) {
         .menu__link {
           &::before {
-            background-image: url("../../assets/images/icons/door.svg");
+            background-image: url("../../assets/icons//door.svg");
             content: "";
             width: 20px;
             height: 20px;

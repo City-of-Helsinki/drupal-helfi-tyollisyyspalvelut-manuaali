@@ -6,12 +6,15 @@ dependencies:
     - field.storage.node.field_service_benefits
     - node.type.service
   module:
-    - epp
+    - linkchecker
     - text
+    - tmgmt_content
 third_party_settings:
-  epp:
-    value: ''
-    on_update: 0
+  linkchecker:
+    scan: true
+    extractor: html_link_extractor
+  tmgmt_content:
+    excluded: false
 id: node.service.field_service_benefits
 field_name: field_service_benefits
 entity_type: node

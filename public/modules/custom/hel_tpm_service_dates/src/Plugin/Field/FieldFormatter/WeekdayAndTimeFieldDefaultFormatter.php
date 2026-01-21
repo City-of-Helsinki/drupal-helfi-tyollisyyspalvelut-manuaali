@@ -60,7 +60,7 @@ final class WeekdayAndTimeFieldDefaultFormatter extends FormatterBase {
       }
 
       foreach ($weekdays['value'] as $weekday => $values) {
-        $string_args = ['@day' => WeekdayAndTimeFieldWidget::$weekdays[$weekday]];
+        $string_args = ['@day' => WeekdayAndTimeFieldWidget::getTranslatedWeekdays()[$weekday]];
         foreach ($values as $key => $value) {
           $start_key = sprintf('@start%s', $key);
           $end_key = sprintf('@end%s', $key);
