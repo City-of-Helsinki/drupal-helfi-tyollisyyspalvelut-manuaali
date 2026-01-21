@@ -20,6 +20,7 @@
   @include xl {
     width: 350px;
     float:left;
+    margin-right: 100%;
   }
   @include xxl {
     width: 400px;
@@ -67,13 +68,10 @@
 }
 
 .service-group {
-  @extend .m-hght--service-grp;
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: unset;
   @include xl {
     display: inline-block;
-    min-height: unset;
   }
 }
