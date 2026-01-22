@@ -72,38 +72,6 @@
         }
       }
   }
-
-  //add basic theming for sidebar horizontal-tabs
-  .horizontal-tabs {
-    .horizontal-tabs-list {
-        border-bottom: 2px solid clr(form-border);
-        padding-left: 16px;
-        background-color: unset;
-        margin-bottom: $space-triple;
-    }
-
-    .horizontal-tab-button {
-      border-radius: 8px 8px 0px 0px;
-      background-color: clr(background);
-      color: clr(background-section);
-      border: unset;
-      a {
-        padding: 12px 48px;
-      }
-      &.selected {
-        border-bottom: unset;
-        background-color: clr(background-section);
-        a {
-          color: clr(text-inverse);
-          &:hover {
-            background-color: clr(alt-header-color);
-            border-radius: 8px 8px 0px 0px;
-          }
-        }
-      }
-    }
-  }
-
   .h2 {
     font-weight: 600;
     font-size: 24px;
@@ -358,7 +326,11 @@
           margin-bottom: 0;
         }
       }
-
+      .field--name-field-level {
+        .form-item-select {
+          width: 100%;
+        }
+      }
 
       .paragraphs-dropbutton-wrapper {
         input[data-drupal-selector*="top-links-remove-button"] {
@@ -377,7 +349,7 @@
 
         input[data-drupal-selector*="inline-entity-form-field-links-add-more-add-more-button-link"] {
           @include round-icon-button;
-          background-image: url("../../assets/images/icons/plus.svg");
+          background-image: url("../../assets/icons/plus.svg");
         }
       }
     }
@@ -503,7 +475,7 @@
   }
 
   .field--name-field-service-location input {
-    background-image: url("../../assets/images/icons/magnifier.svg");
+    background-image: url("../../assets/icons/magnifier.svg");
     background-position: top 12px right 16px;
     max-width: 560px;
   }

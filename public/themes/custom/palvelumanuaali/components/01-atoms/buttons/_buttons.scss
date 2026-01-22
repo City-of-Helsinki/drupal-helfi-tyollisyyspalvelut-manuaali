@@ -231,7 +231,7 @@ $button-colors: (
 //button symbol variations
 @mixin arrow-right-background {
   &::after {
-    background-image: url("../../assets/images/icons/arrow-right-2.svg");
+    background-image: url("../../assets/icons/arrow-right-2.svg");
     content: "";
     display: block;
     background-repeat: no-repeat;
@@ -244,7 +244,7 @@ $button-colors: (
 //variation white
 @mixin arrow-right-white {
   &::after {
-    background-image: url("../../assets/images/icons/arrow-right.svg");
+    background-image: url("../../assets/icons/arrow-right.svg");
     content: "";
     display: block;
     background-repeat: no-repeat;
@@ -258,7 +258,7 @@ $button-colors: (
 //button symbol variations
 @mixin  questionmark-left-background {
   &::before {
-    background-image: url("../../assets/images/icons/c-question.svg");
+    background-image: url("../../assets/icons/c-question.svg");
     content: "";
     display: block;
     background-repeat: no-repeat;
@@ -358,7 +358,7 @@ $button-colors: (
     line-height: 24px;
     &::after {
       content: "";
-      background-image: url("../../assets/images/icons/arrow-sm-down.svg");
+      background-image: url("../../assets/icons/arrow-sm-down.svg");
       background-repeat: no-repeat;
       background-position-y: center;
       width: 24px;
@@ -818,7 +818,7 @@ there is possibility to add classes button--blue-bordered,
       content: "";
       width: 24px;
       height: 24px;
-      background-image: url("../../assets/images/icons/plus.svg");
+      background-image: url("../../assets/icons/plus.svg");
       background-repeat: no-repeat;
       background-position-y: center;
       display: block;
@@ -841,7 +841,7 @@ there is possibility to add classes button--blue-bordered,
     content: "";
     width: 24px;
     height: 24px;
-    background-image: url("../../assets/images/icons/plus.svg");
+    background-image: url("../../assets/icons/plus.svg");
     background-repeat: no-repeat;
     background-position-y: center;
     display: block;
@@ -880,7 +880,7 @@ there is possibility to add classes button--blue-bordered,
 
     width: 100%;
     box-sizing: border-box;
-    background-image: url("../../assets/images/icons/plus.svg");
+    background-image: url("../../assets/icons/plus.svg");
     background-repeat: no-repeat;
     background-position-y: center;
     line-height: 24px;
@@ -919,7 +919,7 @@ input[data-drupal-selector="edit-field-contact-info-external-actions-ief-add"]{
   background-color: clr(text-inverse);
   border-radius: 50%;
   padding: 13px;
-  background-image: url("../../assets/images/icons/user-blue.svg");
+  background-image: url("../../assets/icons/user-blue.svg");
   border-radius: 50%;
   background-size: 18px;
   &:hover {
@@ -927,7 +927,7 @@ input[data-drupal-selector="edit-field-contact-info-external-actions-ief-add"]{
   }
   @include xl {
     background-color: clr(background-section);
-    background-image: url("../../assets/images/icons/user-white.svg");
+    background-image: url("../../assets/icons/user-white.svg");
 
     margin-left: 22px;
     &:hover {
@@ -939,7 +939,7 @@ input[data-drupal-selector="edit-field-contact-info-external-actions-ief-add"]{
 button {
   &.shwpd {
     @extend .background-default;
-    background-image: url("../../assets/images/icons/eye.svg");
+    background-image: url("../../assets/icons/eye.svg");
     background-size: 16px;
     background-position: center;
     width: 32px;
@@ -960,7 +960,7 @@ button {
   background-color: transparent;
   border: 0;
   border-radius: 0;
-  background-image: url("../../assets/images/icons/close.svg");
+  background-image: url("../../assets/icons/close.svg");
   padding: 0;
   background-size: contain;
   &:hover {
@@ -983,5 +983,21 @@ button {
     gap: $space;
     padding-left: 24px;
     padding-right: 24px;
+  }
+}
+
+.button-feedback {
+  @include button-no-color-with-round-border;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+  .icon {
+    background-image: url("../../assets/icons/arrow-right-2-ext.svg");
+    background-repeat: no-repeat;
+    height: 24px;
+    width: 24px;
+    margin-left: 0.5rem;
   }
 }

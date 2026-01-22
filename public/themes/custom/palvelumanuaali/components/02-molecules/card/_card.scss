@@ -313,6 +313,11 @@ $card-font-small-heading: 15px;
   .service-time-and-place {
     display: flex;
     flex-wrap: wrap;
+    .text-wrapper {
+      .field__label {
+        font-weight: 800;
+      }
+    }
     > article {
       width: 100%;
       margin-bottom: $space-one-and-half;
@@ -369,16 +374,6 @@ $card-font-small-heading: 15px;
       margin-right: 16px;
     }
     .field__items {
-      font-size: $card-font-base-small;
-      @include xl {
-        font-size: $card-font-base;
-      }
-      a {
-        font-size: $card-font-base-small;
-        @include xl {
-          font-size: $card-font-base;
-        }
-      }
       .field-items-wrapper {
         display: block;
         margin-bottom: $space-one-half;
@@ -430,9 +425,6 @@ $card-font-small-heading: 15px;
     }
     .field__label {
       margin-bottom: $space-one-half;
-    }
-    .text-wrapper {
-      @extend .text-small;
     }
   }
 
@@ -526,10 +518,6 @@ $card-font-small-heading: 15px;
     width: 100%;
     margin-bottom: 0;
     display: flex;
-    font-size: $card-font-base-small;
-    @include xl {
-      font-size: $card-font-base;
-    }
     &.icon {
       min-width: 24px;
       width: 24px;
@@ -564,10 +552,7 @@ $card-font-small-heading: 15px;
     .field__items {
       display: flex;
       flex-wrap: wrap;
-      font-size: $card-font-base-small;
-      @include xl {
-        font-size: $card-font-base;
-      }
+      margin-bottom: $space;
     }
     .field__item {
       display: flex;
@@ -870,7 +855,7 @@ body:not(.edit-create-form) .field--name-field-linklist-card {
     width: 100%;
   }
   .arrow-icon {
-    background-image: url("../../assets/images/icons/arrow-right-1.svg");
+    background-image: url("../../assets/icons/arrow-right-1.svg");
     background-color: clr(background-section);
     width: 40px;
     height: 40px;
@@ -889,7 +874,7 @@ body:not(.edit-create-form) .field--name-field-linklist-card {
     }
   }
   .arrow-icon.external {
-    background-image: url("../../assets/images/icons/arrow-right-1-ext.svg");
+    background-image: url("../../assets/icons/arrow-right-1-ext.svg");
   }
 }
 

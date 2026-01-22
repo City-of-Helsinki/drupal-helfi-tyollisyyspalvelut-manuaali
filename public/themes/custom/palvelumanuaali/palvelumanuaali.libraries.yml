@@ -2,16 +2,16 @@ global:
   version: 3012033
   css:
     theme:
-      dist/css/style.css: { minified: true }
+      dist/components/style.css: { minified: true }
   js:
     ../../../libraries/bootstrap-dist/js/bootstrap.bundle.min.js: {}
     js/breadcrumbs.js: {}
     js/header.js: {}
     js/favorite-unflag-event.js: {}
-    dist/js/02-molecules/small-message/small-message.js: {}
-    dist/js/03-organisms/view/view.js: {}
+    dist/components/02-molecules/small-message/small-message.js: {}
+    dist/components/03-organisms/view/view.js: {}
     js/error-message.js: {}
-    dist/js/02-molecules/login-form/login.js:  {}
+    dist/components/02-molecules/login-form/login.js:  {}
     js/multi-collapse-label-toggle.js: {}
 
   dependencies:
@@ -30,19 +30,19 @@ dropbutton:
 
 main-menu:
   js:
-    dist/js/02-molecules/menus/main-menu/main-menu.js: {}
+    dist/components/02-molecules/menus/main-menu/main-menu.js: {}
   dependencies:
     - core/drupal
 
 login-form:
   js:
-    dist/js/02-molecules/login-form/login-form.js: {}
+    dist/components/02-molecules/login-form/login-form.js: {}
   dependencies:
     - core/drupal
 
 user-menu:
   js:
-    dist/js/03-organisms/site/site-header/site-header.js: {}
+    dist/components/03-organisms/site/site-header/site-header.js: {}
   dependencies:
     - core/drupal
     - core/jquery
@@ -57,34 +57,27 @@ analytics:
 
 search-filters:
   js:
-    components/05-pages/search/search-page-filters.js: {}
+    dist/components/05-pages/search/search-page-filters.js: {}
   dependencies:
     - core/drupal
     - core/jquery
-
 
 taxonomy-filters:
   js:
-    components/03-organisms/view/taxonomy-view.js: {}
+    dist/components/03-organisms/view/taxonomy-view.js: {}
   dependencies:
     - core/drupal
     - core/jquery
 
-# See also components/01-atoms/images/icons/_icon.twig to remove attach_library.
-sprite:
-  js:
-    components/01-atoms/images/icons/svgxuse.min.js:
-      { attributes: { defer: true } }
-
 tabs:
   js:
-    dist/js/02-molecules/tabs/tabs.js: {}
+    dist/components/02-molecules/tabs/tabs.js: {}
   dependencies:
     - core/drupal
 
 user-form:
   js:
-    dist/js/05-pages/edit-form-overrides/user-form.js: {}
+    dist/components/05-pages/edit-form-overrides/user-form.js: {}
   dependencies:
     - core/drupal
     - select2/select2
@@ -92,4 +85,4 @@ user-form:
 select2.theme:
   css:
     component:
-      dist/select2-palvelumanuaali.css: {}
+      dist/components/style.css: {}
