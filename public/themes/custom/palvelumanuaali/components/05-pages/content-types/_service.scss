@@ -428,11 +428,12 @@
   }
   .toc-js {
     border-left: 6px solid $accent-pink;
+    margin-bottom: 2rem;
     nav {
+      margin-left: 2em;
+      margin-right: 1rem;
       @include xl {
         overflow: auto;
-        margin-left: 2em;
-        margin-right: 1rem;
         max-height: calc(100vh - 190px);
       }
     }
@@ -458,12 +459,9 @@
         content: none;
       }
       a {
-        @include desktop {
-          font-size: 18px;
-        }
+        display: inline-block;
         color: $black;
         font-weight: 600;
-        display: block;
         margin-bottom: 0.2rem;
         &:hover {
           font-weight: bold;
