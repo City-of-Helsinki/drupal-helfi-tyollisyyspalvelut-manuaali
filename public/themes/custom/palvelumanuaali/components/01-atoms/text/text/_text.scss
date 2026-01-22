@@ -142,18 +142,18 @@
   }
 }
 .text-normal {
-  font-size: 14px;
-  line-height: 22px;
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: 400;
   span {
-    font-size: 14px;
-    line-height: 22px;
-  }
-  @include xl-zoom {
     font-size: 16px;
     line-height: 28px;
+    font-weight: 400;
+  }
+  @include xl-zoom {
+    font-weight: 500;
     span {
-      font-size: 16px;
-      line-height: 28px;
+      font-weight: 500;
     }
   }
 }
@@ -181,3 +181,11 @@
   letter-spacing: 1%;
   color: clr(footer-color);
 }
+
+.blue-info-text-small {
+  @extend .font-size--tiny;
+  @extend .font-weight--bold--dsk;
+  @extend .font-spacing--one-desktop;
+  @extend .font-color--dark-blue;
+}
+

@@ -60,17 +60,15 @@ a {
 
 .ext-link {
   position:relative;
-  margin-right: $space;
   &::after {
     background-image: url("../../assets/icons/ext.svg");
     content: "";
-    display: block;
+    display: inline-block;
     background-repeat: no-repeat;
     width: 14px;
     height: 14px;
     min-width: 14px;
-    position: absolute;
-    right: -15px;
+    position: relative;
     top:1px;
     background-size: cover;
   }
