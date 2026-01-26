@@ -120,7 +120,7 @@ $color-heading: clr(accent);
   $color-link-hover: inherit,
   $font-weight: 600,
   $margin: 0 0 0.5em,
-  $font-size-mobile: 1rem,
+  $font-size-mobile: 1.125rem,
   $line-height-mobile:  1.5,
   $letter-spacing: 1%,
   $letter-spacing-mobile: 0%
@@ -158,7 +158,7 @@ $color-heading: clr(accent);
   $color-link-hover: inherit,
   $font-weight: 700,
   $margin: 0 0 0.5em,
-  $font-size-mobile: 0.81rem,
+  $font-size-mobile: 1rem,
   $line-height-mobile:  1rem,
   $letter-spacing: 1%,
   $letter-spacing-mobile: 0%
@@ -281,9 +281,9 @@ $color-heading: clr(accent);
 
 .h5 {
   @include heading-xs;
-  @include large {
-    font-size: 1.125rem;
-  }
+  //@include large {
+  //  font-size: 1.125rem;
+  //}
   &--margin-bottom {
     margin-bottom: $space;
   }
@@ -399,5 +399,6 @@ $color-heading: clr(accent);
   h5 {
     @extend .h5;
     font-weight: 600;
+    margin-top: 24px;
   }
 }
