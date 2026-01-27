@@ -515,7 +515,6 @@
     }
 
   }
-
 }
 
 .details-file-field {
@@ -541,8 +540,6 @@
         font-size: $small-font;
       }
     }
-
-
 }
 
 .field--name-field-client-consent {
@@ -554,7 +551,7 @@
 .field--name-field-public-files,
 .field--name-field-internal-files,
 .field--name-field-file {
-  > .field__items{
+  > .field__items {
     .file,
     a {
       display: block;
@@ -581,6 +578,13 @@
   }
 }
 
+.page-node-type-basic-page {
+  .field--name-field-file {
+    .field__item {
+      background-color: clr(text-inverse);
+    }
+  }
+}
 
 .basic-page .field--name-field-internal-files,
 .basic-page .field--name-field-file {
