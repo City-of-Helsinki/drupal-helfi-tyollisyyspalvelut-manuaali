@@ -6,11 +6,18 @@ display:
           label: Språk
         gid:
           label: Grupp
+        operations:
+          label: Operationer
+        moderation_state:
+          label: 'Tjänstens status'
       filters:
         combine:
           expose:
             label: Filtrera
             placeholder: 'Filtrera efter namn eller ID'
+        moderation_state_filter_exclude_archived:
+          expose:
+            label: 'Tjänstens status'
   page_1:
     display_options:
       filters:
@@ -18,3 +25,11 @@ display:
           expose:
             label: Filtrera
             placeholder: 'Filtrera efter namn eller ID'
+        moderation_state_filter_exclude_archived:
+          expose:
+            label: 'Tjänstens status'
+      fields:
+        operations:
+          label: Operationer
+        moderation_state:
+          label: 'Tjänstens status'

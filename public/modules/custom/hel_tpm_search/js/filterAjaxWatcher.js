@@ -5,7 +5,7 @@
   "use strict";
   Drupal.behaviors.filterAjaxWatcher = {
     attach: function () {
-      const elements = once('wrapped', '.bef-exposed-form');
+      const elements = once('wrapped', '.filter-ajax-watcher');
       elements.forEach(function (element) {
         if (Drupal.ajax) {
           Drupal.Ajax.prototype.eventResponse = function (element, event) {

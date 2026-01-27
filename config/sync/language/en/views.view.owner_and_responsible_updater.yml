@@ -6,11 +6,18 @@ display:
           label: Language
         gid:
           label: Group
+        operations:
+          label: Operations
+        moderation_state:
+          label: 'Service status'
       filters:
         combine:
           expose:
             label: Filter
             placeholder: 'Filter by service name or ID'
+        moderation_state_filter_exclude_archived:
+          expose:
+            label: 'Service status'
   page_1:
     display_options:
       filters:
@@ -18,3 +25,11 @@ display:
           expose:
             label: Filter
             placeholder: 'Filter by service name or ID'
+        moderation_state_filter_exclude_archived:
+          expose:
+            label: 'Service status'
+      fields:
+        operations:
+          label: Operations
+        moderation_state:
+          label: 'Service status'
