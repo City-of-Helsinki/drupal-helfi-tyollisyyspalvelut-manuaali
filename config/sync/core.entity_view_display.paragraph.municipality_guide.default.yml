@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.municipality_guide.field_body
+    - field.field.paragraph.municipality_guide.field_body_limited_html
     - field.field.paragraph.municipality_guide.field_municipality
     - paragraphs.paragraphs_type.municipality_guide
   module:
@@ -13,7 +14,7 @@ targetEntityType: paragraph
 bundle: municipality_guide
 mode: default
 content:
-  field_body:
+  field_body_limited_html:
     type: text_default
     label: hidden
     settings: {  }
@@ -32,4 +33,5 @@ hidden:
   entity_print_view_epub: true
   entity_print_view_pdf: true
   entity_print_view_word_docx: true
+  field_body: true
   search_api_excerpt: true
