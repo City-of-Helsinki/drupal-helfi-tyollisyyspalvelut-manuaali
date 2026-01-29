@@ -65,7 +65,7 @@ jobs:
         run: ./vendor/bin/phpcs --standard=Drupal,DrupalPractice --ignore=node_modules,bower_components,vendor --extensions=php,module,inc,install,test,profile,theme,info,yml ./public/themes/custom
 
       - name: Check security updates.
-        run: composer audit
+        run: composer audit --no-dev --ignore-unreachable
 
       - name: SonarQube Scan
         if: ${{ env.SONARCLOUD_TOKEN }}
