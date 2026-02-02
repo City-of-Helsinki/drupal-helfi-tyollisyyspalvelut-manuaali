@@ -313,6 +313,11 @@ $card-font-small-heading: 15px;
   .service-time-and-place {
     display: flex;
     flex-wrap: wrap;
+    .text-wrapper {
+      .field__label {
+        font-weight: 800;
+      }
+    }
     > article {
       width: 100%;
       margin-bottom: $space-one-and-half;
@@ -369,16 +374,6 @@ $card-font-small-heading: 15px;
       margin-right: 16px;
     }
     .field__items {
-      font-size: $card-font-base-small;
-      @include xl {
-        font-size: $card-font-base;
-      }
-      a {
-        font-size: $card-font-base-small;
-        @include xl {
-          font-size: $card-font-base;
-        }
-      }
       .field-items-wrapper {
         display: block;
         margin-bottom: $space-one-half;
@@ -430,9 +425,6 @@ $card-font-small-heading: 15px;
     }
     .field__label {
       margin-bottom: $space-one-half;
-    }
-    .text-wrapper {
-      @extend .text-small;
     }
   }
 
@@ -526,10 +518,6 @@ $card-font-small-heading: 15px;
     width: 100%;
     margin-bottom: 0;
     display: flex;
-    font-size: $card-font-base-small;
-    @include xl {
-      font-size: $card-font-base;
-    }
     &.icon {
       min-width: 24px;
       width: 24px;
@@ -564,10 +552,7 @@ $card-font-small-heading: 15px;
     .field__items {
       display: flex;
       flex-wrap: wrap;
-      font-size: $card-font-base-small;
-      @include xl {
-        font-size: $card-font-base;
-      }
+      margin-bottom: $space;
     }
     .field__item {
       display: flex;
@@ -901,18 +886,10 @@ body:not(.edit-create-form) .field--name-field-linklist-card {
     font-weight: 600;
     @include heading-xs;
     color: clr(alt-header-color);
-
   }
   .field--name-field-short-description {
-    font-size: 12px;
-    font-weight: 600;
-    color: clr(text);
-    @include xl-zoom {
-      font-size: 14px;
-    }
-    @include xl-zoom {
-      font-size: 14px;
-    }
-
+    @extend .font-primary-black;
+    @extend .text-small;
+    @extend .font-weight-bold;
   }
 }

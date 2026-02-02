@@ -39,6 +39,7 @@
   @include xl {
     width: calc(100% - 382px);
     float: right;
+    min-height: 150px;
   }
   @include xxl {
     width: calc(100% - 432px);
@@ -67,13 +68,10 @@
 }
 
 .service-group {
-  @extend .m-hght--service-grp;
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: unset;
   @include xl {
     display: inline-block;
-    min-height: unset;
   }
 }

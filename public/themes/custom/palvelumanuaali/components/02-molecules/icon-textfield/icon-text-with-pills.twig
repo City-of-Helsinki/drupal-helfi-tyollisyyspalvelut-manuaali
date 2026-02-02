@@ -82,7 +82,7 @@
   <div{{ attributes.addClass(classes) }}>
     <div{{ title_attributes.addClass(title_classes) }}>
     {% include "@atoms/text/headings/_heading.twig" with {
-      "heading_level": 5,
+      "heading_level": 6,
       "heading": field_header,
       "heading_modifiers": 'semibold',
     } %}
@@ -104,12 +104,12 @@
        {% endfor %}
      {% else %}
       {% for item in items %}
-          {% apply spaceless %}
-            <div{{ item.attributes.addClass(item_classes) }}>
-              {{item.content }}
-            </div>
-          {% endapply %}
-        {% endfor %}
+        {% apply spaceless %}
+          <div{{ item.attributes.addClass(item_classes) }}>
+            {{item.content }}
+          </div>
+        {% endapply %}
+      {% endfor %}
      {% endif %}
     </div>
   </div>
