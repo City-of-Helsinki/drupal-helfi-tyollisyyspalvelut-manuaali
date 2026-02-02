@@ -886,18 +886,10 @@ body:not(.edit-create-form) .field--name-field-linklist-card {
     font-weight: 600;
     @include heading-xs;
     color: clr(alt-header-color);
-
   }
   .field--name-field-short-description {
-    font-size: 12px;
-    font-weight: 600;
-    color: clr(text);
-    @include xl-zoom {
-      font-size: 14px;
-    }
-    @include xl-zoom {
-      font-size: 14px;
-    }
-
+    @extend .font-primary-black;
+    @extend .text-small;
+    @extend .font-weight-bold;
   }
 }
