@@ -1,0 +1,41 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for File garbage collector module.
+ */
+
+use Drupal\Core\Datetime\DrupalDateTime;
+
+/**
+ * Implements hook_cron().
+ */
+function hel_tpm_file_garbage_collector_cron() {
+  _hel_tpm_file_garbage_collector_collect();
+}
+
+/**
+ * Performs garbage collection for TPM files by managing the last run state.
+ *
+ * Checks the timestamp of the last garbage collection run stored in state
+ * and compares it against a threshold of one day. If the last run occurred
+ * less than one day ago, the garbage collection process is skipped.
+ * Otherwise, updates the state with the current timestamp to indicate the
+ * completion of the collection.
+ *
+ * @return void
+ *   No return value.
+ */
+function _hel_tpm_file_garbage_collector_collect() {
+  $last_run_state = 'hel_tpm_file_garbage_collector_collect_last_run';
+  $last_run = \Drupal::state()->get($last_run_state);
+  $limit = new DrupalDateTime('-1 day');
+
+  if ($last_run >= $limit->getTimestamp()) {
+    return;
+  }
+
+  \Drupal::service('hel_tpm_file_garbage_collector.collector')->collect();
+
+  \Drupal::state()->set($last_run_state, \Drupal::time()->getCurrentTime());
+}
