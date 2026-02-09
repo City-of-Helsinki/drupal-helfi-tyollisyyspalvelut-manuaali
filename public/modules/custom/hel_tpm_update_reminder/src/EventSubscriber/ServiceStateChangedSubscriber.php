@@ -5,9 +5,13 @@ declare(strict_types=1);
 namespace Drupal\hel_tpm_update_reminder\EventSubscriber;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Logger\LoggerChannelTrait;
 use Drupal\Core\Session\AccountProxyInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\hel_tpm_update_reminder\UpdateReminderUserService;
 use Drupal\hel_tpm_update_reminder\UpdateReminderUtility;
 use Drupal\service_manual_workflow\Event\ServiceModerationEvent;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -15,21 +19,42 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class ServiceStateChangedSubscriber implements EventSubscriberInterface {
 
+  use LoggerChannelTrait;
+  use StringTranslationTrait;
+
   /**
    * The entity type manager.
    *
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  protected $entityTypeManager;
+  protected EntityTypeManagerInterface $entityTypeManager;
+
+  /**
+   * Service for fetching service providers.
+   *
+   * @var \Drupal\hel_tpm_update_reminder\UpdateReminderUserService
+   */
+  protected UpdateReminderUserService $updateReminderUserService;
+
+  /**
+   * Logger interface.
+   *
+   * @var \Psr\Log\LoggerInterface
+   */
+  protected LoggerInterface $logger;
 
   /**
    * Constructs a new ServiceStateChangedSubscriber object.
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.
+   * @param \Drupal\hel_tpm_update_reminder\UpdateReminderUserService $update_reminder_user_service
+   *   Service for fetching service providers.
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, UpdateReminderUserService $update_reminder_user_service) {
     $this->entityTypeManager = $entity_type_manager;
+    $this->updateReminderUserService = $update_reminder_user_service;
+    $this->logger = $this->getLogger('hel_tpm_update_reminder');
   }
 
   /**
@@ -37,17 +62,17 @@ class ServiceStateChangedSubscriber implements EventSubscriberInterface {
    */
   public static function getSubscribedEvents() {
     return [
-      'service_manual_workflow.draft.to.ready_to_publish' => ['markNodeChecked'],
-      'service_manual_workflow.draft.to.published' => ['markNodeChecked'],
-      'service_manual_workflow.ready_to_publish.to.ready_to_publish' => ['markNodeChecked'],
-      'service_manual_workflow.ready_to_publish.to.published' => ['markNodeChecked'],
-      'service_manual_workflow.published.to.ready_to_publish' => ['markNodeChecked'],
-      'service_manual_workflow.published.to.published' => ['markNodeChecked'],
+      'service_manual_workflow.draft.to.ready_to_publish' => ['clearMessagesSent'],
+      'service_manual_workflow.draft.to.published' => ['clearMessagesSent'],
+      'service_manual_workflow.ready_to_publish.to.ready_to_publish' => ['clearMessagesSent'],
+      'service_manual_workflow.ready_to_publish.to.published' => ['clearMessagesSent'],
+      'service_manual_workflow.published.to.ready_to_publish' => ['clearMessagesSent'],
+      'service_manual_workflow.published.to.published' => ['clearMessagesSent'],
     ];
   }
 
   /**
-   * Mark node checked after transition.
+   * Clear the past reminder information after saving the service.
    *
    * @param \Drupal\service_manual_workflow\Event\ServiceModerationEvent $event
    *   Service moderation event.
@@ -55,40 +80,53 @@ class ServiceStateChangedSubscriber implements EventSubscriberInterface {
    * @return void
    *   Void.
    */
-  public function markNodeChecked(ServiceModerationEvent $event): void {
+  public function clearMessagesSent(ServiceModerationEvent $event): void {
     $state = $event->getModerationState();
     if (empty($entityTypeId = $state->content_entity_type_id?->value) ||
         empty($entityId = $state->content_entity_id?->value)) {
       return;
     }
+    if ($entityTypeId !== 'node') {
+      return;
+    }
 
-    if ($entityTypeId === 'node') {
-      if ($this->canMarkChecked((int) $entityId, $event->getAccount())) {
-        UpdateReminderUtility::markNodeChecked((int) $entityId);
-      }
+    if ($this->shouldClearOnSave((int) $entityId, $event->getAccount())) {
+      UpdateReminderUtility::clearMessagesSent((int) $entityId);
     }
   }
 
   /**
-   * Determines if a node can be marked as checked.
+   * Determines if node's past notification info should reset on save.
    *
    * @param int $entityId
-   *   The ID of the node entity to be checked.
+   *   The ID of the node.
    * @param \Drupal\Core\Session\AccountProxyInterface $account
    *   The account of the current user attempting to mark the node as checked.
    *
    * @return bool
-   *   TRUE if the node can be marked as checked by the current account.
+   *   TRUE if notification info should be reset, FALSE otherwise.
    */
-  protected function canMarkChecked(int $entityId, AccountProxyInterface $account): bool {
+  protected function shouldClearOnSave(int $entityId, AccountProxyInterface $account): bool {
     $node = $this->entityTypeManager->getStorage('node')->load($entityId);
-    $serviceProviderUpdater = $node->field_service_provider_updatee->entity;
 
-    if (empty($serviceProviderUpdater)) {
-      return FALSE;
+    try {
+      $fetchedServiceProviderUpdaters = $this->updateReminderUserService->fetchServiceProviderUpdaters([$node->id()]);
+    }
+    catch (\Exception $e) {
+      $fetchedServiceProviderUpdaters = [];
+      $this->logger->error($this->t('Unable to fetch service provider updaters for node ID %node_id. Cannot clear past notification info on save.', [
+        '%node_id' => $node->id(),
+      ]));
+    }
+    $serviceProviderUpdaters = [];
+    foreach ($fetchedServiceProviderUpdaters as $array) {
+      if ($array['entity_id'] === $node->id()) {
+        $serviceProviderUpdaters = $array['updaters'];
+        break;
+      }
     }
 
-    if ($serviceProviderUpdater->id() === $account->id()) {
+    if (in_array($account->id(), $serviceProviderUpdaters)) {
       return TRUE;
     }
 

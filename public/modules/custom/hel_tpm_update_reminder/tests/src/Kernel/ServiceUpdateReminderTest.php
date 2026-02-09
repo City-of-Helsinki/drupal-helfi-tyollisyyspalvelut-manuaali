@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\hel_tpm_update_reminder\Kernel;
 
 use Drupal\Core\Database\Database;
+use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Test\AssertMailTrait;
 use Drupal\group\Entity\Group;
@@ -156,7 +157,7 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
   /**
    * Tests cron queueing with services having published moderation state.
    *
-   * The moderation state transitions should allow cron to add the service ids
+   * The moderation state transitions should allow cron to add the service IDs
    * to the queue.
    *
    * @return void
@@ -176,17 +177,17 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
   }
 
   /**
-   * Tests cron queueing with recently checked services.
+   * Tests cron queueing with recently saved services.
    *
-   * The services that are checked before the first time limit is passed should
-   * not have their ids added to the queue.
+   * The services that are saved before the first time limit is passed should
+   * not have their IDs added to the queue.
    *
    * @return void
    *   -
    *
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  public function testQueueWithRecentlyChecked(): void {
+  public function testQueueWithRecentlySaved(): void {
     $daysAgo = UpdateReminderUtility::LIMIT_1 - 1;
     $this->createServiceWithTransition('draft', 'published', $daysAgo, TRUE);
     $this->createServiceWithTransition('ready_to_publish', 'published', $daysAgo, TRUE);
@@ -201,7 +202,7 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
    * Tests cron queueing with services not having published moderation state.
    *
    * The moderation state transitions should not allow cron to add the service
-   * ids to the queue.
+   * IDs to the queue.
    *
    * @return void
    *   -
@@ -228,8 +229,8 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
    * @group reminders
    */
   public function testRemindersAndOutdated(): void {
-    // Test with service that is not checked for long time and ensure the first
-    // reminder is sent.
+    // Test with service not saved for long time, add a translation, and ensure
+    // the first reminder is sent.
     $service = $this->createServiceWithTransition('ready_to_publish', 'published', UpdateReminderUtility::LIMIT_1 + 1, TRUE);
     $translation = $service->addTranslation($this->translationLangcode);
     $translation->setTitle($this->randomString());
@@ -242,8 +243,7 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
     $this->cronRunHelper();
     $this->assertEquals(1, count($this->getReminderMails()));
 
-    // After too few days from the first reminder, run cron again and ensure the
-    // second reminder is not sent.
+    // Ensure the second reminder is not sent when not enough time is passed.
     $this->setRemindedTimestampToValue((int) $service->id(), UpdateReminderUtility::LIMIT_2 - 1);
     $this->cronRunHelper();
     $this->assertEquals(1, count($this->getReminderMails()));
@@ -258,36 +258,38 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
     $this->assertEquals(2, count($this->getReminderMails()));
     $this->assertEquals(0, count($this->getOutdatedMails()));
 
-    // After too few days from the second reminder, run cron again and ensure no
-    // new messages are sent.
+    // Ensure no new mails are sent when not enough time is passed.
     $this->setRemindedTimestampToValue((int) $service->id(), UpdateReminderUtility::LIMIT_3 - 1);
     $this->cronRunHelper();
     $this->assertEquals(2, count($this->getReminderMails()));
     $this->assertEquals(0, count($this->getOutdatedMails()));
 
-    // Ensure the service is outdated and the related message is sent.
+    // Ensure the service is outdated and the related message is sent after
+    // enough time is passed.
     $this->setRemindedTimestampToValue((int) $service->id(), UpdateReminderUtility::LIMIT_3 + 1);
     $this->cronRunHelper();
     $this->assertEquals(1, count($this->getOutdatedMails()));
     $service = $this->reloadEntity($service);
     $this->assertEquals('outdated', $service->get('moderation_state')->value);
 
+    // Ensure the translation is also outdated.
     $translation = $this->reloadEntity($translation);
     $this->assertEquals('outdated', $translation->get('moderation_state')->value);
 
-    // Ensure no further messages are sent.
+    // Ensure no further messages are immediately sent.
     $this->cronRunHelper();
     $this->assertEquals(2, count($this->getReminderMails()));
     $this->assertEquals(1, count($this->getOutdatedMails()));
 
+    // After some time, ensure no further messages are sent and the service
+    // stays outdated.
     $this->setRemindedTimestampToValue((int) $service->id(), UpdateReminderUtility::LIMIT_3 + 1);
     $this->cronRunHelper();
-
     $this->assertEquals(2, count($this->getReminderMails()));
     $this->assertEquals(1, count($this->getOutdatedMails()));
     $this->assertEquals('outdated', $service->get('moderation_state')->value);
 
-    // Update service back to published state.
+    // Update the service back to published state.
     $this->updateService((int) $service->id(), [
       'moderation_state' => 'published',
     ], 1);
@@ -298,27 +300,47 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
     $this->cronRunHelper();
     $this->assertEquals(2, count($this->getReminderMails()));
     $this->assertEquals(1, count($this->getOutdatedMails()));
+  }
 
-    // Ensure the first reminder is sent again as the service is published
-    // and enough time has passed.
-    // This test might be obsolete because it
-    // relies on creating new revision to the past
-    // which is not realistic use case.
-    /*
-    $this->updateService((int) $service->id(), [
-    'moderation_state' => 'published',
-    ], UpdateReminderUtility::LIMIT_1 + 3);
-    $service = $this->reloadEntity($service);
+  /**
+   * Tests reminders with previously outdated service.
+   *
+   * @return void
+   *   -
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  public function testChangeOutdatedToPublished(): void {
+    // Create outdated service and pretend outdated mails have been sent
+    // previously.
+    $service = $this->createServiceWithTransition('published',
+      'outdated',
+      3 * UpdateReminderUtility::LIMIT_1,
+      TRUE);
+    $this->setRemindedTimestampToValue((int) $service->id(), 3 * UpdateReminderUtility::LIMIT_1);
+    UpdateReminderUtility::setMessagesSentState((int) $service->id(), 3);
+
+    // Set the current user to service owner, who is also a member of the
+    // producer group.
+    $this->drupalSetCurrentUser($service->getOwner());
+
+    // Change the service state to draft and then publish it.
+    $service = $this->updateService((int) $service->id(), [
+      'moderation_state' => 'draft',
+    ], 2 * UpdateReminderUtility::LIMIT_1);
+    $service = $this->updateService((int) $service->id(), [
+      'moderation_state' => 'published',
+    ], UpdateReminderUtility::LIMIT_1 + 1);
+
+    // Ensure the first reminder is sent after enough time is passed.
+    $this->setRemindedTimestampToValue((int) $service->id(), UpdateReminderUtility::LIMIT_1 + 1);
     $this->cronRunHelper();
-    $this->assertEquals(3, count($this->getReminderMails()));
-    $this->assertEquals(1,
-    UpdateReminderUtility::getMessagesSent((int) $service->id()));
+    $this->assertEquals(1, count($this->getReminderMails()));
+
     // Ensure the second reminder is sent after enough time is passed.
-    $this->setRemindedTimestampToValue((int) $service->id(),
-    UpdateReminderUtility::LIMIT_2 + 1);
+    $this->setRemindedTimestampToValue((int) $service->id(), UpdateReminderUtility::LIMIT_2 + 1);
     $this->cronRunHelper();
-    $this->assertEquals(4, count($this->getReminderMails()));
-     */
+    $this->assertEquals(2, count($this->getReminderMails()));
   }
 
   /**
@@ -335,83 +357,143 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
     $this->cronRunHelper();
     $this->assertEquals(0, count($this->getReminderMails()));
 
-    // Test with service that is not checked for long time, but is in ready to
+    // Test with service that is not saved for long time, but is in ready to
     // publish state.
     $this->createServiceWithTransition('draft', 'ready_to_publish', UpdateReminderUtility::LIMIT_1 + 1, TRUE);
     $this->cronRunHelper();
     $this->assertEquals(0, count($this->getReminderMails()));
 
-    // Test with service that is not checked for long time, but is outdated.
+    // Test with service that is not saved for long time, but is outdated.
     $this->createServiceWithTransition('published', 'outdated', UpdateReminderUtility::LIMIT_1 + 1, TRUE);
     $this->cronRunHelper();
     $this->assertEquals(0, count($this->getReminderMails()));
   }
 
   /**
-   * Tests user checking the service before the first reminder.
+   * Tests owner saving the service before the first reminder.
    *
    * @return void
    *   -
    *
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  public function testUserCheckingService(): void {
-    // Ensure the reminder is not sent when user marks the service as checked.
-    $serviceChecked = $this->createServiceWithTransition('ready_to_publish', 'published', UpdateReminderUtility::LIMIT_1 + 1, TRUE);
+  public function testOwnerSavingBeforeReminder(): void {
+    $service = $this->createServiceWithTransition('ready_to_publish', 'published', UpdateReminderUtility::LIMIT_1 + 1, TRUE);
     // Set service owner to current user.
-    $owner = $serviceChecked->getOwner();
-    $this->drupalSetCurrentUser($owner);
-    $serviceChecked->set('moderation_state', 'ready_to_publish');
-    $serviceChecked->save();
-    $serviceChecked = $this->reloadEntity($serviceChecked);
+    $this->drupalSetCurrentUser($service->getOwner());
+    $service->set('moderation_state', 'ready_to_publish');
+    $service->save();
+    $service = $this->reloadEntity($service);
     $this->cronRunHelper();
+    // Ensure the reminder is not sent as the user has saved the service.
     $this->assertEquals(0, count($this->getReminderMails()));
-    $this->assertEquals(0, UpdateReminderUtility::getMessagesSent((int) $serviceChecked->id()));
+    $this->assertEquals(0, UpdateReminderUtility::getMessagesSent((int) $service->id()));
   }
 
   /**
-   * Tests user checking the service after the first reminder.
+   * Tests owner saving the service after the first reminder.
    *
    * @return void
    *   -
    *
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  public function testUserCheckingServiceAfterReminder(): void {
-    // Ensure the second reminder is not sent when user marks the service as
-    // checked after first reminder.
-    $serviceCheckedSecond = $this->createServiceWithTransition('ready_to_publish', 'published', UpdateReminderUtility::LIMIT_1 + 1, TRUE);
+  public function testOwnerSavingAfterReminder(): void {
+    // Ensure first reminder is sent.
+    $service = $this->createServiceWithTransition('ready_to_publish', 'published', 2 * UpdateReminderUtility::LIMIT_1 + 1, TRUE);
     $this->cronRunHelper();
     $this->assertEquals(1, count($this->getReminderMails()));
-    $this->assertEquals(1, UpdateReminderUtility::getMessagesSent((int) $serviceCheckedSecond->id()));
-    $this->setRemindedTimestampToValue((int) $serviceCheckedSecond->id(), UpdateReminderUtility::LIMIT_2 + 1);
+    $this->assertEquals(1, UpdateReminderUtility::getMessagesSent((int) $service->id()));
 
-    $serviceCheckedSecond->save();
-    $serviceCheckedSecond = $this->reloadEntity($serviceCheckedSecond);
+    // Set the current user to service owner, who is also a member of the
+    // producer group.
+    $this->drupalSetCurrentUser($service->getOwner());
+
+    // Update service by altering the changed timestamp to past. Ensure saving
+    // has reset the messages sent info.
+    $this->setRemindedTimestampToValue((int) $service->id(), UpdateReminderUtility::LIMIT_2 + 1);
+    $service = $this->updateService((int) $service->id(), [
+      'title' => 'Updated title',
+    ], UpdateReminderUtility::LIMIT_1 + 1);
+    $this->assertEquals(0, UpdateReminderUtility::getMessagesSent((int) $service->id()));
+
+    // With the altered timestamp, service is included in a cron run. Ensure the
+    // first message is sent again, as the message sent info was reset during
+    // saving.
     $this->cronRunHelper();
-
     $this->assertEquals(2, count($this->getReminderMails()));
-    $this->assertEquals(2, UpdateReminderUtility::getMessagesSent((int) $serviceCheckedSecond->id()));
+    $this->assertEquals('message_notify_hel_tpm_update_reminder_service', $this->getReminderMails()[0]['id']);
+    $this->assertEquals(1, UpdateReminderUtility::getMessagesSent((int) $service->id()));
 
-    $owner = $serviceCheckedSecond->getOwner();
-    $this->drupalSetCurrentUser($owner);
-    $serviceCheckedSecond->save();
-    $serviceCheckedSecond = $this->reloadEntity($serviceCheckedSecond);
+    // Update service normally which will also change the changed time to
+    // current time. Ensure saving has reset the messages sent info.
+    $this->setRemindedTimestampToValue((int) $service->id(), UpdateReminderUtility::LIMIT_2 + 1);
+    $service->set('title', 'Updated title again');
+    $service->save();
+    $service = $this->reloadEntity($service);
+    $this->assertEquals(0, UpdateReminderUtility::getMessagesSent((int) $service->id()));
+
+    // As the service changed timestamp has changed, service should not be
+    // included in cron run.
     $this->cronRunHelper();
-
     $this->assertEquals(2, count($this->getReminderMails()));
-    $this->assertEquals(0, UpdateReminderUtility::getMessagesSent((int) $serviceCheckedSecond->id()));
+    $this->assertEquals(0, UpdateReminderUtility::getMessagesSent((int) $service->id()));
   }
 
   /**
-   * Tests user saving the service as draft.
+   * Tests another user saving the service after the first reminder.
    *
    * @return void
    *   -
    *
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  public function testUserSavingServiceAsDraft(): void {
+  public function testAnotherUserSavingAfterReminder(): void {
+    // Ensure first reminder is sent.
+    $service = $this->createServiceWithTransition('ready_to_publish', 'published', 2 * UpdateReminderUtility::LIMIT_1 + 1, TRUE);
+    $this->cronRunHelper();
+    $this->assertEquals(1, count($this->getReminderMails()));
+    $this->assertEquals(1, UpdateReminderUtility::getMessagesSent((int) $service->id()));
+
+    // Set the current user as another admin user, who is not involved with
+    // the service.
+    $anotherUser = $this->createUser([], NULL, TRUE);
+    $this->drupalSetCurrentUser($anotherUser);
+
+    // Update service by altering the changed timestamp to past. Ensure saving
+    // has not reset the messages sent info.
+    $this->setRemindedTimestampToValue((int) $service->id(), UpdateReminderUtility::LIMIT_2 + 1);
+    $service = $this->updateService((int) $service->id(), [
+      'title' => 'Updated title',
+    ], UpdateReminderUtility::LIMIT_1 + 1);
+    $this->assertEquals(1, UpdateReminderUtility::getMessagesSent((int) $service->id()));
+
+    // With the altered timestamp, service is included in a cron run. Ensure the
+    // second message is sent, as the message sent info was not reset during
+    // saving.
+    $this->cronRunHelper();
+    $this->assertEquals(2, count($this->getReminderMails()));
+    $this->assertEquals('message_notify_hel_tpm_update_reminder_service2', $this->getReminderMails()[1]['id']);
+    $this->assertEquals(2, UpdateReminderUtility::getMessagesSent((int) $service->id()));
+
+    // Update service normally which will also change the changed time to
+    // current time. Ensure saving has not reset the messages sent info.
+    $this->setRemindedTimestampToValue((int) $service->id(), UpdateReminderUtility::LIMIT_2 + 1);
+    $service->set('title', 'Updated title again');
+    $service->save();
+    $service = $this->reloadEntity($service);
+    $this->assertEquals(2, UpdateReminderUtility::getMessagesSent((int) $service->id()));
+  }
+
+  /**
+   * Tests saving the service as draft.
+   *
+   * @return void
+   *   -
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  public function testSavingServiceAsDraft(): void {
     // Ensure first reminder is sent as user only saves the old service as
     // draft.
     $serviceSavingAsDraft = $this->createServiceWithTransition('ready_to_publish', 'published', UpdateReminderUtility::LIMIT_1 + 1, TRUE);
@@ -549,9 +631,13 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
   public function testFetchPublishedServiceIds(): void {
     $update_reminder_service = \Drupal::service('hel_tpm_update_reminder.update_reminder_user');
 
+    $created = new DrupalDateTime('-121 days');
     // Create 2 published nodes.
     $publishedService1 = $this->createService(['moderation_state' => 'published'], $this->group);
-    $publishedService2 = $this->createService(['moderation_state' => 'published'], $this->group);
+    $publishedService2 = $this->createService([
+      'moderation_state' => 'published',
+      'created' => $created->getTimestamp(),
+    ], $this->group);
 
     // Create 1 unpublished node.
     $unpublishedService = $this->createService(['moderation_state' => 'draft'], $this->group);
@@ -559,10 +645,10 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
     // Fetch published node IDs.
     $publishedServiceIds = $update_reminder_service->fetchPublishedServiceIds();
 
-    // Assert the IDs of published nodes are
-    // returned and the unpublished node is not included.
-    $this->assertCount(2, $publishedServiceIds);
-    $this->assertContains($publishedService1->id(), $publishedServiceIds);
+    // Assert the IDs of published nodes are returned and the unpublished node
+    // is not included.
+    $this->assertCount(1, $publishedServiceIds);
+    $this->assertNotContains($publishedService1->id(), $publishedServiceIds);
     $this->assertContains($publishedService2->id(), $publishedServiceIds);
     $this->assertNotContains($unpublishedService->id(), $publishedServiceIds);
   }
@@ -591,8 +677,7 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
     $user3 = $this->createUser([], NULL, TRUE);
     $this->group->addMember($user3);
 
-    // Optionally, add assertions to validate
-    // that the users were created successfully.
+    // Validate that the users were created successfully.
     $this->assertNotNull($user1->id(), 'User 1 was created successfully.');
     $this->assertNotNull($user2->id(), 'User 2 was created successfully.');
     $this->assertNotNull($user3->id(), 'User 3 was created successfully.');
@@ -608,25 +693,25 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
     $this->group->addRelationship($service, 'group_node:service');
 
     $this->updateService((int) $service->id(), ['moderation_state' => 'published'], 129);
-    $remind_service = $update_reminder_service->getServicesToRemind();
+    $remind_service = $update_reminder_service->getServiceIdsToRemind();
     $this->assertCount(1, $remind_service);
 
     $this->setCurrentUser($user2);
 
     $this->updateService((int) $service->id(), ['moderation_state' => 'published'], 128);
-    $remind_service = $update_reminder_service->getServicesToRemind();
+    $remind_service = $update_reminder_service->getServiceIdsToRemind();
     $this->assertCount(1, $remind_service);
 
     $this->setCurrentUser($user1);
 
     $this->updateService((int) $service->id(), ['moderation_state' => 'published'], 2);
-    $remind_service = $update_reminder_service->getServicesToRemind();
+    $remind_service = $update_reminder_service->getServiceIdsToRemind();
     $this->assertCount(0, $remind_service);
 
     $this->updateService((int) $service->id(), [
       'moderation_state' => 'draft',
     ], 1);
-    $remind_service = $update_reminder_service->getServicesToRemind();
+    $remind_service = $update_reminder_service->getServiceIdsToRemind();
     $this->assertCount(0, $remind_service);
   }
 
@@ -653,22 +738,6 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
   protected function cronRunHelper(): void {
     \Drupal::state()->delete(UpdateReminderUtility::LAST_RUN_KEY);
     $this->cron->run();
-  }
-
-  /**
-   * Set node content as checked with past timestamp.
-   *
-   * @param int $nid
-   *   The node id.
-   * @param int $days
-   *   Defines how many days ago the node was checked.
-   *
-   * @return void
-   *   -
-   */
-  protected function setCheckedTimestampToValue(int $nid, int $days): void {
-    $timestamp = strtotime('-' . $days . ' days', \Drupal::time()->getRequestTime());
-    \Drupal::state()->set(UpdateReminderUtility::CHECKED_TIMESTAMP_BASE_KEY . $nid, $timestamp);
   }
 
   /**
@@ -749,7 +818,6 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
     $node->setRevisionCreationTime($changed);
     $node->setRevisionUserId(\Drupal::CurrentUser()->id());
     $node->save();
-    $this->setCheckedTimestampToValue((int) $node->id(), $days);
     return $this->reloadEntity($node);
   }
 
@@ -780,10 +848,11 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
       $this->group->addMember($user);
     }
     // Make sure newly created services are behind new ones.
-    $changed = strtotime('-' . $days + 10 . ' days', \Drupal::time()->getRequestTime());
+    $changed = strtotime('-' . $days . ' days 1 hours', \Drupal::time()->getRequestTime());
     $service = $this->createService([
       'field_service_provider_updatee' => $user,
       'moderation_state' => $fromState,
+      'created' => $changed,
       'changed' => $changed,
       'uid' => $addUser ? $user->id() : 0,
     ], $this->group);

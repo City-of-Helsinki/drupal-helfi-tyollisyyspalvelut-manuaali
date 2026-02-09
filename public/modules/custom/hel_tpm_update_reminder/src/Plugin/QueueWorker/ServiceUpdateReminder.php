@@ -146,23 +146,16 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
     if (!is_int($data)) {
       return;
     }
+    // At this point, the service ID should belong to a service which hasn't
+    // been updated for a while: last save from service provider users exceeds
+    // the first reminder limit.
     $this->serviceId = $data;
 
-    // Do nothing if node is not checked, e.g. there has been no state
-    // transitions as defined in event subscriber ServiceStateChangedSubscriber.
-    if (empty($checked = UpdateReminderUtility::getCheckedTimestamp($this->serviceId))) {
-      return;
-    }
-    // Only continue processing node if checked timestamp is smaller (older)
-    // than the first reminder limit.
-    if ($checked >= UpdateReminderUtility::getFirstLimitTimestamp()) {
-      return;
-    }
     $sent = UpdateReminderUtility::getMessagesSent($this->serviceId);
-    $reminded = UpdateReminderUtility::getRemindedTimestamp($this->serviceId);
+    $reminded = UpdateReminderUtility::getLastMessageSentTimestamp($this->serviceId);
 
     match (TRUE) {
-      ($sent === 0) => $this->remind(1),
+      ($sent === 0) && (!isset($reminded) || ($reminded < UpdateReminderUtility::getFirstLimitTimestamp())) => $this->remind(1),
       ($sent === 1) && isset($reminded) && ($reminded < UpdateReminderUtility::getSecondLimitTimestamp()) => $this->remind(2),
       ($sent === 2) && isset($reminded) && ($reminded < UpdateReminderUtility::getThirdLimitTimestamp()) => $this->outdate(),
       default => FALSE,
