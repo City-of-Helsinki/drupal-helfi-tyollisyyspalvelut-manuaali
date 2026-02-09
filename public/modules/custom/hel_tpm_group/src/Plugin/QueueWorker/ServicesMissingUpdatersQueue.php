@@ -9,6 +9,7 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueWorkerBase;
 use Drupal\group\Entity\GroupInterface;
 use Drupal\group\Entity\GroupMembership;
+use Drupal\hel_tpm_general\PreventMailUtility;
 use Drupal\hel_tpm_group\ServicesMissingUpdaters;
 use Drupal\message\Entity\Message;
 use Drupal\message_notify\MessageNotifier;
@@ -102,6 +103,11 @@ final class ServicesMissingUpdatersQueue extends QueueWorkerBase implements Cont
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
   private function notifyGroupAdmins($group_id) {
+    // Do not proceed if sending missing updaters mail is blocked by settings.
+    if (PreventMailUtility::isServiceMissingUpdatersBlocked()) {
+      return;
+    }
+
     $entity_type_manager = $this->entityTypeManager->getStorage('group');
     $group = $entity_type_manager->load($group_id);
     if (!$users = $this->getUsersToNotify($group)) {

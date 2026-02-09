@@ -12,6 +12,7 @@ use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\gcontent_moderation\GroupStateTransitionValidation;
 use Drupal\ggroup\GroupHierarchyManagerInterface;
+use Drupal\hel_tpm_general\PreventMailUtility;
 use Drupal\message\Entity\Message;
 use Drupal\message_notify\MessageNotifier;
 use Drupal\node\NodeInterface;
@@ -77,7 +78,12 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public function draftToReadyToPublish(ServiceModerationEvent $event) {
+  public function draftToReadyToPublish(ServiceModerationEvent $event): void {
+    // Do not proceed if sending ready to publish mail is blocked by settings.
+    if (PreventMailUtility::isReadyToPublishServicesBlocked()) {
+      return;
+    }
+
     $account = $event->getAccount();
     $state = $event->getModerationState();
     $storage = $this->entityTypeManager->getStorage($state->content_entity_type_id->value);
@@ -122,7 +128,12 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public function readyToPublishToPublished(ServiceModerationEvent $event) {
+  public function readyToPublishToPublished(ServiceModerationEvent $event): void {
+    // Do not proceed if sending published service mails is blocked by settings.
+    if (PreventMailUtility::isPublishedServicesBlocked()) {
+      return;
+    }
+
     $state = $event->getModerationState();
     $storage = $this->entityTypeManager->getStorage($state->content_entity_type_id->value);
     $entity = $storage->load($state->content_entity_id->value);

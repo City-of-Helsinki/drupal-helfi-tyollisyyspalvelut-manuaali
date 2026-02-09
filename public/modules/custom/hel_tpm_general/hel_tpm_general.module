@@ -153,7 +153,7 @@ function hel_tpm_general_user_presave($entity) {
  * Implements hook_mail_alter().
  */
 function hel_tpm_general_mail_alter(&$message): void {
-  if (PreventMailUtility::get()) {
+  if (PreventMailUtility::isBlocked()) {
     $message['send'] = FALSE;
   }
 }

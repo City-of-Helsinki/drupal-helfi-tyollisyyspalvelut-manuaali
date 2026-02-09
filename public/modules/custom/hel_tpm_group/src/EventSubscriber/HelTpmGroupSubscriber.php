@@ -10,6 +10,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\group\Entity\GroupMembership;
 use Drupal\group\Entity\GroupRoleInterface;
 use Drupal\group\GroupMembershipLoader;
+use Drupal\hel_tpm_general\PreventMailUtility;
 use Drupal\hel_tpm_group\Event\GroupMembershipChanged;
 use Drupal\hel_tpm_group\Event\GroupMembershipDeleted;
 use Drupal\hel_tpm_group\Event\GroupSiteWideRoleChanged;
@@ -189,14 +190,18 @@ class HelTpmGroupSubscriber implements EventSubscriberInterface {
       $this->logger->info($this->t('Deactivated user ID %user_id as the user is no longer a member of any group.', [
         '%user_id' => $user->id(),
       ]));
-      // Send message informing the user.
-      $message = Message::create([
-        'template' => 'hel_tpm_group_account_blocked',
-        'uid' => $user->id(),
-      ]);
-      $message->set('field_user', $user);
-      $message->save();
-      $this->messageNotifier->send($message);
+
+      // Send message informing the user if sending mail is not blocked from
+      // settings.
+      if (!PreventMailUtility::isDeactivatedGroupAccountBlocked()) {
+        $message = Message::create([
+          'template' => 'hel_tpm_group_account_blocked',
+          'uid' => $user->id(),
+        ]);
+        $message->set('field_user', $user);
+        $message->save();
+        $this->messageNotifier->send($message);
+      }
     }
   }
 
