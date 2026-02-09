@@ -101,8 +101,9 @@ class PreventMailForm extends FormBase {
       '#type' => 'checkbox',
       '#title' => $this->t('Block user account expiry mails'),
       '#default_value' => PreventMailUtility::isUserExpirationBlocked(),
-      '#description' => $this->t("Prevents sending mails informing users about expiring user accounts. User expiration does not proceed until mails are successfully sent.") . "<p>" .
-      $this->t("Affects message templates: @template1, @template2 and @template3.", [
+      '#description' => $this->t("Prevents sending mails informing users about expiring user accounts. User expiration does not proceed until mails are successfully sent.") .
+      "<p>" . $this->t("Note: User expiry can be disabled from separate settings page. This options blocks sending mail already in queue, the other option stops adding new user expiry tasks to the queue.") . "</p>" .
+      "<p>" . $this->t("Affects message templates: @template1, @template2 and @template3.", [
         '@template1' => "1st_user_account_expiry_reminder",
         '@template2' => "2nd_user_account_expiry_reminder",
         '@template3' => "hel_tpm_user_expiry_blocked",
