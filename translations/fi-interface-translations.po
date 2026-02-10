@@ -1729,3 +1729,117 @@ msgstr[1] "@day klo @start0 - @end0 ja @start1 - @end1"
 
 msgid "Provide feedback"
 msgstr "Anna palautetta"
+
+msgid "Affects message template: @template."
+msgstr "Vaikuttaa viestipohjaan: @template."
+
+msgid "Affects message templates: @template1 and @template2."
+msgstr "Vaikuttaa viestipohjiin: @template1 ja @template2."
+
+msgid "Affects message templates: @template1, @template2 and @template3."
+msgstr "Vaikuttaa viestipohjiin: @template1, @template2 ja @template3."
+
+msgid ""
+"Use these settings to temporarily prevent sending automatic emails. "
+"Importing configurations during deployment does not affect these "
+"settings."
+msgstr ""
+"Käytä näitä asetuksia estääksesi väliaikaisesti automaattisten sähköpostien "
+"lähettämisen. Asetustiedostojen tuominen tuotantoonviennin aikana ei vaikuta "
+"näihin asetuksiin."
+
+msgid "Normally these options should not be checked."
+msgstr "Normaalitilanteessa näiden asetusten ei tulisi olla valittuna."
+
+msgid "Block sending mail"
+msgstr "Estä sähköpostien lähetys"
+
+msgid ""
+"Prevents sending all emails that can be altered using the "
+"hook_mail_alter() hook."
+msgstr ""
+"Estää kaikkien sähköpostien lähettämisen, joita voidaan hallita "
+"hook_mail_alter():n avulla."
+
+msgid "Block mails by message templates"
+msgstr "Estä sähköpostit viestipohjittain"
+
+msgid "Block mails for ready to publish services"
+msgstr "Estä sähköpostit julkaisuvalmiista palveluista"
+
+msgid ""
+"Prevents automatic emails from being sent when services are marked as "
+"ready to publish. Blocked emails will not be sent at a later time."
+msgstr ""
+"Estää automaattisten sähköpostien lähettämisen julkaisuvalmiiksi merkityistä "
+"palveluista. Estettyjä sähköposteja ei lähetetä myöhemmin."
+
+msgid "Block mails for published services"
+msgstr "Estä sähköpostit julkaistuista palveluista"
+
+msgid ""
+"Prevents automatic emails from being sent when services are published. "
+"Blocked emails will not be sent at a later time."
+msgstr ""
+"Estää automaattisten sähköpostien lähettämisen julkaistuista palveluista. "
+"Estettyjä sähköposteja ei lähetetä myöhemmin."
+
+msgid "Block service update reminder mails"
+msgstr "Estä palveluiden muistutussähköposit"
+
+msgid "Prevents sending service reminder emails."
+msgstr "Estää automaattisten palveluiden muistutussähköpostien lähettämisen."
+
+msgid "Block outdated service mails"
+msgstr "Estä sähköpostit vanhentuneista palveluista"
+
+msgid ""
+"Prevents emails from being sent to inform users about outdated "
+"services. Services are not outdated until the emails are successfully "
+"sent."
+msgstr ""
+"Estää sähköpostien lähettämisen vanhentuneista palveluista. "
+"Palvelu ei vanhene ennen kuin sähköposti on lähetetty onnistuneesti."
+
+msgid "Block services missing updaters mails"
+msgstr "Estä sähköpostit puuttuvista vastuupäivittäjistä"
+
+msgid ""
+"Prevents emails from being sent to inform users about services with "
+"missing updaters."
+msgstr ""
+"Estää sähköpostien lähettämisen palveluista, joista puuttuu "
+"vastuupäivittäjä."
+
+msgid "Block user account expiry mails"
+msgstr "Estä käyttäjätilien vanhenemissähköpostit"
+
+msgid ""
+"Prevents emails from being sent to inform users about expiring user "
+"accounts. User expiration does not proceed until the emails are "
+"successfully sent."
+msgstr ""
+"Estää sähköpostien lähettämisen vanhentuneista käyttäjätileistä. "
+"Käyttäjätili ei vanhene ennen kuin sähköposti on lähetetty onnistuneesti."
+
+msgid ""
+"Note: User expiry can be disabled from a separate settings page. This "
+"option blocks emails that are already in the queue, while the other "
+"option prevents new user-expiry tasks from being added to the queue."
+msgstr ""
+"Huom: Käyttäjätilin vanheneminen voidaan poistaa käytöstä erilliseltä "
+"asetussivulta. Tämä valinta estää jo jonossa olevien sähköpostien "
+"lähettämisen, kun taas toisen asetussivun vaihtoehto estää uusien "
+"vanhenemisien lisäämisen jonoon."
+
+msgid "Block mails for deactivated group accounts"
+msgstr "Estä sähköpostit ryhmistä poistetuista suljetuista tileistä"
+
+msgid ""
+"Prevents sending notification emails to users when their account is "
+"deactivated because it no longer belongs to any group. The accounts "
+"are deactivated regardless of this choice."
+msgstr ""
+"Estää ilmoitussähköpostien lähettämisen käyttäjille, joiden tili on "
+"suljettu, koska tili ei enää kuulu mihinkään ryhmään. Tili suljetaan "
+"vaikka sähköpostia ei lähetetä."
