@@ -1,6 +1,7 @@
 .node-service-edit-form,
 .node-service-form {
   display: grid;
+  width: 100%;
   > * {
      min-width: 0px;
   }
@@ -11,6 +12,7 @@
   @include xl {
       grid-template-columns: 7fr 3fr;
       grid-column-gap: 24px;
+
   }
 
   .paragraph-type-top,
