@@ -1,0 +1,32 @@
+uuid: e56d185c-ac53-4eed-af94-b8d591b11d92
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_body_limited_html
+    - filter.format.limited_filtered_html
+    - paragraphs.paragraphs_type.municipality_guide
+  module:
+    - linkchecker
+    - text
+    - tmgmt_content
+third_party_settings:
+  linkchecker:
+    scan: true
+    extractor: html_link_extractor
+  tmgmt_content:
+    excluded: false
+id: paragraph.municipality_guide.field_body_limited_html
+field_name: field_body_limited_html
+entity_type: paragraph
+bundle: municipality_guide
+label: 'Sisältö new'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - limited_filtered_html
+field_type: text_long
