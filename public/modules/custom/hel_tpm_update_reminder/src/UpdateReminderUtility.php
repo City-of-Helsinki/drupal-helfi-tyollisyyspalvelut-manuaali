@@ -35,11 +35,6 @@ class UpdateReminderUtility {
   public const LAST_RUN_KEY = 'hel_tpm_update_reminder.last_run';
 
   /**
-   * Base State API key for node's last checked timestamp.
-   */
-  public const CHECKED_TIMESTAMP_BASE_KEY = 'hel_tpm_update_reminder.checked_timestamp.node.';
-
-  /**
    * Base State API key for node's last reminder timestamp.
    */
   public const REMINDED_BASE_KEY = 'hel_tpm_update_reminder.reminded_timestamp.node.';
@@ -87,41 +82,15 @@ class UpdateReminderUtility {
   }
 
   /**
-   * Get the timestamp the node is last checked.
+   * Get the last reminder message timestamp for node.
    *
    * @param int $nid
    *   The node id.
    *
    * @return int|null
-   *   The checked content timestamp if existing, NULL otherwise.
+   *   The timestamp for last message if existing, NULL otherwise.
    */
-  public static function getCheckedTimestamp(int $nid): ?int {
-    return \Drupal::state()->get(self::CHECKED_TIMESTAMP_BASE_KEY . $nid, NULL);
-  }
-
-  /**
-   * Set node content as checked with current timestamp.
-   *
-   * @param int $nid
-   *   The node id.
-   *
-   * @return void
-   *   Void.
-   */
-  public static function setCheckedTimestamp(int $nid): void {
-    \Drupal::state()->set(self::CHECKED_TIMESTAMP_BASE_KEY . $nid, \Drupal::time()->getRequestTime());
-  }
-
-  /**
-   * Get the reminder message timestamp for node.
-   *
-   * @param int $nid
-   *   The node id.
-   *
-   * @return int|null
-   *   The reminder message timestamp if existing, NULL otherwise.
-   */
-  public static function getRemindedTimestamp(int $nid): ?int {
+  public static function getLastMessageSentTimestamp(int $nid): ?int {
     return \Drupal::state()->get(self::REMINDED_BASE_KEY . $nid, NULL);
   }
 
@@ -134,7 +103,7 @@ class UpdateReminderUtility {
    * @return void
    *   Void.
    */
-  public static function setRemindedTimestamp(int $nid): void {
+  public static function setLastMessageSentTimestamp(int $nid): void {
     \Drupal::state()->set(self::REMINDED_BASE_KEY . $nid, \Drupal::time()->getRequestTime());
   }
 
@@ -182,7 +151,7 @@ class UpdateReminderUtility {
    */
   public static function setMessagesSentState(int $nid, int $messageNumber): void {
     self::setMessagesSent($nid, $messageNumber);
-    self::setRemindedTimestamp($nid);
+    self::setLastMessageSentTimestamp($nid);
   }
 
   /**
@@ -203,20 +172,6 @@ class UpdateReminderUtility {
     if (!empty(\Drupal::state()->get(self::REMINDED_BASE_KEY . $nid))) {
       \Drupal::state()->delete(self::REMINDED_BASE_KEY . $nid);
     }
-  }
-
-  /**
-   * Mark node as checked, e.g. after a state transition.
-   *
-   * @param int $nid
-   *   The node id.
-   *
-   * @return void
-   *   Void.
-   */
-  public static function markNodeChecked(int $nid): void {
-    self::clearMessagesSent($nid);
-    self::setCheckedTimestamp($nid);
   }
 
   /**
