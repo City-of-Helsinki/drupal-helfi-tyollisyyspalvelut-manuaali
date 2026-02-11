@@ -65,7 +65,7 @@ dependencies:
     - entity_reference_revisions
     - entitygroupfield
     - field_group
-    - file
+    - file_download_link
     - hel_tpm_general
     - options
     - text
@@ -405,10 +405,15 @@ content:
     weight: 17
     region: content
   field_internal_files:
-    type: file_default
+    type: file_download_link
     label: above
     settings:
-      use_description_as_link_text: true
+      link_text: ''
+      link_title: ''
+      new_tab: true
+      force_download: false
+      custom_classes: ''
+      aria_label: 'Avaa [file:name] uudessa välilehdessä'
     third_party_settings: {  }
     weight: 18
     region: content
