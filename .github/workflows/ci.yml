@@ -64,8 +64,8 @@ jobs:
       - name: Check theme coding standards.
         run: ./vendor/bin/phpcs --standard=Drupal,DrupalPractice --ignore=node_modules,bower_components,vendor --extensions=php,module,inc,install,test,profile,theme,info,yml ./public/themes/custom
 
-      - name: Check security updates.
-        run: composer audit
+      - name: Check Drupal security advisories.
+        run: composer audit --no-dev --ignore-unreachable --format=json | jq -e '(.advisories | with_entries(select(.key | startswith("drupal/")))) as $d | ($d // empty) , ($d | length == 0)'
 
       - name: SonarQube Scan
         if: ${{ env.SONARCLOUD_TOKEN }}

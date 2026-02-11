@@ -665,3 +665,28 @@ function _palvelumanuaali_dropbutton_add_icon_classes(array &$links): void {
     $link['attributes']->addClass($class);
   }
 }
+
+/**
+ * Implements hook_preprocess().
+ */
+function palvelumanuaali_preprocess_paragraph__quick_link__default(&$variables, $hook) {
+  $content = $variables['content'];
+
+  if (empty($content['field_link'])) {
+    return;
+  }
+  $link = $content['field_link'][0];
+  $variables['quick_link']['url'] = $link['#url']->toString();
+  $title = '';
+  $description = '';
+  if (!empty($content['field_title']['#items'])) {
+    $title = $content['field_title']['#items']->getValue()[0]['value'];
+  }
+  if (!empty($content['field_short_description']['#items'])) {
+    $description = $content['field_short_description']['#items']->getValue()[0]['value'];
+  }
+  $variables['quick_link']['attributes'] = [
+    'title' => $title,
+    'description' => $description,
+  ];
+}

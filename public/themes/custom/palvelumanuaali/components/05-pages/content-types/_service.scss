@@ -224,10 +224,6 @@
     margin-bottom: $space-one-and-half;
   }
 
-  .field--name-field-description {
-    @extend .text-large;
-  }
-
   .field--name-field-implementation-extra-info,
   .field--name-field-service-price,
   .field--name-field-service-languages,
@@ -315,6 +311,7 @@
   }
   .field__item {
     margin-bottom: $space-one-and-half;
+    padding-right: $space;
     a {
       font-weight: 600;
       @extend .text-normal;
@@ -378,10 +375,10 @@
 }
 
 .page-node-type-service {
-  .field--content--margin-left-triple,
+  .field--content--margin-left-two-and-half,
   .field--name-field-service-set {
-    margin-left: $space-triple;
-    .h5 {
+    margin-left: $space-two-and-half;
+    .h6 {
       margin-left: 0;
       margin-bottom: $space-one-half;
     }
@@ -432,11 +429,12 @@
   }
   .toc-js {
     border-left: 6px solid $accent-pink;
+    margin-bottom: 2rem;
     nav {
+      margin-left: 2em;
+      margin-right: 1rem;
       @include xl {
         overflow: auto;
-        margin-left: 2em;
-        margin-right: 1rem;
         max-height: calc(100vh - 190px);
       }
     }
@@ -462,12 +460,9 @@
         content: none;
       }
       a {
-        @include desktop {
-          font-size: 18px;
-        }
+        display: inline-block;
         color: $black;
         font-weight: 600;
-        display: block;
         margin-bottom: 0.2rem;
         &:hover {
           font-weight: bold;
@@ -488,7 +483,7 @@
   position: relative;
   >.icon {
     position: absolute;
-    margin-top: $space;
+    margin-top: 4px;
   }
 }
 

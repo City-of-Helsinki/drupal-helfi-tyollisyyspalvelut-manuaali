@@ -1072,6 +1072,10 @@ function hel_tpm_general_update_20124(&$sandbox) {
     ->execute()
     ->fetchAllAssoc('id');
 
+  if (empty($flags)) {
+    return;
+  }
+
   $database->delete('flagging')
     ->condition('id', array_keys($flags), 'IN')
     ->execute();

@@ -126,22 +126,6 @@
 }
 
 .text-small {
-  font-size: 12px;
-  line-height: 20px;
-  span {
-    font-size: 12px;
-    line-height: 20px;
-  }
-  @include xl-zoom {
-    font-size: 14px;
-    line-height: 24px;
-    span {
-      font-size: 14px;
-      line-height: 24px;
-    }
-  }
-}
-.text-normal {
   font-size: 14px;
   line-height: 22px;
   span {
@@ -149,12 +133,20 @@
     line-height: 22px;
   }
   @include xl-zoom {
+    line-height: 24px;
+    span {
+      line-height: 24px;
+    }
+  }
+}
+.text-normal {
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: 400;
+  span {
     font-size: 16px;
     line-height: 28px;
-    span {
-      font-size: 16px;
-      line-height: 28px;
-    }
+    font-weight: 400;
   }
 }
 .text-large {
@@ -181,3 +173,11 @@
   letter-spacing: 1%;
   color: clr(footer-color);
 }
+
+.blue-info-text-small {
+  @extend .font-size--tiny;
+  @extend .font-weight--bold--dsk;
+  @extend .font-spacing--one-desktop;
+  @extend .font-color--dark-blue;
+}
+

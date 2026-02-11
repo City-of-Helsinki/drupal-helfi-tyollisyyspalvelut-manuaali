@@ -9,6 +9,7 @@ dependencies:
     - field.storage.node.field_service_producer
     - flag.flag.cart
     - node.type.service
+    - user.role.authenticated
     - workflows.workflow.service_moderation
   module:
     - better_exposed_filters
@@ -278,9 +279,10 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       access:
-        type: perm
+        type: role
         options:
-          perm: 'access content'
+          role:
+            authenticated: authenticated
       cache:
         type: tag
         options: {  }
@@ -458,7 +460,7 @@ display:
         - url.query_args
         - user
         - 'user.node_grants:view'
-        - user.permissions
+        - user.roles
       tags:
         - 'config:field.storage.node.field_description'
         - 'config:workflow_list'
@@ -897,7 +899,7 @@ display:
         - 'languages:language_interface'
         - user
         - 'user.node_grants:view'
-        - user.permissions
+        - user.roles
       tags:
         - 'config:field.storage.node.field_service_producer'
         - 'config:workflow_list'
@@ -1077,7 +1079,7 @@ display:
         - 'url.query_args:sort_order'
         - user
         - 'user.node_grants:view'
-        - user.permissions
+        - user.roles
       tags:
         - 'config:field.storage.node.field_description'
         - 'config:workflow_list'
