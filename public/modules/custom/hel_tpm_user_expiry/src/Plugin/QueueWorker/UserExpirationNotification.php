@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\hel_tpm_user_expiry\Plugin\QueueWorker;
 
+use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Logger\LoggerChannelTrait;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
@@ -145,6 +146,15 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
     $count = (int) $notified['count'];
     $timestamp = $notified['timestamp'];
     $user = $this->entityTypeManager->getStorage('user')->load($this->getUid());
+
+    // Anonymize blocked users which haven't accessed account in 7 months.
+    if ($user->isBlocked()) {
+      $limit = new DrupalDateTime('now -8 months');
+      if ($user->getLastAccessedTime() <= $limit->getTimestamp()) {
+        $this->anonymizer->anonymizeUser($user);
+        return;
+      }
+    }
 
     // If user has been notified less than 2 times and last notification
     // has been sent in more.

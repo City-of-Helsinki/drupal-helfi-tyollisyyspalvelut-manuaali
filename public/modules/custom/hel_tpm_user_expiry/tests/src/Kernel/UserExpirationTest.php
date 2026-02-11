@@ -382,6 +382,34 @@ final class UserExpirationTest extends GroupKernelTestBase {
   }
 
   /**
+   * Tests the anonymization of a blocked user.
+   *
+   * This method verifies that after running the cron,
+   * a blocked user's specified fields are anonymized
+   * and no longer match the original values.
+   *
+   * @return void
+   *   No return value.
+   */
+  public function testBlockedUserAnonymization() {
+    $blockedUser = $this->createLastAccessUser(2, '-250 days', 0);
+    $originalValues = $this->getFieldsForAnonymizationTest($blockedUser);
+    $blockedUser1 = $this->createLastAccessUser(1, '-220 days');
+    $originalValues1 = $this->getFieldsForAnonymizationTest($blockedUser1);
+    $this->cron->run();
+    $blockedUser = $this->reloadEntity($blockedUser);
+    $blockedUser1 = $this->reloadEntity($blockedUser1);
+
+    foreach ($originalValues as $key => $oldValue) {
+      $this->assertNotEquals($oldValue, $blockedUser->get($key)->value);
+    }
+
+    foreach ($originalValues1 as $key => $oldValue) {
+      $this->assertEquals($oldValue, $blockedUser1->get($key)->value);
+    }
+  }
+
+  /**
    * Test re-activated accounts stay active for configured period of time.
    *
    * @return void
