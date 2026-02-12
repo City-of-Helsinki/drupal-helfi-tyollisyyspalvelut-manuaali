@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\hel_tpm_user_expiry\Kernel;
 
 use Drupal\Core\Database\Database;
+use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Test\AssertMailTrait;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
@@ -392,11 +393,23 @@ final class UserExpirationTest extends GroupKernelTestBase {
    *   No return value.
    */
   public function testBlockedUserAnonymization() {
-    $blockedUser = $this->createLastAccessUser(2, '-250 days', 0);
+    $date = new DrupalDateTime('now -1 months');
+    $blockedUser = $this->createLastAccessUser(2, '-250 days', 1);
     $originalValues = $this->getFieldsForAnonymizationTest($blockedUser);
-    $blockedUser1 = $this->createLastAccessUser(1, '-220 days');
+    $blockedUser->set('status', 0);
+    $blockedUser->setChangedTime($date->getTimestamp());
+    $blockedUser->save();
+
+    $date = new DrupalDateTime('now -2 weeks');
+    $blockedUser1 = $this->createLastAccessUser(3, '-220 days', 1);
     $originalValues1 = $this->getFieldsForAnonymizationTest($blockedUser1);
+
+    $blockedUser1->set('status', 0);
+    $blockedUser1->setChangedTime($date->getTimestamp());
+    $blockedUser1->save();
+
     $this->cron->run();
+
     $blockedUser = $this->reloadEntity($blockedUser);
     $blockedUser1 = $this->reloadEntity($blockedUser1);
 
