@@ -9,6 +9,7 @@ use Drupal\Core\Logger\LoggerChannelTrait;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueWorkerBase;
 use Drupal\Core\State\State;
+use Drupal\hel_tpm_general\PreventMailUtility;
 use Drupal\hel_tpm_user_expiry\Anonymizer;
 use Drupal\message\Entity\Message;
 use Drupal\message_notify\MessageNotifier;
@@ -140,6 +141,11 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
    * {@inheritdoc}
    */
   public function processItem($data): void {
+    // Do not proceed if sending user expiration mail is blocked by settings.
+    if (PreventMailUtility::isUserExpirationBlocked()) {
+      return;
+    }
+
     $this->setUid((int) $data->uid);
     $notified = $this->getNotified();
     $count = (int) $notified['count'];

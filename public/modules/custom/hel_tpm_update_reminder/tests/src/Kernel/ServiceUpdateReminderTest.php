@@ -29,7 +29,6 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
   use AssertMailTrait;
   use ContentTypeCreationTrait;
 
-
   /**
    * {@inheritdoc}
    */
@@ -518,13 +517,13 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
     // At first reminder, ensure the reminder process does not continue if
     // sending mail fails.
     $service = $this->createServiceWithTransition('ready_to_publish', 'published', UpdateReminderUtility::LIMIT_1 + 1, TRUE);
-    PreventMailUtility::set();
+    PreventMailUtility::block();
     $this->cronRunHelper();
     $this->assertEquals(0, count($this->getReminderMails()));
     $this->assertEquals(0, UpdateReminderUtility::getMessagesSent((int) $service->id()));
 
     // Ensure reminder process continues when sending mail works.
-    PreventMailUtility::set(FALSE);
+    PreventMailUtility::block(FALSE);
     $this->cronRunHelper();
     $this->assertEquals(1, count($this->getReminderMails()));
     $this->assertEquals(1, UpdateReminderUtility::getMessagesSent((int) $service->id()));
@@ -532,13 +531,13 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
     // At second reminder, ensure the reminder process does not continue if
     // sending mail fails.
     $this->setRemindedTimestampToValue((int) $service->id(), UpdateReminderUtility::LIMIT_2 + 1);
-    PreventMailUtility::set();
+    PreventMailUtility::block();
     $this->cronRunHelper();
     $this->assertEquals(1, count($this->getReminderMails()));
     $this->assertEquals(1, UpdateReminderUtility::getMessagesSent((int) $service->id()));
 
     // Ensure reminder process continues when sending mail works.
-    PreventMailUtility::set(FALSE);
+    PreventMailUtility::block(FALSE);
     $this->cronRunHelper();
     $this->assertEquals(2, count($this->getReminderMails()));
     $this->assertEquals(2, UpdateReminderUtility::getMessagesSent((int) $service->id()));
@@ -546,14 +545,73 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
     // When setting outdated, ensure the process does not continue if sending
     // mail fails.
     $this->setRemindedTimestampToValue((int) $service->id(), UpdateReminderUtility::LIMIT_3 + 1);
-    PreventMailUtility::set();
+    PreventMailUtility::block();
     $this->cronRunHelper();
     $this->assertEquals(2, count($this->getReminderMails()));
     $this->assertEquals(0, count($this->getOutdatedMails()));
     $this->assertEquals(2, UpdateReminderUtility::getMessagesSent((int) $service->id()));
 
     // Ensure reminder process continues when sending mail works.
-    PreventMailUtility::set(FALSE);
+    PreventMailUtility::block(FALSE);
+    $this->cronRunHelper();
+    $this->assertEquals(2, count($this->getReminderMails()));
+    $this->assertEquals(1, count($this->getOutdatedMails()));
+    $this->assertEquals(3, UpdateReminderUtility::getMessagesSent((int) $service->id()));
+  }
+
+  /**
+   * Tests sending reminders when sending reminder mails are blocked.
+   *
+   * @return void
+   *   -
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  public function testBlockedReminderMail(): void {
+    $service = $this->createServiceWithTransition('ready_to_publish', 'published', UpdateReminderUtility::LIMIT_1 + 1, TRUE);
+
+    // Ensure blocking update reminder mails does not send update reminders or
+    // continue with the update reminder process.
+    PreventMailUtility::blockUpdateReminder();
+    $this->cronRunHelper();
+    $this->assertEquals(0, count($this->getReminderMails()));
+    $this->assertEquals(0, UpdateReminderUtility::getMessagesSent((int) $service->id()));
+
+    // Ensure unblocking update reminder mails does send mail and continues the
+    // process.
+    PreventMailUtility::blockUpdateReminder(FALSE);
+    $this->cronRunHelper();
+    $this->assertEquals(1, count($this->getReminderMails()));
+    $this->assertEquals(1, UpdateReminderUtility::getMessagesSent((int) $service->id()));
+
+    $this->setRemindedTimestampToValue((int) $service->id(), UpdateReminderUtility::LIMIT_2 + 1);
+
+    // Ensure blocking update reminder mails block also the second reminder.
+    PreventMailUtility::blockUpdateReminder();
+    $this->cronRunHelper();
+    $this->assertEquals(1, count($this->getReminderMails()));
+    $this->assertEquals(1, UpdateReminderUtility::getMessagesSent((int) $service->id()));
+
+    // Ensure unblocking update reminder mails does send mail and continues the
+    // process.
+    PreventMailUtility::blockUpdateReminder(FALSE);
+    // Also ensure blocking outdated mails does not affect sending reminder.
+    PreventMailUtility::blockServiceOutdated();
+    $this->cronRunHelper();
+    $this->assertEquals(2, count($this->getReminderMails()));
+    $this->assertEquals(2, UpdateReminderUtility::getMessagesSent((int) $service->id()));
+
+    $this->setRemindedTimestampToValue((int) $service->id(), UpdateReminderUtility::LIMIT_3 + 1);
+
+    // Ensure outdated mails are not send as it's still blocked.
+    $this->cronRunHelper();
+    $this->assertEquals(2, count($this->getReminderMails()));
+    $this->assertEquals(0, count($this->getOutdatedMails()));
+    $this->assertEquals(2, UpdateReminderUtility::getMessagesSent((int) $service->id()));
+
+    // Ensure unblocking outdated mails does send mail and continues the
+    // process.
+    PreventMailUtility::blockServiceOutdated(FALSE);
     $this->cronRunHelper();
     $this->assertEquals(2, count($this->getReminderMails()));
     $this->assertEquals(1, count($this->getOutdatedMails()));

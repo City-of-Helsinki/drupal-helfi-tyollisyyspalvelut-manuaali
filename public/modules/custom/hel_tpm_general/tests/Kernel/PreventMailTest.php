@@ -76,7 +76,7 @@ final class PreventMailTest extends EntityKernelTestBase {
    * Tests sending mail with blocking mail setting.
    */
   public function testSendingMailWithPrevent() {
-    PreventMailUtility::set();
+    PreventMailUtility::block();
     $this->pluginManager
       ->createInstance('action_send_email_action', $this->configuration)
       ->execute();
@@ -87,7 +87,7 @@ final class PreventMailTest extends EntityKernelTestBase {
    * Tests sending mail with non-blocking mail setting.
    */
   public function testSendingMailWithNoPrevent() {
-    PreventMailUtility::set(FALSE);
+    PreventMailUtility::block(FALSE);
     $this->pluginManager
       ->createInstance('action_send_email_action', $this->configuration)
       ->execute();

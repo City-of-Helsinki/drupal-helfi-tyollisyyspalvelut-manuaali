@@ -3,6 +3,7 @@
 namespace Drupal\Tests\service_manual_workflow\Kernel;
 
 use Drupal\Core\Test\AssertMailTrait;
+use Drupal\hel_tpm_general\PreventMailUtility;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\Tests\service_manual_workflow\Traits\ServiceManualWorkflowTestTrait;
 
@@ -264,7 +265,83 @@ class ServiceStateChangedNotificationSubscriberTest extends GroupKernelTestBase 
     // Validate service publish notification is sent.
     $this->assertEquals('message_notify_content_has_been_published', $mails[1]['id']);
     $this->assertEquals($this->spUser->getEmail(), $mails[1]['to']);
+  }
 
+  /**
+   * Test notifications with blocking mail templates.
+   *
+   * @return void
+   *   -
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  public function testNotificationsWithBlockingMailTemplates() {
+    $content_plugin = 'group_node:service';
+    $spNode = $this->createNode([
+      'type' => 'service',
+      'uid' => $this->spUser->id(),
+      'moderation_state' => 'draft',
+    ]);
+    $spNode->set('field_responsible_updatee', $this->orgUser2);
+    $spNode->save();
+    $this->spGroup->addRelationship($spNode, $content_plugin);
+
+    // Ensure 'ready to publish' notification is not sent when blocking is
+    // enabled.
+    PreventMailUtility::blockReadyToPublishServices();
+    $spNode->set('moderation_state', 'ready_to_publish');
+    $spNode->save();
+    $this->assertEquals(0, count($this->getReadyToPublishMails()));
+
+    // Ensure 'ready to publish' notification is sent when blocking is disabled.
+    PreventMailUtility::blockReadyToPublishServices(FALSE);
+    $spNode->set('moderation_state', 'draft');
+    $spNode->save();
+    $this->assertEquals(0, count($this->getReadyToPublishMails()));
+    $spNode->set('moderation_state', 'ready_to_publish');
+    $spNode->save();
+    $this->assertEquals(1, count($this->getReadyToPublishMails()));
+
+    // Ensure 'content has been published' notification is not sent when
+    // blocking is enabled.
+    PreventMailUtility::blockPublishedServices();
+    $spNode->set('moderation_state', 'published');
+    $spNode->save();
+    $this->assertEquals(0, count($this->getContentHasBeenPublishedMails()));
+
+    // Ensure 'content has been published' notification is sent when blocking
+    // is disabled.
+    PreventMailUtility::blockPublishedServices(FALSE);
+    $spNode->set('moderation_state', 'ready_to_publish');
+    $spNode->save();
+    $this->assertEquals(0, count($this->getContentHasBeenPublishedMails()));
+    $spNode->set('moderation_state', 'published');
+    $spNode->save();
+    $this->assertEquals(0, count($this->getContentHasBeenPublishedMails()));
+  }
+
+  /**
+   * Gets an array containing all 'ready to publish' mails.
+   *
+   * @return array
+   *   An array containing captured email messages.
+   */
+  protected function getReadyToPublishMails(): array {
+    return $this->getMails([
+      'id' => 'message_notify_group_ready_to_publish_notificat',
+    ]);
+  }
+
+  /**
+   * Gets an array containing all 'content has been published' mails.
+   *
+   * @return array
+   *   An array containing captured email messages.
+   */
+  protected function getContentHasBeenPublishedMails(): array {
+    return $this->getMails([
+      'id' => 'message_notify_content_has_been_published',
+    ]);
   }
 
 }

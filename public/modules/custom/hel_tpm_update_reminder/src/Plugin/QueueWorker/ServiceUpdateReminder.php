@@ -10,6 +10,7 @@ use Drupal\Core\Logger\LoggerChannelTrait;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueWorkerBase;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\hel_tpm_general\PreventMailUtility;
 use Drupal\hel_tpm_update_reminder\UpdateReminderUtility;
 use Drupal\message\Entity\Message;
 use Drupal\message_notify\MessageNotifier;
@@ -176,6 +177,11 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
    * @throws \Drupal\message_notify\Exception\MessageNotifyException
    */
   protected function remind(int $messageNumber): bool {
+    // Do not proceed if sending reminder mail is blocked by settings.
+    if (PreventMailUtility::isUpdateReminderBlocked()) {
+      return FALSE;
+    }
+
     $storage = $this->entityTypeManager->getStorage('node');
     /** @var \Drupal\node\NodeInterface $service */
     if (empty($service = $storage->load($this->serviceId))) {
@@ -215,6 +221,11 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
    * @throws \Drupal\message_notify\Exception\MessageNotifyException
    */
   protected function outdate(): bool {
+    // Do not proceed if sending outdated mail is blocked by settings.
+    if (PreventMailUtility::isUpdateReminderOutdatedBlocked()) {
+      return FALSE;
+    }
+
     /** @var \Drupal\Core\Entity\RevisionableStorageInterface $storage */
     $storage = $this->entityTypeManager->getStorage('node');
     /** @var \Drupal\node\NodeInterface $service */
