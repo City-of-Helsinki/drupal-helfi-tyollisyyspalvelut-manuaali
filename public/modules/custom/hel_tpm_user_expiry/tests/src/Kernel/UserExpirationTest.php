@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\hel_tpm_user_expiry\Kernel;
 
 use Drupal\Core\Database\Database;
+use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Test\AssertMailTrait;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
@@ -379,6 +380,46 @@ final class UserExpirationTest extends GroupKernelTestBase {
     }
     // Ensure the blocked user is still blocked.
     $this->assertEquals('0', $blockedUser->get('status')->value);
+  }
+
+  /**
+   * Tests the anonymization of a blocked user.
+   *
+   * This method verifies that after running the cron,
+   * a blocked user's specified fields are anonymized
+   * and no longer match the original values.
+   *
+   * @return void
+   *   No return value.
+   */
+  public function testBlockedUserAnonymization() {
+    $date = new DrupalDateTime('now -1 months');
+    $blockedUser = $this->createLastAccessUser(2, '-250 days', 1);
+    $originalValues = $this->getFieldsForAnonymizationTest($blockedUser);
+    $blockedUser->set('status', 0);
+    $blockedUser->setChangedTime($date->getTimestamp());
+    $blockedUser->save();
+
+    $date = new DrupalDateTime('now -2 weeks');
+    $blockedUser1 = $this->createLastAccessUser(3, '-220 days', 1);
+    $originalValues1 = $this->getFieldsForAnonymizationTest($blockedUser1);
+
+    $blockedUser1->set('status', 0);
+    $blockedUser1->setChangedTime($date->getTimestamp());
+    $blockedUser1->save();
+
+    $this->cron->run();
+
+    $blockedUser = $this->reloadEntity($blockedUser);
+    $blockedUser1 = $this->reloadEntity($blockedUser1);
+
+    foreach ($originalValues as $key => $oldValue) {
+      $this->assertNotEquals($oldValue, $blockedUser->get($key)->value);
+    }
+
+    foreach ($originalValues1 as $key => $oldValue) {
+      $this->assertEquals($oldValue, $blockedUser1->get($key)->value);
+    }
   }
 
   /**
