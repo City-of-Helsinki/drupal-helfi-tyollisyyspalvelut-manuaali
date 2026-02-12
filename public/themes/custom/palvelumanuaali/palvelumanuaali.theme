@@ -685,6 +685,7 @@ function palvelumanuaali_preprocess_paragraph__quick_link__default(&$variables, 
   if (!empty($content['field_short_description']['#items'])) {
     $description = $content['field_short_description']['#items']->getValue()[0]['value'];
   }
+  $variables['quick_link']['external'] = $link['#url']->isExternal();
   $variables['quick_link']['attributes'] = [
     'title' => $title,
     'description' => $description,
