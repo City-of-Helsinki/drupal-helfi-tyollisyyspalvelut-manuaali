@@ -3,7 +3,7 @@
 namespace Drupal\Tests\service_manual_workflow\Kernel;
 
 use Drupal\Core\Test\AssertMailTrait;
-use Drupal\hel_tpm_general\PreventMailUtility;
+use Drupal\hel_tpm_mail_tools\Utility\PreventMailUtility;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\Tests\service_manual_workflow\Traits\ServiceManualWorkflowTestTrait;
 
@@ -28,6 +28,7 @@ class ServiceStateChangedNotificationSubscriberTest extends GroupKernelTestBase 
     'gnode',
     'workflows',
     'hel_tpm_group',
+    'hel_tpm_mail_tools',
     'node',
     'field_permissions',
     'flexible_permissions',

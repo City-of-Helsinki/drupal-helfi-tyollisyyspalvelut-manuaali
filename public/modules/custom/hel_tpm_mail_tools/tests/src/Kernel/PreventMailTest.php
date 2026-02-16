@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Drupal\Tests\hel_tpm_general\Kernel;
+namespace Drupal\Tests\hel_tpm_mail_tools\Kernel;
 
 use Drupal\Core\Test\AssertMailTrait;
 use Drupal\KernelTests\Core\Entity\EntityKernelTestBase;
 use Drupal\Tests\user\Traits\UserCreationTrait;
-use Drupal\hel_tpm_general\PreventMailUtility;
+use Drupal\hel_tpm_mail_tools\Utility\PreventMailUtility;
 
 /**
  * Tests preventing sending mails.
  *
- * @group hel_tpm_general
+ * @group hel_tpm_mail_tools
  */
 final class PreventMailTest extends EntityKernelTestBase {
 
@@ -26,10 +26,9 @@ final class PreventMailTest extends EntityKernelTestBase {
   protected static $modules = [
     'system',
     'user',
-    'flexible_permissions',
-    'group',
-    'hel_tpm_general',
-    'purge',
+    'message',
+    'message_notify',
+    'hel_tpm_mail_tools',
   ];
 
   /**

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Drupal\hel_tpm_general;
+namespace Drupal\hel_tpm_mail_tools\Utility;
 
 /**
  * Helper functions used to temporarily prevent sending mail.
@@ -12,42 +12,42 @@ class PreventMailUtility {
   /**
    * State API block mail key for all mails.
    */
-  private const ALL_MAIL_KEY = 'hel_tpm_general.block_mail';
+  private const ALL_MAIL_KEY = 'hel_tpm_mail_tools.block_mail';
 
   /**
    * State API block mail key for ready to publish services.
    */
-  private const READY_TO_PUBLISH_SERVICES_KEY = 'hel_tpm_general.block_mail.ready_to_publish_services';
+  private const READY_TO_PUBLISH_SERVICES_KEY = 'hel_tpm_mail_tools.block_mail.ready_to_publish_services';
 
   /**
    * State API block mail key for ready to publish services.
    */
-  private const PUBLISHED_SERVICES_KEY = 'hel_tpm_general.block_mail.published_services';
+  private const PUBLISHED_SERVICES_KEY = 'hel_tpm_mail_tools.block_mail.published_services';
 
   /**
    * State API block mail key for update reminders for services.
    */
-  private const UPDATE_REMINDER_SERVICES_KEY = 'hel_tpm_general.block_mail.update_reminder_services';
+  private const UPDATE_REMINDER_SERVICES_KEY = 'hel_tpm_mail_tools.block_mail.update_reminder_services';
 
   /**
    * State API block mail key for update reminders for outdated services.
    */
-  private const UPDATE_REMINDER_OUTDATED_SERVICES_KEY = 'hel_tpm_general.block_mail.update_reminder_outdated';
+  private const UPDATE_REMINDER_OUTDATED_SERVICES_KEY = 'hel_tpm_mail_tools.block_mail.update_reminder_outdated';
 
   /**
    * State API block mail key for services missing updaters.
    */
-  private const SERVICES_MISSING_UPDATERS_KEY = 'hel_tpm_general.block_mail.services_missing_updaters';
+  private const SERVICES_MISSING_UPDATERS_KEY = 'hel_tpm_mail_tools.block_mail.services_missing_updaters';
 
   /**
    * State API block mail key for user expiration.
    */
-  private const USER_EXPIRATION_KEY = 'hel_tpm_general.block_mail.user_expiration';
+  private const USER_EXPIRATION_KEY = 'hel_tpm_mail_tools.block_mail.user_expiration';
 
   /**
    * State API block mail key for deactivating former group member account.
    */
-  private const GROUP_ACCOUNT_BLOCKED_KEY = 'hel_tpm_general.block_mail.group_account_blocked';
+  private const GROUP_ACCOUNT_BLOCKED_KEY = 'hel_tpm_mail_tools.block_mail.group_account_blocked';
 
   /**
    * Get the block mail state for all compatible mails.

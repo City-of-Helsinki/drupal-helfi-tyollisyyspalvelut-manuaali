@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * @file
+ * Module file for hel_tpm_mail_tools.
+ */
+
+use Drupal\hel_tpm_mail_tools\Utility\PreventMailUtility;
+
+/**
+ * Implements hook_entity_type_alter().
+ */
+function hel_tpm_mail_tools_entity_type_alter(array &$entity_types): void {
+  if (isset($entity_types['message'])) {
+    $entity_types['message']->addConstraint('PreventMessageConstraint', []);
+  }
+}
+
+/**
+ * Implements hook_mail_alter().
+ */
+function hel_tpm_mail_tools_mail_alter(&$message): void {
+  if (PreventMailUtility::isBlocked()) {
+    $message['send'] = FALSE;
+  }
+}

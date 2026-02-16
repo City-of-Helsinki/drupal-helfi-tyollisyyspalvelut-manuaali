@@ -7,7 +7,7 @@ namespace Drupal\Tests\hel_tpm_user_expiry\Kernel;
 use Drupal\Core\Database\Database;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Test\AssertMailTrait;
-use Drupal\hel_tpm_general\PreventMailUtility;
+use Drupal\hel_tpm_mail_tools\Utility\PreventMailUtility;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\Tests\user\Traits\UserCreationTrait;
 use Drupal\hel_tpm_user_expiry\SettingsUtility;
@@ -32,6 +32,7 @@ final class UserExpirationTest extends GroupKernelTestBase {
   protected static $modules = [
     'hel_tpm_user_expiry',
     'hel_tpm_user_expiry_messages_test',
+    'hel_tpm_mail_tools',
     'message',
     'message_notify',
     'message_notify_test',

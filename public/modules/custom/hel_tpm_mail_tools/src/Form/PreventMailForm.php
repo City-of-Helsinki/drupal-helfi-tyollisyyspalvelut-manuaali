@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Drupal\hel_tpm_general\Form;
+namespace Drupal\hel_tpm_mail_tools\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\hel_tpm_general\PreventMailUtility;
+use Drupal\hel_tpm_mail_tools\Utility\PreventMailUtility;
 
 /**
  * Manage block mail settings.
@@ -17,7 +17,7 @@ class PreventMailForm extends FormBase {
    * {@inheritdoc}
    */
   public function getFormId(): string {
-    return 'hel_tpm_general_block_mail_form';
+    return 'hel_tpm_mail_tools_block_mail_form';
   }
 
   /**

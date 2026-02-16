@@ -25,6 +25,7 @@ class ServiceArchivalQueueTest extends GroupKernelTestBase {
     'hel_tpm_group',
     'field',
     'gnode',
+    'hel_tpm_mail_tools',
     'service_manual_workflow',
     'content_moderation',
     'content_translation',

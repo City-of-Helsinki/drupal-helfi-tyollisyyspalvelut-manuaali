@@ -14,7 +14,7 @@ use Drupal\language\Entity\ConfigurableLanguage;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
 use Drupal\Tests\user\Traits\UserCreationTrait;
-use Drupal\hel_tpm_general\PreventMailUtility;
+use Drupal\hel_tpm_mail_tools\Utility\PreventMailUtility;
 use Drupal\hel_tpm_update_reminder\UpdateReminderUtility;
 use Drupal\node\Entity\Node;
 
@@ -50,6 +50,7 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
     'hel_tpm_update_reminder',
     'hel_tpm_update_reminder_test',
     'hel_tpm_general',
+    'hel_tpm_mail_tools',
     'purge',
     'dblog',
     'system',

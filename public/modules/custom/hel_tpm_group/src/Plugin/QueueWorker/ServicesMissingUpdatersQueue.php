@@ -9,11 +9,8 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueWorkerBase;
 use Drupal\group\Entity\GroupInterface;
 use Drupal\group\Entity\GroupMembership;
-use Drupal\hel_tpm_general\PreventMailUtility;
+use Drupal\hel_tpm_mail_tools\Utility\MessageSender;
 use Drupal\hel_tpm_group\ServicesMissingUpdaters;
-use Drupal\message\Entity\Message;
-use Drupal\message_notify\MessageNotifier;
-use Drupal\user\UserInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -50,7 +47,7 @@ final class ServicesMissingUpdatersQueue extends QueueWorkerBase implements Cont
     $plugin_definition,
     private readonly EntityTypeManagerInterface $entityTypeManager,
     private readonly ServicesMissingUpdaters $servicesMissingUpdaters,
-    private readonly MessageNotifier $messageNotifier,
+    private readonly MessageSender $messageSender,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
   }
@@ -65,7 +62,7 @@ final class ServicesMissingUpdatersQueue extends QueueWorkerBase implements Cont
       $plugin_definition,
       $container->get('entity_type.manager'),
       $container->get('hel_tpm_group.services_missing_updaters'),
-      $container->get('message_notify.sender')
+      $container->get('hel_tpm_mail_tools.utility.message_sender')
     );
   }
 
@@ -101,13 +98,9 @@ final class ServicesMissingUpdatersQueue extends QueueWorkerBase implements Cont
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    * @throws \Drupal\Core\Entity\EntityStorageException
+   * @throws \Drupal\message_notify\Exception\MessageNotifyException
    */
   private function notifyGroupAdmins($group_id) {
-    // Do not proceed if sending missing updaters mail is blocked by settings.
-    if (PreventMailUtility::isServiceMissingUpdatersBlocked()) {
-      return;
-    }
-
     $entity_type_manager = $this->entityTypeManager->getStorage('group');
     $group = $entity_type_manager->load($group_id);
     if (!$users = $this->getUsersToNotify($group)) {
@@ -115,31 +108,10 @@ final class ServicesMissingUpdatersQueue extends QueueWorkerBase implements Cont
     }
 
     foreach ($users as $user) {
-      $this->sendNotification($user, $group);
+      $this->messageSender->createAndSend(self::$messageTemplate, $user, [
+        'field_group' => $group,
+      ]);
     }
-  }
-
-  /**
-   * Send notification method.
-   *
-   * @param \Drupal\user\UserInterface $user
-   *   User object.
-   * @param \Drupal\group\Entity\GroupInterface $group
-   *   Group object.
-   *
-   * @return void
-   *   -
-   *
-   * @throws \Drupal\Core\Entity\EntityStorageException
-   */
-  protected function sendNotification(UserInterface $user, GroupInterface $group) {
-    $message = Message::create([
-      'template' => self::$messageTemplate,
-      'uid' => $user->id(),
-    ]);
-    $message->set('field_group', $group);
-    $message->save();
-    $this->messageNotifier->send($message);
   }
 
   /**
