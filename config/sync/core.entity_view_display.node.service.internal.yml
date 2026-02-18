@@ -65,7 +65,7 @@ dependencies:
     - entity_reference_revisions
     - entitygroupfield
     - field_group
-    - file
+    - file_download_link
     - hel_tpm_general
     - options
     - text
@@ -202,9 +202,9 @@ third_party_settings:
         - field_service_suits_job_search
         - field_service_suits_info
       label: ' Täydentävät työnhakukeskustelut'
-      parent_name: group_content_right
-      region: content
-      weight: 7
+      parent_name: ''
+      region: hidden
+      weight: 6
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--complementary-job-search text-normal group-border d--flex--dsk column-gap-two flex-wrap--dsk'
@@ -283,7 +283,6 @@ third_party_settings:
       children:
         - group_guidance_to_server
         - group_municipal_guidance
-        - group_complementary_job_search
         - group_service_obligatoryness
         - group_statements_unemploym
         - group_career_marking
@@ -405,10 +404,15 @@ content:
     weight: 17
     region: content
   field_internal_files:
-    type: file_default
+    type: file_download_link
     label: above
     settings:
-      use_description_as_link_text: true
+      link_text: ''
+      link_title: ''
+      new_tab: true
+      force_download: false
+      custom_classes: ''
+      aria_label: 'Avaa [file:name] uudessa välilehdessä'
     third_party_settings: {  }
     weight: 18
     region: content
@@ -498,20 +502,6 @@ content:
     third_party_settings: {  }
     weight: 18
     region: content
-  field_service_suits_info:
-    type: text_default
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    weight: 84
-    region: content
-  field_service_suits_job_search:
-    type: list_key
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    weight: 83
-    region: content
   field_statements:
     type: list_key
     label: hidden
@@ -592,6 +582,8 @@ hidden:
   field_service_radioactivity: true
   field_service_requirements: true
   field_service_set: true
+  field_service_suits_info: true
+  field_service_suits_job_search: true
   field_service_time_and_location: true
   field_tags: true
   field_target_group: true
