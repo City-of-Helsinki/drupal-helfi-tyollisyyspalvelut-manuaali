@@ -110,8 +110,10 @@
       function scrollTop() {
         // I have no idea why this needs this to work but it does
         $(this).scrollTop();
-        // Scroll window to top.
-        window.scroll(0, 0);
+        const pageTitle = document.getElementsByClassName("h1--page-title");
+        const scrollElement = pageTitle[0];
+        scrollElement.scrollIntoView();
+
       }
 
       /**

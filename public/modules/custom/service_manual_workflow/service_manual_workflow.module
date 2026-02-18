@@ -58,16 +58,7 @@ function _service_manual_workflow_queue_services_for_archival($time_limit = "-2 
     return;
   }
 
-  $storage = \Drupal::service('entity_type.manager')->getStorage('node');
-  $date = new DrupalDateTime($time_limit);
-
-  $nids = $storage->getQuery()
-    ->condition('changed', $date->format('U'), '<')
-    ->condition('default_langcode', 1)
-    ->accessCheck(FALSE)
-    ->latestRevision()
-    ->addTag('outdated_services')
-    ->execute();
+  $nids = _service_manual_workflow_get_outdated_services($time_limit);
 
   if (empty($nids)) {
     return;
@@ -85,10 +76,32 @@ function _service_manual_workflow_queue_services_for_archival($time_limit = "-2 
 }
 
 /**
+ * Retrieves a list of outdated service nodes based on the given time limit.
+ *
+ * @param string $time_limit
+ *   A date and time string indicating the threshold for outdated services.
+ *   Nodes updated before this time will be considered outdated.
+ *
+ * @return array
+ *   An array of node IDs that represent the outdated services.
+ */
+function _service_manual_workflow_get_outdated_services($time_limit) {
+  $storage = \Drupal::service('entity_type.manager')->getStorage('node');
+  $date = new DrupalDateTime($time_limit);
+  return $storage->getQuery()
+    ->condition('changed', $date->format('U'), '<')
+    ->condition('default_langcode', 1)
+    ->accessCheck(FALSE)
+    ->latestRevision()
+    ->addTag('outdated_services')
+    ->execute();
+}
+
+/**
  * Implements hook_query_TAG_alter().
  */
 function service_manual_workflow_query_outdated_services_alter(AlterableInterface $query) {
-  $query->addJoin('LEFT', 'content_moderation_state_field_data', 'md', 'md.content_entity_revision_id = base_table.vid');
+  $query->addJoin('LEFT', 'content_moderation_state_field_data', 'md', 'md.content_entity_revision_id = base_table.vid AND md.langcode = base_table.langcode');
   $query->condition('md.moderation_state', 'outdated', '=');
 }
 
