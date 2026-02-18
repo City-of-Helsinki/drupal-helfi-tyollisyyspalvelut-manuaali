@@ -1085,6 +1085,14 @@ function hel_tpm_general_update_20124(&$sandbox) {
 }
 
 /**
+ * Enable hel_tpm_mail_tools module.
+ */
+function hel_tpm_general_update_20125() {
+  $installer = \Drupal::service('module_installer');
+  $installer->install(['hel_tpm_mail_tools']);
+}
+
+/**
  * Inserts a row into the specified field's database tables.
  *
  * This function inserts values for a given field into the appropriate database
