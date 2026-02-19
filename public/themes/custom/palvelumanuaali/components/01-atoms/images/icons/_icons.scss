@@ -196,3 +196,10 @@
   height: 40px;
   padding: 8px;
 }
+a {
+  &:hover {
+    .icon--link-list-bg {
+      background-color: clr(alt-header-color);
+    }
+  }
+}
