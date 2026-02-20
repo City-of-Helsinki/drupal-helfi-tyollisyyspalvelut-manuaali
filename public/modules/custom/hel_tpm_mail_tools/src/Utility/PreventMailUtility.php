@@ -5,49 +5,54 @@ declare(strict_types=1);
 namespace Drupal\hel_tpm_mail_tools\Utility;
 
 /**
- * Helper functions used to temporarily prevent sending mail.
+ * Helper functions to temporarily prevent sending mail and creating messages.
  */
 class PreventMailUtility {
 
   /**
-   * State API block mail key for all mails.
+   * Block mail State API key.
    */
-  private const ALL_MAIL_KEY = 'hel_tpm_mail_tools.block_mail';
+  private const BLOCK_MAIL_KEY = 'hel_tpm_mail_tools.block_mail';
 
   /**
-   * State API block mail key for ready to publish services.
+   * Block message key prefix for State API.
    */
-  private const READY_TO_PUBLISH_SERVICES_KEY = 'hel_tpm_mail_tools.block_mail.ready_to_publish_services';
+  private const BLOCK_MESSAGE_PREFIX = 'hel_tpm_mail_tools.block_message.';
 
   /**
-   * State API block mail key for ready to publish services.
+   * Block message flag for ready to publish services.
    */
-  private const PUBLISHED_SERVICES_KEY = 'hel_tpm_mail_tools.block_mail.published_services';
+  public const SERVICES_READY_TO_PUBLISH = 'services_ready_to_publish';
 
   /**
-   * State API block mail key for update reminders for services.
+   * Block message flag for published services.
    */
-  private const UPDATE_REMINDER_SERVICES_KEY = 'hel_tpm_mail_tools.block_mail.update_reminder_services';
+  public const SERVICES_PUBLISHED = 'services_published';
 
   /**
-   * State API block mail key for update reminders for outdated services.
+   * Block message flag for update reminders for services.
    */
-  private const UPDATE_REMINDER_OUTDATED_SERVICES_KEY = 'hel_tpm_mail_tools.block_mail.update_reminder_outdated';
+  public const SERVICES_UPDATE_REMINDER = 'services_update_reminder';
 
   /**
-   * State API block mail key for services missing updaters.
+   * Block message flag for update reminders for outdated services.
    */
-  private const SERVICES_MISSING_UPDATERS_KEY = 'hel_tpm_mail_tools.block_mail.services_missing_updaters';
+  public const SERVICES_OUTDATED_REMINDER = 'services_outdated_reminder';
 
   /**
-   * State API block mail key for user expiration.
+   * Block message flag for services missing updaters.
    */
-  private const USER_EXPIRATION_KEY = 'hel_tpm_mail_tools.block_mail.user_expiration';
+  public const SERVICES_MISSING_UPDATERS = 'services_missing_updaters';
 
   /**
-   * State API block mail key for deactivating former group member account.
+   * Block message flag for user expiration.
    */
-  private const GROUP_ACCOUNT_BLOCKED_KEY = 'hel_tpm_mail_tools.block_mail.group_account_blocked';
+  public const USER_EXPIRATION = 'user_expiration';
+
+  /**
+   * Block message flag for deactivating former group member account.
+   */
+  public const GROUP_ACCOUNT_BLOCKED = 'group_account_blocked';
 
   /**
    * Get the block mail state for all compatible mails.
@@ -55,99 +60,8 @@ class PreventMailUtility {
    * @return bool
    *   TRUE if sending mail is be blocked, FALSE otherwise.
    */
-  public static function isBlocked(): bool {
-    if (\Drupal::state()->get(self::ALL_MAIL_KEY) === TRUE) {
-      return TRUE;
-    }
-    return FALSE;
-  }
-
-  /**
-   * Get the block mail state for ready to publish services.
-   *
-   * @return bool
-   *   TRUE if sending mail is be blocked, FALSE otherwise.
-   */
-  public static function isReadyToPublishServicesBlocked(): bool {
-    if (\Drupal::state()->get(self::READY_TO_PUBLISH_SERVICES_KEY) === TRUE) {
-      return TRUE;
-    }
-    return FALSE;
-  }
-
-  /**
-   * Get the block mail state for published services.
-   *
-   * @return bool
-   *   TRUE if sending mail is be blocked, FALSE otherwise.
-   */
-  public static function isPublishedServicesBlocked(): bool {
-    if (\Drupal::state()->get(self::PUBLISHED_SERVICES_KEY) === TRUE) {
-      return TRUE;
-    }
-    return FALSE;
-  }
-
-  /**
-   * Get the block mail state for service update reminder.
-   *
-   * @return bool
-   *   TRUE if sending mail is be blocked, FALSE otherwise.
-   */
-  public static function isUpdateReminderBlocked(): bool {
-    if (\Drupal::state()->get(self::UPDATE_REMINDER_SERVICES_KEY) === TRUE) {
-      return TRUE;
-    }
-    return FALSE;
-  }
-
-  /**
-   * Get the block mail state for outdated services.
-   *
-   * @return bool
-   *   TRUE if sending mail is be blocked, FALSE otherwise.
-   */
-  public static function isUpdateReminderOutdatedBlocked(): bool {
-    if (\Drupal::state()->get(self::UPDATE_REMINDER_OUTDATED_SERVICES_KEY) === TRUE) {
-      return TRUE;
-    }
-    return FALSE;
-  }
-
-  /**
-   * Get the block mail state for services missing updaters.
-   *
-   * @return bool
-   *   TRUE if sending mail is be blocked, FALSE otherwise.
-   */
-  public static function isServiceMissingUpdatersBlocked(): bool {
-    if (\Drupal::state()->get(self::SERVICES_MISSING_UPDATERS_KEY) === TRUE) {
-      return TRUE;
-    }
-    return FALSE;
-  }
-
-  /**
-   * Get the block mail state for user expiration.
-   *
-   * @return bool
-   *   TRUE if sending mail is be blocked, FALSE otherwise.
-   */
-  public static function isUserExpirationBlocked(): bool {
-    if (\Drupal::state()->get(self::USER_EXPIRATION_KEY) === TRUE) {
-      return TRUE;
-    }
-    return FALSE;
-  }
-
-  /**
-   * Get the block mail state for deactivating group membership account.
-   *
-   * @return bool
-   *   TRUE if sending mail is be blocked, FALSE otherwise.
-   */
-  public static function isDeactivatedGroupAccountBlocked(): bool {
-    if (\Drupal::state()->get(self::GROUP_ACCOUNT_BLOCKED_KEY) === TRUE) {
+  public static function isMailBlocked(): bool {
+    if (\Drupal::state()->get(self::BLOCK_MAIL_KEY) === TRUE) {
       return TRUE;
     }
     return FALSE;
@@ -162,99 +76,132 @@ class PreventMailUtility {
    * @return void
    *   Void.
    */
-  public static function block(bool $block = TRUE): void {
-    \Drupal::state()->set(self::ALL_MAIL_KEY, $block);
+  public static function blockMail(bool $block = TRUE): void {
+    \Drupal::state()->set(self::BLOCK_MAIL_KEY, $block);
   }
 
   /**
-   * Set the block mail state for ready to publish services.
+   * Get message templates for all message flags.
    *
+   * @return array
+   *   Message flags as keys, array of message templates as values.
+   */
+  public static function getAllTemplates(): array {
+    return [
+      self::SERVICES_READY_TO_PUBLISH => [
+        'group_ready_to_publish_notificat',
+      ],
+      self::SERVICES_PUBLISHED => [
+        'content_has_been_published',
+      ],
+      self::SERVICES_UPDATE_REMINDER => [
+        'hel_tpm_update_reminder_service',
+        'hel_tpm_update_reminder_service2',
+      ],
+      self::SERVICES_OUTDATED_REMINDER => [
+        'hel_tpm_update_reminder_outdated',
+      ],
+      self::SERVICES_MISSING_UPDATERS => [
+        'services_missing_updaters',
+      ],
+      self::USER_EXPIRATION => [
+        '1st_user_account_expiry_reminder',
+        '2nd_user_account_expiry_reminder',
+        'hel_tpm_user_expiry_blocked',
+      ],
+      self::GROUP_ACCOUNT_BLOCKED => [
+        'hel_tpm_group_account_blocked',
+      ],
+    ];
+  }
+
+  /**
+   * Get message templates for given flag.
+   *
+   * @param string $flag
+   *   Message flag.
+   *
+   * @return array|null
+   *   Message template IDs, NULL if flag is not supported.
+   */
+  public static function getTemplates(string $flag): ?array {
+    $templates = self::getAllTemplates();
+    if (!isset($templates[$flag])) {
+      return NULL;
+    }
+    return $templates[$flag];
+  }
+
+  /**
+   * Get flag for given message template.
+   *
+   * @param string $template
+   *   Message template ID.
+   *
+   * @return string|int|null
+   *   First message flag matching the template, NULL if nothing matches.
+   */
+  public static function getFlag(string $template): string|int|null {
+    foreach (self::getAllTemplates() as $flag => $templates) {
+      if (in_array($template, $templates, TRUE)) {
+        return $flag;
+      }
+    }
+    return NULL;
+  }
+
+  /**
+   * Get the block message state for given message flag.
+   *
+   * @param string $flag
+   *   Message flag.
+   *
+   * @return bool|null
+   *   TRUE if sending mail is be blocked, FALSE if not, NULL if flag is not
+   *   supported.
+   */
+  public static function isMessageBlocked(string $flag): ?bool {
+    if (!self::getTemplates($flag)) {
+      return NULL;
+    }
+
+    if (\Drupal::state()->get(self::BLOCK_MESSAGE_PREFIX . $flag) === TRUE) {
+      return TRUE;
+    }
+    return FALSE;
+  }
+
+  /**
+   * Get block message state for given message template.
+   *
+   * @param string $template
+   *   Message template ID.
+   *
+   * @return bool|null
+   *   TRUE if sending message is blocked, FALSE if not, NULL if template is
+   *   not supported.
+   */
+  public static function isTemplateBlocked(string $template): ?bool {
+    return self::isMessageBlocked(self::getFlag($template));
+  }
+
+  /**
+   * Set block message state for given message flag.
+   *
+   * @param string $flag
+   *   Message flag.
    * @param bool $block
-   *   TRUE if sending mail should be blocked, FALSE otherwise.
+   *   TRUE if sending messages should be blocked, FALSE otherwise.
    *
    * @return void
    *   Void.
    */
-  public static function blockReadyToPublishServices(bool $block = TRUE): void {
-    \Drupal::state()->set(self::READY_TO_PUBLISH_SERVICES_KEY, $block);
-  }
+  public static function blockMessage(string $flag, bool $block = TRUE): void {
+    if (!self::getTemplates($flag)) {
+      return;
+    }
 
-  /**
-   * Set the block mail state for published services.
-   *
-   * @param bool $block
-   *   TRUE if sending mail should be blocked, FALSE otherwise.
-   *
-   * @return void
-   *   Void.
-   */
-  public static function blockPublishedServices(bool $block = TRUE): void {
-    \Drupal::state()->set(self::PUBLISHED_SERVICES_KEY, $block);
-  }
-
-  /**
-   * Set the block mail state for service update reminders.
-   *
-   * @param bool $block
-   *   TRUE if sending mail should be blocked, FALSE otherwise.
-   *
-   * @return void
-   *   Void.
-   */
-  public static function blockUpdateReminder(bool $block = TRUE): void {
-    \Drupal::state()->set(self::UPDATE_REMINDER_SERVICES_KEY, $block);
-  }
-
-  /**
-   * Set the block mail state for outdated services.
-   *
-   * @param bool $block
-   *   TRUE if sending mail should be blocked, FALSE otherwise.
-   *
-   * @return void
-   *   Void.
-   */
-  public static function blockServiceOutdated(bool $block = TRUE): void {
-    \Drupal::state()->set(self::UPDATE_REMINDER_OUTDATED_SERVICES_KEY, $block);
-  }
-
-  /**
-   * Set the block mail state for services missing updaters.
-   *
-   * @param bool $block
-   *   TRUE if sending mail should be blocked, FALSE otherwise.
-   *
-   * @return void
-   *   Void.
-   */
-  public static function blockServiceMissingUpdaters(bool $block = TRUE): void {
-    \Drupal::state()->set(self::SERVICES_MISSING_UPDATERS_KEY, $block);
-  }
-
-  /**
-   * Set the block mail state for user expiration.
-   *
-   * @param bool $block
-   *   TRUE if sending mail should be blocked, FALSE otherwise.
-   *
-   * @return void
-   *   Void.
-   */
-  public static function blockUserExpiration(bool $block = TRUE): void {
-    \Drupal::state()->set(self::USER_EXPIRATION_KEY, $block);
-  }
-
-  /**
-   * Set the block mail state for deactivating group membership account.
-   *
-   * @param bool $block
-   *   TRUE if sending mail should be blocked, FALSE otherwise.
-   *
-   * @return void
-   *   Void.
-   */
-  public static function blockDeactivatedGroupAccount(bool $block = TRUE): void {
-    \Drupal::state()->set(self::GROUP_ACCOUNT_BLOCKED_KEY, $block);
+    \Drupal::state()->set(self::BLOCK_MESSAGE_PREFIX . $flag, $block);
   }
 
 }

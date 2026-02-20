@@ -289,13 +289,13 @@ class ServiceStateChangedNotificationSubscriberTest extends GroupKernelTestBase 
 
     // Ensure 'ready to publish' notification is not sent when blocking is
     // enabled.
-    PreventMailUtility::blockReadyToPublishServices();
+    PreventMailUtility::blockMessage(PreventMailUtility::SERVICES_READY_TO_PUBLISH);
     $spNode->set('moderation_state', 'ready_to_publish');
     $spNode->save();
     $this->assertEquals(0, count($this->getReadyToPublishMails()));
 
     // Ensure 'ready to publish' notification is sent when blocking is disabled.
-    PreventMailUtility::blockReadyToPublishServices(FALSE);
+    PreventMailUtility::blockMessage(PreventMailUtility::SERVICES_READY_TO_PUBLISH, FALSE);
     $spNode->set('moderation_state', 'draft');
     $spNode->save();
     $this->assertEquals(0, count($this->getReadyToPublishMails()));
@@ -305,14 +305,14 @@ class ServiceStateChangedNotificationSubscriberTest extends GroupKernelTestBase 
 
     // Ensure 'content has been published' notification is not sent when
     // blocking is enabled.
-    PreventMailUtility::blockPublishedServices();
+    PreventMailUtility::blockMessage(PreventMailUtility::SERVICES_PUBLISHED);
     $spNode->set('moderation_state', 'published');
     $spNode->save();
     $this->assertEquals(0, count($this->getContentHasBeenPublishedMails()));
 
     // Ensure 'content has been published' notification is sent when blocking
     // is disabled.
-    PreventMailUtility::blockPublishedServices(FALSE);
+    PreventMailUtility::blockMessage(PreventMailUtility::SERVICES_PUBLISHED, FALSE);
     $spNode->set('moderation_state', 'ready_to_publish');
     $spNode->save();
     $this->assertEquals(0, count($this->getContentHasBeenPublishedMails()));

@@ -284,7 +284,7 @@ final class UserExpirationTest extends GroupKernelTestBase {
     $this->assertCount(0, $this->drupalGetMails());
 
     // Ensure the cron run consumes the queued task but mail is not sent.
-    PreventMailUtility::blockUserExpiration();
+    PreventMailUtility::blockMessage(PreventMailUtility::USER_EXPIRATION);
     $this->cron->run();
     $this->assertEquals(0, $this->queue->numberOfItems());
     $this->assertCount(0, $this->drupalGetMails());
@@ -296,7 +296,7 @@ final class UserExpirationTest extends GroupKernelTestBase {
     $this->assertCount(0, $this->drupalGetMails());
 
     // Disabling blocking enables sending the mail.
-    PreventMailUtility::blockUserExpiration(FALSE);
+    PreventMailUtility::blockMessage(PreventMailUtility::USER_EXPIRATION, FALSE);
     $this->resetCronLastRun();
     $this->cron->run();
     $this->assertEquals(0, $this->queue->numberOfItems());

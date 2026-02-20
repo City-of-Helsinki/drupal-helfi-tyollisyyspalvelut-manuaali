@@ -13,6 +13,8 @@ use Drupal\hel_tpm_mail_tools\Utility\PreventMailUtility;
  */
 class PreventMailForm extends FormBase {
 
+  private const MESSAGE_OPTION_PREFIX = 'message_';
+
   /**
    * {@inheritdoc}
    */
@@ -26,7 +28,7 @@ class PreventMailForm extends FormBase {
   public function buildForm(array $form, FormStateInterface $form_state): array {
     $form['description'] = [
       '#type' => 'markup',
-      '#markup' => $this->t("Use these settings to temporarily prevent sending automatic emails. Importing configurations during deployment does not affect these settings.") .
+      '#markup' => $this->t('Use these settings to temporarily prevent sending automatic emails. Importing configurations during deployment does not affect these settings.') .
       '<p><strong>' . $this->t('Normally these options should not be checked.') . '</strong></p>',
       '#prefix' => '<div class="description">',
       '#suffix' => '</div>',
@@ -35,8 +37,8 @@ class PreventMailForm extends FormBase {
     $form['all_mails'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Block sending mail'),
-      '#default_value' => PreventMailUtility::isBlocked(),
-      '#description' => $this->t("Prevents sending all emails that can be altered using the hook_mail_alter() hook."),
+      '#default_value' => PreventMailUtility::isMailBlocked(),
+      '#description' => $this->t('Prevents sending all emails that can be altered using the hook_mail_alter() hook.'),
     ];
 
     $form['message_templates'] = [
@@ -44,79 +46,60 @@ class PreventMailForm extends FormBase {
       '#title' => $this->t('Block mails by message templates'),
     ];
 
-    $form['message_templates']['ready_to_publish'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Block mails for ready to publish services'),
-      '#default_value' => PreventMailUtility::isReadyToPublishServicesBlocked(),
-      '#description' => $this->t("Prevents automatic emails from being sent when services are marked as ready to publish. Blocked emails will not be sent at a later time.") . "<p>" .
-      $this->t("Affects message template: @template.", [
-        '@template' => "group_ready_to_publish_notificat",
-      ]) . "</p>",
+    $formMessageOptions = [
+      PreventMailUtility::SERVICES_READY_TO_PUBLISH => [
+        'title' => $this->t('Block mails for ready to publish services'),
+        'descriptions' => [
+          $this->t("Prevents automatic emails from being sent when services are marked as ready to publish. Blocked emails will not be sent at a later time."),
+        ],
+      ],
+      PreventMailUtility::SERVICES_PUBLISHED => [
+        'title' => $this->t('Block mails for published services'),
+        'descriptions' => [
+          $this->t('Prevents automatic emails from being sent when services are published. Blocked emails will not be sent at a later time.'),
+        ],
+      ],
+      PreventMailUtility::SERVICES_UPDATE_REMINDER => [
+        'title' => $this->t('Block service update reminder mails'),
+        'descriptions' => [
+          $this->t('Prevents sending service reminder emails.'),
+        ],
+      ],
+      PreventMailUtility::SERVICES_OUTDATED_REMINDER => [
+        'title' => $this->t('Block outdated service mails'),
+        'descriptions' => [
+          $this->t('Prevents emails from being sent to inform users about outdated services. Services are not outdated until the emails are successfully sent.'),
+        ],
+      ],
+      PreventMailUtility::SERVICES_MISSING_UPDATERS => [
+        'title' => $this->t('Block services missing updaters mails'),
+        'descriptions' => [
+          $this->t('Prevents emails from being sent to inform users about services with missing updaters.'),
+        ],
+      ],
+      PreventMailUtility::USER_EXPIRATION => [
+        'title' => $this->t('Block user account expiry mails'),
+        'descriptions' => [
+          $this->t('Prevents emails from being sent to inform users about expiring user accounts. User expiration does not proceed until the emails are successfully sent.'),
+          $this->t('Note: User expiry can be disabled from a separate settings page. This option blocks emails that are already in the queue, while the other option prevents new user-expiry tasks from being added to the queue.'),
+        ],
+      ],
+      PreventMailUtility::GROUP_ACCOUNT_BLOCKED => [
+        'title' => $this->t('Block mails for deactivated group accounts'),
+        'descriptions' => [
+          $this->t('Prevents sending notification emails to users when their account is deactivated because it no longer belongs to any group. The accounts are deactivated regardless of this choice.'),
+        ],
+      ],
     ];
 
-    $form['message_templates']['published_services'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Block mails for published services'),
-      '#default_value' => PreventMailUtility::isPublishedServicesBlocked(),
-      '#description' => $this->t("Prevents automatic emails from being sent when services are published. Blocked emails will not be sent at a later time.") . "<p>" .
-      $this->t("Affects message template: @template.", [
-        '@template' => "content_has_been_published",
-      ]) . "</p>",
-    ];
-
-    $form['message_templates']['update_reminder_services'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Block service update reminder mails'),
-      '#default_value' => PreventMailUtility::isUpdateReminderBlocked(),
-      '#description' => $this->t("Prevents sending service reminder emails.") . "<p>" .
-      $this->t("Affects message templates: @template1 and @template2.", [
-        '@template1' => "hel_tpm_update_reminder_service",
-        '@template2' => "hel_tpm_update_reminder_service2",
-      ]) . "</p>",
-    ];
-
-    $form['message_templates']['update_reminder_outdated'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Block outdated service mails'),
-      '#default_value' => PreventMailUtility::isUpdateReminderOutdatedBlocked(),
-      '#description' => $this->t("Prevents emails from being sent to inform users about outdated services. Services are not outdated until the emails are successfully sent.") . "<p>" .
-      $this->t("Affects message template: @template.", [
-        '@template' => "hel_tpm_update_reminder_outdated",
-      ]) . "</p>",
-    ];
-
-    $form['message_templates']['services_missing_updaters'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Block services missing updaters mails'),
-      '#default_value' => PreventMailUtility::isServiceMissingUpdatersBlocked(),
-      '#description' => $this->t("Prevents emails from being sent to inform users about services with missing updaters.") . "<p>" .
-      $this->t("Affects message template: @template.", [
-        '@template' => "services_missing_updaters",
-      ]) . "</p>",
-    ];
-
-    $form['message_templates']['user_account_expiry'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Block user account expiry mails'),
-      '#default_value' => PreventMailUtility::isUserExpirationBlocked(),
-      '#description' => $this->t("Prevents emails from being sent to inform users about expiring user accounts. User expiration does not proceed until the emails are successfully sent.") .
-      "<p>" . $this->t("Note: User expiry can be disabled from a separate settings page. This option blocks emails that are already in the queue, while the other option prevents new user-expiry tasks from being added to the queue.") . "</p>" .
-      "<p>" . $this->t("Affects message templates: @template1, @template2 and @template3.", [
-        '@template1' => "1st_user_account_expiry_reminder",
-        '@template2' => "2nd_user_account_expiry_reminder",
-        '@template3' => "hel_tpm_user_expiry_blocked",
-      ]) . "</p>",
-    ];
-
-    $form['message_templates']['group_account_blocked'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Block mails for deactivated group accounts'),
-      '#default_value' => PreventMailUtility::isDeactivatedGroupAccountBlocked(),
-      '#description' => $this->t("Prevents sending notification emails to users when their account is deactivated because it no longer belongs to any group. The accounts are deactivated regardless of this choice.") . "<p>" .
-      $this->t("Affects message template: @template.", [
-        '@template' => "hel_tpm_group_account_blocked",
-      ]) . "</p>",
-    ];
+    foreach ($formMessageOptions as $flag => $values) {
+      $form['message_templates'][self::MESSAGE_OPTION_PREFIX . $flag] = [
+        '#type' => 'checkbox',
+        '#title' => $values['title'],
+        '#default_value' => PreventMailUtility::isMessageBlocked($flag),
+        '#description' => $this->printDescription($values['descriptions'], PreventMailUtility::getTemplates($flag)),
+      ];
+    }
 
     $form['actions']['#type'] = 'actions';
     $form['actions']['submit'] = [
@@ -131,14 +114,50 @@ class PreventMailForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
-    PreventMailUtility::block((bool) $form_state->getValue('all_mails'));
-    PreventMailUtility::blockReadyToPublishServices((bool) $form_state->getValue('ready_to_publish'));
-    PreventMailUtility::blockPublishedServices((bool) $form_state->getValue('published_services'));
-    PreventMailUtility::blockUpdateReminder((bool) $form_state->getValue('update_reminder_services'));
-    PreventMailUtility::blockServiceOutdated((bool) $form_state->getValue('update_reminder_outdated'));
-    PreventMailUtility::blockServiceMissingUpdaters((bool) $form_state->getValue('services_missing_updaters'));
-    PreventMailUtility::blockUserExpiration((bool) $form_state->getValue('user_account_expiry'));
-    PreventMailUtility::blockDeactivatedGroupAccount((bool) $form_state->getValue('group_account_blocked'));
+    PreventMailUtility::blockMail((bool) $form_state->getValue('all_mails'));
+
+    foreach ($form_state->getValues() as $id => $value) {
+      if (str_starts_with($id, self::MESSAGE_OPTION_PREFIX)) {
+        PreventMailUtility::blockMessage(substr($id, strlen(self::MESSAGE_OPTION_PREFIX)), (bool) $value);
+      }
+    }
+  }
+
+  /**
+   * Outputs form item description for template checkboxes.
+   *
+   * @param \Drupal\Core\StringTranslation\TranslatableMarkup[] $descriptions
+   *   Array of description markup.
+   * @param array $affects
+   *   Names of the templates.
+   *
+   * @return string
+   *   Description text.
+   */
+  private function printDescription(array $descriptions, array $affects): string {
+    $output = '';
+    foreach ($descriptions as $description) {
+      $output .= '<p>' . $description . '</p>';
+    }
+
+    if (empty($affects)) {
+      return $output;
+    }
+
+    $output .= '<p>';
+    if (count($affects) === 1) {
+      $output .= $this->t("Affects message template:");
+    }
+    else {
+      $output .= $this->t("Affects message templates:");
+    }
+    $output .= '<ul>';
+    foreach ($affects as $affect) {
+      $output .= '<li>' . $affect . '</li>';
+    }
+    $output .= '</ul></p>';
+
+    return $output;
   }
 
 }
