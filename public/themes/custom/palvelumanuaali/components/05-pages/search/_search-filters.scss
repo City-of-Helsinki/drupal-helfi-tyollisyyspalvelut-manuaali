@@ -26,6 +26,15 @@
         font-weight: 600;
         margin-left: 0;
         height: 40px;
+        &:hover {
+          cursor: pointer;
+          .count {
+            border-color: clr(background-section);
+            &.active {
+              border-color: $blue40;
+            }
+          }
+        }
         .text {
           padding: 8px 10px 8px 0px;
           font-size: 15px;
@@ -34,7 +43,7 @@
           padding: 6px 10px;
           color: $blue100;
           background: #fff;
-          border: 2px solid $blue40 !important;
+          border: 2px solid $blue40;
           border-radius: 8px;
         }
         .count.active {
