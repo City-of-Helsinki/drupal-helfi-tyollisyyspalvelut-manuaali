@@ -729,11 +729,12 @@ $card-font-small-heading: 15px;
   .card__caption {
     @extend .small-uppercase-card-caption;
     color: clr(accent-pink);
-    max-width: 90%;
+    max-width: calc(100% - 35px);
   }
   .card__heading {
     @extend .card-heading;
     max-width: calc(100% - 35px);
+    hyphens: auto;
   }
   .card__content {
     margin: $space;
@@ -752,6 +753,7 @@ $card-font-small-heading: 15px;
   }
   .card__body {
     display: block;
+    hyphens: auto;
     @include xl {
       margin-top: $space;
       margin-bottom: $space-one-and-half;
