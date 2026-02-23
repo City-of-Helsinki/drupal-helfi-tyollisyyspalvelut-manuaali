@@ -165,14 +165,15 @@
 }
 
 // Overrides for service forms
-.logged-in.edit-create-form {
-  &.logged-in {
+.logged-in.edit-create-form,
+.logged-in .node-service-form {
     .horizontal-tabs {
       .horizontal-tabs-list {
         position: relative;
         top: 0;
         border-bottom: 2px solid clr(form-border);
         background-color: transparent;
+        margin-bottom: $space;
         &:has(.horizontal-tab-button-1.selected) {
           background-color: transparent;
         }
@@ -193,6 +194,5 @@
         }
       }
     }
-  }
 }
 
