@@ -4,7 +4,7 @@ services:
     arguments: [
       '@messenger',
       '@group.membership_loader',
-      '@message_notify.sender',
+      '@hel_tpm_mail_tools.utility.message_sender',
       '@entity_type.manager'
     ]
     tags:

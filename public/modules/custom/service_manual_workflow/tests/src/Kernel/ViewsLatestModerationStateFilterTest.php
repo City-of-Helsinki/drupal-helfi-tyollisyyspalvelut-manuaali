@@ -35,6 +35,7 @@ class ViewsLatestModerationStateFilterTest extends ViewsKernelTestBase {
     'entity_test',
     'language',
     'content_translation',
+    'hel_tpm_mail_tools',
     'service_manual_workflow',
     'group',
     'ggroup',
