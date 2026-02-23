@@ -10,11 +10,10 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\group\Entity\GroupMembership;
 use Drupal\group\Entity\GroupRoleInterface;
 use Drupal\group\GroupMembershipLoader;
+use Drupal\hel_tpm_mail_tools\Utility\MessageSender;
 use Drupal\hel_tpm_group\Event\GroupMembershipChanged;
 use Drupal\hel_tpm_group\Event\GroupMembershipDeleted;
 use Drupal\hel_tpm_group\Event\GroupSiteWideRoleChanged;
-use Drupal\message\Entity\Message;
-use Drupal\message_notify\MessageNotifier;
 use Drupal\user\Entity\User;
 use Drupal\user\UserInterface;
 use Psr\Log\LoggerInterface;
@@ -43,11 +42,11 @@ class HelTpmGroupSubscriber implements EventSubscriberInterface {
   protected GroupMembershipLoader $membershipLoader;
 
   /**
-   * Message notifier service.
+   * Message sender service.
    *
-   * @var \Drupal\message_notify\MessageNotifier
+   * @var \Drupal\hel_tpm_mail_tools\Utility\MessageSender
    */
-  protected MessageNotifier $messageNotifier;
+  protected MessageSender $messageSender;
 
   /**
    * Logger interface.
@@ -80,20 +79,20 @@ class HelTpmGroupSubscriber implements EventSubscriberInterface {
    *   The messenger.
    * @param \Drupal\group\GroupMembershipLoader $membership_loader
    *   The group membership loader.
-   * @param \Drupal\message_notify\MessageNotifier $message_notifier
-   *   Message notifier.
+   * @param \Drupal\hel_tpm_mail_tools\Utility\MessageSender $message_sender
+   *   The message notifier service.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   Entity type manager.
    */
   public function __construct(
     MessengerInterface $messenger,
     GroupMembershipLoader $membership_loader,
-    MessageNotifier $message_notifier,
+    MessageSender $message_sender,
     EntityTypeManagerInterface $entityTypeManager,
   ) {
     $this->messenger = $messenger;
     $this->membershipLoader = $membership_loader;
-    $this->messageNotifier = $message_notifier;
+    $this->messageSender = $message_sender;
     $this->logger = $this->getLogger('hel_tpm_group');
     $this->entityTypeManager = $entityTypeManager;
   }
@@ -189,14 +188,13 @@ class HelTpmGroupSubscriber implements EventSubscriberInterface {
       $this->logger->info($this->t('Deactivated user ID %user_id as the user is no longer a member of any group.', [
         '%user_id' => $user->id(),
       ]));
-      // Send message informing the user.
-      $message = Message::create([
-        'template' => 'hel_tpm_group_account_blocked',
-        'uid' => $user->id(),
+
+      // Send message informing the user the account is blocked.
+      // Note that account is deactivated despite whether mail is successfully
+      // sent or not.
+      $this->messageSender->createAndSend('hel_tpm_group_account_blocked', $user, [
+        'field_user' => $user,
       ]);
-      $message->set('field_user', $user);
-      $message->save();
-      $this->messageNotifier->send($message);
     }
   }
 

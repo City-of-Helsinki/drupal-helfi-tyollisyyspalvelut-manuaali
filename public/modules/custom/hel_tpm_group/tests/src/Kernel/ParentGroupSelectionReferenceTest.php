@@ -32,6 +32,7 @@ class ParentGroupSelectionReferenceTest extends GroupKernelTestBase {
    * @var array
    */
   protected static $modules = [
+    'hel_tpm_mail_tools',
     'hel_tpm_group',
     'node',
     'group',

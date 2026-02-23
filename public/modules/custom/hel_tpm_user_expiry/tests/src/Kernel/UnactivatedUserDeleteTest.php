@@ -29,6 +29,7 @@ final class UnactivatedUserDeleteTest extends EntityKernelTestBase {
    * {@inheritdoc}
    */
   protected static $modules = [
+    'hel_tpm_mail_tools',
     'hel_tpm_user_expiry',
     'message',
     'message_notify',
