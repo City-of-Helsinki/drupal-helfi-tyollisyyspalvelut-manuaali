@@ -129,6 +129,12 @@
         top: 38px;
       }
     }
+    .node-service-form,
+    &.edit-create-form {
+      .horizontal-tabs .horizontal-tabs-list {
+        top: 0;
+      }
+    }
     .link-wrapper {
       @include large {
         margin-bottom: unset;
@@ -146,6 +152,12 @@
           top: 15px;
         }
       }
+      .node-service-form,
+      &.edit-create-form {
+        .horizontal-tabs .horizontal-tabs-list {
+          top: 0;
+        }
+      }
     }
   }
   &.toolbar-vertical {
@@ -161,6 +173,12 @@
         top: 0;
       }
     }
+    .node-service-form,
+    &.edit-create-form {
+      .horizontal-tabs .horizontal-tabs-list {
+        top: 0;
+      }
+    }
   }
 }
 
@@ -170,7 +188,6 @@
     .horizontal-tabs {
       .horizontal-tabs-list {
         position: relative;
-        top: 0;
         border-bottom: 2px solid clr(form-border);
         background-color: transparent;
         margin-bottom: $space;
@@ -195,4 +212,5 @@
       }
     }
 }
+
 
