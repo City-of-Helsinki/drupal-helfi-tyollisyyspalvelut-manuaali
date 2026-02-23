@@ -53,6 +53,7 @@ class ServiceStateChangedEventTest extends GroupKernelTestBase {
     'message',
     'message_notify',
     'message_notify_test',
+    'hel_tpm_mail_tools',
     'service_manual_workflow',
     'service_manual_workflow_service_test',
     'service_manual_workflow_notification_test_config',

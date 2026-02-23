@@ -40,6 +40,7 @@ class ContentGroupServiceTest extends GroupKernelTestBase {
     'message_notify',
     'gnode',
     'ggroup',
+    'hel_tpm_mail_tools',
     'service_manual_workflow',
     'group_test_config',
   ];
