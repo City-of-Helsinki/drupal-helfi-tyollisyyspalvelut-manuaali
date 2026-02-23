@@ -77,8 +77,8 @@ third_party_settings:
       children:
         - field_attendance_text
         - field_service_requirements
-        - field_service_benefits
         - field_client_consent
+        - field_service_benefits
         - field_field_client_consent_descr
       label: Osallistuminen
       parent_name: group_customer_view
@@ -216,11 +216,10 @@ third_party_settings:
         - field_internal_files
         - field_internal_links
         - field_contact_info
-        - group_complementary_job_search
       label: Työohje
       parent_name: group_service_navigation
       region: content
-      weight: 5
+      weight: 4
       format_type: tab
       format_settings:
         classes: work-guidance
@@ -356,12 +355,12 @@ third_party_settings:
         speed: fast
     group_complementary_job_search:
       children:
-        - field_service_suits_job_search
         - field_service_suits_info
+        - field_service_suits_job_search
       label: ' Täydentävä työnhakukeskustelu'
-      parent_name: group_work_instructions
+      parent_name: ''
       region: hidden
-      weight: 28
+      weight: 32
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--complementary-job-search'
@@ -489,7 +488,7 @@ content:
       format_custom_false: "Participation  doesn't require customer consent."
       format_custom_true: 'Participation requires customer consent.'
     third_party_settings: {  }
-    weight: 19
+    weight: 18
     region: content
   field_contact_info:
     type: entity_reference_entity_view
@@ -716,20 +715,6 @@ content:
     third_party_settings: {  }
     weight: 37
     region: content
-  field_service_suits_info:
-    type: text_default
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    weight: 15
-    region: content
-  field_service_suits_job_search:
-    type: list_key
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    weight: 14
-    region: content
   field_service_time_and_location:
     type: hel_tpm_general_time_and_place_formatter
     label: hidden
@@ -827,6 +812,8 @@ hidden:
   field_service_price: true
   field_service_provider_updatee: true
   field_service_radioactivity: true
+  field_service_suits_info: true
+  field_service_suits_job_search: true
   field_target_group: true
   langcode: true
   search_api_excerpt: true

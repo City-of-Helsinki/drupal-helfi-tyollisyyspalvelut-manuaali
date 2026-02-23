@@ -106,7 +106,6 @@ third_party_settings:
         - group_statements_unemploym
         - group_measures_during
         - group_exceptions
-        - group_complementary_job_search
         - group_archive_guide
         - group_liitteet_ja_linkit
       label: 'Asiantuntijan työohje'
@@ -360,9 +359,9 @@ third_party_settings:
         - field_service_suits_job_search
         - field_service_suits_info
       label: 'Täydentävä työnhakukeskustelu'
-      region: content
-      parent_name: group_specialist
-      weight: 16
+      region: hidden
+      parent_name: ''
+      weight: 7
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -441,7 +440,7 @@ third_party_settings:
       children:
         - field_service_req_speacialist
         - field_municipality_guidance
-      label: 'Palveluun osallistumisen edellytykset'
+      label: 'Osallistumisen edellytykset'
       region: content
       parent_name: group_specialist
       weight: 10
@@ -450,6 +449,7 @@ third_party_settings:
         classes: group--margin-border-bottom
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: true
         label_element: legend
@@ -1036,20 +1036,6 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_service_suits_info:
-    type: text_textarea
-    weight: 7
-    region: content
-    settings:
-      rows: 5
-      placeholder: ''
-    third_party_settings: {  }
-  field_service_suits_job_search:
-    type: options_buttons
-    weight: 5
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   field_service_time_and_location:
     type: hel_tpm_service_dates_service_time_and_place_widget
     weight: 17
@@ -1145,6 +1131,8 @@ hidden:
   field_service_execution: true
   field_service_price: true
   field_service_radioactivity: true
+  field_service_suits_info: true
+  field_service_suits_job_search: true
   field_target_group: true
   path: true
   promote: true

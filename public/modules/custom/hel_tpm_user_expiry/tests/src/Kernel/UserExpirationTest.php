@@ -7,6 +7,7 @@ namespace Drupal\Tests\hel_tpm_user_expiry\Kernel;
 use Drupal\Core\Database\Database;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Test\AssertMailTrait;
+use Drupal\hel_tpm_mail_tools\Utility\PreventMailUtility;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\Tests\user\Traits\UserCreationTrait;
 use Drupal\hel_tpm_user_expiry\SettingsUtility;
@@ -31,6 +32,7 @@ final class UserExpirationTest extends GroupKernelTestBase {
   protected static $modules = [
     'hel_tpm_user_expiry',
     'hel_tpm_user_expiry_messages_test',
+    'hel_tpm_mail_tools',
     'message',
     'message_notify',
     'message_notify_test',
@@ -269,6 +271,39 @@ final class UserExpirationTest extends GroupKernelTestBase {
   }
 
   /**
+   * Test blocking user expiration mail by message template option.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  public function testBlockingMailByTemplate() {
+    $this->createLastAccessUser(2, '-220 days');
+
+    // Only run specific cron function for keeping the item in queue.
+    _hel_tpm_user_expiry_notification_cron();
+    $this->assertEquals(1, $this->queue->numberOfItems());
+    $this->assertCount(0, $this->drupalGetMails());
+
+    // Ensure the cron run consumes the queued task but mail is not sent.
+    PreventMailUtility::blockMessage(PreventMailUtility::USER_EXPIRATION);
+    $this->cron->run();
+    $this->assertEquals(0, $this->queue->numberOfItems());
+    $this->assertCount(0, $this->drupalGetMails());
+
+    // Ensure re-running cron does not send mail.
+    $this->resetCronLastRun();
+    $this->cron->run();
+    $this->assertEquals(0, $this->queue->numberOfItems());
+    $this->assertCount(0, $this->drupalGetMails());
+
+    // Disabling blocking enables sending the mail.
+    PreventMailUtility::blockMessage(PreventMailUtility::USER_EXPIRATION, FALSE);
+    $this->resetCronLastRun();
+    $this->cron->run();
+    $this->assertEquals(0, $this->queue->numberOfItems());
+    $this->assertCount(1, $this->drupalGetMails());
+  }
+
+  /**
    * Test user expiration deactivation.
    *
    * @throws \Drupal\Core\Entity\EntityStorageException
@@ -503,7 +538,7 @@ final class UserExpirationTest extends GroupKernelTestBase {
   /**
    * Reset last cron run state.
    */
-  protected function resetCronLastRun() {
+  protected function resetCronLastRun(): void {
     \Drupal::state()->delete('hel_tpm_user_expiry.last_run');
   }
 

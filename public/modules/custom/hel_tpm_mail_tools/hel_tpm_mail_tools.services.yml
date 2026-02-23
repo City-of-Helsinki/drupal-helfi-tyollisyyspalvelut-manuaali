@@ -1,0 +1,4 @@
+services:
+  hel_tpm_mail_tools.utility.message_sender:
+    class: Drupal\hel_tpm_mail_tools\Utility\MessageSender
+    arguments: ['@message_notify.sender']
