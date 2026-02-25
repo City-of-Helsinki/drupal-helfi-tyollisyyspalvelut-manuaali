@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\hel_tpm_group\Kernel;
 
 use Drupal\Core\Test\AssertMailTrait;
+use Drupal\hel_tpm_group\ServicesMissingUpdaters;
 use Drupal\Tests\content_moderation\Traits\ContentModerationTestTrait;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
@@ -72,7 +73,7 @@ class ServicesMissingUpdatersNotificationTest extends GroupKernelTestBase {
    *
    * @var mixed
    */
-  protected $servicesMissingUpdaters;
+  protected ServicesMissingUpdaters $servicesMissingUpdaters;
 
   /**
    * Service missing updaters queue.
@@ -104,6 +105,7 @@ class ServicesMissingUpdatersNotificationTest extends GroupKernelTestBase {
     'ggroup_role_mapper',
     'field_permissions',
     'flexible_permissions',
+    'hel_tpm_mail_tools',
     'service_manual_workflow',
     'service_manual_workflow_service_test',
     'service_manual_workflow_notification_test_config',

@@ -4,6 +4,7 @@ status: true
 dependencies:
   module:
     - editor
+    - filter_empty_tags
     - hel_tpm_general
     - media
 name: 'Filtered Html'
@@ -41,6 +42,16 @@ filters:
     status: false
     weight: -41
     settings: {  }
+  filter_empty_tags:
+    id: filter_empty_tags
+    provider: filter_empty_tags
+    status: true
+    weight: 0
+    settings:
+      do_not_consider_empty: 'button canvas drupal-media drupal-entity iframe object script svg textarea td th p br'
+      filter_spaces: true
+      filter_nbsp: true
+      filter_br: true
   filter_html:
     id: filter_html
     provider: filter

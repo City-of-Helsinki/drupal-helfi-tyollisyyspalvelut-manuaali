@@ -4,10 +4,10 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.municipality_guide.field_body
+    - field.field.paragraph.municipality_guide.field_body_limited_html
     - field.field.paragraph.municipality_guide.field_municipality
     - paragraphs.paragraphs_type.municipality_guide
   module:
-    - maxlength
     - select2
     - text
 id: paragraph.municipality_guide.default
@@ -15,18 +15,14 @@ targetEntityType: paragraph
 bundle: municipality_guide
 mode: default
 content:
-  field_body:
+  field_body_limited_html:
     type: text_textarea
     weight: 1
     region: content
     settings:
       rows: 5
       placeholder: ''
-    third_party_settings:
-      maxlength:
-        maxlength_js: null
-        maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
-        maxlength_js_enforce: false
+    third_party_settings: {  }
   field_municipality:
     type: select2_entity_reference
     weight: 0
@@ -39,4 +35,5 @@ content:
     third_party_settings: {  }
 hidden:
   created: true
+  field_body: true
   status: true

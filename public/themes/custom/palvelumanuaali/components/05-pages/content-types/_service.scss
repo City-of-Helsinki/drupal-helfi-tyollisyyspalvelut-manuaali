@@ -1,4 +1,36 @@
 .blue-padded-round-corners-card {
+  a {
+    border-bottom: 2px solid clr(alt-header-color);
+    padding-bottom: 1px;
+    color: clr(alt-header-color);
+    &.arrow {
+      margin-left: $space;
+      border-bottom: unset;
+      .text {
+        border-bottom: 2px solid clr(alt-header-color);
+      }
+      &::after {
+        content: "";
+        display: inline-block;
+        width: 0.8em;
+        height: 0.7em;
+        margin-left: 0.25em;
+        background: url("../../assets/icons/arrow-right-3.svg") no-repeat center;
+      }
+    }
+  }
+
+  .icon-i {
+    display: block;
+    width: 24px;
+    height: 24px;
+    background-image:url("../../assets/icons/info.svg");
+    margin-right: $space-one-and-half;
+    padding-right: $space-one-and-half;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
   display: flex;
   align-items: center;
 
@@ -13,18 +45,6 @@
   line-height: 28px;
 
   color: clr(alt-header-color);
-  .icon-i {
-    display: block;
-
-    width: 24px;
-    height: 24px;
-
-    background-image:url("../../assets/icons/info.svg");
-    margin-right: $space-one-and-half;
-    padding-right: $space-one-and-half;
-    background-size: cover;
-    background-repeat: no-repeat;
-  }
 }
 
 .page-node-type-service {
@@ -435,7 +455,7 @@
       margin-right: 1rem;
       @include xl {
         overflow: auto;
-        max-height: calc(100vh - 190px);
+        max-height: calc(100vh - 280px);
       }
     }
     ul {

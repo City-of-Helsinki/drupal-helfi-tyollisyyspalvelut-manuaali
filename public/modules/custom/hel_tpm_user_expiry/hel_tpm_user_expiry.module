@@ -5,6 +5,7 @@
  * Module file for hel_tpm_user_expiry.
  */
 
+use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\hel_tpm_user_expiry\SettingsUtility;
 use Drupal\user\Entity\User;
@@ -16,6 +17,56 @@ use Drupal\user\UserInterface;
 function hel_tpm_user_expiry_cron() {
   _hel_tpm_user_expiry_notification_cron();
   _hel_tpm_user_expiry_block_unactivated_users();
+  _hel_tpm_user_expiry_anonymize_blocked_users();
+}
+
+/**
+ * Anonymizes user accounts that have been blocked for more than one month.
+ *
+ * This method scans for blocked user accounts that have not logged in or had
+ * changes for over one month and anonymizes them. The method excludes users
+ * that have already been anonymized and limits execution to
+ * once every 12 hours.
+ *
+ * @return void
+ *   Return void.
+ */
+function _hel_tpm_user_expiry_anonymize_blocked_users() {
+  $cron_last_run = 'hel_tpm_user_expiry.anonymize_blocked_users_last_run';
+  $run_time_limit = strtotime('12 hours', 0);
+  $last_run = \Drupal::state()->get($cron_last_run);
+
+  // Run this cron once every 24 hours.
+  if ($last_run && (\Drupal::time()->getRequestTime() - $last_run) < $run_time_limit) {
+    return;
+  }
+
+  $storage = \Drupal::entityTypeManager()->getStorage('user');
+  $limit = new DrupalDateTime('-1 month');
+  $q = Drupal::database()->select('users_field_data', 'ufd')
+    ->fields('ufd', ['uid'])
+    ->condition('uid', 0, '<>')
+    ->condition('uid', 1, '<>')
+    ->condition('status', 0)
+    ->condition('changed', $limit->getTimestamp(), '<=');
+
+  // Exclude users that has been anonymized.
+  if ($anonymized_users = \Drupal::state()->get('hel_tpm_user_expiry.anonymized_users')) {
+    $q->condition('uid', $anonymized_users, 'NOT IN');
+  }
+  $result = $q->execute()->fetchAllAssoc('uid');
+
+  if (empty($result)) {
+    return;
+  }
+
+  $users = $storage->loadMultiple(array_keys($result));
+  $anonymizer = \Drupal::service('hel_tpm_user_expiry.anonymizer');
+  foreach ($users as $user) {
+    $anonymizer->anonymizeUser($user, TRUE);
+  }
+
+  \Drupal::state()->set($cron_last_run, Drupal::time()->getRequestTime());
 }
 
 /**
