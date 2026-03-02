@@ -5633,32 +5633,31 @@
         },
         {
             "name": "drupal/geoblock",
-            "version": "1.1.0",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/geoblock.git",
-                "reference": "1.1.0"
+                "reference": "1.1.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/geoblock-1.1.0.zip",
-                "reference": "1.1.0",
-                "shasum": "bc4a8b3c22d1f8269a959f8ffb9bf7b9548a6c67"
+                "url": "https://ftp.drupal.org/files/projects/geoblock-1.1.2.zip",
+                "reference": "1.1.2",
+                "shasum": "b212de4ca983eee9bc2741c80b715fa5d2218d0d"
             },
             "require": {
-                "drupal/core": "^10.1 || ^11",
+                "drupal/core": "^10.3 || ^11",
                 "league/iso3166": "^4.0",
                 "php": ">=8.1"
             },
             "require-dev": {
-                "drupal/core-dev": "^10.1",
-                "drupal/core-recommended": "^10.1"
+                "drupal/core-dev": "^10.3 || ^11"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "1.1.0",
-                    "datestamp": "1718051489",
+                    "version": "1.1.2",
+                    "datestamp": "1739202737",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -12380,29 +12379,32 @@
         },
         {
             "name": "league/iso3166",
-            "version": "4.3.1",
+            "version": "4.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/alcohol/iso3166.git",
-                "reference": "11703e0313f34920add11c0228f0dd43ebd10f9a"
+                "reference": "928ac7ecc569db9123a83ef5b1c6efc279e7cb49"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/alcohol/iso3166/zipball/11703e0313f34920add11c0228f0dd43ebd10f9a",
-                "reference": "11703e0313f34920add11c0228f0dd43ebd10f9a",
+                "url": "https://api.github.com/repos/alcohol/iso3166/zipball/928ac7ecc569db9123a83ef5b1c6efc279e7cb49",
+                "reference": "928ac7ecc569db9123a83ef5b1c6efc279e7cb49",
                 "shasum": ""
             },
             "require": {
                 "ext-mbstring": "*",
-                "php": "^7.3|^8.0"
+                "php": "^7.4 || ^8.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^9.5"
+                "phpstan/phpstan": "^1.12.6",
+                "phpstan/phpstan-deprecation-rules": "^1.2.1",
+                "phpstan/phpstan-strict-rules": "^1.6.1",
+                "phpunit/phpunit": "^9.6.21"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.x-dev"
+                    "dev-master": "4.x-dev"
                 }
             },
             "autoload": {
@@ -12421,7 +12423,7 @@
                 }
             ],
             "description": "ISO 3166-1 PHP Library",
-            "homepage": "https://github.com/thephpleague/iso3166",
+            "homepage": "https://github.com/alcohol/iso3166",
             "keywords": [
                 "3166",
                 "3166-1",
@@ -12431,10 +12433,16 @@
                 "library"
             ],
             "support": {
-                "issues": "https://github.com/thephpleague/iso3166/issues",
-                "source": "https://github.com/thephpleague/iso3166"
+                "issues": "https://github.com/alcohol/iso3166/issues",
+                "source": "https://github.com/alcohol/iso3166"
             },
-            "time": "2023-09-11T07:59:36+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/alcohol",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-01-02T09:49:36+00:00"
         },
         {
             "name": "librarymarket/maxmind-db-reader",
