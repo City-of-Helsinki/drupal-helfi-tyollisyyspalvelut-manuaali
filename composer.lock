@@ -8367,22 +8367,25 @@
         },
         {
             "name": "drupal/pathauto",
-            "version": "1.13.0",
+            "version": "1.14.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/pathauto.git",
-                "reference": "8.x-1.13"
+                "reference": "8.x-1.14"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/pathauto-8.x-1.13.zip",
-                "reference": "8.x-1.13",
-                "shasum": "e64b5a82cf1b8ab48bce400b21ae6fc99c8078fd"
+                "url": "https://ftp.drupal.org/files/projects/pathauto-8.x-1.14.zip",
+                "reference": "8.x-1.14",
+                "shasum": "07f0d2efcf0bfb450e2ab69a43921fa39dc5f25b"
             },
             "require": {
-                "drupal/core": "^9.4 || ^10 || ^11",
+                "drupal/core": "^10 || ^11",
                 "drupal/ctools": "*",
                 "drupal/token": "*"
+            },
+            "conflict": {
+                "drush/drush": "<12.5.1"
             },
             "require-dev": {
                 "drupal/forum": "*"
@@ -8393,16 +8396,11 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-1.13",
-                    "datestamp": "1722507672",
+                    "version": "8.x-1.14",
+                    "datestamp": "1759838097",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
-                    }
-                },
-                "drush": {
-                    "services": {
-                        "drush.services.yml": "^9 || ^10"
                     }
                 }
             },
@@ -8412,11 +8410,15 @@
             ],
             "authors": [
                 {
-                    "name": "Berdir",
+                    "name": "acbramley",
+                    "homepage": "https://www.drupal.org/user/1036766"
+                },
+                {
+                    "name": "berdir",
                     "homepage": "https://www.drupal.org/user/214652"
                 },
                 {
-                    "name": "Dave Reid",
+                    "name": "dave reid",
                     "homepage": "https://www.drupal.org/user/53892"
                 },
                 {
@@ -8426,6 +8428,10 @@
                 {
                     "name": "greggles",
                     "homepage": "https://www.drupal.org/user/36762"
+                },
+                {
+                    "name": "mably",
+                    "homepage": "https://www.drupal.org/user/3375160"
                 }
             ],
             "description": "Provides a mechanism for modules to automatically generate aliases for the content they manage.",
@@ -10013,29 +10019,29 @@
         },
         {
             "name": "drupal/token",
-            "version": "1.15.0",
+            "version": "1.17.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/token.git",
-                "reference": "8.x-1.15"
+                "reference": "8.x-1.17"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/token-8.x-1.15.zip",
-                "reference": "8.x-1.15",
-                "shasum": "5916fbccc86458a5f51e71f832ac70ff4c84ebdf"
+                "url": "https://ftp.drupal.org/files/projects/token-8.x-1.17.zip",
+                "reference": "8.x-1.17",
+                "shasum": "21d11adf0be16f1aa95b6348b4ceadbe9a625824"
             },
             "require": {
-                "drupal/core": "^9.2 || ^10 || ^11"
+                "drupal/core": "^10.3 || ^11"
             },
             "require-dev": {
-                "drupal/book": "*"
+                "drupal/book": "^1 || ^2"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-1.15",
-                    "datestamp": "1722206211",
+                    "version": "8.x-1.17",
+                    "datestamp": "1767942434",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
