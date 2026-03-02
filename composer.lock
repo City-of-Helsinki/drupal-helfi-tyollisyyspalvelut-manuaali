@@ -3282,17 +3282,17 @@
         },
         {
             "name": "drupal/date_recur",
-            "version": "3.8.0",
+            "version": "3.8.2",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/date_recur.git",
-                "reference": "3.8.0"
+                "reference": "3.8.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/date_recur-3.8.0.zip",
-                "reference": "3.8.0",
-                "shasum": "cc70abc847885399511d2d2008880243020bc1a4"
+                "url": "https://ftp.drupal.org/files/projects/date_recur-3.8.2.zip",
+                "reference": "3.8.2",
+                "shasum": "93540f8d119edb7b402eaad77b406ede48462cc5"
             },
             "require": {
                 "drupal/core": "^10.3 || ^11",
@@ -3306,8 +3306,10 @@
             "require-dev": {
                 "composer/installers": "^2",
                 "dealerdirect/phpcodesniffer-composer-installer": "^1",
+                "drupal/coder": "^8.3.16",
                 "drupal/core-dev": "^10.3 || ^11",
                 "drupal/token": "^1.5",
+                "drush/drush": "^13",
                 "micheh/phpcs-gitlab": "^1.1",
                 "mockery/mockery": "^1.5",
                 "phpstan/extension-installer": "^1.3",
@@ -3324,8 +3326,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "3.8.0",
-                    "datestamp": "1730750665",
+                    "version": "3.8.2",
+                    "datestamp": "1759567758",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -3354,6 +3356,10 @@
                 {
                     "name": "Frando",
                     "homepage": "https://www.drupal.org/user/21850"
+                },
+                {
+                    "name": "joelpittet",
+                    "homepage": "https://www.drupal.org/user/160302"
                 }
             ],
             "description": "Recurring Dates Field",
@@ -14497,16 +14503,16 @@
         },
         {
             "name": "rlanvin/php-rrule",
-            "version": "v2.5.1",
+            "version": "v2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rlanvin/php-rrule.git",
-                "reference": "cb5c6f44f2208144968f7f16b3461bc4566995c9"
+                "reference": "2a389a9fa67dda58bc5a569a3264555152db3c49"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rlanvin/php-rrule/zipball/cb5c6f44f2208144968f7f16b3461bc4566995c9",
-                "reference": "cb5c6f44f2208144968f7f16b3461bc4566995c9",
+                "url": "https://api.github.com/repos/rlanvin/php-rrule/zipball/2a389a9fa67dda58bc5a569a3264555152db3c49",
+                "reference": "2a389a9fa67dda58bc5a569a3264555152db3c49",
                 "shasum": ""
             },
             "require": {
@@ -14540,9 +14546,9 @@
             ],
             "support": {
                 "issues": "https://github.com/rlanvin/php-rrule/issues",
-                "source": "https://github.com/rlanvin/php-rrule/tree/v2.5.1"
+                "source": "https://github.com/rlanvin/php-rrule/tree/v2.6.0"
             },
-            "time": "2024-06-23T07:45:45+00:00"
+            "time": "2025-04-25T07:40:09+00:00"
         },
         {
             "name": "ruflin/elastica",
