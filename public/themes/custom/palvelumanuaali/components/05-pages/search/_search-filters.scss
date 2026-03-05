@@ -26,6 +26,18 @@
         font-weight: 600;
         margin-left: 0;
         height: 40px;
+        &:hover {
+          cursor: pointer;
+          .text {
+            text-decoration: underline;
+          }
+          .count {
+            border-color: clr(background-section);
+            &.active {
+              border-color: $blue40;
+            }
+          }
+        }
         .text {
           padding: 8px 10px 8px 0px;
           font-size: 15px;
@@ -37,8 +49,6 @@
           border: 2px solid $blue40;
           border-radius: 8px;
           &:hover {
-            cursor: pointer;
-            border-color: clr(background-section);
             &.active {
               border-color: $blue40;
             }

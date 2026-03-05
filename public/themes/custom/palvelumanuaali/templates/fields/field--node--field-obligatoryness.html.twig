@@ -57,6 +57,9 @@
     {% elseif item.content['#markup'] == 'option2' %}
       <span class="icon-i"></span>
       <span class="text">{{"<b>Palveluun osallistuminen ei ole velvoittavaa.</b>"|t}}</span>
+    {% elseif item.content['#markup'] == 'option3' %}
+      <span class="icon-i"></span>
+      <span class="text">{{"<b>Palveluun osallistuminen on aina velvoittavaa.</b> Palvelun keskeyttäminen voi vaikuttaa oikeuteen saada työttömyysetuutta."|t}}</span>
     {% endif %}
   </div>
 {% endfor %}
