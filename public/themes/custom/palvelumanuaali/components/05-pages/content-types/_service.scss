@@ -471,6 +471,7 @@
         padding-left: 0;
         > ul {
           margin-bottom: 0;
+          border-left: 2px solid $gray-light;
           li {
             margin-bottom: 0;
           }
@@ -482,16 +483,17 @@
       a {
         display: inline-block;
         color: $black;
-        font-weight: 600;
+        font-weight: 500;
         margin-bottom: 0.2rem;
+        hyphens: auto;
         &:hover {
-          font-weight: bold;
+          text-decoration-line: underline;
+          text-decoration-thickness: 2px;
         }
       }
       &.toc-active {
         > a {
           font-weight: bold;
-          border-bottom: 1px solid $black;
         }
       }
     }
