@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "336c21064c382609d0ebe3940b2a795b",
+    "content-hash": "34280f91dcb4622f5550ab6b82f51a92",
     "packages": [
         {
             "name": "ajgl/breakpoint-twig-extension",
@@ -10593,26 +10593,29 @@
         },
         {
             "name": "drupal/views_ajax_history",
-            "version": "dev-1.x",
+            "version": "1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/views_ajax_history.git",
-                "reference": "9c817081e662a5239e47fd97289d9eab73aef156"
+                "reference": "8.x-1.8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/views_ajax_history-8.x-1.8.zip",
+                "reference": "8.x-1.8",
+                "shasum": "94242393b5ce610c3b5d7ec6dc0ac08da947aff6"
             },
             "require": {
                 "drupal/core": "^8.8 || ^9 || ^10 || ^11"
             },
             "type": "drupal-module",
             "extra": {
-                "branch-alias": {
-                    "dev-1.x": "1.x-dev"
-                },
                 "drupal": {
-                    "version": "8.x-1.7+7-dev",
-                    "datestamp": "1726567552",
+                    "version": "8.x-1.8",
+                    "datestamp": "1735593764",
                     "security-coverage": {
-                        "status": "not-covered",
-                        "message": "Dev releases are not covered by Drupal security advisories."
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
                     }
                 }
             },
@@ -23809,7 +23812,6 @@
         "drupal/inline_entity_form": 5,
         "drupal/notification_message": 5,
         "drupal/require_on_publish": 20,
-        "drupal/views_ajax_history": 20,
         "drupal/views_field_view": 10
     },
     "prefer-stable": true,
