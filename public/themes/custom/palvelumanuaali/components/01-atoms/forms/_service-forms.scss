@@ -163,10 +163,31 @@
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
+      position: relative;
       @include large {
         margin-left: auto;
         margin-right: auto;
         width: 65%;
+      }
+      .stepper-wrapper {
+        width: 80%;
+        position: absolute;
+        top: -3px;
+        height: 3px;
+        background: lightblue;
+      }
+      .step-lines {
+        width: 75%;
+        background: aquamarine;
+        height: 3px;
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+      }
+      .step-line {
+        width: 33.33%;
+        height: 3px;
+        background-color: black;
       }
     }
   }
