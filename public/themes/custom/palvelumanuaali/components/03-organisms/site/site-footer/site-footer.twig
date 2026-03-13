@@ -1,15 +1,17 @@
 {% set footer__base_class = 'footer' %}
+{% set sidebar__logo_src = directory ? '/' ~ directory ~ '/assets/icons/LOGO-white.svg' : 'LOGO-white.svg' %}
+{% set link_url = url('<front>') %}
 
 <footer id="footer-region" {{ bem(footer__base_class) }}>
   <div {{ bem('inner', [], footer__base_class) }}>
     <div {{ bem('branding', [], footer__base_class) }}>
     {% embed "@atoms/links/link/link.twig" %}
       {% block link_content %}
-          {% include "@atoms/images/icons/_icon.twig" with {
-            icon_base_class: 'Logo',
-            icon_blockname: 'link',
-            icon_name: 'LOGO-white',
-          } %}
+        {% include "@organisms/site/site-sidebar/_site-sidebar-branding.twig" with {
+          large: "yes",
+          sidebar__logo_src: sidebar__logo_src,
+          link_url: link_url,
+        }%}
       {% endblock %}
     {% endembed %}
     </div>
