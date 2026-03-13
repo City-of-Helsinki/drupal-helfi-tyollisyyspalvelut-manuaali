@@ -170,24 +170,29 @@
         width: 65%;
       }
       .stepper-wrapper {
-        width: 80%;
+        width: 100%;
         position: absolute;
-        top: -3px;
+        top: 14px;
         height: 3px;
-        background: lightblue;
+        @include large {
+          width: 80%;
+        }
       }
       .step-lines {
         width: 75%;
-        background: aquamarine;
-        height: 3px;
+        height: 2px;
         margin-left: auto;
         margin-right: auto;
         display: flex;
       }
       .step-line {
         width: 33.33%;
-        height: 3px;
-        background-color: black;
+        height: 2px;
+        background-color: $blue20;
+        &:has(~.active),
+        &.active {
+          background-color: $blue100;
+        }
       }
     }
   }
