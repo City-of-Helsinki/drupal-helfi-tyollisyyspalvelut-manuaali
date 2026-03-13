@@ -41,7 +41,7 @@ class SearchLanguageSelect extends RadioButtons implements ContainerFactoryPlugi
    */
   private array $languageMap = [
     'fi' => ['fi' => 'suomeksi', 'sv' => 'ruotsiksi', 'en' => 'englanniksi'],
-    'en' => ['fi' => 'finnish', 'sv' => 'swedish', 'en' => 'english'],
+    'en' => ['fi' => 'Finnish', 'sv' => 'Swedish', 'en' => 'English'],
     'sv' => ['fi' => 'finska', 'sv' => 'svenska', 'en' => 'engelska'],
   ];
 

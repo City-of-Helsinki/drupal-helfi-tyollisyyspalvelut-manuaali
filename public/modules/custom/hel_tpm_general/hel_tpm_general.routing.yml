@@ -14,16 +14,6 @@ hel_tpm_general.group.node.add.service:
   requirements:
     _custom_access: '\Drupal\hel_tpm_general\Controller\GroupNodeAddServiceController::access'
 
-hel_tpm_general.prevent_mail_form:
-  path: '/admin/config/system/prevent-sending-mail'
-  defaults:
-    _form: '\Drupal\hel_tpm_general\Form\PreventMailForm'
-    _title: 'Prevent sending mail'
-  requirements:
-    _permission: 'access site configuration'
-  options:
-    _admin_route: TRUE
-
 hel_tpm_general.feedback_link_settings:
   path: '/admin/config/system/feedback-link-settings'
   defaults:

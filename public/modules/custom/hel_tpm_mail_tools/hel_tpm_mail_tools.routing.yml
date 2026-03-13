@@ -1,0 +1,9 @@
+hel_tpm_mail_tools.prevent_mail_form:
+  path: '/admin/config/system/prevent-sending-mail'
+  defaults:
+    _form: '\Drupal\hel_tpm_mail_tools\Form\PreventMailForm'
+    _title: 'Prevent sending mail'
+  requirements:
+    _permission: 'access site configuration'
+  options:
+    _admin_route: TRUE

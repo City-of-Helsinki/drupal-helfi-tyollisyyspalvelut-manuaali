@@ -5,6 +5,7 @@ dependencies:
   config:
     - entity_browser.browser.entity_browser
     - filter.format.filtered_html
+    - filter.format.limited_filtered_html
     - filter.format.plain_text_format
     - media.type.image
     - node.type.service
@@ -124,6 +125,7 @@ permissions:
   - 'use service_moderation transition ready_to_publish'
   - 'use service_moderation transition ready_to_publish_to_draft'
   - 'use text format filtered_html'
+  - 'use text format limited_filtered_html'
   - 'use text format plain_text_format'
   - 'view contact info'
   - 'view field_age'

@@ -26,6 +26,7 @@ class ViewsModerationStateExcludeArchivedTest extends ViewsKernelTestBase {
    * {@inheritdoc}
    */
   protected static $modules = [
+    'hel_tpm_mail_tools',
     'hel_tpm_group',
     'hel_tpm_group_test_views',
     'text',

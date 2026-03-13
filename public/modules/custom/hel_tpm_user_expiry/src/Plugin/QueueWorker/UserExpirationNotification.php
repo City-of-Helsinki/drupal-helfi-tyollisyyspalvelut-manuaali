@@ -9,9 +9,9 @@ use Drupal\Core\Logger\LoggerChannelTrait;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueWorkerBase;
 use Drupal\Core\State\State;
+use Drupal\hel_tpm_mail_tools\Utility\MessageSender;
 use Drupal\hel_tpm_user_expiry\Anonymizer;
-use Drupal\message\Entity\Message;
-use Drupal\message_notify\MessageNotifier;
+use Drupal\user\UserInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -52,11 +52,11 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
   protected $logger;
 
   /**
-   * Message notifier service.
+   * Message sender service.
    *
-   * @var \Drupal\message_notify\MessageNotifier
+   * @var \Drupal\hel_tpm_mail_tools\Utility\MessageSender
    */
-  protected $messageNotifier;
+  protected $messageSender;
 
   /**
    * The state store.
@@ -95,7 +95,7 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
    *   Plugin id string.
    * @param array $plugin_definition
    *   Plugin definition array.
-   * @param \Drupal\message_notify\MessageNotifier $message_notifier
+   * @param \Drupal\hel_tpm_mail_tools\Utility\MessageSender $message_sender
    *   Message notifier service.
    * @param \Drupal\Core\State\State $state
    *   State service.
@@ -108,14 +108,14 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    MessageNotifier $message_notifier,
+    MessageSender $message_sender,
     State $state,
     EntityTypeManagerInterface $entity_type_manager,
     Anonymizer $anonymizer,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->logger = $this->getLogger('hel_tpm_user_expiry');
-    $this->messageNotifier = $message_notifier;
+    $this->messageSender = $message_sender;
     $this->state = $state;
     $this->anonymizer = $anonymizer;
     $this->entityTypeManager = $entity_type_manager;
@@ -129,7 +129,7 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('message_notify.sender'),
+      $container->get('hel_tpm_mail_tools.utility.message_sender'),
       $container->get('state'),
       $container->get('entity_type.manager'),
       $container->get('hel_tpm_user_expiry.anonymizer')
@@ -144,22 +144,23 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
     $notified = $this->getNotified();
     $count = (int) $notified['count'];
     $timestamp = $notified['timestamp'];
+    /** @var \Drupal\user\UserInterface|null $user */
     $user = $this->entityTypeManager->getStorage('user')->load($this->getUid());
 
     // If user has been notified less than 2 times and last notification
     // has been sent in more.
     if (($count === 0 || $count === 1) && $this->getTimeLimit($count) >= $timestamp) {
-      $user = $this->entityTypeManager->getStorage('user')->load($this->getUid());
-      if (!$user->isBlocked()) {
-        // Send inactivity reminder.
-        $this->sendNotification($this->getUid(), self::$reminderTemplates[$count]);
+      // Send inactivity reminder and mark that user has been notified.
+      if (!$user->isBlocked() && $this->sendNotification(self::$reminderTemplates[$count], $user)) {
         $this->updateNotified();
       }
     }
+    // If previous notifications has been sent and last notification has been
+    // sent at least 2 days ago.
     elseif ($count === 2 && $this->getTimeLimit($count) >= $timestamp) {
-      // Deactivate user if last notification has been sent 2 days ago.
-      if ($this->deactivateUser()) {
-        $this->sendNotification($this->getUid(), self::$deactivatedTemplate);
+      // Send deactivate notification and deactivate user.
+      if (!$user->isBlocked() && $this->sendNotification(self::$deactivatedTemplate, $user)) {
+        $this->deactivateUser($user);
         $this->updateNotified();
       }
     }
@@ -267,47 +268,51 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
   /**
    * Deactivate user.
    *
-   * @return bool
-   *   TRUE if deactivating success, FALSE otherwise.
-   *
-   * @throws \Drupal\Core\Entity\EntityStorageException
-   */
-  protected function deactivateUser(): bool {
-    $user = $this->entityTypeManager->getStorage('user')->load($this->getUid());
-    if ($user->isBlocked()) {
-      return FALSE;
-    }
-    $user->set('status', 0);
-    $user->save();
-    $this->logger->info('Deactivated %user', ['%user' => $user->id()]);
-    return TRUE;
-  }
-
-  /**
-   * Notification sending method.
-   *
-   * @param int $uid
-   *   User id who message is sent.
-   * @param string $template
-   *   Name of message template.
+   * @param \Drupal\user\Entity\User $user
+   *   The user to be deactivated.
    *
    * @return void
    *   -
    *
    * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  protected function deactivateUser(UserInterface $user): void {
+    $user->set('status', 0);
+    $user->save();
+    $this->logger->info('Deactivated user with user ID %user_id.', ['%user_id' => $user->id()]);
+  }
+
+  /**
+   * Notification sending method.
+   *
+   * @param string $template
+   *   The name of the template.
+   * @param \Drupal\user\Entity\User $account
+   *   The user to receive the message.
+   *
+   * @return bool
+   *   TRUE if mail is sent, FALSE otherwise.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
    * @throws \Drupal\message_notify\Exception\MessageNotifyException
    */
-  protected function sendNotification(int $uid, string $template): void {
-    $message = Message::create([
-      'template' => $template,
-      'uid' => $uid,
-    ]);
-    $message->save();
-    $this->messageNotifier->send($message);
-    $this->logger->info('Sending expiry message %template to user %user', [
-      '%user' => $uid,
-      '%template' => $template,
-    ]);
+  protected function sendNotification(string $template, UserInterface $account): bool {
+    $isSent = $this->messageSender->createAndSend($template, $account, []);
+
+    if ($isSent) {
+      $this->logger->info('Expiry message %template to user %user has been sent.', [
+        '%user' => $account->id(),
+        '%template' => $template,
+      ]);
+    }
+    else {
+      $this->logger->notice('Expiry message %template to user %user has not been sent.', [
+        '%user' => $account->id(),
+        '%template' => $template,
+      ]);
+    }
+
+    return $isSent;
   }
 
 }

@@ -13,7 +13,6 @@ use Drupal\Core\Link;
 use Drupal\Core\Site\Settings;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
-use Drupal\hel_tpm_general\PreventMailUtility;
 
 /**
  * Implements hook_theme().
@@ -35,6 +34,18 @@ function hel_tpm_general_theme($existing, $type, $theme, $path) {
       ],
     ],
   ];
+}
+
+/**
+ * Implements hook_ajax_render_alter().
+ */
+function hel_tpm_general_ajax_render_alter(array &$data) {
+  foreach ($data as $key => $command) {
+    if ($command['command'] === 'scrollTop') {
+      unset($data[$key]);
+      break;
+    }
+  }
 }
 
 /**
@@ -147,15 +158,6 @@ function hel_tpm_general_user_presave($entity) {
     return;
   }
   $entity->setUsername($username);
-}
-
-/**
- * Implements hook_mail_alter().
- */
-function hel_tpm_general_mail_alter(&$message): void {
-  if (PreventMailUtility::get()) {
-    $message['send'] = FALSE;
-  }
 }
 
 /**

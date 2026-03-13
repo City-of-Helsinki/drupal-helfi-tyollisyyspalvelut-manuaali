@@ -29,6 +29,7 @@ class GroupRelationshipFormAccessTest extends GroupKernelTestBase {
    * {@inheritdoc}
    */
   protected static $modules = [
+    'hel_tpm_mail_tools',
     'hel_tpm_group',
     'group',
     'ggroup',

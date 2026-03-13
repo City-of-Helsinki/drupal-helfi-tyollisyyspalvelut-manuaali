@@ -10,9 +10,8 @@ use Drupal\Core\Logger\LoggerChannelTrait;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueWorkerBase;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\hel_tpm_mail_tools\Utility\MessageSender;
 use Drupal\hel_tpm_update_reminder\UpdateReminderUtility;
-use Drupal\message\Entity\Message;
-use Drupal\message_notify\MessageNotifier;
 use Drupal\node\NodeInterface;
 use Drupal\service_manual_workflow\ModerationTransition;
 use Drupal\user\Entity\User;
@@ -50,11 +49,11 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
   protected LoggerInterface $logger;
 
   /**
-   * Message notifier service.
+   * Message sender service.
    *
-   * @var \Drupal\message_notify\MessageNotifier
+   * @var \Drupal\hel_tpm_mail_tools\Utility\MessageSender
    */
-  protected MessageNotifier $messageNotifier;
+  protected MessageSender $messageSender;
 
   /**
    * Service's node id.
@@ -95,7 +94,7 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
    *   The plugin implementation definition.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager service.
-   * @param \Drupal\message_notify\MessageNotifier $message_notifier
+   * @param \Drupal\hel_tpm_mail_tools\Utility\MessageSender $message_sender
    *   The message notifier service.
    * @param \Drupal\Component\Datetime\Time $time
    *   The time service.
@@ -110,13 +109,13 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
     $plugin_id,
     $plugin_definition,
     EntityTypeManagerInterface $entity_type_manager,
-    MessageNotifier $message_notifier,
+    MessageSender $message_sender,
     Time $time,
     ModerationTransition $moderation_transition,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->entityTypeManager = $entity_type_manager;
-    $this->messageNotifier = $message_notifier;
+    $this->messageSender = $message_sender;
     $this->time = $time;
     $this->moderationTransition = $moderation_transition;
     $this->logger = $this->getLogger('hel_tpm_update_reminder');
@@ -132,7 +131,7 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
       $plugin_id,
       $plugin_definition,
       $container->get('entity_type.manager'),
-      $container->get('message_notify.sender'),
+      $container->get('hel_tpm_mail_tools.utility.message_sender'),
       $container->get('datetime.time'),
       $container->get('service_manual_workflow.moderation_transition')
     );
@@ -276,16 +275,11 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
     if ($account->isBlocked()) {
       return FALSE;
     }
-    $message = Message::create([
-      'template' => $template,
-      'uid' => $account->id(),
+
+    return $this->messageSender->createAndSend($template, $account, [
+      'field_node' => $service,
+      'field_user' => $account,
     ]);
-    $message->set('field_node', $service);
-    $message->set('field_user', $account);
-    $message->save();
-    // Prevent sending all the mails at once.
-    sleep(1);
-    return $this->messageNotifier->send($message);
   }
 
 }

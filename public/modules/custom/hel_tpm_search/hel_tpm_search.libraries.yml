@@ -21,6 +21,16 @@ taxonomy_hierarchy_select:
     - core/drupal
     - core/drupalSettings
 
+term_hierarchy_buttons:
+  version: 0.1
+  js:
+    js/hel-tpm-search.term-hierarchy-buttons.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings
+    - core/once
+
 filter_ajax_watcher:
   js:
     js/filterAjaxWatcher.js: {}

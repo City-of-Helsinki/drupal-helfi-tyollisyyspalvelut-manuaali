@@ -1,6 +1,7 @@
 .node-service-edit-form,
 .node-service-form {
   display: grid;
+  width: 100%;
   > * {
      min-width: 0px;
   }
@@ -11,6 +12,7 @@
   @include xl {
       grid-template-columns: 7fr 3fr;
       grid-column-gap: 24px;
+
   }
 
   .paragraph-type-top,
@@ -335,8 +337,6 @@
       .paragraphs-dropbutton-wrapper {
         input[data-drupal-selector*="top-links-remove-button"] {
           @include close-button;
-          width: 16px;
-          height: 16px;
           padding: 0;
           line-height: 30px;
         }

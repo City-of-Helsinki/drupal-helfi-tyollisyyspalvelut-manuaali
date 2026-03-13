@@ -517,6 +517,15 @@ details>.form-wrapper:last-child {
   }
 }
 
+.edit-create-form {
+  // inherited styles from headings style width: cause discrepancies when create form has shorter text
+  .h1--page-title {
+    @include xxl {
+      width: 1440px;
+    }
+  }
+}
+
 .node-service-location-form {
   .form-text {
     margin-bottom: $space;

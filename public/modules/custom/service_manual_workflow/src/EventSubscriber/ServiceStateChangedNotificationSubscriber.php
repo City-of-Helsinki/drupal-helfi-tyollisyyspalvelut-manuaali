@@ -12,8 +12,7 @@ use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\gcontent_moderation\GroupStateTransitionValidation;
 use Drupal\ggroup\GroupHierarchyManagerInterface;
-use Drupal\message\Entity\Message;
-use Drupal\message_notify\MessageNotifier;
+use Drupal\hel_tpm_mail_tools\Utility\MessageSender;
 use Drupal\node\NodeInterface;
 use Drupal\service_manual_workflow\ContentGroupService;
 use Drupal\service_manual_workflow\Event\ServiceModerationEvent;
@@ -30,11 +29,6 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
   use ServiceNotificationTrait;
 
   /**
-   * Used message template.
-   */
-  const MESSAGE_TEMPLATE = 'group_ready_to_publish_notificat';
-
-  /**
    * Constructs event subscriber.
    *
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
@@ -49,8 +43,8 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
    *   Route match service.
    * @param \Drupal\Core\Session\AccountProxyInterface $currentUser
    *   Current user object.
-   * @param \Drupal\message_notify\MessageNotifier $messageSender
-   *   Message notifier object.
+   * @param \Drupal\hel_tpm_mail_tools\Utility\MessageSender $messageSender
+   *   Message sender service.
    * @param \Drupal\ggroup\GroupHierarchyManagerInterface $groupHierarchyManager
    *   Group hierarchy manager.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
@@ -63,7 +57,7 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
     protected GroupStateTransitionValidation $stateTransitionValidation,
     protected RouteMatchInterface $routeMatch,
     protected AccountProxyInterface $currentUser,
-    protected MessageNotifier $messageSender,
+    protected MessageSender $messageSender,
     protected GroupHierarchyManagerInterface $groupHierarchyManager,
     protected ConfigFactoryInterface $configFactory,
   ) {}
@@ -77,7 +71,7 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public function draftToReadyToPublish(ServiceModerationEvent $event) {
+  public function draftToReadyToPublish(ServiceModerationEvent $event): void {
     $account = $event->getAccount();
     $state = $event->getModerationState();
     $storage = $this->entityTypeManager->getStorage($state->content_entity_type_id->value);
@@ -122,7 +116,7 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public function readyToPublishToPublished(ServiceModerationEvent $event) {
+  public function readyToPublishToPublished(ServiceModerationEvent $event): void {
     $state = $event->getModerationState();
     $storage = $this->entityTypeManager->getStorage($state->content_entity_type_id->value);
     $entity = $storage->load($state->content_entity_id->value);
@@ -246,17 +240,14 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
    * @throws \Drupal\Core\Entity\EntityStorageException
    * @throws \Drupal\message_notify\Exception\MessageNotifyException
    * */
-  protected function dispatchMessage(EntityInterface $node, UserInterface $account, $message_template) {
+  protected function dispatchMessage(EntityInterface $node, UserInterface $account, string $message_template): void {
     $current_user = $this->entityTypeManager->getStorage('user')->load($this->currentUser->id());
-    $message = Message::create([
-      'template' => $message_template,
-      'uid' => $account->id(),
+
+    $this->messageSender->createAndSend($message_template, $account, [
+      'field_node' => $node,
+      'field_user' => $account,
+      'field_message_author' => $current_user,
     ]);
-    $message->set('field_node', $node);
-    $message->set('field_user', $account);
-    $message->set('field_message_author', $current_user);
-    $message->save();
-    $this->messageSender->send($message);
   }
 
   /**

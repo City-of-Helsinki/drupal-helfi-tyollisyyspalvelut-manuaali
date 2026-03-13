@@ -42,17 +42,19 @@
     paragraph.bundle|clean_class
   ]
 %}
-{% if content['field_link'].0['#url'].external %}
+{% if quick_link.external %}
   {% set icon_name = 'arrow-right-2-ext' %}
 {% else %}
   {% set icon_name = 'arrow-right-2' %}
 {% endif %}
-
 <a
     href="{{ quick_link.url }}"
     title="{{ quick_link.attributes.title }}"
     aria-label="{{ quick_link.attributes.title }}"
     aria-description="{{ quick_link.attributes.description }}"
+    {% if quick_link.external %}
+      target="_blank"
+    {% endif %}
     class="quick-link add--break-word add--hyphen card--default-hover">
   {{ content|without('field_link') }}
   {% include "@atoms/images/icons/_icon.twig" with {
