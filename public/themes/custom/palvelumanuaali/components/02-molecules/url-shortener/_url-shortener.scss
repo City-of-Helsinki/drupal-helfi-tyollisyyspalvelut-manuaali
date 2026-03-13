@@ -1,8 +1,6 @@
 .hel-tpm-url-shortener-shorten-url-link {
   order: 1;
   @include large {
-    position: sticky;
-    top: 93%;
     z-index: $zi-above-content;
     order: unset;
   }
@@ -11,19 +9,12 @@
       float: right;
     }
   }
-  .short-link-result {
-    display: block;
-    width: 310px;
-    top: 1px;
-    background: white;
-    box-shadow: inset 0px 0px 0px 2px clr(form-border);
-    border-radius: 8px;
-    padding: 0.4em 0.5em;
+  div.hide-short-link,
+  .clipboard-button,
+  .create-link {
     margin: auto;
-    position: absolute;
-    left: 65px;
     @include large {
-      left: -315px;
+      margin-right: -3rem;
     }
   }
   .shorten-link {
@@ -36,10 +27,14 @@
       margin-left: $space * 1.5;
     }
   }
-  input.clipboard-button,
-  input.create-link {
+}
+
+.hel-tpm-url-shortener-shorten-url-link-views,
+.hel-tpm-url-shortener-shorten-url-link {
+  div.hide-short-link,
+  .clipboard-button,
+  .create-link {
     display: block;
-    margin: auto;
     background-color: white;
     color: transparent;
     padding: 0;
@@ -49,15 +44,44 @@
     border-radius: 20px;
     background-position: center center;
     background-repeat: no-repeat;
+    cursor: pointer;
+    border: thin solid $blue20;
+  }
 
-    @include large {
-      margin-right: -3rem;
+  label {
+    font-weight: 600;
+    font-size: 15px;
+  }
+  div.hide-short-link {
+    background-image: url('../../assets/icons/close.svg');
+
+    &:hover {
+      background-color: $blue100;
+      background-image: url('../../assets/icons/close-white.svg');
     }
   }
-  input.create-link {
+
+  .create-link {
+    background-image: url('../../assets/icons//chain.svg');
+
+    &.active,
+    &:hover {
+      background-image: url('../../assets/icons//chain-active.svg');
+    }
+  }
+
+  .clipboard-button {
     background-image: url('../../assets/icons//chain.svg');
   }
-  input.clipboard-button {
-    background-image: url('../../assets/icons//chain.svg');
+
+  .short-link-result {
+    display: block;
+    width: 310px;
+    top: 1px;
+    background: white;
+    box-shadow: inset 0px 0px 0px 2px clr(form-border);
+    border-radius: 8px;
+    padding: 0.4em 0.5em;
+    margin: auto;
   }
 }

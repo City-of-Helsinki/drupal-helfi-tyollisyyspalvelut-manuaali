@@ -55,6 +55,14 @@
       {% endif %}
     </div>
   </div>
-    {{ form|without(fieldsMain, fieldsSecondary, 'search_wrapper', 'actions', 'sort_bef_combine' ) }}
+    {{ form|without(fieldsMain, fieldsSecondary, 'search_wrapper', 'actions', 'sort_bef_combine', 'short_url_form', 'langcode') }}
 </div>
-{{form['sort_bef_combine']}}
+<div class="tertiary-filters">
+  <div class="langcode-filter-wrapper">
+    {{ form['langcode'] }}
+  </div>
+  <div class="sort-wrapper">
+    {{ form['short_url_form'] }}
+    {{ form['sort_bef_combine'] }}
+  </div>
+</div>
