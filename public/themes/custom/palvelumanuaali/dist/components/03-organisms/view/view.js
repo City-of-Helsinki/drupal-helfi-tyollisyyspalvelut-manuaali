@@ -1,12 +1,12 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 453:
-/***/ (function() {
+/***/ 453
+() {
 
 (function(a,b){"use strict";b.behaviors.pagerItem={attach:function(){let b;a(".pager--load-more a")&&a(".view-solr-service-search .taxonomy-card")&&a(".pager--load-more a").on("click",function(){b=a(".view-solr-service-search .taxonomy-card").length,b&&setTimeout(function(){let c=a(".view-solr-service-search .taxonomy-card")[b],d=a(c).children(".card")[0],e=a(d).children(".card__link")[0];a(e).focus(),a(c).scrollIntoView({behavior:"smooth",block:"start"})},1e3)})}}})(jQuery,Drupal,this);
 
-/***/ })
+/***/ }
 
 /******/ 	});
 /************************************************************************/
