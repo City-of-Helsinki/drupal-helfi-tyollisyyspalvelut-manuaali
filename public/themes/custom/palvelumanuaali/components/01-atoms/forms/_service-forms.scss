@@ -163,10 +163,36 @@
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
+      position: relative;
       @include large {
         margin-left: auto;
         margin-right: auto;
         width: 65%;
+      }
+      .stepper-wrapper {
+        width: 100%;
+        position: absolute;
+        top: 14px;
+        height: 3px;
+        @include large {
+          width: 80%;
+        }
+      }
+      .step-lines {
+        width: 75%;
+        height: 2px;
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+      }
+      .step-line {
+        width: 33.33%;
+        height: 2px;
+        background-color: $blue20;
+        &:has(~.active),
+        &.active {
+          background-color: $blue100;
+        }
       }
     }
   }
