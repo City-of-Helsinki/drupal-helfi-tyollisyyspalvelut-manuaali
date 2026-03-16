@@ -143,9 +143,22 @@
         let i, x = document.getElementsByClassName("step");
         for (i = 0; i < x.length; i++) {
           x[i].className = x[i].className.replace(" active", "");
+          x[i].ariaLabel = x[i].ariaLabel.replace(" current", "");
         }
         //... and adds the "active" class to the current step:
         x[n].className += " active";
+        x[n].ariaLabel += " current";
+        fixLineIndicator(n);
+      }
+      function fixLineIndicator(n) {
+        //This function adds handles adding active class when page is
+        let x = document.getElementsByClassName("step-line");
+        for (i = 0; i < x.length; i++) {
+          x[i].className = x[i].className.replace(" active", "");
+        }
+        if (n != 0) {
+          x[n - 1].className += " active";
+        }
       }
     }
   }
