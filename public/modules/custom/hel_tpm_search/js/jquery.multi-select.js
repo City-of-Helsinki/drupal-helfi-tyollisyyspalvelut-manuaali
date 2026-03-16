@@ -98,6 +98,7 @@
       this.$button.attr({
         'role': 'button',
         'aria-haspopup': 'true',
+        'aria-expanded': 'false',
         'tabindex': 0,
         'aria-label': this.$labels.eq(0).text()
       })
@@ -477,19 +478,25 @@
           'overflow': ''
         });
       }
+      //Handle aria-expanded value
+      this.$button.attr('aria-expanded','true');
     },
 
     menuHide: function() {
       this.$container.removeClass(this.settings['activeClass']);
       this.$container.removeClass(this.settings['positionedMenuClass']);
       this.$menu.css('width', 'auto');
+      //Handle aria-expanded value
+      this.$button.attr('aria-expanded','false');
     },
 
     menuToggle: function() {
       if ( this.$container.hasClass(this.settings['activeClass']) ) {
         this.menuHide();
+
       } else {
         this.menuShow();
+
       }
     },
 
