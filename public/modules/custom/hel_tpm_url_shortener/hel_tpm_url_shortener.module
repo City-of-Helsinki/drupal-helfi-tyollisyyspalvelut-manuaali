@@ -45,6 +45,8 @@ function _hel_tpm_url_shortener_garbage_collection() {
 function hel_tpm_url_shortener_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   if ($form_id === 'views_exposed_form' && in_array('views_exposed_form__solr_service_search__page', $form['#theme'])) {
     $short_link_form = \Drupal::formBuilder()->getForm('Drupal\hel_tpm_url_shortener\Form\ShortenUrlLinkFormViews');
-    $form['short_url_form'] = $short_link_form['wrapper'];
+    if (\Drupal::currentUser()->isAuthenticated()) {
+      $form['short_url_form'] = $short_link_form['wrapper'];
+    }
   }
 }
