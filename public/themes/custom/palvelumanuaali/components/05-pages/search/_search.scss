@@ -297,6 +297,13 @@
 
         .hel-tpm-url-shortener-shorten-url-link-views {
           margin-right: 10px;
+          grid-column: 1;
+        }
+        .form-item-sort-bef-combine {
+          grid-column: 1;
+          @media (min-width: 585px) {
+            grid-column: 2;
+          }
         }
       }
     }
