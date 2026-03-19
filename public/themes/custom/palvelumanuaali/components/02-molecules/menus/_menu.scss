@@ -142,7 +142,7 @@
 
 //this should be split to dropdown molecule
 .dropdown-menu {
-  background-color: clr(background-dropdown);
+  background-color: clr(text-inverse);
   border-radius: 8px;
   box-shadow: 0px 8px 16px rgba(30, 64, 182, 0.2);
   border: 0;
@@ -184,11 +184,6 @@
 
 nav.language-switcher-language-url {
   .dropdown-menu {
-    padding-left: 0;
-    padding-right: 0;
-  }
-  .language-link {
-    padding-left: $space-three-and-half;
-    padding-right: $space-one-and-half;
+    padding: $space-one-half 0;
   }
 }

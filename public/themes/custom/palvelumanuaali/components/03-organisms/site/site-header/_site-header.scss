@@ -563,10 +563,10 @@ body:not(.admin-toolbar-enabled) {
     }
   }
   .view-user-info {
+    padding: $space-one-and-half $space $space 18px;
     .view-content {
       display: flex;
       align-items: center;
-      margin-bottom: $space-two-and-half;
       &::before {
         content: "";
         width: 32px;
@@ -621,16 +621,15 @@ body:not(.admin-toolbar-enabled) {
     }
   }
   .dropdown-menu {
-    padding: $space-one-and-half 18px;
+    padding: 0;
     min-width: 220px;
   }
   .dropdown-menu-inner {
-    padding: 0 0 0 6px;
+    padding: 0;
     margin-bottom: 0;
   }
   .dropdown-menu-inner__item {
     text-align: left;
-    margin-bottom: $space;
     &:first-child {
       .dropdown-menu-inner__link {
         &::before {
@@ -647,6 +646,7 @@ body:not(.admin-toolbar-enabled) {
     }
     &:nth-child(2) {
       .dropdown-menu-inner__link {
+        border-radius: 0 0 8px 8px;
         &::before {
           background-image: url("../../assets/icons//door.svg");
           content: "";
@@ -670,6 +670,11 @@ body:not(.admin-toolbar-enabled) {
     display: flex;
     align-items: center;
     width: max-content;
+    padding: 10px $space-one-and-half 10px $space-one-and-half;
+    width: 100%;
+    &:hover {
+      background: clr(background);
+    }
   }
 }
 
@@ -759,7 +764,7 @@ body:not(.admin-toolbar-enabled) {
   .dropdown-menu {
     border-radius: 8px;
     box-shadow: 0px 8px 16px rgba(30, 64, 182, 0.2);
-    background-color: clr(background-dropdown);
+    background-color: clr(text-inverse);
     padding-bottom: 32px;
     top:24px !important;
     @include large {
