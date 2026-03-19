@@ -478,7 +478,6 @@
           'overflow': ''
         });
       }
-      //Handle aria-expanded value
       this.$button.attr('aria-expanded','true');
     },
 
@@ -486,17 +485,14 @@
       this.$container.removeClass(this.settings['activeClass']);
       this.$container.removeClass(this.settings['positionedMenuClass']);
       this.$menu.css('width', 'auto');
-      //Handle aria-expanded value
       this.$button.attr('aria-expanded','false');
     },
 
     menuToggle: function() {
       if ( this.$container.hasClass(this.settings['activeClass']) ) {
         this.menuHide();
-
       } else {
         this.menuShow();
-
       }
     },
 
