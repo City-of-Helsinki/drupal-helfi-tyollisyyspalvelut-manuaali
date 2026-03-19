@@ -143,11 +143,11 @@
         let i, x = document.getElementsByClassName("step");
         for (i = 0; i < x.length; i++) {
           x[i].className = x[i].className.replace(" active", "");
-          x[i].ariaLabel = x[i].ariaLabel.replace(" current", "");
+          x[i].ariaCurrent = x[i].ariaCurrent.replace("step", "false");
         }
         //... and adds the "active" class to the current step:
         x[n].className += " active";
-        x[n].ariaLabel += " current";
+        x[n].ariaCurrent = "step";
         fixLineIndicator(n);
       }
       function fixLineIndicator(n) {
