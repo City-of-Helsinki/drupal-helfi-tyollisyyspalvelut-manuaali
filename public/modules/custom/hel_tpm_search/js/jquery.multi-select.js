@@ -98,6 +98,7 @@
       this.$button.attr({
         'role': 'button',
         'aria-haspopup': 'true',
+        'aria-expanded': 'false',
         'tabindex': 0,
         'aria-label': this.$labels.eq(0).text()
       })
@@ -477,12 +478,14 @@
           'overflow': ''
         });
       }
+      this.$button.attr('aria-expanded','true');
     },
 
     menuHide: function() {
       this.$container.removeClass(this.settings['activeClass']);
       this.$container.removeClass(this.settings['positionedMenuClass']);
       this.$menu.css('width', 'auto');
+      this.$button.attr('aria-expanded','false');
     },
 
     menuToggle: function() {
