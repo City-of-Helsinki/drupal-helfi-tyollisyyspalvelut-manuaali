@@ -87,5 +87,12 @@ $config['user.settings']['password_reset_timeout'] = 604800;
 $config['system.performance']['css']['preprocess'] = TRUE;
 $config['system.performance']['js']['preprocess'] = TRUE;
 
+if (getenv('VARNISH_PURGE_KEY')) {
+  $config['varnish_purger.settings.2ce1889afd']['headers'][] = [
+    'field' => 'X-VC-Purge-Key',
+    'value' => getenv('VARNISH_PURGE_KEY'),
+  ];
+}
+
 // Enable redis settings.
 include_once $app_root . '/' . $site_path . '/settings.redis.php';
