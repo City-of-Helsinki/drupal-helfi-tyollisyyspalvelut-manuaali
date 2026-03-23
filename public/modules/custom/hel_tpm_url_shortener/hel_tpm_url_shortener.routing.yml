@@ -6,4 +6,8 @@ hel_tpm_url_shortener.settings_form:
   requirements:
     _permission: 'administer hel_tpm_url_shortener configuration'
 hel_tpm_url_shortener.shortener_ajax:
-  path: '/ajax/url-shortener/{long_path}'
+  path: '/hel_tpm_url_shortener/ajax/url-shortener'
+  defaults:
+    _controller: 'Drupal\hel_tpm_url_shortener\Controller\ShortUrlAjaxController::createShortUrl'
+  requirements:
+    _role: 'authenticated'
