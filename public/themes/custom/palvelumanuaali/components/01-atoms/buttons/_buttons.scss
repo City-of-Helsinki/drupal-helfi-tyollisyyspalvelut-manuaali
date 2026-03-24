@@ -520,6 +520,10 @@ $button-colors: (
       background-image: url("../../assets/icons/arrow-sm-down.svg");
     }
   }
+  &:focus-visible {
+    outline: 2px solid clr(primary);
+    border-radius: 0;
+  }
   .links {
     margin-right: $space;
     height: 24px;
@@ -544,6 +548,13 @@ $button-colors: (
     @media only screen and (max-width: $xl) {
         display: none;
     }
+  }
+}
+
+.account-menu-button {
+  &:focus-visible {
+    outline: 2px solid clr(primary);
+    border-radius: 0;
   }
 }
 
