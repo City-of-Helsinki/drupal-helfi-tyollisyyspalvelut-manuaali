@@ -3,6 +3,7 @@
 namespace Drupal\hel_tpm_search\Plugin\better_exposed_filters\filter;
 
 use Drupal\better_exposed_filters\Plugin\better_exposed_filters\filter\RadioButtons;
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
@@ -40,9 +41,9 @@ class SearchLanguageSelect extends RadioButtons implements ContainerFactoryPlugi
    * @var array
    */
   private array $languageMap = [
-    'fi' => ['fi' => 'suomeksi', 'sv' => 'ruotsiksi', 'en' => 'englanniksi'],
-    'en' => ['fi' => 'Finnish', 'sv' => 'Swedish', 'en' => 'English'],
-    'sv' => ['fi' => 'finska', 'sv' => 'svenska', 'en' => 'engelska'],
+    'fi' => ['fi' => 'Suomeksi', 'sv' => 'Ruotsiksi', 'en' => 'Englanniksi'],
+    'en' => ['fi' => 'In Finnish', 'sv' => 'In Swedish', 'en' => 'In English'],
+    'sv' => ['fi' => 'På finska', 'sv' => 'På svenska', 'en' => 'På engelska'],
   ];
 
   /**
@@ -107,6 +108,10 @@ class SearchLanguageSelect extends RadioButtons implements ContainerFactoryPlugi
     if (!empty($user_input) && !empty($user_input[$field_id])) {
       $current_value = $user_input[$field_id];
     }
+    if (empty($this->languageMap[$current_value])) {
+      unset($field['#options'][$current_value]);
+      return;
+    }
     foreach ($handler->facet_results as $result) {
       $label = $this->formatOptionLabel($result, $current_value);
       if (empty($label)) {
@@ -129,14 +134,15 @@ class SearchLanguageSelect extends RadioButtons implements ContainerFactoryPlugi
    *   The formatted option label as an HTML string.
    */
   protected function formatOptionLabel(Result $result, $selected_value) {
-    $langcode = $result->getRawValue();
+    $langcode = Html::escape($result->getDisplayValue());
     $current_language = $this->languageManager->getCurrentLanguage()->getId();
 
     $lang = $this->languageMap[$current_language][$langcode];
 
-    $label = $this->t('<span class="text">In @language</span>', [
-      '@language' => ucfirst($lang),
-    ]);
+    if (empty($lang)) {
+      return '';
+    }
+    $label = sprintf('<span class="text">%s</span>', $lang);
 
     $classes = ['count'];
     if ($selected_value === $langcode) {
