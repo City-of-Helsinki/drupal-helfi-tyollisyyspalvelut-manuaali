@@ -216,7 +216,7 @@
     }
     .page-header {
       @include xl {
-          grid-column: 2/3;
+          grid-column: 1/3;
           grid-row: 1;
       }
     }
@@ -224,25 +224,86 @@
   .main-content {
     .search-form {
         display: grid;
-      @include xl {
-        grid-template-columns: 1fr 10fr 1fr;
-      }
-      @media (min-width:1640px) {
-        grid-template-columns: 2fr 8fr 2fr;
-      }
+      grid-template-columns: 1fr;
+      //@include xl {
+      //  grid-template-columns: 1fr 10fr 1fr;
+      //}
+      //@media (min-width:1640px) {
+      //  grid-template-columns: 2fr 8fr 2fr;
+      //}
 
+      .main-filters {
+        display: grid;
+        flex-wrap: wrap;
+        gap: $space-one-half;
+        grid-template-columns: 1fr;
+
+        @include small {
+          grid-template-columns: 1fr 1fr;
+        }
+        @include large {
+          grid-template-columns: 1fr 1fr 1fr 1fr;
+        }
+        @include xl {
+        }
+
+        .form-item {
+          @include xl {
+            margin-bottom: 0;
+          }
+        }
+      }
       .text-search-wrapper{
         grid-row: 1;
-        @include xl {
-            grid-column: 2/3;
-
-        }
+        grid-column: 1;
       }
       .filters-wrapper {
         grid-row: 2;
-        @include xl {
-            grid-column: 2/3;
+        grid-column: 1;
+        .select--search-background {
+          max-width: unset;
+        }
+        .multi-select-container {
+          max-width: unset;
 
+        }
+      }
+
+
+      }
+    .tertiary-filters {
+      display: grid;
+      grid-template-columns: 3fr;
+      margin-top: 1rem;
+      @media (min-width: 1165px) {
+        grid-template-columns: 2fr 2fr;
+      }
+
+      .langcode-filter-wrapper {
+        grid-row: 1;
+      }
+      .sort-wrapper {
+        grid-row: 2;
+        display: grid;
+        justify-items: right;
+        gap: 0.5rem;
+        @media (min-width: 585px) {
+          grid-template-columns: 2fr 1fr;
+        }
+        @media (min-width: 1165px){
+          grid-template-columns: 1fr 1fr;
+          grid-row: 1;
+        }
+
+        .hel-tpm-url-shortener-shorten-url-link-views {
+          margin-right: 10px;
+          grid-column: 1;
+        }
+        .form-item-sort-bef-combine {
+          grid-column: 1;
+          @media (min-width: 585px) {
+            grid-column: 2;
+          }
         }
       }
     }

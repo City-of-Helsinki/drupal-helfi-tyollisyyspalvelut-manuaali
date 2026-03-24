@@ -1,20 +1,4 @@
 (function ($, Drupal, drupalSettings) {
-  Drupal.AjaxCommands.prototype.shortUrlCommand = function(ajax, data, status) {
-    let form = ajax.$form;
-    let copied = navigator.clipboard
-      .writeText(data.shortUrl)
-      .then(() => {
-        // On success hide copy clipboard to button and create message.
-        $('.create-link', form).addClass('active');
-        $('.create-link', form).prop("disabled",true);
-        showPopup(Drupal.t('Link copied.'), form);
-      })
-      .catch((e) => {
-        showShortUrl(data.shortUrl, form);
-        showPopup(Drupal.t('Copying link failed'), form);
-      });
-    return false;
-  }
 
   /**
    * Displays a popup with a provided message, attaching it to the given form.
@@ -47,8 +31,6 @@
     shortUrlElement.text(shortUrl);
     shortUrlWrapper.toggleClass('visually-hidden');
     hideShortLink.removeClass('visually-hidden');
-    // createLinkButton.addClass('visually-hidden');
-    // createLinkButton.removeClass('active');
     Drupal.behaviors.url_shortener.hideCreateLink(createLinkButton);
   }
 
@@ -65,26 +47,55 @@
    * @property {HTMLElement} attach.context - The current context in which the behavior is executed, provided by Drupal's framework.
    * @property {Object} attach.settings - An object containing any settings or configuration needed for the behavior.
    */
-  Drupal.behaviors.url_shortener = {
+  Drupal.behaviors.url_shortener_views = {
     attach: function (context, settings) {
-      let createLink = $('.create-link', context);
-      let hideShortLink = $('.hide-short-link', context);
-      let shortLinkResult = $('.short-link-result', context);
+      let view = $('.views-exposed-form.bef-exposed-form', context);
+      let createLink = $('.create-link', view);
+      let hideShortLink = $('.hide-short-link', view);
+      let shortLinkResult = $('.short-link-result', view);
       // Update current path value.
-      $('.current-path', context).val(window.location.pathname + window.location.search);
+      $('.current-path', view).val(window.location.pathname + window.location.search);
       // When current path is updated show create link
       // When current path is updated remove previous short link.
       this.showCreateLink(createLink);
       this.hideShortLinkResult(shortLinkResult);
+
+      let current_path = $('.current-path').val();
+
+      createLink.click(function (event) {
+        event.preventDefault();
+        let form = $(this, context).closest('.shorten-link');
+        console.log(form);
+         $.ajax({
+          'url': $(this).attr('data-ajax-url'),
+          'data': {
+            current_path: current_path
+          },
+          'success': function (data) {
+            let link = data.data;
+            navigator.clipboard
+              .writeText(link)
+              .then(() => {
+                // On success hide copy clipboard to button and create message.
+                $('.create-link', form).addClass('active');
+                $('.create-link', form).prop("disabled",true);
+                showPopup(Drupal.t('Link copied.'), form);
+              })
+              .catch((e) => {
+                showShortUrl(link, form);
+                showPopup(Drupal.t('Copying link failed'), form);
+              });
+          }
+        });
+      });
 
       hideShortLink.click(function () {
         Drupal.behaviors.url_shortener.hideShortLinkResult(shortLinkResult);
         Drupal.behaviors.url_shortener.showCreateLink(createLink);
         $(this).addClass('visually-hidden');
       });
-      $(document).ready(function () {
 
-      })
+
     },
 
     showCreateLink: function (createLink) {

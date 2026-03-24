@@ -134,8 +134,8 @@ class SearchLanguageSelect extends RadioButtons implements ContainerFactoryPlugi
 
     $lang = $this->languageMap[$current_language][$langcode];
 
-    $label = $this->t('<span class="text">Results in @language</span>', [
-      '@language' => $lang,
+    $label = $this->t('<span class="text">In @language</span>', [
+      '@language' => ucfirst($lang),
     ]);
 
     $classes = ['count'];
