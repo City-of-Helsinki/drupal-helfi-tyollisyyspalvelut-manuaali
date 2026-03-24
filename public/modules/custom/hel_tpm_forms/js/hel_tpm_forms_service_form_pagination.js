@@ -40,6 +40,12 @@
             let step = $(this).attr('data-step');
             switchTab(step);
           });
+          $(this).on("keyup",function(e) {
+            if (e.key === "Enter") {
+              let step = $(this).attr('data-step');
+              switchTab(step);
+            }
+          });
         });
       }
 
