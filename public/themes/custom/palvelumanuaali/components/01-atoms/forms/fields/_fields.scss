@@ -226,9 +226,6 @@
       input {
         opacity: 0;
         position: absolute;
-        & + label {
-
-        }
         &:checked + label {
           background-color: $blue100;
           color: $white;
@@ -248,7 +245,6 @@
             cursor: default;
           }
         }
-
       }
       &:nth-child(3) {
         label {
