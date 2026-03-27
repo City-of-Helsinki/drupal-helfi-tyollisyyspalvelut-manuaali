@@ -40,6 +40,12 @@
             let step = $(this).attr('data-step');
             switchTab(step);
           });
+          $(this).on("keyup",function(e) {
+            if (e.key === "Enter") {
+              let step = $(this).attr('data-step');
+              switchTab(step);
+            }
+          });
         });
       }
 
@@ -143,9 +149,22 @@
         let i, x = document.getElementsByClassName("step");
         for (i = 0; i < x.length; i++) {
           x[i].className = x[i].className.replace(" active", "");
+          x[i].ariaCurrent = x[i].ariaCurrent.replace("step", "false");
         }
         //... and adds the "active" class to the current step:
         x[n].className += " active";
+        x[n].ariaCurrent = "step";
+        fixLineIndicator(n);
+      }
+      function fixLineIndicator(n) {
+        //This function adds handles adding active class when page is
+        let x = document.getElementsByClassName("step-line");
+        for (i = 0; i < x.length; i++) {
+          x[i].className = x[i].className.replace(" active", "");
+        }
+        if (n != 0) {
+          x[n - 1].className += " active";
+        }
       }
     }
   }

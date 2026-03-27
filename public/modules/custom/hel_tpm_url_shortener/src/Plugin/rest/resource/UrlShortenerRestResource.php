@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Route;
  *   id = "hel_tpm_url_shortener_url_shortener_rest",
  *   label = @Translation("Url shortener rest"),
  *   uri_paths = {
- *     "create" = "/api/v1/shortenurl"
+ *     "create" = "/api/v1/shorturl"
  *   }
  * )
  *

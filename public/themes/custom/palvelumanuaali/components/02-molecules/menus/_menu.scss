@@ -97,6 +97,7 @@
         margin-left: 40px;
         margin-right: 0;
       }
+
     }
     &:first-child {
       a {
@@ -108,7 +109,7 @@
           content: "";
           display: block;
           background-repeat: no-repeat;
-          background-image: url("../../assets/icons/heart.svg");
+          background-image: url("../../assets/icons/heart-black.svg");
           @extend .icon--small;
           width: 100%;
           height: 100%;
@@ -116,6 +117,25 @@
           @include xl {
             position: absolute;
             left: -56px;
+          }
+        }
+        &.is-active {
+          @extend .active-menu-link;
+          @include xl {
+            color: clr(background-section);
+          }
+          &::before {
+            background-image: url("../../assets/icons/heart.svg");
+          }
+        }
+      }
+      &:hover {
+        a {
+          @include xl {
+            color: clr(background-section);
+          }
+          &::before {
+            background-image: url("../../assets/icons/heart.svg");
           }
         }
       }
@@ -142,7 +162,7 @@
 
 //this should be split to dropdown molecule
 .dropdown-menu {
-  background-color: clr(background-dropdown);
+  background-color: clr(text-inverse);
   border-radius: 8px;
   box-shadow: 0px 8px 16px rgba(30, 64, 182, 0.2);
   border: 0;
@@ -184,11 +204,6 @@
 
 nav.language-switcher-language-url {
   .dropdown-menu {
-    padding-left: 0;
-    padding-right: 0;
-  }
-  .language-link {
-    padding-left: $space-three-and-half;
-    padding-right: $space-one-and-half;
+    padding: $space-one-half 0;
   }
 }

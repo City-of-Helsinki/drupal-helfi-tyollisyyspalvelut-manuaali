@@ -509,11 +509,28 @@ $button-colors: (
     font-weight: 600;
     height: 24px;
   }
+  &:hover {
+    .links {
+      background-image: url("../../assets/icons/world.svg");
+    }
+    .language-code {
+      color: clr(background-section);
+    }
+    .icon--dropdown {
+      background-image: url("../../assets/icons/arrow-sm-down.svg");
+    }
+  }
+  &:focus-visible {
+    outline: 2px solid clr(primary);
+    border-radius: 0;
+  }
   .links {
     margin-right: $space;
     height: 24px;
     width: 24px;
     vertical-align: middle;
+    background-image: url("../../assets/icons/world-black.svg");
+    background-repeat: none;
     @include xl {
       vertical-align: top;
     }
@@ -526,9 +543,18 @@ $button-colors: (
     }
   }
   .icon--dropdown  {
+    background-image: url("../../assets/icons/arrow-sm-down-black.svg");
+    background-repeat: none;
     @media only screen and (max-width: $xl) {
         display: none;
     }
+  }
+}
+
+.account-menu-button {
+  &:focus-visible {
+    outline: 2px solid clr(primary);
+    border-radius: 0;
   }
 }
 
@@ -924,7 +950,7 @@ input[data-drupal-selector="edit-field-contact-info-external-actions-ief-add"]{
   border-radius: 50%;
   background-size: 18px;
   &:hover {
-    background-color: clr(background-border);
+    background-color: clr(footer-color);
   }
   @include xl {
     background-color: clr(background-section);
@@ -932,7 +958,7 @@ input[data-drupal-selector="edit-field-contact-info-external-actions-ief-add"]{
 
     margin-left: 22px;
     &:hover {
-      border: 2px solid $blue100;
+      border: 2px solid clr(footer-color);
     }
   }
 }
