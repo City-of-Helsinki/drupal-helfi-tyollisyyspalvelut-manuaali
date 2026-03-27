@@ -1,0 +1,96 @@
+uuid: c79506c2-17fa-4011-aa7b-9d1ab0014009
+langcode: fi
+status: true
+dependencies:
+  config:
+    - node.type.service
+  module:
+    - content_moderation
+id: service_moderation
+label: 'Service moderation'
+type: content_moderation
+type_settings:
+  states:
+    archived:
+      label: Archived
+      weight: 2
+      published: false
+      default_revision: true
+    draft:
+      label: Draft
+      weight: -4
+      published: false
+      default_revision: false
+    outdated:
+      label: Outdated
+      weight: 0
+      published: false
+      default_revision: true
+    published:
+      label: Published
+      weight: -2
+      published: true
+      default_revision: true
+    ready_to_publish:
+      label: 'Ready to publish'
+      weight: -3
+      published: false
+      default_revision: false
+  transitions:
+    archived:
+      label: Archived
+      from:
+        - archived
+        - outdated
+        - published
+      to: archived
+      weight: 3
+    create_new_draft:
+      label: 'Create New Draft'
+      from:
+        - archived
+        - draft
+        - published
+      to: draft
+      weight: -4
+    outdated:
+      label: Outdated
+      from:
+        - draft
+        - outdated
+        - published
+      to: outdated
+      weight: 1
+    outdated_to_draft:
+      label: 'Outdated to draft'
+      from:
+        - outdated
+      to: draft
+      weight: 4
+    publish:
+      label: Publish
+      from:
+        - draft
+        - published
+        - ready_to_publish
+      to: published
+      weight: -1
+    ready_to_publish:
+      label: 'Ready to publish'
+      from:
+        - draft
+        - outdated
+        - published
+        - ready_to_publish
+      to: ready_to_publish
+      weight: -3
+    ready_to_publish_to_draft:
+      label: 'Ready to publish to draft'
+      from:
+        - ready_to_publish
+      to: draft
+      weight: -2
+  entity_types:
+    node:
+      - service
+  default_moderation_state: draft

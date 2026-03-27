@@ -35,8 +35,10 @@ function fix_missing_service_translations() {
           ->condition('langcode', $rev->langcode)
           ->execute();
       }
-      print sprintf('%s langcode %s', $nid, $langcode);
-      print "\r\n";
+      if (!empty($changed)) {
+        print sprintf('%s langcode %s count: %s', $nid, $langcode, count($changed));
+        print "\r\n";
+      }
     }
   }
   return $mapped_revisions;
@@ -62,12 +64,11 @@ function find_changed_revisions($revisions) {
   unset($revisions[0]);
   $changed_revisions = [$rev];
 
-  $left_entity = $storage->loadRevision($rev->vid)->getTranslation($rev->langcode);
-
+  $left_entity = $storage->loadRevision($rev->vid);
 
   foreach ($revisions as $revision) {
-    $right_entity = $storage->loadRevision($revision->vid)->getTranslation($revision->langcode);
-    $diff = $diff_comparison->compareRevisions($left_entity, $right_entity);
+    $right_entity = $storage->loadRevision($revision->vid);
+    $diff = $diff_comparison->compareRevisions($left_entity, $right_entity, $rev->langcode);
     if (!has_changed_fields($diff)) {
       continue;
     }

@@ -1,0 +1,40 @@
+uuid: fd34aae0-598d-4516-a64c-c7e3acb431ed
+langcode: fi
+status: true
+dependencies:
+  config:
+    - filter.format.filtered_html
+    - filter.format.plain_text_format
+    - media.type.image
+    - node.type.service
+    - node.type.service_location
+    - workflows.workflow.service_moderation
+  module:
+    - content_moderation
+    - content_translation
+    - field_permissions
+    - file
+    - filter
+    - hel_tpm_group
+    - media
+    - node
+    - paragraphs
+    - paragraphs_type_permissions
+    - system
+id: editor
+label: Sisällöntuottaja
+weight: 4
+is_admin: null
+permissions:
+  - 'access content'
+  - 'access extra member info if group admin'
+  - 'access user profiles'
+  - 'create service content'
+  - 'edit own service content'
+  - 'use service_moderation transition create_new_draft'
+  - 'use service_moderation transition outdated'
+  - 'use service_moderation transition ready_to_publish'
+  - 'use service_moderation transition ready_to_publish_to_draft'
+  - 'view latest version'
+  - 'view service revisions'
+  - 'view the administration theme'
