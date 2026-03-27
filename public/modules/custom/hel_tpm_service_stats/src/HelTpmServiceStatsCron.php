@@ -73,6 +73,7 @@ final class HelTpmServiceStatsCron {
     $nids = $this->storage->getQuery()
       ->condition('type', 'service')
       ->condition('changed', $request_time - 86400, "<")
+      ->addTag('exclude_archived_services')
       ->accessCheck(FALSE)
       ->execute();
     if (empty($nids)) {

@@ -1,0 +1,32 @@
+uuid: 697df67e-a9a6-4e41-90f0-b668637f906f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_service_provider_updatee
+    - node.type.service
+id: node.service.field_service_provider_updatee
+field_name: field_service_provider_updatee
+entity_type: node
+bundle: service
+label: 'Responsible for service in the organisation'
+description: 'The responsible person is the owner of the service in the organization. They know the service and monitor the up-to-dateness of the information. '
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: hel_tpm_group_editor_user_selection
+  handler_settings:
+    target_bundles: null
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+    filter:
+      type: _none
+    include_anonymous: false
+    filter_users_without_publish: 0
+    include_supergroup_members: 0
+field_type: entity_reference

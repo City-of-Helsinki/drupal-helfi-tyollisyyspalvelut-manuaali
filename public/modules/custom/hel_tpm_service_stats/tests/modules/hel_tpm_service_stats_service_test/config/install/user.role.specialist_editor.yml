@@ -1,0 +1,23 @@
+uuid: d52fb709-a876-4420-ae30-2a1a36419645
+langcode: fi
+status: true
+dependencies:
+  module:
+    - eu_cookie_compliance
+    - field_permissions
+    - file
+    - hel_tpm_general
+    - hel_tpm_group
+    - paragraphs_type_permissions
+id: specialist_editor
+label: 'Specialist editor'
+weight: 6
+is_admin: null
+permissions:
+  - 'access extra member info if group admin'
+  - 'create field_responsible_municipality'
+  - 'create field_responsible_updatee'
+  - 'edit field_responsible_updatee'
+  - 'view field_responsible_municipality'
+  - 'view field_responsible_updatee'
+  - 'view own field_responsible_municipality'
