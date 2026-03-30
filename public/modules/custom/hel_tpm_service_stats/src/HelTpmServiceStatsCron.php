@@ -55,18 +55,21 @@ final class HelTpmServiceStatsCron {
   }
 
   /**
-   * Executes the cron logic for processing service-related nodes.
+   * Processes cron tasks for managing service statistics.
    *
-   * The method checks whether the cron should run, processes nodes of the type
-   * "service" that have not been modified in the past 24 hours, and queues them
-   * for further processing in chunks. Finally, it updates the
-   * last cron run time in the state storage.
+   * The method checks whether the scheduled task should run and processes
+   * the items if necessary. If the $force parameter is true, it bypasses
+   * the regular scheduling check, and performs the cron operation forcibly.
+   *
+   * @param bool $force
+   *   A flag to indicate if the cron job should run forcibly, regardless of
+   *   the scheduled time. Defaults to false.
    *
    * @return void
-   *   void
+   *   This method does not return a value.
    */
-  public function cron(): void {
-    if (!$this->shouldRun()) {
+  public function cron($force = FALSE): void {
+    if (!$this->shouldRun() && $force === FALSE) {
       return;
     }
     $request_time = $this->datetimeTime->getRequestTime();

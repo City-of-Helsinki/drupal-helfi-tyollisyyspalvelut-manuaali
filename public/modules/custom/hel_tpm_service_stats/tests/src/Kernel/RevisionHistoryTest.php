@@ -341,13 +341,13 @@ final class RevisionHistoryTest extends GroupKernelTestBase {
     $this->setNodeModerationState($node, 'ready_to_publish');
 
     $this->serviceStatsCron->cron();
+    self::assertEmpty($this->serviceStatsCron->cron());
 
+    $this->serviceStatsCron->cron(TRUE);
     $item = $this->queue->claimItem();
-
     self::assertCount(1, $item->data);
 
     $this->queueWorker->processItem($item->data);
-
     $node = $this->reloadEntity($node);
     self::assertEquals(8, $node->field_days_since_last_state_chan->value);
 
@@ -359,7 +359,6 @@ final class RevisionHistoryTest extends GroupKernelTestBase {
     $node->save();
 
     $node = $this->reloadEntity($node);
-
     self::assertEquals(8, $node->field_days_since_last_state_chan->value);
 
     $revision_translation_affected = $this->database->select('node_field_data')
