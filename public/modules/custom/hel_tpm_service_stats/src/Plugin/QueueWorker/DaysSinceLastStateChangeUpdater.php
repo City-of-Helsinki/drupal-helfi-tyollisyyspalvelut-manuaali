@@ -31,6 +31,11 @@ final class DaysSinceLastStateChangeUpdater extends QueueWorkerBase implements C
   private EntityStorageInterface $storage;
 
   /**
+   * The database connection instance.
+   */
+  private Connection $database;
+
+  /**
    * Class constructor.
    *
    * Initializes the service dependencies and sets up required properties.
