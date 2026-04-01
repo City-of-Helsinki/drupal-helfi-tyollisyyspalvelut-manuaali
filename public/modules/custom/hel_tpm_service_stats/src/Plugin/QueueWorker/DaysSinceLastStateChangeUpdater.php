@@ -33,25 +33,27 @@ final class DaysSinceLastStateChangeUpdater extends QueueWorkerBase implements C
   /**
    * Class constructor.
    *
+   * Initializes the service dependencies and sets up required properties.
+   *
    * @param array $configuration
-   *   A configuration array containing information about the plugin instance.
-   * @param string $plugin_id
-   *   The plugin ID for the plugin instance.
+   *   Configuration array.
+   * @param mixed $plugin_id
+   *   The plugin ID.
    * @param mixed $plugin_definition
-   *   The plugin implementation definition.
+   *   The plugin definition.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
-   *   The entity type manager.
-   * @param \Drupal\Core\Datetime\TimeInterface $datetimeTime
-   *   The datetime time service.
-   * @param \Drupal\hel_tpm\Service\RevisionHistoryService $helTpmServiceStatsRevisionHistory
+   *   The entity type manager service.
+   * @param \Drupal\Component\Datetime\TimeInterface $datetimeTime
+   *   The time service for datetime operations.
+   * @param \Drupal\hel_tpm_service_stats\RevisionHistoryService $helTpmServiceStatsRevisionHistory
    *   The revision history service.
    * @param \Drupal\Core\Database\Connection $connection
    *   The database connection service.
-   * @param \Drupal\Core\Logger\LoggerChannelInterface $logger
-   *   The logger channel interface.
+   * @param \Psr\Log\LoggerInterface $logger
+   *   The logger channel service.
    *
    * @return void
-   *   Void.
+   *   This method does not return a value.
    */
   public function __construct(
     array $configuration,
