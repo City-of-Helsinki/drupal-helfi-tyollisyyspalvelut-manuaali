@@ -69,8 +69,6 @@ foreach ($cm_field_revision as $row) {
       print sprintf("Fixed %s rows node_field_data for nid %s \r\n", $node_update, $row->content_entity_id);
     }
   }
-
-  //  print sprintf("Fixed node %s revision %s language %s\r\n", $row->content_entity_id, $row->content_entity_revision_id ,$row->langcode);
 }
 foreach ($fixed_nodes as $nid => $rows) {
   sort($rows);
