@@ -12,7 +12,7 @@
       'menuHTML': '<div class="multi-select-menu">',
       'buttonHTML': '<span class="multi-select-button">',
       'menuItemsHTML': '<div class="multi-select-menuitems">',
-      'menuItemHTML': '<label class="multi-select-menuitem">',
+      'menuItemHTML': '<label class="multi-select-menuitem" tabindex="0">',
       'presetsHTML': '<div class="multi-select-presets">',
       'modalHTML': undefined,
       'menuItemTitleClass': 'multi-select-menuitem--titled',
@@ -244,6 +244,8 @@
         } else {
           this.$menuItems.children().first().focus();
         }
+      } else if (key === 13 ) {
+        $(e.currentTarget).click();
       }
     },
 
@@ -321,6 +323,7 @@
       $($parent_element).addClass('group--parent-label');
       $($parent_element).addClass('select--children');
       $($parent_element).html($optgroup.attr('label'));
+      $($parent_element).attr("tabindex","0");
 
       $optgroup.children('option').each(function(option_index, option) {
         //checked = $(option).attr('selected') === 'selected';

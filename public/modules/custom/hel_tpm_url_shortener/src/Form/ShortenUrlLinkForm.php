@@ -73,7 +73,7 @@ class ShortenUrlLinkForm extends FormBase {
       '#type' => 'button',
       '#value' => $this->t('Copy Link To Search Results'),
       '#attributes' => [
-        'tabindex' => 3,
+        'tabindex' => 0,
         'class' => ['create-link'],
         'title' => $this->t('Copy Link To Search Results'),
       ],

@@ -37,3 +37,13 @@ filter_ajax_watcher:
   dependencies:
     - core/jquery
     - core/drupal.ajax
+
+# Custom module library for general purposes.
+language_radio:
+  version: 0.2
+  js:
+    js/hel-tpm-search.language-radio.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings
