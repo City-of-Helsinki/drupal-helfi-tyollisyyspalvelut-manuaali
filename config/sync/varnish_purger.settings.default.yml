@@ -1,17 +1,23 @@
-uuid: 68740d73-f785-499b-b477-403e718244eb
-langcode: fi
+uuid: 85727c8d-d176-4e6b-a897-fe0f15e13b81
+langcode: en
 status: true
 dependencies: {  }
-id: 2ce1889afd
-name: 'Varnish purger'
+id: default
+name: varnish
 invalidationtype: tag
 hostname: localhost
-port: 8080
+port: 6081
 path: /
 request_method: BAN
 scheme: http
-verify: '1'
-headers: {  }
+verify: '0'
+headers:
+  -
+    field: Cache-Tags
+    value: '[invalidation:expression]'
+  -
+    field: X-Cache-Tags
+    value: '[invalidation:expression]'
 body: null
 body_content_type: null
 runtime_measurement: true
