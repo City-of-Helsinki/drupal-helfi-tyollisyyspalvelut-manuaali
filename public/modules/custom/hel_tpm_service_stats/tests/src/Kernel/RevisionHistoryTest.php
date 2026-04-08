@@ -17,6 +17,7 @@ final class RevisionHistoryTest extends GroupKernelTestBase {
 
   use HelTpmServiceStatsWorkflowTestTrait;
 
+
   /**
    * {@inheritdoc}
    */
@@ -41,7 +42,7 @@ final class RevisionHistoryTest extends GroupKernelTestBase {
     'views',
     'field_permissions',
     'flexible_permissions',
-    'service_manual_workflow_service_test',
+    'hel_tpm_service_stats_service_test',
     'hel_tpm_service_stats',
     'service_manual_workflow_service_language_test',
   ];
@@ -52,6 +53,34 @@ final class RevisionHistoryTest extends GroupKernelTestBase {
    * @var mixed
    */
   private $revisionHistoryService;
+
+  /**
+   * Service stats cron service.
+   *
+   * @var \hel_tpm_service_statscron|object|null
+   */
+  private $serviceStatsCron;
+
+  /**
+   * Queue instance used for managing and processing tasks.
+   *
+   * @var \Drupal\Core\Queue\QueueInterface
+   */
+  private $queue;
+
+  /**
+   * Worker responsible for processing items in the queue.
+   *
+   * @var \Drupal\hel_tpm_service_stats\Plugin\QueueWorker\DaysSinceLastStateChangeUpdater
+   */
+  private $queueWorker;
+
+  /**
+   * Queue name that updates the days since the last state change.
+   *
+   * @var string
+   */
+  private $queueName = 'hel_tpm_service_stats_days_since_last_state_change_updater';
 
   /**
    * {@inheritdoc}
@@ -67,10 +96,14 @@ final class RevisionHistoryTest extends GroupKernelTestBase {
     $this->installConfig(['field', 'node', 'system']);
     $this->installSchema('ggroup', ['group_graph']);
     $this->installConfig([
-      'service_manual_workflow_service_test',
+      'hel_tpm_service_stats_service_test',
       'content_moderation',
     ]);
     $this->revisionHistoryService = \Drupal::service('hel_tpm_service_stats.revision_history');
+    $this->serviceStatsCron = \Drupal::service('hel_tpm_service_stats.cron');
+    $this->queue = \Drupal::service('queue')->get($this->queueName);
+    $this->queueWorker = \Drupal::service('plugin.manager.queue_worker')->createInstance($this->queueName);
+    $this->database = \Drupal::database();
     ConfigurableLanguage::createFromLangcode('fi')->save();
   }
 
@@ -158,14 +191,16 @@ final class RevisionHistoryTest extends GroupKernelTestBase {
   }
 
   /**
-   * Test translations.
+   * Tests the service translation revision history functionality.
+   *
+   * This method evaluates the behavior of node revisions and publishes states
+   * for both default and translated content in the context of service entities.
+   * It verifies data integrity between revisions and transition states for
+   * multilingual scenarios.
    *
    * @return void
-   *   Void.
-   *
-   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
-   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
-   * @throws \Drupal\Core\Entity\EntityStorageException
+   *   This method performs assertions to validate revision and moderation
+   *   state changes, but does not return any value.
    */
   public function testServiceTranslationHistory() {
     $user = $this->createUser([], NULL, TRUE);
@@ -216,7 +251,15 @@ final class RevisionHistoryTest extends GroupKernelTestBase {
   }
 
   /**
-   * Test time since last state change.
+   * Tests the time elapsed since the last moderation state change for a node.
+   *
+   * This method creates nodes and translations with different moderation states
+   * and revision creation times to ensure the time calculated since the last
+   * state change is accurate.
+   *
+   * @return void
+   *   This method does not return a value but performs assertions to validate
+   *   the functionality of the time calculation since the last state change.
    */
   public function testTimeSinceLastStateChange() {
     $this->createUser([], NULL, TRUE);
@@ -259,7 +302,82 @@ final class RevisionHistoryTest extends GroupKernelTestBase {
     $this->assertEquals('ready_to_publish', $node->getTranslation('fi')->moderation_state->getValue()[0]['value']);
 
     $this->assertEquals(3, $this->revisionHistoryService->getTimeSinceLastStateChange($translation));
+  }
 
+  /**
+   * Tests the update of the 'days since last state change' field value.
+   *
+   * This method validates that the field 'field_days_since_last_state_chan' is
+   * correctly updated based on changes in the node's moderation state and when
+   * a new revision is created. It ensures that the cron process and queue
+   * worker operate as expected, and that the 'revision_translation_affected'
+   * flag is set for the current revision.
+   *
+   * @return void
+   *   No return value.
+   */
+  public function testDaysSinceLastStateChangeUpdate() {
+    $this->createUser([], NULL, TRUE);
+    $date = strtotime('-10 days');
+    $node = $this->createNode([
+      'type' => 'service',
+      'moderation_state' => 'draft',
+      'created' => $date,
+      'changed' => $date,
+    ]);
+
+    $date = strtotime('now -9 days');
+    $node->setTitle('Change 1');
+    $node->setChangedTime($date);
+    $node->setRevisionCreationTime($date);
+    $node->setNewRevision(TRUE);
+    $node->save();
+
+    $date = strtotime('now -8 days');
+    $node->setTitle('Change 2');
+    $node->setChangedTime($date);
+    $node->setRevisionCreationTime($date);
+    $node->setNewRevision(TRUE);
+    $this->setNodeModerationState($node, 'ready_to_publish');
+
+    $this->serviceStatsCron->cron();
+    self::assertEmpty($this->serviceStatsCron->cron());
+
+    $this->serviceStatsCron->cron(TRUE);
+    $item = $this->queue->claimItem();
+    self::assertCount(1, $item->data);
+
+    $this->queueWorker->processItem($item->data);
+    $node = $this->reloadEntity($node);
+    self::assertEquals(8, $node->field_days_since_last_state_chan->value);
+
+    $date = strtotime('now -7 days');
+    $node->setTitle('Change 3');
+    $node->setChangedTime($date);
+    $node->setRevisionCreationTime($date);
+    $node->setNewRevision(TRUE);
+    $node->save();
+
+    $node = $this->reloadEntity($node);
+    self::assertEquals(8, $node->field_days_since_last_state_chan->value);
+
+    $revision_translation_affected = $this->database->select('node_field_data')
+      ->fields('node_field_data')
+      ->condition('vid', $node->getRevisionId())
+      ->condition('revision_translation_affected', 1)
+      ->countQuery()
+      ->execute()
+      ->fetchField();
+    self::assertEquals(1, $revision_translation_affected);
+
+    $revision_translation_affected = $this->database->select('node_field_revision')
+      ->fields('node_field_revision')
+      ->condition('vid', $node->getRevisionId())
+      ->condition('revision_translation_affected', 1)
+      ->countQuery()
+      ->execute()
+      ->fetchField();
+    self::assertEquals(1, $revision_translation_affected);
   }
 
 }

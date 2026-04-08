@@ -1,0 +1,31 @@
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_service_producer
+    - group.type.organisation
+    - group.type.service_provider
+    - node.type.service
+  module:
+    - epp
+    - require_on_publish
+id: node.service.field_service_producer
+field_name: field_service_producer
+entity_type: node
+bundle: service
+label: 'Palvelun tuottaja'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:group'
+  handler_settings:
+    target_bundles: null
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: organisation
+field_type: entity_reference
