@@ -1,0 +1,24 @@
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_days_since_last_state_chan
+    - node.type.service
+  module:
+    - hel_tpm_service_stats
+id: node.service.field_days_since_last_state_chan
+field_name: field_days_since_last_state_chan
+entity_type: node
+bundle: service
+label: 'Days since last state change'
+description: ''
+required: false
+translatable: true
+default_value: { }
+default_value_callback: ''
+settings:
+  min: 0
+  max: NULL
+  prefix: NULL
+  suffix: NULL
+field_type: hel_tpm_service_stats_days_since_state_change

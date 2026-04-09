@@ -1,0 +1,34 @@
+field.storage_settings.hel_tpm_service_stats_days_since_state_change:
+  type: mapping
+  label: 'Days since last state change settings'
+  mapping:
+    unsigned:
+      type: boolean
+      label: 'Unsigned'
+    size:
+      type: string
+      label: 'Database storage size'
+field.field_settings.hel_tpm_service_stats_days_since_state_change:
+  type: mapping
+  label: 'Days since last state change'
+  mapping:
+    min:
+      type: integer
+      label: 'Minimum'
+    max:
+      type: integer
+      label: 'Maximum'
+    prefix:
+      type: label
+      label: 'Prefix'
+    suffix:
+      type: label
+      label: 'Suffix'
+
+field.value.hel_tpm_service_stats_days_since_change:
+  type: mapping
+  label: 'Default value'
+  mapping:
+    value:
+      type: integer
+      label: 'Value'
