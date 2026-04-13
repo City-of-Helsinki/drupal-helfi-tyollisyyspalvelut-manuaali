@@ -1154,6 +1154,76 @@ function hel_tpm_general_update_20127(&$sandbox) {
 }
 
 /**
+ * Install field_location_additional_info_ and field_time_additional_info_html.
+ */
+function hel_tpm_general_update_20128(&$sandbox) {
+  $config_path = Settings::get('config_sync_directory');
+  $source = new FileStorage($config_path);
+
+  // Import field storages.
+  $field_storage_conf = [
+    'field.storage.paragraph.field_location_additional_info_1',
+    'field.storage.paragraph.field_time_additional_info_html',
+  ];
+  $field_storage_config = \Drupal::entityTypeManager()->getStorage('field_storage_config');
+  foreach ($field_storage_conf as $config) {
+    $field_storage_config->create($source->read($config))->save();
+  }
+
+  // Import node field configs.
+  $field_configs = [
+    'field.field.paragraph.service_time_and_place.field_location_additional_info_1',
+    'field.field.paragraph.service_time_and_place.field_time_additional_info_html',
+  ];
+  $field_config_storage = \Drupal::entityTypeManager()->getStorage('field_config');
+  foreach ($field_configs as $config) {
+    $field_config_storage->create($source->read($config))->save();
+  }
+}
+
+/**
+ * Migrate field_location_additional_info and field_time_additional_info fields.
+ */
+function hel_tpm_general_update_20129(&$sandbox) {
+  $database = \Drupal::database();
+  $mapping = [
+    'paragraph' => [
+      'field_location_additional_info' => 'field_location_additional_info_1',
+      'field_time_additional_info' => 'field_time_additional_info_html',
+    ],
+  ];
+
+  foreach ($mapping as $entity_type => $field_mapping) {
+    foreach ($field_mapping as $original_field => $new_field) {
+
+      $original_field_tables = _hel_tpm_general_get_field_tables($original_field, $entity_type);
+      $new_field_tables = _hel_tpm_general_get_field_tables($new_field, $entity_type);
+      foreach ($original_field_tables as $key => $original_table) {
+        $new_rows = [];
+        $new_table = $new_field_tables[$key];
+        $rows = $database->select($original_table, 'b')
+          ->fields('b')
+          ->condition('b.bundle', 'service_time_and_place')
+          ->execute()
+          ->fetchAll();
+        foreach ($rows as $row) {
+          $row->{$new_field . '_format'} = 'limited_filtered_html';
+          $row->{$new_field . '_value'} = $row->{$original_field . '_value'};
+          unset($row->{$original_field . '_value'});
+          $new_rows[] = (array) $row;
+        }
+        $insert = $database->insert($new_table)
+          ->fields(array_keys(reset($new_rows)));
+        foreach ($new_rows as $row) {
+          $insert->values(array_values($row));
+        }
+        $insert->execute();
+      }
+    }
+  }
+}
+
+/**
  * Inserts a row into the specified field's database tables.
  *
  * This function inserts values for a given field into the appropriate database
@@ -1554,4 +1624,36 @@ function _hel_tpm_general_is_default($revision_id) {
     ->execute()
     ->fetchField();
   return !((int) $default === 0);
+}
+
+/**
+ * Retrieves the database table names for a given field and entity type.
+ *
+ * This method provides the base and revision table names associated with a
+ * specific field of an entity type, using the entity type manager and field
+ * storage definitions.
+ *
+ * @param string $field_name
+ *   The machine name of the field for which the table names are retrieved.
+ * @param string $entity_type
+ *   The machine name of the entity type to which the field belongs.
+ *
+ * @return array
+ *   An associative array with two keys:
+ *   - base: The name of the base data table for the given field.
+ *   - revision: The name of the revision table for the given field.
+ */
+function _hel_tpm_general_get_field_tables($field_name, $entity_type) {
+  $field_tables = [];
+  $entity_type_manager = Drupal::service('entity_type.manager');
+  $field_manager = Drupal::service('entity_field.manager');
+  $storage = $entity_type_manager->getStorage($entity_type);
+
+  $field_storage_definitions = $field_manager->getFieldStorageDefinitions($entity_type);
+  $field_storage_definition = $field_storage_definitions[$field_name];
+
+  $field_tables['base'] = $storage->getTableMapping()->getDedicatedDataTableName($field_storage_definition);
+  $field_tables['revision'] = $storage->getTableMapping()->getDedicatedRevisionTableName($field_storage_definition);
+
+  return $field_tables;
 }
