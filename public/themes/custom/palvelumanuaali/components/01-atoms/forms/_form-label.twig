@@ -21,6 +21,13 @@
     'form-item__label',
   ]
 %}
+
+{% set tabindex = tabindex %}
+
+
+{% if tabindex is not empty  %}
+  {% set attributes = attributes.setAttribute('tabindex','0') %}
+{% endif %}
 {% if title is not empty or required -%}
-  <label{{ attributes.addClass(classes) }}>{{ title }}</label>
+  <label {{ attributes.addClass(classes) }}>{{ title }}</label>
 {%- endif %}

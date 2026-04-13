@@ -1,0 +1,8 @@
+description: 'Service is ready to publish and needs audit.'
+text:
+  -
+    value: "Palvelun [message:field_node:entity:title] julkaisu odottaa hyväksyntää sivustolla [site:name] \r\n"
+    format: plain_text_format
+  -
+    value: '<p>Hei [message:field_user:entity:mail],</p><p>Sinulle on saapunut palvelun [message:field_node:entity:title] tiedot tarkistettaviksi ennen julkaisun vahvistamista.</p><p>Käythän tarkistamassa palvelun tiedot ja hyväksy palvelu julkaistavaksi, mikäli tiedot ovat oikein. Seuraa linkkiä klikkaamalla tai kopioi se selaimesi osoiteriville: <a href="[message:field_node:entity:url]">[message:field_node:entity:url]</a></p><p>Tilamuutoksen teet vaihtamalla palvelun tilan ”odottaa julkaisua”-tilasta ”julkaistu”-tilaan. Jos palvelun julkisissa tiedoissa on epäselvyyttä, ole yhteydessä muutoksen tehneeseen käyttäjään [message:field_message_author:entity:mail].</p><p>Huomioithan, että kunnan vastuukäyttäjänä sinun tulee varmistaa sisäisten työohjeiden oikeellisuus suhteessa tehtyihin muutoksiin sekä työohjeiden ajantasaisuus.</p><p>&nbsp;</p><p>Ystävällisin terveisin<br>[site:name] tiimi</p> '
+    format: full_html

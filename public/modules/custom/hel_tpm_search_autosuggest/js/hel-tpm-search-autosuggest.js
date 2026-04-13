@@ -44,7 +44,6 @@
       var tab = 0;
       jQuery('.suggestion-item', form).each(function () {
         $(this).attr('tabIndex', tab);
-        tab++;
       });
     },
     submitSelection: function(searchVal, form) {
@@ -83,7 +82,7 @@
       if (history != null && history.length > 0) {
         $.each(history, function(key, value) {
           let val = value.escapeHTML();
-          content +='<span class="suggestion-item word-suggestion" tabindex="' + i + '" value="' + val + '">' + val + '</span>';
+          content +='<span class="suggestion-item word-suggestion" tabindex="0" value="' + val + '">' + val + '</span>';
           i++;
         });
       }
@@ -148,6 +147,20 @@
         $(searchDropdownWrapper, context).show();
         $(autocompleteWrapper, context).show();
       }
+
+      $(document).keyup(function(e) {
+        if (!(e.keyCode !== 6)) {
+          return;
+        }
+        let target = $(event.target);
+        if(!target.closest('.search-autocomplete-wrapper').length &&
+          $('.search-autocomplete-wrapper').is(":visible")) {
+          $(searchDropdownWrapper).hide();
+          // Remove autocomplete-open class.
+          $(input).removeClass('autocomplete-open');
+        }
+      });
+
 
       // Handle click events outside of search element.
       $(document).click(function(event) {

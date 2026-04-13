@@ -99,7 +99,7 @@ class SearchLanguageSelect extends RadioButtons implements ContainerFactoryPlugi
     if (empty($form[$field_id])) {
       return;
     }
-
+    $form['#attached']['library'][] = 'hel_tpm_search/language_radio';
     $field = &$form[$field_id];
     unset($field['#options']['All']);
 
