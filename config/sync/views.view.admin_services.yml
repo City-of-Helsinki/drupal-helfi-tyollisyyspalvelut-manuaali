@@ -792,17 +792,40 @@ display:
               allow_secondary: false
               secondary_label: Lisävaihtoehdot
               secondary_open: false
+              autosubmit_textfield_minimum_length: 3
+              autosubmit_breakpoint: ''
+              auto_submit_sort_only: false
             sort:
               plugin_id: default
             filter:
               title:
                 plugin_id: default
+                advanced:
+                  field_classes: ''
+                  open_by_default: false
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
               status:
                 plugin_id: default
+                advanced:
+                  field_classes: ''
+                  open_by_default: false
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
               langcode:
                 plugin_id: default
+                advanced:
+                  field_classes: ''
+                  open_by_default: false
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
               gid:
                 plugin_id: default
+                advanced:
+                  field_classes: ''
+                  open_by_default: false
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
       access:
         type: perm
         options:
