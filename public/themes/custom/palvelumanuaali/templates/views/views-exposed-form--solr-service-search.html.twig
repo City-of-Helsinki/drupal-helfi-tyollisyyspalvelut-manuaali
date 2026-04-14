@@ -31,7 +31,7 @@
 <div class="form--inline clearfix search-form">
   <div class="text-search-wrapper">
     {{ form['search_wrapper'] }}
-    {{ form['actions'] }}
+    {{ form['actions']|without('reset') }}
   </div>
   <div class="filters-wrapper">
     <div class="exposed-filters">

@@ -97,7 +97,7 @@
         })
         .click(function (ev) {
           Drupal.behaviors.hel_tpm_search_autocomplete.submitSelection($(this).attr('value'), context);
-          $('.form-actions input[type="submit"]', context).click();
+          $(context).find('[id^="edit-submit-"]').click();
         });
     },
 
@@ -145,7 +145,7 @@
         if (!(e.keyCode !== 6)) {
           return;
         }
-        let target = $(event.target);
+        let target = $(e.target);
         if(!target.closest('.search-autocomplete-wrapper').length &&
           $('.search-autocomplete-wrapper').is(":visible")) {
           $(searchDropdownWrapper).hide();
