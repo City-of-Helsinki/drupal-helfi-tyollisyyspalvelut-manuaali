@@ -82,8 +82,8 @@
         {% apply spaceless %}
           <div{{ item.attributes.addClass('field__item') }}>
             {{item.content}}
-          </div>
           {% if not loop.last %}<span>,</span>{% endif %}
+          </div>
         {% endapply %}
       {% endfor %}
      {% elseif price_field %}
