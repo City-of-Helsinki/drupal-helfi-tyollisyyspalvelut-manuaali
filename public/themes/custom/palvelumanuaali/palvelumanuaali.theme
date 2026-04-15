@@ -703,3 +703,20 @@ function palvelumanuaali_preprocess_paragraph__quick_link__default(&$variables, 
     'description' => $description,
   ];
 }
+
+/**
+ * Implements hook_preprocess().
+ */
+function palvelumanuaali_preprocess_pager(&$variables): void {
+  if (!empty($variables['items']['first'])) {
+    $variables['items']['first']['text'] = "1";
+    $variables['items']['first']['attributes']->addClass('pager__link');
+  }
+
+  if (!empty($variables['items']['last'])) {
+    $href = $variables['items']['last']['href'];
+    $page = explode('=', $href);
+    $variables['items']['last']['text'] = $page[1];
+    $variables['items']['last']['attributes']->addClass('pager__link');
+  }
+}
