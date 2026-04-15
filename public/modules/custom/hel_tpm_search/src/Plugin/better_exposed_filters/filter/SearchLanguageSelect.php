@@ -126,6 +126,29 @@ class SearchLanguageSelect extends RadioButtons implements ContainerFactoryPlugi
       $field['#options'][$result->getRawValue()] = $label;
     }
 
+    $this->sortOptions($field['#options']);
+
+  }
+
+  /**
+   * Sorts the given options array based on available languages.
+   *
+   * This method reorders the options array to match the language codes
+   * retrieved from the language manager.
+   *
+   * @param array &$options
+   *   The array of options to be sorted, passed by reference.
+   *
+   * @return void
+   *   This method does not return a value, as the options array is modified
+   *   directly.
+   */
+  protected function sortOptions(&$options) {
+    $languages = $this->languageManager->getLanguages();
+    foreach ($languages as $langcode => $language) {
+      $languages[$langcode] = $options[$langcode];
+    }
+    $options = $languages;
   }
 
   /**
