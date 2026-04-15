@@ -111,6 +111,7 @@ class SearchLanguageSelect extends RadioButtons implements ContainerFactoryPlugi
 
     $handler = &$this->handler;
     $user_input = $form_state->getUserInput();
+    $current_value = $this->languageManager->getCurrentLanguage()->getId();
     if (!empty($user_input) && !empty($user_input[$field_id])) {
       $current_value = $user_input[$field_id];
     }
