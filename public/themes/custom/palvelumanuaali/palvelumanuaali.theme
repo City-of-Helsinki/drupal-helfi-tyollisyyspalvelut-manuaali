@@ -716,7 +716,7 @@ function palvelumanuaali_preprocess_pager(&$variables): void {
   if (!empty($variables['items']['last'])) {
     $href = $variables['items']['last']['href'];
     $page = explode('=', $href);
-    $variables['items']['last']['text'] = $page[1];
+    $variables['items']['last']['text'] = (int) $page[1] + 1;
     $variables['items']['last']['attributes']->addClass('pager__link');
   }
 }
