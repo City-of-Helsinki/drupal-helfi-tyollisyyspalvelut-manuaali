@@ -191,46 +191,19 @@
     },
 
     attach: function (context, settings) {
-      let form = $('.search-autocomplete-wrapper');
-      let searchField = 'input[name="search_api_fulltext"]';
-      let selectedMultiselect = '.filters-wrapper .multi-select-container.active';
-
-      if ($(searchField).val().length === 0) {
-          $('.text-search-wrapper input[id^="edit-reset--"]').hide();
-      } else {
-          $('.text-search-wrapper input[id^="edit-reset--"]').show();
-      }
+      const form = $('.search-autocomplete-wrapper');
+      const searchFieldSelector = 'input[name="search_api_fulltext"]';
+      const resetButtonSelector = '.control-wrapper input[id^="edit-reset-"]';
+      const activeMultiselectSelector = '.filters-wrapper .multi-select-container.active';
 
       $(document).ready(function() {
-        if ($(selectedMultiselect).length) {
-          $('.control-wrapper input[id^="edit-reset--"]').show();
-        } else {
-          $('.control-wrapper input[id^="edit-reset--"]').hide();
-        }
-
-        $('.text-search-wrapper input[id^="edit-reset--"]').click (function (event) {
-          event.preventDefault();
-          $(this).closest('form').find("input[type=text], textarea").val("");
-          $(this).closest('form').find('[id^="edit-submit-"]').click();
-        });
-
-        $('.control-wrapper input[id^="edit-reset--"]').click (function (event) {
-          event.preventDefault();
-          $(this).closest('form').find('select').val('');
-          $(this).closest('form').find('input[type=radio]').prop('checked', false);
-          $(this).closest('form').find('input[type=checkbox]').prop('checked', false);
-          $(this).closest('form').find('[id^="edit-submit-"]').click();
-        });
-        $('.cost-reset input[id^="edit-reset--"]').click (function (event) {
-          event.preventDefault();
-          $(this).closest('form').find('.form-item-field-free-service select').val('');
-          $(this).closest('form').find('.form-item-field-free-service input[type=radio]').prop('checked', false);
-          $(this).closest('form').find('.form-item-field-free-service input[type=checkbox]').prop('checked', false);
-          $(this).closest('form').find('[id^="edit-submit-"]').click();
-        });
+        // Toggle showing reset button.
+        const hasSearchText = $(searchFieldSelector).val().length > 0;
+        const hasSelectedMultiselect = $(activeMultiselectSelector).length > 0;
+        $(resetButtonSelector).toggle(hasSearchText || hasSelectedMultiselect);
       });
 
-      $(searchField, form)
+      $(searchFieldSelector, form)
         .focus(function () {
           // Don't recreate autocomplete element if it is already open.
           if ($(this).hasClass('autocomplete-open')) {
