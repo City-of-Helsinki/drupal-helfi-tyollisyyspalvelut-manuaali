@@ -98,10 +98,7 @@
   .control-wrapper {
     display: flex;
     justify-content: space-between;
-
-    input[data-drupal-selector="edit-reset"] {
-      display: none;
-    }
+    
     .collapse-toggler,
     .form-submit  {
       font-size: $small-caption;
@@ -257,25 +254,6 @@
   .text-search-wrapper {
     .form-actions {
       position: relative;
-    }
-    input[data-drupal-selector="edit-reset"] {
-      display: none;
-      position: absolute;
-      top: 0;
-      left: -36px;
-      padding: 0 !important;
-      color: transparent;
-      @extend .button--reset;
-      @extend .icon--small;
-      margin: 12px 0 12px 0 !important;
-      background-size: contain;
-      background-image: url("../../assets/icons/close.svg");
-      background-repeat: no-repeat;
-      background-position: center;
-      &:hover {
-        background-color: transparent;
-        color: transparent;
-      }
     }
   }
   .select2-search__field {

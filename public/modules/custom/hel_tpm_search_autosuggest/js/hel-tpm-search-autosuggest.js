@@ -13,15 +13,15 @@
    * immediately before sending an Ajax request to the server.
    *
    * @function
-   * @param {XMLHttpRequest} xhr
+   * @param {XMLHttpRequest} xmlhttprequest
    *   The XMLHttpRequest (jqXHR) object used for the Ajax request.
-   * @param {Object} settings
+   * @param {Object} options
    *   A plain object containing settings for the Ajax request. This object can
    *   be modified to customize the request.
    */
   Drupal.Ajax.prototype.beforeSend = function(xmlhttprequest, options) {
     beforeSend.call(this, xmlhttprequest, options);
-   if (options.extraData != undefined && options.extraData.view_name != undefined) {
+   if (options.extraData !== undefined && options.extraData.view_name !== undefined) {
      if (options.extraData.view_name === 'solr_service_search') {
        Drupal.behaviors.hel_tpm_search_autocomplete.appendSearchHistory(options.extraData.search_api_fulltext)
      }
@@ -29,32 +29,25 @@
   }
 
   Drupal.behaviors.hel_tpm_search_autocomplete = {
-
-    arrowNavigation: function(form) {
-      $('input', form).keyup(function(e) {
-        if (e.keyCode == 38) {
-          $("#search-suggestions .suggestion-item:focus").next().focus();
-        }
-        if (e.keyCode == 40) {
-          $("#search-suggestions .suggestion-item:focus").next().focus();
-        }
-      });
-    },
     addTabIndex: function(form) {
       var tab = 0;
       jQuery('.suggestion-item', form).each(function () {
         $(this).attr('tabIndex', tab);
       });
     },
+
     submitSelection: function(searchVal, form) {
       $('input[name="search_api_fulltext"]', form).val(searchVal);
     },
+
     getSearchHistory: function() {
       return JSON.parse(localStorage.getItem('hel_search_history'));
     },
+
     setSearchHistory: function(value) {
       localStorage.setItem('hel_search_history', JSON.stringify(value));
     },
+
     appendSearchHistory: function(value) {
       if (value.length <= 0) {
         return;
@@ -104,7 +97,7 @@
         })
         .click(function (ev) {
           Drupal.behaviors.hel_tpm_search_autocomplete.submitSelection($(this).attr('value'), context);
-          $('.form-actions input[type="submit"]', context).click();
+          $(context).find('[id^="edit-submit-"]').click();
         });
     },
 
@@ -152,7 +145,7 @@
         if (!(e.keyCode !== 6)) {
           return;
         }
-        let target = $(event.target);
+        let target = $(e.target);
         if(!target.closest('.search-autocomplete-wrapper').length &&
           $('.search-autocomplete-wrapper').is(":visible")) {
           $(searchDropdownWrapper).hide();
@@ -160,7 +153,6 @@
           $(input).removeClass('autocomplete-open');
         }
       });
-
 
       // Handle click events outside of search element.
       $(document).click(function(event) {
@@ -199,46 +191,19 @@
     },
 
     attach: function (context, settings) {
-      let form = $('.search-autocomplete-wrapper');
-      let searchField = 'input[name="search_api_fulltext"]';
-      let selectedMultiselect = '.filters-wrapper .multi-select-container.active';
-
-      if ($(searchField).val().length === 0) {
-          $('.text-search-wrapper input[id^="edit-reset--"]').hide();
-      } else {
-          $('.text-search-wrapper input[id^="edit-reset--"]').show();
-      }
+      const form = $('.search-autocomplete-wrapper');
+      const searchFieldSelector = 'input[name="search_api_fulltext"]';
+      const resetButtonSelector = '.control-wrapper input[id^="edit-reset-"]';
+      const activeMultiselectSelector = '.filters-wrapper .multi-select-container.active';
 
       $(document).ready(function() {
-        if ($(selectedMultiselect).length) {
-          $('.control-wrapper input[id^="edit-reset--"]').show();
-        } else {
-          $('.control-wrapper input[id^="edit-reset--"]').hide();
-        }
-
-        $('.text-search-wrapper input[id^="edit-reset--"]').click (function (event) {
-          event.preventDefault();
-          $(this).closest('form').find("input[type=text], textarea").val("");
-          $(this).closest('form').find('[id^="edit-submit-"]').click();
-        });
-
-        $('.control-wrapper input[id^="edit-reset--"]').click (function (event) {
-          event.preventDefault();
-          $(this).closest('form').find('select').val('');
-          $(this).closest('form').find('input[type=radio]').prop('checked', false);
-          $(this).closest('form').find('input[type=checkbox]').prop('checked', false);
-          $(this).closest('form').find('[id^="edit-submit-"]').click();
-        });
-        $('.cost-reset input[id^="edit-reset--"]').click (function (event) {
-          event.preventDefault();
-          $(this).closest('form').find('.form-item-field-free-service select').val('');
-          $(this).closest('form').find('.form-item-field-free-service input[type=radio]').prop('checked', false);
-          $(this).closest('form').find('.form-item-field-free-service input[type=checkbox]').prop('checked', false);
-          $(this).closest('form').find('[id^="edit-submit-"]').click();
-        });
+        // Toggle showing reset button.
+        const hasSearchText = $(searchFieldSelector).val().length > 0;
+        const hasSelectedMultiselect = $(activeMultiselectSelector).length > 0;
+        $(resetButtonSelector).toggle(hasSearchText || hasSelectedMultiselect);
       });
 
-      $(searchField, form)
+      $(searchFieldSelector, form)
         .focus(function () {
           // Don't recreate autocomplete element if it is already open.
           if ($(this).hasClass('autocomplete-open')) {
