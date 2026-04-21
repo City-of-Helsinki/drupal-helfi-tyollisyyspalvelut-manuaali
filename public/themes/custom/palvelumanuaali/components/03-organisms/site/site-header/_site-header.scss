@@ -820,7 +820,7 @@ body:not(.admin-toolbar-enabled) {
 .search-history-wrapper,
 .hel-search-autocomplete {
     z-index: 210;
-    margin-top: 42px;
+    margin-top: 41px;
     position: absolute;
     width: 100%;
     background-color: clr(text-inverse);
@@ -904,6 +904,9 @@ body:not(.admin-toolbar-enabled) {
     @include xxl {
       max-width: none;
     }
+  &.autocomplete-open {
+    box-shadow: inset 0px 0px 0px 2px clr(background-section);
+  }
 }
 
 .admin-toolbar-enabled {

@@ -2,6 +2,7 @@
 
 namespace Drupal\hel_tpm_search\Plugin\better_exposed_filters\filter;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -10,6 +11,7 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\better_exposed_filters\Plugin\better_exposed_filters\filter\FilterWidgetBase;
 use Drupal\selective_better_exposed_filters\Plugin\better_exposed_filters\filter\SelectiveFilterBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Default widget implementation.
@@ -39,10 +41,12 @@ class DropdownMultiselect extends FilterWidgetBase implements ContainerFactoryPl
     array $configuration,
     $plugin_id,
     $plugin_definition,
+    protected Request $request,
+    protected ConfigFactoryInterface $configFactory,
     EntityTypeManagerInterface $entityTypeManager,
     LanguageManagerInterface $languageManager,
   ) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition);
+    parent::__construct($configuration, $plugin_id, $plugin_definition, $request, $configFactory);
     $this->entityTypeManager = $entityTypeManager;
     $this->languageManager = $languageManager;
   }
@@ -50,11 +54,13 @@ class DropdownMultiselect extends FilterWidgetBase implements ContainerFactoryPl
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): static {
     return new static(
       $configuration,
       $plugin_id,
       $plugin_definition,
+      $container->get('request_stack')->getCurrentRequest(),
+      $container->get('config.factory'),
       $container->get('entity_type.manager'),
       $container->get('language_manager')
     );
@@ -63,7 +69,7 @@ class DropdownMultiselect extends FilterWidgetBase implements ContainerFactoryPl
   /**
    * {@inheritdoc}
    */
-  public function defaultConfiguration() {
+  public function defaultConfiguration(): array {
     $configuration = parent::defaultConfiguration() + SelectiveFilterBase::defaultConfiguration();
     $configuration['term_optgroup'] = FALSE;
     return $configuration;
@@ -72,7 +78,7 @@ class DropdownMultiselect extends FilterWidgetBase implements ContainerFactoryPl
   /**
    * {@inheritdoc}
    */
-  public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
+  public function buildConfigurationForm(array $form, FormStateInterface $form_state): array {
     /** @var \Drupal\views\Plugin\views\filter\FilterPluginBase $filter */
     $filter = $this->handler;
     $form = parent::buildConfigurationForm($form, $form_state);
@@ -96,7 +102,7 @@ class DropdownMultiselect extends FilterWidgetBase implements ContainerFactoryPl
    * @return void
    *   -
    */
-  public function exposedFormAlter(array &$form, FormStateInterface $form_state) {
+  public function exposedFormAlter(array &$form, FormStateInterface $form_state): void {
     /** @var \Drupal\views\Plugin\views\filter\FilterPluginBase $filter */
     $filter = $this->handler;
     // Form element is designated by the element ID which is user-

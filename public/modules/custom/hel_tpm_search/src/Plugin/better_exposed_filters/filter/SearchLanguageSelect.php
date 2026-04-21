@@ -4,12 +4,14 @@ namespace Drupal\hel_tpm_search\Plugin\better_exposed_filters\filter;
 
 use Drupal\better_exposed_filters\Plugin\better_exposed_filters\filter\RadioButtons;
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\facets\Result\Result;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Search language select exposed filter widget.
@@ -53,10 +55,12 @@ class SearchLanguageSelect extends RadioButtons implements ContainerFactoryPlugi
     array $configuration,
     $plugin_id,
     $plugin_definition,
+    protected Request $request,
+    protected ConfigFactoryInterface $configFactory,
     EntityTypeManagerInterface $entityTypeManager,
     LanguageManagerInterface $languageManager,
   ) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition);
+    parent::__construct($configuration, $plugin_id, $plugin_definition, $request, $configFactory);
     $this->entityTypeManager = $entityTypeManager;
     $this->languageManager = $languageManager;
   }
@@ -64,11 +68,13 @@ class SearchLanguageSelect extends RadioButtons implements ContainerFactoryPlugi
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): static {
     return new static(
       $configuration,
       $plugin_id,
       $plugin_definition,
+      $container->get('request_stack')->getCurrentRequest(),
+      $container->get('config.factory'),
       $container->get('entity_type.manager'),
       $container->get('language_manager')
     );
@@ -77,7 +83,7 @@ class SearchLanguageSelect extends RadioButtons implements ContainerFactoryPlugi
   /**
    * {@inheritdoc}
    */
-  public static function isApplicable($filter = NULL, array $filter_options = []) {
+  public static function isApplicable($filter = NULL, array $filter_options = []): bool {
     if (is_a($filter, 'Drupal\facets_exposed_filters\Plugin\views\filter\FacetsFilter')) {
       return TRUE;
     }
@@ -87,7 +93,7 @@ class SearchLanguageSelect extends RadioButtons implements ContainerFactoryPlugi
   /**
    * {@inheritdoc}
    */
-  public function exposedFormAlter(array &$form, FormStateInterface $form_state) {
+  public function exposedFormAlter(array &$form, FormStateInterface $form_state): void {
     if (!empty($this->view->search_language_filter) && $this->view->search_language_filter === TRUE) {
       return;
     }
@@ -99,12 +105,13 @@ class SearchLanguageSelect extends RadioButtons implements ContainerFactoryPlugi
     if (empty($form[$field_id])) {
       return;
     }
-
+    $form['#attached']['library'][] = 'hel_tpm_search/language_radio';
     $field = &$form[$field_id];
     unset($field['#options']['All']);
 
     $handler = &$this->handler;
     $user_input = $form_state->getUserInput();
+    $current_value = $this->languageManager->getCurrentLanguage()->getId();
     if (!empty($user_input) && !empty($user_input[$field_id])) {
       $current_value = $user_input[$field_id];
     }
@@ -120,6 +127,29 @@ class SearchLanguageSelect extends RadioButtons implements ContainerFactoryPlugi
       $field['#options'][$result->getRawValue()] = $label;
     }
 
+    $this->sortOptions($field['#options']);
+
+  }
+
+  /**
+   * Sorts the given options array based on available languages.
+   *
+   * This method reorders the options array to match the language codes
+   * retrieved from the language manager.
+   *
+   * @param array &$options
+   *   The array of options to be sorted, passed by reference.
+   *
+   * @return void
+   *   This method does not return a value, as the options array is modified
+   *   directly.
+   */
+  protected function sortOptions(&$options) {
+    $languages = $this->languageManager->getLanguages();
+    foreach ($languages as $langcode => $language) {
+      $languages[$langcode] = $options[$langcode];
+    }
+    $options = $languages;
   }
 
   /**

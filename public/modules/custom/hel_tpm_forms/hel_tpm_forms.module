@@ -136,7 +136,7 @@ function hel_tpm_forms_time_and_location_form_helper(&$form, FormStateInterface 
     }
 
     $input = sprintf(':input[name="field_service_time_and_location[%s][subform][field_service_location][0][target_id]"]', $i);
-    $form[$field_key]['widget'][$i]['subform']['field_location_additional_info']['#states'] = [
+    $form[$field_key]['widget'][$i]['subform']['field_location_additional_info_1']['#states'] = [
       'visible' => [
         $input => ['empty' => FALSE],
       ],

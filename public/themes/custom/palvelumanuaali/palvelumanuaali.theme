@@ -404,6 +404,18 @@ function palvelumanuaali_theme_suggestions_fieldset_alter(array &$suggestions, a
 }
 
 /**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ *
+ * Add template suggestions for fieldset.
+ */
+function palvelumanuaali_theme_suggestions_form_element_label_alter(array &$suggestions, array $variables, $hook): void {
+  $element_id = 'edit-langcode-';
+  if (strpos($variables['element']['#id'], $element_id) === 0) {
+    $suggestions[] = $hook . '__langcode';
+  }
+}
+
+/**
  * Implements hook_page_attachments_alter().
  */
 function palvelumanuaali_page_attachments_alter(array &$attachments): void {
@@ -690,4 +702,21 @@ function palvelumanuaali_preprocess_paragraph__quick_link__default(&$variables, 
     'title' => $title,
     'description' => $description,
   ];
+}
+
+/**
+ * Implements hook_preprocess().
+ */
+function palvelumanuaali_preprocess_pager(&$variables): void {
+  if (!empty($variables['items']['first'])) {
+    $variables['items']['first']['text'] = "1";
+    $variables['items']['first']['attributes']->addClass('pager__link');
+  }
+
+  if (!empty($variables['items']['last'])) {
+    $href = $variables['items']['last']['href'];
+    $page = explode('=', $href);
+    $variables['items']['last']['text'] = (int) $page[1] + 1;
+    $variables['items']['last']['attributes']->addClass('pager__link');
+  }
 }

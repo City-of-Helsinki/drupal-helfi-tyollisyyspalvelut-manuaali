@@ -1,0 +1,28 @@
+uuid: e3790d41-2823-40fc-bc7d-1c311d563bf0
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_time_additional_info_html
+    - filter.format.limited_filtered_html
+    - paragraphs.paragraphs_type.service_time_and_place
+  module:
+    - text
+    - tmgmt_content
+third_party_settings:
+  tmgmt_content:
+    excluded: false
+id: paragraph.service_time_and_place.field_time_additional_info_html
+field_name: field_time_additional_info_html
+entity_type: paragraph
+bundle: service_time_and_place
+label: 'Ajankohdan lisätiedot'
+description: 'Tarkenna järjestämisajankohtaan, esimerkiksi palvelun toistuvuuteen tai poikkeusaikatauluihin, liittyviä ohjeistuksia.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - limited_filtered_html
+field_type: text_long
