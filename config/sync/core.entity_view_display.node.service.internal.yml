@@ -7,7 +7,6 @@ dependencies:
     - field.field.node.service.field_accessibility
     - field.field.node.service.field_age
     - field.field.node.service.field_age_groups
-    - field.field.node.service.field_attendance
     - field.field.node.service.field_attendance_text
     - field.field.node.service.field_career_markings
     - field.field.node.service.field_client_consent
@@ -198,8 +197,8 @@ third_party_settings:
         speed: fast
     group_complementary_job_search:
       children:
-        - field_service_suits_job_search
         - field_service_suits_info
+        - field_service_suits_job_search
       label: ' Täydentävät työnhakukeskustelut'
       parent_name: ''
       region: hidden
@@ -548,7 +547,6 @@ hidden:
   field_accessibility: true
   field_age: true
   field_age_groups: true
-  field_attendance: true
   field_attendance_text: true
   field_client_consent: true
   field_contact_info_external: true
