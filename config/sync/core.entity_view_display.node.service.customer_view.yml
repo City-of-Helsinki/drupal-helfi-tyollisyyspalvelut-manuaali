@@ -44,7 +44,6 @@ dependencies:
     - field.field.node.service.field_service_execution
     - field.field.node.service.field_service_execution_text
     - field.field.node.service.field_service_languages
-    - field.field.node.service.field_service_other_info
     - field.field.node.service.field_service_price
     - field.field.node.service.field_service_producer
     - field.field.node.service.field_service_provider_updatee
@@ -551,7 +550,6 @@ third_party_settings:
     group_implementation_right:
       children:
         - field_service_execution_text
-        - field_service_other_info
       label: 'Implementation right'
       parent_name: group_execution
       region: content
@@ -1034,7 +1032,6 @@ hidden:
   field_service_execution: true
   field_service_links_external: true
   field_service_links_internal: true
-  field_service_other_info: true
   field_service_price: true
   field_service_provider_updatee: true
   field_service_radioactivity: true

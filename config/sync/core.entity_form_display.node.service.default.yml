@@ -3,7 +3,6 @@ langcode: fi
 status: true
 dependencies:
   config:
-    - core.entity_form_mode.paragraph.service_form
     - field.field.node.service.field_accessibility
     - field.field.node.service.field_age
     - field.field.node.service.field_age_groups
@@ -44,7 +43,6 @@ dependencies:
     - field.field.node.service.field_service_execution
     - field.field.node.service.field_service_execution_text
     - field.field.node.service.field_service_languages
-    - field.field.node.service.field_service_other_info
     - field.field.node.service.field_service_price
     - field.field.node.service.field_service_producer
     - field.field.node.service.field_service_provider_updatee
@@ -72,7 +70,6 @@ dependencies:
     - hel_tpm_service_dates
     - hel_tpm_service_stats
     - ief_popup
-    - inline_entity_form
     - link
     - markup
     - maxlength
@@ -130,7 +127,6 @@ third_party_settings:
         - field_field_client_consent_descr
         - field_service_execution_text
         - group_public_links_and_files
-        - field_service_other_info
       label: Asiakasnäkymä
       region: content
       parent_name: group_tabs
@@ -356,8 +352,8 @@ third_party_settings:
         required_fields: false
     group_complementary_job_search:
       children:
-        - field_service_suits_job_search
         - field_service_suits_info
+        - field_service_suits_job_search
       label: 'Täydentävä työnhakukeskustelu'
       region: hidden
       parent_name: ''
@@ -976,19 +972,6 @@ content:
       add_mode: dropdown
       form_display_mode: default
       default_paragraph_type: service_languages
-    third_party_settings: {  }
-  field_service_other_info:
-    type: inline_entity_form_simple
-    weight: 16
-    region: content
-    settings:
-      form_mode: service_form
-      override_labels: false
-      label_singular: ''
-      label_plural: ''
-      collapsible: false
-      collapsed: false
-      revision: false
     third_party_settings: {  }
   field_service_producer:
     type: select2_entity_reference
