@@ -66,8 +66,7 @@ class ShortenUrlLinkForm extends FormBase {
       '#type' => 'html_tag',
       '#tag' => 'label',
       '#attributes' => ['class' => ['label']],
-      '#value' => $this->t('Create link to search result'),
-
+      '#value' => $this->t('Copy link to search results'),
     ];
     $element['submit'] = [
       '#type' => 'button',
