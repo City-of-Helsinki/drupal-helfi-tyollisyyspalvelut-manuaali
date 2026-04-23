@@ -53,7 +53,6 @@ dependencies:
     - field.field.node.service.field_service_time_and_location
     - field.field.node.service.field_statements
     - field.field.node.service.field_statements_unemployment
-    - field.field.node.service.field_target_group
     - field.field.node.service.field_target_group_description
     - field.field.node.service.field_target_group_municipality
     - node.type.service
@@ -231,15 +230,6 @@ content:
       link: ''
     third_party_settings: {  }
     weight: 14
-    region: content
-  field_target_group:
-    type: entity_reference_revisions_entity_view
-    label: hidden
-    settings:
-      view_mode: default
-      link: ''
-    third_party_settings: {  }
-    weight: 2
     region: content
   flag_lista:
     settings: {  }

@@ -53,7 +53,6 @@ dependencies:
     - field.field.node.service.field_service_time_and_location
     - field.field.node.service.field_statements
     - field.field.node.service.field_statements_unemployment
-    - field.field.node.service.field_target_group
     - field.field.node.service.field_target_group_description
     - field.field.node.service.field_target_group_municipality
     - node.type.service
@@ -121,8 +120,7 @@ third_party_settings:
         effect: none
         speed: fast
     group_target_group:
-      children:
-        - field_target_group
+      children: {  }
       label: Kohderyhmä
       parent_name: ''
       region: hidden
@@ -226,7 +224,6 @@ hidden:
   field_service_time_and_location: true
   field_statements: true
   field_statements_unemployment: true
-  field_target_group: true
   field_target_group_description: true
   field_target_group_municipality: true
   langcode: true
