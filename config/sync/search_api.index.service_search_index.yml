@@ -8,13 +8,11 @@ dependencies:
     - field.storage.node.field_address
     - field.storage.node.field_implementation_extra_info
     - field.storage.node.field_life_situations
-    - field.storage.node.field_service_price
     - field.storage.node.field_service_set
     - field.storage.node.field_service_time_and_location
     - field.storage.node.field_target_group
     - field.storage.paragraph.field_age
     - field.storage.paragraph.field_age_groups
-    - field.storage.paragraph.field_free_service
     - field.storage.paragraph.field_level
     - field.storage.paragraph.field_municipality
     - field.storage.paragraph.field_service_location
@@ -62,17 +60,6 @@ field_settings:
       config:
         - field.storage.node.field_target_group
         - field.storage.paragraph.field_age_groups
-      module:
-        - paragraphs
-  field_free_service:
-    label: 'Service price » Paragraph » Palvelu on maksullinen'
-    datasource_id: 'entity:node'
-    property_path: 'field_service_price:entity:field_free_service'
-    type: boolean
-    dependencies:
-      config:
-        - field.storage.node.field_service_price
-        - field.storage.paragraph.field_free_service
       module:
         - paragraphs
   field_implementation_extra_info:
@@ -263,11 +250,11 @@ processor_settings:
     title: true
     alt: true
     tags:
-      b: 2
-      h1: 5
-      h2: 3
-      h3: 2
-      strong: 2
+      b: 2.0
+      h1: 5.0
+      h2: 3.0
+      h3: 2.0
+      strong: 2.0
   ignore_character:
     weights:
       preprocess_index: -10

@@ -42,7 +42,6 @@ dependencies:
     - field.field.node.service.field_service_exceptions
     - field.field.node.service.field_service_execution_text
     - field.field.node.service.field_service_languages
-    - field.field.node.service.field_service_price
     - field.field.node.service.field_service_producer
     - field.field.node.service.field_service_provider_updatee
     - field.field.node.service.field_service_radioactivity
@@ -207,15 +206,6 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 9
-    region: content
-  field_service_price:
-    type: entity_reference_revisions_entity_view
-    label: hidden
-    settings:
-      view_mode: default
-      link: ''
-    third_party_settings: {  }
-    weight: 3
     region: content
   field_service_requirements:
     type: text_default
