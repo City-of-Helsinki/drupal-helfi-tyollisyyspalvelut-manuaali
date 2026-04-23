@@ -40,7 +40,6 @@ dependencies:
     - field.field.node.service.field_service_benefits
     - field.field.node.service.field_service_coordination
     - field.field.node.service.field_service_exceptions
-    - field.field.node.service.field_service_execution
     - field.field.node.service.field_service_execution_text
     - field.field.node.service.field_service_languages
     - field.field.node.service.field_service_price
@@ -208,15 +207,6 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 9
-    region: content
-  field_service_execution:
-    type: entity_reference_revisions_entity_view
-    label: hidden
-    settings:
-      view_mode: default
-      link: ''
-    third_party_settings: {  }
-    weight: 12
     region: content
   field_service_price:
     type: entity_reference_revisions_entity_view
