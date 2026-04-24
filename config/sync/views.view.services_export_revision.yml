@@ -19,7 +19,6 @@ dependencies:
     - hel_tpm_general
     - hel_tpm_service_stats
     - node
-    - paragraphs
     - rest
     - serialization
     - user
@@ -1083,15 +1082,6 @@ display:
           entity_field: nid
           plugin_id: standard
           required: true
-        field_target_group:
-          id: field_target_group
-          table: node__field_target_group
-          field: field_target_group
-          relationship: nid
-          group_type: group
-          admin_label: 'field_target_group: Paragraafi '
-          plugin_id: standard
-          required: false
       header:
         area:
           id: area
