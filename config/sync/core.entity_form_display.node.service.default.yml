@@ -313,8 +313,8 @@ third_party_settings:
         weight: 0
     group_service_obligatoryness:
       children:
-        - field_obligatoryness_freetext
         - field_obligatoryness
+        - field_obligatoryness_freetext
       label: 'Palvelun velvoittavuus'
       region: content
       parent_name: group_specialist
@@ -324,8 +324,9 @@ third_party_settings:
         classes: group--margin-border-bottom
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
-        show_label: true
+        show_label: false
         label_element: legend
         label_element_classes: field-group--title
         attributes: ''
@@ -334,10 +335,10 @@ third_party_settings:
         required_fields: true
     group_statements_unemploym:
       children:
-        - field_statements_unemployment
         - field_statements
+        - field_statements_unemployment
         - field_other_preferences
-      label: 'Lausunnot ja työttömyysetuus'
+      label: 'Lausunnot ja työttömyysturva'
       region: content
       parent_name: group_specialist
       weight: 13
@@ -346,6 +347,7 @@ third_party_settings:
         classes: group--margin-border-bottom
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: true
         label_element: legend
@@ -356,8 +358,8 @@ third_party_settings:
         required_fields: false
     group_complementary_job_search:
       children:
-        - field_service_suits_job_search
         - field_service_suits_info
+        - field_service_suits_job_search
       label: 'Täydentävä työnhakukeskustelu'
       region: hidden
       parent_name: ''
@@ -844,7 +846,7 @@ content:
     third_party_settings: {  }
   field_obligatoryness_freetext:
     type: text_textarea
-    weight: 7
+    weight: 10
     region: content
     settings:
       rows: 5
@@ -856,7 +858,7 @@ content:
         maxlength_js_enforce: false
   field_other_preferences:
     type: options_buttons
-    weight: 17
+    weight: 18
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -1056,7 +1058,7 @@ content:
     third_party_settings: {  }
   field_statements_unemployment:
     type: text_textarea
-    weight: 14
+    weight: 17
     region: content
     settings:
       rows: 5

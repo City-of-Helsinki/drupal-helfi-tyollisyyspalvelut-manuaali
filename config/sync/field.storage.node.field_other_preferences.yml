@@ -17,10 +17,16 @@ settings:
   allowed_values:
     -
       value: option1
-      label: 'Asiakas, jolla on työssäolovelvoite, voi saada työttömyysetuutta palveluun osallistumisen ajalta.'
+      label: 'Asiakas, jolla on 1) korvaukseton määräaika eli karenssi, 2) työssäolovelvoite, 3) alle 25-vuotiaan ammatilliseen koulutukseen liittyvä rajoitus tai 4) omavastuuaika, voi saada ansiopäivärahaa tai yleistukea palveluun osallistumisen ajalta. Päätöksen tekee viime kädessä etuuden maksaja.'
     -
       value: option2
       label: 'Palveluun osallistumisen ajalta on mahdollista saada matka- tai kulukorvausta.'
+    -
+      value: option3
+      label: 'Palveluun osallistuminen voi purkaa työssäolovelvoitetta. Tarkista ohjeet Tuutti-palvelusta.'
+    -
+      value: option4
+      label: 'Palveluun osallistumisen ajalta on mahdollista saada Kelan tai työttömyyskassan maksamaa kulukorvausta, jos osallistumisesta on sovittu suunnitelmassa. Katso tarkemmat tiedot Kelan tai työttömyyskassan verkkosivuilta. <br><br> Jos asiakas ei saa ansiopäivärahaa tai yleistukea, hänelle voidaan myöntää osallistumisen ajalta harkinnanvaraista kulukorvausta. Katso harkinnanvaraisen kulukorvauksen ohje. Huomioithan, että kuntouttavasta työtoiminnasta ei myönnetä harkinnanvaraista kulukorvausta.'
   allowed_values_function: ''
 module: options
 locked: false

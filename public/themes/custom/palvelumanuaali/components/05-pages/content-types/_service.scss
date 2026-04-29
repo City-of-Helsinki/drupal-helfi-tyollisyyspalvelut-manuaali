@@ -91,34 +91,38 @@
   .field--name-field-language {
     margin-bottom: 0;
   }
-  .field--name-field-obligatoryness:not(.field--widget-options-buttons),
-  .field--name-field-statements,
-  .field--name-field-service-suits-job-search {
-    @extend .blue-padded-round-corners-card;
-    .icon-i {
-      display: block;
 
-      width: 24px;
-      height: 24px;
+  &:not(.edit-create-form):not(.node-service-form) {
+    .field--name-field-obligatoryness:not(.field--widget-options-buttons),
+    .field--name-field-statements,
+    .field--name-field-service-suits-job-search {
+      @extend .blue-padded-round-corners-card;
+      .icon-i {
+        display: block;
 
-      background-image:url("../../assets/icons/info.svg");
-      margin-right: $space-one-and-half;
-      padding-right: $space-one-and-half;
-      background-size: cover;
-      background-repeat: no-repeat;
+        width: 24px;
+        height: 24px;
+
+        background-image:url("../../assets/icons/info.svg");
+        margin-right: $space-one-and-half;
+        padding-right: $space-one-and-half;
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
     }
-  }
-  .field--name-field-other-preferences{
-     @extend .blue-padded-round-corners-card;
-     display: block;
-     .field__label {
-       margin-bottom: $space;
-     }
-     .field__item {
-       display: list-item;
-       margin-left: $space-triple;
-       padding-left: $space-one-half;
-     }
+    .field--name-field-other-preferences {
+      @extend .blue-padded-round-corners-card;
+      display: block;
+      padding: $space-double 40px;
+      .field__label {
+        margin-bottom: $space;
+      }
+      .field__item {
+        display: list-item;
+        margin-left: $space;
+        padding-left: $space-one-half;
+      }
+    }
   }
 }
 

@@ -125,7 +125,7 @@ third_party_settings:
       weight: 9
       format_type: html_element
       format_settings:
-        classes: 'service-group service-group--statements-and-jobprofits text-normal group-border d--flex--dsk column-gap-two flex-wrap--dsk'
+        classes: 'service-group service-group--statements-and-jobprofits group-border d--flex--dsk column-gap-two flex-wrap--dsk'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -199,8 +199,8 @@ third_party_settings:
         speed: fast
     group_complementary_job_search:
       children:
-        - field_service_suits_job_search
         - field_service_suits_info
+        - field_service_suits_job_search
       label: ' Täydentävät työnhakukeskustelut'
       parent_name: ''
       region: hidden
@@ -468,7 +468,7 @@ content:
     weight: 69
     region: content
   field_other_preferences:
-    type: list_default
+    type: list_key
     label: hidden
     settings: {  }
     third_party_settings: {  }
