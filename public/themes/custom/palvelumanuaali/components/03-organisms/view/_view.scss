@@ -24,7 +24,10 @@
       margin-bottom: 0;
       gap: $space-one-half;
       @include xl {
-        gap: $space-double;
+        gap: 0;
+        .text-search-wrapper {
+          margin-bottom: $space-double;
+        }
       }
     }
   }
