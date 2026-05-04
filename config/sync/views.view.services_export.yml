@@ -3,15 +3,15 @@ langcode: en
 status: false
 dependencies:
   config:
+    - field.storage.node.field_age
+    - field.storage.node.field_age_groups
     - field.storage.node.field_life_situations
     - field.storage.node.field_responsible_municipality
     - field.storage.node.field_responsible_updatee
     - field.storage.node.field_service_producer
     - field.storage.node.field_service_provider_updatee
     - field.storage.node.field_service_set
-    - field.storage.paragraph.field_age
-    - field.storage.paragraph.field_age_groups
-    - field.storage.paragraph.field_target_group_municipality
+    - field.storage.node.field_target_group_municipality
     - node.type.service
     - system.menu.admin
   module:
@@ -20,7 +20,6 @@ dependencies:
     - hel_tpm_editorial
     - node
     - options
-    - paragraphs
     - range
     - rest
     - serialization
@@ -673,15 +672,15 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-        field_target_group_municipality:
-          id: field_target_group_municipality
-          table: paragraph__field_target_group_municipality
+        field_target_group_municipality_1:
+          id: field_target_group_municipality_1
+          table: node__field_target_group_municipality
           field: field_target_group_municipality
-          relationship: field_target_group
+          relationship: none
           group_type: group
           admin_label: ''
           plugin_id: field
-          label: 'Kohderyhmän kunta'
+          label: Kotikunta
           exclude: false
           alter:
             alter_text: false
@@ -736,11 +735,11 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-        field_age_groups:
-          id: field_age_groups
-          table: paragraph__field_age_groups
+        field_age_groups_1:
+          id: field_age_groups_1
+          table: node__field_age_groups
           field: field_age_groups
-          relationship: field_target_group
+          relationship: none
           group_type: group
           admin_label: ''
           plugin_id: field
@@ -800,13 +799,13 @@ display:
           field_api_classes: false
         field_age:
           id: field_age
-          table: paragraph__field_age
+          table: node__field_age
           field: field_age
-          relationship: field_target_group
+          relationship: none
           group_type: group
           admin_label: ''
           plugin_id: field
-          label: Ikähaitari
+          label: Ikäväli
           exclude: false
           alter:
             alter_text: false
@@ -839,7 +838,7 @@ display:
           element_class: ''
           element_label_type: ''
           element_label_class: ''
-          element_label_colon: true
+          element_label_colon: false
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
@@ -975,16 +974,7 @@ display:
           distinct: false
           replica: false
           query_tags: {  }
-      relationships:
-        field_target_group:
-          id: field_target_group
-          table: node__field_target_group
-          field: field_target_group
-          relationship: none
-          group_type: group
-          admin_label: 'field_target_group: Paragraafi '
-          plugin_id: standard
-          required: false
+      relationships: {  }
       header:
         area:
           id: area
@@ -1010,15 +1000,15 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags:
+        - 'config:field.storage.node.field_age'
+        - 'config:field.storage.node.field_age_groups'
         - 'config:field.storage.node.field_life_situations'
         - 'config:field.storage.node.field_responsible_municipality'
         - 'config:field.storage.node.field_responsible_updatee'
         - 'config:field.storage.node.field_service_producer'
         - 'config:field.storage.node.field_service_provider_updatee'
         - 'config:field.storage.node.field_service_set'
-        - 'config:field.storage.paragraph.field_age'
-        - 'config:field.storage.paragraph.field_age_groups'
-        - 'config:field.storage.paragraph.field_target_group_municipality'
+        - 'config:field.storage.node.field_target_group_municipality'
   data_export_1:
     id: data_export_1
     display_title: 'Data export'
@@ -1061,15 +1051,15 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags:
+        - 'config:field.storage.node.field_age'
+        - 'config:field.storage.node.field_age_groups'
         - 'config:field.storage.node.field_life_situations'
         - 'config:field.storage.node.field_responsible_municipality'
         - 'config:field.storage.node.field_responsible_updatee'
         - 'config:field.storage.node.field_service_producer'
         - 'config:field.storage.node.field_service_provider_updatee'
         - 'config:field.storage.node.field_service_set'
-        - 'config:field.storage.paragraph.field_age'
-        - 'config:field.storage.paragraph.field_age_groups'
-        - 'config:field.storage.paragraph.field_target_group_municipality'
+        - 'config:field.storage.node.field_target_group_municipality'
   page_1:
     id: page_1
     display_title: Page
@@ -1096,12 +1086,12 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags:
+        - 'config:field.storage.node.field_age'
+        - 'config:field.storage.node.field_age_groups'
         - 'config:field.storage.node.field_life_situations'
         - 'config:field.storage.node.field_responsible_municipality'
         - 'config:field.storage.node.field_responsible_updatee'
         - 'config:field.storage.node.field_service_producer'
         - 'config:field.storage.node.field_service_provider_updatee'
         - 'config:field.storage.node.field_service_set'
-        - 'config:field.storage.paragraph.field_age'
-        - 'config:field.storage.paragraph.field_age_groups'
-        - 'config:field.storage.paragraph.field_target_group_municipality'
+        - 'config:field.storage.node.field_target_group_municipality'

@@ -7,7 +7,6 @@ dependencies:
     - field.field.node.service.field_accessibility
     - field.field.node.service.field_age
     - field.field.node.service.field_age_groups
-    - field.field.node.service.field_attendance
     - field.field.node.service.field_attendance_text
     - field.field.node.service.field_career_markings
     - field.field.node.service.field_client_consent
@@ -41,11 +40,8 @@ dependencies:
     - field.field.node.service.field_service_benefits
     - field.field.node.service.field_service_coordination
     - field.field.node.service.field_service_exceptions
-    - field.field.node.service.field_service_execution
     - field.field.node.service.field_service_execution_text
     - field.field.node.service.field_service_languages
-    - field.field.node.service.field_service_other_info
-    - field.field.node.service.field_service_price
     - field.field.node.service.field_service_producer
     - field.field.node.service.field_service_provider_updatee
     - field.field.node.service.field_service_radioactivity
@@ -57,7 +53,6 @@ dependencies:
     - field.field.node.service.field_service_time_and_location
     - field.field.node.service.field_statements
     - field.field.node.service.field_statements_unemployment
-    - field.field.node.service.field_target_group
     - field.field.node.service.field_target_group_description
     - field.field.node.service.field_target_group_municipality
     - node.type.service
@@ -199,8 +194,8 @@ third_party_settings:
         speed: fast
     group_complementary_job_search:
       children:
-        - field_service_suits_job_search
         - field_service_suits_info
+        - field_service_suits_job_search
       label: ' Täydentävät työnhakukeskustelut'
       parent_name: ''
       region: hidden
@@ -549,7 +544,6 @@ hidden:
   field_accessibility: true
   field_age: true
   field_age_groups: true
-  field_attendance: true
   field_attendance_text: true
   field_client_consent: true
   field_contact_info_external: true
@@ -570,13 +564,10 @@ hidden:
   field_responsible_updatee: true
   field_search_boost: true
   field_service_benefits: true
-  field_service_execution: true
   field_service_execution_text: true
   field_service_languages: true
   field_service_location: true
   field_service_obligations: true
-  field_service_other_info: true
-  field_service_price: true
   field_service_producer: true
   field_service_provider_updatee: true
   field_service_radioactivity: true
@@ -586,7 +577,6 @@ hidden:
   field_service_suits_job_search: true
   field_service_time_and_location: true
   field_tags: true
-  field_target_group: true
   field_target_group_description: true
   field_target_group_municipality: true
   flag_flag_list_template_1: true
