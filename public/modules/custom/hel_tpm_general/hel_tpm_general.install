@@ -1224,9 +1224,48 @@ function hel_tpm_general_update_20129(&$sandbox) {
 }
 
 /**
+ * Delete long_text_field_with_toolbar paragraph entities.
+ */
+function hel_tpm_general_update_20130() {
+  // The paragraph type is obsolete and will be removed as the fields using it,
+  // field_attendance and field_service_execution, are being removed.
+  $storage = \Drupal::entityTypeManager()->getStorage('paragraph');
+  $paragraphs = $storage->loadByProperties(['type' => 'long_text_field_with_toolbar']);
+  foreach ($paragraphs as $paragraph) {
+    $paragraph->delete();
+  }
+}
+
+/**
+ * Delete service_price paragraph entities.
+ */
+function hel_tpm_general_update_20131() {
+  // The paragraph type is obsolete and will be removed as the field using it,
+  // field_service_price, is being removed.
+  $storage = \Drupal::entityTypeManager()->getStorage('paragraph');
+  $paragraphs = $storage->loadByProperties(['type' => 'service_price']);
+  foreach ($paragraphs as $paragraph) {
+    $paragraph->delete();
+  }
+}
+
+/**
+ * Delete target_group paragraph entities.
+ */
+function hel_tpm_general_update_20132() {
+  // The paragraph type is obsolete and will be removed as the field using it,
+  // field_target_group, is being removed.
+  $storage = \Drupal::entityTypeManager()->getStorage('paragraph');
+  $paragraphs = $storage->loadByProperties(['type' => 'target_group']);
+  foreach ($paragraphs as $paragraph) {
+    $paragraph->delete();
+  }
+}
+
+/**
  * Delete specific values from other preferences fields in node tables.
  */
-function hel_tpm_general_update_20130(&$sandbox) {
+function hel_tpm_general_update_20133(&$sandbox) {
   $connection = \Drupal::service('database');
   $tables = ['node__field_other_preferences', 'node_revision__field_other_preferences'];
   $column = 'field_other_preferences_value';
