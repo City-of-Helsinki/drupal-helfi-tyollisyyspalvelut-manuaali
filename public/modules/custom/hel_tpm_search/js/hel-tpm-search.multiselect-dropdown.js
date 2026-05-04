@@ -21,7 +21,7 @@
             $(this).closest('.form-item__dropdown').find('select:selected').val('');
             $(this).closest('.form-item__dropdown').find('select').val('2');
           }
-           $(this).closest('form').find('.text-search-wrapper .form-submit').click();
+           $(this).closest('form').find('[id^="edit-submit-"]').click();
         });
 
         $('.form-item-field-free-service input:checked').on( 'click', function(event) {

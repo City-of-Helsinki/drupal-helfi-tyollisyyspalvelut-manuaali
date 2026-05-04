@@ -1,0 +1,13 @@
+diff --git a/src/Plugin/views/exposed_form/BetterExposedFilters.php b/src/Plugin/views/exposed_form/BetterExposedFilters.php
+index fe646d1..517dc3e 100644
+--- a/src/Plugin/views/exposed_form/BetterExposedFilters.php
++++ b/src/Plugin/views/exposed_form/BetterExposedFilters.php
+@@ -1004,7 +1004,7 @@ class BetterExposedFilters extends InputRequired {
+               foreach (['sort_bef_combine', 'sort_by', 'sort_order'] as $sort_el) {
+                 if (isset($this->view->exposed_data[$sort_el]) && isset($form[$sort_el])) {
+                   $this->request->query->remove($sort_el);
+-                  $form_state->setValue($sort_el, $form[$sort_el]['#default_value']);
++                  $form_state->setValue($sort_el, $form[$sort_el]['#default_value'] ?? NULL);
+                 }
+               }
+               continue 2;

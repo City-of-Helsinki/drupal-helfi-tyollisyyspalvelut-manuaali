@@ -31,7 +31,7 @@
 <div class="form--inline clearfix search-form">
   <div class="text-search-wrapper">
     {{ form['search_wrapper'] }}
-    {{ form['actions'] }}
+    {{ form['actions']|without('reset') }}
   </div>
   <div class="filters-wrapper">
     <div class="exposed-filters">
@@ -48,9 +48,6 @@
         <span class="link-wrapper">
           <a class="collapse-toggler" data-bs-toggle="collapse" href="#" role="button" aria-expanded="false" aria-controls="collapseItem">{{ 'Show more'|t }}</a></span>
          {{ form['actions']['reset'] }}
-        </div>
-        <div class='cost-reset'>
-             {{ form['actions']['reset'] }}
         </div>
       {% endif %}
     </div>
