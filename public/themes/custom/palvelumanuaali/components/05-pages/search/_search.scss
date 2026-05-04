@@ -281,6 +281,10 @@
 
       .langcode-filter-wrapper {
         grid-row: 1;
+        legend span {
+          @extend .h5;
+          font-weight: 600;
+        }
       }
       .sort-wrapper {
         grid-row: 2;
@@ -298,6 +302,8 @@
         .hel-tpm-url-shortener-shorten-url-link-views {
           margin-right: 10px;
           grid-column: 1;
+          display: flex;
+          align-items: end;
         }
         .form-item-sort-bef-combine {
           grid-column: 1;

@@ -50,6 +50,7 @@
   Drupal.behaviors.url_shortener_views = {
     attach: function (context, settings) {
       let view = $('.views-exposed-form.bef-exposed-form', context);
+      let shortenLink = $('.shorten-link .label', view);
       let createLink = $('.create-link', view);
       let hideShortLink = $('.hide-short-link', view);
       let shortLinkResult = $('.short-link-result', view);
@@ -61,11 +62,14 @@
       this.hideShortLinkResult(shortLinkResult);
 
       let current_path = $('.current-path').val();
+      shortenLink.click(function(event){
+        event.preventDefault();
+        createLink.click();
+      });
 
       createLink.click(function (event) {
         event.preventDefault();
         let form = $(this, context).closest('.shorten-link');
-        console.log(form);
          $.ajax({
           'url': $(this).attr('data-ajax-url'),
           'data': {
