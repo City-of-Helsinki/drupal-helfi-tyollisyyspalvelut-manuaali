@@ -1,0 +1,26 @@
+uuid: d82f40b0-360b-4319-8feb-7b684088589e
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.long_text_field_with_toolbar.field_description
+    - paragraphs.paragraphs_type.long_text_field_with_toolbar
+  module:
+    - text
+id: paragraph.long_text_field_with_toolbar.default
+targetEntityType: paragraph
+bundle: long_text_field_with_toolbar
+mode: default
+content:
+  field_description:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  search_api_excerpt: true
