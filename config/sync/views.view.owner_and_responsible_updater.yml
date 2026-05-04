@@ -1501,7 +1501,7 @@ display:
               autosubmit_exclude_textfield: false
               autosubmit_textfield_delay: 500
               autosubmit_textfield_minimum_length: 3
-              autosubmit_hide: false
+              autosubmit_hide: true
               input_required: false
               allow_secondary: false
               secondary_label: Lisävaihtoehdot
@@ -1509,11 +1509,12 @@ display:
               reset_button_always_show: false
             filter:
               moderation_state_filter_exclude_archived:
-                plugin_id: default
+                plugin_id: bef_select2
                 advanced:
                   sort_options: false
                   sort_options_method: alphabetical_asc
                   sort_options_natural: true
+                  placeholder_text: '- Ei mikään -'
                   rewrite:
                     filter_rewrite_values: ''
                     filter_rewrite_values_key: false
@@ -1523,11 +1524,7 @@ display:
                   is_secondary: false
                   hide_label: false
                   field_classes: ''
-                options_show_only_used: false
-                options_show_only_used_filtered: false
-                options_hide_when_empty: false
-                options_show_items_count: false
-              title:
+              combine:
                 plugin_id: default
                 advanced:
                   sort_options_method: alphabetical_asc
@@ -1539,6 +1536,7 @@ display:
                   is_secondary: false
                   hide_label: false
                   field_classes: ''
+                  sort_options_unsupported: ''
                 options_show_only_used: false
                 options_show_only_used_filtered: false
                 options_hide_when_empty: false
@@ -1750,7 +1748,7 @@ display:
           exposed: true
           expose:
             operator_id: combine_op
-            label: Suodata
+            label: Hae
             description: ''
             use_operator: false
             operator: combine_op
@@ -2202,6 +2200,64 @@ display:
           empty_zero: false
           hide_alter_empty: true
           destination: false
+      exposed_form:
+        type: bef
+        options:
+          submit_button: Käytä
+          reset_button: false
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+          text_input_required: 'Valitse mikä tahansa suodatin ja klikkaa Suorita nähdäksesi tulokset'
+          text_input_required_format: filtered_html
+          bef:
+            general:
+              autosubmit: true
+              auto_submit_sort_only: false
+              autosubmit_breakpoint: ''
+              autosubmit_exclude_textfield: false
+              autosubmit_textfield_delay: 500
+              autosubmit_textfield_minimum_length: 3
+              autosubmit_hide: true
+              input_required: false
+              allow_secondary: false
+              secondary_label: Lisävaihtoehdot
+              secondary_open: false
+              reset_button_always_show: false
+            filter:
+              moderation_state_filter_exclude_archived:
+                plugin_id: bef_select2
+                advanced:
+                  sort_options: false
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
+                  placeholder_text: '- Ei mikään -'
+                  rewrite:
+                    filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
+                  collapsible: false
+                  collapsible_disable_automatic_open: false
+                  open_by_default: false
+                  is_secondary: false
+                  hide_label: false
+                  field_classes: ''
+              combine_1:
+                plugin_id: default
+                advanced:
+                  placeholder_text: ''
+                  collapsible: false
+                  collapsible_disable_automatic_open: false
+                  open_by_default: false
+                  is_secondary: false
+                  hide_label: false
+                  field_classes: ''
+                  sort_options_unsupported: ''
+                options_show_only_used: false
+                options_show_only_used_filtered: false
+                options_hide_when_empty: false
+                options_show_items_count: false
       filters:
         moderation_state_filter_exclude_archived:
           id: moderation_state_filter_exclude_archived
@@ -2409,7 +2465,7 @@ display:
           exposed: true
           expose:
             operator_id: combine_1_op
-            label: Suodata
+            label: Hae
             description: ''
             use_operator: false
             operator: combine_1_op
@@ -2449,6 +2505,7 @@ display:
           1: AND
           2: OR
       defaults:
+        exposed_form: false
         fields: false
         filters: false
         filter_groups: false
