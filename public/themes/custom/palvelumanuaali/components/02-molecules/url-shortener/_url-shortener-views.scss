@@ -2,10 +2,22 @@
   position: relative;
   .shorten-link {
     display: flex;
+    &:hover {
+      .label {
+        text-decoration: underline;
+      }
+      .create-link {
+        border-color: clr(background-section);
+        border-width: 2px;
+      }
+    }
   }
   label {
     line-height: 40px;
     margin-right: 1rem;
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   .short-link-result {
