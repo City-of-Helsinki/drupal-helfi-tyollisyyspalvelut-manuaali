@@ -52,10 +52,10 @@
   <div{{ attributes.addClass(classes, 'field__item') }}>
     {% if item.content['#markup'] == 'yes' %}
       <span class="icon-i"></span>
-      <span class="text">{{"<b>Palveluun osallistumisesta tehdään työvoimapoliittinen lausunto.</b>"|t}}</span>
+      <span class="text">{{"<b>Palveluun osallistumisesta annetaan työvoimapoliittinen lausunto.</b>"|t}}</span>
     {% elseif item.content['#markup'] == 'no' %}
       <span class="icon-i"></span>
-      <span class="text">{{"<b>Palveluun osallistumisesta ei tehdä työvoimapoliittista lausuntoa.</b> Koska palveluun osallistumisesta ei lausuta, työllisyysstatus ei muutu eikä osallistuminen vaikuta asiakkaan työttömyysetuuteen."|t}}</span>
+      <span class="text">{{"<b>Palveluun osallistumisesta ei anneta työvoimapoliittista lausuntoa.</b> Asiakkaan työllisyystilanne ei muutu."|t}}</span>
     {% endif %}
   </div>
 {% endfor %}

@@ -49,11 +49,17 @@
 
 <div{{ attributes.addClass(classes) }}>
   <div class='field__label'>
-    <span class="title">{{label}}</span>
-  </div>  
+    <span class="title h6 font-color--blue">{{label}}{{':'}}</span>
+  </div>
     {% for item in items %}
     <div class="field__item">
-        {{item.content}}
+      {% if item.content['#markup'] == 'option1' %}
+        <span class="text">{{"Asiakas, jolla on 1) korvaukseton määräaika eli karenssi, 2) työssäolovelvoite, 3) alle 25-vuotiaan ammatilliseen koulutukseen liittyvä rajoitus tai 4) omavastuuaika, voi saada ansiopäivärahaa tai yleistukea palveluun osallistumisen ajalta. Päätöksen tekee viime kädessä etuuden maksaja."|t}}</span>
+      {% elseif item.content['#markup'] == 'option3' %}
+        <span class="text">{{"Palveluun osallistuminen voi purkaa työssäolovelvoitetta. Tarkista ohjeet <a href='https://tuuttipalvelu.sharepoint.com/sites/Tyottomyysturva/SitePages/Tyossaolovelvoite.aspx'>Tuutti-palvelusta.</a>"|t}}</span>
+      {% elseif item.content['#markup'] == 'option4' %}
+        <span class="text">{{"Palveluun osallistumisen ajalta on mahdollista saada Kelan tai työttömyyskassan maksamaa kulukorvausta, jos osallistumisesta on sovittu suunnitelmassa. Katso tarkemmat tiedot <a href='https://www.kela.fi/tyollistymista-edistavat-palvelut#kulukorvaus'>Kelan</a> tai <a href='https://www.tyj.fi/jos-jaat-tyottomaksi/tyollistymista-edistavat-palvelut'>työttömyyskassan</a> verkkosivuilta. <br> Jos asiakas ei saa ansiopäivärahaa tai yleistukea, hänelle voidaan myöntää osallistumisen ajalta harkinnanvaraista kulukorvausta. Katso <a href='https://tyollisyys.palvelumanuaali.fi/palvelu/harkinnanvarainen-kulukorvaus'>harkinnanvaraisen kulukorvauksen ohje</a>. Huomioithan, että kuntouttavasta työtoiminnasta ei myönnetä harkinnanvaraista kulukorvausta."|t}}</span>
+      {% endif %}
     </div>
     {% endfor %}
 </div>
