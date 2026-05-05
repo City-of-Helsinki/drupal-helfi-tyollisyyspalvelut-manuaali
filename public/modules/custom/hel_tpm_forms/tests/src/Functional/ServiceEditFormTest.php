@@ -115,14 +115,6 @@ class ServiceEditFormTest extends BrowserTestBase {
         'type' => 'text_textarea',
         'settings' => [],
       ])
-      ->setComponent('field_service_execution', [
-        'type' => 'inline_entity_form_simple',
-        'settings' => [],
-      ])
-      ->setComponent('field_attendance', [
-        'type' => 'inline_entity_form_simple',
-        'settings' => [],
-      ])
       ->save();
   }
 

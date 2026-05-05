@@ -12,7 +12,6 @@
   @include xl {
       grid-template-columns: 7fr 3fr;
       grid-column-gap: 24px;
-
   }
 
   .paragraph-type-top,
@@ -23,8 +22,6 @@
   .description {
     margin-bottom: $space;
   }
-
-
 
   table {
     background-color: unset;
@@ -61,29 +58,23 @@
     .form-wrapper {
       margin-bottom: 3px;
     }
-      .select--white-rounded {
-        .select2 {
-          .select2-selection--single {
-             >.select2-selection__rendered {
-              margin-top: 5px;
-              .select2-selection__placeholder {
-                  margin-top: 0;
-              }
+    .select--white-rounded {
+      .select2 {
+        .select2-selection--single {
+           >.select2-selection__rendered {
+            margin-top: 5px;
+            .select2-selection__placeholder {
+                margin-top: 0;
             }
           }
         }
       }
+    }
   }
   .h2 {
     font-weight: 600;
     font-size: 24px;
     line-height: 32px;
-  }
-
-  .field--name-field-target-group  {
-    > fieldset > legend {
-      display: none !important;
-    }
   }
 
   .field--name-field-client-consent {
@@ -98,7 +89,7 @@
   }
 
   .field--name-field-statements-unemployment  {
-      margin-bottom: $space-two-and-half;
+    margin-bottom: $space-two-and-half;
   }
 
   .field--name-field-obligatoryness-freetext {
@@ -145,7 +136,6 @@
     .container-inline {
       order: 2;
     }
-
   }
 
   .form-item__dropdown {
@@ -217,7 +207,6 @@
     }
   }
 
-
   > .tab-1,
   > .tab-2,
   > .tab-3 {
@@ -241,7 +230,6 @@
       margin-top: -68px;
     }
   }
-
 
   > .tab-1,
   > .tab-2,
@@ -379,13 +367,11 @@
         }
       }
     }
-
   }
 
   #edit-group-basic-information {
     background-color: unset;
     max-width: unset;
-
 
     @include large {
       padding: 0;
@@ -420,21 +406,10 @@
     }
   }
 
-
   .field--name-field-service-obligatoryness,
   .field--name-field-exceptions {
     margin-bottom: $space-triple;
     border-bottom: 2px solid clr(background-border);
-  }
-
-  .field--name-field-service-other-info,
-  .field--name-field-service-execution {
-    margin-top: $space-triple;
-    padding-top: $space-triple;
-    border-top: 2px solid clr(background-border);
-    .field--name-field-link .table__cell {
-      padding-left: 0;
-    }
   }
 
   .field--name-field-price {
@@ -446,9 +421,6 @@
       bottom: 13px;
     }
   }
-
-
-
 
   .field--name-field-municipality-guide .button,
   .field--name-field-archiving-guide .button,
@@ -505,7 +477,6 @@
     background-position: top 12px right 16px;
     max-width: 560px;
   }
-
 
   .field--name-entitygroupfield,
   .field--name-field-contact-info,

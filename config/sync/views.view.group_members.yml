@@ -472,30 +472,30 @@ display:
           bef:
             general:
               autosubmit: true
+              auto_submit_sort_only: false
+              autosubmit_breakpoint: ''
               autosubmit_exclude_textfield: false
               autosubmit_textfield_delay: 1000
+              autosubmit_textfield_minimum_length: 3
               autosubmit_hide: false
               input_required: false
               allow_secondary: false
               secondary_label: 'Advanced options'
               secondary_open: false
               reset_button_always_show: false
-              autosubmit_textfield_minimum_length: 3
-              autosubmit_breakpoint: ''
-              auto_submit_sort_only: false
             filter:
               mail:
                 plugin_id: default
                 advanced:
-                  placeholder_text: ''
-                  collapsible: false
-                  is_secondary: false
-                  collapsible_disable_automatic_open: false
-                  hide_label: false
-                  field_classes: ''
-                  open_by_default: false
                   sort_options_method: alphabetical_asc
                   sort_options_natural: true
+                  placeholder_text: ''
+                  collapsible: false
+                  collapsible_disable_automatic_open: false
+                  open_by_default: false
+                  is_secondary: false
+                  hide_label: false
+                  field_classes: ''
                 options_show_only_used: false
                 options_show_only_used_filtered: false
                 options_hide_when_empty: false
