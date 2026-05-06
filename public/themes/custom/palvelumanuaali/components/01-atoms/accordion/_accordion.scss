@@ -25,10 +25,6 @@
 
 .ckeditor-accordion-container > .styled {
   border: 0 !important;
-
-  .ckeditor-accordion-toggler {
-    background-color: $blue05;
-  }
 }
 
 .ckeditor-accordion-container {
@@ -41,6 +37,7 @@
       border-bottom: 2px solid clr(light-border);
       border-left: 2px solid clr(light-border);
       border-right: 2px solid clr(light-border);
+      background-color: $blue05;
       transition-duration: 600ms;
       transition-delay: 0.2ms;
       transition-property: border-bottom-right-radius, border-bottom-left-radius;
@@ -52,6 +49,7 @@
         border-bottom-left-radius: 0;
         border-top-right-radius: 8px;
         border-top-left-radius: 8px;
+
         .ckeditor-accordion-toggle {
             background-image: url("../../assets/icons/minus-blue.svg");
         }
@@ -69,6 +67,7 @@
         color: clr(alt-header-color);
         text-decoration: none;
         padding: $space $space-one-and-half $space $space-double;
+        margin-right: 65px;
         &:hover {
           background-color: $blue05;
           color: clr(alt-header-color);

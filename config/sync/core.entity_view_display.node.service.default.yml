@@ -6,7 +6,6 @@ dependencies:
     - field.field.node.service.field_accessibility
     - field.field.node.service.field_age
     - field.field.node.service.field_age_groups
-    - field.field.node.service.field_attendance
     - field.field.node.service.field_attendance_text
     - field.field.node.service.field_career_markings
     - field.field.node.service.field_client_consent
@@ -40,11 +39,8 @@ dependencies:
     - field.field.node.service.field_service_benefits
     - field.field.node.service.field_service_coordination
     - field.field.node.service.field_service_exceptions
-    - field.field.node.service.field_service_execution
     - field.field.node.service.field_service_execution_text
     - field.field.node.service.field_service_languages
-    - field.field.node.service.field_service_other_info
-    - field.field.node.service.field_service_price
     - field.field.node.service.field_service_producer
     - field.field.node.service.field_service_provider_updatee
     - field.field.node.service.field_service_radioactivity
@@ -56,7 +52,6 @@ dependencies:
     - field.field.node.service.field_service_time_and_location
     - field.field.node.service.field_statements
     - field.field.node.service.field_statements_unemployment
-    - field.field.node.service.field_target_group
     - field.field.node.service.field_target_group_description
     - field.field.node.service.field_target_group_municipality
     - node.type.service
@@ -100,7 +95,6 @@ third_party_settings:
     group_execution:
       children:
         - field_service_execution_text
-        - field_service_other_info
       label: Toteutustapa
       parent_name: group_customer_view
       region: content
@@ -275,7 +269,7 @@ third_party_settings:
         - field_statements
         - field_statements_unemployment
         - field_other_preferences
-      label: 'Lausunnot ja työttömyysetuus'
+      label: 'Lausunnot ja työttömyysturva'
       parent_name: group_work_instructions
       region: content
       weight: 25
@@ -608,7 +602,7 @@ content:
     weight: 11
     region: content
   field_other_preferences:
-    type: list_default
+    type: list_key
     label: hidden
     settings: {  }
     third_party_settings: {  }
@@ -675,15 +669,6 @@ content:
       link: ''
     third_party_settings: {  }
     weight: 38
-    region: content
-  field_service_other_info:
-    type: entity_reference_revisions_entity_view
-    label: hidden
-    settings:
-      view_mode: default
-      link: ''
-    third_party_settings: {  }
-    weight: 14
     region: content
   field_service_producer:
     type: entity_reference_label
@@ -790,7 +775,6 @@ hidden:
   entity_print_view_word_docx: true
   feedback_button: true
   field_age: true
-  field_attendance: true
   field_career_marking: true
   field_contact_info_internal: true
   field_days_since_last_state_chan: true
@@ -806,15 +790,12 @@ hidden:
   field_responsible_municipality: true
   field_responsible_updatee: true
   field_search_boost: true
-  field_service_execution: true
   field_service_links_external: true
   field_service_links_internal: true
-  field_service_price: true
   field_service_provider_updatee: true
   field_service_radioactivity: true
   field_service_suits_info: true
   field_service_suits_job_search: true
-  field_target_group: true
   langcode: true
   search_api_excerpt: true
   toc_js: true
