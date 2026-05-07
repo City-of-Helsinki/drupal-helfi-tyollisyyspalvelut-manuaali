@@ -733,7 +733,7 @@ $card-font-small-heading: 15px;
     hyphens: auto;
   }
   .card__heading {
-    @extend .card-heading;
+    @include heading-xs;
     max-width: calc(100% - 43px);
     hyphens: auto;
   }
@@ -760,7 +760,7 @@ $card-font-small-heading: 15px;
       margin-bottom: $space-one-and-half;
     }
     .field__item {
-      @extend .small-font;
+      @extend .medium-paragraph;
       word-break: break-word;
       @include xl {
         overflow: hidden;
@@ -896,7 +896,7 @@ body:not(.edit-create-form) .field--name-field-linklist-card {
   }
   .field--name-field-short-description {
     @extend .font-primary-black;
-    @extend .text-small;
-    @extend .font-weight-bold;
+    @extend .medium-paragraph;
+    //@extend .font-weight-bold;
   }
 }
