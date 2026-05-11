@@ -5,6 +5,7 @@ namespace Drupal\hel_tpm_tmgmt;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\tmgmt_content\ContentEntitySourcePluginUi;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Extends ContentEntitySourcePluginUi to override and enhance functionality.
@@ -22,6 +23,11 @@ class ContentEntitySourcePluginUiOverride extends ContentEntitySourcePluginUi {
     'target_language',
     'target_status',
   ];
+
+  /**
+   * The StackInterface instance for handling incoming requests.
+   */
+  private RequestStack $requestStack;
 
   /**
    * {@inheritdoc}
