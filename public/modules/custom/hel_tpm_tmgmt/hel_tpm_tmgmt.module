@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Hel tpm tmgmt module.
+ */
+
+/**
+ * Implements hook_tmgmt_source_plugin_info_alter().
+ */
+function hel_tpm_tmgmt_tmgmt_source_plugin_info_alter($info) {
+  if (!empty($info['content'])) {
+    $info['content']['ui'] = 'Drupal\hel_tpm_tmgmt\ContentEntitySourcePluginUiOverride';
+  }
+}
