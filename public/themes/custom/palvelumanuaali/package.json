@@ -3,7 +3,7 @@
   "description": "Emulsify sub-theme with Storybook and Webpack",
   "scripts": {
     "a11y": "npm run storybook-build && node_modules/@emulsify/core/scripts/a11y.js -r",
-    "build": "npm run ensure-dist && webpack --config config/emulsify-core/webpack/webpack.prod.js",
+    "build": "npm run ensure-dist && webpack --config ./config/emulsify-core/webpack/webpack.config.js",
     "build-dev": "npm run ensure-dist && webpack --config config/emulsify-core/webpack/webpack.dev.js",
     "coverage": "npm run test && open-cli .coverage/lcov-report/index.html",
     "develop": "npm run ensure-dist && concurrently --raw --no-shell npm:webpack npm:storybook",
@@ -20,9 +20,21 @@
     "storybook-deploy": "storybook-to-ghpages -o .out",
     "test": "jest --coverage  --config ./config/jest.config.js",
     "twatch": "jest --no-coverage --watch --verbose",
-    "webpack": "webpack --watch --config config/emulsify-core/webpack/webpack.dev.js"
+    "webpack": "webpack --watch --config ./webpack.config.js"
   },
-  "dependencies": {
-    "@emulsify/core": "^3.3.1"
+  "devDependencies": {
+    "@babel/core": "^7.29.0",
+    "@babel/preset-env": "^7.29.5",
+    "autoprefixer": "^10.5.0",
+    "babel-loader": "^10.1.1",
+    "css-loader": "^7.1.4",
+    "glob": "^13.0.6",
+    "glob-import-loader": "^2.0.0",
+    "mini-css-extract-plugin": "^2.10.2",
+    "postcss-loader": "^8.2.1",
+    "sass": "^1.99.0",
+    "sass-loader": "^16.0.8",
+    "webpack": "^5.106.2",
+    "webpack-cli": "^7.0.2"
   }
 }
