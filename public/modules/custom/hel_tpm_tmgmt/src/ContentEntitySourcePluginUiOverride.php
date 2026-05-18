@@ -2,6 +2,8 @@
 
 namespace Drupal\hel_tpm_tmgmt;
 
+use Drupal\content_moderation\ModerationInformationInterface;
+use Drupal\content_translation\ContentTranslationManager;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\tmgmt_content\ContentEntitySourcePluginUi;
@@ -22,6 +24,7 @@ class ContentEntitySourcePluginUiOverride extends ContentEntitySourcePluginUi {
     'langcode',
     'target_language',
     'target_status',
+    'content_moderation_state',
   ];
 
   /**
@@ -30,11 +33,17 @@ class ContentEntitySourcePluginUiOverride extends ContentEntitySourcePluginUi {
   private RequestStack $requestStack;
 
   /**
+   * Service or utility handling moderation information retrieval.
+   */
+  private ModerationInformationInterface $moderationInfo;
+
+  /**
    * {@inheritdoc}
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->requestStack = \Drupal::requestStack();
+    $this->moderationInfo = \Drupal::service('content_moderation.moderation_information');
   }
 
   /**
@@ -51,7 +60,47 @@ class ContentEntitySourcePluginUiOverride extends ContentEntitySourcePluginUi {
       '#default_value' => $this->requestStack->getCurrentRequest()->query->get($id_key) ?? NULL,
       '#size' => 5,
     ];
+
+    if ($this->moderationInfo->isModeratedEntityType($entity_type) && $this->requestStack->getCurrentRequest()->query->has('type')) {
+      $bundle = $this->requestStack->getCurrentRequest()->query->get('type');
+      $search += $this->buildContentModerationFormElement($entity_type, $bundle);
+    }
     return $form;
+  }
+
+  /**
+   * Builds a form element for content moderation state selection.
+   *
+   * This method generates a select form element to choose a workflow state for
+   * content moderation. If no workflow is defined for the given entity type and
+   * bundle, an empty array is returned.
+   *
+   * @param \Drupal\Core\Entity\EntityTypeInterface $entity_type
+   *   The entity type object for which the moderation form element is built.
+   * @param string $bundle
+   *   The specific bundle of the entity type.
+   *
+   * @return array
+   *   A render array containing the content moderation state select element, or
+   *   an empty array if no workflow is defined.
+   */
+  protected function buildContentModerationFormElement(EntityTypeInterface $entity_type, $bundle) {
+    $workflow = $this->moderationInfo->getWorkflowForEntityTypeAndBundle($entity_type->id(), $bundle);
+    if (empty($workflow)) {
+      return [];
+    }
+    $options = ['none' => $this->t('- None -')];
+    $workflow_type_settings = $workflow->get('type_settings');
+    foreach ($workflow_type_settings['states'] as $key => $state) {
+      $options[$key] = $state['label'];
+    }
+    $element['content_moderation_state'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Workflow state'),
+      '#options' => $options,
+      '#default_value' => $this->requestStack->getCurrentRequest()->query->get('content_moderation_state') ?? 'none',
+    ];
+    return $element;
   }
 
   /**
@@ -126,6 +175,10 @@ class ContentEntitySourcePluginUiOverride extends ContentEntitySourcePluginUi {
    * {@inheritdoc}
    */
   public static function buildTranslatableEntitiesQuery($entity_type_id, $property_conditions = []) {
+    if (!empty($property_conditions['content_moderation_state'])) {
+      $content_moderation_state = $property_conditions['content_moderation_state'];
+      unset($property_conditions['content_moderation_state']);
+    }
     $query = parent::buildTranslatableEntitiesQuery($entity_type_id, $property_conditions);
     $entity_type = \Drupal::entityTypeManager()->getDefinition($entity_type_id);
     $id_key = $entity_type->getKey('id');
@@ -133,7 +186,69 @@ class ContentEntitySourcePluginUiOverride extends ContentEntitySourcePluginUi {
       $search_id = (int) trim($property_conditions[$id_key]);
       $query->condition('e.' . $id_key, $search_id);
     }
+    if (!empty($content_moderation_state)) {
+      $table = 'content_moderation_state_field_data';
+      if (!empty($property_conditions['type']) && ContentTranslationManager::isPendingRevisionSupportEnabled($entity_type_id, $property_conditions['type'])) {
+        $table = 'content_moderation_state_field_revision';
+        $ids = self::getContentWithModerationState($content_moderation_state);
+        if (empty($ids)) {
+          $query->condition('e.' . $id_key, 0);
+        }
+        else {
+          $query->condition('e.' . $id_key, $ids, 'IN');
+        }
+      }
+      $query->leftJoin($table, 'cm', 'cm.content_entity_id = e.nid AND cm.default_langcode = 1');
+
+      $query->condition('cm.moderation_state', $content_moderation_state);
+    }
     return $query;
+  }
+
+  /**
+   * Retrieves a list of entity IDs based on the moderation state.
+   *
+   * This method queries the content moderation state table to find entity
+   * IDs that match the specified moderation state. Only the latest revision
+   * for each entity is considered in the results.
+   *
+   * @param string $moderation_state
+   *   The moderation state to filter entities by.
+   *
+   * @return array
+   *   An array of entity IDs that match the given moderation state.
+   */
+  private static function getContentWithModerationState($moderation_state) {
+    $entity_ids = [];
+    $database = \Drupal::database();
+
+    $latest_revision_subquery = $database->select('content_moderation_state_field_revision', 'cm_latest');
+    $latest_revision_subquery->addField('cm_latest', 'content_entity_id');
+    $latest_revision_subquery->addExpression('MAX(cm_latest.content_entity_revision_id)', 'latest_revision_id');
+    $latest_revision_subquery->condition('cm_latest.default_langcode', 1);
+    $latest_revision_subquery->groupBy('cm_latest.content_entity_id');
+
+    $query = $database->select('content_moderation_state_field_revision', 'cm');
+    $query->innerJoin(
+      $latest_revision_subquery,
+      'latest',
+      'latest.content_entity_id = cm.content_entity_id AND latest.latest_revision_id = cm.content_entity_revision_id'
+    );
+    $query->fields('cm', [
+      'content_entity_id',
+      'moderation_state',
+      'content_entity_revision_id',
+    ]);
+    $query->condition('cm.default_langcode', 1);
+    $result = $query->execute()->fetchAll();
+
+    foreach ($result as $row) {
+      if ($moderation_state !== $row->moderation_state) {
+        continue;
+      }
+      $entity_ids[] = $row->content_entity_id;
+    }
+    return $entity_ids;
   }
 
 }
