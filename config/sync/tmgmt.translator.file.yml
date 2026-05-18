@@ -7,14 +7,18 @@ dependencies:
 name: file
 label: 'File exchange'
 description: 'Provider to export and import files.'
-auto_accept: null
+auto_accept: false
 weight: null
 plugin: file
 settings:
   export_format: xlf
   allow_override: true
-  scheme: public
+  scheme: private
   xliff_processing: false
   xliff_cdata: false
-  format_configuration: {  }
-remote_languages_mappings: {  }
+  format_configuration:
+    target: ''
+remote_languages_mappings:
+  fi: fi
+  sv: sv
+  en: en
