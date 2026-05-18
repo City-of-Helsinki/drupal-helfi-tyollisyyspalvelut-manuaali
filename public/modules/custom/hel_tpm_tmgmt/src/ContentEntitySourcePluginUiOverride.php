@@ -191,7 +191,12 @@ class ContentEntitySourcePluginUiOverride extends ContentEntitySourcePluginUi {
       if (!empty($property_conditions['type']) && ContentTranslationManager::isPendingRevisionSupportEnabled($entity_type_id, $property_conditions['type'])) {
         $table = 'content_moderation_state_field_revision';
         $ids = self::getContentWithModerationState($content_moderation_state);
-        $query->condition('e.' . $id_key, $ids, 'IN');
+        if (empty($ids)) {
+          $query->condition('e.' . $id_key, 0);
+        }
+        else {
+          $query->condition('e.' . $id_key, $ids, 'IN');
+        }
       }
       $query->leftJoin($table, 'cm', 'cm.content_entity_id = e.nid AND cm.default_langcode = 1');
 
