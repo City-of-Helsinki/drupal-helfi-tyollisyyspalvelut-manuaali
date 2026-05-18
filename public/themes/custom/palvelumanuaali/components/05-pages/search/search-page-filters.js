@@ -189,4 +189,28 @@
       });
     }
   }
+  Drupal.behaviors.conditionalResetButton = {
+    attach: function (context, settings) {
+      // Target your specific exposed text filter (update class as needed)
+      var $textInput = $('.views-exposed-form input[type="text"]');
+      var $resetButton = $('.views-exposed-form input[type="submit"][name="reset"]');
+
+      // Run on page load
+      toggleReset();
+
+      // Run on text change
+      $textInput.on('input', function() {
+        toggleReset();
+      });
+
+      function toggleReset() {
+        if ($textInput.val().length > 0) {
+          $resetButton.show();
+        } else {
+          $resetButton.hide();
+        }
+      }
+    }
+  };
+
 })(jQuery, Drupal, this);
