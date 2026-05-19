@@ -193,7 +193,7 @@
     attach: function (context, settings) {
       // Target your specific exposed text filter (update class as needed)
       var $textInput = $('.views-exposed-form input[type="text"]');
-      var $resetButton = $('.views-exposed-form input[type="submit"][name="reset"]');
+      var $resetButton = $('.views-exposed-form .text-search-wrapper input[type="submit"][name="reset"]');
 
       // Run on page load
       toggleReset();
