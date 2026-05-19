@@ -5,11 +5,22 @@
  * Primary module hooks for Hel tpm tmgmt module.
  */
 
+use Drupal\hel_tpm_tmgmt\LinkFieldProcessorOverride;
+
 /**
  * Implements hook_tmgmt_source_plugin_info_alter().
  */
 function hel_tpm_tmgmt_tmgmt_source_plugin_info_alter($info) {
   if (!empty($info['content'])) {
     $info['content']['ui'] = 'Drupal\hel_tpm_tmgmt\ContentEntitySourcePluginUiOverride';
+  }
+}
+
+/**
+ * Implements hook_field_info_alter().
+ */
+function hel_tpm_tmgmt_field_info_alter(&$info) {
+  if (!empty($info['link'])) {
+    $info['link']['tmgmt_field_processor'] = LinkFieldProcessorOverride::class;
   }
 }
