@@ -24,3 +24,12 @@ function hel_tpm_tmgmt_field_info_alter(&$info) {
     $info['link']['tmgmt_field_processor'] = LinkFieldProcessorOverride::class;
   }
 }
+
+function hel_tpm_tmgmt_entity_type_alter(&$info) {
+  if (!empty($info['tmgmt_job_item'])) {
+    $content_type = &$info['tmgmt_job_item'];
+    $handlers = $content_type->getHandlerClasses();
+    $handlers['form']['edit'] = 'Drupal\hel_tpm_tmgmt\Form\HelTpmTmgmtJobItemForm';
+    $content_type->setHandlerClass('form', $handlers['form']);
+  };
+}
