@@ -40,7 +40,7 @@ $card-font-small-heading: 15px;
 .card__heading {
   @include heading-xs;
   @include no-bottom;
-
+  letter
   &-link {
     @include link;
   }
@@ -736,6 +736,10 @@ $card-font-small-heading: 15px;
     @include heading-xs;
     max-width: calc(100% - 43px);
     hyphens: auto;
+    margin-bottom: 0;
+    @include xl-zoom {
+      letter-spacing: 0%;
+    }
   }
   .card__content {
     margin: $space;
