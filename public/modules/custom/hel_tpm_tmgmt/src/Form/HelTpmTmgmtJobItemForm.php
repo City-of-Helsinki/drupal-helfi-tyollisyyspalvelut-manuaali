@@ -2,7 +2,6 @@
 
 namespace Drupal\hel_tpm_tmgmt\Form;
 
-use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\tmgmt\Form\JobItemForm;
@@ -52,85 +51,26 @@ class HelTpmTmgmtJobItemForm extends JobItemForm {
     }
 
     foreach (Element::children($data) as $key) {
-      $field_name = $this->getFieldNameFromDataKey($key);
-      $maxlength = $this->getFieldMaxlength($field_name);
-
-      if (empty($maxlength)) {
+      $data_value = $data[$key];
+      if (!$data_value['#maxlength_js_enabled']) {
         continue;
       }
 
       $translation_key = str_replace('][', '|', $key);
       $group_name = substr($translation_key, 0, strrpos($translation_key, '|'));
+
       if (empty($group_name)) {
         continue;
       }
 
       if (!empty($review_element[$group_name][$translation_key]['translation'])) {
         $element = &$review_element[$group_name][$translation_key]['translation'];
-        $element['#maxlength'] = $maxlength;
-        $element['#attributes']['data-maxlength'] = $maxlength;
+        $element['#attributes']['data-maxlength'] = $element['#max_length'];
         $element['#attributes']['class'][] = 'maxlength';
       }
     }
 
     return $review_element;
-  }
-
-  /**
-   * Gets maxlength setting for a field from the source entity form display.
-   *
-   * @param string|null $field_name
-   *   The field machine name.
-   *
-   * @return int|null
-   *   The configured maxlength value, or NULL when unavailable.
-   */
-  protected function getFieldMaxlength(?string $field_name): ?int {
-    if (!$field_name) {
-      return NULL;
-    }
-
-    $job_item = $this->getEntity();
-
-    $entity_type = $job_item->get('item_type')->value;
-    $entity_id = $job_item->get('item_id')->value;
-
-    if (!$entity_type || !$entity_id) {
-      return NULL;
-    }
-
-    $source_entity = \Drupal::entityTypeManager()
-      ->getStorage($entity_type)
-      ->load($entity_id);
-
-    if (!$source_entity || !$source_entity->hasField($field_name)) {
-      return NULL;
-    }
-
-    $form_display = EntityFormDisplay::load($entity_type . '.' . $source_entity->bundle() . '.default');
-    if (!$form_display) {
-      return NULL;
-    }
-
-    $component = $form_display->getComponent($field_name);
-    $maxlength = $component['third_party_settings']['maxlength']['maxlength_js'] ?? NULL;
-
-    return !empty($maxlength) && (int) $maxlength > 0 ? (int) $maxlength : NULL;
-  }
-
-  /**
-   * Extracts the field name from a flattened TMGMT data key.
-   *
-   * @param string $key
-   *   The flattened TMGMT data key.
-   *
-   * @return string|null
-   *   The field name, or NULL when it cannot be resolved.
-   */
-  protected function getFieldNameFromDataKey(string $key): ?string {
-    $parts = explode('][', $key);
-
-    return !empty($parts[0]) ? $parts[0] : NULL;
   }
 
 }
