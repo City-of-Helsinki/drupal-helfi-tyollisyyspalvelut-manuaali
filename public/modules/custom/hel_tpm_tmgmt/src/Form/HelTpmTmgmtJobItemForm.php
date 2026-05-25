@@ -52,7 +52,7 @@ class HelTpmTmgmtJobItemForm extends JobItemForm {
 
     foreach (Element::children($data) as $key) {
       $data_value = $data[$key];
-      if (!$data_value['#maxlength_js_enabled']) {
+      if (empty($data_value['#maxlength_js_enabled']) || $data_value['#maxlength_js_enabled'] !== TRUE) {
         continue;
       }
 
