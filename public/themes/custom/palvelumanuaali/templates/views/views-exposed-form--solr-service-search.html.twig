@@ -32,7 +32,7 @@
   <div class="text-search-wrapper">
     {{ form['search_wrapper'] }}
     <div class="reset-wrapper">
-      {{ form['actions']['reset'] }}
+      <button name="reset" class="reset-text button">{{ "Reset text"|t }}</button>
     </div>
     {{ form['actions']|without('reset') }}
   </div>
