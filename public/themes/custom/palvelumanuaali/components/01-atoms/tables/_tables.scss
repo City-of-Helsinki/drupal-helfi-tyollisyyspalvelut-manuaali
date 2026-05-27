@@ -721,3 +721,19 @@ table {
       }
     }
 }
+
+.tmgmt-job-item-form {
+  tr {
+    table-layout: fixed;
+    display: table;
+    width: calc(100vw - 48px);
+  }
+  .tmgmt-ui-data-item-label,
+  .tmgmt-ui-data-item-actions {
+    width: 10%;
+  }
+  .tmgmt-ui-data-item-source,
+  .tmgmt-ui-data-item-translation {
+    width: 40%;
+  }
+}
