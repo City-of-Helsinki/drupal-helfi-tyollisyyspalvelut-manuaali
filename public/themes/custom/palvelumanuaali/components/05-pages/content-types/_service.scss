@@ -1,15 +1,17 @@
 .blue-padded-round-corners-card {
   a {
     padding-bottom: 1px;
-    color: clr(background-section);
+    color: clr(alt-header-color);
     text-decoration: underline;
     text-decoration-style: solid;
-    text-decoration-offset: 10%;
+    text-underline-offset: 10%;
     text-decoration-thickness: 1px;
     text-decoration-skip-ink: auto;
+    text-underline-position: from-font;
     &:after {
       top: 3px;
       height: 16px;
+      background-image: url("../../assets/icons/ext-dark.svg");
     }
     &:hover {
       text-decoration-thickness: 2px;
