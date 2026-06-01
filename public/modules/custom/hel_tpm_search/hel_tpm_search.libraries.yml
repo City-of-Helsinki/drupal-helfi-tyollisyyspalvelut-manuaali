@@ -38,6 +38,14 @@ filter_ajax_watcher:
     - core/jquery
     - core/drupal.ajax
 
+reset_additional_filters:
+  js:
+    js/hel-tpm-search.reset-additional-filters.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings
+
 # Custom module library for general purposes.
 language_radio:
   version: 0.2
