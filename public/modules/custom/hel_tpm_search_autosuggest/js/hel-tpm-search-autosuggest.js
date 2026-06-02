@@ -193,15 +193,6 @@
     attach: function (context, settings) {
       const form = $('.search-autocomplete-wrapper');
       const searchFieldSelector = 'input[name="search_api_fulltext"]';
-      const resetButtonSelector = '.control-wrapper input[id^="edit-reset-"]';
-      const activeMultiselectSelector = '.filters-wrapper .multi-select-container.active';
-
-      $(document).ready(function() {
-        // Toggle showing reset button.
-        const hasSearchText = $(searchFieldSelector).val().length > 0;
-        const hasSelectedMultiselect = $(activeMultiselectSelector).length > 0;
-        $(resetButtonSelector).toggle(hasSearchText || hasSelectedMultiselect);
-      });
 
       $(searchFieldSelector, form)
         .focus(function () {
