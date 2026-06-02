@@ -107,6 +107,7 @@ function hel_tpm_search_preprocess_views_exposed_form(&$variables) {
       '#value' => t('Empty selection'),
       '#attributes' => [
         'name' => 'reset_additional_filters',
+        'type' => 'reset',
         'class' => [
           'form-submit',
           'button',
