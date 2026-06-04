@@ -97,12 +97,12 @@ final class ServiceRequireOnPublishConstraintValidator extends RequireOnPublishV
    */
   protected function determineEntityPublishedStatus(ContentEntityInterface $entity): bool {
     if (
-      $this->moderationInformation
-      && $this->moderationInformation->isModeratedEntity($entity)
+      $this->moderationInfo
+      && $this->moderationInfo->isModeratedEntity($entity)
       && $entity->hasField('moderation_state')
       && !$entity->get('moderation_state')->isEmpty()
     ) {
-      $workflow = $this->moderationInformation->getWorkflowForEntity($entity);
+      $workflow = $this->moderationInfo->getWorkflowForEntity($entity);
       $state_id = $entity->get('moderation_state')->value;
       $state = $workflow?->getTypePlugin()->getState($state_id);
 
@@ -119,11 +119,11 @@ final class ServiceRequireOnPublishConstraintValidator extends RequireOnPublishV
    */
   protected function determineParagraphPublishedStatus(ContentEntityInterface $parent): bool {
     if (
-      $this->moderationInformation
-      && $this->moderationInformation->isModeratedEntity($parent)
+      $this->moderationInfo
+      && $this->moderationInfo->isModeratedEntity($parent)
       && ($state_id = $this->getModerationStateFromRequest())
     ) {
-      $workflow = $this->moderationInformation->getWorkflowForEntity($parent);
+      $workflow = $this->moderationInfo->getWorkflowForEntity($parent);
       $state = $workflow?->getTypePlugin()->getState($state_id);
 
       if ($state) {
@@ -160,13 +160,13 @@ final class ServiceRequireOnPublishConstraintValidator extends RequireOnPublishV
    * Gets the posted moderation state ID, if available.
    */
   protected function getModerationStateFromRequest(): ?string {
-    $request = $this->request;
+    $requestStack = $this->requestStack;
 
-    if (!$request->isMethod('POST')) {
+    if (!$requestStack->isMethod('POST')) {
       return NULL;
     }
 
-    $moderation_state = $request->get('moderation_state');
+    $moderation_state = $requestStack->get('moderation_state');
 
     if (!is_array($moderation_state) || !isset($moderation_state[0]['state'])) {
       return NULL;
@@ -179,13 +179,13 @@ final class ServiceRequireOnPublishConstraintValidator extends RequireOnPublishV
    * Gets the posted publication status, if available.
    */
   protected function getStatusFromRequest(): ?bool {
-    $request = $this->request;
+    $requestStack = $this->requestStack;
 
-    if (!$request->isMethod('POST')) {
+    if (!$requestStack->isMethod('POST')) {
       return NULL;
     }
 
-    $status = $request->get('status');
+    $status = $requestStack->get('status');
 
     if (!is_array($status) || !array_key_exists('value', $status)) {
       return NULL;
