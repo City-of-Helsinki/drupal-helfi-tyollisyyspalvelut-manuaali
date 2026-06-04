@@ -105,31 +105,31 @@ final class ServiceRequireOnPublishConstraintValidator extends RequireOnPublishV
   /**
    * Determines published status from workflow state when available.
    */
-protected function determineEntityPublishedStatus(ContentEntityInterface $entity): bool {
-  if (!$this->moderationInfo || !$this->moderationInfo->isModeratedEntity($entity)) {
-    return $entity->isPublished();
+  protected function determineEntityPublishedStatus(ContentEntityInterface $entity): bool {
+    if (!$this->moderationInfo || !$this->moderationInfo->isModeratedEntity($entity)) {
+      return $entity->isPublished();
+    }
+
+    if (!$entity->hasField('moderation_state')) {
+      return $entity->isPublished();
+    }
+
+    $moderation_state = $entity->get('moderation_state');
+
+    if ($moderation_state->isEmpty()) {
+      return $entity->isPublished();
+    }
+
+    $workflow = $this->moderationInfo->getWorkflowForEntity($entity);
+    $state_id = $moderation_state->value;
+    $state = $workflow?->getTypePlugin()->getState($state_id);
+
+    if (!$state) {
+      return $entity->isPublished();
+    }
+
+    return $this->isStatePublished($state);
   }
-
-  if (!$entity->hasField('moderation_state')) {
-    return $entity->isPublished();
-  }
-
-  $moderation_state = $entity->get('moderation_state');
-
-  if ($moderation_state->isEmpty()) {
-    return $entity->isPublished();
-  }
-
-  $workflow = $this->moderationInfo->getWorkflowForEntity($entity);
-  $state_id = $moderation_state->value;
-  $state = $workflow?->getTypePlugin()->getState($state_id);
-
-  if (!$state) {
-    return $entity->isPublished();
-  }
-
-  return $this->isStatePublished($state);
-}
 
   /**
    * Determines published status for a paragraph based on its parent entity.
