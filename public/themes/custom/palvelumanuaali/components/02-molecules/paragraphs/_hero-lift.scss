@@ -39,6 +39,7 @@
     }
     .long-text {
       max-width: 100%;
+      @extend .text-large;
       @include large {
         max-width: unset;
       }
@@ -47,7 +48,7 @@
       max-width: 55ch;
     }
     ul {
-      @extend .bulleted-list;
+      @extend .bulleted-list;_
       li {
         @extend .list-item;
       }
