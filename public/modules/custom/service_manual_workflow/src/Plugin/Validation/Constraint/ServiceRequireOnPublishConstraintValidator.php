@@ -60,7 +60,7 @@ final class ServiceRequireOnPublishConstraintValidator extends RequireOnPublishV
   }
 
   /**
-   * Validates a scalar/text/boolean/etc. field with ROP settings.
+   * {@inheritdoc}
    */
   protected function validateField(FieldItemListInterface $items, bool $is_published, Constraint $constraint): void {
     if ($is_published && $this->isServiceReadyToPublishFieldExempt($items)) {
@@ -75,44 +75,61 @@ final class ServiceRequireOnPublishConstraintValidator extends RequireOnPublishV
    */
   protected function isServiceReadyToPublishFieldExempt(FieldItemListInterface $items): bool {
     $entity = $items->getEntity();
+    $is_service_node = $entity->getEntityTypeId() === 'node'
+      && $entity->bundle() === 'service';
 
-    if (
-      $entity->getEntityTypeId() !== 'node'
-      || $entity->bundle() !== 'service'
-      || !$entity->hasField('moderation_state')
-      || $entity->get('moderation_state')->isEmpty()
-      || in_array($entity->get('moderation_state')->value, self::ADDITIONAL_PUBLISHED_STATE_IDS, TRUE)
-    ) {
+    if (!$is_service_node || !$entity->hasField('moderation_state')) {
       return FALSE;
     }
 
-    $field_config = $items->getFieldDefinition();
+    $moderation_state = $entity->get('moderation_state');
 
-    return $field_config instanceof FieldConfigInterface
-      && in_array($items->getName(), self::SERVICE_FIELDS_NOT_REQUIRED_ON_READY_TO_PUBLISH, TRUE);
+    if ($moderation_state->isEmpty()) {
+      return FALSE;
+    }
+
+    $moderation_state_id = $moderation_state->value;
+    $has_ready_to_publish_state = in_array($moderation_state_id, self::ADDITIONAL_PUBLISHED_STATE_IDS, TRUE);
+
+    if (!$has_ready_to_publish_state) {
+      return FALSE;
+    }
+
+    $field_definition = $items->getFieldDefinition();
+    $field_name = $items->getName();
+
+    return $field_definition instanceof FieldConfigInterface
+      && in_array($field_name, self::SERVICE_FIELDS_NOT_REQUIRED_ON_READY_TO_PUBLISH, TRUE);
   }
 
   /**
    * Determines published status from workflow state when available.
    */
-  protected function determineEntityPublishedStatus(ContentEntityInterface $entity): bool {
-    if (
-      $this->moderationInfo
-      && $this->moderationInfo->isModeratedEntity($entity)
-      && $entity->hasField('moderation_state')
-      && !$entity->get('moderation_state')->isEmpty()
-    ) {
-      $workflow = $this->moderationInfo->getWorkflowForEntity($entity);
-      $state_id = $entity->get('moderation_state')->value;
-      $state = $workflow?->getTypePlugin()->getState($state_id);
-
-      if ($state) {
-        return $this->isStatePublished($state);
-      }
-    }
-
+protected function determineEntityPublishedStatus(ContentEntityInterface $entity): bool {
+  if (!$this->moderationInfo || !$this->moderationInfo->isModeratedEntity($entity)) {
     return $entity->isPublished();
   }
+
+  if (!$entity->hasField('moderation_state')) {
+    return $entity->isPublished();
+  }
+
+  $moderation_state = $entity->get('moderation_state');
+
+  if ($moderation_state->isEmpty()) {
+    return $entity->isPublished();
+  }
+
+  $workflow = $this->moderationInfo->getWorkflowForEntity($entity);
+  $state_id = $moderation_state->value;
+  $state = $workflow?->getTypePlugin()->getState($state_id);
+
+  if (!$state) {
+    return $entity->isPublished();
+  }
+
+  return $this->isStatePublished($state);
+}
 
   /**
    * Determines published status for a paragraph based on its parent entity.
@@ -162,11 +179,11 @@ final class ServiceRequireOnPublishConstraintValidator extends RequireOnPublishV
   protected function getModerationStateFromRequest(): ?string {
     $requestStack = $this->requestStack;
 
-    if (!$requestStack->isMethod('POST')) {
+    if (!$requestStack->getCurrentRequest()->isMethod('POST')) {
       return NULL;
     }
 
-    $moderation_state = $requestStack->get('moderation_state');
+    $moderation_state = $requestStack->getCurrentRequest()->get('moderation_state');
 
     if (!is_array($moderation_state) || !isset($moderation_state[0]['state'])) {
       return NULL;
@@ -181,11 +198,11 @@ final class ServiceRequireOnPublishConstraintValidator extends RequireOnPublishV
   protected function getStatusFromRequest(): ?bool {
     $requestStack = $this->requestStack;
 
-    if (!$requestStack->isMethod('POST')) {
+    if (!$requestStack->getCurrentRequest()->isMethod('POST')) {
       return NULL;
     }
 
-    $status = $requestStack->get('status');
+    $status = $requestStack->getCurrentRequest()->get('status');
 
     if (!is_array($status) || !array_key_exists('value', $status)) {
       return NULL;

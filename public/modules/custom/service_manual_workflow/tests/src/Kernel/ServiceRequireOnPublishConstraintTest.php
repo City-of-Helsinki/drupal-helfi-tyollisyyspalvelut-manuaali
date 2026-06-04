@@ -8,6 +8,7 @@ use Drupal\field\Entity\FieldConfig;
 use Drupal\service_manual_workflow\Plugin\Validation\Constraint\ServiceRequireOnPublishConstraint;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\Tests\service_manual_workflow\Traits\ServiceManualWorkflowTestTrait;
+use Drupal\Tests\user\Traits\UserCreationTrait;
 
 /**
  * Tests the service require-on-publish constraint validator.
@@ -17,6 +18,7 @@ use Drupal\Tests\service_manual_workflow\Traits\ServiceManualWorkflowTestTrait;
 final class ServiceRequireOnPublishConstraintTest extends GroupKernelTestBase {
 
   use ServiceManualWorkflowTestTrait;
+  use UserCreationTrait;
 
   /**
    * {@inheritdoc}
@@ -51,6 +53,20 @@ final class ServiceRequireOnPublishConstraintTest extends GroupKernelTestBase {
    * @var \Drupal\service_manual_workflow\Plugin\Validation\Constraint\ServiceRequireOnPublishConstraint
    */
   private ServiceRequireOnPublishConstraint $constraint;
+
+  /**
+   * A user with permission to publish services.
+   *
+   * @var \Drupal\user\UserInterface
+   */
+  private $publishServiceUser;
+
+  /**
+   * A user without permission to publish services.
+   *
+   * @var \Drupal\user\UserInterface
+   */
+  private $nonPublishServiceUser;
 
   /**
    * {@inheritdoc}
