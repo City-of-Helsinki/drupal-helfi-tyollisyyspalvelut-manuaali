@@ -1,0 +1,1189 @@
+From f118c777aaeffa21d4a256ac650206c5bc8a700e Mon Sep 17 00:00:00 2001
+From: James Candan <jcandan82@gmail.com>
+Date: Wed, 18 Jun 2025 02:30:43 +0000
+Subject: [PATCH 1/6] Issue #3178100 by jcandan: Fix Paragraphs support with
+ Content Moderation
+
+---
+ .../Constraint/RequireOnPublishValidator.php  | 67 +++++++++++++++++--
+ 1 file changed, 60 insertions(+), 7 deletions(-)
+
+diff --git a/src/Plugin/Validation/Constraint/RequireOnPublishValidator.php b/src/Plugin/Validation/Constraint/RequireOnPublishValidator.php
+index ccd2b35..dfe5acb 100644
+--- a/src/Plugin/Validation/Constraint/RequireOnPublishValidator.php
++++ b/src/Plugin/Validation/Constraint/RequireOnPublishValidator.php
+@@ -2,6 +2,7 @@
+ 
+ namespace Drupal\require_on_publish\Plugin\Validation\Constraint;
+ 
++use Drupal\content_moderation\ModerationInformationInterface;
+ use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+ use Drupal\Core\Extension\ModuleHandlerInterface;
+ use Drupal\Core\Messenger\MessengerInterface;
+@@ -40,6 +41,13 @@ class RequireOnPublishValidator extends ConstraintValidator implements Container
+    */
+   protected $messenger;
+ 
++  /**
++   * The moderation service.
++   *
++   * @var \Drupal\content_moderation\ModerationInformation
++   */
++  protected $moderationInfo;
++
+   /**
+    * Constructs a RequireOnPublishValidator object.
+    *
+@@ -49,21 +57,30 @@ class RequireOnPublishValidator extends ConstraintValidator implements Container
+    *   The request stack object.
+    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
+    *   The messenger service.
++   * @param \Drupal\content_moderation\ModerationInformation $moderation_info
++   *   The messenger service.
+    */
+-  public function __construct(ModuleHandlerInterface $module_handler, RequestStack $request_stack, MessengerInterface $messenger) {
++  public function __construct(ModuleHandlerInterface $module_handler, RequestStack $request_stack, MessengerInterface $messenger, ModerationInformationInterface $moderation_info = null) {
+     $this->moduleHandler = $module_handler;
+     $this->messenger = $messenger;
+     $this->request = $request_stack->getCurrentRequest();
++    $this->moderationInfo = $moderation_info;
+   }
+ 
+   /**
+    * {@inheritdoc}
+    */
+   public static function create(ContainerInterface $container) {
++    $moderation_info = null;
++    if ($container->has('content_moderation.moderation_information')) {
++      $moderation_info = $container->get('content_moderation.moderation_information');
++    }
++
+     return new static(
+       $container->get('module_handler'),
+       $container->get('request_stack'),
+-      $container->get('messenger')
++      $container->get('messenger'),
++      $moderation_info
+     );
+   }
+ 
+@@ -80,12 +97,48 @@ class RequireOnPublishValidator extends ConstraintValidator implements Container
+     // If the entity is a paragraph, we need to determine the publish status of
+     // its parent entity.
+     if ($this->moduleHandler->moduleExists('paragraphs') && $entity->getEntityTypeId() == 'paragraph') {
+-      if ($this->request) {
+-        $status = $this->request->request->all()['status'] ?? ['value' => 0];
+-        $is_published = $status['value'];
++      // Grab the parent entity of the paragraph.
++      $parent = $entity->getParentEntity();
++      if (!$parent) {
++        return;
+       }
+-      else {
+-        $is_published = $entity->getParentEntity()->isPublished();
++
++      // Default to the current saved state.
++      $is_published = $parent->isPublished();
++
++      // Check if the parent entity is under content moderation.
++      if ($this->moderationInfo && $this->moderationInfo->isModeratedEntity($parent)) {
++        // Only check moderation state from the request if we're in a POST web request.
++        if (
++          PHP_SAPI !== 'cli' &&
++          $this->request &&
++          $this->request->getMethod() === 'POST' &&
++          ($moderation_state = $this->request->get('moderation_state'))
++        ) {
++          if (is_array($moderation_state) && isset($moderation_state[0]['state'])) {
++            // Check that the given moderation state is a "Published" state.
++            $workflow = $this->moderationInfo->getWorkflowForEntity($parent);
++            /* @var \Drupal\content_moderation\ContentModerationState $new_state */
++            $new_state = $workflow?->getTypePlugin()->getState($moderation_state[0]['state']);
++            if ($new_state) {
++              $is_published = $new_state->isPublishedState();
++            }
++          }
++        }
++      }
++
++      // If not using moderation, check the raw 'status' field from the request
++      // form submission. This ensures we capture an intent to publish or
++      // unpublish that hasn't been saved yet.
++      if (
++        PHP_SAPI !== 'cli' &&
++        $this->request &&
++        $this->request->getMethod() === 'POST'
++      ) {
++        $status = $this->request->get('status');
++        if (is_array($status) && array_key_exists('value', $status)) {
++          $is_published = (bool) $status['value'];
++        }
+       }
+     }
+ 
+-- 
+GitLab
+
+
+From 6ab242329c41f6ecde0bc1be4683a9f9044ce08f Mon Sep 17 00:00:00 2001
+From: James Candan <jcandan82@gmail.com>
+Date: Wed, 18 Jun 2025 02:46:46 +0000
+Subject: [PATCH 2/6] code standards fixes
+
+---
+ .../Validation/Constraint/RequireOnPublishValidator.php   | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/src/Plugin/Validation/Constraint/RequireOnPublishValidator.php b/src/Plugin/Validation/Constraint/RequireOnPublishValidator.php
+index dfe5acb..c11ac3c 100644
+--- a/src/Plugin/Validation/Constraint/RequireOnPublishValidator.php
++++ b/src/Plugin/Validation/Constraint/RequireOnPublishValidator.php
+@@ -60,7 +60,7 @@ class RequireOnPublishValidator extends ConstraintValidator implements Container
+    * @param \Drupal\content_moderation\ModerationInformation $moderation_info
+    *   The messenger service.
+    */
+-  public function __construct(ModuleHandlerInterface $module_handler, RequestStack $request_stack, MessengerInterface $messenger, ModerationInformationInterface $moderation_info = null) {
++  public function __construct(ModuleHandlerInterface $module_handler, RequestStack $request_stack, MessengerInterface $messenger, ?ModerationInformationInterface $moderation_info = NULL) {
+     $this->moduleHandler = $module_handler;
+     $this->messenger = $messenger;
+     $this->request = $request_stack->getCurrentRequest();
+@@ -71,7 +71,7 @@ class RequireOnPublishValidator extends ConstraintValidator implements Container
+    * {@inheritdoc}
+    */
+   public static function create(ContainerInterface $container) {
+-    $moderation_info = null;
++    $moderation_info = NULL;
+     if ($container->has('content_moderation.moderation_information')) {
+       $moderation_info = $container->get('content_moderation.moderation_information');
+     }
+@@ -108,7 +108,7 @@ class RequireOnPublishValidator extends ConstraintValidator implements Container
+ 
+       // Check if the parent entity is under content moderation.
+       if ($this->moderationInfo && $this->moderationInfo->isModeratedEntity($parent)) {
+-        // Only check moderation state from the request if we're in a POST web request.
++        // Check moderation state from the request if in a POST web request.
+         if (
+           PHP_SAPI !== 'cli' &&
+           $this->request &&
+@@ -118,7 +118,7 @@ class RequireOnPublishValidator extends ConstraintValidator implements Container
+           if (is_array($moderation_state) && isset($moderation_state[0]['state'])) {
+             // Check that the given moderation state is a "Published" state.
+             $workflow = $this->moderationInfo->getWorkflowForEntity($parent);
+-            /* @var \Drupal\content_moderation\ContentModerationState $new_state */
++            /** @var \Drupal\content_moderation\ContentModerationState $new_state */
+             $new_state = $workflow?->getTypePlugin()->getState($moderation_state[0]['state']);
+             if ($new_state) {
+               $is_published = $new_state->isPublishedState();
+-- 
+GitLab
+
+
+From 66a3d44e1d220583230404243143243ae0e3958a Mon Sep 17 00:00:00 2001
+From: James Candan <james.candan@mail.house.gov>
+Date: Tue, 5 Aug 2025 23:05:28 -0400
+Subject: [PATCH 3/6] refactor and fix validator
+
+---
+ .../Constraint/RequireOnPublishValidator.php  | 252 +++++++++++-------
+ 1 file changed, 159 insertions(+), 93 deletions(-)
+
+diff --git a/src/Plugin/Validation/Constraint/RequireOnPublishValidator.php b/src/Plugin/Validation/Constraint/RequireOnPublishValidator.php
+index c11ac3c..fb3e62d 100644
+--- a/src/Plugin/Validation/Constraint/RequireOnPublishValidator.php
++++ b/src/Plugin/Validation/Constraint/RequireOnPublishValidator.php
+@@ -2,12 +2,15 @@
+ 
+ namespace Drupal\require_on_publish\Plugin\Validation\Constraint;
+ 
+-use Drupal\content_moderation\ModerationInformationInterface;
+ use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+-use Drupal\Core\Extension\ModuleHandlerInterface;
++use Drupal\Core\Field\FieldConfigInterface;
++use Drupal\Core\Field\FieldDefinitionInterface;
++use Drupal\Core\Field\FieldItemListInterface;
+ use Drupal\Core\Messenger\MessengerInterface;
+ use Drupal\Core\StringTranslation\StringTranslationTrait;
+-use Drupal\field\FieldConfigInterface;
++use Drupal\Core\Extension\ModuleHandlerInterface;
++use Drupal\paragraphs\Entity\Paragraph;
++use Drupal\content_moderation\ModerationInformationInterface;
+ use Symfony\Component\DependencyInjection\ContainerInterface;
+ use Symfony\Component\HttpFoundation\RequestStack;
+ use Symfony\Component\Validator\Constraint;
+@@ -25,158 +28,221 @@ class RequireOnPublishValidator extends ConstraintValidator implements Container
+    *
+    * @var \Drupal\Core\Extension\ModuleHandlerInterface
+    */
+-  protected $moduleHandler;
++  protected ModuleHandlerInterface $moduleHandler;
+ 
+   /**
+-   * The request object.
++   * The HTTP request stack.
+    *
+-   * @var \Symfony\Component\HttpFoundation\Request
++   * @var \Symfony\Component\HttpFoundation\RequestStack
+    */
+-  protected $request;
++  protected RequestStack $requestStack;
+ 
+   /**
+    * The messenger service.
+    *
+    * @var \Drupal\Core\Messenger\MessengerInterface
+    */
+-  protected $messenger;
++  protected MessengerInterface $messenger;
+ 
+   /**
+-   * The moderation service.
++   * The content moderation information service (if present).
+    *
+-   * @var \Drupal\content_moderation\ModerationInformation
++   * @var \Drupal\content_moderation\ModerationInformationInterface|null
+    */
+-  protected $moderationInfo;
++  protected ?ModerationInformationInterface $moderationInfo;
+ 
+   /**
+-   * Constructs a RequireOnPublishValidator object.
+-   *
+-   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
+-   *   The module handler.
+-   * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
+-   *   The request stack object.
+-   * @param \Drupal\Core\Messenger\MessengerInterface $messenger
+-   *   The messenger service.
+-   * @param \Drupal\content_moderation\ModerationInformation $moderation_info
+-   *   The messenger service.
++   * Constructs a RequireOnPublishValidator.
+    */
+   public function __construct(ModuleHandlerInterface $module_handler, RequestStack $request_stack, MessengerInterface $messenger, ?ModerationInformationInterface $moderation_info = NULL) {
+     $this->moduleHandler = $module_handler;
++    $this->requestStack = $request_stack;
+     $this->messenger = $messenger;
+-    $this->request = $request_stack->getCurrentRequest();
+     $this->moderationInfo = $moderation_info;
+   }
+ 
+   /**
+    * {@inheritdoc}
+    */
+-  public static function create(ContainerInterface $container) {
+-    $moderation_info = NULL;
+-    if ($container->has('content_moderation.moderation_information')) {
+-      $moderation_info = $container->get('content_moderation.moderation_information');
+-    }
+-
++  public static function create(ContainerInterface $container) : static {
+     return new static(
+       $container->get('module_handler'),
+       $container->get('request_stack'),
+       $container->get('messenger'),
+-      $moderation_info
++      $container->has('content_moderation.moderation_information')
++        ? $container->get('content_moderation.moderation_information')
++        : NULL
+     );
+   }
+ 
+   /**
+    * {@inheritdoc}
+    */
+-  public function validate($entity, Constraint $constraint) {
+-    if (!isset($entity)) {
++  public function validate($entity, Constraint $constraint): void {
++    if (!$entity) {
+       return;
+     }
+ 
+-    $is_published = $entity->isPublished();
++    // Determine “published” status (or parent status for paragraphs).
++    $is_published = $this->determinePublishedStatus($entity);
++
++    // Walk every field on the entity.
++    foreach ($entity->getFields() as $items) {
++      if (!($items instanceof FieldItemListInterface)) {
++        continue;
++      }
++      $def = $items->getFieldDefinition();
+ 
+-    // If the entity is a paragraph, we need to determine the publish status of
+-    // its parent entity.
+-    if ($this->moduleHandler->moduleExists('paragraphs') && $entity->getEntityTypeId() == 'paragraph') {
+-      // Grab the parent entity of the paragraph.
+-      $parent = $entity->getParentEntity();
+-      if (!$parent) {
+-        return;
++      if ($this->isParagraphReferenceField($def)) {
++        // Paragraph-reference → special logic.
++        $this->validateParagraphReferenceField($items, $is_published, $constraint);
+       }
++      else {
++        // All other fields.
++        $this->validateField($items, $is_published, $constraint);
++      }
++    }
++  }
+ 
+-      // Default to the current saved state.
++  /**
++   * Determine publish status, or parent’s status if this is a paragraph.
++   */
++  protected function determinePublishedStatus($entity): bool {
++    $is_published = $entity->isPublished();
++
++    if (
++      $this->moduleHandler->moduleExists('paragraphs')
++      && $entity->getEntityTypeId() === 'paragraph'
++      && ($parent = $entity->getParentEntity())
++    ) {
++      // Base: parent’s saved flag.
+       $is_published = $parent->isPublished();
+ 
+-      // Check if the parent entity is under content moderation.
+-      if ($this->moderationInfo && $this->moderationInfo->isModeratedEntity($parent)) {
+-        // Check moderation state from the request if in a POST web request.
+-        if (
+-          PHP_SAPI !== 'cli' &&
+-          $this->request &&
+-          $this->request->getMethod() === 'POST' &&
+-          ($moderation_state = $this->request->get('moderation_state'))
+-        ) {
+-          if (is_array($moderation_state) && isset($moderation_state[0]['state'])) {
+-            // Check that the given moderation state is a "Published" state.
+-            $workflow = $this->moderationInfo->getWorkflowForEntity($parent);
+-            /** @var \Drupal\content_moderation\ContentModerationState $new_state */
+-            $new_state = $workflow?->getTypePlugin()->getState($moderation_state[0]['state']);
+-            if ($new_state) {
+-              $is_published = $new_state->isPublishedState();
+-            }
+-          }
++      // If moderated, pick up incoming POST moderation_state.
++      $request = $this->requestStack->getCurrentRequest();
++      if (
++        $this->moderationInfo
++        && $this->moderationInfo->isModeratedEntity($parent)
++        && $request->isMethod('POST')
++        && ($ms = $request->get('moderation_state'))
++        && is_array($ms)
++        && isset($ms[0]['state'])
++      ) {
++        $workflow = $this->moderationInfo->getWorkflowForEntity($parent);
++        $new = $workflow?->getTypePlugin()->getState($ms[0]['state']);
++        if ($new) {
++          $is_published = $new->isPublishedState();
+         }
+       }
+ 
+-      // If not using moderation, check the raw 'status' field from the request
+-      // form submission. This ensures we capture an intent to publish or
+-      // unpublish that hasn't been saved yet.
++      // Fallback to raw status POST.
+       if (
+-        PHP_SAPI !== 'cli' &&
+-        $this->request &&
+-        $this->request->getMethod() === 'POST'
++        $request->isMethod('POST')
++        && ($status = $request->get('status'))
++        && is_array($status)
++        && array_key_exists('value', $status)
+       ) {
+-        $status = $this->request->get('status');
+-        if (is_array($status) && array_key_exists('value', $status)) {
+-          $is_published = (bool) $status['value'];
+-        }
++        $is_published = (bool) $status['value'];
+       }
+     }
+ 
+-    /** @var \Drupal\Core\Field\FieldItemListInterface $field */
+-    foreach ($entity->getFields() as $field) {
+-      /** @var \Drupal\Core\Field\FieldConfigInterface $field_config */
+-      $field_config = $field->getFieldDefinition();
+-      if (!($field_config instanceof FieldConfigInterface)) {
++    return $is_published;
++  }
++
++  /**
++   * Detects a paragraph reference revisions field.
++   */
++  protected function isParagraphReferenceField(FieldDefinitionInterface $def): bool {
++    return $def->getType() === 'entity_reference_revisions'
++      && $def->getSetting('target_type') === 'paragraph';
++  }
++
++  /**
++   * Validates an entity_reference_revisions → paragraph field.
++   */
++  protected function validateParagraphReferenceField(FieldItemListInterface $items, bool $is_published, Constraint $constraint): void {
++    $parent_def = $items->getFieldDefinition();
++    $field_name = $parent_def->getName();
++
++    /** @var \Drupal\paragraphs\Plugin\Field\FieldType\ParagraphItem[] $items */
++    foreach ($items as $delta => $item) {
++      $paragraph = $item->entity;
++      if (!($paragraph instanceof Paragraph)) {
+         continue;
+       }
+ 
+-      if ($field_config->getType() === 'boolean') {
+-        $field_name = $field->getName();
+-        $value = $entity->get($field_name)->value;
+-        if ($value) {
++      // Walk every sub-field on the paragraph.
++      foreach ($paragraph->getFields() as $subfield) {
++        $subdef = $subfield->getFieldDefinition();
++        if (!($subdef instanceof FieldConfigInterface)) {
++          continue;
++        }
++        $sublabel = $subdef->getLabel();
++        $subname = $subdef->getName();
++        $empty = $subfield->isEmpty();
++        $req = $subdef->getThirdPartySetting('require_on_publish', 'require_on_publish', FALSE);
++        $warn = $subdef->getThirdPartySetting('require_on_publish', 'warn_on_empty', FALSE);
++
++        // Draft/unpublished → only warn_on_empty.
++        if (!$is_published) {
++          if ($warn && $empty) {
++            $this->messenger->addWarning($this->t(
++              '@label may be empty until publishing.',
++              ['@label' => $sublabel]
++            ));
++          }
+           continue;
+         }
+-      }
+-      elseif (!$field->isEmpty()) {
+-        continue;
+-      }
+ 
+-      if (!$field_config->getThirdPartySetting('require_on_publish', 'require_on_publish', FALSE)) {
+-        continue;
++        // Published → enforce require_on_publish.
++        if ($req && $empty) {
++          $this->context
++            ->buildViolation($constraint->message, ['@field_label' => $sublabel])
++            ->atPath("$field_name[$delta].$subname")
++            ->addViolation();
++        }
+       }
++    }
++  }
+ 
+-      if ($is_published) {
+-        $message = $this->getStringTranslation()->translate($constraint->message, ['@field_label' => $field_config->getLabel()]);
+-        $this->context->buildViolation($message)->atPath($field->getName())->addViolation();
+-      }
+-      else {
+-        if (!$field_config->getThirdPartySetting('require_on_publish', 'warn_on_empty', FALSE)) {
+-          continue;
+-        }
++  /**
++   * Validates a scalar/text/boolean/etc. field with ROP settings.
++   */
++  protected function validateField(FieldItemListInterface $items, bool $is_published, Constraint $constraint): void {
++    $def = $items->getFieldDefinition();
++    if (!($def instanceof FieldConfigInterface)) {
++      return;
++    }
++    $req  = $def->getThirdPartySetting('require_on_publish', 'require_on_publish', FALSE);
++    $warn = $def->getThirdPartySetting('require_on_publish', 'warn_on_empty', FALSE);
+ 
+-        $message = $this->t('@label field can not be empty on publication', ['@label' => $field_config->getLabel()]);
+-        $this->messenger->addWarning($message);
++    // Skip if neither applies.
++    if (!$req && !$warn) {
++      return;
++    }
++
++    // Empty detection (booleans special).
++    $empty = $def->getType() === 'boolean'
++      ? !(bool) $items->value
++      : $items->isEmpty();
++
++    // Draft/unpublished → only warn.
++    if (!$is_published) {
++      if ($warn && $empty) {
++        $this->messenger->addWarning($this->t(
++          '@label may be empty until publishing.',
++          ['@label' => $def->getLabel()]
++        ));
+       }
++      return;
++    }
++
++    // Published → enforce require_on_publish.
++    if ($req && $empty) {
++      $this->context
++        ->buildViolation($constraint->message, ['@field_label' => $def->getLabel()])
++        ->atPath($def->getName())
++        ->addViolation();
+     }
+   }
+ 
+-- 
+GitLab
+
+
+From f3a5ae9f78aef44aaf5906696f745ee79acf46f2 Mon Sep 17 00:00:00 2001
+From: James Candan <james.candan@mail.house.gov>
+Date: Tue, 5 Aug 2025 23:06:19 -0400
+Subject: [PATCH 4/6] add test coverage
+
+---
+ ...ragraphsContentModerationValidatorTest.php | 206 ++++++++++++++++++
+ ...equireOnPublishModerationValidatorTest.php | 133 +++++++++++
+ .../Kernel/RequireOnPublishValidatorTest.php  | 111 ++++++++++
+ 3 files changed, 450 insertions(+)
+ create mode 100644 tests/src/Kernel/ParagraphsContentModerationValidatorTest.php
+ create mode 100644 tests/src/Kernel/RequireOnPublishModerationValidatorTest.php
+ create mode 100644 tests/src/Kernel/RequireOnPublishValidatorTest.php
+
+diff --git a/tests/src/Kernel/ParagraphsContentModerationValidatorTest.php b/tests/src/Kernel/ParagraphsContentModerationValidatorTest.php
+new file mode 100644
+index 0000000..0155332
+--- /dev/null
++++ b/tests/src/Kernel/ParagraphsContentModerationValidatorTest.php
+@@ -0,0 +1,206 @@
++<?php
++
++namespace Drupal\Tests\require_on_publish\Kernel;
++
++use Drupal\KernelTests\KernelTestBase;
++use Drupal\Tests\user\Traits\UserCreationTrait;
++use Drupal\Tests\content_moderation\Traits\ContentModerationTestTrait;
++use Drupal\node\Entity\Node;
++use Drupal\node\Entity\NodeType;
++use Drupal\paragraphs\Entity\ParagraphsType;
++use Drupal\paragraphs\Entity\Paragraph;
++use Drupal\field\Entity\FieldStorageConfig;
++use Drupal\field\Entity\FieldConfig;
++
++/**
++ * Test Paragraphs Content Moderation support.
++ *
++ * @group require_on_publish
++ */
++class ParagraphsContentModerationValidatorTest extends KernelTestBase {
++
++  use ContentModerationTestTrait;
++  use UserCreationTrait;
++
++  /**
++   * {@inheritdoc}
++   */
++  protected static $modules = [
++    'node',
++    'user',
++    'system',
++    'filter',
++    'text',
++    'field',
++    'file',
++    'entity_reference_revisions',
++    'paragraphs',
++    'require_on_publish',
++    'workflows',
++    'content_moderation',
++  ];
++
++  /**
++   * {@inheritdoc}
++   */
++  protected function setUp(): void {
++    parent::setUp();
++
++    // Install required schemas and config.
++    $this->installSchema('node', 'node_access');
++    $this->installSchema('file', 'file_usage');
++    $this->installEntitySchema('paragraph');
++    $this->installEntitySchema('node');
++    $this->installEntitySchema('user');
++    $this->installEntitySchema('content_moderation_state');
++    $this->installConfig(['content_moderation']);
++
++    // Create article content type.
++    NodeType::create(['type' => 'article', 'name' => 'Article'])->save();
++
++    // Create paragraph type “note”.
++    ParagraphsType::create(['id' => 'note', 'label' => 'Note'])->save();
++
++    // Sub-field #1: require_on_publish.
++    FieldStorageConfig::create([
++      'field_name' => 'field_subnote1',
++      'entity_type' => 'paragraph',
++      'type' => 'string',
++      'cardinality' => 1,
++    ])->save();
++    FieldConfig::create([
++      'field_name' => 'field_subnote1',
++      'entity_type' => 'paragraph',
++      'bundle' => 'note',
++      'label' => 'Sub Note 1',
++      'required' => FALSE,
++      'third_party_settings' => [
++        'require_on_publish' => ['require_on_publish' => TRUE],
++      ],
++    ])->save();
++
++    // Sub-field #2: warn_on_empty.
++    FieldStorageConfig::create([
++      'field_name' => 'field_subnote2',
++      'entity_type' => 'paragraph',
++      'type' => 'string',
++      'cardinality' => 1,
++    ])->save();
++    FieldConfig::create([
++      'field_name' => 'field_subnote2',
++      'entity_type' => 'paragraph',
++      'bundle' => 'note',
++      'label' => 'Sub Note 2',
++      'required' => FALSE,
++      'third_party_settings' => [
++        'require_on_publish' => ['warn_on_empty' => TRUE],
++      ],
++    ])->save();
++
++    // Paragraph reference revisions field on node.article.
++    FieldStorageConfig::create([
++      'field_name' => 'field_note',
++      'entity_type' => 'node',
++      'type' => 'entity_reference_revisions',
++      'settings' => ['target_type' => 'paragraph'],
++      'cardinality' => 1,
++    ])->save();
++    FieldConfig::create([
++      'field_name' => 'field_note',
++      'entity_type' => 'node',
++      'bundle' => 'article',
++      'label' => 'Note',
++      'settings' => [
++        'target_type' => 'paragraph',
++        'handler' => 'default:paragraph',
++      ],
++    ])->save();
++
++    // Attach editorial workflow to node.article.
++    $workflow = $this->createEditorialWorkflow();
++    $this->addEntityTypeAndBundleToWorkflow($workflow, 'node', 'article');
++    $workflow->save();
++
++    // Give ourselves the “publish” and “create_new_draft” permissions.
++    $this->setCurrentUser($this->createUser([
++      'use editorial transition publish',
++      'use editorial transition create_new_draft',
++    ]));
++  }
++
++  /**
++   * Helper to create a moderated node with one paragraph.
++   *
++   * @param string|null $val1
++   *   Value for field_subnote1, or NULL.
++   * @param string|null $val2
++   *   Value for field_subnote2, or NULL.
++   * @param string $state
++   *   Moderation state: 'draft' or 'published'.
++   *
++   * @return \Drupal\node\Entity\Node
++   *   The created node.
++   */
++  private function createNodeWithParagraph(?string $val1 = NULL, ?string $val2 = NULL, string $state = 'draft'): Node {
++    $node = Node::create([
++      'type' => 'article',
++      'title' => 'Moderated note',
++    ]);
++
++    $paragraph = Paragraph::create([
++      'type'           => 'note',
++      'field_subnote1' => $val1,
++      'field_subnote2' => $val2,
++    ]);
++    $paragraph->save();
++
++    // Reference it with both target_id and target_revision_id.
++    $node->set('field_note', [
++      [
++        'target_id' => $paragraph->id(),
++        'target_revision_id' => $paragraph->getRevisionId(),
++      ],
++    ]);
++
++    $node->moderation_state->value = $state;
++    $node->save();
++
++    return $node;
++  }
++
++  /**
++   * Draft parent → only warn_on_empty should fire (no violations).
++   */
++  public function testDraftParagraphWarning(): void {
++    $node = $this->createNodeWithParagraph(NULL, NULL, 'draft');
++    $violations = $node->validate();
++    $this->assertCount(0, $violations, 'Draft parent causes no ROP violations.');
++
++    // But a warning was emitted for Sub Note 2.
++    $warnings = $this->container->get('messenger')->messagesByType('warning');
++    $this->assertStringContainsString('Sub Note 2 may be empty until publishing.', reset($warnings));
++  }
++
++  /**
++   * Published parent → require_on_publish should produce a violation.
++   */
++  public function testPublishedParentTriggersParagraphViolation(): void {
++    $node = $this->createNodeWithParagraph(NULL, NULL, 'published');
++    $violations = $node->validate();
++
++    $this->assertCount(1, $violations, 'Published parent with missing sub-fields produces one violation.');
++
++    $messages = array_map(fn($v) => $v->getMessage()->render(), iterator_to_array($violations));
++    $this->assertStringContainsString('Sub Note 1 field is required when publishing.', reset($messages));
++  }
++
++  /**
++   * Published parent with both sub-fields filled → no violations.
++   */
++  public function testPublishedParentWithParagraphFilledPasses(): void {
++    $node = $this->createNodeWithParagraph('foo', 'bar', 'published');
++    $violations = $node->validate();
++    $this->assertCount(0, $violations, 'Published parent with all sub-fields filled passes validation.');
++  }
++
++}
+diff --git a/tests/src/Kernel/RequireOnPublishModerationValidatorTest.php b/tests/src/Kernel/RequireOnPublishModerationValidatorTest.php
+new file mode 100644
+index 0000000..554fc2a
+--- /dev/null
++++ b/tests/src/Kernel/RequireOnPublishModerationValidatorTest.php
+@@ -0,0 +1,133 @@
++<?php
++
++namespace Drupal\Tests\require_on_publish\Kernel;
++
++use Drupal\node\Entity\Node;
++use Drupal\node\Entity\NodeType;
++use Drupal\field\Entity\FieldConfig;
++use Drupal\KernelTests\KernelTestBase;
++use Drupal\field\Entity\FieldStorageConfig;
++use Drupal\Tests\user\Traits\UserCreationTrait;
++use Drupal\Tests\content_moderation\Traits\ContentModerationTestTrait;
++
++/**
++ * Test Content Moderation.
++ *
++ * @group require_on_publish
++ */
++class RequireOnPublishModerationValidatorTest extends KernelTestBase {
++  use ContentModerationTestTrait;
++  use UserCreationTrait;
++
++  /**
++   * {@inheritdoc}
++   */
++  protected static $modules = [
++    'node',
++    'user',
++    'field',
++    'text',
++    'filter',
++    'system',
++    'workflows',
++    'content_moderation',
++    'require_on_publish',
++  ];
++
++  /**
++   * {@inheritdoc}
++   */
++  protected function setUp(): void {
++    parent::setUp();
++
++    // Install schemas / configs needed.
++    $this->installSchema('node', 'node_access');
++    $this->installEntitySchema('node');
++    $this->installEntitySchema('user');
++    $this->installEntitySchema('content_moderation_state');
++    $this->installConfig(['content_moderation']);
++
++    // Create the article type.
++    NodeType::create([
++      'type' => 'article',
++      'name' => 'Article',
++    ])->save();
++
++    // Create and attach the editorial workflow to node.article.
++    $workflow = $this->createEditorialWorkflow();
++    $this->addEntityTypeAndBundleToWorkflow($workflow, 'node', 'article');
++    $workflow->save();
++
++    // Add a require-on-publish field.
++    FieldStorageConfig::create([
++      'field_name' => 'field_rop_text',
++      'entity_type' => 'node',
++      'type' => 'text',
++    ])->save();
++
++    FieldConfig::create([
++      'field_name' => 'field_rop_text',
++      'entity_type' => 'node',
++      'bundle' => 'article',
++      'label' => 'Required on publish text',
++      'third_party_settings' => [
++        'require_on_publish' => [
++          'require_on_publish' => TRUE,
++        ],
++      ],
++    ])->save();
++  }
++
++  /**
++   * Test draft violation.
++   */
++  public function testDraftDoesNotTriggerViolation() {
++    $node = Node::create([
++      'type' => 'article',
++      'title' => 'Moderated draft',
++    ]);
++
++    $this->setCurrentUser($this->createUser(['use editorial transition create_new_draft']));
++    $node->moderation_state->value = 'draft';
++    $node->save();
++    $violations = $node->validate();
++    $this->assertCount(0, $violations);
++  }
++
++  /**
++   * Test published violation.
++   */
++  public function testLiveStateTriggersViolation() {
++    // The core editorial workflow uses 'published' as the published state; if
++    // you renamed it you'd adapt accordingly.
++    $node = Node::create([
++      'type' => 'article',
++      'title' => 'Moderated publish',
++    ]);
++    $this->setCurrentUser($this->createUser(['use editorial transition publish']));
++    $node->moderation_state->value = 'published';
++    $node->save();
++    $violations = $node->validate();
++    $this->assertGreaterThan(0, $violations->count());
++
++    $messages = array_map(fn($v) => $v->getMessage()->render(), iterator_to_array($violations));
++    $this->assertStringContainsString('Required on publish text field is required when publishing.', reset($messages));
++  }
++
++  /**
++   * Test published passes validation.
++   */
++  public function testPublishedWithFieldPasses() {
++    $node = Node::create([
++      'type' => 'article',
++      'title' => 'With required field',
++      'field_rop_text' => 'Filled in',
++    ]);
++    $this->setCurrentUser($this->createUser(['use editorial transition publish']));
++    $node->moderation_state->value = 'published';
++    $node->save();
++    $violations = $node->validate();
++    $this->assertCount(0, $violations);
++  }
++
++}
+diff --git a/tests/src/Kernel/RequireOnPublishValidatorTest.php b/tests/src/Kernel/RequireOnPublishValidatorTest.php
+new file mode 100644
+index 0000000..c2f96b9
+--- /dev/null
++++ b/tests/src/Kernel/RequireOnPublishValidatorTest.php
+@@ -0,0 +1,111 @@
++<?php
++
++namespace Drupal\Tests\require_on_publish\Kernel;
++
++use Drupal\field\Entity\FieldConfig;
++use Drupal\field\Entity\FieldStorageConfig;
++use Drupal\KernelTests\KernelTestBase;
++use Drupal\node\Entity\Node;
++use Drupal\node\Entity\NodeType;
++
++/**
++ * Tests the RequireOnPublishValidator without moderation.
++ *
++ * @group require_on_publish
++ */
++class RequireOnPublishValidatorTest extends KernelTestBase {
++
++  /**
++   * {@inheritdoc}
++   */
++  protected static $modules = [
++    'node',
++    'user',
++    'field',
++    'text',
++    'filter',
++    'system',
++    'require_on_publish',
++  ];
++
++  /**
++   * {@inheritdoc}
++   */
++  protected function setUp(): void {
++    parent::setUp();
++
++    $this->installEntitySchema('node');
++    $this->installEntitySchema('user');
++    $this->installSchema('system', ['sequences']);
++
++    NodeType::create([
++      'type' => 'article',
++      'name' => 'Article',
++    ])->save();
++
++    // Create a field.
++    FieldStorageConfig::create([
++      'field_name' => 'field_rop_text',
++      'entity_type' => 'node',
++      'type' => 'text',
++      'cardinality' => 1,
++      'settings' => [],
++    ])->save();
++
++    FieldConfig::create([
++      'field_name' => 'field_rop_text',
++      'entity_type' => 'node',
++      'bundle' => 'article',
++      'label' => 'Required on publish text',
++      'required' => FALSE,
++      'third_party_settings' => [
++        'require_on_publish' => [
++          'require_on_publish' => TRUE,
++        ],
++      ],
++    ])->save();
++  }
++
++  /**
++   * Test unpublished validation.
++   */
++  public function testValidWhenUnpublished() {
++    $node = Node::create([
++      'type' => 'article',
++      'title' => 'Example node',
++      'status' => 0,
++    ]);
++    $violations = $node->validate();
++    $this->assertCount(0, $violations, 'Unpublished node does not require field_rop_text.');
++  }
++
++  /**
++   * Test published and missing validation.
++   */
++  public function testViolationWhenPublishedAndMissingField() {
++    $node = Node::create([
++      'type' => 'article',
++      'title' => 'Example node',
++      'status' => 1,
++    ]);
++    $violations = $node->validate();
++
++    $messages = array_map(fn($v) => $v->getMessage()->render(), iterator_to_array($violations));
++    $this->assertStringContainsString('Required on publish text field is required when publishing.', reset($messages));
++  }
++
++  /**
++   * Test published and filled validation.
++   */
++  public function testValidWhenPublishedAndFieldFilled() {
++    $node = Node::create([
++      'type' => 'article',
++      'title' => 'Example node',
++      'status' => 1,
++      'field_rop_text' => 'This field is required when publishing',
++    ]);
++    $violations = $node->validate();
++    $this->assertCount(0, $violations, 'Published node with field_rop_text passes validation.');
++  }
++
++}
+-- 
+GitLab
+
+
+From a2477c9371830a9f455a7e53e61e7cb5306a6742 Mon Sep 17 00:00:00 2001
+From: James Candan <james.candan@mail.house.gov>
+Date: Tue, 5 Aug 2025 23:06:35 -0400
+Subject: [PATCH 5/6] run tests
+
+---
+ .gitlab-ci.yml  | 4 ++++
+ CONTRIBUTING.md | 7 +++++++
+ composer.json   | 1 +
+ 3 files changed, 12 insertions(+)
+
+diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
+index 8af8512..0f9a769 100644
+--- a/.gitlab-ci.yml
++++ b/.gitlab-ci.yml
+@@ -52,6 +52,10 @@ variables:
+   OPT_IN_TEST_CURRENT: 1
+   OPT_IN_TEST_PREVIOUS_MAJOR: 1
+ 
++.composer-base:
++  after_script:
++    - composer require --no-interaction drupal/paragraphs:>=1.15
++
+ phpcs:
+   allow_failure: false
+ phpstan:
+diff --git a/CONTRIBUTING.md b/CONTRIBUTING.md
+index 1b7bf88..8eb42d5 100644
+--- a/CONTRIBUTING.md
++++ b/CONTRIBUTING.md
+@@ -90,6 +90,13 @@ To auto-fix coding issues:
+ ddev phpcbf
+ ```
+ 
++> Note: if using the Local History VSCode extension, you may wish to include the following:
++>
++> ```
++> <!-- @file phpcs.xml.dist -->
++> <exclude-pattern>.history</exclude-pattern>
++> ```
++
+ ## Running Drupal 10 or 11
+ 
+ Easily switch core version with:
+diff --git a/composer.json b/composer.json
+index 873aed1..61d209d 100644
+--- a/composer.json
++++ b/composer.json
+@@ -22,6 +22,7 @@
+     }
+   ],
+   "require-dev": {
++    "drupal/paragraphs": ">=1.15",
+     "drush/drush": "*"
+   }
+ }
+-- 
+GitLab
+
+
+From 63b7dfa0cb89c63b9c1f6d4bc7ad22b82fdfa34a Mon Sep 17 00:00:00 2001
+From: James Candan <james.candan@mail.house.gov>
+Date: Tue, 5 Aug 2025 23:12:21 -0400
+Subject: [PATCH 6/6] fix spelling errors
+
+---
+ .../Constraint/RequireOnPublishValidator.php     | 16 ++++++++--------
+ .../ParagraphsContentModerationValidatorTest.php | 16 ++++++++--------
+ 2 files changed, 16 insertions(+), 16 deletions(-)
+
+diff --git a/src/Plugin/Validation/Constraint/RequireOnPublishValidator.php b/src/Plugin/Validation/Constraint/RequireOnPublishValidator.php
+index fb3e62d..163e022 100644
+--- a/src/Plugin/Validation/Constraint/RequireOnPublishValidator.php
++++ b/src/Plugin/Validation/Constraint/RequireOnPublishValidator.php
+@@ -173,22 +173,22 @@ class RequireOnPublishValidator extends ConstraintValidator implements Container
+ 
+       // Walk every sub-field on the paragraph.
+       foreach ($paragraph->getFields() as $subfield) {
+-        $subdef = $subfield->getFieldDefinition();
+-        if (!($subdef instanceof FieldConfigInterface)) {
++        $subfield_definition = $subfield->getFieldDefinition();
++        if (!($subfield_definition instanceof FieldConfigInterface)) {
+           continue;
+         }
+-        $sublabel = $subdef->getLabel();
+-        $subname = $subdef->getName();
++        $subfield_label = $subfield_definition->getLabel();
++        $subname = $subfield_definition->getName();
+         $empty = $subfield->isEmpty();
+-        $req = $subdef->getThirdPartySetting('require_on_publish', 'require_on_publish', FALSE);
+-        $warn = $subdef->getThirdPartySetting('require_on_publish', 'warn_on_empty', FALSE);
++        $req = $subfield_definition->getThirdPartySetting('require_on_publish', 'require_on_publish', FALSE);
++        $warn = $subfield_definition->getThirdPartySetting('require_on_publish', 'warn_on_empty', FALSE);
+ 
+         // Draft/unpublished → only warn_on_empty.
+         if (!$is_published) {
+           if ($warn && $empty) {
+             $this->messenger->addWarning($this->t(
+               '@label may be empty until publishing.',
+-              ['@label' => $sublabel]
++              ['@label' => $subfield_label]
+             ));
+           }
+           continue;
+@@ -197,7 +197,7 @@ class RequireOnPublishValidator extends ConstraintValidator implements Container
+         // Published → enforce require_on_publish.
+         if ($req && $empty) {
+           $this->context
+-            ->buildViolation($constraint->message, ['@field_label' => $sublabel])
++            ->buildViolation($constraint->message, ['@field_label' => $subfield_label])
+             ->atPath("$field_name[$delta].$subname")
+             ->addViolation();
+         }
+diff --git a/tests/src/Kernel/ParagraphsContentModerationValidatorTest.php b/tests/src/Kernel/ParagraphsContentModerationValidatorTest.php
+index 0155332..4b197df 100644
+--- a/tests/src/Kernel/ParagraphsContentModerationValidatorTest.php
++++ b/tests/src/Kernel/ParagraphsContentModerationValidatorTest.php
+@@ -63,13 +63,13 @@ class ParagraphsContentModerationValidatorTest extends KernelTestBase {
+ 
+     // Sub-field #1: require_on_publish.
+     FieldStorageConfig::create([
+-      'field_name' => 'field_subnote1',
++      'field_name' => 'field_subfield_note1',
+       'entity_type' => 'paragraph',
+       'type' => 'string',
+       'cardinality' => 1,
+     ])->save();
+     FieldConfig::create([
+-      'field_name' => 'field_subnote1',
++      'field_name' => 'field_subfield_note1',
+       'entity_type' => 'paragraph',
+       'bundle' => 'note',
+       'label' => 'Sub Note 1',
+@@ -81,13 +81,13 @@ class ParagraphsContentModerationValidatorTest extends KernelTestBase {
+ 
+     // Sub-field #2: warn_on_empty.
+     FieldStorageConfig::create([
+-      'field_name' => 'field_subnote2',
++      'field_name' => 'field_subfield_note2',
+       'entity_type' => 'paragraph',
+       'type' => 'string',
+       'cardinality' => 1,
+     ])->save();
+     FieldConfig::create([
+-      'field_name' => 'field_subnote2',
++      'field_name' => 'field_subfield_note2',
+       'entity_type' => 'paragraph',
+       'bundle' => 'note',
+       'label' => 'Sub Note 2',
+@@ -132,9 +132,9 @@ class ParagraphsContentModerationValidatorTest extends KernelTestBase {
+    * Helper to create a moderated node with one paragraph.
+    *
+    * @param string|null $val1
+-   *   Value for field_subnote1, or NULL.
++   *   Value for field_subfield_note1, or NULL.
+    * @param string|null $val2
+-   *   Value for field_subnote2, or NULL.
++   *   Value for field_subfield_note2, or NULL.
+    * @param string $state
+    *   Moderation state: 'draft' or 'published'.
+    *
+@@ -149,8 +149,8 @@ class ParagraphsContentModerationValidatorTest extends KernelTestBase {
+ 
+     $paragraph = Paragraph::create([
+       'type'           => 'note',
+-      'field_subnote1' => $val1,
+-      'field_subnote2' => $val2,
++      'field_subfield_note1' => $val1,
++      'field_subfield_note2' => $val2,
+     ]);
+     $paragraph->save();
+ 
+-- 
+GitLab
+
