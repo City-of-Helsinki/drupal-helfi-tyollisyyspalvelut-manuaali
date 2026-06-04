@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\service_manual_workflow\Plugin\Validation\Constraint;
 
+use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Field\FieldConfigInterface;
 use Drupal\Core\Field\FieldItemListInterface;
@@ -94,14 +95,14 @@ final class ServiceRequireOnPublishConstraintValidator extends RequireOnPublishV
   /**
    * Determines published status from workflow state when available.
    */
-  protected function determineEntityPublishedStatus(EntityInterface $entity): bool {
+  protected function determineEntityPublishedStatus(ContentEntityInterface $entity): bool {
     if (
-      $this->moderationInfo
-      && $this->moderationInfo->isModeratedEntity($entity)
+      $this->moderationInformation
+      && $this->moderationInformation->isModeratedEntity($entity)
       && $entity->hasField('moderation_state')
       && !$entity->get('moderation_state')->isEmpty()
     ) {
-      $workflow = $this->moderationInfo->getWorkflowForEntity($entity);
+      $workflow = $this->moderationInformation->getWorkflowForEntity($entity);
       $state_id = $entity->get('moderation_state')->value;
       $state = $workflow?->getTypePlugin()->getState($state_id);
 
@@ -116,13 +117,13 @@ final class ServiceRequireOnPublishConstraintValidator extends RequireOnPublishV
   /**
    * Determines published status for a paragraph based on its parent entity.
    */
-  protected function determineParagraphPublishedStatus(EntityInterface $parent): bool {
+  protected function determineParagraphPublishedStatus(ContentEntityInterface $parent): bool {
     if (
-      $this->moderationInfo
-      && $this->moderationInfo->isModeratedEntity($parent)
+      $this->moderationInformation
+      && $this->moderationInformation->isModeratedEntity($parent)
       && ($state_id = $this->getModerationStateFromRequest())
     ) {
-      $workflow = $this->moderationInfo->getWorkflowForEntity($parent);
+      $workflow = $this->moderationInformation->getWorkflowForEntity($parent);
       $state = $workflow?->getTypePlugin()->getState($state_id);
 
       if ($state) {
@@ -159,7 +160,7 @@ final class ServiceRequireOnPublishConstraintValidator extends RequireOnPublishV
    * Gets the posted moderation state ID, if available.
    */
   protected function getModerationStateFromRequest(): ?string {
-    $request = $this->requestStack->getCurrentRequest();
+    $request = $this->request;
 
     if (!$request->isMethod('POST')) {
       return NULL;
@@ -178,7 +179,7 @@ final class ServiceRequireOnPublishConstraintValidator extends RequireOnPublishV
    * Gets the posted publication status, if available.
    */
   protected function getStatusFromRequest(): ?bool {
-    $request = $this->requestStack->getCurrentRequest();
+    $request = $this->request;
 
     if (!$request->isMethod('POST')) {
       return NULL;
