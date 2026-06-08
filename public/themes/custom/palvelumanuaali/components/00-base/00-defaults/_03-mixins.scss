@@ -158,7 +158,8 @@ $outer-container-break: $small;
       width: 468px;
     }
 
-    &.selected {
+    &.selected:has(.form-radio[value='yes']),
+    &:has(input:checked) {
       border: 2px solid clr(background-section);
     }
     input {
