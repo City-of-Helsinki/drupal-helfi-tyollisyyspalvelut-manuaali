@@ -31,6 +31,9 @@
 <div class="form--inline clearfix search-form">
   <div class="text-search-wrapper">
     {{ form['search_wrapper'] }}
+    <div class="reset-wrapper">
+      <button name="reset" type="reset" class="reset-text button">{{ "Reset text search"|t }}</button>
+    </div>
     {{ form['actions']|without('reset') }}
   </div>
   <div class="filters-wrapper">
