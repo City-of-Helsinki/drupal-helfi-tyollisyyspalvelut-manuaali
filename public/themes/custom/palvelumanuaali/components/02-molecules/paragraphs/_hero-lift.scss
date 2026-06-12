@@ -39,6 +39,7 @@
     }
     .long-text {
       max-width: 100%;
+      @extend .text-large;
       @include large {
         max-width: unset;
       }

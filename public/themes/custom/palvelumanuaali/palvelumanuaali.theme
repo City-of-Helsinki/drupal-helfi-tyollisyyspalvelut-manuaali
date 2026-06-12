@@ -410,7 +410,7 @@ function palvelumanuaali_theme_suggestions_fieldset_alter(array &$suggestions, a
  */
 function palvelumanuaali_theme_suggestions_form_element_label_alter(array &$suggestions, array $variables, $hook): void {
   $element_id = 'edit-langcode-';
-  if (strpos($variables['element']['#id'], $element_id) === 0) {
+  if ((strpos($variables['element']['#id'], $element_id) === 0) and ($variables['element']['#form_element_type'] === 'radio')) {
     $suggestions[] = $hook . '__langcode';
   }
 }
