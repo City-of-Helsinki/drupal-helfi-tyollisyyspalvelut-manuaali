@@ -1,4 +1,1 @@
-/******/ (() => { // webpackBootstrap
-(function(a,b){b.behaviors.smallMessage={attach(){const b=a(".action-flag .use-ajax"),c=a(".action-unflag .use-ajax");a(b).click(function(){const b=a(this).closest(".small-message-wrapper").children(".pill--small-message--add");b.fadeIn("2000ms"),setTimeout(function(){b.fadeOut("2000ms")},3e3)}),a(c).click(function(){const b=a(this).closest(".small-message-wrapper").children(".pill--small-message--remove");b.fadeIn("2000ms"),setTimeout(function(){b.fadeOut("2000ms")},3e3)})}}})(jQuery,Drupal,drupalSettings);
-/******/ })()
-;
+(()=>{"use strict";!function(e,a){a.behaviors.smallMessage={attach:function(a){var s=e(".action-flag .use-ajax"),l=e(".action-unflag .use-ajax");e(s).click(function(){var a=e(this).closest(".small-message-wrapper").children(".pill--small-message--add");a.fadeIn("2000ms"),setTimeout(function(){a.fadeOut("2000ms")},3e3)}),e(l).click(function(){var a=e(this).closest(".small-message-wrapper").children(".pill--small-message--remove");a.fadeIn("2000ms"),setTimeout(function(){a.fadeOut("2000ms")},3e3)})}}}(jQuery,Drupal,drupalSettings)})();
