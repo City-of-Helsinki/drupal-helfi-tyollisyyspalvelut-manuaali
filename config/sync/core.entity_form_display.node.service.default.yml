@@ -67,7 +67,6 @@ dependencies:
     - hel_tpm_service_dates
     - hel_tpm_service_stats
     - ief_popup
-    - link
     - markup
     - maxlength
     - range
@@ -756,12 +755,25 @@ content:
       progress_indicator: throbber
     third_party_settings: {  }
   field_internal_links:
-    type: link_default
+    type: limited_link_widget
     weight: 18
     region: content
     settings:
       placeholder_url: ''
       placeholder_title: ''
+      target_bundles:
+        service: service
+        basic_page: 0
+        landing_page: 0
+        service_location: 0
+      bypass_target_bundles_roles:
+        root: root
+        admin: admin
+        anonymous: 0
+        authenticated: 0
+        editor: 0
+        specialist: 0
+        specialist_editor: 0
     third_party_settings: {  }
   field_life_situations:
     type: select2_entity_reference
@@ -887,12 +899,25 @@ content:
       progress_indicator: throbber
     third_party_settings: {  }
   field_public_links:
-    type: link_default
+    type: limited_link_widget
     weight: 16
     region: content
     settings:
       placeholder_url: ''
       placeholder_title: ''
+      target_bundles:
+        service: service
+        basic_page: 0
+        landing_page: 0
+        service_location: 0
+      bypass_target_bundles_roles:
+        root: root
+        admin: admin
+        anonymous: 0
+        authenticated: 0
+        editor: 0
+        specialist: 0
+        specialist_editor: 0
     third_party_settings: {  }
   field_related_archive:
     type: options_buttons
