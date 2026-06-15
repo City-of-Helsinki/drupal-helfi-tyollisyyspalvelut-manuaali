@@ -59,7 +59,8 @@ export default (env, argv) => {
               loader: "css-loader",
               options: {
                 sourceMap: true,
-                modules: false
+                modules: false,
+                url: false
               }
             },
             {
