@@ -4,7 +4,6 @@ status: true
 dependencies:
   config:
     - filter.format.plain_text_format
-    - search_api_autocomplete.search.service_search
     - search_api_autocomplete.search.solr_service_search
     - workflows.workflow.service_moderation
   module:
@@ -36,7 +35,6 @@ permissions:
   - 'entity print views access'
   - 'flag cart'
   - 'unflag cart'
-  - 'use search_api_autocomplete for service_search'
   - 'use search_api_autocomplete for solr_service_search'
   - 'use service_moderation transition create_new_draft'
   - 'use service_moderation transition outdated'
