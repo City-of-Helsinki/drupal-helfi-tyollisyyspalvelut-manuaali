@@ -12,7 +12,6 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\content_moderation\Entity\ContentModerationStateInterface;
-use Drupal\field\FieldConfigInterface;
 use Drupal\node\NodeInterface;
 use Drupal\service_manual_workflow\Event\ServiceModerationEvent;
 
@@ -21,6 +20,25 @@ use Drupal\service_manual_workflow\Event\ServiceModerationEvent;
  */
 function service_manual_workflow_cron() {
   _service_manual_workflow_queue_services_for_archival();
+}
+
+/**
+ * Implements hook_entity_type_alter().
+ */
+function service_manual_workflow_entity_type_alter(array &$entity_types) {
+  /** @var \Drupal\Core\Entity\EntityTypeInterface $entity_type */
+  foreach ($entity_types as $entity_type) {
+    $constraints = $entity_type->getConstraints();
+
+    if (!array_key_exists('require_on_publish', $constraints)) {
+      continue;
+    }
+
+    $constraints['service_require_on_publish'] = NULL;
+    unset($constraints['require_on_publish']);
+
+    $entity_type->setConstraints($constraints);
+  }
 }
 
 /**
@@ -173,57 +191,6 @@ function service_manual_workflow_entity_insert(EntityInterface $entity) {
     $event = new ServiceModerationEvent($entity, \Drupal::currentUser());
     $transition = 'service_manual_workflow.draft.to.ready_to_publish';
     Drupal::service('event_dispatcher')->dispatch($event, $transition);
-  }
-}
-
-/**
- * Implements hook_require_on_publish_is_published_alter().
- */
-function service_manual_workflow_require_on_publish_is_published_alter(&$is_published, &$entity, $operation) {
-  /** @var \Drupal\content_moderation\Entity\ContentModerationState $entity */
-  $entity_type = $entity->getEntityType();
-  if ($entity_type->id() !== 'node') {
-    return;
-  }
-
-  $publish_states = ['ready_to_publish', 'published'];
-  $moderation_state = $entity->moderation_state->value;
-  $is_published = in_array($moderation_state, $publish_states);
-
-  // Allow saving a service node to `ready to publish` state without e.g.
-  // filling the `Specialist` fields which are required for specialist editors.
-  // The fields are still required before publishing the node.
-  //
-  // @todo Consider replacing the require_on_publish module with a custom
-  // module. As emphasized by this workaround, there is a need for separate
-  // "require on publish" and "require on publish and ready to publish" states.
-  if ($entity->bundle() === 'service' && $moderation_state === 'ready_to_publish') {
-    $fields_not_required_on_ready_to_publish = [
-      'field_service_req_speacialist',
-      'field_service_coordination',
-      'field_obligatoryness_freetext',
-      'field_obligatoryness',
-      'field_career_markings',
-      'field_statements_unemployment',
-      'field_statements',
-      'field_service_suits_job_search',
-      'field_responsible_updatee',
-    ];
-
-    /** @var \Drupal\Core\Field\FieldItemListInterface $field */
-    foreach ($entity->getFields() as $field) {
-      $field_config = $field->getFieldDefinition();
-      if (!($field_config instanceof FieldConfigInterface)) {
-        continue;
-      }
-      if (in_array($field->getName(), $fields_not_required_on_ready_to_publish)) {
-        // This setting is read at RequireOnPublish constraint's validate().
-        // The entity itself is not saved, so the change is not persistent.
-        // Setting the value to false means that validate() does not build
-        // constraint violation.
-        $field_config->setThirdPartySetting('require_on_publish', 'require_on_publish', FALSE);
-      }
-    }
   }
 }
 
