@@ -11,12 +11,6 @@
     ],
     "repositories": [
         {
-            "name": "drupal/group_roles_management",
-            "type": "vcs",
-            "url": "https://git.drupalcode.org/issue/group_roles_management-3373100.git",
-            "comment": "Support for Group v2/v3"
-        },
-        {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
         },
@@ -64,7 +58,7 @@
         "drupal/ckeditor": "*",
         "drupal/ckeditor_accordion": "^2.0",
         "drupal/coder": "^8",
-        "drupal/content_lock": "^2.4",
+        "drupal/content_lock": "^3.0@RC",
         "drupal/context": "^5",
         "drupal/core-composer-scaffold": "^10.3",
         "drupal/core-recommended": "^10.3",
@@ -103,7 +97,7 @@
         "drupal/ggroup": "^2.0@RC",
         "drupal/ginvite": "^3.0",
         "drupal/group": "^2.3",
-        "drupal/group_roles_management": "dev-3373100-support-group-version#4eb1038b",
+        "drupal/group_roles_management": "^2",
         "drupal/health_check": "^3.0",
         "drupal/hook_post_action": "^1.1",
         "drupal/htmlmail": "*",
@@ -370,8 +364,7 @@
                 "WSOD when filtering by Date field (https://www.drupal.org/project/token_views_filter/issues/3499480#comment-16167091)": "https://www.drupal.org/files/issues/2025-06-26/token_view_filer-wsod-when-filtering-by-date-field_3499480-7.patch"
             },
             "drupal/content_lock": {
-                "Break lock operation not showing for user who created the lock (https://www.drupal.org/project/content_lock/issues/3559775)": "https://www.drupal.org/files/issues/2025-11-25/break-lock-operation-permission-3559775-1.patch",
-                "content_lock_entity_operation doesn't work if the entity list is cached (https://git.drupalcode.org/project/content_lock/-/merge_requests/38/diffs)": "patches/2919019-content_lock_entity_operation.patch"
+                "content_lock_entity_operation doesn't work if the entity list is cached (https://www.drupal.org/project/content_lock/issues/2919019#comment-16635990)": "https://www.drupal.org/files/issues/2026-06-16/content-locked-entity-operation-doesnt-work-3.x-2919019-26.patch"
             },
             "drupal/tmgmt": {
                 "Computed fields and not translatable fields from paragraphs are being translated (https://www.drupal.org/project/tmgmt/issues/3382356#comment-16104653)": "https://www.drupal.org/files/issues/2025-05-12/3382356_field_translation_checks_ordered_by_granularity.patch",

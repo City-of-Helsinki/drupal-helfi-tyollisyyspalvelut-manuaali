@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "acc49997565cc01c277e879f31e0d76f",
+    "content-hash": "a66d67be867aadcbb382f4203b940ca0",
     "packages": [
         {
             "name": "ajgl/breakpoint-twig-extension",
@@ -2634,29 +2634,36 @@
         },
         {
             "name": "drupal/content_lock",
-            "version": "2.4.0",
+            "version": "3.0.0-rc2",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/content_lock.git",
-                "reference": "8.x-2.4"
+                "reference": "3.0.0-rc2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/content_lock-8.x-2.4.zip",
-                "reference": "8.x-2.4",
-                "shasum": "99d149e530555aae12b44292efe5887d373e862e"
+                "url": "https://ftp.drupal.org/files/projects/content_lock-3.0.0-rc2.zip",
+                "reference": "3.0.0-rc2",
+                "shasum": "1b883c60994680c099f5c34906580e541b113295"
             },
             "require": {
-                "drupal/core": "^9.0 || ^10.0"
+                "drupal/core": "^10.2 || ^11"
+            },
+            "require-dev": {
+                "drupal/conflict": "^3.0@ALPHA",
+                "drupal/trash": "^3.0"
+            },
+            "suggest": {
+                "drupal/conflict": "For entity translation level locking"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-2.4",
-                    "datestamp": "1715783058",
+                    "version": "3.0.0-rc2",
+                    "datestamp": "1781339751",
                     "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
+                        "status": "not-covered",
+                        "message": "RC releases are not covered by Drupal security advisories."
                     }
                 }
             },
@@ -2666,42 +2673,54 @@
             ],
             "authors": [
                 {
-                    "name": "alexpott",
-                    "homepage": "https://www.drupal.org/user/157725"
+                    "name": "Christian Fritsch (chr.fritsch)",
+                    "homepage": "https://www.drupal.org/u/chrfritsch",
+                    "role": "Maintainer"
                 },
                 {
-                    "name": "astonvictor",
-                    "homepage": "https://www.drupal.org/user/3466615"
+                    "name": "Daniel Bosen (daniel.bosen)",
+                    "homepage": "https://www.drupal.org/u/danielbosen",
+                    "role": "Maintainer"
                 },
                 {
-                    "name": "chr.fritsch",
-                    "homepage": "https://www.drupal.org/user/2103716"
+                    "name": "Christopher Gervais (ergonlogic)",
+                    "homepage": "https://www.drupal.org/u/ergonlogic",
+                    "role": "Maintainer"
                 },
                 {
-                    "name": "daniel.bosen",
-                    "homepage": "https://www.drupal.org/user/404865"
+                    "name": "Joseph Zhao (pandaski)",
+                    "homepage": "https://www.drupal.org/u/pandaski",
+                    "role": "Maintainer"
                 },
                 {
-                    "name": "ergonlogic",
-                    "homepage": "https://www.drupal.org/user/368613"
+                    "name": "Volker Killesreiter (volkerk)",
+                    "homepage": "https://www.drupal.org/u/volkerk",
+                    "role": "Maintainer"
                 },
                 {
-                    "name": "mfb",
-                    "homepage": "https://www.drupal.org/user/12302"
+                    "name": "Alex Pott (alexpott)",
+                    "homepage": "https://www.drupal.org/u/alexpott",
+                    "role": "Maintainer"
                 },
                 {
-                    "name": "pandaski",
-                    "homepage": "https://www.drupal.org/user/1987218"
+                    "name": "mark burdett (mfb)",
+                    "homepage": "https://www.drupal.org/u/mfb",
+                    "role": "Maintainer"
                 },
                 {
-                    "name": "volkerk",
-                    "homepage": "https://www.drupal.org/user/57527"
+                    "name": "Viktor Holovachek (AstonVictor)",
+                    "homepage": "https://www.drupal.org/u/astonvictor",
+                    "role": "Maintainer"
                 }
             ],
             "description": "Prevents multiple users from trying to edit a content entity simultaneously to prevent edit conflicts.",
             "homepage": "https://www.drupal.org/project/content_lock",
+            "keywords": [
+                "Drupal"
+            ],
             "support": {
-                "source": "https://git.drupalcode.org/project/content_lock"
+                "source": "https://git.drupalcode.org/project/content_lock",
+                "issues": "https://www.drupal.org/project/issues/content_lock"
             }
         },
         {
@@ -5898,17 +5917,34 @@
         },
         {
             "name": "drupal/group_roles_management",
-            "version": "dev-3373100-support-group-version",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
-                "url": "https://git.drupalcode.org/issue/group_roles_management-3373100.git",
-                "reference": "4eb1038b"
+                "url": "https://git.drupalcode.org/project/group_roles_management.git",
+                "reference": "2.0.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/group_roles_management-2.0.0.zip",
+                "reference": "2.0.0",
+                "shasum": "5b521219c24d43ef560fbbaba65f005773f88928"
             },
             "require": {
-                "drupal/core": "^8.8 || ^9 || ^10",
-                "drupal/group": "^1.0 || ^2.0 || ^3.0"
+                "drupal/core": "^10 || ^11",
+                "drupal/group": "^2.0 || ^3.0"
             },
             "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "2.0.0",
+                    "datestamp": "1775860400",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
             "license": [
                 "GPL-2.0-or-later"
             ],
@@ -5922,10 +5958,9 @@
             "description": "Group roles management module allows a role to manage other roles.",
             "homepage": "https://www.drupal.org/project/group_roles_management",
             "support": {
-                "issues": "https://www.drupal.org/project/issues/group_roles_management",
-                "source": "https://git.drupalcode.org/project/group_roles_management"
-            },
-            "time": "2023-11-06T12:39:38+00:00"
+                "source": "https://git.drupalcode.org/project/group_roles_management",
+                "issues": "https://www.drupal.org/project/issues/group_roles_management"
+            }
         },
         {
             "name": "drupal/health_check",
@@ -23790,12 +23825,12 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "drupal/block_breakpoint": 15,
+        "drupal/content_lock": 5,
         "drupal/elasticsearch_connector": 15,
         "drupal/entitygroupfield": 5,
         "drupal/flag": 10,
         "drupal/gcontent_moderation": 10,
         "drupal/ggroup": 5,
-        "drupal/group_roles_management": 20,
         "drupal/inline_entity_form": 5,
         "drupal/notification_message": 5
     },
