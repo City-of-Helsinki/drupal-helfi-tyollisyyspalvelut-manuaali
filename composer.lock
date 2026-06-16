@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f377310180b51a2bb4c2e5cf0fe3bcba",
+    "content-hash": "32f5d95be552721d2f9208b34d32adf0",
     "packages": [
         {
             "name": "ajgl/breakpoint-twig-extension",
@@ -9013,26 +9013,32 @@
         },
         {
             "name": "drupal/require_on_publish",
-            "version": "dev-1.x",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/require_on_publish.git",
-                "reference": "d9a22879b87f96ed031e98776fea4efdd035b956"
+                "reference": "2.0.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/require_on_publish-2.0.0.zip",
+                "reference": "2.0.0",
+                "shasum": "6412d873a055a7e4336d9c7a3eea0127130cb85d"
             },
             "require": {
-                "drupal/core": "^9.2 || ^10"
+                "drupal/core": "^10 || ^11"
+            },
+            "require-dev": {
+                "drush/drush": "*"
             },
             "type": "drupal-module",
             "extra": {
-                "branch-alias": {
-                    "dev-1.x": "1.x-dev"
-                },
                 "drupal": {
-                    "version": "8.x-1.9+2-dev",
-                    "datestamp": "1706803111",
+                    "version": "2.0.0",
+                    "datestamp": "1754485798",
                     "security-coverage": {
-                        "status": "not-covered",
-                        "message": "Dev releases are not covered by Drupal security advisories."
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
                     }
                 }
             },
@@ -9045,6 +9051,10 @@
                     "name": "Mike Priscella",
                     "homepage": "https://drupal.org/u/mpriscella",
                     "role": "Maintainer"
+                },
+                {
+                    "name": "markdorison",
+                    "homepage": "https://www.drupal.org/user/346106"
                 },
                 {
                     "name": "mpriscella",
@@ -23796,8 +23806,7 @@
         "drupal/group_roles_management": 20,
         "drupal/inline_entity_form": 5,
         "drupal/nodeaccess": 15,
-        "drupal/notification_message": 5,
-        "drupal/require_on_publish": 20
+        "drupal/notification_message": 5
     },
     "prefer-stable": true,
     "prefer-lowest": false,

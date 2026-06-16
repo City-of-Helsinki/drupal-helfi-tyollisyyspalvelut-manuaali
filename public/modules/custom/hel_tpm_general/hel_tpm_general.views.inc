@@ -24,4 +24,11 @@ function hel_tpm_general_views_data_alter(array &$data) {
       'id' => 'hel_tpm_general_add_service_button',
     ],
   ];
+  $data['node_revision']['link_to_latest_translation_revision'] = [
+    'title' => t('Link to latest translation revision'),
+    'field' => [
+      'id' => 'link_to_latest_translation_revision',
+      'help' => t('Link to latest translation revision'),
+    ],
+  ];
 }
