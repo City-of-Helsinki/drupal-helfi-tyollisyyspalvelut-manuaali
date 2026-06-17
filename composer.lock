@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6485ed0414e3b75cd48a523bf2920f1f",
+    "content-hash": "b6ad4af40b8ed88d45bec6e93494572a",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -4359,52 +4359,6 @@
             }
         },
         {
-            "name": "drupal/eu_cookie_compliance_matomo",
-            "version": "1.0.9",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupalcode.org/project/eu_cookie_compliance_matomo.git",
-                "reference": "1.0.9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/eu_cookie_compliance_matomo-1.0.9.zip",
-                "reference": "1.0.9",
-                "shasum": "36cff524e8e86fa37b563af1c1fa6c02d7e3c9c6"
-            },
-            "require": {
-                "drupal/core": "^8 || ^9 || ^10 || ^11",
-                "drupal/eu_cookie_compliance": "*",
-                "drupal/matomo": "*"
-            },
-            "type": "drupal-module",
-            "extra": {
-                "drupal": {
-                    "version": "1.0.9",
-                    "datestamp": "1714562653",
-                    "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "marco.aresu",
-                    "homepage": "https://www.drupal.org/user/3248962"
-                }
-            ],
-            "description": "Add Matomo features to EU Cookie Compliance",
-            "homepage": "https://www.drupal.org/project/eu_cookie_compliance_matomo",
-            "support": {
-                "source": "https://git.drupalcode.org/project/eu_cookie_compliance_matomo"
-            }
-        },
-        {
             "name": "drupal/eva",
             "version": "3.1.1",
             "source": {
@@ -6619,70 +6573,6 @@
             "homepage": "https://www.drupal.org/project/markup",
             "support": {
                 "source": "https://git.drupalcode.org/project/markup"
-            }
-        },
-        {
-            "name": "drupal/matomo",
-            "version": "1.25.0",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupalcode.org/project/matomo.git",
-                "reference": "8.x-1.25"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/matomo-8.x-1.25.zip",
-                "reference": "8.x-1.25",
-                "shasum": "5e65764f4499061fa33cb5c46afcc26a85b8725e"
-            },
-            "require": {
-                "drupal/core": "^9.0 || ^10"
-            },
-            "conflict": {
-                "drupal/csp": "<1.12"
-            },
-            "require-dev": {
-                "drupal/csp": "~1.12",
-                "drupal/php": "~1.1",
-                "drupal/token": "~1.9"
-            },
-            "type": "drupal-module",
-            "extra": {
-                "drupal": {
-                    "version": "8.x-1.25",
-                    "datestamp": "1738948462",
-                    "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "c-logemann",
-                    "homepage": "https://www.drupal.org/user/218368"
-                },
-                {
-                    "name": "grimreaper",
-                    "homepage": "https://www.drupal.org/user/2388214"
-                },
-                {
-                    "name": "hass",
-                    "homepage": "https://www.drupal.org/user/85918"
-                },
-                {
-                    "name": "shelane",
-                    "homepage": "https://www.drupal.org/user/2674989"
-                }
-            ],
-            "description": "Adds Matomo javascript tracking code to all your site's pages.",
-            "homepage": "https://www.drupal.org/project/matomo",
-            "support": {
-                "source": "https://git.drupalcode.org/project/matomo"
             }
         },
         {
@@ -18509,16 +18399,16 @@
         },
         {
             "name": "justinrainbow/json-schema",
-            "version": "6.9.0",
+            "version": "6.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jsonrainbow/json-schema.git",
-                "reference": "bd1bda2ebfc8bff418565941771ea8f03c557886"
+                "reference": "8b1308a9d7bdbdb20ce87ef920f82b4564bb2d33"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jsonrainbow/json-schema/zipball/bd1bda2ebfc8bff418565941771ea8f03c557886",
-                "reference": "bd1bda2ebfc8bff418565941771ea8f03c557886",
+                "url": "https://api.github.com/repos/jsonrainbow/json-schema/zipball/8b1308a9d7bdbdb20ce87ef920f82b4564bb2d33",
+                "reference": "8b1308a9d7bdbdb20ce87ef920f82b4564bb2d33",
                 "shasum": ""
             },
             "require": {
@@ -18528,7 +18418,7 @@
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "3.3.0",
-                "json-schema/json-schema-test-suite": "^23.2",
+                "json-schema/json-schema-test-suite": "dev-main",
                 "marc-mabe/php-enum-phpstan": "^2.0",
                 "phpspec/prophecy": "^1.19",
                 "phpstan/phpstan": "^1.12",
@@ -18578,9 +18468,9 @@
             ],
             "support": {
                 "issues": "https://github.com/jsonrainbow/json-schema/issues",
-                "source": "https://github.com/jsonrainbow/json-schema/tree/6.9.0"
+                "source": "https://github.com/jsonrainbow/json-schema/tree/6.10.0"
             },
-            "time": "2026-06-05T14:05:24+00:00"
+            "time": "2026-06-16T20:50:26+00:00"
         },
         {
             "name": "lullabot/mink-selenium2-driver",
