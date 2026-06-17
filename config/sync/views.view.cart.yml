@@ -14,7 +14,6 @@ dependencies:
   module:
     - better_exposed_filters
     - content_moderation
-    - entity_print_views
     - flag
     - node
     - user
@@ -436,19 +435,7 @@ display:
           flag: cart
           user_scope: current
       use_ajax: true
-      header:
-        area_entity_print_views:
-          id: area_entity_print_views
-          table: views
-          field: area_entity_print_views
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: entity_print_views_link
-          empty: false
-          export_type: pdf
-          link_text: 'Print PDF'
-          display_id: default
+      header: {  }
       footer: {  }
       display_extenders:
         ajax_history: {  }
