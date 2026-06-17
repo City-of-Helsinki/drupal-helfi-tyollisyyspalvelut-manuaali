@@ -55,7 +55,6 @@
         "drupal/better_exposed_filters": "^7.1",
         "drupal/block_breakpoint": "^1.0@alpha",
         "drupal/block_class": "^4.0",
-        "drupal/ckeditor": "*",
         "drupal/ckeditor_accordion": "^2.0",
         "drupal/coder": "^8",
         "drupal/content_lock": "^3.0@RC",
@@ -69,7 +68,6 @@
         "drupal/disable_html5_validation": "^2.0",
         "drupal/dropzonejs": "^2.8",
         "drupal/editor_advanced_link": "^2.1",
-        "drupal/elasticsearch_connector": "^7.0@alpha",
         "drupal/emulsify": "^6.1",
         "drupal/emulsify_twig": "^5.0",
         "drupal/entity_browser": "^2.9",
@@ -100,7 +98,6 @@
         "drupal/group_roles_management": "^2",
         "drupal/health_check": "^3.0",
         "drupal/hook_post_action": "^2",
-        "drupal/htmlmail": "*",
         "drupal/ief_popup": "^2",
         "drupal/ief_table_view_mode": "^3",
         "drupal/inline_entity_form": "^3",
@@ -109,9 +106,7 @@
         "drupal/jquery_ui_touch_punch": "^1.1",
         "drupal/linkchecker": "^2.0",
         "drupal/log_stdout": "^3",
-        "drupal/login_security": "^2.0",
         "drupal/mail_login": "^4.2",
-        "drupal/mailsystem": "^4.4",
         "drupal/markup": "^2",
         "drupal/matomo": "^1.23",
         "drupal/maxlength": "^3",
@@ -124,9 +119,8 @@
         "drupal/migrate_plus": "^6.0",
         "drupal/migrate_source_csv": "^3.5",
         "drupal/migrate_tools": "^6.0",
-        "drupal/mimemail": "*",
         "drupal/node_edit_protection": "^1.0",
-        "drupal/nodeaccess": "^1.1",
+        "drupal/nodeaccess": "^2.0@alpha",
         "drupal/notification_message": "^2.0@RC",
         "drupal/other_view_filter": "^1.2",
         "drupal/paragraphs": "^1.12",
@@ -162,8 +156,7 @@
         "drupal/token": "^1.10",
         "drupal/token_views_filter": "^2.1",
         "drupal/twig_tweak": "^3.2",
-        "drupal/twig_xdebug": "^1.3",
-        "drupal/upgrade_status": "^4.3",
+        "drupal/upgrade_status": "^4.0",
         "drupal/variationcache": "^1.5",
         "drupal/varnish_purge": "*",
         "drupal/view_password": "^6.0",
@@ -189,6 +182,7 @@
     "require-dev": {
         "brainmaestro/composer-git-hooks": "*",
         "drupal/core-dev": "^10.3",
+        "drupal/twig_xdebug": "^1.4",
         "phpspec/prophecy-phpunit": "^2.0",
         "vincentlanglet/twig-cs-fixer": "*",
         "weitzman/drupal-test-traits": "^2.2",
@@ -199,6 +193,9 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
+    "replace": {
+        "drupal/ctools": "*"
+    },
     "config": {
         "platform": {
             "php": "8.3"
@@ -318,10 +315,6 @@
             },
             "drupal/themable_forms": {
                 "https://www.drupal.org/files/issues/undefined_index_type_themable_forms_theme_suggestions_form_element_2903660.patch": "https://www.drupal.org/files/issues/undefined_index_type_themable_forms_theme_suggestions_form_element_2903660.patch"
-            },
-            "drupal/nodeaccess": {
-                "https://www.drupal.org/project/nodeaccess/issues/3169490#comment-13814377": "https://www.drupal.org/files/issues/2020-09-07/nodeaccess_unpublish_nodes_visible-3169490-3.patch",
-                "https://www.drupal.org/project/nodeaccess/issues/3357718#comment-15266389": "https://www.drupal.org/files/issues/2023-10-11/3357718-undefined-key-rid-11.patch"
             },
             "drupal/require_on_publish" : {
                 "https://www.drupal.org/project/require_on_publish/issues/3178100#comment-16214646": "patches/fix-paragraphs-validation-3178100-48.patch"
