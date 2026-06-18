@@ -1,0 +1,12 @@
+view all block content revisions:
+  title: 'View all block content revisions'
+  description: 'To view a revision, you also need permission to view the block content.'
+revert all block content revisions:
+  title: 'Revert all block content revisions'
+  description: 'To revert a revision, you also need permission to edit the block content.'
+delete all block content revisions:
+  title: 'Delete all block content revisions'
+  description: 'To delete a revision, you also need permission to delete the block content.'
+
+permission_callbacks:
+  - \Drupal\block_diff_ui\BlockContentPermissions::blockTypePermissions
