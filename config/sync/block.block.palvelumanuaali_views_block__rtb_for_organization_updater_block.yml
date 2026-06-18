@@ -1,9 +1,9 @@
-uuid: 1f450b54-13e3-485e-8f4c-f84449d942e9
+uuid: 479e79a2-08d9-4054-a2da-032f8fd52d99
 langcode: fi
-status: false
+status: true
 dependencies:
   config:
-    - views.view.ready_to_publish_for_organization_updater
+    - views.view.rtb_for_organization_updater
   module:
     - block_class
     - context
@@ -14,14 +14,14 @@ dependencies:
 third_party_settings:
   block_class:
     classes: ready-to-publish-for-organization-updatee-view-block
-id: views_block__ready_to_publish_for_organization_updater_block_1
+id: palvelumanuaali_views_block__rtb_for_organization_updater_block
 theme: palvelumanuaali
 region: content
-weight: 1
+weight: 0
 provider: null
-plugin: 'views_block:ready_to_publish_for_organization_updater-block_1'
+plugin: 'views_block:rtb_for_organization_updater-block_1'
 settings:
-  id: 'views_block:ready_to_publish_for_organization_updater-block_1'
+  id: 'views_block:rtb_for_organization_updater-block_1'
   label: ''
   label_display: visible
   provider: views
