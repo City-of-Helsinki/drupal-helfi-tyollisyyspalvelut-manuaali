@@ -1,10 +1,10 @@
 name: helfi-manuska
-recipe: drupal10
+recipe: drupal11
 config:
   via: nginx
   webroot: public
   php: "8.3"
-  database: mysql
+  database: mariadb
   composer_version: 2
 proxy:
   mailhog:
