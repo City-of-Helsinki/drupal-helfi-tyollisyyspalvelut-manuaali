@@ -1,0 +1,354 @@
+From 615a212e4a816c6e3db48285c3ef038e0625371d Mon Sep 17 00:00:00 2001
+From: "gene.miller" <gene.miller@eightyoptions.com>
+Date: Thu, 18 Sep 2025 13:44:55 +1000
+Subject: [PATCH 1/5] Issue #2906455: Reroll patch for Drupal 11.x
+
+---
+ .../Field/FieldFormatter/StringFormatter.php  |  7 ++++
+ .../KernelString/StringFormatterTest.php      | 25 +++++++++++++
+ .../entity_test/entity_test.routing.yml       | 11 ++++++
+ .../src/Controller/EntityTestController.php   | 24 ++++++++++++
+ .../entity_test/src/Entity/EntityTestRev.php  |  1 +
+ .../config/schema/views.field.schema.yml      | 14 +++++++
+ core/modules/views/src/EntityViewsData.php    |  7 ++++
+ .../views/field/LinkToLatestRevision.php      | 37 +++++++++++++++++++
+ 8 files changed, 126 insertions(+)
+ create mode 100644 core/modules/views/src/Plugin/views/field/LinkToLatestRevision.php
+
+diff --git a/core/lib/Drupal/Core/Field/Plugin/Field/FieldFormatter/StringFormatter.php b/core/lib/Drupal/Core/Field/Plugin/Field/FieldFormatter/StringFormatter.php
+index d860cb73346f..898f95fec930 100644
+--- a/core/lib/Drupal/Core/Field/Plugin/Field/FieldFormatter/StringFormatter.php
++++ b/core/lib/Drupal/Core/Field/Plugin/Field/FieldFormatter/StringFormatter.php
+@@ -186,6 +186,13 @@ protected function getEntityUrl(EntityInterface $entity) {
+     // 'canonical'.
+     // @see \Drupal\Core\Entity\EntityBase::toUrl()
+     $rel = $entity->getEntityType()->hasLinkTemplate('revision') ? 'revision' : 'canonical';
++
++    // If this is not the default revision and is the latest translation
++    // affected revision, then show a URL pointing to the latest version.
++    if ($rel == 'revision' && !$entity->isDefaultRevision() && $entity->isLatestTranslationAffectedRevision() && $entity->hasLinkTemplate('latest-version')) {
++      $rel = 'latest-version';
++    }
++
+     return $entity->toUrl($rel);
+   }
+ 
+diff --git a/core/modules/field/tests/src/Kernel/KernelString/StringFormatterTest.php b/core/modules/field/tests/src/Kernel/KernelString/StringFormatterTest.php
+index a591e3cccbad..a3dea22e3d0d 100644
+--- a/core/modules/field/tests/src/Kernel/KernelString/StringFormatterTest.php
++++ b/core/modules/field/tests/src/Kernel/KernelString/StringFormatterTest.php
+@@ -181,6 +181,31 @@ public function testStringFormatter(): void {
+     $this->assertLink($value, 0);
+     $this->assertLinkByHref('/entity_test_rev/' . $entity_new_revision->id() . '/revision/' . $entity_new_revision->getRevisionId() . '/view');
+ 
++    // Make the entity a new non-default revision and assert it points to latest
++    // version.
++    $value3 = $this->randomMachineName();
++    $entity->setNewRevision(TRUE);
++    $entity->isDefaultRevision(FALSE);
++    $entity->{$this->fieldName}->value = $value3;
++    $entity->save();
++    $entity_latest_revision_id = $entity->getRevisionId();
++    $entity_latest_revision = $this->entityTypeManager->getStorage('entity_test_rev')->loadRevision($entity_latest_revision_id);
++    $this->renderEntityFields($entity_latest_revision, $this->display);
++    $this->assertLink($value3, 0);
++    $this->assertLinkByHref($entity->toUrl('latest-version')->toString());
++
++    // Check that linking to a revisionable entity works if the entity type does
++    // not specify a 'latest-version' link template.
++    $entity_type = clone $this->entityTypeManager->getDefinition('entity_test_rev');
++    $link_templates = $entity_type->getLinkTemplates();
++    unset($link_templates['latest-version']);
++    $entity_type->set('links', $link_templates);
++    \Drupal::state()->set('entity_test_rev.entity_type', $entity_type);
++    $this->entityTypeManager->clearCachedDefinitions();
++    $this->renderEntityFields($entity_latest_revision, $this->display);
++    $this->assertLink($value3, 0);
++    $this->assertLinkByHref('/entity_test_rev/' . $entity_latest_revision->id() . '/revision/' . $entity_latest_revision->getRevisionId() . '/view');
++
+     // Check that linking to a revisionable entity works if the entity type does
+     // not specify a 'revision' link template.
+     $entity_type = clone $this->entityTypeManager->getDefinition('entity_test_rev');
+diff --git a/core/modules/system/tests/modules/entity_test/entity_test.routing.yml b/core/modules/system/tests/modules/entity_test/entity_test.routing.yml
+index 52278e4d7806..01d42d5511c8 100644
+--- a/core/modules/system/tests/modules/entity_test/entity_test.routing.yml
++++ b/core/modules/system/tests/modules/entity_test/entity_test.routing.yml
+@@ -55,6 +55,17 @@ entity.entity_test.collection:
+   requirements:
+     _access: 'TRUE'
+ 
++entity.entity_test_rev.latest_version:
++  path: '/entity_test_rev/{entity_test_rev}/latest'
++  defaults:
++    _controller: '\Drupal\entity_test\Controller\EntityTestController::viewLatestVersion'
++  options:
++    parameters:
++      entity_test_rev:
++        type: entity:entity_test_rev
++  requirements:
++    _access: 'TRUE'
++
+ entity.entity_test_mulrev.revision:
+   path: '/entity_test_mulrev/{entity_test_mulrev}/revision/{entity_test_mulrev_revision}/view'
+   defaults:
+diff --git a/core/modules/system/tests/modules/entity_test/src/Controller/EntityTestController.php b/core/modules/system/tests/modules/entity_test/src/Controller/EntityTestController.php
+index 5a2af0aa150b..f21a3c290845 100644
+--- a/core/modules/system/tests/modules/entity_test/src/Controller/EntityTestController.php
++++ b/core/modules/system/tests/modules/entity_test/src/Controller/EntityTestController.php
+@@ -6,6 +6,8 @@
+ 
+ use Drupal\Core\Cache\Cache;
+ use Drupal\Core\Controller\ControllerBase;
++use Drupal\Core\Entity\EntityInterface;
++use Drupal\Core\Entity\RevisionableStorageInterface;
+ 
+ /**
+  * Controller routines for entity_test routes.
+@@ -123,4 +125,26 @@ public function listEntitiesEmpty($entity_type_id) {
+     ];
+   }
+ 
++  /**
++   * Returns the latest revision for the given entity.
++   *
++   * @param \Drupal\Core\Entity\EntityInterface $entity
++   *   The entity.
++   *
++   * @return array
++   *   A render array for the entity.
++   */
++  public function viewLatestVersion(EntityInterface $entity) {
++    $entity_type_id = $entity->getEntityTypeId();
++    $storage = $this->entityTypeManager->getStorage($entity_type_id);
++    if ($storage instanceof RevisionableStorageInterface) {
++      $latest_revision_id = $storage->getLatestRevisionId($entity->id());
++      if ($latest_revision_id) {
++        $entity = $storage->loadRevision($latest_revision_id);
++      }
++    }
++
++    return $this->entityTypeManager->getViewBuilder($entity_type_id)->view($entity);
++  }
++
+ }
+diff --git a/core/modules/system/tests/modules/entity_test/src/Entity/EntityTestRev.php b/core/modules/system/tests/modules/entity_test/src/Entity/EntityTestRev.php
+index 7f4f25572e91..b8cd5e292d86 100644
+--- a/core/modules/system/tests/modules/entity_test/src/Entity/EntityTestRev.php
++++ b/core/modules/system/tests/modules/entity_test/src/Entity/EntityTestRev.php
+@@ -57,6 +57,7 @@
+     'delete-multiple-form' => '/entity_test_rev/delete_multiple',
+     'edit-form' => '/entity_test_rev/manage/{entity_test_rev}/edit',
+     'revision' => '/entity_test_rev/{entity_test_rev}/revision/{entity_test_rev_revision}/view',
++    "latest-version" => "/entity_test_rev/{entity_test_rev}/latest",
+     'revision-delete-form' => '/entity_test_rev/{entity_test_rev}/revision/{entity_test_rev_revision}/delete',
+     'revision-revert-form' => '/entity_test_rev/{entity_test_rev}/revision/{entity_test_rev_revision}/revert',
+     'version-history' => '/entity_test_rev/{entity_test_rev}/revisions',
+diff --git a/core/modules/views/config/schema/views.field.schema.yml b/core/modules/views/config/schema/views.field.schema.yml
+index 1cddb405f7f7..fed3942656f7 100644
+--- a/core/modules/views/config/schema/views.field.schema.yml
++++ b/core/modules/views/config/schema/views.field.schema.yml
+@@ -260,3 +260,17 @@ views.field.field:
+ views.field.field_language:
+   type: views.field.field
+   label: 'Views language field handler'
++
++views.field.link_to_latest_revision:
++  type: views_field
++  label: 'Link to latest revision'
++  mapping:
++    text:
++      type: label
++      label: 'Text to display'
++    output_url_as_text:
++      type: boolean
++      label: 'Output the URL as text'
++    absolute:
++      type: boolean
++      label: 'Output an absolute link'
+diff --git a/core/modules/views/src/EntityViewsData.php b/core/modules/views/src/EntityViewsData.php
+index 741e974f4cac..35ce1dad8f6a 100644
+--- a/core/modules/views/src/EntityViewsData.php
++++ b/core/modules/views/src/EntityViewsData.php
+@@ -280,6 +280,13 @@ public function getViewsData() {
+         'help' => $this->t('Restrict the view to only revisions that are the latest revision of their entity.'),
+         'filter' => ['id' => 'latest_revision'],
+       ];
++      $data[$revision_table]['link_to_latest_revision'] = [
++        'title' => $this->t('Link to latest revision'),
++        'field' => [
++          'id' => 'link_to_latest_revision',
++          'help' => $this->t('Provides a link to the latest revision of an entity. If the latest revision is the default revision, provide a link to that instead.'),
++        ],
++      ];
+       if ($this->entityType->isTranslatable()) {
+         $data[$revision_table]['latest_translation_affected_revision'] = [
+           'title' => $this->t('Is Latest Translation Affected Revision'),
+diff --git a/core/modules/views/src/Plugin/views/field/LinkToLatestRevision.php b/core/modules/views/src/Plugin/views/field/LinkToLatestRevision.php
+new file mode 100644
+index 000000000000..4d6bf4156a92
+--- /dev/null
++++ b/core/modules/views/src/Plugin/views/field/LinkToLatestRevision.php
+@@ -0,0 +1,37 @@
++<?php
++
++namespace Drupal\views\Plugin\views\field;
++
++use Drupal\views\ResultRow;
++
++/**
++ * Field handler to view the latest revision of an entity.
++ *
++ * @ingroup views_field_handlers
++ *
++ * @ViewsField("link_to_latest_revision")
++ */
++class LinkToLatestRevision extends EntityLink {
++
++  /**
++   * {@inheritdoc}
++   */
++  protected function getUrlInfo(ResultRow $row) {
++    $entity = $this->getEntity($row);
++    $template = !$entity->isLatestRevision() && $entity->hasLinkTemplate('latest-version') ? 'latest-version' : $this->getEntityLinkTemplate();
++    $entity = $this->getEntity($row);
++    if ($this->languageManager->isMultilingual()) {
++      $entity = $this->getEntityTranslation($entity, $row);
++      $this->addLangcode($row);
++    }
++    return $entity->toUrl($template)->setAbsolute($this->options['absolute']);
++  }
++
++  /**
++   * {@inheritdoc}
++   */
++  protected function getDefaultLabel() {
++    return $this->t('View Latest Revision');
++  }
++
++}
+-- 
+GitLab
+
+
+From be954a90ceb7bdba8dc660a9c91fc3cb7ed6294a Mon Sep 17 00:00:00 2001
+From: "gene.miller" <gene.miller@eightyoptions.com>
+Date: Thu, 18 Sep 2025 14:10:34 +1000
+Subject: [PATCH 2/5] Issue #2906455: fix deprecated getEntityTranslation
+
+---
+ .../views/src/Plugin/views/field/LinkToLatestRevision.php       | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/core/modules/views/src/Plugin/views/field/LinkToLatestRevision.php b/core/modules/views/src/Plugin/views/field/LinkToLatestRevision.php
+index 4d6bf4156a92..68a639e4da6d 100644
+--- a/core/modules/views/src/Plugin/views/field/LinkToLatestRevision.php
++++ b/core/modules/views/src/Plugin/views/field/LinkToLatestRevision.php
+@@ -21,7 +21,7 @@ protected function getUrlInfo(ResultRow $row) {
+     $template = !$entity->isLatestRevision() && $entity->hasLinkTemplate('latest-version') ? 'latest-version' : $this->getEntityLinkTemplate();
+     $entity = $this->getEntity($row);
+     if ($this->languageManager->isMultilingual()) {
+-      $entity = $this->getEntityTranslation($entity, $row);
++      $entity = $this->getEntityTranslationByRelationship($entity, $row);
+       $this->addLangcode($row);
+     }
+     return $entity->toUrl($template)->setAbsolute($this->options['absolute']);
+-- 
+GitLab
+
+
+From 097998dee76e5952a3dba64278c5ddd5ebc5c430 Mon Sep 17 00:00:00 2001
+From: "gene.miller" <gene.miller@eightyoptions.com>
+Date: Thu, 18 Sep 2025 14:36:43 +1000
+Subject: [PATCH 3/5] Issue #2906455: fix deprecated @ViewsField annotation
+
+---
+ .../views/src/Plugin/views/field/LinkToLatestRevision.php     | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/core/modules/views/src/Plugin/views/field/LinkToLatestRevision.php b/core/modules/views/src/Plugin/views/field/LinkToLatestRevision.php
+index 68a639e4da6d..5eb90c7ce719 100644
+--- a/core/modules/views/src/Plugin/views/field/LinkToLatestRevision.php
++++ b/core/modules/views/src/Plugin/views/field/LinkToLatestRevision.php
+@@ -3,14 +3,14 @@
+ namespace Drupal\views\Plugin\views\field;
+ 
+ use Drupal\views\ResultRow;
++use Drupal\views\Attribute\ViewsField;
+ 
+ /**
+  * Field handler to view the latest revision of an entity.
+  *
+  * @ingroup views_field_handlers
+- *
+- * @ViewsField("link_to_latest_revision")
+  */
++#[ViewsField('link_to_latest_revision')]
+ class LinkToLatestRevision extends EntityLink {
+ 
+   /**
+-- 
+GitLab
+
+
+From ebfd79a57ed2cfdc0450976f83f8e4f956a20f1e Mon Sep 17 00:00:00 2001
+From: genebobmiller <genebobmiller@gmail.com>
+Date: Fri, 19 Sep 2025 11:27:02 +1000
+Subject: [PATCH 4/5] Issue #2906455: Only use 'latest-version' link template
+ if route is accessible
+
+---
+ .../Plugin/Field/FieldFormatter/StringFormatter.php  | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/core/lib/Drupal/Core/Field/Plugin/Field/FieldFormatter/StringFormatter.php b/core/lib/Drupal/Core/Field/Plugin/Field/FieldFormatter/StringFormatter.php
+index 898f95fec930..f1adb1ce35c5 100644
+--- a/core/lib/Drupal/Core/Field/Plugin/Field/FieldFormatter/StringFormatter.php
++++ b/core/lib/Drupal/Core/Field/Plugin/Field/FieldFormatter/StringFormatter.php
+@@ -189,8 +189,16 @@ protected function getEntityUrl(EntityInterface $entity) {
+ 
+     // If this is not the default revision and is the latest translation
+     // affected revision, then show a URL pointing to the latest version.
+-    if ($rel == 'revision' && !$entity->isDefaultRevision() && $entity->isLatestTranslationAffectedRevision() && $entity->hasLinkTemplate('latest-version')) {
+-      $rel = 'latest-version';
++    if ($rel === 'revision'
++      && !$entity->isDefaultRevision()
++      && $entity->isLatestTranslationAffectedRevision()
++      && $entity->hasLinkTemplate('latest-version')) {
++
++      $url = $entity->toUrl('latest-version');
++      if ($url->access()) {
++        $rel = 'latest-version';
++      }
++      // else keep $rel as 'revision' so consumers that expect revision links aren't broken.
+     }
+ 
+     return $entity->toUrl($rel);
+-- 
+GitLab
+
+
+From 8d03104e04a1da154d2db1ab4d69834e4e28e343 Mon Sep 17 00:00:00 2001
+From: genebobmiller <genebobmiller@gmail.com>
+Date: Fri, 19 Sep 2025 11:37:01 +1000
+Subject: [PATCH 5/5] Issue #2906455: Coding Standards
+
+---
+ .../Core/Field/Plugin/Field/FieldFormatter/StringFormatter.php  | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/core/lib/Drupal/Core/Field/Plugin/Field/FieldFormatter/StringFormatter.php b/core/lib/Drupal/Core/Field/Plugin/Field/FieldFormatter/StringFormatter.php
+index f1adb1ce35c5..a6cad9c8f6fd 100644
+--- a/core/lib/Drupal/Core/Field/Plugin/Field/FieldFormatter/StringFormatter.php
++++ b/core/lib/Drupal/Core/Field/Plugin/Field/FieldFormatter/StringFormatter.php
+@@ -198,7 +198,7 @@ protected function getEntityUrl(EntityInterface $entity) {
+       if ($url->access()) {
+         $rel = 'latest-version';
+       }
+-      // else keep $rel as 'revision' so consumers that expect revision links aren't broken.
++      // Else keep $rel as 'revision'.
+     }
+ 
+     return $entity->toUrl($rel);
+-- 
+GitLab
+
