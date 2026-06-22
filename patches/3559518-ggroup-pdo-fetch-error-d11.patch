@@ -1,0 +1,69 @@
+From 3e46882a5c00a1f47b27d5da192e66e0fc1e2cac Mon Sep 17 00:00:00 2001
+From: Jay Friendly <19219-JayMatwichuk@users.noreply.drupalcode.org>
+Date: Mon, 24 Nov 2025 01:49:31 +0000
+Subject: [PATCH] #3559518: Changing use of \PDO::FETCH_* constants to use
+ FetchAs class fixing fatal error in 11.2.
+
+---
+ src/Graph/SqlGroupGraphStorage.php | 29 ++++++++++++++++++++++++-----
+ 1 file changed, 24 insertions(+), 5 deletions(-)
+
+diff --git a/src/Graph/SqlGroupGraphStorage.php b/src/Graph/SqlGroupGraphStorage.php
+index 4cd6cee..a471a3c 100644
+--- a/src/Graph/SqlGroupGraphStorage.php
++++ b/src/Graph/SqlGroupGraphStorage.php
+@@ -2,9 +2,10 @@
+ 
+ namespace Drupal\ggroup\Graph;
+ 
++use Drupal\Core\Cache\Cache;
+ use Drupal\Core\Database\Connection;
+ use Drupal\Core\Database\Query\Condition;
+-use Drupal\Core\Cache\Cache;
++use Drupal\Core\Database\Statement\FetchAs;
+ 
+ /**
+  * SQL based storage of the group relationship graph.
+@@ -122,8 +123,18 @@ class SqlGroupGraphStorage implements GroupGraphStorageInterface {
+       // Add the Or condition Group.
+       $query->condition($or_group);
+ 
+-      $mapping['descendants'] = $query->execute()->fetchAll(\PDO::FETCH_COLUMN | \PDO::FETCH_GROUP);
+-      $mapping['ancestors'] = $query->execute()->fetchAll(\PDO::FETCH_COLUMN | \PDO::FETCH_GROUP, 1);
++      $rows = $query->execute()->fetchAll(FetchAs::List);
++      $mapping['descendants'] = [];
++      foreach ($rows as $row) {
++        $mapping['descendants'][$row[0]][] = $row[1];
++      }
++      $rows = $query->execute()->fetchAll(FetchAs::List);
++      $mapping['ancestors'] = [];
++      foreach ($rows as $row) {
++        // Group by end_vertex so keys are parent group IDs and values are
++        // arrays of start_vertex (ancestors).
++       $mapping['ancestors'][$row[1]][] = $row[0];
++      }
+ 
+       // Now load direct relatives.
+       $query = $this->connection->select('group_graph', 'gg')
+@@ -133,8 +144,16 @@ class SqlGroupGraphStorage implements GroupGraphStorageInterface {
+       $query->condition('hops', 0)
+         ->condition($or_group);
+ 
+-      $mapping['directDescendants'] = $query->execute()->fetchAll(\PDO::FETCH_COLUMN | \PDO::FETCH_GROUP);
+-      $mapping['directAncestors'] = $query->execute()->fetchAll(\PDO::FETCH_COLUMN | \PDO::FETCH_GROUP, 1);
++      $rows = $query->execute()->fetchAll(FetchAs::List);
++      $mapping['directDescendants'] = [];
++      foreach ($rows as $row) {
++        $mapping['directDescendants'][$row[0]][] = $row[1];
++      }
++      $rows = $query->execute()->fetchAll(FetchAs::List);
++      $mapping['directAncestors'] = [];
++      foreach ($rows as $row) {
++        $mapping['directAncestors'][$row[1]][] = $row[0];
++      }
+ 
+       // Descendants and Ancestors contain direct relatives as well.
+       // Combine ancestors and descendants to get a full list of all groups
+-- 
+GitLab
+
