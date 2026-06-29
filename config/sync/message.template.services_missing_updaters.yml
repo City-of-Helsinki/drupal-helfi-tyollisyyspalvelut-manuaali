@@ -3,18 +3,18 @@ langcode: fi
 status: true
 dependencies:
   config:
-    - filter.format.filtered_html
-    - filter.format.full_html
+    - filter.format.email_html
+    - filter.format.plain_text_format
 template: services_missing_updaters
-label: 'Services missing updaters'
-description: 'Services in group have missing updatee references notification'
+label: services_missing_updaters
+description: 'Services in group have missing updaters references notification'
 text:
   -
-    value: '<p>Ryhmän [message:field_group] palveluiden vastuupäivittäjätiedoissa puutteita</p>'
-    format: filtered_html
+    value: 'Ryhmän [message:field_group] palveluiden vastuupäivittäjätiedoissa puutteita'
+    format: plain_text_format
   -
-    value: "<p>Ryhmässäsi on yksi tai useampi palvelu joiden vastuupäivittäjätieto on puutteellinen. Käy tarkistamassa ryhmän <a href=\"[site:base-url]/group/[message:field_group:entity:id]/missing-updaters\">Puuttuvat vastuupäivittäjät -lista</a>.<br />\r\n&nbsp;</p>\r\n"
-    format: full_html
+    value: '<p>Ryhmässäsi on yksi tai useampi palvelu, joiden vastuupäivittäjätieto on puutteellinen. Käy tarkistamassa ryhmän <a href="[site:base-url]/group/[message:field_group:entity:id]/missing-updaters">Puuttuvat vastuupäivittäjät -lista</a>.</p><p>Puute voi tarkoittaa esimerkiksi, että vastuupäivittäjän käyttäjätili on sulkeutunut.</p><p>Tämä ilmoitus on automaattinen.</p><p>Ystävällisin terveisin<br>Palvelumanuaalin ylläpito</p>'
+    format: email_html
 settings:
   'token options':
     clear: false
