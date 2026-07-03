@@ -44,10 +44,11 @@
         }
     ],
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.3",
         "ext-pdo": "*",
         "composer/installers": "^2.3",
         "cweagans/composer-patches": "~1.0",
+        "drupal/action": "^0.2.2",
         "drupal/address": "^2",
         "drupal/admin_toolbar": "^3.0",
         "drupal/ajax_dependency": "^2.0",
@@ -59,12 +60,13 @@
         "drupal/coder": "*",
         "drupal/content_lock": "^3.0@RC",
         "drupal/context": "^5",
-        "drupal/core-composer-scaffold": "^11.4@RC",
-        "drupal/core-recommended": "^11.4@RC",
+        "drupal/core-composer-scaffold": "^11.4",
+        "drupal/core-recommended": "^11.4",
         "drupal/csv_serialization": "^4.0",
         "drupal/date_recur": "^3.8",
         "drupal/date_recur_modular": "^3.2",
         "drupal/dependent_fields": "^1.0",
+        "drupal/devel": "^5.5",
         "drupal/diff": "^1",
         "drupal/disable_html5_validation": "^2.0",
         "drupal/dropzonejs": "^2.8",
@@ -83,8 +85,8 @@
         "drupal/field_permissions": "^1.1",
         "drupal/file_download_link": "^2.0",
         "drupal/filter_empty_tags": "^2.1",
-        "drupal/flag": "^4.0@beta",
-        "drupal/flag_lists": "^4.0",
+        "drupal/flag": "^4",
+        "drupal/flag_lists": "4.0.x-dev",
         "drupal/flexible_permissions": "^2",
         "drupal/gcontent_moderation": "^2.0@beta",
         "drupal/gdpr": "3.1.2",
@@ -111,7 +113,7 @@
         "drupal/menu_breadcrumb": "^2.0",
         "drupal/menu_item_fields": "^1.5",
         "drupal/menu_item_role_access": "*",
-        "drupal/message": "^1.6",
+        "drupal/message": "1.x-dev",
         "drupal/message_notify": "^1.2",
         "drupal/message_ui": "*",
         "drupal/migrate_plus": "^6.0",
@@ -194,7 +196,7 @@
     },
     "config": {
         "platform": {
-            "php": "8.3"
+            "php": "8.4"
         },
         "audit": {
             "abandoned": "ignore"
@@ -283,7 +285,8 @@
                 "Concurrent ajax submits cause user data loss (https://www.drupal.org/project/drupal/issues/2830295#comment-15685036)": "https://www.drupal.org/files/issues/2024-07-16/2830295-71.patch",
                 "Ajax exposed filters not working for multiple instances (https://www.drupal.org/i/3163299#comment-15829959)": "https://www.drupal.org/files/issues/2024-10-24/3163299_120_d10.3.5.patch",
                 "Cannot save or publish originating node or translations. error \"The content has either been modified by another user, or you have already submitted modifications \"(https://www.drupal.org/project/drupal/issues/3285657)": "https://www.drupal.org/files/issues/2022-06-14/core9.2-node-lock-translations-2744851.patch",
-                "Link to latest revision (https://www.drupal.org/i/2906455#comment-15996236)": "https://www.drupal.org/files/issues/2026-06-23/2906455-59.patch"
+                "Link to latest revision (https://www.drupal.org/i/2906455#comment-15996236)": "patches/2906455-60.patch",
+                "Load multiple cardinality fields separately to avoid duplicate row multiplication": "https://www.drupal.org/files/issues/2026-07-03/drupal-core-load-multiple-cardinality-fields-separately-6.patch"
             },
             "drupal/better_exposed_filters": {
                 "Fix undefined array key #default_value": "patches/bef-default-value.patch"

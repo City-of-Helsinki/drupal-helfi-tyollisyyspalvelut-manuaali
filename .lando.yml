@@ -3,7 +3,7 @@ recipe: drupal11
 config:
   via: nginx
   webroot: public
-  php: "8.4"
+  php: "8.3"
   database: mariadb
   composer_version: 2
 proxy:
@@ -25,6 +25,8 @@ services:
       - "/app/vendor/bin/cghooks update"
     config:
       php: .lando.php.ini
+    install:
+      - pdo_mysql
     overrides:
       environment:
         ENVIRONMENT: "local"
