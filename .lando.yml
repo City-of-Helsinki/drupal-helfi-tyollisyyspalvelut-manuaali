@@ -33,7 +33,7 @@ services:
         PHP_IDE_CONFIG: "serverName=appserver"
         SIMPLETEST_BASE_URL: "http://helfi-manuska.lndo.site"
         SIMPLETEST_DB: "mysql://drupal11:drupal11@database/drupal11"
-        MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome", "goog:chromeOptions":{"args":["--disable-gpu", "--headless", "--no-sandbox"]}}, "http://chrome:9515"]'
+        MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","goog:chromeOptions":{"args":["--disable-gpu","--headless","--no-sandbox","--disable-dev-shm-usage","--disable-extensions","--remote-allow-origins=*"]}}, "http://chrome.helfimanuska.internal:9515"]'
         DRUSH_OPTIONS_URI: "https://helfi-manuska.lndo.site"
         XDEBUG_MODE: "coverage,debug"
         TFA_KEY: ''
@@ -43,9 +43,11 @@ services:
     type: compose
     services:
       image: drupalci/webdriver-chromedriver:production
-      command: chromedriver --host=0.0.0.0 --port=9515 --log-path=/tmp/chromedriver.log --no-sandbox --headless --verbose --allowed-origins=*
+      command: chromedriver --host=0.0.0.0 --port=9515 --log-path=/tmp/chromedriver.log --verbose --allowed-ips= --allowed-origins=*
       ports:
         - "9515:9515"
+      security_opt:
+        - seccomp:unconfined
   elastic:
     type: elasticsearch:7
     portforward: true
