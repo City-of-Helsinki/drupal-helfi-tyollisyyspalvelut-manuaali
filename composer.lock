@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4efb4df23e1ec2f72d372bf029b83b3e",
+    "content-hash": "2182db463196e8ab8efd3a678e8b7715",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -4669,17 +4669,17 @@
         },
         {
             "name": "drupal/eva",
-            "version": "3.1.1",
+            "version": "3.1.2",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/eva.git",
-                "reference": "3.1.1"
+                "reference": "3.1.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/eva-3.1.1.zip",
-                "reference": "3.1.1",
-                "shasum": "11df2285cc479033637b9aac2fe65f681e5ed38b"
+                "url": "https://ftp.drupal.org/files/projects/eva-3.1.2.zip",
+                "reference": "3.1.2",
+                "shasum": "12e4f281ac2200290832e4aae417a690fc2ece08"
             },
             "require": {
                 "drupal/core": "^9.5.11 || ^10 || ^11"
@@ -4690,8 +4690,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "3.1.1",
-                    "datestamp": "1769857067",
+                    "version": "3.1.2",
+                    "datestamp": "1783542971",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -10010,29 +10010,26 @@
         },
         {
             "name": "drupal/views_ajax_history",
-            "version": "1.8.0",
+            "version": "dev-1.x",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/views_ajax_history.git",
-                "reference": "8.x-1.8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/views_ajax_history-8.x-1.8.zip",
-                "reference": "8.x-1.8",
-                "shasum": "94242393b5ce610c3b5d7ec6dc0ac08da947aff6"
+                "reference": "6f37288335cd46fb6f96039786481c1a11b3ac90"
             },
             "require": {
                 "drupal/core": "^8.8 || ^9 || ^10 || ^11"
             },
             "type": "drupal-module",
             "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
                 "drupal": {
-                    "version": "8.x-1.8",
-                    "datestamp": "1735593764",
+                    "version": "8.x-1.8+7-dev",
+                    "datestamp": "1780981720",
                     "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
+                        "status": "not-covered",
+                        "message": "Dev releases are not covered by Drupal security advisories."
                     }
                 }
             },
@@ -12537,10 +12534,10 @@
         },
         {
             "name": "npm-asset/select2",
-            "version": "4.0.13",
+            "version": "4.1.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/select2/-/select2-4.0.13.tgz"
+                "url": "https://registry.npmjs.org/select2/-/select2-4.1.0.tgz"
             },
             "type": "npm-asset",
             "license": [
@@ -23489,7 +23486,8 @@
         "drupal/ggroup": 5,
         "drupal/message": 20,
         "drupal/nodeaccess": 15,
-        "drupal/notification_message": 5
+        "drupal/notification_message": 5,
+        "drupal/views_ajax_history": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
