@@ -122,6 +122,7 @@
         "drupal/message": "^1.6",
         "drupal/message_notify": "^1.2",
         "drupal/message_ui": "*",
+        "drupal/metatag": "*",
         "drupal/migrate_plus": "^6.0",
         "drupal/migrate_source_csv": "^3.5",
         "drupal/migrate_tools": "^6.0",
@@ -215,14 +216,15 @@
         "allow-plugins": {
             "composer/installers": true,
             "cweagans/composer-patches": true,
-            "drupal/core-composer-scaffold": true,
-            "zaporylie/composer-drupal-optimizations": true,
             "dealerdirect/phpcodesniffer-composer-installer": true,
-            "oomphinc/composer-installers-extender": true,
             "drupal/console-extend-plugin": true,
-            "phpstan/extension-installer": true,
+            "drupal/core-composer-scaffold": true,
+            "oomphinc/composer-installers-extender": true,
             "php-http/discovery": true,
-            "tbachert/spi": true
+            "phpstan/extension-installer": true,
+            "symfony/runtime": true,
+            "tbachert/spi": true,
+            "zaporylie/composer-drupal-optimizations": true
         }
     },
     "autoload": {
