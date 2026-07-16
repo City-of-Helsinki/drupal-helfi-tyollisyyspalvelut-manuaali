@@ -117,7 +117,7 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
     $this->installConfig([
       'content_moderation',
       'hel_tpm_update_reminder_test',
-      'views_bulk_operations'
+      'views_bulk_operations',
     ]);
 
     $this->cron = \Drupal::service('cron');

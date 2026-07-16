@@ -41,6 +41,8 @@ class ServicePopupConfirmSettingsForm extends ConfigFormBase {
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   Configuration factory.
+   * @param \Drupal\Core\Config\TypedConfigManagerInterface $typedConfigManager
+   *   Typed config manager.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   Entity type manager.
    * @param \Drupal\Core\Entity\EntityTypeBundleInfoInterface $entity_type_bundle_info
