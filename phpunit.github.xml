@@ -6,13 +6,15 @@
  https://www.drupal.org/node/2116263 for details.
 -->
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="./public/core/tests/bootstrap.php" colors="true" beStrictAboutTestsThatDoNotTestAnything="true" beStrictAboutOutputDuringTests="true" beStrictAboutChangesToGlobalState="true" failOnWarning="true" printerClass="\Drupal\Tests\Listeners\HtmlOutputPrinter" cacheResult="false" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
-  <coverage>
+  <source>
     <include>
       <directory>./public/modules/custom</directory>
     </include>
     <exclude>
       <directory>./public/modules/custom/*/tests</directory>
     </exclude>
+  </source>
+  <coverage>
   </coverage>
   <php>
     <!-- Disable deprecation notifications -->
