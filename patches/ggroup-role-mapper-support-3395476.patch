@@ -1,7 +1,7 @@
 From a453db616abb26dbe5bcb4ddc34d8b8203da2d96 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Jussi=20Viitam=C3=A4ki?= <jussi@kwd.fi>
 Date: Fri, 27 Oct 2023 14:48:40 +0300
-Subject: [PATCH 01/10] Added initial version of group role mapper with group2
+Subject: [PATCH 01/11] Added initial version of group role mapper with group2
  support
 
 ---
@@ -842,7 +842,7 @@ GitLab
 From 0ebf91b4f82ee2d2bc76878b46c57f5e7740f777 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Jussi=20Viitam=C3=A4ki?= <jussi@kwd.fi>
 Date: Mon, 27 Nov 2023 14:21:55 +0200
-Subject: [PATCH 02/10] Added schema for role mapping configs
+Subject: [PATCH 02/11] Added schema for role mapping configs
 
 ---
  .../config/schema/ggroup_role_mapper.schema.yml      | 12 ++++++++++++
@@ -874,7 +874,7 @@ GitLab
 From 2300c74ba1b9215fe095abfd82e4e6cf45fc309b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Jussi=20Viitam=C3=A4ki?= <jussi@kwd.fi>
 Date: Fri, 5 Jan 2024 12:49:32 +0200
-Subject: [PATCH 03/10] Changed getMappedRoles always return array mapped by
+Subject: [PATCH 03/11] Changed getMappedRoles always return array mapped by
  group_id to prevent random crasheh while calculatingPermissions
 
 ---
@@ -901,7 +901,7 @@ GitLab
 From caf34deff523a898e38fe4a18efaebf7b0b4fecb Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Jussi=20Viitam=C3=A4ki?= <jussi@kwd.fi>
 Date: Mon, 8 Jan 2024 08:24:36 +0200
-Subject: [PATCH 04/10] Fixed empty check in getMappedRoles
+Subject: [PATCH 04/11] Fixed empty check in getMappedRoles
 
 ---
  .../src/Access/InheritGroupPermissionCalculator.php             | 2 +-
@@ -927,7 +927,7 @@ GitLab
 From e8b34b8cfc80fea65477323f6f7b9ffbaf8ad340 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Jussi=20Viitam=C3=A4ki?= <jussi@kwd.fi>
 Date: Mon, 8 Jan 2024 12:32:40 +0200
-Subject: [PATCH 05/10] Fixed errors when build role mapping in specific use
+Subject: [PATCH 05/11] Fixed errors when build role mapping in specific use
  cases
 
 ---
@@ -984,7 +984,7 @@ GitLab
 From cc523b96df16fa3f629f8ae422cd14d007201452 Mon Sep 17 00:00:00 2001
 From: catch <6915-catch@users.noreply.drupalcode.org>
 Date: Mon, 16 Sep 2024 10:59:30 +0100
-Subject: [PATCH 06/10] Only add role mappings for the individual scope to
+Subject: [PATCH 06/11] Only add role mappings for the individual scope to
  avoid exception from flexible permissions module.
 
 ---
@@ -1031,7 +1031,7 @@ GitLab
 From 309758c07230e9d0abe3dce08de66fdb0a33f274 Mon Sep 17 00:00:00 2001
 From: catch <6915-catch@users.noreply.drupalcode.org>
 Date: Mon, 16 Sep 2024 16:33:23 +0100
-Subject: [PATCH 07/10] Account for 'insider' roles too so that 'member' role
+Subject: [PATCH 07/11] Account for 'insider' roles too so that 'member' role
  can be mapped.
 
 ---
@@ -1070,7 +1070,7 @@ GitLab
 From b1124d5c7acb94cd97091953da00b6b714020ca0 Mon Sep 17 00:00:00 2001
 From: catch <6915-catch@users.noreply.drupalcode.org>
 Date: Mon, 30 Sep 2024 18:39:51 +0200
-Subject: [PATCH 08/10] Groups passes in the 'outsider' scope before we get the
+Subject: [PATCH 08/11] Groups passes in the 'outsider' scope before we get the
  chance to calculate permissions, so return all relevant permissions for all
  scopes.
 
@@ -1123,7 +1123,7 @@ GitLab
 From 2faf789e582b695c53dbe687d4b20604fba8ffef Mon Sep 17 00:00:00 2001
 From: jviitamaki <jussi.viitamaki@citrus.fi>
 Date: Mon, 29 Jun 2026 14:12:52 +0300
-Subject: [PATCH 09/10] Fixed Cannot load the "user" entity with NULL ID when
+Subject: [PATCH 09/11] Fixed Cannot load the "user" entity with NULL ID when
  adding new user.
 
 ---
@@ -1150,7 +1150,7 @@ GitLab
 From ad9e4b6229f2c7d471861fd07582494406a370ef Mon Sep 17 00:00:00 2001
 From: jviitamaki <jussi.viitamaki@citrus.fi>
 Date: Thu, 16 Jul 2026 09:44:57 +0300
-Subject: [PATCH 10/10] Changed drupal compatibility to match main module
+Subject: [PATCH 10/11] Changed drupal compatibility to match main module
  requirement
 
 ---
@@ -1169,6 +1169,33 @@ index 3aa6937..04a52d6 100644
 +core_version_requirement: ^10.3 || ^11
  dependencies:
    - 'ggroup'
+-- 
+GitLab
+
+
+From a217075e46373625db3c80b61860f2664411036e Mon Sep 17 00:00:00 2001
+From: jviitamaki <jussi.viitamaki@citrus.fi>
+Date: Thu, 16 Jul 2026 11:54:44 +0300
+Subject: [PATCH 11/11] Fixed call to undefined function isNew() in some use
+ cases
+
+---
+ .../src/Access/InheritGroupPermissionCalculator.php             | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php b/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php
+index 1ac6884..ea76b41 100644
+--- a/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php
++++ b/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php
+@@ -157,7 +157,7 @@ class InheritGroupPermissionCalculator extends PermissionCalculatorBase {
+     $calculated_permissions = parent::calculatePermissions($account, $scope);
+ 
+     // Skip anonymous users.
+-    if ($account->isNew() && $account->isAnonymous()) {
++    if (is_null($account->id()) || $account->isAnonymous()) {
+       return $calculated_permissions;
+     }
+ 
 -- 
 GitLab
 
