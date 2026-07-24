@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "78c4074d8cdf6b8ed260e02e37a83374",
+    "content-hash": "b33158595ae74f1a09f06a744c76abd4",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -9443,6 +9443,56 @@
             "homepage": "https://www.drupal.org/project/symfony_mailer",
             "support": {
                 "source": "https://git.drupalcode.org/project/symfony_mailer"
+            }
+        },
+        {
+            "name": "drupal/symfony_mailer_log",
+            "version": "1.2.6",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/symfony_mailer_log.git",
+                "reference": "1.2.6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/symfony_mailer_log-1.2.6.zip",
+                "reference": "1.2.6",
+                "shasum": "a6c4c9327eb6a0a8003767277d1540bd8736c0a4"
+            },
+            "require": {
+                "drupal/core": "^10.3 || ^11 || ^12",
+                "drupal/symfony_mailer": "^1.3 || ^2.0"
+            },
+            "require-dev": {
+                "drush/drush": "^13"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "1.2.6",
+                    "datestamp": "1784015441",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Sven Decabooter",
+                    "homepage": "https://www.drupal.org/u/svendecabooter",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "Logs Mailer Plus emails",
+            "homepage": "https://drupal.org/project/symfony_mailer_log",
+            "support": {
+                "source": "https://git.drupalcode.org/project/symfony_mailer_log",
+                "issues": "https://www.drupal.org/project/issues/symfony_mailer_log"
             }
         },
         {

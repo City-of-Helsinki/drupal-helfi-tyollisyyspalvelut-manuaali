@@ -5,7 +5,34 @@
  * Module file for hel_tpm_mail_tools.
  */
 
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\hel_tpm_mail_tools\Event\SymfonyMailerLogItemCreatedEvent;
 use Drupal\hel_tpm_mail_tools\Utility\PreventMailUtility;
+
+/**
+ * Implements hook_mail().
+ */
+function hel_tpm_mail_tools_mail($key, &$message, $params): void {
+  if ($key !== 'mail_monitor_abnormality') {
+    return;
+  }
+
+  $message['subject'] = t('Mail abnormality detected');
+  $message['body'][] = t('Mail Monitor detected abnormal mail activity and blocked an email.');
+  $message['body'][] = '';
+  $message['body'][] = t('Type: @type', [
+    '@type' => $params['type'] ?? '',
+  ]);
+  $message['body'][] = t('Subtype: @sub_type', [
+    '@sub_type' => $params['sub_type'] ?? '-',
+  ]);
+  $message['body'][] = t('Subject: @subject', [
+    '@subject' => $params['subject'] ?? '',
+  ]);
+  $message['body'][] = t('Recipients: @recipients', [
+    '@recipients' => implode(', ', $params['recipients'] ?? []),
+  ]);
+}
 
 /**
  * Implements hook_entity_type_alter().
@@ -22,5 +49,17 @@ function hel_tpm_mail_tools_entity_type_alter(array &$entity_types): void {
 function hel_tpm_mail_tools_mail_alter(&$message): void {
   if (PreventMailUtility::isMailBlocked()) {
     $message['send'] = FALSE;
+  }
+}
+
+/**
+ * Implements hook_entity_postsave().
+ */
+function hel_tpm_mail_tools_entity_postsave(EntityInterface $entity) {
+  if ($entity->getEntityTypeId() === 'symfony_mailer_log') {
+    $event = new SymfonyMailerLogItemCreatedEvent($entity);
+    //Get the event dispatcher service and dispatch the event.
+    $eventDispatcher = \Drupal::service('event_dispatcher');
+    $eventDispatcher->dispatch($event, SymfonyMailerLogItemCreatedEvent::EVENT_NAME);
   }
 }
