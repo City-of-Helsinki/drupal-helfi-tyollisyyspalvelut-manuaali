@@ -25,7 +25,7 @@
 #}
 <span class="term d--flex" >
   {% if name and not page %}
-      <div class="whitespace"></div><a class="modal-link focus-outline" type="button" data-bs-toggle="modal" data-bs-target="{{'#Modal-' ~ term.id}}" tabindex="0">{{ name|render }}</a>
+      <div class="whitespace"></div><button class="modal-link modal-button focus-outline" type="button" data-bs-toggle="modal" data-bs-target="{{'#Modal-' ~ term.id}}" tabindex="0">{{ name|render }}</button>
   {% endif %}
   <div class="modal fade" id="{{'Modal-' ~ term.id}}" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
