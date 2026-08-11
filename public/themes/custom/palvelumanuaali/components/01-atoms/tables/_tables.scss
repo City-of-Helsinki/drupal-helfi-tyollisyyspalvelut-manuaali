@@ -292,6 +292,9 @@ table.sticky-header thead {
     top: 0;
     right: unset;
     margin-top: 0;
+    &:focus {
+      outline: 2px solid clr(primary);
+    }
   }
 }
 
