@@ -1,11 +1,10 @@
-(function ($, Drupal, drupalSettings) {
+(function ($, Drupal, drupalSettings, once) {
   Drupal.behaviors.hel_tpm_forms = {
     attach: function (context, settings) {
       addError();
       toggleAgeRange();
       handleSelectedStatement();
       handleSelectedObligatoryness();
-      handleFocus();
 
       // hide age range on the first a page of service entity form.
       function toggleAgeRange() {
@@ -17,30 +16,6 @@
           toggleAgeField(this);
         });
       }
-
-
-        let addParagraphClicked = false;
-            $(document).on('click', '.paragraphs-dropbutton-wrapper input', function () {
-              addParagraphClicked = true;
-            });
-
-            $(document).ajaxComplete( function () {
-
-              if (!addParagraphClicked) {
-                return;
-              }
-
-              addParagraphClicked = false;
-              setTimeout(function () {
-              const $newParagraph = $('.field-service-time-and-location-values  > tbody').children('.table__row').last();
-              console.log($newParagraph);
-              if ($newParagraph.length) {
-                $('html, body').animate({
-                  scrollTop: $newParagraph.offset().top - 80
-                }, 600);
-              }
-              }, 3000);
-            });
 
       /**
        * Toggle field age element.
@@ -114,4 +89,47 @@
 
     }
   }
-})(jQuery, Drupal, drupalSettings);
+
+  let addParagraphClicked = false;
+
+    Drupal.behaviors.serviceTimeParagraphScroll = {
+      attach(context) {
+
+        once(
+          'service-time-add-button',
+          '.field--widget-hel-tpm-service-dates-service-time-and-place-widget .paragraphs-dropbutton-wrapper input',
+          context
+        ).forEach(function (button) {
+
+          $(button).on('click', function () {
+            addParagraphClicked = true;
+          });
+
+        });
+
+        $(document).ajaxComplete(function () {
+
+
+
+          addParagraphClicked = false;
+
+          setTimeout(function () {
+
+            const $newRow = $('.field-service-time-and-location-values > tbody > .table__row').last();
+
+            if ($newRow.length) {
+              $newRow[0].scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+              });
+            }
+
+          }, 5000);
+
+        });
+
+      }
+    };
+
+
+})(jQuery, Drupal, drupalSettings, once );
