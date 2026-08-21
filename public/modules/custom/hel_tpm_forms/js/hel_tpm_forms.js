@@ -5,17 +5,42 @@
       toggleAgeRange();
       handleSelectedStatement();
       handleSelectedObligatoryness();
+      handleFocus();
 
       // hide age range on the first a page of service entity form.
       function toggleAgeRange() {
         let ageGroupRadio = '.field--name-field-age-groups .form-item .form-checkbox';
-        toggleAgeField(ageGroupRadio)
+        toggleAgeField(ageGroupRadio);
 
         //handle age accordion
         $(ageGroupRadio).click(function() {
           toggleAgeField(this);
         });
       }
+
+
+        let addParagraphClicked = false;
+            $(document).on('click', '.paragraphs-dropbutton-wrapper input', function () {
+              addParagraphClicked = true;
+            });
+
+            $(document).ajaxComplete( function () {
+
+              if (!addParagraphClicked) {
+                return;
+              }
+
+              addParagraphClicked = false;
+              setTimeout(function () {
+              const $newParagraph = $('.field-service-time-and-location-values  > tbody').children('.table__row').last();
+              console.log($newParagraph);
+              if ($newParagraph.length) {
+                $('html, body').animate({
+                  scrollTop: $newParagraph.offset().top - 80
+                }, 600);
+              }
+              }, 3000);
+            });
 
       /**
        * Toggle field age element.
@@ -28,7 +53,8 @@
           $(ageField).hide();
         }
         else {
-          $(ageField).show();
+          $(ageField).show();  return ajax.keypressResponse(this, event);
+
         }
       }
 
@@ -79,6 +105,11 @@
             $(this).siblings('.form-item--radio-button').removeClass('selected');
           }
         });
+      }
+
+      // hide age range on the first a page of service entity form.
+      function handleFocus() {
+
       }
 
     }
