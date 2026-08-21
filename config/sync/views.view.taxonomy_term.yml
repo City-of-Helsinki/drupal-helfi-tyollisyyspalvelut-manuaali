@@ -1,14 +1,12 @@
 uuid: be9b661e-e7c7-4397-94f3-7947aee31805
 langcode: fi
-status: true
+status: false
 dependencies:
   config:
     - core.entity_view_mode.node.view_card_lift
-    - field.storage.paragraph.field_title
     - node.type.service
   module:
     - node
-    - paragraphs
     - taxonomy
     - user
 _core:
@@ -27,69 +25,7 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      fields:
-        field_title:
-          id: field_title
-          table: paragraph__field_title
-          field: field_title
-          relationship: field_target_group
-          group_type: group
-          admin_label: ''
-          plugin_id: field
-          label: ''
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: string
-          settings: {  }
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
+      fields: {  }
       pager:
         type: some
         options:
@@ -268,25 +204,7 @@ display:
           distinct: false
           replica: false
           query_tags: {  }
-      relationships:
-        field_target_group:
-          id: field_target_group
-          table: node__field_target_group
-          field: field_target_group
-          relationship: none
-          group_type: group
-          admin_label: 'field_target_group: Paragraph'
-          plugin_id: standard
-          required: false
-        field_target_group_municipality:
-          id: field_target_group_municipality
-          table: paragraph__field_target_group_municipality
-          field: field_target_group_municipality
-          relationship: field_target_group
-          group_type: group
-          admin_label: 'field_target_group_municipality: Luokittelutermi'
-          plugin_id: standard
-          required: false
+      relationships: {  }
       group_by: true
       link_display: page_1
       link_url: ''
@@ -305,23 +223,23 @@ display:
           tokenize: true
           bypass_access: false
       footer: {  }
-      display_extenders: {  }
+      display_extenders:
+        ajax_history: {  }
     cache_metadata:
       max-age: -1
       contexts:
-        - 'languages:language_content'
         - 'languages:language_interface'
         - url
         - 'user.node_grants:view'
         - user.permissions
-      tags:
-        - 'config:field.storage.paragraph.field_title'
+      tags: {  }
   feed_1:
     id: feed_1
     display_title: Syöte
     display_plugin: feed
     position: 2
     display_options:
+      enabled: false
       pager:
         type: some
         options:
@@ -349,13 +267,11 @@ display:
     cache_metadata:
       max-age: -1
       contexts:
-        - 'languages:language_content'
         - 'languages:language_interface'
         - url
         - 'user.node_grants:view'
         - user.permissions
-      tags:
-        - 'config:field.storage.paragraph.field_title'
+      tags: {  }
   page_1:
     id: page_1
     display_title: Page
@@ -379,10 +295,8 @@ display:
     cache_metadata:
       max-age: -1
       contexts:
-        - 'languages:language_content'
         - 'languages:language_interface'
         - url
         - 'user.node_grants:view'
         - user.permissions
-      tags:
-        - 'config:field.storage.paragraph.field_title'
+      tags: {  }

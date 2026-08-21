@@ -163,7 +163,7 @@ index 0000000000000000000000000000000000000000..f5ce9e1c93ac32aeb8d8bedc209d6df8
 +      - { name: flexible_permission_calculator, priority: -110 }
 diff --git a/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php b/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php
 new file mode 100644
-index 0000000000000000000000000000000000000000..32177fe152fff4a2d0e1f1b128da1b97dc94e746
+index 0000000000000000000000000000000000000000..29de11d3f4a01019fd278ca88045bf1987d3b1e6
 --- /dev/null
 +++ b/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php
 @@ -0,0 +1,347 @@
@@ -325,8 +325,8 @@ index 0000000000000000000000000000000000000000..32177fe152fff4a2d0e1f1b128da1b97
 +  public function calculatePermissions(AccountInterface $account, $scope) {
 +    $calculated_permissions = parent::calculatePermissions($account, $scope);
 +
-+    // Skip anonymous users.
-+    if ($account->isAnonymous()) {
++    // Skip new accounts and anonymous users.
++    if (is_null($account->id()) || $account->isAnonymous()) {
 +      return $calculated_permissions;
 +    }
 +
