@@ -10,9 +10,11 @@ use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
+use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\Core\Site\Settings;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\node\NodeInterface;
 
 /**
  * Implements hook_theme().
@@ -158,6 +160,54 @@ function hel_tpm_general_user_presave($entity) {
     return;
   }
   $entity->setUsername($username);
+}
+
+/**
+ * Implements hook_token_info().
+ */
+function hel_tpm_general_token_info(): array {
+  return [
+    'tokens' => [
+      'node' => [
+        'latest-revision-url' => [
+          'name' => t('Latest revision URL'),
+          'description' => t("The URL of the node's latest version."),
+        ],
+      ],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_tokens().
+ */
+function hel_tpm_general_tokens(string $type, array $tokens, array $data, array $options, BubbleableMetadata $bubbleable_metadata): array {
+  $replacements = [];
+
+  if ($type !== 'node' || empty($data['node']) || !$data['node'] instanceof NodeInterface) {
+    return $replacements;
+  }
+
+  $node = $data['node'];
+  $bubbleable_metadata->addCacheableDependency($node);
+
+  foreach ($tokens as $name => $original) {
+    if ($name === 'latest-revision-url') {
+      $url_options = [
+        'absolute' => TRUE,
+      ];
+
+      if (!empty($options['langcode']) && $node->hasTranslation($options['langcode'])) {
+        $url_options['language'] = $node->getTranslation($options['langcode'])->language();
+      }
+
+      $replacements[$original] = $node
+        ->toUrl('latest-version', $url_options)
+        ->toString();
+    }
+  }
+
+  return $replacements;
 }
 
 /**
