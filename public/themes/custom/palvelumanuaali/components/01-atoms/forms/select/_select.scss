@@ -81,8 +81,10 @@
     }
     &:focus {
       box-shadow: inset 0px 0px 0px 2px clr(background-section);
+    }
+    &:open {
       ~svg {
-          transform: rotateX(180deg);
+        transform: rotateX(180deg);
       }
     }
   }
