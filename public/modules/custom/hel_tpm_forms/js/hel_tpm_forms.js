@@ -28,8 +28,7 @@
           $(ageField).hide();
         }
         else {
-          $(ageField).show();  return ajax.keypressResponse(this, event);
-
+          $(ageField).show();
         }
       }
 
@@ -105,13 +104,9 @@
           setTimeout(function () {
             const $newRow = $('.field-service-time-and-location-values > tbody > .table__row').last();
             if ($newRow.length) {
-              $newRow[0].scrollIntoView({
-                behavior: 'smooth',
-                block: 'center'
-              });
+              $newRow.find('.form-text').first().focus();
             }
-
-          }, 5000);
+          }, 1000);
 
         });
 
