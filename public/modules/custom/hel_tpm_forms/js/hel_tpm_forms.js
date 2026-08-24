@@ -81,12 +81,6 @@
           }
         });
       }
-
-      // hide age range on the first a page of service entity form.
-      function handleFocus() {
-
-      }
-
     }
   }
 
@@ -94,13 +88,11 @@
 
     Drupal.behaviors.serviceTimeParagraphScroll = {
       attach(context) {
-
         once(
           'service-time-add-button',
           '.field--widget-hel-tpm-service-dates-service-time-and-place-widget .paragraphs-dropbutton-wrapper input',
           context
         ).forEach(function (button) {
-
           $(button).on('click', function () {
             addParagraphClicked = true;
           });
@@ -108,15 +100,10 @@
         });
 
         $(document).ajaxComplete(function () {
-
-
-
           addParagraphClicked = false;
 
           setTimeout(function () {
-
             const $newRow = $('.field-service-time-and-location-values > tbody > .table__row').last();
-
             if ($newRow.length) {
               $newRow[0].scrollIntoView({
                 behavior: 'smooth',
