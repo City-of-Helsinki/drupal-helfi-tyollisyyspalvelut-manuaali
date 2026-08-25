@@ -99,12 +99,16 @@
         });
 
         $(document).ajaxComplete(function () {
-          addParagraphClicked = false;
-
           setTimeout(function () {
             const $newRow = $('.field-service-time-and-location-values > tbody > .table__row').last();
-            if ($newRow.length) {
+            const $ajaxAdded = $newRow.find('.ajax-new-content');
+            if ($ajaxAdded.length) {
+              const $firstField = $newRow.find('.form-text').first();
               $newRow.find('.form-text').first().focus();
+              $firstField[0].scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+              });
             }
           }, 1000);
 
