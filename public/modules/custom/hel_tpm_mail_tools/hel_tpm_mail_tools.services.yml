@@ -2,3 +2,19 @@ services:
   hel_tpm_mail_tools.utility.message_sender:
     class: Drupal\hel_tpm_mail_tools\Utility\MessageSender
     arguments: ['@message_notify.sender']
+
+  hel_tpm_mail_tools.mail_monitor:
+    class: Drupal\hel_tpm_mail_tools\Utility\MailMonitor
+    arguments: ['@entity_type.manager', '@datetime.time']
+
+  hel_tpm_mail_tools.mail_monitor_notification:
+    class: Drupal\hel_tpm_mail_tools\Utility\MailMonitorNotification
+    arguments:
+      - '@state'
+      - '@plugin.manager.mail'
+      - '@config.factory'
+      - '@logger.channel.hel_tpm_mail_tools'
+
+  logger.channel.hel_tpm_mail_tools:
+    parent: logger.channel_base
+    arguments: ['hel_tpm_mail_tools']
