@@ -10,10 +10,10 @@ label: hel_tpm_update_reminder_outdated
 description: 'Service outdated message'
 text:
   -
-    value: 'Palvelu [message:field_node:entity:title] on vanhentunut Palvelumanuaalissa'
+    value: 'Vastuupalvelusi on vanhentunut Palvelumanuaalissa: [message:field_node:entity:title]'
     format: plain_text_format
   -
-    value: "<p>Hei [message:field_user:entity:name]</p>\r\n\r\n<p>Palvelu [message:field_node:entity:title] on vanhentunut. Palvelu on merkitty vanhentuneeksi eikä se ole enää löydettävissä Palvelumanuaali-sivustolla.</p>\r\n\r\n<p>Saat tämän viestin, koska palvelu on ollut merkitty osaksi vastuupalveluita. Palvelun uudelleen julkaisu vaatii kunnan hyväksynnän järjestelmässä. Jos palvelua ei julkaista uudelleen, kunnan ylläpitovastuu tiedoista päättyy.</p>\r\n\r\n<p>Tämä ilmoitus on automaattinen.</p>\r\n\r\n<p>Ystävällisin terveisin,<br />\r\nPalvelumanuaalin tiimi</p>\r\n"
+    value: '<p>Palvelukuvaus on vanhentunut automaattisesti, koska palveluntuottaja ei ole päivittänyt sen tietoja neljään kuukauteen. Palvelu ei ole enää julkisesti nähtävissä Palvelumanuaali-sivustolla. Jos kuvauksella on käännösversioita, myös ne ovat vanhentuneet ja poistuneet näkyvistä.&nbsp;</p><p>Palvelu ja sen mahdolliset käännösversiot säilyvät "Vanhentunut"-tilassa kahden kuukauden ajan. Tänä aikana sinun on mahdollista julkaista ne uudestaan. Siirry palvelukuvaukseen alla olevasta linkistä.</p><p><a href="[message:field_node:entity:url]">[message:field_node:entity:title]</a><br>Huom! Linkki toimii vain sisäänkirjautuneille käyttäjille.</p><p>Palveluntuottajan vastuupäivittäjä:</p><p>1. Jos haluat julkaista palvelun uudelleen, käy tarkistamassa tietojen ajantasaisuus ja paina "Valmis julkaistavaksi".</p><p>Kunnan vastuupäivittäjä:</p><p>1. Jos kyseessä on ulkoisen palveluntuottajan palvelu, voit tarvittaessa kysyä palvelun tilanteesta palveluntuottajan vastuupäivittäjältä [message:field_message_author:entity:mail].</p><p>2. Jos kyseessä on kunnan hallinnoima palvelu ja haluat julkaista palvelun uudelleen, käy tarkistamassa tietojen ajantasaisuus ja paina ensin "Valmis julkaistavaksi". Paina tämän jälkeen "Julkaise".</p><p>Jos palvelua ei julkaista uudestaan, se arkistoituu kahden kuukauden kuluttua. Arkistoidun palvelun voi palauttaa vain sivuston ylläpito.</p><p>Tämä ilmoitus on automaattinen.</p><p>Ystävällisin terveisin<br>Palvelumanuaalin ylläpito</p>'
     format: email_html
 settings:
   'token options':
