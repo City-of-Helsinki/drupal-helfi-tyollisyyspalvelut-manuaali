@@ -3,18 +3,6 @@ services:
     class: Drupal\hel_tpm_mail_tools\Utility\MessageSender
     arguments: ['@message_notify.sender']
 
-  hel_tpm_mail_tools.event_subscriber:
-    class: Drupal\hel_tpm_mail_tools\EventSubscriber\HelTpmMailLogSubscriber
-    arguments: ['@entity_type.manager']
-    tags:
-      - { name: event_subscriber }
-
-  hel_tpm_mail_tools.symfony_mailer_log_item_created_subscriber:
-    class: Drupal\hel_tpm_mail_tools\EventSubscriber\SymfonyMailerLogItemCreatedSubscriber
-    arguments: ['@entity_type.manager']
-    tags:
-      - { name: event_subscriber }
-
   hel_tpm_mail_tools.mail_monitor:
     class: Drupal\hel_tpm_mail_tools\Utility\MailMonitor
     arguments: ['@entity_type.manager', '@datetime.time']

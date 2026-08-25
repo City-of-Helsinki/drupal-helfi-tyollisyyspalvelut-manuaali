@@ -75,9 +75,10 @@ class MailMonitor {
       ->accessCheck(FALSE)
       ->condition('to', $this->getEmailTo($email), 'IN')
       ->condition('created', $created_after, '>=')
-      ->condition('type', $email->getType())
-      ->condition('subject', $email->getSubject())
-      ->condition('text_body', $email->getTextBody());
+      ->condition('type', $email->getType());
+
+    $this->addNullableStringCondition($query, 'subject', $email->getSubject());
+    $this->addTextBodyCondition($query, $email->getTextBody());
 
     if ($email->getSubType() !== NULL) {
       $query->condition('sub_type', $email->getSubType());
@@ -89,6 +90,59 @@ class MailMonitor {
     $ids = $query->range(0, self::IDENTICAL_MAIL_LIMIT)->execute();
 
     return count($ids) >= self::IDENTICAL_MAIL_LIMIT;
+  }
+
+  /**
+   * Adds a condition for a string field that may be empty or missing.
+   *
+   * @param \Drupal\Core\Entity\Query\QueryInterface $query
+   *   The entity query.
+   * @param string $field
+   *   The field name.
+   * @param string|null $value
+   *   The value to match.
+   */
+  private function addNullableStringCondition($query, string $field, ?string $value): void {
+    if ($value === NULL || $value === '') {
+      $group = $query->orConditionGroup()
+        ->condition($field, '')
+        ->notExists($field);
+
+      $query->condition($group);
+      return;
+    }
+
+    $query->condition($field, $value);
+  }
+
+  /**
+   * Adds a normalized condition for the text body.
+   *
+   * @param \Drupal\Core\Entity\Query\QueryInterface $query
+   *   The entity query.
+   * @param string|null $body
+   *   The text body.
+   */
+  private function addTextBodyCondition($query, ?string $body): void {
+    if ($this->isEmptyTextBody($body)) {
+      return;
+    }
+
+    $query->condition('text_body', $body, 'IN');
+  }
+
+  /**
+   * Checks whether the text body should be treated as empty.
+   *
+   * @param string|null $body
+   *   The email text body.
+   *
+   * @return bool
+   *   TRUE if the body is empty or only whitespace/newlines.
+   */
+  private function isEmptyTextBody(?string $body): bool {
+    return trim(str_replace(["\r\n", "\r"], "\n", $body ?? '')) === '';
+
   }
 
   /**

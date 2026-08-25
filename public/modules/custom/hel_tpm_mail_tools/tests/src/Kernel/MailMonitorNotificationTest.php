@@ -6,7 +6,6 @@ namespace Drupal\Tests\hel_tpm_mail_tools\Kernel;
 
 use Drupal\Core\Mail\MailManagerInterface;
 use Drupal\KernelTests\KernelTestBase;
-use Drupal\symfony_mailer\EmailInterface;
 
 /**
  * Tests the mail monitor administration notification service.
@@ -15,17 +14,19 @@ use Drupal\symfony_mailer\EmailInterface;
  */
 final class MailMonitorNotificationTest extends KernelTestBase {
 
+  use CreateEmailTrait;
+
   /**
    * {@inheritdoc}
    */
   protected static $modules = [
     'system',
+    'hel_tpm_mail_tools',
     'user',
     'message',
     'message_notify',
     'symfony_mailer',
     'symfony_mailer_log',
-    'hel_tpm_mail_tools',
   ];
 
   /**
@@ -48,21 +49,10 @@ final class MailMonitorNotificationTest extends KernelTestBase {
       ->set('langcode', 'en')
       ->save();
 
-    $this->container->set('plugin.manager.mail', new class($this->mails) implements MailManagerInterface {
-
-      /**
-       * Constructs the test mail manager.
-       *
-       * @param array<int, array<string, mixed>> $mails
-       *   Captured mails.
-       */
-      public function __construct(private array &$mails) {
-      }
-
-      /**
-       * {@inheritdoc}
-       */
-      public function mail($module, $key, $to, $langcode, $params = [], $reply = NULL, $send = TRUE) {
+    $mail_manager = $this->createMock(MailManagerInterface::class);
+    $mail_manager
+      ->method('mail')
+      ->willReturnCallback(function ($module, $key, $to, $langcode, $params = [], $reply = NULL, $send = TRUE): array {
         $message = [
           'module' => $module,
           'key' => $key,
@@ -81,16 +71,9 @@ final class MailMonitorNotificationTest extends KernelTestBase {
         $this->mails[] = $message;
 
         return $message;
-      }
+      });
 
-      /**
-       * {@inheritdoc}
-       */
-      public function getInstance(array $options) {
-        return NULL;
-      }
-
-    });
+    $this->container->set('plugin.manager.mail', $mail_manager);
   }
 
   /**
@@ -161,58 +144,6 @@ final class MailMonitorNotificationTest extends KernelTestBase {
 
     $this->assertFalse($result);
     $this->assertCount(0, $this->mails);
-  }
-
-  /**
-   * Creates a mocked Symfony Mailer email.
-   *
-   * @param array $values
-   *   Optional email values.
-   *
-   * @return \Drupal\symfony_mailer\EmailInterface
-   *   The mocked email.
-   */
-  private function createEmail(array $values = []): EmailInterface {
-    $values += [
-      'type' => 'test_type',
-      'sub_type' => 'test_sub_type',
-      'subject' => 'Test subject',
-      'text_body' => 'Test body',
-      'recipients' => ['recipient@example.com'],
-    ];
-
-    $email = $this->createMock(EmailInterface::class);
-    $email->method('getType')->willReturn($values['type']);
-    $email->method('getSubType')->willReturn($values['sub_type']);
-    $email->method('getSubject')->willReturn($values['subject']);
-    $email->method('getTextBody')->willReturn($values['text_body']);
-    $email->method('getTo')->willReturn(array_map(
-      static fn (string $address): object => new class($address) {
-
-        /**
-         * Constructs a test address object.
-         *
-         * @param string $email
-         *   The email address.
-         */
-        public function __construct(private readonly string $email) {
-        }
-
-        /**
-         * Gets the email address.
-         *
-         * @return string
-         *   The email address.
-         */
-        public function getEmail(): string {
-          return $this->email;
-        }
-
-      },
-      $values['recipients'],
-    ));
-
-    return $email;
   }
 
 }

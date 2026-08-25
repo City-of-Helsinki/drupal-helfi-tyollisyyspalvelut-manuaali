@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Drupal\Tests\hel_tpm_mail_tools\Kernel;
 
 use Drupal\KernelTests\KernelTestBase;
-use Drupal\symfony_mailer\EmailInterface;
 
 /**
  * Tests the mail monitor service.
@@ -13,6 +12,8 @@ use Drupal\symfony_mailer\EmailInterface;
  * @group hel_tpm_mail_tools
  */
 final class MailMonitorTest extends KernelTestBase {
+
+  use CreateEmailTrait;
 
   /**
    * {@inheritdoc}
@@ -117,6 +118,23 @@ final class MailMonitorTest extends KernelTestBase {
     ]);
 
     $this->assertFalse($this->mailMonitor->mailSentTooManyTimes($email));
+  }
+
+  /**
+   * Tests that empty subjects and whitespace-only bodies are treated as equal.
+   */
+  public function testMailSentTooManyTimesMatchesEmptySubjectAndWhitespaceOnlyTextBody(): void {
+    $email = $this->createEmail([
+      'subject' => NULL,
+      'text_body' => "\n",
+    ]);
+
+    $this->createLogItems(5, [
+      'subject' => '',
+      'text_body' => "  \n ",
+    ]);
+
+    $this->assertTrue($this->mailMonitor->mailSentTooManyTimes($email));
   }
 
   /**
@@ -230,58 +248,6 @@ final class MailMonitorTest extends KernelTestBase {
       }));
       $entity->save();
     }
-  }
-
-  /**
-   * Creates a mocked Symfony Mailer email.
-   *
-   * @param array $values
-   *   Optional email values.
-   *
-   * @return \Drupal\symfony_mailer\EmailInterface
-   *   The mocked email.
-   */
-  private function createEmail(array $values = []): EmailInterface {
-    $values += [
-      'type' => 'test_type',
-      'sub_type' => 'test_sub_type',
-      'subject' => 'Test subject',
-      'text_body' => 'Test body',
-      'recipients' => ['recipient@example.com'],
-    ];
-
-    $email = $this->createMock(EmailInterface::class);
-    $email->method('getType')->willReturn($values['type']);
-    $email->method('getSubType')->willReturn($values['sub_type']);
-    $email->method('getSubject')->willReturn($values['subject']);
-    $email->method('getTextBody')->willReturn($values['text_body']);
-    $email->method('getTo')->willReturn(array_map(
-      static fn (string $address): object => new class($address) {
-
-        /**
-         * Constructs a test address object.
-         *
-         * @param string $email
-         *   The email address.
-         */
-        public function __construct(private readonly string $email) {
-        }
-
-        /**
-         * Gets the email address.
-         *
-         * @return string
-         *   The email address.
-         */
-        public function getEmail(): string {
-          return $this->email;
-        }
-
-      },
-      $values['recipients'],
-    ));
-
-    return $email;
   }
 
 }
