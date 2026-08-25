@@ -16,20 +16,19 @@ function hel_tpm_mail_tools_mail($key, &$message, $params): void {
   }
 
   $message['subject'] = t('Mail abnormality detected');
-  $message['body'][] = t('Mail Monitor detected abnormal mail activity and blocked an email.');
-  $message['body'][] = '';
+  $message['body'][] = t('Mail Monitor detected abnormal mail activity and blocked an email.') . "\n";
   $message['body'][] = t('Type: @type', [
     '@type' => $params['type'] ?? '',
-  ]);
+  ]) . "\n";
   $message['body'][] = t('Subtype: @sub_type', [
     '@sub_type' => $params['sub_type'] ?? '-',
-  ]);
+  ]) . "\n";
   $message['body'][] = t('Subject: @subject', [
     '@subject' => $params['subject'] ?? '',
-  ]);
+  ]) . "\n";
   $message['body'][] = t('Recipients: @recipients', [
     '@recipients' => implode(', ', $params['recipients'] ?? []),
-  ]);
+  ]) . "\n";
 }
 
 /**
