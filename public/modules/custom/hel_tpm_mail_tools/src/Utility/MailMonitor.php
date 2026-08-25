@@ -151,7 +151,7 @@ class MailMonitor {
    * This method extracts all the recipient email addresses from the given
    * EmailInterface object by iterating over its "to" field.
    *
-   * @param \EmailInterface $email
+   * @param \Drupal\symfony_mailer\EmailInterface $email
    *   The email object from which to retrieve recipient addresses.
    *
    * @return array|null
