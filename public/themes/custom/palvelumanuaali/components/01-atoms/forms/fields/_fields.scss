@@ -36,7 +36,9 @@
         input {
           opacity: 0;
           position: absolute;
-          &:checked +label {
+
+          &:checked +label,
+          &:focus-visible +label {
             background-color: $blue100;
             color: $white;
           }
@@ -256,6 +258,9 @@
       }
 
       .add-time-button {
+        &:focus-visible +label {
+          background-color: clr(alt-header-color);
+        }
         & + label {
           background-color: $blue100;
           @include round-icon-button;
@@ -431,7 +436,14 @@
     }
   }
   input[type="radio"] {
-    display: none;
+    width:0;
+    height:0;
+    &:focus-visible {
+      outline: 0;
+      + label::before {
+        border-width: 2px;
+      }
+    }
     &:disabled +label {
       &::before {
         border: 1px solid $gray-light;
