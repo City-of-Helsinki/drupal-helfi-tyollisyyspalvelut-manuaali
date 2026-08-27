@@ -3,18 +3,18 @@ langcode: en
 status: true
 dependencies:
   config:
-    - filter.format.filtered_html
-    - filter.format.full_html
+    - filter.format.email_html
+    - filter.format.plain_text_format
 template: content_has_been_published
-label: 'Service has been published'
-description: ''
+label: content_has_been_published
+description: 'Service has been published'
 text:
   -
-    value: "<p>[message:field_node:entity:title] julkaistu Palvelumanuaalissa</p>\r\n"
-    format: filtered_html
+    value: 'Vastuupalvelusi on julkaistu Palvelumanuaalissa: [message:field_node:entity:title]'
+    format: plain_text_format
   -
-    value: "<p>Hei [message:field_node:entity:field_service_provider_updatee],</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Palvelu [message:field_node:entity:title] on nyt julkaistu palvelussa [site:name].</p>\r\n\r\n<p>Voit tarkastella julkaistua palvelua sivustolla:</p>\r\n\r\n<p><a href=\"[message:field_node:entity:url]\" title=\"[message:field_node:entity:url]\">[message:field_node:entity:title]</a></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Terveisin,</p>\r\n\r\n<p>Palvelumanuaalin ylläpito</p>\r\n"
-    format: full_html
+    value: '<p>Vastuupalvelusi on nyt julkaistu Palvelumanuaalissa.</p><p>Voit tarkastella julkaistua palvelua sivustolla: <a href="[message:field_node:entity:url]">[message:field_node:entity:title]</a></p><p>Tämä ilmoitus on automaattinen.</p><p>Ystävällisin terveisin<br>Palvelumanuaalin ylläpito</p>'
+    format: email_html
 settings:
   'token options':
     clear: false

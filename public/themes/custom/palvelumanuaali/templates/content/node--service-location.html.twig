@@ -94,14 +94,14 @@
   {% endif %}
 
   <div{{ content_attributes }}>
-    {{ content|without('field_accessibility', 'field_accessibility_details') }}
+    {{ content|without('field_accessibility', 'field_accessibility_info') }}
   </div>
 
 </article>
-{% if (content.field_accessibility['0'] is not null or content.field_accessibility_details['0'] is not null) %}
+{% if (content.field_accessibility['0'] is not null or content.field_accessibility_info['0'] is not null) %}
 <div class='accessibility-wrapper'>
 <div{{ title_attributes.addClass(title_classes) }}>{{ 'Accessibility'|t }}</div>
 {{content.field_accessibility}}
-{{content.field_accessibility_details}}
+{{content.field_accessibility_info}}
 </div>
 {% endif %}
