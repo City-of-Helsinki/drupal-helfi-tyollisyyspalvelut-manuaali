@@ -11,12 +11,6 @@
     ],
     "repositories": [
         {
-            "name": "drupal/group_roles_management",
-            "type": "vcs",
-            "url": "https://git.drupalcode.org/issue/group_roles_management-3373100.git",
-            "comment": "Support for Group v2/v3"
-        },
-        {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
         },
@@ -50,86 +44,85 @@
         }
     ],
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.3",
+        "ext-pdo": "*",
         "composer/installers": "^2.3",
         "cweagans/composer-patches": "~1.0",
-        "drupal/address": "^1.10",
+        "drupal/action": "^0.2.2",
+        "drupal/address": "^2",
         "drupal/admin_toolbar": "^3.0",
         "drupal/ajax_dependency": "^2.0",
-        "drupal/auto_username": "^1.3",
         "drupal/autologout": "^1.4",
         "drupal/better_exposed_filters": "^7.1",
         "drupal/block_breakpoint": "^1.0@alpha",
         "drupal/block_class": "^4.0",
         "drupal/ckeditor_accordion": "^2.0",
-        "drupal/coder": "^8",
-        "drupal/content_lock": "^2.4",
+        "drupal/coder": "^8.3",
+        "drupal/content_lock": "^3.0",
         "drupal/context": "^5",
-        "drupal/core-composer-scaffold": "^10.3",
-        "drupal/core-recommended": "^10.3",
+        "drupal/core-composer-scaffold": "^11.4",
+        "drupal/core-recommended": "^11.4",
         "drupal/csv_serialization": "^4.0",
         "drupal/date_recur": "^3.8",
         "drupal/date_recur_modular": "^3.2",
         "drupal/dependent_fields": "^1.0",
+        "drupal/devel": "^5.5",
+        "drupal/diff": "^2",
         "drupal/disable_html5_validation": "^2.0",
         "drupal/dropzonejs": "^2.8",
         "drupal/editor_advanced_link": "^2.1",
         "drupal/emulsify": "^6.1",
         "drupal/emulsify_twig": "^5.0",
         "drupal/entity_browser": "^2.9",
-        "drupal/entity_diff_ui": "^1.0",
         "drupal/entity_export_csv": "^2.1",
         "drupal/entity_print": "^2.4",
         "drupal/entitygroupfield": "^2.0@RC",
         "drupal/epp": "^1.3",
         "drupal/eu_cookie_compliance": "^1.24",
-        "drupal/eu_cookie_compliance_matomo": "^1.0",
         "drupal/eva": "^3.1",
         "drupal/facets": "^3.0",
-        "drupal/field_description_tooltip": "^1.0",
         "drupal/field_group": "^4.0",
         "drupal/field_permissions": "^1.1",
         "drupal/file_download_link": "^2.0",
         "drupal/filter_empty_tags": "^2.1",
-        "drupal/flag": "^4.0@beta",
-        "drupal/flag_lists": "^4.0",
+        "drupal/flag": "^4",
+        "drupal/flag_lists": "4.0.x-dev",
         "drupal/flexible_permissions": "^2",
         "drupal/gcontent_moderation": "^2.0@beta",
-        "drupal/gdpr": "^3.1",
+        "drupal/gdpr": "3.1.2",
         "drupal/geoblock": "^1.0",
         "drupal/geoblock_maxmind": "^1.0",
         "drupal/ggroup": "^2.0@RC",
         "drupal/ginvite": "^3.0",
         "drupal/group": "^2.3",
-        "drupal/group_roles_management": "dev-3373100-support-group-version#4eb1038b",
+        "drupal/group_roles_management": "^2",
         "drupal/health_check": "^3.0",
-        "drupal/hook_post_action": "^1.1",
+        "drupal/hook_post_action": "^2",
         "drupal/ief_popup": "^2",
-        "drupal/ief_table_view_mode": "^2.2",
-        "drupal/inline_entity_form": "^1.0@RC",
+        "drupal/ief_table_view_mode": "^3",
+        "drupal/inline_entity_form": "^3",
         "drupal/jquery_ui_datepicker": "^2.1",
         "drupal/jquery_ui_slider": "^2.1",
+        "drupal/jquery_ui_tooltip": "^2.1",
         "drupal/jquery_ui_touch_punch": "^1.1",
         "drupal/linkchecker": "^2.0",
-        "drupal/log_stdout": "^1.3",
+        "drupal/log_stdout": "^3",
         "drupal/mail_login": "^4.2",
         "drupal/markup": "^2",
-        "drupal/matomo": "^1.23",
-        "drupal/maxlength": "^2.1",
+        "drupal/maxlength": "^3",
         "drupal/menu_breadcrumb": "^2.0",
         "drupal/menu_item_fields": "^1.5",
         "drupal/menu_item_role_access": "*",
-        "drupal/message": "^1.6",
+        "drupal/message": "1.x-dev",
         "drupal/message_notify": "^1.2",
         "drupal/message_ui": "*",
-        "drupal/metatag": "*",
+        "drupal/metatag": "^2.2",
         "drupal/migrate_plus": "^6.0",
         "drupal/migrate_source_csv": "^3.5",
         "drupal/migrate_tools": "^6.0",
         "drupal/node_edit_protection": "^1.0",
         "drupal/nodeaccess": "^2.0@alpha",
         "drupal/notification_message": "^2.0@RC",
-        "drupal/other_view_filter": "^1.2",
         "drupal/paragraphs": "^1.12",
         "drupal/paragraphs_asymmetric_translation_widgets": "^1.4",
         "drupal/password_policy": "^4.0",
@@ -152,8 +145,7 @@
         "drupal/seckit": "^2.0",
         "drupal/select2": "^2",
         "drupal/selective_better_exposed_filters": "*",
-        "drupal/simplei": "^2.1",
-        "drupal/smart_date": "^3.5",
+        "drupal/simplei": "^3",
         "drupal/smtp": "^1.2",
         "drupal/stable": "^2",
         "drupal/svg_image": "^3.2",
@@ -166,10 +158,9 @@
         "drupal/token_views_filter": "^2.1",
         "drupal/twig_tweak": "^3.2",
         "drupal/upgrade_status": "^4.0",
-        "drupal/variationcache": "^1.5",
         "drupal/varnish_purge": "*",
         "drupal/view_password": "^6.0",
-        "drupal/views_ajax_history": "^1.8",
+        "drupal/views_ajax_history": "1.x-dev",
         "drupal/views_bulk_edit": "^3.0",
         "drupal/views_bulk_operations": "^4.4",
         "drupal/views_contextual_filters_or": "^1.4",
@@ -177,9 +168,10 @@
         "drupal/views_field_view": "^1.0",
         "drupal/views_infinite_scroll": "^2.0",
         "drupal/views_load_more": "^2.0",
-        "drush/drush": "^12",
+        "drupal/views_negate": "^2.0",
+        "drush/drush": "^13",
         "enyo/dropzone": "^5.7",
-        "npm-asset/select2": "^4.0",
+        "npm-asset/select2": "^4.1",
         "oomphinc/composer-installers-extender": "^2.0",
         "platformsh/config-reader": "^2.4",
         "twbs/bootstrap": "^5",
@@ -190,7 +182,7 @@
     },
     "require-dev": {
         "brainmaestro/composer-git-hooks": "*",
-        "drupal/core-dev": "^10.3",
+        "drupal/core-dev": "^11",
         "drupal/twig_xdebug": "^1.4",
         "phpspec/prophecy-phpunit": "^2.0",
         "vincentlanglet/twig-cs-fixer": "*",
@@ -207,7 +199,7 @@
     },
     "config": {
         "platform": {
-            "php": "8.3"
+            "php": "8.4"
         },
         "audit": {
             "abandoned": "ignore"
@@ -288,20 +280,17 @@
         },
         "patches": {
             "drupal/core": {
-                "https://www.drupal.org/project/drupal/issues/3135409#comment-14746356": "https://www.drupal.org/files/issues/2022-10-17/3135409-17.patch",
-                "If you don't want to translate your URL alias, the original URL alias won't work with your translations (https://www.drupal.org/project/drupal/issues/2689459#comment-15656505)": "https://www.drupal.org/files/issues/2024-06-26/2689459_d10.3.0.patch",
-                "Private file download returns access denied, when file attached to revision other than current (https://www.drupal.org/project/drupal/issues/1452100#comment-15657651)": "https://www.drupal.org/files/issues/2024-06-26/1452100-156.patch",
-                "https://www.drupal.org/project/drupal/issues/3338260#comment-14900238": "https://www.drupal.org/files/issues/2023-02-01/skip_changing_affected_flag_3338260-2.patch",
+                "Enabling aggregation breaks views with Moderation state fields (https://www.drupal.org/project/drupal/issues/3135409#comment-14746356)": "https://www.drupal.org/files/issues/2022-10-17/3135409-17.patch",
+                "Skip changing 'revision translation affected' field if the old revision is syncing (https://www.drupal.org/project/drupal/issues/3338260#comment-14900238)": "https://www.drupal.org/files/issues/2023-02-01/skip_changing_affected_flag_3338260-2.patch",
                 "Unable to change non-translatable field value on translatable content with content moderation enabled (https://www.drupal.org/project/drupal/issues/2955321)": "https://www.drupal.org/files/issues/2024-04-16/2955321-77.patch",
-                "One time login link expiration (https://www.drupal.org/project/drupal/issues/3097238#comment-15374828)": "https://www.drupal.org/files/issues/2024-06-21/3097238-initial-reset-harden-35.patch",
-                "ContentEntityBase::hasTranslationChanges will compare a forward revision with the default one instead of the newest forward revision (https://www.drupal.org/project/drupal/issues/2833049#comment-15868865)": "https://www.drupal.org/files/issues/2024-11-22/entity-revision_translation_changes-2833049-32.patch",
                 "Inconsistent database because of a bug in the Content Moderation module (https://www.drupal.org/project/drupal/issues/3088790#comment-15837881)": "https://www.drupal.org/files/issues/2024-10-30/content-moderation-unpublished-translation-3088790-37.patch",
                 "DateTimeComputed tries to compute from an empty value (https://www.drupal.org/project/drupal/issues/3052608#comment-16004608)": "https://www.drupal.org/files/issues/2025-02-26/3052608.patch",
                 "Concurrent ajax submits cause user data loss (https://www.drupal.org/project/drupal/issues/2830295#comment-15685036)": "https://www.drupal.org/files/issues/2024-07-16/2830295-71.patch",
-                "Link to latest revision (https://www.drupal.org/i/2906455#comment-15996236)": "https://www.drupal.org/files/issues/2025-02-20/2906455-45.patch",
                 "Ajax exposed filters not working for multiple instances (https://www.drupal.org/i/3163299#comment-15829959)": "https://www.drupal.org/files/issues/2024-10-24/3163299_120_d10.3.5.patch",
                 "Cannot save or publish originating node or translations. error \"The content has either been modified by another user, or you have already submitted modifications \"(https://www.drupal.org/project/drupal/issues/3285657)": "https://www.drupal.org/files/issues/2022-06-14/core9.2-node-lock-translations-2744851.patch",
-                "Entity operations lack cacheability support, resulting in incorrect dropbuttons (https://www.drupal.org/project/drupal/issues/2473873#comment-15911985)": "https://www.drupal.org/files/issues/2024-12-20/2473873-134-reroll.patch"
+                "Link to latest revision (https://www.drupal.org/project/drupal/issues/3097238#comment-16673086)": "https://www.drupal.org/files/issues/2026-07-03/2906455-60.patch",
+                "One time login link expiration (https://www.drupal.org/project/drupal/issues/3097238#comment-15374828)": "https://www.drupal.org/files/issues/2026-07-06/3097238-protect-initial-login.patch",
+                "Runtime ThemeRegistry left empty after destruct(), causing \"Theme hook not found\" warnings (https://www.drupal.org/project/drupal/issues/3609212#comment-16676906)": "patches/3609212-runtime-theme-registry-left-empty-after-destruct.patch"
             },
             "drupal/better_exposed_filters": {
                 "Fix undefined array key #default_value": "patches/bef-default-value.patch"
@@ -318,19 +307,14 @@
                 "https://www.drupal.org/project/group/issues/2942657#comment-15285989": "https://www.drupal.org/files/issues/2023-10-23/2942657-31.patch"
             },
             "drupal/ggroup": {
-                "https://www.drupal.org/project/ggroup/issues/3395476": "patches/ggroup-role-mapper-support-3395476.patch"
-            },
-            "drupal/file_download_link": {
-              "https://www.drupal.org/project/file_download_link/issues/3318657": "https://www.drupal.org/files/issues/2022-11-02/3318657-02.patch"
+                "Ggroup role mapper Group v2 support (https://www.drupal.org/project/ggroup/issues/3395476)": "patches/ggroup-role-mapper-support-3395476.patch",
+                "Usage of \\PDO::FETCH_* constants is deprecated (https://www.drupal.org/project/ggroup/issues/3559518#comment-16357666)": "patches/3559518-ggroup-pdo-fetch-error-d11.patch"
             },
             "drupal/themable_forms": {
                 "https://www.drupal.org/files/issues/undefined_index_type_themable_forms_theme_suggestions_form_element_2903660.patch": "https://www.drupal.org/files/issues/undefined_index_type_themable_forms_theme_suggestions_form_element_2903660.patch"
             },
             "drupal/require_on_publish" : {
                 "https://www.drupal.org/project/require_on_publish/issues/3178100#comment-16214646": "patches/fix-paragraphs-validation-3178100-48.patch"
-            },
-            "drupal/address": {
-                "https://www.drupal.org/project/address/issues/3033592#comment-14737130": "https://www.drupal.org/files/issues/2022-10-11/drupal-address-3033592-8.patch"
             },
             "drupal/pathauto": {
                 "https://www.drupal.org/project/pathauto/issues/3039822#comment-13930768": "https://www.drupal.org/files/issues/2020-12-08/3039822-create-path-for-none-translate-6.patch"
@@ -342,8 +326,7 @@
                 "Prevent unnecessary field attributes on forms": "patches/field-description-tooltip-prevent-unnecessary-attribute-casting.patch"
             },
             "drupal/eu_cookie_compliance": {
-                "Categories block": "patches/eu-cookie-compliance-categories-1.24.patch",
-                "Remove uglify and min JS": "patches/remove-uglify-and-min-js.patch"
+                "Categories block": "patches/eu-cookie-compliance-categories-1.24.patch"
             },
             "drupal/entity_export_csv": {
                 "https://www.drupal.org/project/entity_export_csv/issues/3166121": "https://www.drupal.org/files/issues/2025-05-14/3166121-allow-to-use-entity-export-csv-config-17.patch"
@@ -352,9 +335,9 @@
                 "https://www.drupal.org/project/entity_reference_revisions/issues/3150084#comment-15398765": "https://www.drupal.org/files/issues/2024-01-15/3150084-35.patch"
             },
             "drupal/diff": {
-                "Revision form list show wrong moderation state (https://www.drupal.org/project/diff/issues/3322352#comment-15910500)": "https://www.drupal.org/files/issues/2024-12-20/revision_overview_form_3322352.patch",
-                "Multilingual site with entity reference field not picking up correct language (https://www.drupal.org/project/diff/issues/3480594#comment-15813944)": "https://www.drupal.org/files/issues/2024-10-14/3480594-diff-entity-reference-field-not-picking-up-correct-language.patch",
-                "Always list a \"Current revision\" for each available content translation (https://www.drupal.org/project/diff/issues/3228917#comment-15580389)": "https://www.drupal.org/files/issues/2024-05-03/3228917-4.patch",
+                "Revision form list show wrond moderation state after creating translated node again. (https://www.drupal.org/project/diff/issues/3322352#comment-15910500)": "https://www.drupal.org/files/issues/2026-08-27/revision_overview_form_3322352_14.patch",
+                "Multilingual site with entity reference field not picking up correct language (https://www.drupal.org/project/diff/issues/3480594#comment-15813944)": "patches/diff-2480594-multilingual-site-with-entity-reference.patch",
+                "Always list a \"Current revision\" for each available content translation (https://www.drupal.org/project/diff/issues/3228917#comment-15580389)": "https://www.drupal.org/files/issues/2026-08-14/3228917-2.x-5.patch",
                 "Temprary patch for revision fix": "patches/diff-translation-affected-temporary.patch"
             },
             "drupal/conditional_fields": {
@@ -366,17 +349,25 @@
             "drupal/date_recur": {
                 "Temporary fix for field deletion": "patches/date-recurr-field-delete.patch"
             },
-            "drupal/token_views_filter": {
-                "WSOD when filtering by Date field (https://www.drupal.org/project/token_views_filter/issues/3499480#comment-16167091)": "https://www.drupal.org/files/issues/2025-06-26/token_view_filer-wsod-when-filtering-by-date-field_3499480-7.patch"
-            },
-            "drupal/content_lock": {
-                "Break lock operation not showing for user who created the lock (https://www.drupal.org/project/content_lock/issues/3559775)": "https://www.drupal.org/files/issues/2025-11-25/break-lock-operation-permission-3559775-1.patch",
-                "content_lock_entity_operation doesn't work if the entity list is cached (https://git.drupalcode.org/project/content_lock/-/merge_requests/38/diffs)": "patches/2919019-content_lock_entity_operation.patch"
-            },
             "drupal/tmgmt": {
                 "Computed fields and not translatable fields from paragraphs are being translated (https://www.drupal.org/project/tmgmt/issues/3382356#comment-16104653)": "https://www.drupal.org/files/issues/2025-05-12/3382356_field_translation_checks_ordered_by_granularity.patch",
                 "Wrong field order when fields are in field groups (https://www.drupal.org/project/tmgmt/issues/3586466)": "https://www.drupal.org/files/issues/2026-05-18/reweight-grouped-fields-3586466-4.patch",
                 "Fields Content Deletions of (already Translated) Entity Content are not reflected in new Translations updates (https://www.drupal.org/project/tmgmt/issues/3278370#comment-16475359)": "https://www.drupal.org/files/issues/2026-02-18/tmgmt-content-fields-deletions-3278370-19.patch"
+            },
+            "drupal/menu_breadcrumb": {
+                "Call to a member function getUrl() on null (https://www.drupal.org/project/menu_breadcrumb/issues/3239276)": "https://www.drupal.org/files/issues/2021-09-26/menu_breadcrumb-error-geturl-3239276-2.patch"
+            },
+            "drupal/menu_item_role_access": {
+                "Deprecations and TypeErrors with PHP 8.4 (https://www.drupal.org/project/menu_item_role_access/issues/3506247)": "https://www.drupal.org/files/issues/2026-03-26/3506247-10.patch"
+            },
+            "drupal/flag_lists": {
+                "Fix PHP 8.4 implicit nullable parameter deprecation in flag_lists_flag_action_access() (https://www.drupal.org/project/flag_lists/issues/3611121)": "https://www.drupal.org/files/issues/2026-07-15/flag-lists-explicit-nullable-flaggable_0.patch"
+            },
+            "drupal/message_ui": {
+                "Fix PHP 8.4 implicit nullable parameter deprecation in SaveMessage::access() (https://www.drupal.org/project/message_ui/issues/3611122)": "https://www.drupal.org/files/issues/2026-07-15/message-ui-explicit-nullable-account.patch"
+            },
+            "drupal/context": {
+                "Fix PHP 8.4 deprecations (https://www.drupal.org/project/context/issues/3513516)": "https://www.drupal.org/files/issues/2025-03-17/context-fix-php-84-deprecations-3513516-62.patch"
             }
         }
     }

@@ -1,0 +1,95 @@
+From bf9235e4469becc98974c68583a488f45cf393f1 Mon Sep 17 00:00:00 2001
+From: Eduardo Morales <eduardo.morales@metadrop.net>
+Date: Wed, 8 Jul 2026 10:01:45 +0200
+Subject: [PATCH 1/2] fix: #3609212 Runtime ThemeRegistry left empty after
+ destruct(), causing "Theme hook not found" warnings
+
+---
+ core/lib/Drupal/Core/Theme/Registry.php | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/core/lib/Drupal/Core/Theme/Registry.php b/core/lib/Drupal/Core/Theme/Registry.php
+index 3bbfb425bcb1..fffefbaa81e9 100644
+--- a/core/lib/Drupal/Core/Theme/Registry.php
++++ b/core/lib/Drupal/Core/Theme/Registry.php
+@@ -956,6 +956,11 @@ public function destruct() {
+     foreach ($this->runtimeRegistry as $runtime_registry) {
+       $runtime_registry->destruct();
+     }
++    // CacheCollector::destruct() calls reset() on each runtime registry,
++    // emptying its storage. Drop the now-empty instances so a subsequent
++    // getRuntime() call rebuilds a complete registry instead of reusing an
++    // emptied one.
++    $this->runtimeRegistry = [];
+   }
+ 
+   /**
+-- 
+GitLab
+
+
+From 24bbb3bddb4a447dd5a0a59050d9ab120bf413ff Mon Sep 17 00:00:00 2001
+From: Eduardo Morales <eduardo.morales@metadrop.net>
+Date: Wed, 8 Jul 2026 10:14:02 +0200
+Subject: [PATCH 2/2] fix: #3609212 Runtime ThemeRegistry left empty after
+ destruct(), causing "Theme hook not found" warnings
+
+---
+ .../KernelTests/Core/Theme/RegistryTest.php   | 43 +++++++++++++++++++
+ 1 file changed, 43 insertions(+)
+
+diff --git a/core/tests/Drupal/KernelTests/Core/Theme/RegistryTest.php b/core/tests/Drupal/KernelTests/Core/Theme/RegistryTest.php
+index a6823a2dc144..67bcfa69bb47 100644
+--- a/core/tests/Drupal/KernelTests/Core/Theme/RegistryTest.php
++++ b/core/tests/Drupal/KernelTests/Core/Theme/RegistryTest.php
+@@ -282,4 +282,47 @@ public function testThemeTemplatesRegisteredByModules(): void {
+     $this->assertEquals($expected, array_values($registry['theme_test_registered_by_module']['preprocess functions']));
+   }
+ 
++  /**
++   * Tests that the runtime registry is rebuilt after being destructed.
++   *
++   * CacheCollector::destruct() resets each collector, emptying its storage.
++   * Registry::destruct() must drop the destructed runtime instances so that a
++   * subsequent getRuntime() call within the same request (for example, while
++   * rendering content during Search API post-request indexing that runs after
++   * the theme registry has already been destructed) rebuilds a complete
++   * registry instead of reusing an emptied one. Otherwise ThemeRegistry::has()
++   * returns FALSE for every hook, logging "Theme hook %hook not found" and
++   * rendering empty output.
++   *
++   * @see https://www.drupal.org/i/3609212
++   */
++  public function testRuntimeRegistryRebuiltAfterDestruct(): void {
++    // Use a POST request so the runtime registry is not persistable and thus
++    // not restored from the cache backend, matching the real-world scenario
++    // where post-request indexing rebuilds the registry after destruction.
++    \Drupal::request()->setMethod('POST');
++
++    $registry = \Drupal::service('theme.registry');
++    $registry->setThemeManager(\Drupal::theme());
++
++    // Populate the runtime registry, which the constructor fills with every
++    // theme hook key.
++    $runtime = $registry->getRuntime();
++    $this->assertTrue($runtime->has('theme_test_template_test'));
++
++    // Destruct the registry the way DrupalKernel::terminate() does at the end
++    // of a request. This empties the underlying storage of every runtime
++    // instance.
++    $registry->destruct();
++
++    // Anything rendered after destruction requests the runtime registry again.
++    // It must be a freshly constructed, fully populated instance.
++    $runtime_after = $registry->getRuntime();
++    $this->assertTrue($runtime_after->has('theme_test_template_test'));
++    $this->assertNotEmpty($runtime_after->get('theme_test_template_test'));
++    // getPreprocessInvokes() must not return NULL, which would trigger a
++    // TypeError; it reads from the same storage as has().
++    $this->assertIsArray($runtime_after->getPreprocessInvokes());
++  }
++
+ }
+-- 
+GitLab
+

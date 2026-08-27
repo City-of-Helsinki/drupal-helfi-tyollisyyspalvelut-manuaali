@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @file
+ * Foo.
+ */
+
+/**
+ * Implements hook diff_layout_builder_info_alter()
+ *
+ * The plugins delivered by Diff module have following issues:
+ * 1. Undefined index in VisualInlineDiffLayout plugin.
+ *
+ *    @see https://www.drupal.org/project/diff/issues/3204468
+ * 2. Call to a member function getDisplayName() on null
+ *    @see https://www.drupal.org/project/diff/issues/3206057
+ *
+ * In order to fix the issues above, the plugin classes need to
+ * be replaced with those provided by this module.
+ * Once those issues are fixed by Diff module, this hook function
+ * can be removed.
+ */
+function entity_diff_ui_diff_layout_builder_info_alter(array &$definitions) {
+  if (isset($definitions['visual_inline'])) {
+    $definitions['visual_inline']['class'] = 'Drupal\entity_diff_ui\Plugin\diff\Layout\EntityVisualInlineDiffLayout';
+  }
+
+  if (isset($definitions['split_fields'])) {
+    $definitions['split_fields']['class'] = 'Drupal\entity_diff_ui\Plugin\diff\Layout\EntitySplitFieldsDiffLayout';
+  }
+
+  if (isset($definitions['unified_fields'])) {
+    $definitions['unified_fields']['class'] = 'Drupal\entity_diff_ui\Plugin\diff\Layout\EntityUnifiedFieldsDiffLayout';
+  }
+}

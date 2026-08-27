@@ -139,7 +139,7 @@
         let text = /** @type string */ ($(this).text());
         options.push(text);
         if ($(this).is(':selected')) {
-          selected.push( $.trim(text) );
+          selected.push( text.trim() );
         }
       });
 

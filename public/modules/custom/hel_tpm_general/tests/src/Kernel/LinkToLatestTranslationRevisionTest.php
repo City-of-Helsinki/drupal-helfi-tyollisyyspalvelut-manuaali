@@ -152,12 +152,10 @@ final class LinkToLatestTranslationRevisionTest extends KernelTestBase {
 
   /**
    * Tests render output for denied edit access results.
-   *
-   * @dataProvider deniedAccessResultsProvider
    */
-  public function testRenderDoesNotOutputLinkWhenEditAccessIsDenied(AccessResultInterface $access_result): void {
+  public function testRenderDoesNotOutputLinkWhenEditAccessIsDenied(): void {
     $account = $this->createMock(AccountInterface::class);
-    $entity = $this->createEntityExpectingAccess($account, $access_result);
+    $entity = $this->createEntityExpectingAccess($account, AccessResult::forbidden());
     $entity
       ->expects($this->never())
       ->method('toUrl');

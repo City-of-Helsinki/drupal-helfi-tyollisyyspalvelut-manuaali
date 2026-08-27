@@ -1,0 +1,8 @@
+name: Media diff UI plugin
+type: module
+description: Provide Diff UI plugin for Media entity. Note, since this sub-module uses deprecated functionality, it is not compatible with Drupal 10. The sub-module included in the 2.0.0-alpha1 version is compatible with Drupal 10, but requires a close security review.
+package: Entity Revision Diff
+core_version_requirement: ^8.7.7 || ^9
+
+dependencies:
+  - entity_diff_ui:entity_diff_ui

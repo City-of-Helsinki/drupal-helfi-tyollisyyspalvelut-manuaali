@@ -239,10 +239,12 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
    */
   protected function getNotified(): array {
     $notified = $this->state->get($this->getStateName());
-    if (empty($notified)) {
-      return ['count' => 0, 'timestamp' => 0];
+
+    if (!is_array($notified)) {
+      $notified = [];
     }
-    return $notified;
+
+    return $notified + ['count' => 0, 'timestamp' => 0];
   }
 
   /**

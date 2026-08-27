@@ -1,0 +1,9 @@
+revert all media revisions:
+  title: 'Revert all media revisions'
+  description: 'To revert a revision, you also need permission to edit the media.'
+delete all media revisions:
+  title: 'Delete all media revisions'
+  description: 'To delete a revision, you also need permission to delete the media.'
+
+permission_callbacks:
+  - \Drupal\media_diff_ui\MediaRevisionPermissions::mediaTypePermissions

@@ -1,0 +1,12 @@
+view all taxonomy term revisions:
+  title: 'View all taxonomy term revisions'
+  description: 'To view a revision, you also need permission to view the taxonomy term.'
+revert all taxonomy term revisions:
+  title: 'Revert all taxonomy term revisions'
+  description: 'To revert a revision, you also need permission to edit the taxonomy term.'
+delete all taxonomy term revisions:
+  title: 'Delete all taxonomy term revisions'
+  description: 'To delete a revision, you also need permission to delete the taxonomy term.'
+
+permission_callbacks:
+  - \Drupal\taxonomy_diff_ui\TaxonomyTermPermissions::TaxonomyTypePermissions
