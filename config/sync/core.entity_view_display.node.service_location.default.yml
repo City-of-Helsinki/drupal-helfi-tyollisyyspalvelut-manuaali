@@ -5,9 +5,11 @@ dependencies:
   config:
     - field.field.node.service_location.field_accessibility
     - field.field.node.service_location.field_accessibility_details
+    - field.field.node.service_location.field_accessibility_info
     - field.field.node.service_location.field_address
     - node.type.service_location
   module:
+    - text
     - user
 id: node.service_location.default
 targetEntityType: node
@@ -23,9 +25,9 @@ content:
     third_party_settings: {  }
     weight: 1
     region: content
-  field_accessibility_details:
-    type: basic_string
-    label: hidden
+  field_accessibility_info:
+    type: text_default
+    label: above
     settings: {  }
     third_party_settings: {  }
     weight: 2
@@ -40,6 +42,7 @@ hidden:
   entity_print_view_pdf: true
   entity_print_view_word_docx: true
   entitygroupfield: true
+  field_accessibility_details: true
   field_address: true
   flag_cart: true
   flag_flag_list_template_1: true

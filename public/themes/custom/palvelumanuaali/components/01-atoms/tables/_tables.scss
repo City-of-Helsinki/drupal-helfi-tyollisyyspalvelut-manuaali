@@ -262,8 +262,11 @@ table.sticky-header thead {
   .dropbutton-toggle {
     position: relative;
     margin-bottom: 2em;
-  }
-  &.open ul.dropbutton {
+    &:focus-within {
+      .dropbutton-arrow {
+        outline: 2px solid clr(primary);
+      }
+    }
   }
   .dropbutton-widget {
     padding-right: 0;
@@ -277,7 +280,8 @@ table.sticky-header thead {
     .secondary-action {
       padding: 0.5em 1.5em;
       min-width: 225px;
-      &:hover {
+      &:hover,
+      &:focus-within {
         background-color: $blue10;
       }
     }

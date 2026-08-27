@@ -74,6 +74,7 @@
         $(item).attr('data-bs-placement', 'right');
         $(item).attr('data-bs-custom-class', 'styled-tooltip');
         $(item).attr('data-bs-delay', '200');
+        $(item).attr('tabindex', '0');
 
         let tooltipText = "";
         // Get the description text to be prepared as tooltip.
