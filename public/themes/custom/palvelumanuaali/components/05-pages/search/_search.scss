@@ -225,17 +225,12 @@
     .search-form {
         display: grid;
       grid-template-columns: 1fr;
-      //@include xl {
-      //  grid-template-columns: 1fr 10fr 1fr;
-      //}
-      //@media (min-width:1640px) {
-      //  grid-template-columns: 2fr 8fr 2fr;
-      //}
 
       .main-filters {
         display: grid;
         flex-wrap: wrap;
-        gap: $space-one-half;
+        column-gap: $space-one-and-half;
+        row-gap: $space;
         grid-template-columns: 1fr;
 
         @include small {
@@ -244,13 +239,16 @@
         @include large {
           grid-template-columns: 1fr 1fr 1fr 1fr;
         }
-        @include xl {
-        }
-
         .form-item {
           @include xl {
             margin-bottom: 0;
           }
+        }
+        .form-item__label {
+          @extend .font-size--default;
+          @extend .font-spacing--one;
+          font-weight: 700;
+          margin-bottom: 0;
         }
       }
       .text-search-wrapper{

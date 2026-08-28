@@ -50,7 +50,7 @@ function _hel_tpm_user_expiry_anonymize_blocked_users() {
     ->condition('status', 0)
     ->condition('changed', $limit->getTimestamp(), '<=');
 
-  // Exclude users that has been anonymized.
+  // Exclude users that have been anonymized.
   if ($anonymized_users = \Drupal::state()->get('hel_tpm_user_expiry.anonymized_users')) {
     $q->condition('uid', $anonymized_users, 'NOT IN');
   }
