@@ -1,4 +1,4 @@
-(function ($, Drupal, drupalSettings) {
+(function ($, Drupal, drupalSettings, once) {
   Drupal.behaviors.hel_tpm_forms = {
     attach: function (context, settings) {
       addError();
@@ -9,7 +9,7 @@
       // hide age range on the first a page of service entity form.
       function toggleAgeRange() {
         let ageGroupRadio = '.field--name-field-age-groups .form-item .form-checkbox';
-        toggleAgeField(ageGroupRadio)
+        toggleAgeField(ageGroupRadio);
 
         //handle age accordion
         $(ageGroupRadio).click(function() {
@@ -80,7 +80,38 @@
           }
         });
       }
-
     }
   }
-})(jQuery, Drupal, drupalSettings);
+
+  let addParagraphClicked = false;
+
+    Drupal.behaviors.serviceTimeParagraphScroll = {
+      attach(context) {
+        once(
+          'service-time-add-button',
+          '.field--widget-hel-tpm-service-dates-service-time-and-place-widget .paragraphs-dropbutton-wrapper input',
+          context
+        ).forEach(function (button) {
+          $(button).on('click', function () {
+            addParagraphClicked = true;
+          });
+
+        });
+
+        $(document).ajaxComplete(function () {
+          addParagraphClicked = false;
+
+          setTimeout(function () {
+            const $newRow = $('.field-service-time-and-location-values > tbody > .table__row').last();
+            if ($newRow.length) {
+              $newRow.find('.form-text').first().focus();
+            }
+          }, 1000);
+
+        });
+
+      }
+    };
+
+
+})(jQuery, Drupal, drupalSettings, once );
