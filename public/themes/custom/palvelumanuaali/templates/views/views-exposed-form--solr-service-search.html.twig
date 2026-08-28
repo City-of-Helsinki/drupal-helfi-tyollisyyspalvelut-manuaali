@@ -37,6 +37,7 @@
     {{ form['actions']|without('reset') }}
   </div>
   <div class="filters-wrapper">
+    <span class="h5">{{ 'Search filters'|t }}</span>
     <div class="exposed-filters">
       <div class="main-filters filters" data-is-collapsed="true" >
         {% for field in fieldsMain %}
