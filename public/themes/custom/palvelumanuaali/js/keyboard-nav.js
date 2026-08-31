@@ -15,10 +15,11 @@
        * Pager navigation.
        */
       function selectRemove() {
-        $(once('.select2-selection__choice', '.select2-selection__choice__remove', context)).each(function() {
+        $('.select2-selection__choice', '.select2-selection__choice__remove', context).each(function() {
           $(this).on("keydown",function(e) {
             if (e.key === "Enter") {
               e.preventDefault();
+              e.stopPropagation();
               $(this).trigger('click');
             }
           });
@@ -30,6 +31,11 @@
         $('.select2-selection__choice__remove').attr('tabindex', '0');
         $('.select2-selection__choice__remove').attr('aria-label', 'Poista valinta');
       }
+      $(document).ajaxComplete(function () {
+        selectRemove();
+      });
+
     }
   };
+
 })(jQuery, Drupal, this);
