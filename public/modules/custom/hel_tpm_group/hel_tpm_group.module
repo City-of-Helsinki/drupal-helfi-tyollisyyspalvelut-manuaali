@@ -552,6 +552,13 @@ function hel_tpm_group_views_data_alter(array &$data) {
       'id' => 'hel_tpm_group_archived_service_count',
     ],
   ];
+  $data['users']['reactivate_group_user'] = [
+    'title' => t('Reactivate group user'),
+    'field' => [
+      'title' => t('Reactivate group user'),
+      'id' => 'hel_tpm_group_reactivate_group_user_link',
+    ],
+  ];
 }
 
 /**
