@@ -13,7 +13,7 @@ third_party_settings:
       specialist_editor: specialist_editor
       specialist: '0'
 id: organisation-administrator
-label: 'Ryhmän ylläpitäjä'
+label: 'Group admin'
 weight: -4
 admin: false
 scope: individual
@@ -29,6 +29,7 @@ permissions:
   - 'manage members with role organisation-administrator'
   - 'manage members with role organisation-editor'
   - 'manage members with role organisation-expert'
+  - 'reactivate group members'
   - 'update any group_node:service content'
   - 'update any group_node:service entity'
   - 'update any group_node:service_location content'
