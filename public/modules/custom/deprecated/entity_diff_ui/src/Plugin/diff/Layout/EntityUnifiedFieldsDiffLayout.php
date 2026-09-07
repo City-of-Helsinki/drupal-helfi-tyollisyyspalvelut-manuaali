@@ -20,7 +20,7 @@ class EntityUnifiedFieldsDiffLayout extends UnifiedFieldsDiffLayout {
   /**
    * {@inheritdoc}
    */
-  protected function buildRevisionData(ContentEntityInterface $revision) {
+  protected function buildRevisionData(ContentEntityInterface $revision): array {
     if ($revision instanceof RevisionLogInterface) {
       $revision_log = Xss::filter($revision->getRevisionLogMessage());
       $revision_user = $revision->getRevisionUser();

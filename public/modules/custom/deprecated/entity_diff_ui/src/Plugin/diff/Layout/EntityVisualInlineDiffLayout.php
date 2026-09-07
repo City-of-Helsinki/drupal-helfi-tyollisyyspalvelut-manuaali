@@ -17,7 +17,7 @@ class EntityVisualInlineDiffLayout extends VisualInlineDiffLayout {
   /**
    * {@inheritdoc}
    */
-  protected function buildRevisionData(ContentEntityInterface $revision) {
+  protected function buildRevisionData(ContentEntityInterface $revision): array {
     if ($revision instanceof RevisionLogInterface) {
       $revision_log_message = $revision->getRevisionLogMessage();
       $revision_log = !empty($revision_log_message) ? Xss::filter($revision_log_message) : '';
@@ -73,7 +73,7 @@ class EntityVisualInlineDiffLayout extends VisualInlineDiffLayout {
   /**
    * {@inheritdoc}
    */
-  public function build(ContentEntityInterface $left_revision, ContentEntityInterface $right_revision, ContentEntityInterface $entity) {
+  public function build(ContentEntityInterface $left_revision, ContentEntityInterface $right_revision, ContentEntityInterface $entity): array {
     // Build the revisions data.
     $build = $this->buildRevisionsData($left_revision, $right_revision);
 
