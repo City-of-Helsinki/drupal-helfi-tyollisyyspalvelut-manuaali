@@ -24,9 +24,11 @@ display:
         field_service_set:
           expose:
             label: 'Service category'
+            description: "Select service category"
         field_life_situations:
           expose:
             label: 'Jobseeker’s situation'
+            description: "Select situation"
         field_free_service:
           group_info:
             label: Charges
@@ -35,21 +37,29 @@ display:
                 title: 'Subject to a charge'
               2:
                 title: 'Free of charge'
+            description: 'Select charging details'
+          expose:
+            description: ''
         field_accessibility:
           expose:
             label: Accessibility
+            description: 'Select accessibility details'
         field_implementation_extra_info:
           expose:
             label: Implementation
+            description: 'Select method of implementation'
         age_groups_filter:
           expose:
             label: 'Target group age'
+            description: 'Select target group age'
         field_target_group_municipality:
           expose:
             label: 'Municipality of residence'
+            description: 'Select municipality of residence'
         field_language_1:
           expose:
             label: 'Service language'
+            description: 'Select language'
         facets_langcode:
           expose:
             label: Results
