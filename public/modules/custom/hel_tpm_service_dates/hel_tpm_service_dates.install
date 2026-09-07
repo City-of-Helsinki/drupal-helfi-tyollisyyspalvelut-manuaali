@@ -1,0 +1,81 @@
+<?php
+
+/**
+ * @file
+ * Database updates for service dates.
+ */
+
+use Drupal\Core\Cache\Cache;
+use Drupal\hel_tpm_service_dates\WeekdayAndTimeValue;
+
+/**
+ * Replace serialized weekday date objects in current and revision field tables.
+ */
+function hel_tpm_service_dates_update_11001(&$sandbox) {
+  $database = \Drupal::database();
+  $column = 'field_weekday_and_time_value';
+  if (!isset($sandbox['tables'])) {
+    $sandbox['tables'] = [];
+    $sandbox['offset'] = 0;
+    $sandbox['processed'] = 0;
+    $sandbox['total'] = 0;
+    foreach ([
+      'paragraph__field_weekday_and_time',
+      'paragraph_revision__field_weekday_and_time',
+    ] as $table) {
+      if ($database->schema()->tableExists($table)) {
+        $sandbox['tables'][] = $table;
+        $sandbox['total'] += (int) $database->select($table)
+          ->countQuery()
+          ->execute()
+          ->fetchField();
+      }
+    }
+  }
+
+  if (!$sandbox['tables']) {
+    $sandbox['#finished'] = 1;
+    return;
+  }
+
+  $table = reset($sandbox['tables']);
+  $keys = ['entity_id', 'revision_id', 'deleted', 'delta', 'langcode'];
+  $query = $database->select($table, 't')->fields('t');
+  foreach ($keys as $key) {
+    $query->orderBy($key);
+  }
+  $records = $query->range($sandbox['offset'], 100)->execute()->fetchAll();
+  $ids = [];
+  foreach ($records as $record) {
+    if ($record->$column !== NULL) {
+      // Do not instantiate old DrupalDateTime objects: their removed properties
+      // cause PHP deprecations during ordinary unserialization.
+      $value = unserialize($record->$column, ['allowed_classes' => FALSE]);
+      if (!is_array($value)) {
+        throw new \UnexpectedValueException('Invalid serialized weekday and time field value.');
+      }
+      $serialized = serialize(WeekdayAndTimeValue::normalize($value));
+      if ($serialized !== $record->$column) {
+        $update = $database->update($table)->fields([$column => $serialized]);
+        foreach ($keys as $key) {
+          $update->condition($key, $record->$key);
+        }
+        $update->execute();
+        $ids[] = $record->entity_id;
+      }
+    }
+    $sandbox['processed']++;
+  }
+  if ($ids) {
+    \Drupal::entityTypeManager()
+      ->getStorage('paragraph')
+      ->resetCache(array_unique($ids));
+    Cache::invalidateTags(array_map(static fn($id) => 'paragraph:' . $id, array_unique($ids)));
+  }
+  $sandbox['offset'] += count($records);
+  if (count($records) < 100) {
+    array_shift($sandbox['tables']);
+    $sandbox['offset'] = 0;
+  }
+  $sandbox['#finished'] = $sandbox['tables'] ? min(0.99, $sandbox['processed'] / max(1, $sandbox['total'])) : 1;
+}
