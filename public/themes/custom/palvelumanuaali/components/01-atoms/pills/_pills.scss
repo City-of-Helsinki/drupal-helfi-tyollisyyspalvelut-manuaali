@@ -233,7 +233,7 @@ $pill-colors: (
     color: clr(alt-header-color);
     font-size: 14px;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 400;
     line-height: 24px;
     &:hover {
       cursor: pointer;
@@ -263,6 +263,15 @@ $pill-colors: (
     color: clr(text-inverse);
     a {
       color: clr(text-inverse);
+    }
+    .modal-button {
+      color: clr(text-inverse);
+      border:0;
+      background: 0;
+      font-size: 12px;
+      font-weight: 700;
+      line-height:24px;
+      letter-spacing: 1%;
     }
   }
   .field__item {

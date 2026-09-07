@@ -368,7 +368,7 @@ display:
           expose:
             operator_id: field_service_set_op
             label: Palvelukategoria
-            description: ''
+            description: 'Valitse palvelukategoria'
             use_operator: false
             operator: field_service_set_op
             operator_limit_selection: false
@@ -419,7 +419,7 @@ display:
           expose:
             operator_id: field_life_situations_op
             label: 'Työnhakijan tilanne'
-            description: ''
+            description: 'Valitse tilanne'
             use_operator: false
             operator: field_life_situations_op
             operator_limit_selection: false
@@ -470,7 +470,7 @@ display:
           expose:
             operator_id: field_language_1_op
             label: 'Palvelun kieli'
-            description: ''
+            description: 'Valitse kieli'
             use_operator: false
             operator: field_language_1_op
             operator_limit_selection: false
@@ -535,7 +535,7 @@ display:
           is_grouped: true
           group_info:
             label: Maksullisuus
-            description: ''
+            description: 'Valitse maksullisuustieto'
             identifier: field_free_service
             optional: true
             widget: select
@@ -571,7 +571,7 @@ display:
           expose:
             operator_id: age_groups_filter_op
             label: 'Kohderyhmän ikä'
-            description: ''
+            description: 'Valitse ikäryhmä'
             use_operator: false
             operator: age_groups_filter_op
             operator_limit_selection: false
@@ -617,7 +617,7 @@ display:
           expose:
             operator_id: field_accessibility_op
             label: Saavutettavuus
-            description: ''
+            description: 'Valitse saavutettavuustiedot'
             use_operator: false
             operator: field_accessibility_op
             operator_limit_selection: false
@@ -668,7 +668,7 @@ display:
           expose:
             operator_id: field_implementation_extra_info_op
             label: Toteutustapa
-            description: ''
+            description: 'Valitse toteutustapa'
             use_operator: false
             operator: field_implementation_extra_info_op
             operator_limit_selection: false
@@ -752,22 +752,22 @@ display:
           plugin_id: search_api_term
           operator: or
           value:
-            412: 412
-            415: 415
-            425: 425
             32: 32
             33: 33
+            415: 415
             34: 34
             35: 35
+            425: 425
             36: 36
             37: 37
+            412: 412
             408: 408
           group: 2
           exposed: true
           expose:
             operator_id: field_target_group_municipality_op
             label: Kotikunta
-            description: ''
+            description: 'Valitse kotikunta'
             use_operator: false
             operator: field_target_group_municipality_op
             operator_limit_selection: false

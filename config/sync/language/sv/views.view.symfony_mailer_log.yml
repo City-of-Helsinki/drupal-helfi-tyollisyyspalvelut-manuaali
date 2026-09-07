@@ -1,0 +1,39 @@
+display:
+  default:
+    display_title: Förvald
+    display_options:
+      fields:
+        id:
+          label: ID
+          separator: ', '
+        created:
+          label: Datum
+          separator: ', '
+        to_value:
+          label: Till
+          separator: ', '
+        subject:
+          label: Ämne
+          separator: ', '
+        operations:
+          label: 'Länkar till funktioner'
+      pager:
+        options:
+          tags:
+            next: ››
+            previous: ‹‹
+            first: '« Första'
+            last: 'Sista »'
+          expose:
+            items_per_page_label: 'Inlägg per sida'
+            items_per_page_options_all_label: '- Alla -'
+            offset_label: Kompensera
+      exposed_form:
+        options:
+          submit_button: Verkställ
+          reset_button_label: Återställ
+          exposed_sorts_label: 'Sortera efter'
+          sort_asc_label: Stigande
+          sort_desc_label: Fallande
+  page_admin_mail_log:
+    display_title: Sida

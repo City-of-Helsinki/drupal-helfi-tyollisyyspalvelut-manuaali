@@ -23,11 +23,11 @@
 %}
 
 {% set tabindex = tabindex %}
-
+{% set uniqueId = random() %}
 
 {% if tabindex is not empty  %}
   {% set attributes = attributes.setAttribute('tabindex','0') %}
 {% endif %}
 {% if title is not empty or required -%}
-  <label {{ attributes.addClass(classes) }}>{{ title }}</label>
+  <label id="{{ uniqueId }}" {{ attributes.addClass(classes) }}>{{ title }}</label>
 {%- endif %}

@@ -4,7 +4,8 @@
       $(document).ready(function() {
         $('select.dropdownMultiselect[multiple="multiple"]').each(function () {
           let parent = $(this).parents('.js-form-type-select');
-          let label = $('label.form-item__label', parent);
+          let label = $('div.form-item__description', parent);
+
           $(this).multiSelect({
               noneText: $(label).text()
           });

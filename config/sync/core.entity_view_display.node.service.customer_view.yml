@@ -57,7 +57,6 @@ dependencies:
     - field.field.node.service.field_target_group_municipality
     - node.type.service
   module:
-    - entity_print
     - entity_reference_revisions
     - entitygroupfield
     - field_group
@@ -762,10 +761,6 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-  entity_print:
-    pdf_label: 'Katsele PDF'
-    epub_label: 'Katsele EPub'
-    word_docx_label: 'Katsele Word Document'
 id: node.service.customer_view
 targetEntityType: node
 bundle: service

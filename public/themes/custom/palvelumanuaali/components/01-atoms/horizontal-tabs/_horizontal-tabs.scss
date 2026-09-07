@@ -70,6 +70,10 @@
         &:hover {
           background-color: clr(background-border);
         }
+        &:focus {
+          outline: 2px solid clr(primary);
+          outline-offset: 2px;
+        }
       }
 
       &.selected {

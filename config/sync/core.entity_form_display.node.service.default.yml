@@ -60,16 +60,15 @@ dependencies:
     - content_moderation
     - field_group
     - file
+    - hel_tpm_editorial
     - hel_tpm_forms
     - hel_tpm_general
     - hel_tpm_group
     - hel_tpm_service_dates
     - hel_tpm_service_stats
     - ief_popup
-    - link
     - markup
     - maxlength
-    - paragraphs
     - range
     - select2
     - text
@@ -756,12 +755,25 @@ content:
       progress_indicator: throbber
     third_party_settings: {  }
   field_internal_links:
-    type: link_default
+    type: limited_link_widget
     weight: 18
     region: content
     settings:
       placeholder_url: ''
       placeholder_title: ''
+      target_bundles:
+        service: service
+        basic_page: basic_page
+        landing_page: 0
+        service_location: 0
+      bypass_target_bundles_roles:
+        root: root
+        admin: admin
+        anonymous: 0
+        authenticated: 0
+        editor: 0
+        specialist: 0
+        specialist_editor: 0
     third_party_settings: {  }
   field_life_situations:
     type: select2_entity_reference
@@ -887,12 +899,25 @@ content:
       progress_indicator: throbber
     third_party_settings: {  }
   field_public_links:
-    type: link_default
+    type: limited_link_widget
     weight: 16
     region: content
     settings:
       placeholder_url: ''
       placeholder_title: ''
+      target_bundles:
+        basic_page: basic_page
+        service: service
+        landing_page: 0
+        service_location: 0
+      bypass_target_bundles_roles:
+        root: root
+        admin: admin
+        anonymous: 0
+        authenticated: 0
+        editor: 0
+        specialist: 0
+        specialist_editor: 0
     third_party_settings: {  }
   field_related_archive:
     type: options_buttons
@@ -960,16 +985,25 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_service_languages:
-    type: entity_reference_paragraphs
+    type: hel_tpm_editorial_paragraphs_accessibility
     weight: 30
     region: content
     settings:
       title: 'Paragraafi '
       title_plural: Paragraafit
       edit_mode: open
+      closed_mode: summary
+      autocollapse: none
+      closed_mode_threshold: '0'
       add_mode: dropdown
       form_display_mode: default
-      default_paragraph_type: service_languages
+      default_paragraph_type: service_language
+      add_label: ''
+      features:
+        duplicate: 0
+        collapse_edit_all: 0
+        add_above: 0
+        convert: 0
     third_party_settings: {  }
   field_service_producer:
     type: select2_entity_reference

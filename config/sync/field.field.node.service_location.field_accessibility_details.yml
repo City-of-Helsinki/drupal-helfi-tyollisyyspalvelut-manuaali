@@ -5,11 +5,16 @@ dependencies:
   config:
     - field.storage.node.field_accessibility_details
     - node.type.service_location
+  module:
+    - tmgmt_content
+third_party_settings:
+  tmgmt_content:
+    excluded: false
 id: node.service_location.field_accessibility_details
 field_name: field_accessibility_details
 entity_type: node
 bundle: service_location
-label: 'Accessibility details'
+label: 'Accessibility details (deprecated)'
 description: ''
 required: false
 translatable: true

@@ -6,28 +6,6 @@
       handleSelectedStatement();
       handleSelectedObligatoryness();
 
-      addMoreSubmitBackgroud();
-
-      /**
-       * Add custom background position css for add more buttons.
-       */
-      function addMoreSubmitBackgroud() {
-        let widgets = [
-          '.field--widget-hel-tpm-editorial-paragraphs-custom',
-          '.field--widget-hel-tpm-service-dates-service-time-and-place-widget'
-        ];
-        $(widgets).each(function() {
-          if($(this + ' .field-add-more-submit').length){
-            let backgroundPos = $(this + ' .field-add-more-submit').val().length;
-            backgroundPos = backgroundPos/2;
-            backgroundPos = backgroundPos.toString();
-            backgroundPos = backgroundPos + "ch";
-            backgroundPos = "calc(50% + " + backgroundPos + " - 0.5rem)";
-            $(this + ' .field-add-more-submit').css('background-position-x',backgroundPos);
-          }
-        })
-      }
-
       // hide age range on the first a page of service entity form.
       function toggleAgeRange() {
         let ageGroupRadio = '.field--name-field-age-groups .form-item .form-checkbox';

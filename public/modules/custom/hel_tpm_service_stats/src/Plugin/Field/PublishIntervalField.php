@@ -13,7 +13,7 @@ use Drupal\Core\TypedData\ComputedItemListTrait;
  *   id = "hel_tpm_service_stats_publish_interval",
  *   label = @Translation("Publish interval"),
  *   description = @Translation("Service publish interval"),
- *   category = @Translation("Custom"),
+ *   category = "custom",
  *   default_widget = "",
  *   default_formatter = "number_integer"
  * )

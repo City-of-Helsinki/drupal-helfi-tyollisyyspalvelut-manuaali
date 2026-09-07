@@ -10,7 +10,6 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueWorkerBase;
 use Drupal\Core\State\State;
 use Drupal\hel_tpm_mail_tools\Utility\MessageSender;
-use Drupal\hel_tpm_user_expiry\Anonymizer;
 use Drupal\user\UserInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -80,13 +79,6 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
   private EntityTypeManagerInterface $entityTypeManager;
 
   /**
-   * Anonymizer service.
-   *
-   * @var \Drupal\hel_tpm_user_expiry\Anonymizer
-   */
-  private Anonymizer $anonymizer;
-
-  /**
    * Constructor.
    *
    * @param array $configuration
@@ -101,8 +93,6 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
    *   State service.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   Entity type manager.
-   * @param \Drupal\hel_tpm_user_expiry\Anonymizer $anonymizer
-   *   User anonymizer service.
    */
   public function __construct(
     array $configuration,
@@ -111,13 +101,11 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
     MessageSender $message_sender,
     State $state,
     EntityTypeManagerInterface $entity_type_manager,
-    Anonymizer $anonymizer,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->logger = $this->getLogger('hel_tpm_user_expiry');
     $this->messageSender = $message_sender;
     $this->state = $state;
-    $this->anonymizer = $anonymizer;
     $this->entityTypeManager = $entity_type_manager;
   }
 
@@ -132,7 +120,6 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
       $container->get('hel_tpm_mail_tools.utility.message_sender'),
       $container->get('state'),
       $container->get('entity_type.manager'),
-      $container->get('hel_tpm_user_expiry.anonymizer')
     );
   }
 
@@ -155,8 +142,8 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
         $this->updateNotified();
       }
     }
-    // If previous notifications has been sent and last notification has been
-    // sent at least 2 days ago.
+    // If previous notifications have been sent, and last notification was sent
+    // at least 2 days ago.
     elseif ($count === 2 && $this->getTimeLimit($count) >= $timestamp) {
       // Send deactivate notification and deactivate user.
       if (!$user->isBlocked() && $this->sendNotification(self::$deactivatedTemplate, $user)) {
@@ -164,16 +151,10 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
         $this->updateNotified();
       }
     }
-    elseif ($count === 3 && $this->getTimeLimit($count) >= $timestamp) {
-      // Anonymize user if deactivation happened 30 days ago.
-      if ($this->anonymizer->anonymizeUser($user)) {
-        $this->updateNotified();
-      }
-    }
   }
 
   /**
-   * Get time limit for notifications.
+   * Get a time limit for notifications.
    *
    * @param int $count
    *   Count messages have been sent.
@@ -187,10 +168,8 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
       0 => 0,
       // Time since first notification.
       1 => strtotime('-2 weeks'),
-      // Time since second notification, deactivation.
+      // Time since second notification; deactivation limit.
       2 => strtotime('-2 days'),
-      // Time since deactivation, user is anonymized.
-      3 => strtotime('-30 days'),
     ];
     return $limits[$count];
   }

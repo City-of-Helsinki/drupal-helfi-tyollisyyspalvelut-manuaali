@@ -20,6 +20,8 @@
   color: clr(text);
   &:focus {
     border-color: clr(accent-high);
+    box-shadow: inset 0px 0px 0px 2px clr(primary);
+    outline: 0;
   }
 
   &::placeholder {
