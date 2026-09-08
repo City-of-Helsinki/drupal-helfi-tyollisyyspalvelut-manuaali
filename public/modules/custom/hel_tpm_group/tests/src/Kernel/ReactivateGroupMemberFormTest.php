@@ -63,6 +63,7 @@ final class ReactivateGroupMemberFormTest extends GroupKernelTestBase {
    */
   protected function setUp(): void {
     parent::setUp();
+    $this->installConfig(['views']);
     $this->groupType = $this->createGroupType([
       'id' => 'reactivate_test',
       'creator_membership' => FALSE,
@@ -184,8 +185,13 @@ final class ReactivateGroupMemberFormTest extends GroupKernelTestBase {
     $this->assertTrue($access->canActivateGroupMembers($admin, $group));
 
     $blocked->activate()->save();
+    // Reload the membership to discard its cached user entity reference.
+    $storage = $this->container->get('entity_type.manager')->getStorage('group_content');
+    $membership = $storage->loadUnchanged($membership->id());
     $this->assertTrue($access->access($membership)->isForbidden());
     $blocked->block()->save();
+    $membership = $storage->loadUnchanged($membership->id());
+    $this->assertTrue($access->access($membership)->isAllowed());
 
     $other_group = $this->createGroup(['type' => $this->groupType->id()]);
     $other_group->addMember($blocked);
@@ -323,15 +329,33 @@ final class ReactivateGroupMemberFormTest extends GroupKernelTestBase {
    *   The configured field handler.
    */
   private function createHandler(array $args) {
-    $handler = $this->container->get('plugin.manager.views.field')->createInstance('hel_tpm_group_reactivate_group_user_link');
     $view = View::create([
       'id' => 'reactivate_link_test',
       'label' => 'Reactivate link test',
       'base_table' => 'group_relationship_field_data',
+      'display' => [
+        'default' => [
+          'id' => 'default',
+          'display_title' => 'Default',
+          'display_plugin' => 'default',
+          'position' => 0,
+          'display_options' => [
+            'fields' => [
+              'reactivate_group_user' => [
+                'id' => 'reactivate_group_user',
+                'table' => 'users',
+                'field' => 'reactivate_group_user',
+                'plugin_id' => 'hel_tpm_group_reactivate_group_user_link',
+              ],
+            ],
+          ],
+        ],
+      ],
     ]);
-    $handler->view = $view->getExecutable();
-    $handler->view->setArguments($args);
-    return $handler;
+    $executable = $view->getExecutable();
+    $executable->setArguments($args);
+    $executable->setDisplay('default');
+    return $executable->display_handler->getHandler('field', 'reactivate_group_user');
   }
 
 }
