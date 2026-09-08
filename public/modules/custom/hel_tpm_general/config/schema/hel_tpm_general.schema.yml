@@ -39,6 +39,50 @@ field.widget.settings.hel_tpm_general_inline_entity_form_improved:
       type: array
       label: "Content type limit"
 
+field.widget.settings.municipality_specific_ief_widget:
+  type: mapping
+  label: 'Municipality specific inline entity form widget settings'
+  mapping:
+    form_mode:
+      type: string
+      label: "Form mode"
+    override_labels:
+      type: boolean
+      label: "Override labels"
+    label_singular:
+      type: label
+      label: "Label (singular)"
+    label_plural:
+      type: label
+      label: "Label (plural)"
+    allow_new:
+      type: boolean
+      label: "Allow new"
+    allow_existing:
+      type: boolean
+      label: "Allow existing"
+    match_operator:
+      type: string
+      label: "Match operator"
+    allow_duplicate:
+      type: boolean
+      label: "Allow duplicate"
+    collapsible:
+      type: boolean
+      label: "Collapsible"
+    collapsed:
+      type: boolean
+      label: "Collapsed by default"
+    revision:
+      type: boolean
+      label: "Create new revision"
+    removed_reference:
+      type: string
+      label: "Removed reference"
+    prevent_translation_deletion:
+      type: boolean
+      label: "Prevent reference deletion from translations"
+
 field.formatter.settings.hel_tpm_general_municipality_field_formatter:
   type: mapping
   label: Municipality field formatter formatter settings
