@@ -245,8 +245,8 @@
           }
         }
         .form-item__label {
-          @extend .font-size--default;
-          @extend .font-spacing--one;
+          @extend .font-size--view-label;
+          @extend .font-spacing--one-desktop;
           font-weight: 700;
           margin-bottom: 0;
         }
@@ -258,6 +258,13 @@
       .filters-wrapper {
         grid-row: 2;
         grid-column: 1;
+        >.h5 {
+          display: block;
+          margin-bottom:13px;
+          @include xl {
+            margin-bottom: $space;
+          }
+        }
         .select--search-background {
           max-width: unset;
         }
