@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * @file
+ * Foo.
+ */
+
+/**
+ * Implements hook_entity_type_alter().
+ */
+function block_diff_ui_entity_type_alter(array &$entity_types) {
+
+  /** @var \Drupal\Core\Entity\EntityTypeInterface[] $entity_types */
+
+  // Set the revision link.
+  $entity_types['block_content']->setLinkTemplate('revision', '/block/{block_content}/revisions/{block_content_revision}/view');
+}

@@ -726,12 +726,8 @@ table {
     }
 }
 
-.tmgmt-job-item-form {
-  tr {
-    table-layout: fixed;
-    display: table;
-    width: calc(100vw - 48px);
-  }
+/* Fixes the translation management tool's job item comparison fields to use the same width. */
+.tmgmt-job-item-form table.tmgmt-ui-review > tbody tr {
   .tmgmt-ui-data-item-label,
   .tmgmt-ui-data-item-actions {
     width: 10%;
