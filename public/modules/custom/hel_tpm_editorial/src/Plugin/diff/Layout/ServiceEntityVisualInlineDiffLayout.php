@@ -12,7 +12,7 @@ use Drupal\Core\Theme\ThemeInitializationInterface;
 use Drupal\Core\Theme\ThemeManagerInterface;
 use Drupal\diff\DiffEntityComparison;
 use Drupal\diff\DiffEntityParser;
-use Drupal\entity_diff_ui\Plugin\diff\Layout\EntityVisualInlineDiffLayout;
+use Drupal\diff\Plugin\diff\Layout\VisualInlineDiffLayout;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -25,7 +25,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
  *   description = @Translation("Custom Visual layout, displays revision comparison using the entity type view mode."),
  * )
  */
-class ServiceEntityVisualInlineDiffLayout extends EntityVisualInlineDiffLayout {
+class ServiceEntityVisualInlineDiffLayout extends VisualInlineDiffLayout {
 
   /**
    * Theme manager.
@@ -100,7 +100,7 @@ class ServiceEntityVisualInlineDiffLayout extends EntityVisualInlineDiffLayout {
   /**
    * {@inheritdoc}
    */
-  public function build(ContentEntityInterface $left_revision, ContentEntityInterface $right_revision, ContentEntityInterface $entity) {
+  public function build(ContentEntityInterface $left_revision, ContentEntityInterface $right_revision, ContentEntityInterface $entity): array {
     // Build the revisions data.
     $build = $this->buildRevisionsData($left_revision, $right_revision);
 

@@ -1,0 +1,69 @@
+entity.taxonomy_term.revisions_diff:
+  path: '/taxonomy/term/{taxonomy_term}/revisions/view/{left_revision}/{right_revision}/{filter}'
+  defaults:
+    _controller: '\Drupal\taxonomy_diff_ui\Controller\TaxonomyTermRevisionController::compareTermRevisions'
+    _title: Diff General Settings
+  requirements:
+     _access_taxonomy_revision: 'view'
+     taxonomy_term: \d+
+     left_revision: \d+
+     right_revision: \d+
+  options:
+    _admin_route: TRUE
+    
+entity.taxonomy_term.version_history:
+  path: '/taxonomy/term/{taxonomy_term}/revisions'
+  defaults:
+    _title: 'Revisions'
+    _controller: '\Drupal\taxonomy_diff_ui\Controller\TaxonomyTermRevisionController::revisionOverview'
+  requirements:
+    _access_taxonomy_revision: 'view'
+    taxonomy_term: \d+
+  options:
+    _admin_route: TRUE
+    
+entity.taxonomy_term.revision:
+  path: '/taxonomy/term/{taxonomy_term}/revisions/{taxonomy_term_revision}/view'
+  defaults:
+    _controller: '\Drupal\taxonomy_diff_ui\Controller\TaxonomyTermRevisionController::revisionShow'
+    _title_callback: '\Drupal\taxonomy_diff_ui\Controller\TaxonomyTermRevisionController::revisionPageTitle'
+  requirements:
+    _access_taxonomy_revision: 'view'
+    taxonomy_term: \d+
+    taxonomy_term_revision: \d+
+    
+taxonomy_term.revision_revert_confirm:
+  path: '/taxonomy/term/{taxonomy_term}/revisions/{taxonomy_term_revision}/revert'
+  defaults:
+    _form: '\Drupal\taxonomy_diff_ui\Form\TaxonomyTermRevisionRevertForm'
+    _title: 'Revert to earlier revision'
+  requirements:
+    _access_taxonomy_revision: 'update'
+    taxonomy_term: \d+
+    taxonomy_term_revision: \d+
+  options:
+    _admin_route: TRUE
+
+taxonomy_term.revision_revert_translation_confirm:
+  path: '/taxonomy/term/{taxonomy_term}/revisions/{taxonomy_term_revision}/revert/{langcode}'
+  defaults:
+    _form: '\Drupal\taxonomy_diff_ui\Form\TaxonomyTermRevisionRevertTranslationForm'
+    _title: 'Revert to earlier revision of a translation'
+  requirements:
+    _access_taxonomy_revision: 'update'
+    taxonomy_term: \d+
+    taxonomy_term_revision: \d+
+  options:
+    _admin_route: TRUE
+
+taxonomy_term.revision_delete_confirm:
+  path: '/taxonomy/term/{taxonomy_term}/revisions/{taxonomy_term_revision}/delete'
+  defaults:
+    _form: '\Drupal\taxonomy_diff_ui\Form\TaxonomyTermRevisionDeleteForm'
+    _title: 'Delete earlier revision'
+  requirements:
+    _access_taxonomy_revision: 'delete'
+    taxonomy_term: \d+
+    taxonomy_term_revision: \d+
+  options:
+    _admin_route: TRUE

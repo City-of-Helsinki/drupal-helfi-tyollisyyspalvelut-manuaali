@@ -1,0 +1,69 @@
+entity.block_content.revisions_diff:
+  path: '/block/{block_content}/revisions/view/{left_revision}/{right_revision}/{filter}'
+  defaults:
+    _controller: '\Drupal\block_diff_ui\Controller\BlockContentRevisionController::compareRevisions'
+    _title: Diff General Settings
+  requirements:
+     _access_block_revision: 'view'
+     block_content: \d+
+     left_revision: \d+
+     right_revision: \d+
+  options:
+    _admin_route: TRUE
+    
+entity.block_content.version_history:
+  path: '/block/{block_content}/revisions'
+  defaults:
+    _title: 'Revisions'
+    _controller: '\Drupal\block_diff_ui\Controller\BlockContentRevisionController::revisionOverview'
+  requirements:
+    _access_block_revision: 'view'
+    block_content: \d+
+  options:
+    _admin_route: TRUE
+    
+entity.block_content.revision:
+  path: '/block/{block_content}/revisions/{block_content_revision}/view'
+  defaults:
+    _controller: '\Drupal\block_diff_ui\Controller\BlockContentRevisionController::revisionShow'
+    _title_callback: '\Drupal\block_diff_ui\Controller\BlockContentRevisionController::revisionPageTitle'
+  requirements:
+    _access_block_revision: 'view'
+    block_content: \d+
+    block_content_revision: \d+
+    
+block_content.revision_revert_confirm:
+  path: '/block/{block_content}/revisions/{block_content_revision}/revert'
+  defaults:
+    _form: '\Drupal\block_diff_ui\Form\BlockContentRevisionRevertForm'
+    _title: 'Revert to earlier revision'
+  requirements:
+    _access_block_revision: 'update'
+    block_content: \d+
+    block_content_revision: \d+
+  options:
+    _admin_route: TRUE
+
+block_content.revision_revert_translation_confirm:
+  path: '/block/{block_content}/revisions/{block_content_revision}/revert/{langcode}'
+  defaults:
+    _form: '\Drupal\block_diff_ui\Form\BlockContentRevisionRevertTranslationForm'
+    _title: 'Revert to earlier revision of a translation'
+  requirements:
+    _access_block_revision: 'update'
+    block_content: \d+
+    block_content_revision: \d+
+  options:
+    _admin_route: TRUE
+
+block_content.revision_delete_confirm:
+  path: '/block/{block_content}/revisions/{block_content_revision}/delete'
+  defaults:
+    _form: '\Drupal\block_diff_ui\Form\BlockContentRevisionDeleteForm'
+    _title: 'Delete earlier revision'
+  requirements:
+    _access_block_revision: 'delete'
+    block_content: \d+
+    block_content_revision: \d+
+  options:
+    _admin_route: TRUE

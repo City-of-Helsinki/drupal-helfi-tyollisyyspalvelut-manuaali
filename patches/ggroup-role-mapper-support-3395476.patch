@@ -1,24 +1,27 @@
-diff --git a/modules/ggroup_role_mapper/config/schema/ggroup_role_mapper.schema.yml b/modules/ggroup_role_mapper/config/schema/ggroup_role_mapper.schema.yml
-new file mode 100644
-index 0000000000000000000000000000000000000000..2af7b9b28b14f3d9e06961f52daad9ad121e8183
---- /dev/null
-+++ b/modules/ggroup_role_mapper/config/schema/ggroup_role_mapper.schema.yml
-@@ -0,0 +1,12 @@
-+group_relation.config.parent_role_mapping:
-+  type: sequence
-+  label: Parent role mapping
-+  sequence:
-+    type: string
-+    label: Role mapping
-+group_relation.config.child_role_mapping:
-+  type: sequence
-+  label: Child role mapping
-+  sequence:
-+    type: string
-+    label: Role mapping
+From a453db616abb26dbe5bcb4ddc34d8b8203da2d96 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Jussi=20Viitam=C3=A4ki?= <jussi@kwd.fi>
+Date: Fri, 27 Oct 2023 14:48:40 +0300
+Subject: [PATCH 01/11] Added initial version of group role mapper with group2
+ support
+
+---
+ .../ggroup_role_mapper.info.yml               |   7 +
+ .../ggroup_role_mapper.module                 | 111 ++++++
+ .../ggroup_role_mapper.services.yml           |   9 +
+ .../InheritGroupPermissionCalculator.php      | 340 ++++++++++++++++++
+ .../src/GroupRoleInheritance.php              | 283 +++++++++++++++
+ .../src/GroupRoleInheritanceInterface.php     |  30 ++
+ 6 files changed, 780 insertions(+)
+ create mode 100644 modules/ggroup_role_mapper/ggroup_role_mapper.info.yml
+ create mode 100644 modules/ggroup_role_mapper/ggroup_role_mapper.module
+ create mode 100644 modules/ggroup_role_mapper/ggroup_role_mapper.services.yml
+ create mode 100644 modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php
+ create mode 100644 modules/ggroup_role_mapper/src/GroupRoleInheritance.php
+ create mode 100644 modules/ggroup_role_mapper/src/GroupRoleInheritanceInterface.php
+
 diff --git a/modules/ggroup_role_mapper/ggroup_role_mapper.info.yml b/modules/ggroup_role_mapper/ggroup_role_mapper.info.yml
 new file mode 100644
-index 0000000000000000000000000000000000000000..3aa69377a8d8fe7a9408c47b2ca9b12d2a7e783f
+index 0000000..3aa6937
 --- /dev/null
 +++ b/modules/ggroup_role_mapper/ggroup_role_mapper.info.yml
 @@ -0,0 +1,7 @@
@@ -31,7 +34,7 @@ index 0000000000000000000000000000000000000000..3aa69377a8d8fe7a9408c47b2ca9b12d
 +  - 'ggroup'
 diff --git a/modules/ggroup_role_mapper/ggroup_role_mapper.module b/modules/ggroup_role_mapper/ggroup_role_mapper.module
 new file mode 100644
-index 0000000000000000000000000000000000000000..7736c0fe9562294a5221ad269a94fa63f49b8cb4
+index 0000000..7736c0f
 --- /dev/null
 +++ b/modules/ggroup_role_mapper/ggroup_role_mapper.module
 @@ -0,0 +1,111 @@
@@ -148,7 +151,7 @@ index 0000000000000000000000000000000000000000..7736c0fe9562294a5221ad269a94fa63
 +}
 diff --git a/modules/ggroup_role_mapper/ggroup_role_mapper.services.yml b/modules/ggroup_role_mapper/ggroup_role_mapper.services.yml
 new file mode 100644
-index 0000000000000000000000000000000000000000..f5ce9e1c93ac32aeb8d8bedc209d6df8d5220d20
+index 0000000..f5ce9e1
 --- /dev/null
 +++ b/modules/ggroup_role_mapper/ggroup_role_mapper.services.yml
 @@ -0,0 +1,9 @@
@@ -163,10 +166,10 @@ index 0000000000000000000000000000000000000000..f5ce9e1c93ac32aeb8d8bedc209d6df8
 +      - { name: flexible_permission_calculator, priority: -110 }
 diff --git a/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php b/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php
 new file mode 100644
-index 0000000000000000000000000000000000000000..29de11d3f4a01019fd278ca88045bf1987d3b1e6
+index 0000000..9b42525
 --- /dev/null
 +++ b/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php
-@@ -0,0 +1,347 @@
+@@ -0,0 +1,340 @@
 +<?php
 +
 +namespace Drupal\ggroup_role_mapper\Access;
@@ -184,8 +187,6 @@ index 0000000000000000000000000000000000000000..29de11d3f4a01019fd278ca88045bf19
 +use Drupal\group\Access\SynchronizedGroupPermissionCalculator;
 +use Drupal\group\Entity\Group;
 +use Drupal\group\Entity\GroupInterface;
-+use Drupal\group\Entity\GroupRole;
-+use Drupal\group\Entity\GroupRoleInterface;
 +use Drupal\group\GroupMembership;
 +use Drupal\group\GroupMembershipLoader;
 +use Drupal\ggroup_role_mapper\GroupRoleInheritanceInterface;
@@ -284,12 +285,9 @@ index 0000000000000000000000000000000000000000..29de11d3f4a01019fd278ca88045bf19
 +   */
 +  public function getMappedRoles($account_id, $group_id = NULL) {
 +    if (!empty($group_id)) {
-+      if (!isset($this->mappedRoles[$account_id][$group_id])) {
-+        return [];
-+      }
-+      return [$group_id => $this->mappedRoles[$account_id][$group_id]];
++      return $this->mappedRoles[$account_id][$group_id] ?? [];
 +    }
-+    return !empty($this->mappedRoles[$account_id]) ? $this->mappedRoles[$account_id] : [];
++    return $this->mappedRoles[$account_id] ?? [];
 +  }
 +
 +  /**
@@ -325,8 +323,12 @@ index 0000000000000000000000000000000000000000..29de11d3f4a01019fd278ca88045bf19
 +  public function calculatePermissions(AccountInterface $account, $scope) {
 +    $calculated_permissions = parent::calculatePermissions($account, $scope);
 +
-+    // Skip new accounts and anonymous users.
-+    if (is_null($account->id()) || $account->isAnonymous()) {
++    // Skip anonymous users.
++    if ($account->isAnonymous()) {
++      return $calculated_permissions;
++    }
++
++    if ($scope !== PermissionScopeInterface::INDIVIDUAL_ID) {
 +      return $calculated_permissions;
 +    }
 +
@@ -353,16 +355,16 @@ index 0000000000000000000000000000000000000000..29de11d3f4a01019fd278ca88045bf19
 +
 +      $calculated_permissions->addCacheableDependency($group_membership);
 +      $group_role_array = $this->getInheritedGroupRoleIdsByMembership($group_membership, $account);
-+      foreach ($group_role_array as $group_id => $group_roles) {
-+        foreach ($group_roles as $group_role) {
-+          $item = new CalculatedPermissionsItem(
-+            $scope,
-+            $group_id,
-+            $group_role->getPermissions(),
-+            $group_role->isAdmin()
-+          );
-+          $calculated_permissions->addItem($item);
-+        }
++       foreach ($group_role_array as $group_id => $group_roles) {
++         foreach ($group_roles as $group_role) {
++           $item = new CalculatedPermissionsItem(
++             $group_role->getScope(),
++             $group_id,
++             $group_role->getPermissions(),
++             $group_role->isAdmin()
++           );
++           $calculated_permissions->addItem($item);
++         }
 +      }
 +    }
 +
@@ -407,13 +409,7 @@ index 0000000000000000000000000000000000000000..29de11d3f4a01019fd278ca88045bf19
 +
 +    foreach ($mapped_role_ids as $group_id => $role_ids) {
 +      if (!empty(array_unique($role_ids))) {
-+        $mapped_roles = $this->getMappedRoles($account_id, $group_id);
-+        if (empty($mapped_roles)) {
-+          $this->mappedRoles[$account_id][$group_id] = $this->entityTypeManager->getStorage('group_role')->loadMultiple(array_unique($role_ids));
-+        }
-+        else {
-+          $this->mappedRoles[$account_id][$group_id] = array_merge(reset($mapped_roles), $this->entityTypeManager->getStorage('group_role')->loadMultiple(array_unique($role_ids)));
-+        }
++        $this->mappedRoles[$account_id][$group_id] = array_merge($this->getMappedRoles($account_id, $group_id), $this->entityTypeManager->getStorage('group_role')->loadMultiple(array_unique($role_ids)));
 +      }
 +    }
 +
@@ -516,7 +512,7 @@ index 0000000000000000000000000000000000000000..29de11d3f4a01019fd278ca88045bf19
 +}
 diff --git a/modules/ggroup_role_mapper/src/GroupRoleInheritance.php b/modules/ggroup_role_mapper/src/GroupRoleInheritance.php
 new file mode 100644
-index 0000000000000000000000000000000000000000..758e2e344de298b1ba3f079f82c53ebd14dd51c9
+index 0000000..758e2e3
 --- /dev/null
 +++ b/modules/ggroup_role_mapper/src/GroupRoleInheritance.php
 @@ -0,0 +1,283 @@
@@ -805,7 +801,7 @@ index 0000000000000000000000000000000000000000..758e2e344de298b1ba3f079f82c53ebd
 +}
 diff --git a/modules/ggroup_role_mapper/src/GroupRoleInheritanceInterface.php b/modules/ggroup_role_mapper/src/GroupRoleInheritanceInterface.php
 new file mode 100644
-index 0000000000000000000000000000000000000000..b6c83d206d309051cc5382523f29b3d982a2a316
+index 0000000..b6c83d2
 --- /dev/null
 +++ b/modules/ggroup_role_mapper/src/GroupRoleInheritanceInterface.php
 @@ -0,0 +1,30 @@
@@ -839,3 +835,367 @@ index 0000000000000000000000000000000000000000..b6c83d206d309051cc5382523f29b3d9
 +  public function getAllInheritedGroupRoleIds($group);
 +
 +}
+-- 
+GitLab
+
+
+From 0ebf91b4f82ee2d2bc76878b46c57f5e7740f777 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Jussi=20Viitam=C3=A4ki?= <jussi@kwd.fi>
+Date: Mon, 27 Nov 2023 14:21:55 +0200
+Subject: [PATCH 02/11] Added schema for role mapping configs
+
+---
+ .../config/schema/ggroup_role_mapper.schema.yml      | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+ create mode 100644 modules/ggroup_role_mapper/config/schema/ggroup_role_mapper.schema.yml
+
+diff --git a/modules/ggroup_role_mapper/config/schema/ggroup_role_mapper.schema.yml b/modules/ggroup_role_mapper/config/schema/ggroup_role_mapper.schema.yml
+new file mode 100644
+index 0000000..2af7b9b
+--- /dev/null
++++ b/modules/ggroup_role_mapper/config/schema/ggroup_role_mapper.schema.yml
+@@ -0,0 +1,12 @@
++group_relation.config.parent_role_mapping:
++  type: sequence
++  label: Parent role mapping
++  sequence:
++    type: string
++    label: Role mapping
++group_relation.config.child_role_mapping:
++  type: sequence
++  label: Child role mapping
++  sequence:
++    type: string
++    label: Role mapping
+-- 
+GitLab
+
+
+From 2300c74ba1b9215fe095abfd82e4e6cf45fc309b Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Jussi=20Viitam=C3=A4ki?= <jussi@kwd.fi>
+Date: Fri, 5 Jan 2024 12:49:32 +0200
+Subject: [PATCH 03/11] Changed getMappedRoles always return array mapped by
+ group_id to prevent random crasheh while calculatingPermissions
+
+---
+ .../src/Access/InheritGroupPermissionCalculator.php             | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php b/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php
+index 9b42525..194b770 100644
+--- a/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php
++++ b/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php
+@@ -113,7 +113,7 @@ class InheritGroupPermissionCalculator extends PermissionCalculatorBase {
+    */
+   public function getMappedRoles($account_id, $group_id = NULL) {
+     if (!empty($group_id)) {
+-      return $this->mappedRoles[$account_id][$group_id] ?? [];
++      return [$group_id => $this->mappedRoles[$account_id][$group_id]] ?? [];
+     }
+     return $this->mappedRoles[$account_id] ?? [];
+   }
+-- 
+GitLab
+
+
+From caf34deff523a898e38fe4a18efaebf7b0b4fecb Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Jussi=20Viitam=C3=A4ki?= <jussi@kwd.fi>
+Date: Mon, 8 Jan 2024 08:24:36 +0200
+Subject: [PATCH 04/11] Fixed empty check in getMappedRoles
+
+---
+ .../src/Access/InheritGroupPermissionCalculator.php             | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php b/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php
+index 194b770..428b3a2 100644
+--- a/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php
++++ b/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php
+@@ -113,7 +113,7 @@ class InheritGroupPermissionCalculator extends PermissionCalculatorBase {
+    */
+   public function getMappedRoles($account_id, $group_id = NULL) {
+     if (!empty($group_id)) {
+-      return [$group_id => $this->mappedRoles[$account_id][$group_id]] ?? [];
++      return $this->mappedRoles[$account_id][$group_id] ? [$group_id => $this->mappedRoles[$account_id][$group_id]] : [];
+     }
+     return $this->mappedRoles[$account_id] ?? [];
+   }
+-- 
+GitLab
+
+
+From e8b34b8cfc80fea65477323f6f7b9ffbaf8ad340 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Jussi=20Viitam=C3=A4ki?= <jussi@kwd.fi>
+Date: Mon, 8 Jan 2024 12:32:40 +0200
+Subject: [PATCH 05/11] Fixed errors when build role mapping in specific use
+ cases
+
+---
+ .../Access/InheritGroupPermissionCalculator.php | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
+
+diff --git a/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php b/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php
+index 428b3a2..420ab67 100644
+--- a/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php
++++ b/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php
+@@ -15,6 +15,8 @@ use Drupal\flexible_permissions\CalculatedPermissionsItem;
+ use Drupal\group\Access\SynchronizedGroupPermissionCalculator;
+ use Drupal\group\Entity\Group;
+ use Drupal\group\Entity\GroupInterface;
++use Drupal\group\Entity\GroupRole;
++use Drupal\group\Entity\GroupRoleInterface;
+ use Drupal\group\GroupMembership;
+ use Drupal\group\GroupMembershipLoader;
+ use Drupal\ggroup_role_mapper\GroupRoleInheritanceInterface;
+@@ -113,9 +115,12 @@ class InheritGroupPermissionCalculator extends PermissionCalculatorBase {
+    */
+   public function getMappedRoles($account_id, $group_id = NULL) {
+     if (!empty($group_id)) {
+-      return $this->mappedRoles[$account_id][$group_id] ? [$group_id => $this->mappedRoles[$account_id][$group_id]] : [];
++      if (!isset($this->mappedRoles[$account_id][$group_id])) {
++        return [];
++      }
++      return [$group_id => $this->mappedRoles[$account_id][$group_id]];
+     }
+-    return $this->mappedRoles[$account_id] ?? [];
++    return !empty($this->mappedRoles[$account_id]) ? $this->mappedRoles[$account_id] : [];
+   }
+ 
+   /**
+@@ -237,7 +242,13 @@ class InheritGroupPermissionCalculator extends PermissionCalculatorBase {
+ 
+     foreach ($mapped_role_ids as $group_id => $role_ids) {
+       if (!empty(array_unique($role_ids))) {
+-        $this->mappedRoles[$account_id][$group_id] = array_merge($this->getMappedRoles($account_id, $group_id), $this->entityTypeManager->getStorage('group_role')->loadMultiple(array_unique($role_ids)));
++        $mapped_roles = $this->getMappedRoles($account_id, $group_id);
++        if (empty($mapped_roles)) {
++          $this->mappedRoles[$account_id][$group_id] = $this->entityTypeManager->getStorage('group_role')->loadMultiple(array_unique($role_ids));
++        }
++        else {
++          $this->mappedRoles[$account_id][$group_id] = array_merge(reset($mapped_roles), $this->entityTypeManager->getStorage('group_role')->loadMultiple(array_unique($role_ids)));
++        }
+       }
+     }
+ 
+-- 
+GitLab
+
+
+From cc523b96df16fa3f629f8ae422cd14d007201452 Mon Sep 17 00:00:00 2001
+From: catch <6915-catch@users.noreply.drupalcode.org>
+Date: Mon, 16 Sep 2024 10:59:30 +0100
+Subject: [PATCH 06/11] Only add role mappings for the individual scope to
+ avoid exception from flexible permissions module.
+
+---
+ .../InheritGroupPermissionCalculator.php      | 22 ++++++++++---------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
+
+diff --git a/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php b/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php
+index 420ab67..797cac4 100644
+--- a/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php
++++ b/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php
+@@ -188,16 +188,18 @@ class InheritGroupPermissionCalculator extends PermissionCalculatorBase {
+ 
+       $calculated_permissions->addCacheableDependency($group_membership);
+       $group_role_array = $this->getInheritedGroupRoleIdsByMembership($group_membership, $account);
+-       foreach ($group_role_array as $group_id => $group_roles) {
+-         foreach ($group_roles as $group_role) {
+-           $item = new CalculatedPermissionsItem(
+-             $group_role->getScope(),
+-             $group_id,
+-             $group_role->getPermissions(),
+-             $group_role->isAdmin()
+-           );
+-           $calculated_permissions->addItem($item);
+-         }
++      foreach ($group_role_array as $group_id => $group_roles) {
++        foreach ($group_roles as $group_role) {
++          if ($group_role->getScope() === PermissionScopeInterface::INDIVIDUAL_ID) {
++            $item = new CalculatedPermissionsItem(
++              $group_role->getScope(),
++              $group_id,
++              $group_role->getPermissions(),
++              $group_role->isAdmin()
++            );
++            $calculated_permissions->addItem($item);
++          }
++        }
+       }
+     }
+ 
+-- 
+GitLab
+
+
+From 309758c07230e9d0abe3dce08de66fdb0a33f274 Mon Sep 17 00:00:00 2001
+From: catch <6915-catch@users.noreply.drupalcode.org>
+Date: Mon, 16 Sep 2024 16:33:23 +0100
+Subject: [PATCH 07/11] Account for 'insider' roles too so that 'member' role
+ can be mapped.
+
+---
+ .../src/Access/InheritGroupPermissionCalculator.php         | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php b/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php
+index 797cac4..bba473d 100644
+--- a/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php
++++ b/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php
+@@ -161,7 +161,7 @@ class InheritGroupPermissionCalculator extends PermissionCalculatorBase {
+       return $calculated_permissions;
+     }
+ 
+-    if ($scope !== PermissionScopeInterface::INDIVIDUAL_ID) {
++    if ($scope !== PermissionScopeInterface::INDIVIDUAL_ID && $scope !== PermissionScopeInterface::INSIDER_ID) {
+       return $calculated_permissions;
+     }
+ 
+@@ -190,9 +190,9 @@ class InheritGroupPermissionCalculator extends PermissionCalculatorBase {
+       $group_role_array = $this->getInheritedGroupRoleIdsByMembership($group_membership, $account);
+       foreach ($group_role_array as $group_id => $group_roles) {
+         foreach ($group_roles as $group_role) {
+-          if ($group_role->getScope() === PermissionScopeInterface::INDIVIDUAL_ID) {
++          if ($group_role->getScope() === $scope) {
+             $item = new CalculatedPermissionsItem(
+-              $group_role->getScope(),
++              $scope,
+               $group_id,
+               $group_role->getPermissions(),
+               $group_role->isAdmin()
+-- 
+GitLab
+
+
+From b1124d5c7acb94cd97091953da00b6b714020ca0 Mon Sep 17 00:00:00 2001
+From: catch <6915-catch@users.noreply.drupalcode.org>
+Date: Mon, 30 Sep 2024 18:39:51 +0200
+Subject: [PATCH 08/11] Groups passes in the 'outsider' scope before we get the
+ chance to calculate permissions, so return all relevant permissions for all
+ scopes.
+
+---
+ .../InheritGroupPermissionCalculator.php      | 20 +++++++------------
+ 1 file changed, 7 insertions(+), 13 deletions(-)
+
+diff --git a/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php b/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php
+index bba473d..32177fe 100644
+--- a/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php
++++ b/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php
+@@ -161,10 +161,6 @@ class InheritGroupPermissionCalculator extends PermissionCalculatorBase {
+       return $calculated_permissions;
+     }
+ 
+-    if ($scope !== PermissionScopeInterface::INDIVIDUAL_ID && $scope !== PermissionScopeInterface::INSIDER_ID) {
+-      return $calculated_permissions;
+-    }
+-
+     $calculated_permissions->addCacheContexts(['user']);
+     $user = $this->entityTypeManager->getStorage('user')->load($account->id());
+     $calculated_permissions->addCacheableDependency($user);
+@@ -190,15 +186,13 @@ class InheritGroupPermissionCalculator extends PermissionCalculatorBase {
+       $group_role_array = $this->getInheritedGroupRoleIdsByMembership($group_membership, $account);
+       foreach ($group_role_array as $group_id => $group_roles) {
+         foreach ($group_roles as $group_role) {
+-          if ($group_role->getScope() === $scope) {
+-            $item = new CalculatedPermissionsItem(
+-              $scope,
+-              $group_id,
+-              $group_role->getPermissions(),
+-              $group_role->isAdmin()
+-            );
+-            $calculated_permissions->addItem($item);
+-          }
++          $item = new CalculatedPermissionsItem(
++            $scope,
++            $group_id,
++            $group_role->getPermissions(),
++            $group_role->isAdmin()
++          );
++          $calculated_permissions->addItem($item);
+         }
+       }
+     }
+-- 
+GitLab
+
+
+From 2faf789e582b695c53dbe687d4b20604fba8ffef Mon Sep 17 00:00:00 2001
+From: jviitamaki <jussi.viitamaki@citrus.fi>
+Date: Mon, 29 Jun 2026 14:12:52 +0300
+Subject: [PATCH 09/11] Fixed Cannot load the "user" entity with NULL ID when
+ adding new user.
+
+---
+ .../src/Access/InheritGroupPermissionCalculator.php             | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php b/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php
+index 32177fe..1ac6884 100644
+--- a/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php
++++ b/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php
+@@ -157,7 +157,7 @@ class InheritGroupPermissionCalculator extends PermissionCalculatorBase {
+     $calculated_permissions = parent::calculatePermissions($account, $scope);
+ 
+     // Skip anonymous users.
+-    if ($account->isAnonymous()) {
++    if ($account->isNew() && $account->isAnonymous()) {
+       return $calculated_permissions;
+     }
+ 
+-- 
+GitLab
+
+
+From ad9e4b6229f2c7d471861fd07582494406a370ef Mon Sep 17 00:00:00 2001
+From: jviitamaki <jussi.viitamaki@citrus.fi>
+Date: Thu, 16 Jul 2026 09:44:57 +0300
+Subject: [PATCH 10/11] Changed drupal compatibility to match main module
+ requirement
+
+---
+ modules/ggroup_role_mapper/ggroup_role_mapper.info.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/modules/ggroup_role_mapper/ggroup_role_mapper.info.yml b/modules/ggroup_role_mapper/ggroup_role_mapper.info.yml
+index 3aa6937..04a52d6 100644
+--- a/modules/ggroup_role_mapper/ggroup_role_mapper.info.yml
++++ b/modules/ggroup_role_mapper/ggroup_role_mapper.info.yml
+@@ -2,6 +2,6 @@ name: 'Subgroup role mapper'
+ description: 'Allows map roles between parent groups and subgroups'
+ package: 'Group'
+ type: 'module'
+-core_version_requirement: ^8 || ^9 || ^10
++core_version_requirement: ^10.3 || ^11
+ dependencies:
+   - 'ggroup'
+-- 
+GitLab
+
+
+From a217075e46373625db3c80b61860f2664411036e Mon Sep 17 00:00:00 2001
+From: jviitamaki <jussi.viitamaki@citrus.fi>
+Date: Thu, 16 Jul 2026 11:54:44 +0300
+Subject: [PATCH 11/11] Fixed call to undefined function isNew() in some use
+ cases
+
+---
+ .../src/Access/InheritGroupPermissionCalculator.php             | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php b/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php
+index 1ac6884..ea76b41 100644
+--- a/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php
++++ b/modules/ggroup_role_mapper/src/Access/InheritGroupPermissionCalculator.php
+@@ -157,7 +157,7 @@ class InheritGroupPermissionCalculator extends PermissionCalculatorBase {
+     $calculated_permissions = parent::calculatePermissions($account, $scope);
+ 
+     // Skip anonymous users.
+-    if ($account->isNew() && $account->isAnonymous()) {
++    if (is_null($account->id()) || $account->isAnonymous()) {
+       return $calculated_permissions;
+     }
+ 
+-- 
+GitLab
+
