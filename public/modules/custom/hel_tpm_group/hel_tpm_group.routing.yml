@@ -1,0 +1,13 @@
+hel_tpm_group.reactivate_group_member:
+  path: '/group/{group}/reactivate-member/{group_content}'
+  defaults:
+    _form: '\Drupal\hel_tpm_group\Form\ReactivateGroupMemberForm'
+    _title: 'Reactivate group member'
+  options:
+    parameters:
+      group:
+        type: entity:group
+      group_content:
+        type: entity:group_content
+  requirements:
+    _custom_access: 'Drupal\hel_tpm_group\Access\ReactivateGroupMemberAccess:access'
