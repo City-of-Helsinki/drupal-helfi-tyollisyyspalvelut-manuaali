@@ -1,0 +1,81 @@
+<?php
+
+/**
+ * @file
+ * The .module file for Field description tooltip module.
+ */
+
+use Drupal\Core\Entity\EntityForm;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function field_description_tooltip_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the field_description_tooltip module.
+    case 'help.page.field_description_tooltip':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('This module simply provides the possibility to convert the entity form field descriptions into a tooltip popup.') . '</p>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function field_description_tooltip_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
+  // We only filter the entity forms.
+  if ($form_state->getFormObject() instanceof EntityForm) {
+    /** @var \Drupal\Core\Entity\EntityInterface $entity */
+    $entity = $form_state->getFormObject()->getEntity();
+
+    // Get the configuration.
+    $config = \Drupal::configFactory()
+      ->getEditable('field_description_tooltip.settings')
+      ->get();
+
+    $config_prefix = $entity->getEntityType()->id() . ':' . $entity->bundle();
+
+    $module_path = \Drupal::service('module_handler')
+      ->getModule('field_description_tooltip')
+      ->getPath();
+    // Get the tooltip image path.
+    $tooltip_img = $module_path . "/tooltip.png";
+
+    $tooltip_fields_count = 0;
+    foreach ($config as $field_config => $use_tooltip) {
+      if (substr($field_config, 0, strlen($config_prefix)) !== $config_prefix) {
+        continue;
+      }
+
+      if ($use_tooltip || $config['tooltip_all']) {
+        $exploded = explode(':', $field_config);
+        $field = end($exploded);
+        if (empty($form[$field])) {
+          continue;
+        }
+        // Set the tooltip flag.
+        $form[$field]['#attributes']['data-description-tooltip'] = [TRUE];
+        $tooltip_fields_count++;
+      }
+    }
+
+    // Only attach the tooltip if there are any configured fields.
+    if ($tooltip_fields_count) {
+      // Attach the tooltip library.
+      $form['#attached']['library'][] = 'field_description_tooltip/tooltip';
+      // Attach the tooltip config image.
+      $form['#attached']['drupalSettings']['fieldDescriptionTooltip']['img'] = $tooltip_img;
+      // Attach the popup position.
+      $form['#attached']['drupalSettings']['fieldDescriptionTooltip']['position'] = [
+        'my_1' => $config['my_1'] ?? 'center',
+        'my_2' => $config['my_2'] ?? 'bottom',
+        'at_1' => $config['at_1'] ?? 'center',
+        'at_2' => $config['at_2'] ?? 'bottom',
+      ];
+    }
+  }
+}

@@ -20,6 +20,7 @@ use Drupal\hel_tpm_group\Event\GroupMembershipChanged;
 use Drupal\hel_tpm_group\Event\GroupMembershipDeleted;
 use Drupal\hel_tpm_group\Event\GroupSiteWideRoleChanged;
 use Drupal\node\NodeInterface;
+use Drupal\user\Entity\Role;
 
 /**
  * Implements hook_cron().
@@ -603,10 +604,22 @@ function hel_tpm_group_menu_local_tasks_alter(&$data, $route_name) {
 function _hel_tpm_group_get_valid_roles() {
   // Unwanted roles.
   $role_bl = ['authenticated', 'root', 'admin'];
-  $roles = array_map(['\Drupal\Component\Utility\Html', 'escape'], user_role_names(TRUE));
+  $roles = array_map(['\Drupal\Component\Utility\Html', 'escape'], _hel_tpm_group_user_roles());
   // Filter out all roles we don't want to be inherited.
   foreach ($role_bl as $role) {
     unset($roles[$role]);
   }
   return $roles;
+}
+
+/**
+ * Gets assignable user role names.
+ *
+ * @return array
+ *   An associative array of user role labels keyed by role ID.
+ */
+function _hel_tpm_group_user_roles(): array {
+  $roles = Role::loadMultiple();
+  unset($roles[AccountInterface::ANONYMOUS_ROLE]);
+  return array_map(static fn(Role $role): string => $role->label(), $roles);
 }

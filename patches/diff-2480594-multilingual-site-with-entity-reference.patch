@@ -1,0 +1,30 @@
+From e284961d06c90d8257c73cef7f733cf7ae71b414 Mon Sep 17 00:00:00 2001
+From: Leticia Gauna <leticia@zoocha.com>
+Date: Fri, 21 Aug 2026 21:11:13 -0300
+Subject: [PATCH] Multilingual site with entity reference field not picking up
+ correct language during diff comparison
+
+---
+ src/Plugin/diff/Field/EntityReferenceFieldBuilder.php | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/src/Plugin/diff/Field/EntityReferenceFieldBuilder.php b/src/Plugin/diff/Field/EntityReferenceFieldBuilder.php
+index 058232d..bbea523 100644
+--- a/src/Plugin/diff/Field/EntityReferenceFieldBuilder.php
++++ b/src/Plugin/diff/Field/EntityReferenceFieldBuilder.php
+@@ -37,7 +37,11 @@ class EntityReferenceFieldBuilder extends FieldDiffBuilderBase {
+         // @phpstan-ignore-next-line
+         if ($field_item->entity instanceof EntityInterface) {
+           if ($this->configuration['compare_entity_reference'] == COMPARE_ENTITY_REFERENCE_LABEL) {
+-            $result[$field_key][] = $field_item->entity->label();
++            $entity_label = $field_item->entity->label();
++            if ($field_item->entity->hasTranslation($field_items->getLangcode())) {
++              $entity_label = $field_item->entity->getTranslation($field_items->getLangcode())->label();
++            }
++            $result[$field_key][] = $entity_label;
+           }
+           else {
+             $result[$field_key][] = $this->t('Entity ID: :id', [
+-- 
+GitLab
+

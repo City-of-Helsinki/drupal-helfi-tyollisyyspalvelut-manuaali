@@ -75,6 +75,7 @@ class SetServiceOutdatedOperationForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function getDescription() {
+    $this->t("You are about to change @node to Outdated and unpublished. After this the service won't show as published");
   }
 
   /**

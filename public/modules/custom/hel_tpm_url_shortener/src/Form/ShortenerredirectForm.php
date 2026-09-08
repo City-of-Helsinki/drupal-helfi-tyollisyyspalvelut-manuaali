@@ -64,6 +64,7 @@ class ShortenerredirectForm extends ContentEntityForm {
     }
 
     $form_state->setRedirect('entity.shortenerredirect.canonical', ['shortenerredirect' => $entity->id()]);
+    return $result;
   }
 
 }

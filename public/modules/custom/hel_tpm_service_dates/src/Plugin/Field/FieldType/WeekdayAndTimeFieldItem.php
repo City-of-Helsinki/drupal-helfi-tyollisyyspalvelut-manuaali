@@ -8,6 +8,7 @@ use Drupal\Core\Field\Attribute\FieldType;
 use Drupal\Core\Field\MapFieldItemList;
 use Drupal\Core\Field\Plugin\Field\FieldType\MapItem;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\hel_tpm_service_dates\WeekdayAndTimeValue;
 
 /**
  * Defines the 'hel_tpm_service_dates_weekday_and_time_field' field type.
@@ -27,10 +28,12 @@ final class WeekdayAndTimeFieldItem extends MapItem {
   /**
    * {@inheritdoc}
    */
-  public function getConstraints(): array {
-    $constraints = parent::getConstraints();
-    // @todo Add more constraints here.
-    return $constraints;
+  public function preSave() {
+    parent::preSave();
+    // Also normalize values assigned programmatically, outside the widget.
+    if (!empty($this->values['value'])) {
+      $this->values['value'] = WeekdayAndTimeValue::normalize($this->values['value']);
+    }
   }
 
 }
