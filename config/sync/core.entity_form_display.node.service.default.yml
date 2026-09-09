@@ -354,7 +354,7 @@ third_party_settings:
       label: 'Täydentävä työnhakukeskustelu'
       region: hidden
       parent_name: ''
-      weight: 7
+      weight: 13
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -799,17 +799,17 @@ content:
     region: content
     settings:
       form_mode: default
-      override_labels: '1'
+      override_labels: true
       label_singular: 'kuntakohtainen ohje'
       label_plural: 'kuntakohtaiset ohjeet'
-      allow_new: '1'
+      allow_new: true
+      allow_existing: false
       match_operator: CONTAINS
+      allow_duplicate: false
+      collapsible: false
+      collapsed: false
+      revision: false
       removed_reference: optional
-      revision: 0
-      collapsible: 0
-      collapsed: 0
-      allow_existing: 0
-      allow_duplicate: 0
       prevent_translation_deletion: false
     third_party_settings:
       ief_popup:
@@ -827,17 +827,17 @@ content:
     region: content
     settings:
       form_mode: default
-      override_labels: '1'
+      override_labels: true
       label_singular: 'kuntakohtainen poikkeustilanne'
       label_plural: 'kuntakohtaiset poikkeustilanteet'
-      allow_new: '1'
+      allow_new: true
+      allow_existing: false
       match_operator: CONTAINS
+      allow_duplicate: false
+      collapsible: false
+      collapsed: false
+      revision: false
       removed_reference: optional
-      revision: 0
-      collapsible: 0
-      collapsed: 0
-      allow_existing: 0
-      allow_duplicate: 0
       prevent_translation_deletion: false
     third_party_settings:
       ief_popup:
@@ -1147,6 +1147,7 @@ hidden:
   field_service_suits_job_search: true
   path: true
   promote: true
+  simple_sitemap: true
   sticky: true
   translation: true
   url_redirects: true
