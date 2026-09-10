@@ -136,5 +136,7 @@ $config['user.settings']['password_reset_timeout'] = 1209600;
 $config['system.performance']['css']['preprocess'] = TRUE;
 $config['system.performance']['js']['preprocess'] = TRUE;
 
+$settings['reverse_proxy'] = TRUE;
+
 // Enable redis settings.
 include_once $app_root . '/' . $site_path . '/settings.redis.php';
