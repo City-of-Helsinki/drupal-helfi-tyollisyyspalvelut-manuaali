@@ -12,19 +12,18 @@
   $tooltip-arrow-height:              0;
 
   --#{$prefix}tooltip-zindex: #{$zindex-tooltip};
- --#{$prefix}tooltip-max-width: #{$tooltip-max-width};
- --#{$prefix}tooltip-padding-x: #{$tooltip-padding-x};
- --#{$prefix}tooltip-padding-y: #{$tooltip-padding-y};
- --#{$prefix}tooltip-margin: #{$tooltip-margin};
- @include rfs($tooltip-font-size, --#{$prefix}tooltip-font-size);
- --#{$prefix}tooltip-color: #{$tooltip-color};
- --#{$prefix}tooltip-bg: #{$tooltip-bg};
- --#{$prefix}tooltip-border-radius: #{$tooltip-border-radius};
- --#{$prefix}tooltip-opacity: #{$tooltip-opacity};
- --#{$prefix}tooltip-arrow-width: #{$tooltip-arrow-width};
- --#{$prefix}tooltip-arrow-height: #{$tooltip-arrow-height};
- text-align: left;
-
+  --#{$prefix}tooltip-max-width: #{$tooltip-max-width};
+  --#{$prefix}tooltip-padding-x: #{$tooltip-padding-x};
+  --#{$prefix}tooltip-padding-y: #{$tooltip-padding-y};
+  --#{$prefix}tooltip-margin: #{$tooltip-margin};
+  @include rfs($tooltip-font-size, --#{$prefix}tooltip-font-size);
+  --#{$prefix}tooltip-color: #{$tooltip-color};
+  --#{$prefix}tooltip-bg: #{$tooltip-bg};
+  --#{$prefix}tooltip-border-radius: #{$tooltip-border-radius};
+  --#{$prefix}tooltip-opacity: #{$tooltip-opacity};
+  --#{$prefix}tooltip-arrow-width: #{$tooltip-arrow-width};
+  --#{$prefix}tooltip-arrow-height: #{$tooltip-arrow-height};
+  text-align: left;
 }
 .tooltip-inner {
     text-align: left;

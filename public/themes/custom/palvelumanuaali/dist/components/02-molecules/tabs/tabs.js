@@ -1,4 +1,1 @@
-/******/ (() => { // webpackBootstrap
-Drupal.behaviors.tabs={attach(a){function b(a){a!==g&&0<=a&&a<=e.length&&(e[g].classList.remove("is-active"),e[a].classList.add("is-active"),f[g].classList.remove("is-active"),f[a].classList.add("is-active"),g=a)}function c(a,c){a.addEventListener("click",a=>{a.preventDefault(),b(c)})}const d=a.querySelectorAll(".tabs"),e=a.querySelectorAll(".tabs__link"),f=a.querySelectorAll(".tabs__tab");let g=0;for(let b=0;b<d.length;b+=1)d[b].classList.remove("no-js");for(let b=0;b<e.length;b+=1){const a=e[b];c(a,b)}}};
-/******/ })()
-;
+(()=>{"use strict";Drupal.behaviors.tabs={attach:function(t){var e=t.querySelectorAll(".tabs"),s=t.querySelectorAll(".tabs__link"),a=t.querySelectorAll(".tabs__tab"),i=0;function l(t,e){t.addEventListener("click",function(t){t.preventDefault(),function(t){t!==i&&t>=0&&t<=s.length&&(s[i].classList.remove("is-active"),s[t].classList.add("is-active"),a[i].classList.remove("is-active"),a[t].classList.add("is-active"),i=t)}(e)})}for(var c=0;c<e.length;c+=1)e[c].classList.remove("no-js");for(var r=0;r<s.length;r+=1)l(s[r],r)}}})();
