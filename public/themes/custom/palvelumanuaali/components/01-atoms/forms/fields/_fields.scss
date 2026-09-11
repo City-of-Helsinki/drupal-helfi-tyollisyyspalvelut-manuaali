@@ -36,7 +36,9 @@
         input {
           opacity: 0;
           position: absolute;
-          &:checked +label {
+
+          &:checked +label,
+          &:focus-visible +label {
             background-color: $blue100;
             color: $white;
           }
@@ -256,6 +258,9 @@
       }
 
       .add-time-button {
+        &:focus-visible +label {
+          background-color: clr(alt-header-color);
+        }
         & + label {
           background-color: $blue100;
           @include round-icon-button;
@@ -431,7 +436,14 @@
     }
   }
   input[type="radio"] {
-    display: none;
+    width:0;
+    height:0;
+    &:focus-visible {
+      outline: 0;
+      + label::before {
+        border-width: 2px;
+      }
+    }
     &:disabled +label {
       &::before {
         border: 1px solid $gray-light;
@@ -449,6 +461,11 @@
 
 .field--name-field-service-languages,
 .field--name-field-links {
+  &.form-wrapper {
+    .paragraphs-tabs-wrapper >label {
+      display: none;
+    }
+  }
   .paragraphs-subform {
     display: flex;
     order: 1;
@@ -457,25 +474,30 @@
   .paragraph-type-top {
     order: 2;
     align-items: end;
+    grid-gap: 0;
   }
-  .paragraphs-dropbutton-wrapper {
+  .paragraphs-actions {
     line-height: 42px;
-    input[data-drupal-selector*="top-links-remove-button"] {
+    display: block;
+    input {
       @include close-button;
       padding: 0;
       line-height: 30px;
     }
+  }
 
-    input[data-drupal-selector*="subform-field-service-languages-add-more-add-more-button-service-language"] {
+    input[data-drupal-selector*="field-service-languages-service-language-add-more"] {
       width: 259px;
       height: 48px;
       font-size: $small-caption;
     }
 
-    input[data-drupal-selector*="inline-entity-form-field-links-add-more-add-more-button-link"] {
+    input[data-drupal-selector*="inline-entity-form-field-links-add-more-add-more-button-link"], {
       @include round-icon-button;
-      background-image: url("../../assets/icons//plus.svg");
     }
+
+  .placeholder {
+    display: none;
   }
 }
 

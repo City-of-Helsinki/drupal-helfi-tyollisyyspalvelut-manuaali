@@ -737,7 +737,7 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          use_tokens: 0
+          use_tokens: false
       style:
         type: table
         options:
@@ -870,7 +870,7 @@ display:
         default: '0'
       filename: tyollisyysptv-kayttajat.csv
       automatic_download: true
-      store_in_public_file_directory: false
+      export_filesystem: private
       custom_redirect_path: false
       redirect_to_display: none
       include_query_params: false

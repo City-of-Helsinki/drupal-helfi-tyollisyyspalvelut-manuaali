@@ -2,6 +2,8 @@ uuid: a4a6f8f6-fe6c-4fb6-975d-0eddf7f02ee6
 langcode: fi
 status: true
 dependencies:
+  config:
+    - taxonomy.vocabulary.municipality
   module:
     - taxonomy
 id: municipality_view_page_taxonomy_url
@@ -12,7 +14,6 @@ selection_criteria:
   c0257d74-42c0-4ac7-b2a0-9bb095a9e603:
     id: 'entity_bundle:taxonomy_term'
     negate: false
-    uuid: c0257d74-42c0-4ac7-b2a0-9bb095a9e603
     context_mapping:
       taxonomy_term: taxonomy_term
     bundles:

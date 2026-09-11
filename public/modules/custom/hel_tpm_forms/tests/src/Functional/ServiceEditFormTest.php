@@ -40,6 +40,9 @@ class ServiceEditFormTest extends BrowserTestBase {
     'inline_entity_form',
     'hel_tpm_forms',
     'hel_tpm_forms_config_test',
+    'service_manual_workflow',
+    'group',
+    'ggroup',
   ];
 
   /**
@@ -127,17 +130,17 @@ class ServiceEditFormTest extends BrowserTestBase {
     $page->selectFieldOption('moderation_state[0][state]', 'published');
 
     // Not filling any age fields should not pass validation.
-    $this->submitForm([], 'Save');
+    $this->click('input#edit-submit');
     $this->assertSession()->pageTextContains('age group is mandatory');
 
     // Filling only the "age from" field should not pass validation.
     $page->fillField('edit-field-age-0-from', '18');
-    $this->submitForm([], 'Save');
+    $this->click('input#edit-submit');
     $this->assertSession()->pageTextContains('Both range values (FROM and TO) are required.');
 
     // Filling also the "age to" field should pass validation.
     $page->fillField('edit-field-age-0-to', '30');
-    $this->submitForm([], 'Save');
+    $this->click('input#edit-submit');
     $this->assertSession()->pageTextNotContains('Both range values (FROM and TO) are required.');
     $this->assertSession()->pageTextNotContains('age group is mandatory');
 
@@ -148,7 +151,7 @@ class ServiceEditFormTest extends BrowserTestBase {
     $page->fillField('edit-field-age-0-from', '');
     $page->fillField('edit-field-age-0-to', '');
     $page->checkField('edit-field-age-groups-no-age-restriction');
-    $this->submitForm([], 'Save');
+    $this->click('input#edit-submit');
     $this->assertSession()->pageTextNotContains('age group is mandatory');
   }
 
@@ -161,12 +164,12 @@ class ServiceEditFormTest extends BrowserTestBase {
     $page->selectFieldOption('moderation_state[0][state]', 'published');
 
     // Not filling any municipality fields should not pass validation.
-    $this->submitForm([], 'Save');
+    $this->click('input#edit-submit');
     $this->assertSession()->pageTextContains('municipalities is required');
 
     // Checking the "municipality irrelevant" field should pass validation.
     $page->checkField('edit-field-municipality-irrelevant-value');
-    $this->submitForm([], 'Save');
+    $this->click('input#edit-submit');
     $this->assertSession()->pageTextNotContains('municipalities is required');
   }
 
@@ -209,7 +212,7 @@ class ServiceEditFormTest extends BrowserTestBase {
     $page->selectFieldOption('moderation_state[0][state]', 'ready_to_publish');
 
     // Not filling required language fields should not pass validation.
-    $this->submitForm([], 'Save');
+    $this->click('input#edit-submit');
     $this->assertSession()->pageTextContains('Language: field is required');
 
     // Filling required language fields should pass validation.
@@ -218,7 +221,8 @@ class ServiceEditFormTest extends BrowserTestBase {
     $page->pressButton('Add Language and skills level');
     // Remove the new empty language selection paragraph.
     $page->pressButton('edit-field-service-languages-1-top-links-remove-button');
-    $this->submitForm([], 'Save');
+
+    $this->click('input#edit-submit');
     $this->assertSession()->pageTextNotContains('Language: field is required');
   }
 

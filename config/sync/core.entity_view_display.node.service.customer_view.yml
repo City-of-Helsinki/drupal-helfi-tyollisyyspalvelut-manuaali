@@ -57,7 +57,6 @@ dependencies:
     - field.field.node.service.field_target_group_municipality
     - node.type.service
   module:
-    - entity_print
     - entity_reference_revisions
     - entitygroupfield
     - field_group
@@ -762,10 +761,6 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-  entity_print:
-    pdf_label: 'Katsele PDF'
-    epub_label: 'Katsele EPub'
-    word_docx_label: 'Katsele Word Document'
 id: node.service.customer_view
 targetEntityType: node
 bundle: service
@@ -893,10 +888,10 @@ content:
     settings:
       link_text: ''
       link_title: ''
+      aria_label: 'Avaa [file:name] uudessa välilehdessä'
       new_tab: true
       force_download: false
       custom_classes: ''
-      aria_label: 'Avaa [file:name] uudessa välilehdessä'
     third_party_settings: {  }
     weight: 20
     region: content

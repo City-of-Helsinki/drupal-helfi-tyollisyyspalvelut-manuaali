@@ -265,7 +265,9 @@ function hel_tpm_forms_node_service_form_alter_helper(&$form, FormStateInterface
 
   $form['paging_header'] = [
     '#theme' => 'hel_tpm_navigation',
+    "#weight" => '96',
   ];
+  $form['advanced']['#weight'] = '90';
 
   // Hide consent description on the third page of service entity form.
   $form['field_field_client_consent_descr']['#states'] = [
@@ -500,6 +502,7 @@ function hel_tpm_forms_publish_service_action(&$form, $form_state) {
   }
 
   $form['actions']['publish_service'] = $action;
+  $form['actions']['#weight'] = '98';
 }
 
 /**

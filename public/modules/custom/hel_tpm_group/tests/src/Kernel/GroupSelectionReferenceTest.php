@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\hel_tpm_group\Kernel;
 
 use Drupal\Core\Entity\EntityInterface;
-use Drupal\Tests\field\Traits\EntityReferenceTestTrait;
+use Drupal\Tests\field\Traits\EntityReferenceFieldCreationTrait;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\group\Entity\Group;
 use Drupal\group\Entity\GroupInterface;
@@ -24,7 +24,7 @@ use Drupal\user\RoleInterface;
  */
 class GroupSelectionReferenceTest extends GroupKernelTestBase {
 
-  use EntityReferenceTestTrait;
+  use EntityReferenceFieldCreationTrait;
 
   /**
    * Modules to enable.

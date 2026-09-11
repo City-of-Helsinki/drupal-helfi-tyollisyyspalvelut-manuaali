@@ -134,6 +134,15 @@
   </div>
 </div>
     {{ content|without('flag_cart', 'flag_lists', 'view_mode_switcher', 'field_other_services', 'field_contact_info_external','field_implementation_extra_info','group_description','field_service_producer','entitygroupfield') }}
+    <div class="sharing-options rounded-icon-parent">
+      <button onclick="window.print();" class="btn" title="{{ 'Print'|t }}" aria-label="{{ 'Print'|t }}">
+        {% include "@atoms/images/icons/_icon.twig" with {
+          icon_base_class: 'icon',
+          icon_name: 'print',
+          icon_modifiers: ['small'],
+        } %}
+      </button>
+    </div>
     {% if content.flag_cart  %}
       <div class='small-message-wrapper small-message-wrapper--service'>
         {{ content.flag_cart }}
@@ -158,15 +167,6 @@
         {{ content.field_contact_info_external }}
       </div>
     {% endif %}
-    <div class="sharing-options rounded-icon-parent">
-      <button onclick="window.print();" class="btn" title="{{ 'Print'|t }}" aria-label="{{ 'Print'|t }}">
-        {% include "@atoms/images/icons/_icon.twig" with {
-          icon_base_class: 'icon',
-          icon_name: 'print',
-          icon_modifiers: ['small'],
-        } %}
-      </button>
-    </div>
   {% endblock %}
       {% block page_content %}
         <div class="service-header-wrapper">

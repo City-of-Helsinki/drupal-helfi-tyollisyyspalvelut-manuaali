@@ -1,0 +1,28 @@
+uuid: 0e80176d-202e-4632-950a-f277db1aacd1
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_accessibility_info
+    - filter.format.plain_text_format
+    - node.type.service_location
+  module:
+    - text
+    - tmgmt_content
+third_party_settings:
+  tmgmt_content:
+    excluded: false
+id: node.service_location.field_accessibility_info
+field_name: field_accessibility_info
+entity_type: node
+bundle: service_location
+label: 'Esteettömyyden lisätiedot'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - plain_text_format
+field_type: text_long

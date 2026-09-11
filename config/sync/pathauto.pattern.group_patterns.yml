@@ -2,17 +2,19 @@ uuid: dfe297e6-e9df-4992-80ef-1b89353cf175
 langcode: fi
 status: true
 dependencies:
+  config:
+    - group.type.organisation
+    - group.type.service_provider
   module:
     - group
 id: group_patterns
 label: 'Group patterns'
 type: 'canonical_entities:group'
-pattern: '[group:subgroup_left:value]/[group:title]'
+pattern: '/[group:subgroup_left:value]/[group:title]'
 selection_criteria:
   4d22e45b-3879-4712-8a27-c6ab6436041f:
     id: 'entity_bundle:group'
     negate: false
-    uuid: 4d22e45b-3879-4712-8a27-c6ab6436041f
     context_mapping:
       group: group
     bundles:

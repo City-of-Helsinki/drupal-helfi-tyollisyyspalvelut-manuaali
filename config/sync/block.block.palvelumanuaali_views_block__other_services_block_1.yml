@@ -23,7 +23,7 @@ settings:
   provider: views
   context_mapping: {  }
   views_label: ''
-  items_per_page: none
+  items_per_page: null
 visibility:
   'entity_bundle:node':
     id: 'entity_bundle:node'
@@ -36,4 +36,4 @@ visibility:
   request_path_exclusion:
     id: request_path_exclusion
     negate: true
-    pages: "/*/edit\r\n/*/edit/*\r\n/*/delete\r\n/*/delete/*\r\n/*/revisions\r\n/*/revisions/*\r\n/*/translations\r\n/*/translations/*"
+    pages: "/*/edit\r\n/*/edit/*\r\n/*/delete\r\n/*/delete/*\r\n/*/revisions\r\n/*/revisions/*\r\n/*/translations\r\n/*/translations/*\r\n/node/*/outdated"

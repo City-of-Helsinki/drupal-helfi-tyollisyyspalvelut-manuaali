@@ -847,14 +847,16 @@ body:not(.admin-toolbar-enabled) {
     #search-suggestions {
       .suggestion-item {
         &::before {
-          @include icons;
-          content: "\EA06";
+          // @include icons();
+          // background-image: "\EA06";
+          background-image: url('../../assets/icons/magnifier2.svg');
           height: 16px;
           width: 16px;
           margin-top: auto;
           margin-bottom: auto;
           margin-right: $space;
           color: $blue40;
+          content:"";
         }
         &:hover {
           &::before {

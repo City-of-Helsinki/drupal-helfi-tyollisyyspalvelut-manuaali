@@ -1,0 +1,6 @@
+services:
+  access_check.block.revision:
+    class: Drupal\block_diff_ui\Access\BlockRevisionAccessCheck
+    arguments: ['@entity_type.manager']
+    tags:
+      - { name: access_check, applies_to: _access_block_revision }

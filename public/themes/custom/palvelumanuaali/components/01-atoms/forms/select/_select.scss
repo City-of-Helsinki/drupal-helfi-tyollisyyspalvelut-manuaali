@@ -80,8 +80,11 @@
       font-size: $small-caption;
     }
     &:focus {
+      box-shadow: inset 0px 0px 0px 2px clr(background-section);
+    }
+    &:open {
       ~svg {
-          transform: rotateX(180deg);
+        transform: rotateX(180deg);
       }
     }
   }
@@ -191,7 +194,8 @@
       border-radius: 8px;
     }
     &:hover,
-    &:active {
+    &:active,
+    &:focus {
       box-shadow: inset 0px 0px 0px 2px clr(background-section);
     }
     .select2-selection {
@@ -283,7 +287,8 @@
     right: 0;
     width: 24px;
     color: clr(text) !important;
-
+    background: none;
+    border: none;
   }
 }
 
