@@ -1,0 +1,69 @@
+entity.media.revisions_diff:
+  path: '/media/{media}/revisions/view/{left_revision}/{right_revision}/{filter}'
+  defaults:
+    _controller: '\Drupal\media_diff_ui\Controller\MediaRevisionController::compareRevisions'
+    _title: Diff General Settings
+  requirements:
+     _access_media_diff_revision: 'view'
+     media: \d+
+     left_revision: \d+
+     right_revision: \d+
+  options:
+    _admin_route: TRUE
+    
+entity.media.version_history:
+  path: '/media/{media}/revisions'
+  defaults:
+    _title: 'Revisions'
+    _controller: '\Drupal\media_diff_ui\Controller\MediaRevisionController::revisionOverview'
+  requirements:
+    _access_media_diff_revision: 'view'
+    media: \d+
+  options:
+    _admin_route: TRUE
+    
+entity.media.revision:
+  path: '/media/{media}/revisions/{media_revision}/view'
+  defaults:
+    _controller: '\Drupal\media_diff_ui\Controller\MediaRevisionController::revisionShow'
+    _title_callback: '\Drupal\media_diff_ui\Controller\MediaRevisionController::revisionPageTitle'
+  requirements:
+    _access_media_diff_revision: 'view'
+    media: \d+
+    media_revision: \d+
+    
+media.revision_revert_confirm:
+  path: '/media/{media}/revisions/{media_revision}/revert'
+  defaults:
+    _form: '\Drupal\media_diff_ui\Form\MediaRevisionRevertForm'
+    _title: 'Revert to earlier revision'
+  requirements:
+    _access_media_diff_revision: 'update'
+    media: \d+
+    media_revision: \d+
+  options:
+    _admin_route: TRUE
+
+media.revision_revert_translation_confirm:
+  path: '/media/{media}/revisions/{media_revision}/revert/{langcode}'
+  defaults:
+    _form: '\Drupal\media_diff_ui\Form\MediaRevisionRevertTranslationForm'
+    _title: 'Revert to earlier revision of a translation'
+  requirements:
+    _access_media_diff_revision: 'update'
+    media: \d+
+    media_revision: \d+
+  options:
+    _admin_route: TRUE
+
+media.revision_delete_confirm:
+  path: '/media/{media}/revisions/{media_revision}/delete'
+  defaults:
+    _form: '\Drupal\media_diff_ui\Form\MediaRevisionDeleteForm'
+    _title: 'Delete earlier revision'
+  requirements:
+    _access_media_diff_revision: 'delete'
+    media: \d+
+    media_revision: \d+
+  options:
+    _admin_route: TRUE

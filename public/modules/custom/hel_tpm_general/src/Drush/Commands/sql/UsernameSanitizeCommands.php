@@ -8,7 +8,7 @@ use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drush\Attributes as CLI;
 use Drush\Commands\DrushCommands;
-use Drush\Drupal\Commands\sql\SanitizeCommands;
+use Drush\Commands\sql\sanitize\SanitizeCommands;
 use Drush\Sql\SqlBase;
 use Symfony\Component\Console\Input\InputInterface;
 

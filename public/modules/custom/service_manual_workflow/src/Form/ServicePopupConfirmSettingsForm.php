@@ -3,6 +3,7 @@
 namespace Drupal\service_manual_workflow\Form;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Config\TypedConfigManagerInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\ConfigFormBase;
@@ -40,6 +41,8 @@ class ServicePopupConfirmSettingsForm extends ConfigFormBase {
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   Configuration factory.
+   * @param \Drupal\Core\Config\TypedConfigManagerInterface $typedConfigManager
+   *   Typed config manager.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   Entity type manager.
    * @param \Drupal\Core\Entity\EntityTypeBundleInfoInterface $entity_type_bundle_info
@@ -47,10 +50,11 @@ class ServicePopupConfirmSettingsForm extends ConfigFormBase {
    */
   public function __construct(
     ConfigFactoryInterface $config_factory,
+    protected TypedConfigManagerInterface $typedConfigManager,
     EntityTypeManagerInterface $entity_type_manager,
     EntityTypeBundleInfoInterface $entity_type_bundle_info,
   ) {
-    parent::__construct($config_factory);
+    parent::__construct($config_factory, $typedConfigManager);
     $this->entityTypeManager = $entity_type_manager;
     $this->entityTypeBundleInfo = $entity_type_bundle_info;
   }
@@ -61,6 +65,7 @@ class ServicePopupConfirmSettingsForm extends ConfigFormBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('config.factory'),
+      $container->get('config.typed'),
       $container->get('entity_type.manager'),
       $container->get('entity_type.bundle.info')
     );

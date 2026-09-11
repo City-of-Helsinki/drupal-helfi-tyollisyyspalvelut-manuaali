@@ -1,0 +1,6 @@
+services:
+  access_check.taxonomy.revision:
+    class: Drupal\taxonomy_diff_ui\Access\TaxonomyRevisionAccessCheck
+    arguments: ['@entity_type.manager']
+    tags:
+      - { name: access_check, applies_to: _access_taxonomy_revision }

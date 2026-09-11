@@ -4,7 +4,13 @@ status: true
 dependencies:
   config:
     - field.storage.paragraph.field_service_location
+    - node.type.service_location
     - paragraphs.paragraphs_type.service_time_and_place
+  module:
+    - tmgmt_content
+third_party_settings:
+  tmgmt_content:
+    excluded: false
 id: paragraph.service_time_and_place.field_service_location
 field_name: field_service_location
 entity_type: paragraph
@@ -16,10 +22,9 @@ translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
-  handler: views
+  handler: published_node_selection
   handler_settings:
-    view:
-      view_name: service_location_reference
-      display_name: entity_reference_1
-      arguments: {  }
+    target_bundles:
+      service_location: service_location
+    auto_create_bundle: ''
 field_type: entity_reference

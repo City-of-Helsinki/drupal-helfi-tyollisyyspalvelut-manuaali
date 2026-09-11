@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Drupal\hel_tpm_service_dates\Plugin\Field\FieldFormatter;
 
-use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Field\Attribute\FieldFormatter;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\hel_tpm_service_dates\Plugin\Field\FieldWidget\WeekdayAndTimeFieldWidget;
+use Drupal\hel_tpm_service_dates\WeekdayAndTimeValue;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -59,17 +59,14 @@ final class WeekdayAndTimeFieldDefaultFormatter extends FormatterBase {
         return $element;
       }
 
+      $markup = [];
       foreach ($weekdays['value'] as $weekday => $values) {
         $string_args = ['@day' => WeekdayAndTimeFieldWidget::getTranslatedWeekdays()[$weekday]];
         foreach ($values as $key => $value) {
           $start_key = sprintf('@start%s', $key);
           $end_key = sprintf('@end%s', $key);
-          if ($value['time']['start'] instanceof DrupalDateTime) {
-            $string_args[$start_key] = $value['time']['start']->format('H:i');
-          }
-          if ($value['time']['end'] instanceof DrupalDateTime) {
-            $string_args[$end_key] = $value['time']['end']->format('H:i');
-          }
+          $string_args[$start_key] = substr(WeekdayAndTimeValue::time($value['time']['start']) ?? '', 0, 5);
+          $string_args[$end_key] = substr(WeekdayAndTimeValue::time($value['time']['end']) ?? '', 0, 5);
         }
         $markup[] = [
           '#type' => 'item',
