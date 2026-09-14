@@ -1,0 +1,9 @@
+--- a/config/schema/block_class.schema.yml
++++ b/config/schema/block_class.schema.yml
+@@ -57,3 +57,6 @@
+       type: string
+     attributes_inline:
+       type: string
++    id_replacement_stored:
++      type: string
++      label: 'JSON-encoded map of block ID replacements'
