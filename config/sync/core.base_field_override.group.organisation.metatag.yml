@@ -1,0 +1,20 @@
+uuid: 635d5ed0-57a1-4be5-a009-cfcfca9b6493
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.organisation
+  module:
+    - metatag
+id: group.organisation.metatag
+field_name: metatag
+entity_type: group
+bundle: organisation
+label: 'Metatags (Hidden field for JSON support)'
+description: 'The computed meta tags for the entity.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: metatag_computed
