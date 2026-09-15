@@ -7,6 +7,8 @@
 
 use Drupal\Core\Template\Attribute;
 use Drupal\content_moderation\Entity\ContentModerationState;
+use Drupal\node\NodeInterface;
+use Drupal\node\NodeTypeInterface;
 use Drupal\views_infinite_scroll\Plugin\views\pager\InfiniteScroll;
 
 /**
@@ -34,6 +36,41 @@ function palvelumanuaali_preprocess_node(&$variables): void {
   }
   _palvelumanuaali_preprocess_view_card_liftup($variables);
   _palvelumanuaali_preprocess_taxonomy_card($variables);
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
+ * Prepares variables for page title templates.
+ */
+function palvelumanuaali_preprocess_page_title(array &$variables): void {
+  $route_match = \Drupal::routeMatch();
+
+  switch ($route_match->getRouteName()) {
+    case 'node.add':
+      // Alter page title when adding a new node.
+      $node_type = $route_match->getParameter('node_type');
+      if ($node_type instanceof NodeTypeInterface) {
+        $variables['title'] = t('Add new @type_singular', [
+          '@type_singular' => mb_strtolower($node_type->label()),
+        ]);
+      }
+      break;
+
+    case 'entity.node.edit_form':
+      // Only show service label when editing a service.
+      $node = $route_match->getParameter('node');
+      if ($node instanceof NodeInterface && $node->bundle() === 'service') {
+        $langcode = \Drupal::languageManager()->getCurrentLanguage()->getId();
+        if ($node->hasTranslation($langcode)) {
+          $variables['title'] = $node->getTranslation($langcode)->getTitle();
+        }
+        else {
+          $variables['title'] = $node->getTitle();
+        }
+      }
+      break;
+  }
 }
 
 /**
