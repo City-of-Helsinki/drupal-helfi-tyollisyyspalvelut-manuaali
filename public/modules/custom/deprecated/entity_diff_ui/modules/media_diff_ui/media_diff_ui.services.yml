@@ -1,6 +1,0 @@
-services:
-  access_check.media.revision:
-    class: Drupal\media_diff_ui\Access\DiffMediaRevisionAccessCheck
-    arguments: ['@entity_type.manager']
-    tags:
-      - { name: access_check, applies_to: _access_media_diff_revision }
