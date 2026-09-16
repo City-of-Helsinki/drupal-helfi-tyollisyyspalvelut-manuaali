@@ -121,6 +121,28 @@ function hel_tpm_general_node_view(array &$build, EntityInterface $entity, Entit
 }
 
 /**
+ * Implements hook_preprocess_status_messages().
+ *
+ * Hides the core content_translation message shown on the translation overview
+ * page for every translation that was published before but is currently
+ * unpublished.
+ */
+function hel_tpm_general_preprocess_status_messages(&$variables): void {
+  if (\Drupal::routeMatch()->getRouteName() !== 'entity.node.content_translation_overview') {
+    return;
+  }
+  if (empty($variables['message_list']['warning'])) {
+    return;
+  }
+
+  $target = (string) t('The "Delete translation" action is only available for published translations.');
+  $variables['message_list']['warning'] = array_filter(
+    $variables['message_list']['warning'],
+    fn ($message) => (string) $message !== $target
+  );
+}
+
+/**
  * Implements hook_form_FORM_ID_alter().
  */
 function hel_tpm_general_form_user_register_form_alter(&$form, &$form_state, $form_id) {
