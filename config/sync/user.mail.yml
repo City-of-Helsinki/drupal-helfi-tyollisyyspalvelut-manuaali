@@ -21,7 +21,7 @@ register_pending_approval_admin:
   body: "[user:display-name] has applied for an account.\r\n\r\n[user:edit-url]"
 status_activated:
   subject: 'Käyttäjätilisi on aktivoitu uudelleen Palvelumanuaalissa'
-  body: "Käyttäjätilisi Palvelumanuaalissa on aktivoitu uudelleen. Aseta uusi salasana ja kirjaudu sisään sivustolle alla olevan linkin kautta.\r\n\r\nKäyttäjätunnus: [user:mail]\r\n\r\nPääset kirjautumaan sisään ja vaihtamaan salasanaasi tällä kertakirjautumislinkillä: [user:one-time-login-url]\r\n\r\nHuom! Linkki on kertakäyttöinen ja voimassa 14 päivää."
+  body: "Käyttäjätilisi Palvelumanuaalissa on aktivoitu uudelleen. Aseta uusi salasana ja kirjaudu sisään sivustolle alla olevan linkin kautta.\r\n\r\nKäyttäjätunnus: [user:mail]\r\n\r\nPääset kirjautumaan sisään ja vaihtamaan salasanasi tällä kertakirjautumislinkillä: [user:one-time-login-url]\r\n\r\nHuom! Linkki on kertakäyttöinen ja voimassa 14 päivää."
 status_blocked:
   subject: 'Account details for [user:display-name] at [site:name] (blocked)'
   body: "[user:display-name],\r\n\r\nYour account on [site:name] has been blocked.\r\n\r\n--  [site:name] team"
