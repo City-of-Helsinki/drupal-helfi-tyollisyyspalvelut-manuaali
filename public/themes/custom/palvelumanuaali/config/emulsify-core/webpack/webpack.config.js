@@ -104,7 +104,14 @@ export default (env, argv) => {
       publicPath: "/assets/"
     },
     plugins: [
-      new MiniCssExtractPlugin({filename: "components/style.css"})
+      new MiniCssExtractPlugin({filename: "components/style.css"}),
+      {
+        apply(compiler) {
+          compiler.hooks.emit.tap('RemoveStyleJS', compilation => {
+            delete compilation.assets['components/style.js'];
+          });
+        }
+      }
     ]
   };
 };
