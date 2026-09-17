@@ -1,0 +1,26 @@
+From 95e51c4ceac9a60fc77cdf5fa785cb179421b604 Mon Sep 17 00:00:00 2001
+From: Devendra Mishra <devendra.mishra@redcrackle.com>
+Date: Sat, 6 Jun 2026 18:17:37 +0530
+Subject: [PATCH] Issue #3570688: Add schema for widget third-party settings
+
+---
+ config/schema/ief_popup.schema.yml | 7 +++++++
+ 1 file changed, 7 insertions(+)
+ create mode 100644 config/schema/ief_popup.schema.yml
+
+diff --git a/config/schema/ief_popup.schema.yml b/config/schema/ief_popup.schema.yml
+new file mode 100644
+index 0000000..fdbd45d
+--- /dev/null
++++ b/config/schema/ief_popup.schema.yml
+@@ -0,0 +1,7 @@
++field.widget.third_party.ief_popup:
++  type: mapping
++  label: 'IEF popup settings'
++  mapping:
++    ief_popup_enabled:
++      type: boolean
++      label: 'Enable popup for IEF'
+-- 
+GitLab
+
