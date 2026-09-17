@@ -2,15 +2,14 @@
   "name": "palvelumanuaali",
   "description": "Theme for the palvelumanuaali webpage",
   "scripts": {
-    "a11y": "npm run storybook-build && node_modules/@emulsify/core/scripts/a11y.js -r",
-    "build": "npm run ensure-dist && webpack --config ./config/emulsify-core/webpack/webpack.config.js",
+    "build": "npm run ensure-dist && webpack --config config/theme-compiling/webpack/webpack.config.js",
     "coverage": "npm run test && open-cli .coverage/lcov-report/index.html",
     "ensure-dist": "mkdir -p dist",
     "format": "npm run lint-fix; npm run prettier-fix",
     "lint": "npm run lint-js; npm run lint-styles",
     "lint-fix": "npm run lint-js -- --fix; npm run lint-styles -- --fix",
-    "lint-js": "eslint --config config/emulsify-core/eslintrc.config.json --no-eslintrc --no-error-on-unmatched-pattern ./components",
-    "lint-styles": "stylelint --config config/emulsify-core/stylelintrc.config.json './components/**/*.scss'",
+    "lint-js": "eslint --config config/theme-compiling/eslintrc.config.json --no-eslintrc --no-error-on-unmatched-pattern ./components",
+    "lint-styles": "stylelint --config config/theme-compiling/stylelintrc.config.json './components/**/*.scss'",
     "test": "jest --coverage  --config ./config/jest.config.js",
     "twatch": "jest --no-coverage --watch --verbose",
     "webpack": "webpack --watch --config ./webpack.config.js"
