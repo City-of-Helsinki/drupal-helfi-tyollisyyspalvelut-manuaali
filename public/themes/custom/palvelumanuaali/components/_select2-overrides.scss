@@ -108,7 +108,7 @@
     padding: 0 5px;
     display: inline-block;
     overflow: hidden;
-    width: 100%; }
+    }
     .select2-container--palvelumanuaali .select2-selection--multiple .select2-selection__rendered li {
       list-style: none; }
  .select2-container .select2-selection--multiple .select2-selection__rendered {
@@ -185,7 +185,11 @@
   border: none;
   outline: 0;
   box-shadow: none;
-  -webkit-appearance: textfield; }
+  -webkit-appearance: textfield;
+  height: 24px;
+  margin: 0;
+  line-height: 24px;
+}
 
 .select2-container--palvelumanuaali .select2-results > .select2-results__options {
   max-height: 200px;
@@ -204,19 +208,21 @@
 }
 
 .select2-container--palvelumanuaali .select2-results__option[aria-selected=true]::before {
+  background-image: url('../../assets/icons/check.svg');
   display: inline-block;
-  font-family: "icons";
   font-style: normal;
   font-weight: normal;
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  content: "\EA0D";
+  content: "";
   position: absolute;
   color: #1E40B6;
   font-size: 12px;
   left: -24px;
   top: 37%;
+  width: 16px;
+  height: 12px;
 }
 
 
