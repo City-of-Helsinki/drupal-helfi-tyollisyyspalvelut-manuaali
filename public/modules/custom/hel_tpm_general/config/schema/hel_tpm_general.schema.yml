@@ -87,6 +87,17 @@ field.formatter.settings.hel_tpm_general_municipality_field_formatter:
   type: mapping
   label: Municipality field formatter formatter settings
 
+field.formatter.settings.hel_tpm_general_entity_reference_label_language:
+  type: mapping
+  label: Entity reference label formatter for set language settings
+  mapping:
+    link:
+      type: boolean
+      label: 'Link label to the referenced entity'
+    langcode:
+      type: string
+      label: 'Language'
+
 field.formatter.settings.hel_tpm_general_time_and_place_formatter:
   type: mapping
   label: Time and Place formatter formatter settings
