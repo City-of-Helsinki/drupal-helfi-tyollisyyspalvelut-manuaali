@@ -1,0 +1,5 @@
+services:
+  hel_tpm_better_locale_interface.route_subscriber:
+    class: Drupal\hel_tpm_better_locale_interface\EventSubscriber\BetterUiTranslationRouteSubscriber
+    tags:
+      - { name: event_subscriber }
