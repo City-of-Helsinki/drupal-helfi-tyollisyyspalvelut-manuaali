@@ -1,7 +1,6 @@
 #!/bin/bash
 
-#cd /var/www/html/public
-cd /app/public
+cd /var/www/html/public
 
 function get_deploy_id {
   if [ ! -f "sites/default/files/deploy.id" ]; then
