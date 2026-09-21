@@ -1,5 +1,7 @@
 <?php
 
+use Symfony\Component\HttpFoundation\Request;
+
 $databases['default']['default'] = [
   'database' => getenv('DRUPAL_DB_NAME'),
   'username' => getenv('DRUPAL_DB_USER'),
@@ -136,7 +138,11 @@ $config['user.settings']['password_reset_timeout'] = 1209600;
 $config['system.performance']['css']['preprocess'] = TRUE;
 $config['system.performance']['js']['preprocess'] = TRUE;
 
+// Enable reverse proxy settings.
 $settings['reverse_proxy'] = TRUE;
+$settings['reverse_proxy_addresses'] = $_SERVER['REMOTE_ADDR'];
+$settings['reverse_proxy_trusted_headers'] = Request::HEADER_X_FORWARDED_FOR | Request::HEADER_X_FORWARDED_HOST | Request::HEADER_X_FORWARDED_PORT | Request::HEADER_X_FORWARDED_PROTO;
+$settings['reverse_proxy_host_header'] = 'X_FORWARDED_HOST';
 
 // Enable redis settings.
 include_once $app_root . '/' . $site_path . '/settings.redis.php';
