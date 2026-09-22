@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /app/docker/init.sh
+source /init.sh
 
 cd /var/www/html/public
 
