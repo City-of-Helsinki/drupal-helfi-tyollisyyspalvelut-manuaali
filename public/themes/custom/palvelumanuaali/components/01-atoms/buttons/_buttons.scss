@@ -397,9 +397,13 @@ $button-colors: (
   &--arrow-left {
     @include arrow-left;
   }
+  &--margin-top-one-and-half {
+    margin-top: $space-one-and-half;
+  }
   &--margin-top-double {
     margin-top: $space-double;
   }
+
   &--padding-left-right-double {
     padding-left: $space-double;
     padding-right: $space-double;
@@ -472,7 +476,6 @@ $button-colors: (
   .login-text {
     @include button-color-blue;
     @include button-round-corners;
-    border: 2px solid $blue20;
     padding: 12px 32px 12px 32px;
     font-size: 14px;
     line-height: 24px;
@@ -486,7 +489,7 @@ $button-colors: (
     height: 20px;
     border-radius: 50%;
     padding: 0;
-    margin-left: 22px;
+    margin-left: 16px;
   }
 }
 
@@ -970,6 +973,8 @@ button {
     width: 32px;
     height: 32px;
     margin-left: -40px;
+    background-color: $blue20;
+    border-radius:50%;
   }
   &.shwpd.eye-open {
     @extend .background-default;
