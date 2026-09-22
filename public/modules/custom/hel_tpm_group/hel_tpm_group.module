@@ -560,6 +560,14 @@ function hel_tpm_group_views_data_alter(array &$data) {
       'id' => 'hel_tpm_group_reactivate_group_user_link',
     ],
   ];
+  $data['groups']['label_translated'] = [
+    'title' => t('Translated label'),
+    'help' => t('The group label in the current interface language, falling back to the original language.'),
+    'field' => [
+      'title' => t('Translated label'),
+      'id' => 'hel_tpm_group_group_translated_label',
+    ],
+  ];
 }
 
 /**
