@@ -12,4 +12,4 @@ COPY docker/openshift/crons/ /crons
 
 RUN chmod -R +x /entrypoints/* /crons/*
 
-COPY docker/openshift/init.sh /
+COPY docker/init.sh /
