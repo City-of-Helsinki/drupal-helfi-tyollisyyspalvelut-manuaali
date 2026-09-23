@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Template\Attribute;
+use Drupal\Core\Url;
 use Drupal\content_moderation\Entity\ContentModerationState;
 use Drupal\node\NodeInterface;
 use Drupal\node\NodeTypeInterface;
@@ -80,10 +81,26 @@ function palvelumanuaali_preprocess_page_title(array &$variables): void {
  */
 function palvelumanuaali_preprocess_breadcrumb(&$variables): void {
   $request = \Drupal::request();
-  $route = \Drupal::routeMatch()->getRouteObject();
+  $route_match = \Drupal::routeMatch();
+  $route = $route_match->getRouteObject();
   if ($variables['breadcrumb']) {
     $variables['title'] = \Drupal::service('title_resolver')->getTitle($request, $route);
+
+    // The menu_breadcrumb module appends the current page to breadcrumb. As the
+    // template also adds the title, the title would be shown twice in some
+    // cases. Remove the duplicate item by comparing the last breadcrumb item
+    // URL to the current URL. This requires that menu_breadcrumb is set to show
+    // the current page as a link. By doing so, it also fixes the issue where
+    // some parent breadcrumb items were not clickable links.
+    $last_item = end($variables['breadcrumb']);
+    if ($last_item && !empty($last_item['url'])) {
+      $current_url = Url::fromRouteMatch($route_match)->toString();
+      if ($last_item['url'] === $current_url) {
+        array_pop($variables['breadcrumb']);
+      }
+    }
   }
+
   $variables['#cache']['contexts'][] = 'url';
 }
 
