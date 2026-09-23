@@ -151,6 +151,15 @@ final class LimitedLinkWidgetTest extends EntityKernelTestBase {
   }
 
   /**
+   * Tests the https scheme is added to external links without one.
+   */
+  public function testMassageFormValuesAddsSchemeToExternalLinks(): void {
+    $values = $this->createWidget()->massageFormValues([['uri' => 'www.example.com']], [], new FormState());
+
+    $this->assertSame('https://www.example.com', $values[0]['uri']);
+  }
+
+  /**
    * Creates test content types.
    */
   private function createContentTypes(): void {
