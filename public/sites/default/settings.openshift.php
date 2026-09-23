@@ -140,7 +140,7 @@ $config['system.performance']['js']['preprocess'] = TRUE;
 
 // Enable reverse proxy settings.
 $settings['reverse_proxy'] = TRUE;
-$settings['reverse_proxy_addresses'] = $_SERVER['REMOTE_ADDR'];
+$settings['reverse_proxy_addresses'][] = $_SERVER['REMOTE_ADDR'];
 $settings['reverse_proxy_trusted_headers'] = Request::HEADER_X_FORWARDED_FOR | Request::HEADER_X_FORWARDED_HOST | Request::HEADER_X_FORWARDED_PORT | Request::HEADER_X_FORWARDED_PROTO;
 $settings['reverse_proxy_host_header'] = 'X_FORWARDED_HOST';
 
