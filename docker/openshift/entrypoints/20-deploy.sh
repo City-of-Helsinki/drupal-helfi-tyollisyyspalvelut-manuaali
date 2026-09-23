@@ -10,10 +10,10 @@ if [ ! -n "$OPENSHIFT_BUILD_NAME" ]; then
 fi
 
 
-if deployment_in_progress; then
-  echo "Deployment already in progress"
-  exit 1
-fi
+#if deployment_in_progress; then
+#  echo "Deployment already in progress"
+#  exit 1
+#fi
 
 echo "Starting deploy: $(date)"
 # Populate deploy ID so 20-deploy.sh is skipped.
