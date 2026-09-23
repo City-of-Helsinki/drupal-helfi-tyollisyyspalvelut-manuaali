@@ -4,6 +4,7 @@ status: true
 dependencies:
   module:
     - group
+    - hel_tpm_group
 id: group_title_view
 label: 'Group title view'
 module: views
@@ -20,16 +21,15 @@ display:
     display_options:
       title: 'Group title view'
       fields:
-        label:
-          id: label
-          table: groups_field_data
-          field: label
+        label_translated:
+          id: label_translated
+          table: groups
+          field: label_translated
           relationship: none
           group_type: group
           admin_label: ''
-          entity_type: null
-          entity_field: label
-          plugin_id: field
+          entity_type: group
+          plugin_id: hel_tpm_group_group_translated_label
           label: ''
           exclude: false
           alter:
@@ -60,7 +60,7 @@ display:
             preserve_tags: ''
             html: false
           element_type: h1
-          element_class: ''
+          element_class: views-field-label
           element_label_type: ''
           element_label_class: ''
           element_label_colon: false
@@ -71,20 +71,7 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          click_sort_column: value
-          type: string
-          settings:
-            link_to_entity: false
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
+          link_to_entity: 0
       pager:
         type: some
         options:
@@ -167,7 +154,6 @@ display:
     cache_metadata:
       max-age: -1
       contexts:
-        - 'languages:language_content'
         - 'languages:language_interface'
         - route
         - url
@@ -182,7 +168,6 @@ display:
     cache_metadata:
       max-age: -1
       contexts:
-        - 'languages:language_content'
         - 'languages:language_interface'
         - route
         - url

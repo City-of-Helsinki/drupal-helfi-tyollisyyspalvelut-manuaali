@@ -701,13 +701,11 @@ body:not(.admin-toolbar-enabled) {
 }
 
 .block-user-login-block {
+  .h6 {
+    @extend .margin--bottom-two-and-half;
+  }
   .form-item {
     position: relative;
-    &:focus-within {
-      &::before {
-        color: clr(alt-header-color)!important;
-      }
-    }
     .form-item__description {
       display: none;
     }
@@ -727,37 +725,11 @@ body:not(.admin-toolbar-enabled) {
     }
     input {
       border-radius: 8px;
-      padding-left: 51px;
+      padding-left: 16px;
       background: clr(sidebar-color);
       &:focus {
         box-shadow: inset 0px 0px 0px 2px clr(background-section);
         outline: none;
-      }
-    }
-    &:first-child {
-      &::before {
-        @include icons;
-        content: "\EA02";
-        position: absolute;
-        left: 18px;
-        bottom: 15px;
-        color: clr(gray);
-      }
-
-    }
-    &:nth-child(2) {
-      &::before {
-        @include icons;
-        content: "\EA04";
-        position: absolute;
-        left: 18px;
-        bottom: 15px;
-        color: clr(gray);
-      }
-      &:focus {
-        &::before {
-          color: clr(alt-header-color);
-        }
       }
     }
   }
@@ -765,10 +737,10 @@ body:not(.admin-toolbar-enabled) {
     border-radius: 8px;
     box-shadow: 0px 8px 16px rgba(30, 64, 182, 0.2);
     background-color: clr(text-inverse);
-    padding-bottom: 32px;
+    padding: 28px 35px 28px 23px;
     top:24px !important;
     @include large {
-      width: 336px;
+      width: 370px;
     }
     .form-actions{
       display: flex;
@@ -779,7 +751,8 @@ body:not(.admin-toolbar-enabled) {
       margin-bottom: 0;
       padding: 0;
       width: fit-content;
-      margin-top: -32px;
+      margin-top: 14px;
+      width: 100%;
     }
     a {
       font-size: 12px;
