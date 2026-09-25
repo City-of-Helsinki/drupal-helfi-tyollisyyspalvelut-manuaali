@@ -196,8 +196,9 @@ class ViewsExposedEmbedFieldFormatterTest extends ViewsExposedEmbedKernelTestBas
     ]);
 
     $this->assertSame(['type' => ['bar']], $this->presetArgument($build[0]));
-    // Every enabled filter has a value, so there is nothing left to choose.
-    $this->assertArrayNotHasKey('exposed_filters', $build[0]);
+    // A value chosen by the visitor must not hide the filter.
+    $this->assertArrayHasKey('exposed_filters', $build[0]);
+    $this->assertNotFalse($build[0]['exposed_filters']['type']['#access'] ?? TRUE);
 
     $output = (string) $this->render($build);
     $this->assertStringContainsString('Bar item', $output);

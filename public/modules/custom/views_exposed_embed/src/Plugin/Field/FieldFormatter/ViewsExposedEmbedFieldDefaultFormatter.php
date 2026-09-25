@@ -130,6 +130,7 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
    *   View render array.
    */
   protected function renderView(ViewsExposedEmbedFieldItem $item): array {
+    $presets = $this->getPresetFilters($item);
     $filters = $this->buildFilters($item);
 
     $view = $this->prepareViewRender($filters);
@@ -144,9 +145,10 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
     $view->preview();
     $render_array = $view->buildRenderable();
 
-    // Create custom exposed filter list.
-    if ($this->showExposedForm($filters)) {
-      $render_array['exposed_filters'] = $this->createFilterForm($view, $filters);
+    // Create custom exposed filter list. Only the editor's presets hide
+    // filters, values chosen by the visitor must stay selectable.
+    if ($this->showExposedForm($presets)) {
+      $render_array['exposed_filters'] = $this->createFilterForm($view, $presets);
     }
 
     $render_array['#arguments'][] = Json::encode(['exposed_embed' => $filters]);
@@ -164,13 +166,23 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
    *   An array of filters after merging with the exposed filter selection.
    */
   protected function buildFilters(ViewsExposedEmbedFieldItem $item): array {
+    $filters = array_merge($this->getPresetFilters($item), $this->getExposedFilterSelection());
+    return array_filter($filters);
+  }
+
+  /**
+   * Returns the filter values preset by the editor in the field item.
+   *
+   * @param \Drupal\views_exposed_embed\Plugin\Field\FieldType\ViewsExposedEmbedFieldItem $item
+   *   The views exposed embed field item.
+   *
+   * @return array
+   *   The non-empty preset filter values keyed by filter identifier.
+   */
+  protected function getPresetFilters(ViewsExposedEmbedFieldItem $item): array {
     $filters = $item->getValue();
     $filters = reset($filters);
-    if (!is_array($filters)) {
-      $filters = [];
-    }
-    $filters = array_merge($filters, $this->getExposedFilterSelection());
-    return array_filter($filters);
+    return is_array($filters) ? array_filter($filters) : [];
   }
 
   /**
