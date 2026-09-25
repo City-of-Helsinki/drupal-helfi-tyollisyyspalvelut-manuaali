@@ -110,7 +110,7 @@ final class ViewsExposedEmbedFieldItem extends MapItem {
    */
   public function getViewOptions($filter = TRUE) {
     $views_options = [];
-    $allowed_views = $filter ? array_filter($this->getSetting('allowed_views')) : [];
+    $allowed_views = $filter ? array_filter($this->getSetting('allowed_views') ?? []) : [];
     foreach (Views::getEnabledViews() as $key => $view) {
       $allow = FALSE;
       $displays = $view->get('display');

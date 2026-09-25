@@ -11,8 +11,32 @@ field.storage_settings.views_exposed_embed_field:
 field.field_settings.views_exposed_embed_field:
   type: mapping
   label: Views exposed embed field settings.
+  mapping:
+    view_id:
+      type: string
+      label: 'View ID'
+    display_id:
+      type: string
+      label: 'Display ID'
 
 # Default value.
 field.value.views_exposed_embed_field:
   type: mapping
   label: Views exposed embed field default value
+
+# Formatter settings.
+field.formatter.settings.views_exposed_embed_field_default:
+  type: mapping
+  label: Views exposed embed default formatter settings
+  mapping:
+    exposed_filters:
+      type: sequence
+      label: 'Exposed filters'
+      sequence:
+        type: string
+        label: 'Exposed filter'
+
+# Views display plugin.
+views.display.exposed_embed:
+  type: views_display
+  label: 'Exposed embed display options'
