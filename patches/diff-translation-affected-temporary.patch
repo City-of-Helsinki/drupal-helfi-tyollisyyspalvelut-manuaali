@@ -1,0 +1,46 @@
+diff --git a/src/DiffEntityComparison.php b/src/DiffEntityComparison.php
+index fdc1e5b..3c7149b 100644
+--- a/src/DiffEntityComparison.php
++++ b/src/DiffEntityComparison.php
+@@ -43,11 +43,11 @@ class DiffEntityComparison {
+    * @return array
+    *   Items ready to be compared by the Diff component.
+    */
+-  public function compareRevisions(ContentEntityInterface $left_entity, ContentEntityInterface $right_entity): array {
++  public function compareRevisions(ContentEntityInterface $left_entity, ContentEntityInterface $right_entity, $langcode = NULL): array {
+     $result = [];
+ 
+-    $left_values = $this->entityParser->parseEntity($left_entity);
+-    $right_values = $this->entityParser->parseEntity($right_entity);
++    $left_values = $this->entityParser->parseEntity($left_entity, $langcode);
++    $right_values = $this->entityParser->parseEntity($right_entity, $langcode);
+ 
+     foreach ($left_values as $left_key => $values) {
+       [, $field_key] = \explode(':', $left_key);
+diff --git a/src/DiffEntityParser.php b/src/DiffEntityParser.php
+index ed82438..236ee91 100644
+--- a/src/DiffEntityParser.php
++++ b/src/DiffEntityParser.php
+@@ -41,9 +41,11 @@ class DiffEntityParser {
+    * @return array
+    *   Array of strings resulted by parsing the entity.
+    */
+-  public function parseEntity(ContentEntityInterface $entity): array {
++  public function parseEntity(ContentEntityInterface $entity, $langcode = NULL): array {
+     $result = [];
+-    $langcode = \Drupal::languageManager()->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)->getId();
++    if (empty($langcode)) {
++      $langcode = \Drupal::languageManager()->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)->getId();
++    }
+     // Load entity of current language, otherwise fields are always compared by
+     // their default language.
+     if ($entity->hasTranslation($langcode)) {
+@@ -66,7 +68,7 @@ class DiffEntityParser {
+         // field contains entities.
+         if ($plugin instanceof FieldReferenceInterface) {
+           foreach ($plugin->getEntitiesToDiff($field_items) as $reference_entity) {
+-            foreach ($this->parseEntity($reference_entity) as $key => $build) {
++            foreach ($this->parseEntity($reference_entity, $langcode) as $key => $build) {
+               $result[$key] = $build;
+               $result[$key]['label'] = $field_items->getFieldDefinition()->getLabel() . ' > ' . $result[$key]['label'];
+             }

@@ -6,7 +6,6 @@ dependencies:
     - field.field.node.service.field_accessibility
     - field.field.node.service.field_age
     - field.field.node.service.field_age_groups
-    - field.field.node.service.field_attendance
     - field.field.node.service.field_attendance_text
     - field.field.node.service.field_career_markings
     - field.field.node.service.field_client_consent
@@ -36,14 +35,12 @@ dependencies:
     - field.field.node.service.field_related_archive
     - field.field.node.service.field_responsible_municipality
     - field.field.node.service.field_responsible_updatee
+    - field.field.node.service.field_search_boost
     - field.field.node.service.field_service_benefits
     - field.field.node.service.field_service_coordination
     - field.field.node.service.field_service_exceptions
-    - field.field.node.service.field_service_execution
     - field.field.node.service.field_service_execution_text
     - field.field.node.service.field_service_languages
-    - field.field.node.service.field_service_other_info
-    - field.field.node.service.field_service_price
     - field.field.node.service.field_service_producer
     - field.field.node.service.field_service_provider_updatee
     - field.field.node.service.field_service_radioactivity
@@ -55,12 +52,10 @@ dependencies:
     - field.field.node.service.field_service_time_and_location
     - field.field.node.service.field_statements
     - field.field.node.service.field_statements_unemployment
-    - field.field.node.service.field_target_group
     - field.field.node.service.field_target_group_description
     - field.field.node.service.field_target_group_municipality
     - node.type.service
   module:
-    - entity_print
     - entity_reference_revisions
     - entitygroupfield
     - field_group
@@ -76,8 +71,8 @@ third_party_settings:
       children:
         - field_attendance_text
         - field_service_requirements
-        - field_service_benefits
         - field_client_consent
+        - field_service_benefits
         - field_field_client_consent_descr
       label: Osallistuminen
       parent_name: group_customer_view
@@ -99,7 +94,6 @@ third_party_settings:
     group_execution:
       children:
         - field_service_execution_text
-        - field_service_other_info
       label: Toteutustapa
       parent_name: group_customer_view
       region: content
@@ -215,11 +209,10 @@ third_party_settings:
         - field_internal_files
         - field_internal_links
         - field_contact_info
-        - group_complementary_job_search
       label: Työohje
       parent_name: group_service_navigation
       region: content
-      weight: 5
+      weight: 4
       format_type: tab
       format_settings:
         classes: work-guidance
@@ -275,7 +268,7 @@ third_party_settings:
         - field_statements
         - field_statements_unemployment
         - field_other_preferences
-      label: 'Lausunnot ja työttömyysetuus'
+      label: 'Lausunnot ja työttömyysturva'
       parent_name: group_work_instructions
       region: content
       weight: 25
@@ -355,12 +348,12 @@ third_party_settings:
         speed: fast
     group_complementary_job_search:
       children:
-        - field_service_suits_job_search
         - field_service_suits_info
+        - field_service_suits_job_search
       label: ' Täydentävä työnhakukeskustelu'
-      parent_name: group_work_instructions
+      parent_name: ''
       region: hidden
-      weight: 28
+      weight: 32
       format_type: html_element
       format_settings:
         classes: 'service-group service-group--complementary-job-search'
@@ -434,10 +427,6 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-  entity_print:
-    pdf_label: 'Katsele PDF'
-    epub_label: 'Katsele EPub'
-    word_docx_label: 'Katsele Word Document'
 id: node.service.default
 targetEntityType: node
 bundle: service
@@ -488,7 +477,7 @@ content:
       format_custom_false: "Participation  doesn't require customer consent."
       format_custom_true: 'Participation requires customer consent.'
     third_party_settings: {  }
-    weight: 19
+    weight: 18
     region: content
   field_contact_info:
     type: entity_reference_entity_view
@@ -608,7 +597,7 @@ content:
     weight: 11
     region: content
   field_other_preferences:
-    type: list_default
+    type: list_key
     label: hidden
     settings: {  }
     third_party_settings: {  }
@@ -676,15 +665,6 @@ content:
     third_party_settings: {  }
     weight: 38
     region: content
-  field_service_other_info:
-    type: entity_reference_revisions_entity_view
-    label: hidden
-    settings:
-      view_mode: default
-      link: ''
-    third_party_settings: {  }
-    weight: 14
-    region: content
   field_service_producer:
     type: entity_reference_label
     label: above
@@ -714,20 +694,6 @@ content:
       link: true
     third_party_settings: {  }
     weight: 37
-    region: content
-  field_service_suits_info:
-    type: text_default
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    weight: 15
-    region: content
-  field_service_suits_job_search:
-    type: list_key
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    weight: 14
     region: content
   field_service_time_and_location:
     type: hel_tpm_general_time_and_place_formatter
@@ -802,8 +768,8 @@ hidden:
   entity_print_view_epub: true
   entity_print_view_pdf: true
   entity_print_view_word_docx: true
+  feedback_button: true
   field_age: true
-  field_attendance: true
   field_career_marking: true
   field_contact_info_internal: true
   field_days_since_last_state_chan: true
@@ -818,13 +784,13 @@ hidden:
   field_public_links: true
   field_responsible_municipality: true
   field_responsible_updatee: true
-  field_service_execution: true
+  field_search_boost: true
   field_service_links_external: true
   field_service_links_internal: true
-  field_service_price: true
   field_service_provider_updatee: true
   field_service_radioactivity: true
-  field_target_group: true
+  field_service_suits_info: true
+  field_service_suits_job_search: true
   langcode: true
   search_api_excerpt: true
   toc_js: true

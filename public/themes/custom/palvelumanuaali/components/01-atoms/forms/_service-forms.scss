@@ -1,6 +1,7 @@
 .node-service-edit-form,
 .node-service-form {
   display: grid;
+  width: 100%;
   > * {
      min-width: 0px;
   }
@@ -21,8 +22,6 @@
   .description {
     margin-bottom: $space;
   }
-
-
 
   table {
     background-color: unset;
@@ -59,61 +58,23 @@
     .form-wrapper {
       margin-bottom: 3px;
     }
-      .select--white-rounded {
-        .select2 {
-          .select2-selection--single {
-             >.select2-selection__rendered {
-              margin-top: 5px;
-              .select2-selection__placeholder {
-                  margin-top: 0;
-              }
+    .select--white-rounded {
+      .select2 {
+        .select2-selection--single {
+           >.select2-selection__rendered {
+            margin-top: 5px;
+            .select2-selection__placeholder {
+                margin-top: 0;
             }
           }
         }
       }
-  }
-
-  //add basic theming for sidebar horizontal-tabs
-  .horizontal-tabs {
-    .horizontal-tabs-list {
-        border-bottom: 2px solid clr(form-border);
-        padding-left: 16px;
-        background-color: unset;
-        margin-bottom: $space-triple;
-    }
-
-    .horizontal-tab-button {
-      border-radius: 8px 8px 0px 0px;
-      background-color: clr(background);
-      color: clr(background-section);
-      border: unset;
-      a {
-        padding: 12px 48px;
-      }
-      &.selected {
-        border-bottom: unset;
-        background-color: clr(background-section);
-        a {
-          color: clr(text-inverse);
-          &:hover {
-            background-color: clr(alt-header-color);
-            border-radius: 8px 8px 0px 0px;
-          }
-        }
-      }
     }
   }
-
   .h2 {
     font-weight: 600;
     font-size: 24px;
     line-height: 32px;
-  }
-
-  .field--name-field-target-group  {
-    > fieldset > legend {
-      display: none !important;
-    }
   }
 
   .field--name-field-client-consent {
@@ -128,7 +89,7 @@
   }
 
   .field--name-field-statements-unemployment  {
-      margin-bottom: $space-two-and-half;
+    margin-bottom: $space-two-and-half;
   }
 
   .field--name-field-obligatoryness-freetext {
@@ -175,7 +136,6 @@
     .container-inline {
       order: 2;
     }
-
   }
 
   .form-item__dropdown {
@@ -193,10 +153,36 @@
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
+      position: relative;
       @include large {
         margin-left: auto;
         margin-right: auto;
         width: 65%;
+      }
+      .stepper-wrapper {
+        width: 100%;
+        position: absolute;
+        top: 14px;
+        height: 3px;
+        @include large {
+          width: 80%;
+        }
+      }
+      .step-lines {
+        width: 75%;
+        height: 2px;
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+      }
+      .step-line {
+        width: 33.33%;
+        height: 2px;
+        background-color: $blue20;
+        &:has(~.active),
+        &.active {
+          background-color: $blue100;
+        }
       }
     }
   }
@@ -221,7 +207,6 @@
     }
   }
 
-
   > .tab-1,
   > .tab-2,
   > .tab-3 {
@@ -245,7 +230,6 @@
       margin-top: -68px;
     }
   }
-
 
   > .tab-1,
   > .tab-2,
@@ -358,13 +342,15 @@
           margin-bottom: 0;
         }
       }
-
+      .field--name-field-level {
+        .form-item-select {
+          width: 100%;
+        }
+      }
 
       .paragraphs-dropbutton-wrapper {
         input[data-drupal-selector*="top-links-remove-button"] {
           @include close-button;
-          width: 16px;
-          height: 16px;
           padding: 0;
           line-height: 30px;
         }
@@ -377,17 +363,15 @@
 
         input[data-drupal-selector*="inline-entity-form-field-links-add-more-add-more-button-link"] {
           @include round-icon-button;
-          background-image: url("../../assets/images/icons/plus.svg");
+          background-image: url("../../assets/icons/plus.svg");
         }
       }
     }
-
   }
 
   #edit-group-basic-information {
     background-color: unset;
     max-width: unset;
-
 
     @include large {
       padding: 0;
@@ -422,21 +406,10 @@
     }
   }
 
-
   .field--name-field-service-obligatoryness,
   .field--name-field-exceptions {
     margin-bottom: $space-triple;
     border-bottom: 2px solid clr(background-border);
-  }
-
-  .field--name-field-service-other-info,
-  .field--name-field-service-execution {
-    margin-top: $space-triple;
-    padding-top: $space-triple;
-    border-top: 2px solid clr(background-border);
-    .field--name-field-link .table__cell {
-      padding-left: 0;
-    }
   }
 
   .field--name-field-price {
@@ -448,9 +421,6 @@
       bottom: 13px;
     }
   }
-
-
-
 
   .field--name-field-municipality-guide .button,
   .field--name-field-archiving-guide .button,
@@ -503,11 +473,10 @@
   }
 
   .field--name-field-service-location input {
-    background-image: url("../../assets/images/icons/magnifier.svg");
+    background-image: url("../../assets/icons/magnifier.svg");
     background-position: top 12px right 16px;
     max-width: 560px;
   }
-
 
   .field--name-entitygroupfield,
   .field--name-field-contact-info,
@@ -571,11 +540,9 @@
 
 .field--name-field-service-languages {
   .select2-selection--single {
-    .select2-selection__rendered {
-      background: transparent;
-      .select2-selection__clear {
-        display: none;
-      }
+    background: transparent;
+    .select2-selection__clear {
+      display: none !important;
     }
   }
 }

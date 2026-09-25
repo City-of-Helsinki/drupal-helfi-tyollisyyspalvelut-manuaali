@@ -57,7 +57,6 @@
       const $secondary = this.$actions.slice(0);
       $secondary.addClass('secondary-action');
       // Add toggle link.
-      console.log(options);
       this.$list.before(Drupal.theme('dropbuttonToggle', options));
       // Bind mouse events.
       this.$dropbutton.addClass('dropbutton-multiple').on({

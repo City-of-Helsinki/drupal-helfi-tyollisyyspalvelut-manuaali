@@ -54,12 +54,10 @@
 %}
 
 <div{{ attributes.addClass(classes, 'field__items') }}>
-  <span class="prefix">{{" ("}}</span>
     {% for item in items %}
       <span {{ item.attributes.addClass('language-level') }}>{{ item.content }}</span>
       {% if not loop.last %}
         <span class="delimiter">,</span>
       {% endif %}
     {% endfor %}
-  <span class="suffix">)</span>
 </div>

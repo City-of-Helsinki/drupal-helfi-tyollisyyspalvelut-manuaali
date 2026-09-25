@@ -39,9 +39,32 @@ field.widget.settings.hel_tpm_general_inline_entity_form_improved:
       type: array
       label: "Content type limit"
 
+field.widget.settings.ief_no_confirm_widget:
+  type: field.widget.settings.inline_entity_form_complex
+  label: 'IEF without remove confirmation widget settings'
+  mapping:
+    prevent_translation_deletion:
+      type: boolean
+      label: "Prevent reference deletion from translations"
+
+field.widget.settings.municipality_specific_ief_widget:
+  type: field.widget.settings.ief_no_confirm_widget
+  label: 'Municipality specific inline entity form widget settings'
+
 field.formatter.settings.hel_tpm_general_municipality_field_formatter:
   type: mapping
   label: Municipality field formatter formatter settings
+
+field.formatter.settings.hel_tpm_general_entity_reference_label_language:
+  type: mapping
+  label: Entity reference label formatter for set language settings
+  mapping:
+    link:
+      type: boolean
+      label: 'Link label to the referenced entity'
+    langcode:
+      type: string
+      label: 'Language'
 
 field.formatter.settings.hel_tpm_general_time_and_place_formatter:
   type: mapping

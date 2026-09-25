@@ -1,4 +1,9 @@
-
+.active-menu-link {
+  text-decoration-line: underline;
+  text-decoration-color: $blue100;
+  text-decoration-thickness: 4px;
+  text-underline-offset: 5px;
+}
 
 .main-nav {
   &--open {
@@ -97,7 +102,7 @@
   &:focus, &:hover {
     color: clr(alt-header-color);
     background-color: clr(background-dropdown);
-    background-image: url('../../assets/images/icons/arrow-right-2.svg');
+    background-image: url('../../assets/icons//arrow-right-2.svg');
     background-repeat: no-repeat;
     background-position: calc(100% - 24px) center;
   }

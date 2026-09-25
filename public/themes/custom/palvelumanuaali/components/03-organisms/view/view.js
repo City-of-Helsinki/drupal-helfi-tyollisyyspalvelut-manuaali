@@ -7,13 +7,13 @@
           $('.pager--load-more a').on('click', function() {
 
           firstLength = $('.view-solr-service-search .taxonomy-card').length;
-          if (firstLength) {
+            if (firstLength) {
             setTimeout(function() {
-              let choice = $('.view-solr-service-search .taxonomy-card')[firstLength];
+              let choice = $('.view-solr-service-search .taxonomy-card')[firstLength-1];
               let choice2 = $(choice).children('.card')[0];
               let choice3 = $(choice2).children('.card__link')[0];
               $(choice3).focus();
-              $(choice).scrollIntoView({
+              choice.scrollIntoView({
                 behavior: "smooth",
                 block: "start"
               });

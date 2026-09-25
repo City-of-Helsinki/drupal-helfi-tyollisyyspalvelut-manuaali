@@ -39,41 +39,54 @@
 #}
 {%
   set classes = [
-    'field',
-    'field--name-' ~ field_name|clean_class,
-    'field--type-' ~ field_type|clean_class,
-    'field--label-' ~ label_display,
-    label_display == 'inline' ? 'clearfix',
-  ]
+  'field',
+  'field--name-' ~ field_name|clean_class,
+  'field--type-' ~ field_type|clean_class,
+  'field--label-' ~ label_display,
+  label_display == 'inline' ? 'clearfix',
+]
 %}
 {%
   set title_classes = [
-    'field__label',
-    label_display == 'visually_hidden' ? 'visually-hidden',
-  ]
+  'field__label',
+  label_display == 'visually_hidden' ? 'visually-hidden',
+]
 %}
 
 <div{{ attributes.addClass(classes) }}>
-  {% if not label_hidden %}
-    <div{{ title_attributes.addClass(title_classes) }}>
-      {% include "@atoms/text/headings/_heading.twig" with {
-        "heading_level": 5,
-        "heading": 'Links'|t,
-        "heading_modifiers": ['semibold','margin-bottom'],
-      } %}
-    </div>
-  {% endif %}
+  <div{{ title_attributes.addClass(title_classes) }}>
+    {% include "@atoms/text/headings/_heading.twig" with {
+      "heading_level": 5,
+      "heading": 'Links:'|t,
+      "heading_modifiers": ['semibold','margin-bottom'],
+      "heading_base_class": 'h5',
+    } %}
+  </div>
   {% if multiple %}
   <div class="field__items">
     {% endif %}
     {% for item in items %}
       <div{{ item.attributes.addClass('field__item', 'col-lg-6', 'col-12') }}>
-        {% include "@atoms/images/icons/_icon.twig" with {
-          icon_base_class: 'icon',
-          icon_name: 'arrow-right-short',
-          icon_modifiers: ['smaller', 'margin-right-twelve'],
-        } %}
-        {{ item.content }}
+
+        <a class="hover--underline"
+           href="{{ item.content['#url'] }}"
+           title="{{ item.content['#title'] }}"
+          {% if item.content['#url'].external == true %} target="_blank" rel="noopener" aria-label="{{ 'Opens in a new tab'|t }}" {% endif %}>
+          {% if item.content['#url'].external == true %}
+            {% include "@atoms/images/icons/_icon.twig" with {
+              icon_base_class: 'icon',
+              icon_name: 'arrow-right-1-ext',
+              icon_modifiers: ['smaller', 'margin-right-twelve', 'link-list-bg'],
+            } %}
+          {% else %}
+            {% include "@atoms/images/icons/_icon.twig" with {
+              icon_base_class: 'icon',
+              icon_name: 'arrow-right-1',
+              icon_modifiers: ['smaller', 'margin-right-twelve', 'link-list-bg'],
+            } %}
+          {% endif %}
+          {{ item.content['#title'] }}
+        </a>
       </div>
     {% endfor %}
     {% if multiple %}

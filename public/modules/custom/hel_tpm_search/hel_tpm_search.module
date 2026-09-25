@@ -84,10 +84,39 @@ function hel_tpm_search_views_pre_build(ViewExecutable $view) {
 }
 
 /**
- * Implements hook_preprocess_views_exposed_form().
+ * Preprocesses the Views exposed form for specific themes.
+ *
+ * This function attaches libraries and modifies the form structure based on
+ * the theme hook of the exposed form. It specifically handles the
+ * 'views_exposed_form__solr_service_search' theme hook by adding a reset
+ * button and attaching the necessary libraries.
+ *
+ * @param array $variables
+ *   An associative array of variables for the exposed form.
+ *
+ * @return void
+ *   This function does not return any value.
  */
 function hel_tpm_search_preprocess_views_exposed_form(&$variables) {
   $variables['#attached']['library'][] = 'hel_tpm_search/filter_ajax_watcher';
+  if ($variables['theme_hook_original'] === 'views_exposed_form__solr_service_search') {
+    $form = &$variables['form'];
+    $form['actions']['reset'] = [
+      '#type' => 'html_tag',
+      '#tag' => 'button',
+      '#value' => t('Empty selection'),
+      '#attributes' => [
+        'name' => 'reset_additional_filters',
+        'type' => 'reset',
+        'class' => [
+          'form-submit',
+          'button',
+          'js-form-submit',
+        ],
+      ],
+    ];
+    $form['#attached']['library'][] = 'hel_tpm_search/reset_additional_filters';
+  }
 }
 
 /**

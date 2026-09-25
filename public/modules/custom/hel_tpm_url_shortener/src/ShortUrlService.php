@@ -66,6 +66,8 @@ class ShortUrlService {
       return FALSE;
     }
 
+    $url = $this->filterQueryParams($url);
+
     $hash = md5($url->toString());
     $shortlink = $this->shortLinkExists($hash);
     if (!$shortlink) {
@@ -129,6 +131,30 @@ class ShortUrlService {
     }
     $randString = str_shuffle($randString);
     return $randString;
+  }
+
+  /**
+   * Filters query parameters from the given URL.
+   *
+   * Removes defined unnecessary query parameters from the URL.
+   *
+   * @param \Drupal\Core\Url $url
+   *   The current URL object to process.
+   *
+   * @return \Drupal\Core\Url
+   *   A URL object with the filtered query parameters.
+   */
+  protected function filterQueryParams(Url $url) {
+    $bl = [
+      'current_path',
+      'form_build_id',
+      'form_token',
+      'form_id',
+    ];
+    $params = $url->getOptions();
+    $params['query'] = array_diff_key($params['query'], array_flip($bl));
+    $url->setOptions($params);
+    return $url;
   }
 
 }

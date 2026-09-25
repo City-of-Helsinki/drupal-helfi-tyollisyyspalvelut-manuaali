@@ -6,6 +6,7 @@ dependencies:
     - entity_browser.browser.entity_browser
     - filter.format.filtered_html
     - filter.format.full_html
+    - filter.format.limited_filtered_html
     - media.type.image
     - node.type.basic_page
     - node.type.landing_page
@@ -38,6 +39,7 @@ dependencies:
     - hel_tpm_contact_info
     - hel_tpm_general
     - hel_tpm_group
+    - hel_tpm_update_reminder
     - locale
     - media
     - node
@@ -102,9 +104,9 @@ permissions:
   - 'create field_related_archive'
   - 'create field_responsible_municipality'
   - 'create field_responsible_updatee'
+  - 'create field_search_boost'
   - 'create field_service_coordination'
   - 'create field_service_exceptions'
-  - 'create field_service_other_info'
   - 'create field_service_req_speacialist'
   - 'create field_service_suits_info'
   - 'create field_service_suits_job_search'
@@ -203,9 +205,9 @@ permissions:
   - 'edit field_related_archive'
   - 'edit field_responsible_municipality'
   - 'edit field_responsible_updatee'
+  - 'edit field_search_boost'
   - 'edit field_service_coordination'
   - 'edit field_service_exceptions'
-  - 'edit field_service_other_info'
   - 'edit field_service_req_speacialist'
   - 'edit field_service_suits_info'
   - 'edit field_service_suits_job_search'
@@ -227,9 +229,9 @@ permissions:
   - 'edit own field_related_archive'
   - 'edit own field_responsible_municipality'
   - 'edit own field_responsible_updatee'
+  - 'edit own field_search_boost'
   - 'edit own field_service_coordination'
   - 'edit own field_service_exceptions'
-  - 'edit own field_service_other_info'
   - 'edit own field_service_req_speacialist'
   - 'edit own field_service_suits_info'
   - 'edit own field_service_suits_job_search'
@@ -247,6 +249,7 @@ permissions:
   - 'edit terms in service_set'
   - 'flag lists'
   - 'grant node permissions'
+  - 'reset update reminder'
   - 'revert all revisions'
   - 'submit translation jobs'
   - 'translate editable entities'
@@ -281,6 +284,7 @@ permissions:
   - 'use service_moderation transition publish'
   - 'use text format filtered_html'
   - 'use text format full_html'
+  - 'use text format limited_filtered_html'
   - 'view all revisions'
   - 'view any unpublished content'
   - 'view field_age'
@@ -297,9 +301,9 @@ permissions:
   - 'view field_related_archive'
   - 'view field_responsible_municipality'
   - 'view field_responsible_updatee'
+  - 'view field_search_boost'
   - 'view field_service_coordination'
   - 'view field_service_exceptions'
-  - 'view field_service_other_info'
   - 'view field_service_req_speacialist'
   - 'view field_service_suits_info'
   - 'view field_service_suits_job_search'
@@ -320,9 +324,9 @@ permissions:
   - 'view own field_related_archive'
   - 'view own field_responsible_municipality'
   - 'view own field_responsible_updatee'
+  - 'view own field_search_boost'
   - 'view own field_service_coordination'
   - 'view own field_service_exceptions'
-  - 'view own field_service_other_info'
   - 'view own field_service_req_speacialist'
   - 'view own field_service_suits_info'
   - 'view own field_service_suits_job_search'

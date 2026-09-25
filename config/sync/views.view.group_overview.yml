@@ -439,8 +439,11 @@ display:
           bef:
             general:
               autosubmit: false
+              auto_submit_sort_only: false
+              autosubmit_breakpoint: ''
               autosubmit_exclude_textfield: false
               autosubmit_textfield_delay: 500
+              autosubmit_textfield_minimum_length: 3
               autosubmit_hide: false
               input_required: false
               allow_secondary: false
@@ -452,8 +455,18 @@ display:
             filter:
               status:
                 plugin_id: default
+                advanced:
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
+                  open_by_default: false
+                  field_classes: ''
               group_without_admin_filter:
                 plugin_id: default
+                advanced:
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
+                  open_by_default: false
+                  field_classes: ''
       access:
         type: perm
         options:
@@ -493,12 +506,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              root: '0'
-              admin: '0'
-              editor: '0'
-              specialist: '0'
-              specialist_editor: '0'
             placeholder: ''
           is_grouped: false
           group_info:
@@ -512,7 +519,7 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          use_tokens: 0
+          use_tokens: false
         type:
           id: type
           table: groups_field_data
@@ -541,12 +548,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              root: '0'
-              admin: '0'
-              editor: '0'
-              specialist: '0'
-              specialist_editor: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -588,12 +589,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              root: '0'
-              admin: '0'
-              editor: '0'
-              specialist: '0'
-              specialist_editor: '0'
           is_grouped: false
           group_info:
             label: ''
@@ -636,12 +631,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              root: '0'
-              admin: '0'
-              editor: '0'
-              specialist: '0'
-              specialist_editor: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -685,12 +674,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              root: '0'
-              admin: '0'
-              editor: '0'
-              specialist: '0'
-              specialist_editor: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -734,12 +717,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              root: '0'
-              admin: '0'
-              editor: '0'
-              specialist: '0'
-              specialist_editor: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -783,12 +760,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              root: '0'
-              admin: '0'
-              editor: '0'
-              specialist: '0'
-              specialist_editor: '0'
             reduce: false
           is_grouped: false
           group_info:

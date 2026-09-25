@@ -36,7 +36,9 @@
         input {
           opacity: 0;
           position: absolute;
-          &:checked +label {
+
+          &:checked +label,
+          &:focus-visible +label {
             background-color: $blue100;
             color: $white;
           }
@@ -226,9 +228,6 @@
       input {
         opacity: 0;
         position: absolute;
-        & + label {
-
-        }
         &:checked + label {
           background-color: $blue100;
           color: $white;
@@ -248,7 +247,6 @@
             cursor: default;
           }
         }
-
       }
       &:nth-child(3) {
         label {
@@ -260,10 +258,13 @@
       }
 
       .add-time-button {
+        &:focus-visible +label {
+          background-color: clr(alt-header-color);
+        }
         & + label {
           background-color: $blue100;
           @include round-icon-button;
-          background-image: url("../../assets/images/icons/plus.svg");
+          background-image: url("../../assets/icons//plus.svg");
           text-indent: -9999px;
           &:hover {
             color: transparent;
@@ -271,7 +272,7 @@
         }
         &:checked +label {
           @include round-icon-button;
-          background-image: url("../../assets/images/icons/minus.svg");
+          background-image: url("../../assets/icons//minus.svg");
         }
         &:disabled +label {
           border-color: $gray-light;
@@ -320,8 +321,6 @@
     > .form-submit {
       order: 2;
       @include close-button;
-      width: 16px;
-      height: 16px;
       margin-bottom: 38px;
     }
     .dates {
@@ -400,13 +399,12 @@
   .field-service-time-and-location-values > tbody > tr > .table__cell > .ajax-new-content > div > div > div > .paragraphs-dropbutton-wrapper {
     > input {
       @include close-button;
-
       display: block;
       position: absolute;
-      right: 24px;
-      top: 24px;
-      width: 20px;
-      height: 20px;
+      right: 12px;
+      top: 12px;
+      width: 48px;
+      height: 48px;
       padding: 4px;
     }
   }
@@ -438,7 +436,14 @@
     }
   }
   input[type="radio"] {
-    display: none;
+    width:0;
+    height:0;
+    &:focus-visible {
+      outline: 0;
+      + label::before {
+        border-width: 2px;
+      }
+    }
     &:disabled +label {
       &::before {
         border: 1px solid $gray-light;
@@ -446,7 +451,7 @@
     }
   }
   input[type="radio"]:checked + label::before {
-    background-image: url('../../assets/images/icons/check-black.svg');
+    background-image: url('../../assets/icons//check-black.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: 14px 11px;
@@ -456,6 +461,11 @@
 
 .field--name-field-service-languages,
 .field--name-field-links {
+  &.form-wrapper {
+    .paragraphs-tabs-wrapper >label {
+      display: none;
+    }
+  }
   .paragraphs-subform {
     display: flex;
     order: 1;
@@ -464,33 +474,35 @@
   .paragraph-type-top {
     order: 2;
     align-items: end;
+    grid-gap: 0;
   }
-  .paragraphs-dropbutton-wrapper {
-    line-height: 32px;
-    input[data-drupal-selector*="top-links-remove-button"] {
+  .paragraphs-actions {
+    line-height: 42px;
+    display: block;
+    input {
       @include close-button;
-      width: 16px;
-      height: 16px;
       padding: 0;
       line-height: 30px;
     }
+  }
 
-    input[data-drupal-selector*="subform-field-service-languages-add-more-add-more-button-service-language"] {
+    input[data-drupal-selector*="field-service-languages-service-language-add-more"] {
       width: 259px;
       height: 48px;
       font-size: $small-caption;
     }
 
-    input[data-drupal-selector*="inline-entity-form-field-links-add-more-add-more-button-link"] {
+    input[data-drupal-selector*="inline-entity-form-field-links-add-more-add-more-button-link"], {
       @include round-icon-button;
-      background-image: url("../../assets/images/icons/plus.svg");
     }
+
+  .placeholder {
+    display: none;
   }
 }
 
 
 .fieldset-internal-files-and-attachments,
-.field--name-field-service-other-info,
 .field--name-field-links-and-attachments {
   .field--name-field-public-links,
   .field--name-field-internal-links,
@@ -515,7 +527,6 @@
     }
 
   }
-
 }
 
 .details-file-field {
@@ -541,8 +552,6 @@
         font-size: $small-font;
       }
     }
-
-
 }
 
 .field--name-field-client-consent {
@@ -554,7 +563,7 @@
 .field--name-field-public-files,
 .field--name-field-internal-files,
 .field--name-field-file {
-  > .field__items{
+  > .field__items {
     .file,
     a {
       display: block;
@@ -581,6 +590,13 @@
   }
 }
 
+.page-node-type-basic-page {
+  .field--name-field-file {
+    .field__item {
+      background-color: clr(text-inverse);
+    }
+  }
+}
 
 .basic-page .field--name-field-internal-files,
 .basic-page .field--name-field-file {

@@ -44,7 +44,7 @@
     padding-right: 0;
   }
   .dropbutton-widget {
-position: relative;
+    position: relative;
     input {
       background-color: transparent;
       color: clr(background-section);
@@ -201,36 +201,6 @@ position: relative;
   .table__cell .paragraph-type-top {
     display: flex;
   }
-
-  //add basic theming for sidebar horizontal-tabs
-  .horizontal-tabs {
-    .horizontal-tabs-list {
-      border-bottom: 2px solid clr(form-border);
-      padding-left: 16px;
-      background-color: unset;
-      margin-bottom: $space-triple;
-    }
-
-    .horizontal-tab-button {
-      border-radius: 8px 8px 0px 0px;
-      background-color: clr(background);
-      color: clr(background-section);
-      border: unset;
-      a {
-        padding: 12px 48px;
-      }
-      &.selected {
-        border-bottom: unset;
-        background-color: clr(background-section);
-        a {
-          color: clr(text-inverse);
-          padding: 12px 48px;
-        }
-      }
-
-    }
-  }
-
   .h2 {
     font-weight: 600;
     font-size: 24px;
@@ -311,23 +281,16 @@ details>.form-wrapper:last-child {
   }
 }
 
-#edit-field-service-price-wrapper {
-  padding-top: 8px;
-  legend {
-    display: none;
+.field--name-field-dates {
+  h4 {
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 24px;
+    color: clr(text);
+    text-transform: capitalize;
+    letter-spacing: 0px;
   }
 }
-
- .field--name-field-dates {
-   h4 {
-     font-weight: 600;
-     font-size: 12px;
-     line-height: 24px;
-     color: clr(text);
-     text-transform: capitalize;
-     letter-spacing: 0px;
-   }
- }
 
 .field--name-field-public-links,
 .field--name-field-internal-links,
@@ -543,6 +506,15 @@ details>.form-wrapper:last-child {
       .select2 {
         background-color: clr(text-inverse);
       }
+    }
+  }
+}
+
+.edit-create-form {
+  // inherited styles from headings style width: cause discrepancies when create form has shorter text
+  .h1--page-title {
+    @include xxl {
+      width: 1440px;
     }
   }
 }

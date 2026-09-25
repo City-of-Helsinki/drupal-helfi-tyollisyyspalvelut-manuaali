@@ -785,8 +785,11 @@ display:
           bef:
             general:
               autosubmit: false
+              auto_submit_sort_only: false
+              autosubmit_breakpoint: ''
               autosubmit_exclude_textfield: false
               autosubmit_textfield_delay: 500
+              autosubmit_textfield_minimum_length: 3
               autosubmit_hide: false
               input_required: false
               allow_secondary: false
@@ -797,12 +800,32 @@ display:
             filter:
               title:
                 plugin_id: default
+                advanced:
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
+                  open_by_default: false
+                  field_classes: ''
               status:
                 plugin_id: default
+                advanced:
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
+                  open_by_default: false
+                  field_classes: ''
               langcode:
                 plugin_id: default
+                advanced:
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
+                  open_by_default: false
+                  field_classes: ''
               gid:
                 plugin_id: default
+                advanced:
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
+                  open_by_default: false
+                  field_classes: ''
       access:
         type: perm
         options:
@@ -848,8 +871,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
             placeholder: ''
           is_grouped: false
           group_info:
@@ -892,8 +913,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -983,8 +1002,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -1167,7 +1184,7 @@ display:
                   min: ''
                   max: ''
                   value: ''
-          use_tokens: 0
+          use_tokens: false
       filter_groups:
         operator: AND
         groups:

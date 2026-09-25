@@ -1,5 +1,7 @@
 <?php
 
+use Symfony\Component\HttpFoundation\Request;
+
 $databases['default']['default'] = [
   'database' => getenv('DRUPAL_DB_NAME'),
   'username' => getenv('DRUPAL_DB_USER'),
@@ -72,20 +74,75 @@ if (getenv('REDIS_HOST')) {
   $settings['cache_prefix'] = getenv('REDIS_PREFIX') . '_';
 }
 
-if (getenv('DRUPAL_VARNISH_HOST') && getenv('DRUPAL_VARNISH_PORT')) {
-  $config['varnish_purger.settings.2ce1889afd']['hostname'] = getenv('DRUPAL_VARNISH_HOST');
-  $config['varnish_purger.settings.2ce1889afd']['port'] = getenv('DRUPAL_VARNISH_PORT');
+if ($varnish_host = getenv('DRUPAL_VARNISH_HOST')) {
+  // Cache everything for 1 year by default.
+  $config['system.performance']['cache']['page']['max_age'] = 31536000;
+
+  // settings.php doesn't know about existing configuration yet so we can't
+  // just append new headers to an already existing headers array here.
+  // If you have configured any extra headers in your purge settings
+  // you must add them in your all.settings.php as well.
+  // @todo Replace this with config override service?
+  $varnishConfiguration = [
+    'default' => [
+      [
+        'field' => 'Cache-Tags',
+        'value' => '[invalidation:expression]',
+      ],
+    ],
+    'assets' => [
+      [
+        'field' => 'X-VC-Purge-Method',
+        'value' => 'regex',
+      ],
+      [
+        'field' => 'Host',
+        'value' => $varnish_host,
+      ],
+    ],
+    'varnish_purge_all' => [
+      [
+        'field' => 'X-VC-Purge-Method',
+        'value' => 'regex',
+      ],
+    ],
+  ];
+
+  foreach ($varnishConfiguration as $name => $headers) {
+    $config['varnish_purger.settings.' . $name]['hostname'] = $varnish_host;
+
+    if ($varnish_port = getenv('DRUPAL_VARNISH_PORT')) {
+      $config['varnish_purger.settings.' . $name]['port'] = $varnish_port;
+    }
+
+    foreach ($headers as $header) {
+      $config['varnish_purger.settings.' . $name]['headers'][] = $header;
+    }
+
+    if ($varnish_purge_key = getenv('VARNISH_PURGE_KEY')) {
+      $config['varnish_purger.settings.' . $name]['headers'][] = [
+        'field' => 'X-VC-Purge-Key',
+        'value' => $varnish_purge_key,
+      ];
+    }
+  }
 }
 
 if (getenv('SMTP_HOST')) {
   $config['symfony_mailer.mailer_transport.smtp']['configuration']['host'] = getenv('SMTP_HOST');
   $config['symfony_mailer.mailer_transport.smtp']['configuration']['port'] = 25;
 }
-$config['user.settings']['password_reset_timeout'] = 604800;
+$config['user.settings']['password_reset_timeout'] = 1209600;
 
 // Enable css and js preprocessing.
 $config['system.performance']['css']['preprocess'] = TRUE;
 $config['system.performance']['js']['preprocess'] = TRUE;
+
+// Enable reverse proxy settings.
+$settings['reverse_proxy'] = TRUE;
+$settings['reverse_proxy_addresses'][] = $_SERVER['REMOTE_ADDR'];
+$settings['reverse_proxy_trusted_headers'] = Request::HEADER_X_FORWARDED_FOR | Request::HEADER_X_FORWARDED_HOST | Request::HEADER_X_FORWARDED_PORT | Request::HEADER_X_FORWARDED_PROTO;
+$settings['reverse_proxy_host_header'] = 'X_FORWARDED_HOST';
 
 // Enable redis settings.
 include_once $app_root . '/' . $site_path . '/settings.redis.php';

@@ -56,7 +56,8 @@ $button-colors: (
     color: map-get($pallate, text);
   }
 
-  &:active {
+  &:active,
+  &:focus {
     color: map-get($pallate, text-hover);
     background-color: map-get($pallate, bg-hover);
   }
@@ -231,7 +232,7 @@ $button-colors: (
 //button symbol variations
 @mixin arrow-right-background {
   &::after {
-    background-image: url("../../assets/images/icons/arrow-right-2.svg");
+    background-image: url("../../assets/icons/arrow-right-2.svg");
     content: "";
     display: block;
     background-repeat: no-repeat;
@@ -244,7 +245,7 @@ $button-colors: (
 //variation white
 @mixin arrow-right-white {
   &::after {
-    background-image: url("../../assets/images/icons/arrow-right.svg");
+    background-image: url("../../assets/icons/arrow-right.svg");
     content: "";
     display: block;
     background-repeat: no-repeat;
@@ -258,7 +259,7 @@ $button-colors: (
 //button symbol variations
 @mixin  questionmark-left-background {
   &::before {
-    background-image: url("../../assets/images/icons/c-question.svg");
+    background-image: url("../../assets/icons/c-question.svg");
     content: "";
     display: block;
     background-repeat: no-repeat;
@@ -358,7 +359,7 @@ $button-colors: (
     line-height: 24px;
     &::after {
       content: "";
-      background-image: url("../../assets/images/icons/arrow-sm-down.svg");
+      background-image: url("../../assets/icons/arrow-sm-down.svg");
       background-repeat: no-repeat;
       background-position-y: center;
       width: 24px;
@@ -396,9 +397,13 @@ $button-colors: (
   &--arrow-left {
     @include arrow-left;
   }
+  &--margin-top-one-and-half {
+    margin-top: $space-one-and-half;
+  }
   &--margin-top-double {
     margin-top: $space-double;
   }
+
   &--padding-left-right-double {
     padding-left: $space-double;
     padding-right: $space-double;
@@ -471,7 +476,6 @@ $button-colors: (
   .login-text {
     @include button-color-blue;
     @include button-round-corners;
-    border: 2px solid $blue20;
     padding: 12px 32px 12px 32px;
     font-size: 14px;
     line-height: 24px;
@@ -485,7 +489,7 @@ $button-colors: (
     height: 20px;
     border-radius: 50%;
     padding: 0;
-    margin-left: 22px;
+    margin-left: 16px;
   }
 }
 
@@ -508,11 +512,28 @@ $button-colors: (
     font-weight: 600;
     height: 24px;
   }
+  &:hover {
+    .links {
+      background-image: url("../../assets/icons/world.svg");
+    }
+    .language-code {
+      color: clr(background-section);
+    }
+    .icon--dropdown {
+      background-image: url("../../assets/icons/arrow-sm-down.svg");
+    }
+  }
+  &:focus-visible {
+    outline: 2px solid clr(primary);
+    border-radius: 0;
+  }
   .links {
     margin-right: $space;
     height: 24px;
     width: 24px;
     vertical-align: middle;
+    background-image: url("../../assets/icons/world-black.svg");
+    background-repeat: none;
     @include xl {
       vertical-align: top;
     }
@@ -525,9 +546,18 @@ $button-colors: (
     }
   }
   .icon--dropdown  {
+    background-image: url("../../assets/icons/arrow-sm-down-black.svg");
+    background-repeat: none;
     @media only screen and (max-width: $xl) {
         display: none;
     }
+  }
+}
+
+.account-menu-button {
+  &:focus-visible {
+    outline: 2px solid clr(primary);
+    border-radius: 0;
   }
 }
 
@@ -585,8 +615,8 @@ $button-colors: (
     border: 2px solid $blue40;
     border-radius: 50%;
     &:focus-visible {
-      outline: 2px solid clr(accent-high);
-      border-radius: 0;
+      outline: 1px solid clr(primary);
+      border-radius: 50%;
     }
     &:hover {
       border: 2px solid $blue100;
@@ -818,7 +848,7 @@ there is possibility to add classes button--blue-bordered,
       content: "";
       width: 24px;
       height: 24px;
-      background-image: url("../../assets/images/icons/plus.svg");
+      background-image: url("../../assets/icons/plus.svg");
       background-repeat: no-repeat;
       background-position-y: center;
       display: block;
@@ -841,7 +871,7 @@ there is possibility to add classes button--blue-bordered,
     content: "";
     width: 24px;
     height: 24px;
-    background-image: url("../../assets/images/icons/plus.svg");
+    background-image: url("../../assets/icons/plus.svg");
     background-repeat: no-repeat;
     background-position-y: center;
     display: block;
@@ -877,10 +907,8 @@ there is possibility to add classes button--blue-bordered,
 .field--name-field-service-time-and-location input[data-drupal-selector*="edit-field-service-time-and-location-add-more-add-more-button-service-time-and-place"] {
     margin-top: $space-one-half;
     @include button-color-blue;
-
     width: 100%;
     box-sizing: border-box;
-    background-image: url("../../assets/images/icons/plus.svg");
     background-repeat: no-repeat;
     background-position-y: center;
     line-height: 24px;
@@ -919,19 +947,19 @@ input[data-drupal-selector="edit-field-contact-info-external-actions-ief-add"]{
   background-color: clr(text-inverse);
   border-radius: 50%;
   padding: 13px;
-  background-image: url("../../assets/images/icons/user-blue.svg");
+  background-image: url("../../assets/icons/user-blue.svg");
   border-radius: 50%;
   background-size: 18px;
   &:hover {
-    background-color: clr(background-border);
+    background-color: clr(footer-color);
   }
   @include xl {
     background-color: clr(background-section);
-    background-image: url("../../assets/images/icons/user-white.svg");
+    background-image: url("../../assets/icons/user-white.svg");
 
     margin-left: 22px;
     &:hover {
-      border: 2px solid $blue100;
+      border: 2px solid clr(footer-color);
     }
   }
 }
@@ -939,12 +967,14 @@ input[data-drupal-selector="edit-field-contact-info-external-actions-ief-add"]{
 button {
   &.shwpd {
     @extend .background-default;
-    background-image: url("../../assets/images/icons/eye.svg");
+    background-image: url("../../assets/icons/eye.svg");
     background-size: 16px;
     background-position: center;
     width: 32px;
     height: 32px;
     margin-left: -40px;
+    background-color: $blue20;
+    border-radius:50%;
   }
   &.shwpd.eye-open {
     @extend .background-default;
@@ -960,7 +990,7 @@ button {
   background-color: transparent;
   border: 0;
   border-radius: 0;
-  background-image: url("../../assets/images/icons/close.svg");
+  background-image: url("../../assets/icons/close.svg");
   padding: 0;
   background-size: contain;
   &:hover {
@@ -983,5 +1013,21 @@ button {
     gap: $space;
     padding-left: 24px;
     padding-right: 24px;
+  }
+}
+
+.button-feedback {
+  @include button-no-color-with-round-border;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+  .icon {
+    background-image: url("../../assets/icons/arrow-right-2-ext.svg");
+    background-repeat: no-repeat;
+    height: 24px;
+    width: 24px;
+    margin-left: 0.5rem;
   }
 }

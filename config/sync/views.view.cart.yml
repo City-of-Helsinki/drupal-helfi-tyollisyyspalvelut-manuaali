@@ -9,11 +9,11 @@ dependencies:
     - field.storage.node.field_service_producer
     - flag.flag.cart
     - node.type.service
+    - user.role.authenticated
     - workflows.workflow.service_moderation
   module:
     - better_exposed_filters
     - content_moderation
-    - entity_print_views
     - flag
     - node
     - user
@@ -278,9 +278,10 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       access:
-        type: perm
+        type: role
         options:
-          perm: 'access content'
+          role:
+            authenticated: authenticated
       cache:
         type: tag
         options: {  }
@@ -434,19 +435,7 @@ display:
           flag: cart
           user_scope: current
       use_ajax: true
-      header:
-        area_entity_print_views:
-          id: area_entity_print_views
-          table: views
-          field: area_entity_print_views
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: entity_print_views_link
-          empty: false
-          export_type: pdf
-          link_text: 'Print PDF'
-          display_id: default
+      header: {  }
       footer: {  }
       display_extenders:
         ajax_history: {  }
@@ -458,7 +447,7 @@ display:
         - url.query_args
         - user
         - 'user.node_grants:view'
-        - user.permissions
+        - user.roles
       tags:
         - 'config:field.storage.node.field_description'
         - 'config:workflow_list'
@@ -897,7 +886,7 @@ display:
         - 'languages:language_interface'
         - user
         - 'user.node_grants:view'
-        - user.permissions
+        - user.roles
       tags:
         - 'config:field.storage.node.field_service_producer'
         - 'config:workflow_list'
@@ -946,8 +935,11 @@ display:
           bef:
             general:
               autosubmit: true
+              auto_submit_sort_only: false
+              autosubmit_breakpoint: ''
               autosubmit_exclude_textfield: false
               autosubmit_textfield_delay: 500
+              autosubmit_textfield_minimum_length: 3
               autosubmit_hide: true
               input_required: false
               allow_secondary: false
@@ -1077,7 +1069,7 @@ display:
         - 'url.query_args:sort_order'
         - user
         - 'user.node_grants:view'
-        - user.permissions
+        - user.roles
       tags:
         - 'config:field.storage.node.field_description'
         - 'config:workflow_list'

@@ -42,6 +42,7 @@ class ServiceOutdatedAccessTest extends GroupKernelTestBase {
     'gcontent_moderation_test',
     'message_notify',
     'gnode',
+    'hel_tpm_mail_tools',
     'service_manual_workflow',
     'group_test_config',
     'ggroup',

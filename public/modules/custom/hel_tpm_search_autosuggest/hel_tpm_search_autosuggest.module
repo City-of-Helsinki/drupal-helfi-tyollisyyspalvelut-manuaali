@@ -44,6 +44,7 @@ function hel_tpm_search_autosuggest_form_alter(&$form, FormStateInterface $form_
   $form['search_api_fulltext'] = [
     '#type' => 'textfield',
     '#id' => 'hel-tpm-search-autocomplete',
+    '#weight' => 0,
     '#attributes' => [
       'placeholder' => t('Search from all services'),
       'autocomplete' => 'off',
@@ -53,6 +54,7 @@ function hel_tpm_search_autosuggest_form_alter(&$form, FormStateInterface $form_
   ];
   $form['search_wrapper']['list_items'] = [
     '#theme' => 'hel_tpm_search_autocomplete',
+    '#weight' => 1,
   ];
   $form['search_wrapper']['search_api_fulltext'] = $form['search_api_fulltext'];
 

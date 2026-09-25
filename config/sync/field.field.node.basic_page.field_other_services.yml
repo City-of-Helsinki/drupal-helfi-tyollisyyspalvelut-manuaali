@@ -5,6 +5,12 @@ dependencies:
   config:
     - field.storage.node.field_other_services
     - node.type.basic_page
+    - node.type.service
+  module:
+    - tmgmt_content
+third_party_settings:
+  tmgmt_content:
+    excluded: false
 id: node.basic_page.field_other_services
 field_name: field_other_services
 entity_type: node
@@ -16,10 +22,9 @@ translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
-  handler: views
+  handler: published_node_selection
   handler_settings:
-    view:
-      view_name: published_services_selection
-      display_name: entity_reference_1
-      arguments: {  }
+    target_bundles:
+      service: service
+    auto_create_bundle: ''
 field_type: entity_reference

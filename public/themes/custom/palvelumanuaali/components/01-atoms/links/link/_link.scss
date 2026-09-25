@@ -14,17 +14,10 @@
 .language-link {
   line-height: 24px;
   font-size: 12px;
-
-  padding-top: 0;
-  padding-right: 0;
-  padding-bottom: 0;
-  padding-left: 32px;
-
+  padding: 10px $space-one-and-half 10px $space-three-and-half;
   position: relative;
-  margin-bottom: $space;
   width: unset;
   text-align: left;
-
   &:hover {
     background: clr(background);
   }
@@ -45,7 +38,7 @@
       height: 24px;
       position: absolute;
       left: $space-one-and-half;
-      background-image: url('../../assets/images/icons/d-check.svg');
+      background-image: url('../../assets/icons/d-check.svg');
     }
   }
 }
@@ -60,17 +53,15 @@ a {
 
 .ext-link {
   position:relative;
-  margin-right: $space;
   &::after {
-    background-image: url("../../assets/images/icons/ext.svg");
+    background-image: url("../../assets/icons/ext.svg");
     content: "";
-    display: block;
+    display: inline-block;
     background-repeat: no-repeat;
     width: 14px;
     height: 14px;
     min-width: 14px;
-    position: absolute;
-    right: -15px;
+    position: relative;
     top:1px;
     background-size: cover;
   }

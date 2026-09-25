@@ -39,6 +39,7 @@ class GroupCloseGroupTest extends GroupKernelTestBase {
     'system',
     'user',
     'workflows',
+    'hel_tpm_mail_tools',
     'hel_tpm_group',
     'field',
     'content_moderation',

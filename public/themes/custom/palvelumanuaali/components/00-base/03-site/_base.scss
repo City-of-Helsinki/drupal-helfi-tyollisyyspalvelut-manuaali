@@ -211,8 +211,13 @@ article ul,
   margin-bottom: $space;
 }
 
+
 .margin-bottom-double-space {
   margin-bottom: $space-double;
+}
+
+.margin-bottom-two-and-half {
+  margin-bottom: $space-two-and-half;
 }
 
 .margin-bottom-triple-space {
@@ -258,16 +263,6 @@ article ul,
   }
   &--min-content {
     width: min-content;
-  }
-}
-
-//min-height
-.m-hght {
-  &--service-grp {
-    min-height: 200px;
-    @include xl {
-      min-height: 300px;
-    }
   }
 }
 
@@ -414,6 +409,11 @@ article ul,
         margin-top: $space-three-fourths;
       }
     }
+    &--bottom-two-and-half {
+      @include large {
+        margin-bottom: $space-two-and-half;
+      }
+    }
   }
   //desktop-extra-large
   &--dxl {
@@ -439,6 +439,10 @@ article ul,
     font-size: 16px;
     line-height: 24px;
   }
+  &--tiny {
+    font-size: 12px;
+    line-height: 24px;
+  }
   &--small {
     font-size: 14px;
     line-height: 24px;
@@ -451,15 +455,30 @@ article ul,
     font-size: 15px;
     font-style: normal;
   }
+  &--view-label {
+    font-size: 14px;
+    line-height: 16px;
+    @include xl {
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
 }
 
 .font-weight {
   &--bold {
     font-weight: 600;
+    &--dsk {
+      font-weight: 400;
+      @include xl {
+        font-weight: 600;
+      }
+    }
   }
   &--normal {
     font-weight: 400;
   }
+
 }
 
 .font-color {
@@ -471,6 +490,9 @@ article ul,
       color:clr(alt-header-color);
     }
   }
+  &--dark-blue {
+    color: clr(footer-color);
+  }
   &--light-blue {
     color:clr(background-section);
   }
@@ -479,6 +501,15 @@ article ul,
 .font-spacing {
   &--spaced {
     letter-spacing: 0.16px;
+  }
+  &--one {
+    letter-spacing: 1%;
+  }
+  &--one-desktop {
+    letter-spacing: 0%;
+    @include xl {
+      letter-spacing: 1%;
+    }
   }
 }
 
@@ -610,6 +641,9 @@ article ul,
   &--center {
       text-align: center;
   }
+  &--left {
+    text-align: left;
+  }
 }
 
 //z-index
@@ -682,5 +716,23 @@ article ul,
         float:right;
       }
     }
+  }
+}
+.whitespace {
+  width: 8px;
+  height: 8px;
+}
+
+.hover {
+  &--underline {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.focus-outline {
+  &:focus-within {
+    outline: 2px solid clr(primary);
   }
 }

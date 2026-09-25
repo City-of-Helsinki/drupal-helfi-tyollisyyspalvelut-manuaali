@@ -9,11 +9,9 @@
 
 @mixin body-copy {
   font-family: $font-body;
-  font-size: 0.85rem;
-  line-height: 1.7;
-  @include xl-zoom {
-    font-size: 1rem;
-  }
+  font-size: 1rem;
+  line-height: 28px;
+  font-weight: 400;
 }
 
 @mixin basic-text {
@@ -126,9 +124,11 @@ $outer-container-break: $small;
   background-color: transparent;
   border: 0;
   border-radius: 0;
-  background-image: url("../../assets/images/icons/close.svg");
+  background-image: url("../../assets/icons/close.svg");
   padding: 0;
   background-size: 18px;
+  width: 24px;
+  height: 24px;
   &:hover {
     background-color: transparent;
     color: transparent;
@@ -158,7 +158,8 @@ $outer-container-break: $small;
       width: 468px;
     }
 
-    &.selected {
+    &.selected:has(.form-radio[value='yes']),
+    &:has(input:checked) {
       border: 2px solid clr(background-section);
     }
     input {

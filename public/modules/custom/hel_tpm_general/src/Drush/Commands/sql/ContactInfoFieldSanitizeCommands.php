@@ -11,7 +11,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Field\FieldTypePluginManagerInterface;
 use Drush\Attributes as CLI;
 use Drush\Commands\DrushCommands;
-use Drush\Drupal\Commands\sql\SanitizeCommands;
+use Drush\Commands\sql\sanitize\SanitizeCommands;
 use Symfony\Component\Console\Input\InputInterface;
 
 /**

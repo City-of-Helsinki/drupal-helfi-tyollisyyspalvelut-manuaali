@@ -83,7 +83,8 @@ $color-heading: clr(accent);
   $font-weight: 600,
   $margin: 0 0 0.5em,
   $font-size-mobile: 1.25rem,
-  $line-height-mobile:  1.4
+  $line-height-mobile:  1.4,
+  $letter-spacing-mobile: 0%
 ) {
   color: $color;
   font-family: $font-family;
@@ -93,6 +94,7 @@ $color-heading: clr(accent);
   line-height: $line-height-mobile;
   margin: $margin;
   width: auto;
+  letter-spacing: $letter-spacing-mobile;
   @include xl-zoom {
     font-size: $font-size;
     line-height: $line-height;
@@ -116,17 +118,19 @@ $color-heading: clr(accent);
   $color-link-hover: inherit,
   $font-weight: 600,
   $margin: 0 0 0.5em,
-  $font-size-mobile: 1rem,
-  $line-height-mobile:  1.5
+  $font-size-mobile: 1.125rem,
+  $line-height-mobile:  1.5,
+  $letter-spacing-mobile: 0%
 ) {
   color: $color;
   font-family: $font-family;
   font-weight: $font-weight;
   font-style: normal;
-  font-size: $font-size-mobile;
+  font-size: 18px;
   line-height: $line-height-mobile;
   margin: $margin;
   width: auto;
+  letter-spacing: $letter-spacing-mobile;
   @include xl-zoom {
     font-size: $font-size;
     line-height: $line-height;
@@ -150,8 +154,9 @@ $color-heading: clr(accent);
   $color-link-hover: inherit,
   $font-weight: 600,
   $margin: 0 0 0.5em,
-  $font-size-mobile: 0.81rem,
-  $line-height-mobile:  1rem
+  $font-size-mobile: 1rem,
+  $line-height-mobile:  22px,
+  $letter-spacing-mobile: 0%
 ) {
   color: $color;
   font-family: $font-family;
@@ -161,13 +166,13 @@ $color-heading: clr(accent);
   line-height: $line-height-mobile;
   margin: $margin;
   width: auto;
+  letter-spacing: $letter-spacing-mobile;
   @include xl-zoom {
     font-size: $font-size;
     line-height: $line-height;
   }
   &__link {
     color: $color-link;
-
     &:hover {
       color: $color-link-hover;
     }
@@ -183,8 +188,9 @@ $color-heading: clr(accent);
   $color-link-hover: inherit,
   $font-weight: 600,
   $margin: 0 0 0.5em,
-  $font-size-mobile: 0.75rem,
-  $line-height-mobile:  1rem
+  $font-size-mobile: 13px,
+  $line-height-mobile:  1rem,
+  $letter-spacing-mobile: 0%
 ) {
   color: $color;
   font-family: $font-family;
@@ -194,6 +200,7 @@ $color-heading: clr(accent);
   line-height: $line-height-mobile;
   margin: $margin;
   width: auto;
+  letter-spacing: $letter-spacing-mobile;
   @include xl-zoom {
     font-size: $font-size;
     line-height: $line-height;
@@ -265,9 +272,6 @@ $color-heading: clr(accent);
 
 .h5 {
   @include heading-xs;
-  @include large {
-    font-size: 1.125rem;
-  }
   &--margin-bottom {
     margin-bottom: $space;
   }
@@ -293,6 +297,9 @@ $color-heading: clr(accent);
 
 .h6 {
   @include heading-xxs;
+  &.font-color--blue {
+    @extend .font-color--blue;
+  }
 }
 
 /* TODO: BEM selectors should be applied to wysiwyg-created content */
@@ -378,8 +385,10 @@ $color-heading: clr(accent);
   margin-bottom: $space-one-half;
 }
 
-.long-text {
+.long-text,
+.form-text-wrapper {
   h5 {
     @extend .h5;
+    margin-top: 24px;
   }
 }

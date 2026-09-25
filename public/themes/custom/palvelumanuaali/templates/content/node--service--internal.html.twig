@@ -82,7 +82,7 @@
     hero_text__image__modifiers: ['one-third'],
     hero_text__content__modifiers: ['half'],
     content_base_class: 'service',
-    content_additional_classes: ['bs--bb'],
+    content_additional_classes: ['bs--bb', 'position--relative'],
     service_modifiers:service_modifiers,
     service_blockname:service_blockname,
     service__updated: greeting_text ~ " " ~ node.changed.value|date("d.m.Y"),
@@ -104,6 +104,26 @@
       </div>
     {% endif %}
     {{ content.field_responsible_updatee }}
+    <div class="sharing-options rounded-icon-parent">
+      <button onclick="window.print();" class="btn" title="{{ 'Print'|t }}" aria-label="{{ 'Print'|t }}">
+        {% include "@atoms/images/icons/_icon.twig" with {
+          icon_base_class: 'icon',
+          icon_name: 'print',
+          icon_modifiers: ['small'],
+        } %}
+      </button>
+    </div>
+    {% if content.flag_cart  %}
+      <div class='small-message-wrapper small-message-wrapper--service'>
+        {{ content.flag_cart }}
+        <div class='pill--small-message pill--small-message--add pill--padding-small-text pill--small-message-service small-font font-primary-blue font-weight-bold' aria-live="polite">
+          {{'Added to favourites'|t}}
+        </div>
+        <div class='pill--small-message pill--small-message--remove pill--padding-small-text pill--small-message-service small-font font-primary-blue font-weight-bold' aria-live="polite">
+          {{'Removed from favourites'|t}}
+        </div>
+      </div>
+    {% endif %}
     {% if content.field_related_archive['0']['#markup'] == 'yes' %}
       <div class="archiving-guides">
         {% include "@atoms/text/headings/_heading.twig" with {
@@ -114,15 +134,6 @@
         <a class="small-font" href="/node/275">{{ 'Archiving guide'|t }}</a>
       </div>
     {% endif %}
-    <div class="sharing-options rounded-icon-parent">
-      <button onclick="window.print();" class="btn" title="{{ 'Print'|t }}" aria-label="{{ 'Print'|t }}">
-        {% include "@atoms/images/icons/_icon.twig" with {
-          icon_base_class: 'icon',
-          icon_name: 'print',
-          icon_modifiers: ['small'],
-        } %}
-      </button>
-    </div>
   {% endblock %}
    {% block page_content %}
      <div class="service-header-wrapper">

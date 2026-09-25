@@ -8,6 +8,7 @@ use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueWorkerBase;
 use Drupal\hel_tpm_service_stats\RevisionHistoryService;
@@ -30,7 +31,34 @@ final class DaysSinceLastStateChangeUpdater extends QueueWorkerBase implements C
   private EntityStorageInterface $storage;
 
   /**
-   * Constructs a new DaysSinceLastStateChangeUpdater instance.
+   * The database connection instance.
+   */
+  private Connection $database;
+
+  /**
+   * Class constructor.
+   *
+   * Initializes the service dependencies and sets up required properties.
+   *
+   * @param array $configuration
+   *   Configuration array.
+   * @param mixed $plugin_id
+   *   The plugin ID.
+   * @param mixed $plugin_definition
+   *   The plugin definition.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
+   *   The entity type manager service.
+   * @param \Drupal\Component\Datetime\TimeInterface $datetimeTime
+   *   The time service for datetime operations.
+   * @param \Drupal\hel_tpm_service_stats\RevisionHistoryService $helTpmServiceStatsRevisionHistory
+   *   The revision history service.
+   * @param \Drupal\Core\Database\Connection $connection
+   *   The database connection service.
+   * @param \Psr\Log\LoggerInterface $logger
+   *   The logger channel service.
+   *
+   * @return void
+   *   This method does not return a value.
    */
   public function __construct(
     array $configuration,
@@ -40,9 +68,11 @@ final class DaysSinceLastStateChangeUpdater extends QueueWorkerBase implements C
     private readonly TimeInterface $datetimeTime,
     private readonly RevisionHistoryService $helTpmServiceStatsRevisionHistory,
     private readonly Connection $connection,
+    private readonly LoggerChannelInterface $logger,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->storage = $this->entityTypeManager->getStorage('node');
+    $this->database = $this->connection;
   }
 
   /**
@@ -56,7 +86,8 @@ final class DaysSinceLastStateChangeUpdater extends QueueWorkerBase implements C
       $container->get('entity_type.manager'),
       $container->get('datetime.time'),
       $container->get('hel_tpm_service_stats.revision_history'),
-      $container->get('database')
+      $container->get('database'),
+      $container->get('logger.factory')->get('hel_tpm_service_stats')
     );
   }
 
@@ -69,6 +100,10 @@ final class DaysSinceLastStateChangeUpdater extends QueueWorkerBase implements C
     }
     foreach ($data as $nid) {
       $revisions = $this->getTranslationRevisions($nid);
+      if (empty($revisions)) {
+        $this->logger->warning('No revisions found for ' . $nid);
+        continue;
+      }
       foreach ($revisions as $node) {
         if ($node->bundle() != 'service') {
           continue;
@@ -91,11 +126,24 @@ final class DaysSinceLastStateChangeUpdater extends QueueWorkerBase implements C
   protected function getTranslationRevisions($nid) {
     $node_revisions = [];
     $node = $this->storage->load($nid);
+    if (empty($node)) {
+      $this->logger->warning('Node @node was not found while calculating days since last state change.', ['@node' => $nid]);
+      return [];
+    }
     $languages = $node->getTranslationLanguages();
     foreach ($languages as $language) {
       $vid = $this->storage->getLatestTranslationAffectedRevisionId($node->id(), $language->getId());
-      $node = $this->storage->loadRevision($vid);
-      $translation_revision = $node->getTranslation($language->getId());
+      $revision = $this->storage->loadRevision($vid);
+      if (empty($revision)) {
+        $this->logger->warning('Missing revision for node: @node revision id: @vid langcode @langcode ', [
+          '@node' => $nid,
+          '@langcode' => $language->getId(),
+          '@vid' => $vid,
+        ]);
+        continue;
+
+      }
+      $translation_revision = $revision->getTranslation($language->getId());
       $node_revisions[$language->getId()] = $translation_revision;
     }
     return $node_revisions;
@@ -111,13 +159,11 @@ final class DaysSinceLastStateChangeUpdater extends QueueWorkerBase implements C
    *   This method does not return a value.
    */
   public function updateNodeLastStateChangeTimestamp($node) {
-    $node->set('field_days_since_last_state_chan', $this->helTpmServiceStatsRevisionHistory->getTimeSinceLastStateChange($node));
-    $node->setChangedTime($node->getChangedTime() + 1);
-    $node->setRevisionCreationTime($node->getRevisionCreationTime());
-    $node->setRevisionTranslationAffected(TRUE);
-    $node->setSyncing(TRUE);
-    $node->setNewRevision(FALSE);
-    $node->save();
+    $this->database->update('node__field_days_since_last_state_chan')
+      ->fields(['field_days_since_last_state_chan_value' => $this->helTpmServiceStatsRevisionHistory->getTimeSinceLastStateChange($node)])
+      ->condition('revision_id', $node->getRevisionId())
+      ->condition('langcode', $node->language()->getId())
+      ->execute();
   }
 
 }

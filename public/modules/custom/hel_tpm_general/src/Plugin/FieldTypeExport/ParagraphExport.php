@@ -11,6 +11,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemInterface;
+use Drupal\Core\File\FileUrlGenerator;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\entity_export_csv\Plugin\FieldTypeExportBase;
@@ -57,6 +58,7 @@ final class ParagraphExport extends FieldTypeExportBase {
     EntityFieldManagerInterface $entity_field_manager,
     LanguageManagerInterface $language_manager,
     ConfigFactoryInterface $config_factory,
+    FileUrlGenerator $file_url_generator,
     RendererInterface $renderer,
   ) {
     parent::__construct(
@@ -69,7 +71,8 @@ final class ParagraphExport extends FieldTypeExportBase {
       $entity_repository,
       $entity_field_manager,
       $language_manager,
-      $config_factory
+      $config_factory,
+      $file_url_generator,
     );
     $this->renderer = $renderer;
   }
@@ -89,6 +92,7 @@ final class ParagraphExport extends FieldTypeExportBase {
       $container->get('entity_field.manager'),
       $container->get('language_manager'),
       $container->get('config.factory'),
+      $container->get('file_url_generator'),
       $container->get('renderer')
     );
   }

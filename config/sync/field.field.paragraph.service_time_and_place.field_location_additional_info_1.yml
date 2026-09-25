@@ -1,0 +1,28 @@
+uuid: 72691823-598f-4399-843a-193a91d48b44
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_location_additional_info_1
+    - filter.format.limited_filtered_html
+    - paragraphs.paragraphs_type.service_time_and_place
+  module:
+    - text
+    - tmgmt_content
+third_party_settings:
+  tmgmt_content:
+    excluded: false
+id: paragraph.service_time_and_place.field_location_additional_info_1
+field_name: field_location_additional_info_1
+entity_type: paragraph
+bundle: service_time_and_place
+label: 'Toimipaikan lisätiedot'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - limited_filtered_html
+field_type: text_long

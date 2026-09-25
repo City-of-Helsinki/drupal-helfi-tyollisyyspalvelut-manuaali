@@ -80,8 +80,11 @@
       font-size: $small-caption;
     }
     &:focus {
+      box-shadow: inset 0px 0px 0px 2px clr(background-section);
+    }
+    &:open {
       ~svg {
-          transform: rotateX(180deg);
+        transform: rotateX(180deg);
       }
     }
   }
@@ -112,7 +115,7 @@
       .multi-select-button {
         position: relative;
         &:before {
-          background-image: url('../../assets/images/icons/arrow-sm-down.svg');
+          background-image: url('../../assets/icons/arrow-sm-down.svg');
           background-repeat: no-repeat;
           position: absolute;
           width: 100%;
@@ -138,7 +141,7 @@
       .multi-select-button {
         background-color: transparent;
         &:before {
-          background-image: url('../../assets/images/icons/arrow-sm-down-white.svg');
+          background-image: url('../../assets/icons/arrow-sm-down-white.svg');
         }
       }
     }
@@ -191,7 +194,8 @@
       border-radius: 8px;
     }
     &:hover,
-    &:active {
+    &:active,
+    &:focus {
       box-shadow: inset 0px 0px 0px 2px clr(background-section);
     }
     .select2-selection {
@@ -283,7 +287,8 @@
     right: 0;
     width: 24px;
     color: clr(text) !important;
-
+    background: none;
+    border: none;
   }
 }
 
@@ -310,7 +315,7 @@
 
 .select2-container .selection .select2-selection {
   &::after {
-    background-image: url('../../assets/images/icons/arrow-sm-down.svg');
+    background-image: url('../../assets/icons/arrow-sm-down.svg');
     background-repeat: no-repeat;
     position: absolute;
     width: 48px;
@@ -318,7 +323,7 @@
     content:"";
     right: 0;
     top: 0;
-    background-position: top 9px right 8px;
+    background-position: top 13px right 8px;
     cursor: pointer;
   }
   &[aria-expanded="true"] {

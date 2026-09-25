@@ -499,8 +499,11 @@ display:
           bef:
             general:
               autosubmit: false
+              auto_submit_sort_only: false
+              autosubmit_breakpoint: ''
               autosubmit_exclude_textfield: false
               autosubmit_textfield_delay: 500
+              autosubmit_textfield_minimum_length: 3
               autosubmit_hide: false
               input_required: false
               allow_secondary: false
@@ -512,8 +515,18 @@ display:
             filter:
               status:
                 plugin_id: default
+                advanced:
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
+                  open_by_default: false
+                  field_classes: ''
               title:
                 plugin_id: default
+                advanced:
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
+                  open_by_default: false
+                  field_classes: ''
       access:
         type: group_permission
         options:
@@ -600,9 +613,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              group_admin: '0'
           is_grouped: true
           group_info:
             label: Julkaisutila
@@ -693,12 +703,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              root: '0'
-              admin: '0'
-              editor: '0'
-              specialist: '0'
-              specialist_editor: '0'
             placeholder: 'Suodata hakusanalla'
           is_grouped: false
           group_info:
@@ -850,8 +854,11 @@ display:
           bef:
             general:
               autosubmit: true
+              auto_submit_sort_only: false
+              autosubmit_breakpoint: ''
               autosubmit_exclude_textfield: false
               autosubmit_textfield_delay: 1000
+              autosubmit_textfield_minimum_length: 3
               autosubmit_hide: false
               input_required: false
               allow_secondary: false
@@ -863,17 +870,30 @@ display:
                 plugin_id: bef_select2
                 advanced:
                   sort_options: false
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
                   placeholder_text: '- None -'
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
+                  collapsible_disable_automatic_open: false
+                  open_by_default: false
                   is_secondary: false
+                  hide_label: false
+                  field_classes: ''
               title:
                 plugin_id: default
                 advanced:
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
                   placeholder_text: ''
                   collapsible: false
+                  collapsible_disable_automatic_open: false
+                  open_by_default: false
                   is_secondary: false
+                  hide_label: false
+                  field_classes: ''
                 options_show_only_used: false
                 options_show_only_used_filtered: false
                 options_hide_when_empty: false

@@ -12,7 +12,7 @@
       'menuHTML': '<div class="multi-select-menu">',
       'buttonHTML': '<span class="multi-select-button">',
       'menuItemsHTML': '<div class="multi-select-menuitems">',
-      'menuItemHTML': '<label class="multi-select-menuitem">',
+      'menuItemHTML': '<label class="multi-select-menuitem" tabindex="0">',
       'presetsHTML': '<div class="multi-select-presets">',
       'modalHTML': undefined,
       'menuItemTitleClass': 'multi-select-menuitem--titled',
@@ -98,6 +98,7 @@
       this.$button.attr({
         'role': 'button',
         'aria-haspopup': 'true',
+        'aria-expanded': 'false',
         'tabindex': 0,
         'aria-label': this.$labels.eq(0).text()
       })
@@ -138,7 +139,7 @@
         let text = /** @type string */ ($(this).text());
         options.push(text);
         if ($(this).is(':selected')) {
-          selected.push( $.trim(text) );
+          selected.push( text.trim() );
         }
       });
 
@@ -243,6 +244,8 @@
         } else {
           this.$menuItems.children().first().focus();
         }
+      } else if (key === 13 ) {
+        $(e.currentTarget).click();
       }
     },
 
@@ -320,6 +323,7 @@
       $($parent_element).addClass('group--parent-label');
       $($parent_element).addClass('select--children');
       $($parent_element).html($optgroup.attr('label'));
+      $($parent_element).attr("tabindex","0");
 
       $optgroup.children('option').each(function(option_index, option) {
         //checked = $(option).attr('selected') === 'selected';
@@ -477,12 +481,14 @@
           'overflow': ''
         });
       }
+      this.$button.attr('aria-expanded','true');
     },
 
     menuHide: function() {
       this.$container.removeClass(this.settings['activeClass']);
       this.$container.removeClass(this.settings['positionedMenuClass']);
       this.$menu.css('width', 'auto');
+      this.$button.attr('aria-expanded','false');
     },
 
     menuToggle: function() {

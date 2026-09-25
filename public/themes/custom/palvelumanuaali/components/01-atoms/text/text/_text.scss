@@ -126,22 +126,6 @@
 }
 
 .text-small {
-  font-size: 12px;
-  line-height: 20px;
-  span {
-    font-size: 12px;
-    line-height: 20px;
-  }
-  @include xl-zoom {
-    font-size: 14px;
-    line-height: 24px;
-    span {
-      font-size: 14px;
-      line-height: 24px;
-    }
-  }
-}
-.text-normal {
   font-size: 14px;
   line-height: 22px;
   span {
@@ -149,19 +133,27 @@
     line-height: 22px;
   }
   @include xl-zoom {
-    font-size: 16px;
-    line-height: 28px;
+    line-height: 24px;
     span {
-      font-size: 16px;
-      line-height: 28px;
+      line-height: 24px;
     }
   }
 }
+.text-normal {
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: 400;
+  span {
+    font-size: 16px;
+    line-height: 28px;
+    font-weight: 400;
+  }
+}
 .text-large {
-  font-size: 15px;
+  font-size: 16px;
   line-height: 28px;
   span {
-    font-size: 15px;
+    font-size: 16px;
     line-height: 28px;
   }
   @include large {
@@ -174,6 +166,61 @@
   }
 }
 
+//small paragraph
+.small-paragraph {
+  font-family: Manrope;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 14px;
+  leading-trim: NONE;
+  line-height: 22px;
+  letter-spacing: 0%;
+  @include xl {
+    font-size: 14px;
+    leading-trim: NONE;
+    line-height: 24px;
+  }
+}
+
+//medium paragraph
+.medium-paragraph {
+  font-family: Manrope;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 14px;
+  leading-trim: NONE;
+  line-height: 22px;
+  letter-spacing: 0%;
+  @include xl {
+    font-family: Manrope;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 16px;
+    line-height: 28px;
+    letter-spacing: 0%;
+  }
+}
+
+//large paragraph
+.large-paragraph {
+  font-family: Manrope;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 14px;
+  leading-trim: NONE;
+  line-height: 22px;
+  letter-spacing: 0%;
+  @include xl {
+    font-family: Manrope;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 16px;
+    line-height: 28px;
+    letter-spacing: 0%;
+  }
+}
+
+
 .blue-info-text {
   font-weight: 600;
   font-size: 16px;
@@ -181,3 +228,11 @@
   letter-spacing: 1%;
   color: clr(footer-color);
 }
+
+.blue-info-text-small {
+  @extend .font-size--tiny;
+  @extend .font-weight--bold--dsk;
+  @extend .font-spacing--one-desktop;
+  @extend .font-color--dark-blue;
+}
+

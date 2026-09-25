@@ -86,7 +86,8 @@ display:
             thousand_separator: ''
             prefix_suffix: false
           group_column: value
-          group_columns: {  }
+          group_columns:
+            entity_id: entity_id
           group_rows: true
           delta_limit: 0
           delta_offset: 0
@@ -515,6 +516,7 @@ display:
           replica: false
           query_tags: {  }
       relationships: {  }
+      group_by: true
       header: {  }
       footer: {  }
       display_extenders: {  }
@@ -536,7 +538,8 @@ display:
     display_plugin: block
     position: 1
     display_options:
-      display_extenders: {  }
+      display_extenders:
+        ajax_history: {  }
       block_description: 'Ready to publish service for responsible updater block'
       block_hide_empty: true
     cache_metadata:

@@ -2,4 +2,8 @@ name: Helsinki TPM Update reminder
 type: module
 description: 'Reminds users to periodically check their services.'
 package: Custom
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11
+dependencies:
+  - drupal:action
+  - drupal:views
+  - views_bulk_operations:views_bulk_operations

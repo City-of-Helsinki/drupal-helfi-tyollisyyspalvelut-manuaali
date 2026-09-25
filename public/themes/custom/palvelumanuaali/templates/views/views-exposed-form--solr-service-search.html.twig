@@ -31,9 +31,13 @@
 <div class="form--inline clearfix search-form">
   <div class="text-search-wrapper">
     {{ form['search_wrapper'] }}
-    {{ form['actions'] }}
+    <div class="reset-wrapper">
+      <button name="reset" type="reset" class="reset-text button">{{ "Reset text search"|t }}</button>
+    </div>
+    {{ form['actions']|without('reset') }}
   </div>
   <div class="filters-wrapper">
+    <span class="h5">{{ 'Search filters'|t }}</span>
     <div class="exposed-filters">
       <div class="main-filters filters" data-is-collapsed="true" >
         {% for field in fieldsMain %}
@@ -49,12 +53,17 @@
           <a class="collapse-toggler" data-bs-toggle="collapse" href="#" role="button" aria-expanded="false" aria-controls="collapseItem">{{ 'Show more'|t }}</a></span>
          {{ form['actions']['reset'] }}
         </div>
-        <div class='cost-reset'>
-             {{ form['actions']['reset'] }}
-        </div>
       {% endif %}
     </div>
   </div>
-    {{ form|without(fieldsMain, fieldsSecondary, 'search_wrapper', 'actions', 'sort_bef_combine' ) }}
+    {{ form|without(fieldsMain, fieldsSecondary, 'search_wrapper', 'actions', 'sort_bef_combine', 'short_url_form', 'langcode') }}
 </div>
-{{form['sort_bef_combine']}}
+<div class="tertiary-filters">
+  <div class="langcode-filter-wrapper">
+    {{ form['langcode'] }}
+  </div>
+  <div class="sort-wrapper">
+    {{ form['short_url_form'] }}
+    {{ form['sort_bef_combine'] }}
+  </div>
+</div>

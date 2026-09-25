@@ -3,11 +3,9 @@ langcode: fi
 status: true
 dependencies:
   config:
-    - core.entity_form_mode.paragraph.service_form
     - field.field.node.service.field_accessibility
     - field.field.node.service.field_age
     - field.field.node.service.field_age_groups
-    - field.field.node.service.field_attendance
     - field.field.node.service.field_attendance_text
     - field.field.node.service.field_career_markings
     - field.field.node.service.field_client_consent
@@ -37,14 +35,12 @@ dependencies:
     - field.field.node.service.field_related_archive
     - field.field.node.service.field_responsible_municipality
     - field.field.node.service.field_responsible_updatee
+    - field.field.node.service.field_search_boost
     - field.field.node.service.field_service_benefits
     - field.field.node.service.field_service_coordination
     - field.field.node.service.field_service_exceptions
-    - field.field.node.service.field_service_execution
     - field.field.node.service.field_service_execution_text
     - field.field.node.service.field_service_languages
-    - field.field.node.service.field_service_other_info
-    - field.field.node.service.field_service_price
     - field.field.node.service.field_service_producer
     - field.field.node.service.field_service_provider_updatee
     - field.field.node.service.field_service_radioactivity
@@ -56,7 +52,6 @@ dependencies:
     - field.field.node.service.field_service_time_and_location
     - field.field.node.service.field_statements
     - field.field.node.service.field_statements_unemployment
-    - field.field.node.service.field_target_group
     - field.field.node.service.field_target_group_description
     - field.field.node.service.field_target_group_municipality
     - node.type.service
@@ -65,17 +60,15 @@ dependencies:
     - content_moderation
     - field_group
     - file
+    - hel_tpm_editorial
     - hel_tpm_forms
     - hel_tpm_general
     - hel_tpm_group
     - hel_tpm_service_dates
     - hel_tpm_service_stats
     - ief_popup
-    - inline_entity_form
-    - link
     - markup
     - maxlength
-    - paragraphs
     - range
     - select2
     - text
@@ -105,7 +98,6 @@ third_party_settings:
         - group_statements_unemploym
         - group_measures_during
         - group_exceptions
-        - group_complementary_job_search
         - group_archive_guide
         - group_liitteet_ja_linkit
       label: 'Asiantuntijan työohje'
@@ -130,7 +122,6 @@ third_party_settings:
         - field_field_client_consent_descr
         - field_service_execution_text
         - group_public_links_and_files
-        - field_service_other_info
       label: Asiakasnäkymä
       region: content
       parent_name: group_tabs
@@ -296,6 +287,7 @@ third_party_settings:
         - moderation_state
         - created
         - status
+        - field_search_boost
       label: Lisätiedot
       region: content
       parent_name: ''
@@ -312,8 +304,8 @@ third_party_settings:
         weight: 0
     group_service_obligatoryness:
       children:
-        - field_obligatoryness_freetext
         - field_obligatoryness
+        - field_obligatoryness_freetext
       label: 'Palvelun velvoittavuus'
       region: content
       parent_name: group_specialist
@@ -323,8 +315,9 @@ third_party_settings:
         classes: group--margin-border-bottom
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
-        show_label: true
+        show_label: false
         label_element: legend
         label_element_classes: field-group--title
         attributes: ''
@@ -333,10 +326,10 @@ third_party_settings:
         required_fields: true
     group_statements_unemploym:
       children:
-        - field_statements_unemployment
         - field_statements
+        - field_statements_unemployment
         - field_other_preferences
-      label: 'Lausunnot ja työttömyysetuus'
+      label: 'Lausunnot ja työttömyysturva'
       region: content
       parent_name: group_specialist
       weight: 13
@@ -345,6 +338,7 @@ third_party_settings:
         classes: group--margin-border-bottom
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: true
         label_element: legend
@@ -355,12 +349,12 @@ third_party_settings:
         required_fields: false
     group_complementary_job_search:
       children:
-        - field_service_suits_job_search
         - field_service_suits_info
+        - field_service_suits_job_search
       label: 'Täydentävä työnhakukeskustelu'
-      region: content
-      parent_name: group_specialist
-      weight: 16
+      region: hidden
+      parent_name: ''
+      weight: 13
       format_type: html_element
       format_settings:
         classes: group--margin-border-bottom
@@ -439,7 +433,7 @@ third_party_settings:
       children:
         - field_service_req_speacialist
         - field_municipality_guidance
-      label: 'Palveluun osallistumisen edellytykset'
+      label: 'Osallistumisen edellytykset'
       region: content
       parent_name: group_specialist
       weight: 10
@@ -448,6 +442,7 @@ third_party_settings:
         classes: group--margin-border-bottom
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: true
         label_element: legend
@@ -642,42 +637,42 @@ content:
     region: content
     settings:
       form_mode: default
+      override_labels: false
       label_singular: ''
       label_plural: ''
-      allow_new: '1'
+      allow_new: true
+      allow_existing: false
       match_operator: CONTAINS
+      allow_duplicate: false
+      collapsible: false
+      collapsed: false
+      revision: false
       removed_reference: optional
-      prevent_translation_deletion: '1'
-      revision: 0
-      override_labels: 0
-      collapsible: 0
-      collapsed: 0
-      allow_existing: 0
-      allow_duplicate: 0
+      prevent_translation_deletion: true
     third_party_settings:
       ief_popup:
-        ief_popup_enabled: '1'
+        ief_popup_enabled: true
   field_contact_info_external:
     type: ief_no_confirm_widget
     weight: 15
     region: content
     settings:
       form_mode: default
+      override_labels: false
       label_singular: ''
       label_plural: ''
-      allow_new: '1'
+      allow_new: true
+      allow_existing: false
       match_operator: CONTAINS
+      allow_duplicate: false
+      collapsible: false
+      collapsed: false
+      revision: false
       removed_reference: optional
-      prevent_translation_deletion: '1'
-      revision: 0
-      override_labels: 0
-      collapsible: 0
-      collapsed: 0
-      allow_existing: 0
-      allow_duplicate: 0
+      prevent_translation_deletion: true
     third_party_settings:
       ief_popup:
-        ief_popup_enabled: '1'
+        ief_popup_enabled: true
   field_days_since_last_state_chan:
     type: hel_tpm_service_stats_days_since_last_state_change_widget
     weight: 23
@@ -697,26 +692,6 @@ content:
         maxlength_js: 250
         maxlength_js_label: 'Merkkimäärä rajattu @limit merkkiin, jäljellä: <strong>@remaining</strong>'
         maxlength_js_enforce: true
-        maxlength_js_truncate_html: false
-      conditional_fields:
-        f4913650-3595-4d98-a95e-b972cdaa65b0:
-          entity_type: node
-          bundle: service
-          dependee: title
-          settings:
-            state: '!visible'
-            reset: false
-            condition: value
-            grouping: AND
-            values_set: 1
-            value: ''
-            values: {  }
-            value_form:
-              -
-                value: test
-            effect: show
-            effect_options: {  }
-            selector: ''
   field_field_client_consent_descr:
     type: text_textarea
     weight: 13
@@ -760,12 +735,25 @@ content:
       progress_indicator: throbber
     third_party_settings: {  }
   field_internal_links:
-    type: link_default
+    type: limited_link_widget
     weight: 18
     region: content
     settings:
       placeholder_url: ''
       placeholder_title: ''
+      target_bundles:
+        basic_page: basic_page
+        landing_page: '0'
+        service: service
+        service_location: '0'
+      bypass_target_bundles_roles:
+        admin: admin
+        anonymous: '0'
+        authenticated: '0'
+        editor: '0'
+        root: root
+        specialist: '0'
+        specialist_editor: '0'
     third_party_settings: {  }
   field_life_situations:
     type: select2_entity_reference
@@ -791,21 +779,21 @@ content:
     region: content
     settings:
       form_mode: default
-      override_labels: '1'
+      override_labels: true
       label_singular: 'kuntakohtainen ohje'
       label_plural: 'kuntakohtaiset ohjeet'
-      allow_new: '1'
+      allow_new: true
+      allow_existing: false
       match_operator: CONTAINS
+      allow_duplicate: false
+      collapsible: false
+      collapsed: false
+      revision: false
       removed_reference: optional
-      revision: 0
-      collapsible: 0
-      collapsed: 0
-      allow_existing: 0
-      allow_duplicate: 0
       prevent_translation_deletion: false
     third_party_settings:
       ief_popup:
-        ief_popup_enabled: '1'
+        ief_popup_enabled: true
   field_municipality_irrelevant:
     type: boolean_checkbox
     weight: 13
@@ -819,21 +807,21 @@ content:
     region: content
     settings:
       form_mode: default
-      override_labels: '1'
+      override_labels: true
       label_singular: 'kuntakohtainen poikkeustilanne'
       label_plural: 'kuntakohtaiset poikkeustilanteet'
-      allow_new: '1'
+      allow_new: true
+      allow_existing: false
       match_operator: CONTAINS
+      allow_duplicate: false
+      collapsible: false
+      collapsed: false
+      revision: false
       removed_reference: optional
-      revision: 0
-      collapsible: 0
-      collapsed: 0
-      allow_existing: 0
-      allow_duplicate: 0
       prevent_translation_deletion: false
     third_party_settings:
       ief_popup:
-        ief_popup_enabled: '1'
+        ief_popup_enabled: true
   field_obligatoryness:
     type: options_buttons
     weight: 9
@@ -842,7 +830,7 @@ content:
     third_party_settings: {  }
   field_obligatoryness_freetext:
     type: text_textarea
-    weight: 7
+    weight: 10
     region: content
     settings:
       rows: 5
@@ -854,7 +842,7 @@ content:
         maxlength_js_enforce: false
   field_other_preferences:
     type: options_buttons
-    weight: 17
+    weight: 18
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -891,12 +879,25 @@ content:
       progress_indicator: throbber
     third_party_settings: {  }
   field_public_links:
-    type: link_default
+    type: limited_link_widget
     weight: 16
     region: content
     settings:
       placeholder_url: ''
       placeholder_title: ''
+      target_bundles:
+        basic_page: basic_page
+        landing_page: '0'
+        service: service
+        service_location: '0'
+      bypass_target_bundles_roles:
+        admin: admin
+        anonymous: '0'
+        authenticated: '0'
+        editor: '0'
+        root: root
+        specialist: '0'
+        specialist_editor: '0'
     third_party_settings: {  }
   field_related_archive:
     type: options_buttons
@@ -919,6 +920,13 @@ content:
     weight: 21
     region: content
     settings: {  }
+    third_party_settings: {  }
+  field_search_boost:
+    type: number
+    weight: 14
+    region: content
+    settings:
+      placeholder: ''
     third_party_settings: {  }
   field_service_benefits:
     type: text_textarea
@@ -957,29 +965,25 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_service_languages:
-    type: entity_reference_paragraphs
+    type: hel_tpm_editorial_paragraphs_accessibility
     weight: 30
     region: content
     settings:
       title: 'Paragraafi '
       title_plural: Paragraafit
       edit_mode: open
+      closed_mode: summary
+      autocollapse: none
+      closed_mode_threshold: 0
       add_mode: dropdown
       form_display_mode: default
-      default_paragraph_type: service_languages
-    third_party_settings: {  }
-  field_service_other_info:
-    type: inline_entity_form_simple
-    weight: 16
-    region: content
-    settings:
-      form_mode: service_form
-      override_labels: false
-      label_singular: ''
-      label_plural: ''
-      collapsible: false
-      collapsed: false
-      revision: false
+      default_paragraph_type: service_language
+      features:
+        add_above: '0'
+        collapse_edit_all: '0'
+        convert: '0'
+        duplicate: '0'
+      add_label: ''
     third_party_settings: {  }
   field_service_producer:
     type: select2_entity_reference
@@ -1027,20 +1031,6 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_service_suits_info:
-    type: text_textarea
-    weight: 7
-    region: content
-    settings:
-      rows: 5
-      placeholder: ''
-    third_party_settings: {  }
-  field_service_suits_job_search:
-    type: options_buttons
-    weight: 5
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   field_service_time_and_location:
     type: hel_tpm_service_dates_service_time_and_place_widget
     weight: 17
@@ -1061,7 +1051,7 @@ content:
     third_party_settings: {  }
   field_statements_unemployment:
     type: text_textarea
-    weight: 14
+    weight: 17
     region: content
     settings:
       rows: 5
@@ -1105,7 +1095,7 @@ content:
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 14
+    weight: 13
     region: content
     settings:
       display_label: true
@@ -1132,13 +1122,12 @@ content:
       match_limit: 10
     third_party_settings: {  }
 hidden:
-  field_attendance: true
-  field_service_execution: true
-  field_service_price: true
   field_service_radioactivity: true
-  field_target_group: true
+  field_service_suits_info: true
+  field_service_suits_job_search: true
   path: true
   promote: true
+  simple_sitemap: true
   sticky: true
   translation: true
   url_redirects: true

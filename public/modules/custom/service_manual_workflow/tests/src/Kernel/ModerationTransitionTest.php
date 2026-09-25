@@ -45,6 +45,7 @@ final class ModerationTransitionTest extends GroupKernelTestBase {
     'ggroup_role_mapper',
     'field_permissions',
     'flexible_permissions',
+    'hel_tpm_mail_tools',
     'service_manual_workflow_service_test',
   ];
 

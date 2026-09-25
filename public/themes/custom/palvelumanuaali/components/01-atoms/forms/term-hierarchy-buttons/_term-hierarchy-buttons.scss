@@ -1,0 +1,65 @@
+.term-hierarchy-buttons-select {
+  display: none !important;
+}
+.term-hierarchy-buttons {
+  margin-bottom: $space-one-and-half;
+
+  .term-hierarchy-button-group {
+    display: flex;
+//    display: inline-flex;
+    flex-direction: row;
+    align-items: flex-start;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    margin-bottom: 1rem;
+    flex-wrap: nowrap;
+    padding-bottom: 1rem;
+    @include xl {
+      margin: $space-one-and-half auto 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      align-content: flex-start;
+      gap: 8px;
+      flex-shrink: 0;
+      flex-wrap: wrap;
+      padding-bottom: unset;
+      &::-webkit-scrollbar { display:none; }
+      @media (max-width: 1302px) {
+        overflow-x: scroll;
+        overflow-y: hidden;
+      }
+      @media (min-width: 1302px) and (max-width: 1420px) {
+        column-gap:4px;
+      }
+    }
+    &.hidden {
+      display: none;
+    }
+    .hierarchy-select-button {
+      .btn-value {
+      }
+      @extend .checkbox-pill;
+      font-size: 14px;
+      text-align: center;
+      display: inline-block;
+      padding: 5px 24px !important;
+      white-space: nowrap;
+      margin-left: .5rem;
+      margin-right: .5rem;
+      &.child-button {
+        background-color: $blue20;
+        @include xl {
+          margin-left: 0;
+          margin-right: 0;
+        }
+      }
+      &.highlight {
+        color: white;
+      }
+    }
+  }
+  .term-hierarchy-child-group {
+    margin-bottom: auto;
+  }
+}

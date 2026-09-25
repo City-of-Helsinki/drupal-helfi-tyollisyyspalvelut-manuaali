@@ -1,0 +1,22 @@
+field.widget.settings.hel_tpm_forms_simple_select2:
+  type: field.widget.settings.options_select
+  label: 'Simple Select2 widget settings'
+
+field.widget.settings.limited_link_widget:
+  type: field.widget.settings.link_default
+  label: 'Limited Link widget settings'
+  mapping:
+    target_bundles:
+      type: sequence
+      label: 'Target bundles'
+      orderby: key
+      sequence:
+        type: string
+        label: 'Bundle'
+    bypass_target_bundles_roles:
+      type: sequence
+      label: 'Bypass target bundles roles'
+      orderby: key
+      sequence:
+        type: string
+        label: 'Role'

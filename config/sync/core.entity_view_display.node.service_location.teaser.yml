@@ -6,10 +6,12 @@ dependencies:
     - core.entity_view_mode.node.teaser
     - field.field.node.service_location.field_accessibility
     - field.field.node.service_location.field_accessibility_details
+    - field.field.node.service_location.field_accessibility_info
     - field.field.node.service_location.field_address
     - node.type.service_location
   module:
     - address
+    - text
     - user
 id: node.service_location.teaser
 targetEntityType: node
@@ -24,8 +26,8 @@ content:
     third_party_settings: {  }
     weight: 2
     region: content
-  field_accessibility_details:
-    type: basic_string
+  field_accessibility_info:
+    type: text_default
     label: above
     settings: {  }
     third_party_settings: {  }
@@ -52,6 +54,7 @@ hidden:
   entity_print_view_pdf: true
   entity_print_view_word_docx: true
   entitygroupfield: true
+  field_accessibility_details: true
   flag_cart: true
   flag_flag_list_template_1: true
   flag_lists: true

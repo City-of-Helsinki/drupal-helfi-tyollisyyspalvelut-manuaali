@@ -1,0 +1,90 @@
+.hel-tpm-url-shortener-shorten-url-link {
+  order: 1;
+  @include large {
+    z-index: $zi-above-content;
+    order: unset;
+  }
+  >form {
+    @include xxl {
+      float: right;
+    }
+  }
+  div.hide-short-link,
+  .clipboard-button,
+  .create-link {
+    margin: auto;
+    @include large {
+      margin-right: -3rem;
+    }
+  }
+  .shorten-link {
+      left: unset;
+      bottom: 5%;
+      z-index: $zi-above-content;
+      float: right;
+      position: relative;
+    .clipboard-status {
+      margin-left: $space * 1.5;
+    }
+  }
+}
+
+.hel-tpm-url-shortener-shorten-url-link-views,
+.hel-tpm-url-shortener-shorten-url-link {
+  div.hide-short-link,
+  .clipboard-button,
+  .create-link {
+    display: block;
+    background-color: white;
+    color: transparent;
+    padding: 0;
+    font-weight: bold;
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    border: thin solid $blue20;
+  }
+
+  label {
+    font-weight: 600;
+    font-size: 15px;
+  }
+  div.hide-short-link {
+    background-image: url('../../assets/icons/close.svg');
+
+    &:hover {
+      background-color: $blue100;
+      background-image: url('../../assets/icons/close-white.svg');
+    }
+  }
+
+  .create-link {
+    background-image: url('../../assets/icons//chain.svg');
+
+    &.active,
+    &:hover {
+      background-image: url('../../assets/icons//chain-active.svg');
+    }
+    &:focus {
+      border: 2px solid clr(background-section);
+    }
+  }
+
+  .clipboard-button {
+    background-image: url('../../assets/icons//chain.svg');
+  }
+
+  .short-link-result {
+    display: block;
+    width: 310px;
+    top: 1px;
+    background: white;
+    box-shadow: inset 0px 0px 0px 2px clr(form-border);
+    border-radius: 8px;
+    padding: 0.4em 0.5em;
+    margin: auto;
+  }
+}

@@ -13,7 +13,7 @@
       function showHideAdditionalFilters(filterWrapper, isCollapsed) {
         let filterRows = calculateFilterRows(filterWrapper);
         // Maximum number of rows when filters are collapsed
-        let minRows= 1;
+        let minRows= 4;
         $(filterRows).each(function(i, filterRow) {
           $(filterRow).each(function(j, item) {
             if (i < minRows) {
@@ -91,10 +91,10 @@
       function toggleFilters(filterWrapper) {
         $('.collapse-toggler').click(function() {
           let isCollapsed = $(filterWrapper).attr('data-is-collapsed');
-          if (isCollapsed === "true")
-            isCollapsed = "false";
-          else
-            isCollapsed = "true";
+         if (isCollapsed === "true")
+           isCollapsed = "false";
+         else
+           isCollapsed = "true";
 
           $(filterWrapper).attr('data-is-collapsed', isCollapsed);
           localStorage.setItem('searchFiltersIsCollapsed', isCollapsed);
@@ -146,6 +146,7 @@
           isCollapsed = "true";
         }
         $(filterWrapper).attr('data-is-collapsed', isCollapsed);
+        setTogglerLabel(isCollapsed);
         showHideAdditionalFilters(filterWrapper, isCollapsed);
         setAriaExpanded(isCollapsed)
       }
@@ -154,6 +155,7 @@
        * Set filter toggler on document ready.
        */
       $(document).ready(function() {
+        initFilterToggle(FILTER_WRAPPER);
         toggleFilters(FILTER_WRAPPER);
       })
 
@@ -163,9 +165,7 @@
       $(window).on('load', function() {
         // Without this bubblegum fix elements get wrong widths
         // due to flex items.
-        setTimeout(function() {
-          initFilterToggle(FILTER_WRAPPER);
-        }, 0.2);
+        initFilterToggle(FILTER_WRAPPER);
       });
 
       /**
@@ -189,4 +189,46 @@
       });
     }
   }
+
+  Drupal.behaviors.conditionalResetButton = {
+    attach: function (context, settings) {
+      // Target your specific exposed text filter (update class as needed)
+      var $textInput = $('.views-exposed-form input[type="text"]');
+      var $resetButton = $('.views-exposed-form .text-search-wrapper button.reset-text');
+      var $submitButton = $('.views-exposed-form .text-search-wrapper .form-submit');
+
+      // Run on page load
+      toggleReset();
+      resetTextClick();
+
+      // Run on text change
+      $textInput.on('input', function() {
+        toggleReset();
+      });
+
+
+      /**
+       * Toggles the visibility of the reset button based on text input length.
+       */
+      function toggleReset() {
+        if ($textInput.val().length > 0) {
+          $resetButton.show();
+        } else {
+          $resetButton.hide();
+        }
+      }
+
+      /**
+       * Resets the text input field and triggers the submit button click event.
+       */
+      function resetTextClick() {
+        $resetButton.click(function(e) {
+          e.preventDefault();
+          $textInput.val('');
+          $submitButton.click();
+        });
+      }
+    }
+  };
+
 })(jQuery, Drupal, this);

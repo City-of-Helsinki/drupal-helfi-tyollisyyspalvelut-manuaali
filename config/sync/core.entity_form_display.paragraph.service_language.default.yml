@@ -7,6 +7,7 @@ dependencies:
     - field.field.paragraph.service_language.field_level
     - paragraphs.paragraphs_type.service_language
   module:
+    - hel_tpm_forms
     - select2
 id: paragraph.service_language.default
 targetEntityType: paragraph
@@ -24,14 +25,10 @@ content:
       match_limit: 10
     third_party_settings: {  }
   field_level:
-    type: select2_entity_reference
+    type: hel_tpm_forms_simple_select2
     weight: 2
     region: content
-    settings:
-      width: 100%
-      autocomplete: false
-      match_operator: CONTAINS
-      match_limit: 10
+    settings: {  }
     third_party_settings: {  }
   translation:
     weight: 10

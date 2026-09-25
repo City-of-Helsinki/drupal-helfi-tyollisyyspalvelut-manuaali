@@ -7,16 +7,18 @@
 
 .toggle-expand {
   @include link;
-
-  @include xl {
-    display: none;
-  }
   position: absolute;
   top: 15px;
   margin-left: $space;
   display: inline-block;
   padding: $space;
   text-decoration: none;
+}
+
+.toggle-expand {
+  @include xl {
+    display: none;
+  }
 }
 
 .toggle-expand__text {

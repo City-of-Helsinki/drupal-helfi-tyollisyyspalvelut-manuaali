@@ -1,11 +1,20 @@
 uuid: 06eb038c-72c4-4521-8569-a27a51c4da62
 langcode: fi
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - hel_tpm_general
 name: 'Plain text format'
 format: plain_text_format
 weight: 0
 filters:
+  external_links_to_new_tab:
+    id: external_links_to_new_tab
+    provider: hel_tpm_general
+    status: true
+    weight: 0
+    settings:
+      internal_hosts: ''
   filter_autop:
     id: filter_autop
     provider: filter

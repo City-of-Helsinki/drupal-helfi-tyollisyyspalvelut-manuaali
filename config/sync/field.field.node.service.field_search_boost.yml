@@ -1,0 +1,28 @@
+uuid: 729f7c42-7667-4e44-a950-7fadc1ac1380
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_search_boost
+    - node.type.service
+  module:
+    - tmgmt_content
+third_party_settings:
+  tmgmt_content:
+    excluded: false
+id: node.service.field_search_boost
+field_name: field_search_boost
+entity_type: node
+bundle: service
+label: 'Nosta hakutuloksissa'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 0
+  max: 10
+  prefix: ''
+  suffix: ''
+field_type: integer

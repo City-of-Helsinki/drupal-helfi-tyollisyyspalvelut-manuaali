@@ -15,17 +15,17 @@ settings:
       value: date_not_available
       label: 'Palvelun ajankohta sovitaan erikseen'
     -
-      value: start_and_end_date
-      label: 'Palvelulla on alkamis- ja päättymisajankohta'
-    -
       value: service_continous
-      label: 'Palvelu on toistaiseksi jatkuva (ei alkamis- ja päättymispäivää)'
+      label: 'Palvelu on toistaiseksi jatkuva (viikonpäivät ja kellonajat)'
     -
-      value: separate_dates
-      label: 'Palvelulla on yksittäisiä toteutusajankohtia'
+      value: start_and_end_date
+      label: 'Palvelulla on tarkka toteutusajanjakso (päivämäärät, viikonpäivät ja kellonajat)'
     -
       value: multiple_dates
-      label: 'Palvelulla on useampi ajanjakso'
+      label: 'Palvelulla on yksi tai useampi toteutusajanjakso (pelkät päivämäärät)'
+    -
+      value: separate_dates
+      label: 'Palvelulla on yksittäisiä toteutuspäiviä'
   allowed_values_function: ''
 module: options
 locked: false

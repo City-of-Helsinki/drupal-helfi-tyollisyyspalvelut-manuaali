@@ -129,8 +129,11 @@ display:
           bef:
             general:
               autosubmit: false
+              auto_submit_sort_only: false
+              autosubmit_breakpoint: ''
               autosubmit_exclude_textfield: false
               autosubmit_textfield_delay: 500
+              autosubmit_textfield_minimum_length: 3
               autosubmit_hide: false
               input_required: false
               allow_secondary: false
@@ -141,11 +144,18 @@ display:
               search_api_fulltext:
                 plugin_id: default
                 advanced:
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
                   placeholder_text: ''
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
+                  collapsible_disable_automatic_open: false
+                  open_by_default: false
                   is_secondary: false
+                  hide_label: false
+                  field_classes: ''
                 options_show_only_used: false
                 options_show_only_used_filtered: false
                 options_hide_when_empty: false
@@ -154,10 +164,17 @@ display:
                 plugin_id: default
                 advanced:
                   sort_options: false
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
+                  collapsible_disable_automatic_open: false
+                  open_by_default: false
                   is_secondary: false
+                  hide_label: false
+                  field_classes: ''
                 options_show_only_used: false
                 options_show_only_used_filtered: false
                 options_hide_when_empty: false
@@ -166,10 +183,17 @@ display:
                 plugin_id: default
                 advanced:
                   sort_options: false
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
+                  collapsible_disable_automatic_open: false
+                  open_by_default: false
                   is_secondary: false
+                  hide_label: false
+                  field_classes: ''
                 options_show_only_used: false
                 options_show_only_used_filtered: false
                 options_hide_when_empty: false
@@ -178,10 +202,17 @@ display:
                 plugin_id: default
                 advanced:
                   sort_options: false
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
+                  collapsible_disable_automatic_open: false
+                  open_by_default: false
                   is_secondary: false
+                  hide_label: false
+                  field_classes: ''
                 options_show_only_used: false
                 options_show_only_used_filtered: false
                 options_hide_when_empty: false
@@ -190,10 +221,17 @@ display:
                 plugin_id: default
                 advanced:
                   sort_options: false
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
+                  collapsible_disable_automatic_open: false
+                  open_by_default: false
                   is_secondary: false
+                  hide_label: false
+                  field_classes: ''
                 options_show_only_used: false
                 options_show_only_used_filtered: false
                 options_hide_when_empty: false
@@ -202,10 +240,17 @@ display:
                 plugin_id: default
                 advanced:
                   sort_options: false
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
+                  collapsible_disable_automatic_open: false
+                  open_by_default: false
                   is_secondary: false
+                  hide_label: false
+                  field_classes: ''
                 options_show_only_used: false
                 options_show_only_used_filtered: false
                 options_hide_when_empty: false
@@ -214,10 +259,17 @@ display:
                 plugin_id: default
                 advanced:
                   sort_options: false
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
+                  collapsible_disable_automatic_open: false
+                  open_by_default: false
                   is_secondary: false
+                  hide_label: false
+                  field_classes: ''
                 options_show_only_used: false
                 options_show_only_used_filtered: false
                 options_hide_when_empty: false
@@ -226,10 +278,17 @@ display:
                 plugin_id: default
                 advanced:
                   sort_options: false
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
+                  collapsible_disable_automatic_open: false
+                  open_by_default: false
                   is_secondary: false
+                  hide_label: false
+                  field_classes: ''
                 options_show_only_used: false
                 options_show_only_used_filtered: false
                 options_hide_when_empty: false
@@ -270,12 +329,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              root: '0'
-              admin: '0'
-              editor: '0'
-              specialist: '0'
-              specialist_editor: '0'
             expose_fields: false
             placeholder: ''
             searched_fields_id: search_api_fulltext_searched_fields
@@ -309,7 +362,7 @@ display:
           expose:
             operator_id: field_service_set_op
             label: Palvelukategoria
-            description: ''
+            description: 'Valitse palvelukategoria'
             use_operator: false
             operator: field_service_set_op
             operator_limit_selection: false
@@ -320,12 +373,6 @@ display:
             multiple: true
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              root: '0'
-              admin: '0'
-              editor: '0'
-              specialist: '0'
-              specialist_editor: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -359,8 +406,8 @@ display:
           exposed: true
           expose:
             operator_id: field_life_situations_op
-            label: 'Asiakkaan tilanne'
-            description: ''
+            label: 'Työnhakijan tilanne'
+            description: 'Valitse tilanne'
             use_operator: false
             operator: field_life_situations_op
             operator_limit_selection: false
@@ -371,12 +418,6 @@ display:
             multiple: true
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              root: '0'
-              admin: '0'
-              editor: '0'
-              specialist: '0'
-              specialist_editor: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -411,7 +452,7 @@ display:
           expose:
             operator_id: field_language_1_op
             label: 'Palvelun kieli'
-            description: ''
+            description: 'Valitse kieli'
             use_operator: false
             operator: field_language_1_op
             operator_limit_selection: false
@@ -422,12 +463,6 @@ display:
             multiple: true
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              root: '0'
-              admin: '0'
-              editor: '0'
-              specialist: '0'
-              specialist_editor: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -476,7 +511,7 @@ display:
           is_grouped: true
           group_info:
             label: Maksullisuus
-            description: ''
+            description: 'Valitse maksullisuustieto'
             identifier: field_free_service
             optional: true
             widget: select
@@ -512,7 +547,7 @@ display:
           expose:
             operator_id: age_groups_filter_op
             label: 'Kohderyhmän ikä'
-            description: ''
+            description: 'Valitse ikäryhmä'
             use_operator: false
             operator: age_groups_filter_op
             operator_limit_selection: false
@@ -523,12 +558,6 @@ display:
             multiple: true
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              root: '0'
-              admin: '0'
-              editor: '0'
-              specialist: '0'
-              specialist_editor: '0'
             reduce: true
           is_grouped: false
           group_info:
@@ -557,8 +586,8 @@ display:
           exposed: true
           expose:
             operator_id: field_accessibility_op
-            label: Esteettömyys
-            description: ''
+            label: Saavutettavuus
+            description: 'Valitse saavutettavuustiedot'
             use_operator: false
             operator: field_accessibility_op
             operator_limit_selection: false
@@ -569,12 +598,6 @@ display:
             multiple: true
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              root: '0'
-              admin: '0'
-              editor: '0'
-              specialist: '0'
-              specialist_editor: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -609,7 +632,7 @@ display:
           expose:
             operator_id: field_implementation_extra_info_op
             label: Toteutustapa
-            description: ''
+            description: 'Valitse toteutustapa'
             use_operator: false
             operator: field_implementation_extra_info_op
             operator_limit_selection: false
@@ -620,12 +643,6 @@ display:
             multiple: true
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              root: '0'
-              admin: '0'
-              editor: '0'
-              specialist: '0'
-              specialist_editor: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -693,22 +710,22 @@ display:
           plugin_id: search_api_term
           operator: or
           value:
-            412: 412
-            415: 415
-            425: 425
             32: 32
             33: 33
+            415: 415
             34: 34
             35: 35
+            425: 425
             36: 36
             37: 37
+            412: 412
             408: 408
           group: 2
           exposed: true
           expose:
             operator_id: field_target_group_municipality_op
             label: Kotikunta
-            description: ''
+            description: 'Valitse kotikunta'
             use_operator: false
             operator: field_target_group_municipality_op
             operator_limit_selection: false
@@ -719,12 +736,6 @@ display:
             multiple: true
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              root: '0'
-              admin: '0'
-              editor: '0'
-              specialist: '0'
-              specialist_editor: '0'
             reduce: true
           is_grouped: false
           group_info:
@@ -796,7 +807,7 @@ display:
           exposed: true
           expose:
             operator_id: ''
-            label: ''
+            label: Hakutulokset
             description: ''
             use_operator: false
             operator: ''
@@ -808,13 +819,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              0: '0'
-              anonymous: '0'
-              root: '0'
-              admin: '0'
-              editor: '0'
-              specialist: '0'
-              specialist_editor: '0'
           is_grouped: false
           group_info:
             label: ''
@@ -831,6 +835,7 @@ display:
           label_display: visible
           facet:
             query_operator: or
+            hard_limit: 0
             min_count: 0
             show_numbers: true
             processor_configs:
@@ -915,12 +920,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              root: '0'
-              admin: '0'
-              editor: '0'
-              specialist: '0'
-              specialist_editor: '0'
             expose_fields: false
             placeholder: ''
             searched_fields_id: search_api_fulltext_searched_fields
@@ -1005,8 +1004,11 @@ display:
           bef:
             general:
               autosubmit: true
+              auto_submit_sort_only: false
+              autosubmit_breakpoint: ''
               autosubmit_exclude_textfield: true
               autosubmit_textfield_delay: 500
+              autosubmit_textfield_minimum_length: 3
               autosubmit_hide: false
               input_required: false
               allow_secondary: false
@@ -1027,11 +1029,18 @@ display:
               search_api_fulltext:
                 plugin_id: default
                 advanced:
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
                   placeholder_text: ''
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
+                  collapsible_disable_automatic_open: false
+                  open_by_default: false
                   is_secondary: false
+                  hide_label: false
+                  field_classes: ''
                 options_show_only_used: false
                 options_show_only_used_filtered: false
                 options_hide_when_empty: false
@@ -1040,10 +1049,17 @@ display:
                 plugin_id: bef_dropdown_multiselet
                 advanced:
                   sort_options: false
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
+                  collapsible_disable_automatic_open: false
+                  open_by_default: false
                   is_secondary: false
+                  hide_label: false
+                  field_classes: ''
                 options_show_only_used: 0
                 options_show_only_used_filtered: 0
                 options_hide_when_empty: 0
@@ -1053,10 +1069,17 @@ display:
                 plugin_id: bef_dropdown_multiselet
                 advanced:
                   sort_options: false
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
+                  collapsible_disable_automatic_open: false
+                  open_by_default: false
                   is_secondary: false
+                  hide_label: false
+                  field_classes: ''
                 options_show_only_used: 0
                 options_show_only_used_filtered: 0
                 options_hide_when_empty: 0
@@ -1066,10 +1089,17 @@ display:
                 plugin_id: bef_dropdown_multiselet
                 advanced:
                   sort_options: false
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
+                  collapsible_disable_automatic_open: false
+                  open_by_default: false
                   is_secondary: false
+                  hide_label: false
+                  field_classes: ''
                 options_show_only_used: 0
                 options_show_only_used_filtered: 1
                 options_hide_when_empty: 0
@@ -1079,10 +1109,17 @@ display:
                 plugin_id: bef_dropdown_multiselet
                 advanced:
                   sort_options: false
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
+                  collapsible_disable_automatic_open: false
+                  open_by_default: false
                   is_secondary: false
+                  hide_label: false
+                  field_classes: ''
                 options_show_only_used: false
                 options_show_only_used_filtered: false
                 options_hide_when_empty: false
@@ -1092,10 +1129,17 @@ display:
                 plugin_id: bef_dropdown_multiselet
                 advanced:
                   sort_options: false
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
+                  collapsible_disable_automatic_open: false
+                  open_by_default: false
                   is_secondary: false
+                  hide_label: false
+                  field_classes: ''
                 options_show_only_used: false
                 options_show_only_used_filtered: false
                 options_hide_when_empty: false
@@ -1105,10 +1149,17 @@ display:
                 plugin_id: bef_dropdown_multiselet
                 advanced:
                   sort_options: false
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
+                  collapsible_disable_automatic_open: false
+                  open_by_default: false
                   is_secondary: true
+                  hide_label: false
+                  field_classes: ''
                 options_show_only_used: 0
                 options_show_only_used_filtered: 0
                 options_hide_when_empty: 0
@@ -1118,10 +1169,17 @@ display:
                 plugin_id: bef_dropdown_multiselet
                 advanced:
                   sort_options: false
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
+                  collapsible_disable_automatic_open: false
+                  open_by_default: false
                   is_secondary: true
+                  hide_label: false
+                  field_classes: ''
                 options_show_only_used: 0
                 options_show_only_used_filtered: 0
                 options_hide_when_empty: 0
@@ -1131,10 +1189,17 @@ display:
                 plugin_id: bef_dropdown_multiselet
                 advanced:
                   sort_options: false
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
+                  collapsible_disable_automatic_open: false
+                  open_by_default: false
                   is_secondary: false
+                  hide_label: false
+                  field_classes: ''
                 options_show_only_used: 0
                 options_show_only_used_filtered: 0
                 options_hide_when_empty: 0
@@ -1143,10 +1208,17 @@ display:
               facets_langcode:
                 plugin_id: search_language_select
                 advanced:
+                  sort_options_method: alphabetical_asc
+                  sort_options_natural: true
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
+                  collapsible_disable_automatic_open: false
+                  open_by_default: false
                   is_secondary: false
+                  hide_label: false
+                  field_classes: ''
                 select_all_none: false
                 select_all_none_nested: false
                 display_inline: 0

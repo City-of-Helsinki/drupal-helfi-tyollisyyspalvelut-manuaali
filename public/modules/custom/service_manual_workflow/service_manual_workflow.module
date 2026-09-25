@@ -12,7 +12,6 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\content_moderation\Entity\ContentModerationStateInterface;
-use Drupal\field\FieldConfigInterface;
 use Drupal\node\NodeInterface;
 use Drupal\service_manual_workflow\Event\ServiceModerationEvent;
 
@@ -21,6 +20,25 @@ use Drupal\service_manual_workflow\Event\ServiceModerationEvent;
  */
 function service_manual_workflow_cron() {
   _service_manual_workflow_queue_services_for_archival();
+}
+
+/**
+ * Implements hook_entity_type_alter().
+ */
+function service_manual_workflow_entity_type_alter(array &$entity_types) {
+  /** @var \Drupal\Core\Entity\EntityTypeInterface $entity_type */
+  foreach ($entity_types as $entity_type) {
+    $constraints = $entity_type->getConstraints();
+
+    if (!array_key_exists('require_on_publish', $constraints)) {
+      continue;
+    }
+
+    $constraints['service_require_on_publish'] = NULL;
+    unset($constraints['require_on_publish']);
+
+    $entity_type->setConstraints($constraints);
+  }
 }
 
 /**
@@ -58,16 +76,7 @@ function _service_manual_workflow_queue_services_for_archival($time_limit = "-2 
     return;
   }
 
-  $storage = \Drupal::service('entity_type.manager')->getStorage('node');
-  $date = new DrupalDateTime($time_limit);
-
-  $nids = $storage->getQuery()
-    ->condition('changed', $date->format('U'), '<')
-    ->condition('default_langcode', 1)
-    ->accessCheck(FALSE)
-    ->latestRevision()
-    ->addTag('outdated_services')
-    ->execute();
+  $nids = _service_manual_workflow_get_outdated_services($time_limit);
 
   if (empty($nids)) {
     return;
@@ -85,11 +94,41 @@ function _service_manual_workflow_queue_services_for_archival($time_limit = "-2 
 }
 
 /**
+ * Retrieves a list of outdated service nodes based on the given time limit.
+ *
+ * @param string $time_limit
+ *   A date and time string indicating the threshold for outdated services.
+ *   Nodes updated before this time will be considered outdated.
+ *
+ * @return array
+ *   An array of node IDs that represent the outdated services.
+ */
+function _service_manual_workflow_get_outdated_services($time_limit) {
+  $storage = \Drupal::service('entity_type.manager')->getStorage('node');
+  $date = new DrupalDateTime($time_limit);
+  return $storage->getQuery()
+    ->condition('changed', $date->format('U'), '<')
+    ->condition('default_langcode', 1)
+    ->accessCheck(FALSE)
+    ->latestRevision()
+    ->addTag('outdated_services')
+    ->execute();
+}
+
+/**
  * Implements hook_query_TAG_alter().
  */
 function service_manual_workflow_query_outdated_services_alter(AlterableInterface $query) {
-  $query->addJoin('LEFT', 'content_moderation_state_field_data', 'md', 'md.content_entity_revision_id = base_table.vid');
+  $query->addJoin('LEFT', 'content_moderation_state_field_data', 'md', 'md.content_entity_revision_id = base_table.vid AND md.langcode = base_table.langcode');
   $query->condition('md.moderation_state', 'outdated', '=');
+}
+
+/**
+ * Implements hook_query_TAG_alter().
+ */
+function service_manual_workflow_query_exclude_archived_services_alter(AlterableInterface $query) {
+  $query->addJoin('LEFT', 'content_moderation_state_field_data', 'md', 'md.content_entity_revision_id = base_table.vid AND md.langcode = base_table.langcode');
+  $query->condition('md.moderation_state', 'archived', '!=');
 }
 
 /**
@@ -152,57 +191,6 @@ function service_manual_workflow_entity_insert(EntityInterface $entity) {
     $event = new ServiceModerationEvent($entity, \Drupal::currentUser());
     $transition = 'service_manual_workflow.draft.to.ready_to_publish';
     Drupal::service('event_dispatcher')->dispatch($event, $transition);
-  }
-}
-
-/**
- * Implements hook_require_on_publish_is_published_alter().
- */
-function service_manual_workflow_require_on_publish_is_published_alter(&$is_published, &$entity, $operation) {
-  /** @var \Drupal\content_moderation\Entity\ContentModerationState $entity */
-  $entity_type = $entity->getEntityType();
-  if ($entity_type->id() !== 'node') {
-    return;
-  }
-
-  $publish_states = ['ready_to_publish', 'published'];
-  $moderation_state = $entity->moderation_state->value;
-  $is_published = in_array($moderation_state, $publish_states);
-
-  // Allow saving a service node to `ready to publish` state without e.g.
-  // filling the `Specialist` fields which are required for specialist editors.
-  // The fields are still required before publishing the node.
-  //
-  // @todo Consider replacing the require_on_publish module with a custom
-  // module. As emphasized by this workaround, there is a need for separate
-  // "require on publish" and "require on publish and ready to publish" states.
-  if ($entity->bundle() === 'service' && $moderation_state === 'ready_to_publish') {
-    $fields_not_required_on_ready_to_publish = [
-      'field_service_req_speacialist',
-      'field_service_coordination',
-      'field_obligatoryness_freetext',
-      'field_obligatoryness',
-      'field_career_markings',
-      'field_statements_unemployment',
-      'field_statements',
-      'field_service_suits_job_search',
-      'field_responsible_updatee',
-    ];
-
-    /** @var \Drupal\Core\Field\FieldItemListInterface $field */
-    foreach ($entity->getFields() as $field) {
-      $field_config = $field->getFieldDefinition();
-      if (!($field_config instanceof FieldConfigInterface)) {
-        continue;
-      }
-      if (in_array($field->getName(), $fields_not_required_on_ready_to_publish)) {
-        // This setting is read at RequireOnPublish constraint's validate().
-        // The entity itself is not saved, so the change is not persistent.
-        // Setting the value to false means that validate() does not build
-        // constraint violation.
-        $field_config->setThirdPartySetting('require_on_publish', 'require_on_publish', FALSE);
-      }
-    }
   }
 }
 
