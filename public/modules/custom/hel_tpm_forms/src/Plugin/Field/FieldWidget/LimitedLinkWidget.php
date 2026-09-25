@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\hel_tpm_forms\Plugin\Field\FieldWidget;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -8,18 +10,17 @@ use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\link\Plugin\Field\FieldWidget\LinkWidget;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Plugin implementation of the 'link' widget.
+ * Link widget limiting target bundles of internal links.
  */
 #[FieldWidget(
   id: 'limited_link_widget',
   label: new TranslatableMarkup('Limited Link'),
   field_types: ['link'],
 )]
-class LimitedLinkWidget extends LinkWidget {
+class LimitedLinkWidget extends AutoSchemeLinkWidget {
 
   /**
    * Manages interactions with entity types and their storage handlers.
