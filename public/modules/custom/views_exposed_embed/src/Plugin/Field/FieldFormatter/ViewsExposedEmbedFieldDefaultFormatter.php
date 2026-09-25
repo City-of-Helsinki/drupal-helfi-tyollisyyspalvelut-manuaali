@@ -130,20 +130,25 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
    *   View render array.
    */
   protected function renderView(ViewsExposedEmbedFieldItem $item): array {
+    $presets = $this->getPresetFilters($item);
     $filters = $this->buildFilters($item);
 
     $view = $this->prepareViewRender($filters);
     if (empty($view)) {
       return [];
     }
+    if (!$view->access($view->current_display)) {
+      return ['#cache' => ['contexts' => ['user.permissions', 'user.roles']]];
+    }
 
     // Create a preview render from view.
     $view->preview();
     $render_array = $view->buildRenderable();
 
-    // Create custom exposed filter list.
-    if ($this->showExposedForm($filters)) {
-      $render_array['exposed_filters'] = $this->createFilterForm($view, $filters);
+    // Create custom exposed filter list. Only the editor's presets hide
+    // filters, values chosen by the visitor must stay selectable.
+    if ($this->showExposedForm($presets)) {
+      $render_array['exposed_filters'] = $this->createFilterForm($view, $presets);
     }
 
     $render_array['#arguments'][] = Json::encode(['exposed_embed' => $filters]);
@@ -161,10 +166,23 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
    *   An array of filters after merging with the exposed filter selection.
    */
   protected function buildFilters(ViewsExposedEmbedFieldItem $item): array {
+    $filters = array_merge($this->getPresetFilters($item), $this->getExposedFilterSelection());
+    return array_filter($filters);
+  }
+
+  /**
+   * Returns the filter values preset by the editor in the field item.
+   *
+   * @param \Drupal\views_exposed_embed\Plugin\Field\FieldType\ViewsExposedEmbedFieldItem $item
+   *   The views exposed embed field item.
+   *
+   * @return array
+   *   The non-empty preset filter values keyed by filter identifier.
+   */
+  protected function getPresetFilters(ViewsExposedEmbedFieldItem $item): array {
     $filters = $item->getValue();
     $filters = reset($filters);
-    $filters = array_merge($filters, $this->getExposedFilterSelection());
-    return array_filter($filters);
+    return is_array($filters) ? array_filter($filters) : [];
   }
 
   /**
@@ -186,12 +204,14 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
       return [];
     }
 
-    $query = $this->currentRequest->query;
+    // Read the raw query, InputBag::all($key) throws on scalar values such as
+    // textfield filters.
+    $query = $this->currentRequest->query->all();
     foreach ($filters as $filter => $value) {
       if (empty($value)) {
         continue;
       }
-      $filter_value = $query->all($filter);
+      $filter_value = $query[$filter] ?? NULL;
       if (empty($filter_value)) {
         continue;
       }
@@ -213,17 +233,17 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
    *   A renderable array representing the filter form.
    */
   protected function createFilterForm(ViewExecutable $view, array $selected_filters): array {
-    $filter_form = [];
+    $output = [];
     $filters = $this->getSetting('exposed_filters') ?? [];
 
     if (empty($filters)) {
-      return $filter_form;
+      return $output;
     }
 
     if ($view->display_handler->usesExposed()) {
       /** @var \Drupal\views\Plugin\views\exposed_form\ExposedFormPluginInterface $exposed_form */
       $exposed_form = $view->display_handler->getPlugin('exposed_form');
-      $output = $exposed_form->renderExposedForm(TRUE);
+      $output = $exposed_form->renderExposedForm(TRUE) ?: [];
       if (!empty($output)) {
         $output += [
           '#view' => $view,
@@ -233,14 +253,14 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
     }
 
     foreach ($filters as $filter => $value) {
-      if ($value !== 0) {
-        if (!empty($selected_filters[$filter])) {
-          $output[$filter]['#access'] = FALSE;
-        }
+      // Show enabled filters that have no preset value. Unchecked checkboxes
+      // are stored as 0, or '0' once cast by the schema.
+      if (!empty($value) && empty($selected_filters[$filter])) {
         continue;
       }
-
-      $output[$filter]['#access'] = FALSE;
+      // Filters with an exposed operator are wrapped in a container.
+      $key = isset($output[$filter . '_wrapper']) ? $filter . '_wrapper' : $filter;
+      $output[$key]['#access'] = FALSE;
     }
 
     return $output;
@@ -258,6 +278,9 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
    */
   protected function prepareViewRender(array $filter_values): ?ViewExecutable {
     $view = $this->getView();
+    if (!$view) {
+      return NULL;
+    }
     $exposed_input = $view->getExposedInput();
     $exposed_input = array_merge($exposed_input, $filter_values);
     $view->setExposedInput($exposed_input);
@@ -275,7 +298,10 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
     $view_id = $this->getFieldSetting('view_id');
     $display_id = $this->getFieldSetting('display_id');
 
-    $view = Views::getView($view_id);
+    $view = Views::getView((string) $view_id);
+    if (!$view || !$view->storage->getDisplay((string) $display_id)) {
+      return NULL;
+    }
     $view->setDisplay($display_id);
 
     return $view;
@@ -290,6 +316,9 @@ final class ViewsExposedEmbedFieldDefaultFormatter extends FormatterBase {
    */
   protected function getViewsExposedFiltersList(): array {
     $view = $this->getView();
+    if (!$view) {
+      return [];
+    }
     $view->initHandlers();
     $filters = [];
     foreach ($view->filter as $filter) {
