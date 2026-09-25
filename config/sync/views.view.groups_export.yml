@@ -602,7 +602,47 @@ display:
             field_identifier: ''
           exposed: false
       arguments: {  }
-      filters: {  }
+      filters:
+        default_langcode:
+          id: default_langcode
+          table: groups_field_data
+          field: default_langcode
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: group
+          entity_field: default_langcode
+          plugin_id: boolean
+          operator: '='
+          value: '1'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
       filter_groups:
         operator: AND
         groups: {  }
@@ -661,11 +701,12 @@ display:
             format: full_html
           tokenize: false
       footer: {  }
-      display_extenders: {  }
+      rendering_language: '***LANGUAGE_language_interface***'
+      display_extenders:
+        ajax_history: {  }
     cache_metadata:
       max-age: -1
       contexts:
-        - 'languages:language_content'
         - 'languages:language_interface'
         - url.query_args
         - user.permissions
@@ -690,7 +731,9 @@ display:
             encoding: utf8
             utf8_bom: '0'
             use_serializer_encode_only: false
-      display_extenders: {  }
+      rendering_language: '***LANGUAGE_language_interface***'
+      display_extenders:
+        ajax_history: {  }
       path: export/groups/csv
       auth:
         - cookie
@@ -706,7 +749,6 @@ display:
     cache_metadata:
       max-age: -1
       contexts:
-        - 'languages:language_content'
         - 'languages:language_interface'
         - request_format
         - user.permissions
@@ -717,7 +759,9 @@ display:
     display_plugin: page
     position: 2
     display_options:
-      display_extenders: {  }
+      rendering_language: '***LANGUAGE_language_interface***'
+      display_extenders:
+        ajax_history: {  }
       path: export/groups
       menu:
         type: normal
@@ -731,7 +775,6 @@ display:
     cache_metadata:
       max-age: -1
       contexts:
-        - 'languages:language_content'
         - 'languages:language_interface'
         - url.query_args
         - user.permissions
