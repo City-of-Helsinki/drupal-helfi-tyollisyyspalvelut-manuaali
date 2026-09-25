@@ -35,7 +35,7 @@
   ]
 %}
   <nav{{ attributes.addClass(classes) }}>
-    <button id="loginDropdownButton" class="btn btn-menu hide-mobile" type="button" data-bs-toggle="dropdown"  data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
+    <button id="loginDropdownButton" class="btn btn-menu hide-mobile focus-outline" type="button" data-bs-toggle="dropdown"  data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
       <span class="login-text">{{'Log in'|t}}
       {% do attributes.removeAttribute('id') %}
       {% do attributes.removeAttribute('class') %}

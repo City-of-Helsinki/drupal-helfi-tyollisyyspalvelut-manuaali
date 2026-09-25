@@ -785,3 +785,14 @@ function palvelumanuaali_preprocess_pager(&$variables): void {
     $variables['items']['last']['attributes']->addClass('pager__link');
   }
 }
+
+/**
+ * Implements hook_preprocess_block().
+ */
+function palvelumanuaali_preprocess_block(array &$variables) {
+  if (($variables['elements']['#plugin_id'] ?? '') === 'user_login_block') {
+    if (isset($variables['content']['user_links']['#items']['request_password']['#title'])) {
+      $variables['content']['user_links']['#items']['request_password']['#title'] = t('Forgot password?');
+    }
+  }
+}
