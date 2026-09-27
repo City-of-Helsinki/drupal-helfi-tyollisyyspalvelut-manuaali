@@ -271,6 +271,7 @@
   font-weight: 600;
   white-space: normal;
   word-wrap: anywhere;
+  overflow: visible;
   @include xl-zoom {
     font-size: 14px;
   }
@@ -286,9 +287,13 @@
     font-size: 16px;
     right: 0;
     width: 24px;
+    height: 24px;
+    padding: 0;
     color: clr(text) !important;
     background: none;
     border: none;
+    @extend .focus-outline;
+    outline-offset: -1px;
   }
 }
 
