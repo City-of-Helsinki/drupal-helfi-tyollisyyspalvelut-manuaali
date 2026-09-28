@@ -149,11 +149,14 @@ class ServiceEntityVisualInlineDiffLayout extends VisualInlineDiffLayout {
    * @return void
    *   Does not return a value.
    */
-  protected function switchTheme($theme = 'default') {
-    $selected_theme = $this->configFactory->get('system.theme')->get($theme); {
+  protected function switchTheme(string $theme = 'default'): void {
+    $selected_theme = $this->configFactory->get('system.theme')->get($theme);
     if ($selected_theme) {
+      // Reset the theme manager's default template variables before switching,
+      // otherwise templates rendered after this point keep resolving asset
+      // paths from the previous theme.
+      $this->themeManager->resetActiveTheme();
       $this->themeManager->setActiveTheme($this->themeInitialization->initTheme($selected_theme));
-    }
     }
   }
 

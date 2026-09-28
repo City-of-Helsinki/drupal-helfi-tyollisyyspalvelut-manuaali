@@ -1,0 +1,9 @@
+services:
+  elasticsearch:
+    image: elasticsearch:7.17.28
+    container_name: ddev-${DDEV_SITENAME}-elastic
+    environment:
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms1024m -Xmx1024m
+    ports:
+      - "9200:9200"

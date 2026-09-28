@@ -5,11 +5,11 @@ WORKDIR /var/www/html
 RUN composer install --no-progress --prefer-dist --no-interaction --no-dev --optimize-autoloader
 RUN composer dump-autoload --optimize
 
-# Copy deploy script
-COPY docker/openshift/entrypoints/20-deploy.sh /entrypoints
-RUN chmod +x /entrypoints/20-deploy.sh
+RUN mkdir -p /crons /entrypoints
 
-# Copy cron scripts
-RUN mkdir /crons
+COPY docker/openshift/entrypoints /entrypoints
 COPY docker/openshift/crons/ /crons
-RUN chmod +x /crons/*
+
+RUN chmod -R +x /entrypoints/* /crons/*
+
+COPY docker/init.sh /

@@ -1,1 +1,0 @@
-(()=>{"use strict";!function(e,i){i.behaviors.loginMove={attach:function(i,n){var a=e(".header__primary >.block-user-login-block");if(0!==a.length){var t=e(".main-menu__item--active.main-menu__item--with-sub >.main-menu--sub-1");0!==t.length&&e(a).appendTo(t)}}}}(jQuery,Drupal)})();

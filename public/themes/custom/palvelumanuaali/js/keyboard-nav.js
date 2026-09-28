@@ -9,6 +9,13 @@
       $(document).on('select2:select', function () {
         $('.select2-selection__choice__remove').attr('tabindex', '0');
         $('.select2-selection__choice__remove').attr('aria-label', 'Poista valinta');
+      }).on('select2:unselect', function () {
+        $('.select2-selection__choice__remove').attr('tabindex', '0');
+        $('.select2-selection__choice__remove').attr('aria-label', 'Poista valinta');
+      }).on('select:highlight' , function(){
+        $('.select2-results__option--selected').attr('aria-selected', 'true');
+    }).on('select:focus' , function(){
+        $('.select2-results__option--selected').attr('aria-selected', 'true');
       });
 
       $(document).on(
@@ -34,7 +41,6 @@
           $(this).attr('aria-labeledby', $(this).parent().parent().parent().siblings('label')[0]['id']);
         });
       }
-
     }
   };
 })(jQuery, Drupal, this);

@@ -211,8 +211,13 @@ article ul,
   margin-bottom: $space;
 }
 
+
 .margin-bottom-double-space {
   margin-bottom: $space-double;
+}
+
+.margin-bottom-two-and-half {
+  margin-bottom: $space-two-and-half;
 }
 
 .margin-bottom-triple-space {
@@ -402,6 +407,11 @@ article ul,
     &--top-three-fourths {
       @include large {
         margin-top: $space-three-fourths;
+      }
+    }
+    &--bottom-two-and-half {
+      @include large {
+        margin-bottom: $space-two-and-half;
       }
     }
   }
@@ -631,6 +641,9 @@ article ul,
   &--center {
       text-align: center;
   }
+  &--left {
+    text-align: left;
+  }
 }
 
 //z-index
@@ -722,4 +735,8 @@ article ul,
   &:focus-within {
     outline: 2px solid clr(primary);
   }
+}
+
+.offset-outline {
+  outline-offset: 2px;
 }
