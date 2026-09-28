@@ -3,6 +3,14 @@
     attach: function (context, settings) {
       $(document).ready(function() {
         $('select.dropdownMultiselect[multiple="multiple"]').each(function () {
+          // Firefox restores previous form state on reload, overriding the
+          // server rendered selection. Reset options to the rendered state
+          // before the widget reads them.
+          if (!$.data(this, 'plugin_multiSelect')) {
+            $('option', this).each(function () {
+              this.selected = this.defaultSelected;
+            });
+          }
           let parent = $(this).parents('.js-form-type-select');
           let label = $('div.form-item__description', parent);
 
