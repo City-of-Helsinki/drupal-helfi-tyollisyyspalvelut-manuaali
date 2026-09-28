@@ -290,7 +290,8 @@
                 "Cannot save or publish originating node or translations. error \"The content has either been modified by another user, or you have already submitted modifications \"(https://www.drupal.org/project/drupal/issues/3285657)": "https://www.drupal.org/files/issues/2022-06-14/core9.2-node-lock-translations-2744851.patch",
                 "Link to latest revision (https://www.drupal.org/project/drupal/issues/3097238#comment-16673086)": "https://www.drupal.org/files/issues/2026-07-03/2906455-60.patch",
                 "One time login link expiration (https://www.drupal.org/project/drupal/issues/3097238#comment-15374828)": "https://www.drupal.org/files/issues/2026-07-06/3097238-protect-initial-login.patch",
-                "Runtime ThemeRegistry left empty after destruct(), causing \"Theme hook not found\" warnings (https://www.drupal.org/project/drupal/issues/3609212#comment-16676906)": "patches/3609212-runtime-theme-registry-left-empty-after-destruct.patch"
+                "Runtime ThemeRegistry left empty after destruct(), causing \"Theme hook not found\" warnings (https://www.drupal.org/project/drupal/issues/3609212#comment-16676906)": "patches/3609212-runtime-theme-registry-left-empty-after-destruct.patch",
+                "Views AJAX keeps multi-value exposed filter values from the page URL, duplicating them on every submit (https://www.drupal.org/project/drupal/issues/3273334#comment-16717653)": "patches/3273334-unable-to-unselect-multiselect.patch"
             },
             "drupal/better_exposed_filters": {
                 "Fix undefined array key #default_value": "patches/bef-default-value.patch"
@@ -377,6 +378,9 @@
             },
             "drupal/address": {
                 "Incompatibility with diff ^2.0 (https://www.drupal.org/project/address/issues/3589015#comment-16640742)": "https://www.drupal.org/files/issues/2026-06-17/address-3589015-7.patch"
+            },
+            "drupal/views_ajax_history": {
+                "Multi-value exposed filter values are duplicated on every submit": "patches/views_ajax_history-duplicate-multivalue-params.patch"
             }
         }
     }

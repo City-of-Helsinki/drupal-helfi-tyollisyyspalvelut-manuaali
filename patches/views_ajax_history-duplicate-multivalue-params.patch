@@ -1,0 +1,32 @@
+diff --git a/js/views_ajax_history.js b/js/views_ajax_history.js
+--- a/js/views_ajax_history.js
++++ b/js/views_ajax_history.js
+@@ -111,7 +111,7 @@
+               args[key] = [value];
+             }
+             // Don't duplicate values.
+-            else if (!$.inArray(value, args[key]) !== -1) {
++            else if ($.inArray(value, args[key]) === -1) {
+               args[key].push(value);
+             }
+           }
+@@ -351,11 +351,18 @@
+       // Copy selected values in history state.
++      // options.data is shared with the view settings, so reset multi-value
++      // fields first, otherwise every submit appends the same values again.
++      element.find('[name$="[]"]').each(function () {
++        delete options.data[this.name];
++      });
+       $.each(form_values, function () {
+         // Field name ending with [] is a multi value field.
+         if (/\[\]$/.test(this.name)) {
+           if (!options.data[this.name]) {
+             options.data[this.name] = [];
+           }
+-          options.data[this.name].push(this.value);
++          if ($.inArray(this.value, options.data[this.name]) === -1) {
++            options.data[this.name].push(this.value);
++          }
+         }
+         // Regular field.
+         else {

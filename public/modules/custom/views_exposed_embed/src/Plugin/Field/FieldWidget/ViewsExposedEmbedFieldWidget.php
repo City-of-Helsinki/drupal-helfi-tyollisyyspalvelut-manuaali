@@ -102,6 +102,9 @@ final class ViewsExposedEmbedFieldWidget extends WidgetBase {
     }
 
     $view = Views::getView($view_id);
+    if (!$view) {
+      return [];
+    }
     $view->initHandlers();
 
     $form_state = new FormState();
@@ -133,7 +136,7 @@ final class ViewsExposedEmbedFieldWidget extends WidgetBase {
   private function extractExposedFormFilters(array $form, FieldItemInterface $field_item): array {
     $filters = [];
     $default_values = $field_item->getValue();
-    $default_values = reset($default_values);
+    $default_values = reset($default_values) ?: [];
 
     $filter_params = [
       '#type',
@@ -146,11 +149,14 @@ final class ViewsExposedEmbedFieldWidget extends WidgetBase {
       '#value',
     ];
 
-    $empty_filter = NULL;
     foreach ($form['#info'] as $filter) {
 
       $field_key = $filter['value'];
-      $filter_item = $form[$field_key];
+      // Filters with an exposed operator are wrapped in a container.
+      $filter_item = $form[$field_key] ?? $form[$field_key . '_wrapper'][$field_key] ?? NULL;
+      if ($filter_item === NULL) {
+        continue;
+      }
 
       $filter = [];
 
@@ -163,9 +169,7 @@ final class ViewsExposedEmbedFieldWidget extends WidgetBase {
 
       $filters[$field_key] = $filter;
 
-      if ($filter['#type'] === 'select') {
-        $empty_filter = [];
-      }
+      $empty_filter = ($filter['#type'] ?? NULL) === 'select' ? [] : NULL;
       $filters[$field_key]['#default_value'] = !empty($default_values[$field_key]) ? $default_values[$field_key] : $empty_filter;
     }
 
@@ -194,8 +198,9 @@ final class ViewsExposedEmbedFieldWidget extends WidgetBase {
    */
   public function massageFormValues(array $values, array $form, FormStateInterface $form_state): array {
     foreach ($values as &$value) {
-      if (empty($value['value'])) {
+      if (empty($value['value']) || !is_array($value['value'])) {
         $value['value'] = NULL;
+        continue;
       }
       $this->massageFilters($value['value']);
     }
@@ -213,7 +218,7 @@ final class ViewsExposedEmbedFieldWidget extends WidgetBase {
    */
   protected function massageFilters(array &$filters) {
     foreach ($filters as &$filter) {
-      if (empty($filter)) {
+      if (empty($filter) || !is_array($filter)) {
         continue;
       }
       foreach ($filter as $key => $value) {

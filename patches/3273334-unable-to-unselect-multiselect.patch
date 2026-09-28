@@ -1,0 +1,250 @@
+From f171d1b635f0d1e4584548958d67bf2a7b23c84d Mon Sep 17 00:00:00 2001
+From: Stephen Mustgrave <smustgrave@gmail.com>
+Date: Fri, 24 Jul 2026 12:05:30 -0400
+Subject: [PATCH 1/3] Fix #3273334
+
+---
+ core/modules/views/js/ajax_view.js            | 19 ++++++-
+ .../ExposedFilterAJAXTest.php                 | 57 +++++++++++++++++++
+ 2 files changed, 74 insertions(+), 2 deletions(-)
+
+diff --git a/core/modules/views/js/ajax_view.js b/core/modules/views/js/ajax_view.js
+index 1fbb7d1282de..664ca9ad1a3e 100644
+--- a/core/modules/views/js/ajax_view.js
++++ b/core/modules/views/js/ajax_view.js
+@@ -85,13 +85,28 @@
+       // Remove the question mark and Drupal path component if any.
+       queryString = queryString.slice(1);
+ 
++      // Collect the base names of every named field in the exposed form. The
++      // trailing `[…]` is stripped so a multi-select field named `type[]`
++      // matches URL params serialized by PHP as `type[0]`, `type[1]`, or
++      // `type[]`.
++      const stripArraySuffix = (name) => {
++        const bracketIndex = name.indexOf('[');
++        return bracketIndex === -1 ? name : name.slice(0, bracketIndex);
++      };
++      const exposedFieldBaseNames = new Set();
++      this.$exposed_form
++        .find('input[name], select[name], textarea[name]')
++        .each(function () {
++          exposedFieldBaseNames.add(stripArraySuffix(this.name));
++        });
++
+       // Remove current exposed filters.
+       const params = decodeURI(queryString)
+         .split('&')
+         .filter((param) => {
+-          const [name, value] = param.split('=');
++          const [name] = param.split('=');
+           return (
+-            this.$exposed_form.find(`input[name="${name}"]`).length === 0 &&
++            !exposedFieldBaseNames.has(stripArraySuffix(name)) &&
+             /*
+             Submitting filters should reset paging and sorting
+             because that is what happens without AJAX.
+diff --git a/core/modules/views/tests/src/FunctionalJavascript/ExposedFilterAJAXTest.php b/core/modules/views/tests/src/FunctionalJavascript/ExposedFilterAJAXTest.php
+index 5e465d33150f..680927b42280 100644
+--- a/core/modules/views/tests/src/FunctionalJavascript/ExposedFilterAJAXTest.php
++++ b/core/modules/views/tests/src/FunctionalJavascript/ExposedFilterAJAXTest.php
+@@ -252,6 +252,63 @@ public function testExposedFilteringWithButtonElement(): void {
+     $this->assertSame($ajax_views_before, $ajax_views_after);
+   }
+ 
++  /**
++   * Tests deselecting a multi-select exposed filter clears it from the URL.
++   */
++  public function testUnselectMultiSelectExposedFilter(): void {
++    // Flip the type filter to allow multiple selections.
++    \Drupal::configFactory()->getEditable('views.view.content')
++      ->set('display.default.display_options.filters.type.expose.multiple', TRUE)
++      ->save();
++
++    // Create a second content type and a node of that type so we can tell the
++    // filter was actually cleared.
++    $this->createContentType(['type' => 'article']);
++    $this->createNode(['type' => 'article', 'title' => 'Article One']);
++
++    $assert = $this->assertSession();
++    $page = $this->getSession()->getPage();
++
++    $this->drupalGet('admin/content', ['query' => ['type[]' => 'page']]);
++    $html = $page->getHtml();
++    $this->assertStringContainsString('Page One', $html);
++    $this->assertStringNotContainsString('Article One', $html);
++
++    $select = $page->find('css', 'select[name="type[]"]');
++    $this->assertNotNull($select);
++    $select->setValue([]);
++    $page->pressButton('Filter');
++    $assert->assertWaitOnAjaxRequest();
++
++    $html = $page->getHtml();
++    $this->assertStringContainsString('Page One', $html);
++    $this->assertStringContainsString('Article One', $html);
++    $url = $this->getSession()->getCurrentUrl();
++    $this->assertStringNotContainsString('type%5B%5D=page', $url);
++    $this->assertStringNotContainsString('type[]=page', $url);
++
++    $this->drupalGet('admin/content', [
++      'query' => ['type[0]' => 'article', 'type[1]' => 'page'],
++    ]);
++    $html = $page->getHtml();
++    $this->assertStringContainsString('Page One', $html);
++    $this->assertStringContainsString('Article One', $html);
++
++    $select = $page->find('css', 'select[name="type[]"]');
++    $this->assertNotNull($select);
++    // Keep only article selected; drop page.
++    $select->setValue(['article']);
++    $page->pressButton('Filter');
++    $assert->assertWaitOnAjaxRequest();
++
++    $html = $page->getHtml();
++    $this->assertStringContainsString('Article One', $html);
++    $this->assertStringNotContainsString('Page One', $html);
++    $this->assertStringNotContainsString('Page Two', $html);
++    $url = $this->getSession()->getCurrentUrl();
++    $this->assertStringNotContainsString('=page', $url);
++  }
++
+   /**
+    * Tests that errors messages are displayed for exposed filters via ajax.
+    */
+-- 
+GitLab
+
+
+From 5fd0c357ab26727e542f37f91d2d7360196700c3 Mon Sep 17 00:00:00 2001
+From: Stephen Mustgrave <smustgrave@gmail.com>
+Date: Fri, 24 Jul 2026 12:29:49 -0400
+Subject: [PATCH 2/3] Fix tests
+
+---
+ .../src/FunctionalJavascript/ExposedFilterAJAXTest.php      | 4 ++--
+ .../tests/src/FunctionalJavascript/PaginationAJAXTest.php   | 6 +++---
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/core/modules/views/tests/src/FunctionalJavascript/ExposedFilterAJAXTest.php b/core/modules/views/tests/src/FunctionalJavascript/ExposedFilterAJAXTest.php
+index 680927b42280..0293c5110581 100644
+--- a/core/modules/views/tests/src/FunctionalJavascript/ExposedFilterAJAXTest.php
++++ b/core/modules/views/tests/src/FunctionalJavascript/ExposedFilterAJAXTest.php
+@@ -117,7 +117,7 @@ public function testExposedFiltering(): void {
+     $html = $session->getPage()->getHtml();
+     $this->assertStringContainsString('Page Two', $html);
+     $this->assertStringNotContainsString('Page One', $html);
+-    $this->assertSession()->addressEquals('admin/content?type=All&status=All&title=Page%20Two');
++    $this->assertSession()->addressEquals('admin/content?title=Page%20Two&type=All&status=All');
+ 
+     // Submit bulk actions form to ensure that the previous AJAX submit does not
+     // break it.
+@@ -128,7 +128,7 @@ public function testExposedFiltering(): void {
+ 
+     // Verify that the action was performed.
+     $this->assertSession()->pageTextContains('Make content sticky was applied to 1 item.');
+-    $this->assertSession()->addressEquals('admin/content?type=All&status=All&title=Page%20Two');
++    $this->assertSession()->addressEquals('admin/content?title=Page%20Two&type=All&status=All');
+ 
+     // Reset the form.
+     $this->submitForm([], 'Reset');
+diff --git a/core/modules/views/tests/src/FunctionalJavascript/PaginationAJAXTest.php b/core/modules/views/tests/src/FunctionalJavascript/PaginationAJAXTest.php
+index 8c563930d376..7299d0042ed5 100644
+--- a/core/modules/views/tests/src/FunctionalJavascript/PaginationAJAXTest.php
++++ b/core/modules/views/tests/src/FunctionalJavascript/PaginationAJAXTest.php
+@@ -116,7 +116,7 @@ public function testBasicPagination(): void {
+     $this->assertNoDuplicateAssetsOnPage();
+ 
+     // Test that no unwanted parameters are added to the URL.
+-    $this->assertEquals('?status=All&type=All&items_per_page=5&title=&order=changed&sort=asc&page=2', $link->getAttribute('href'));
++    $this->assertEquals('?status=All&type=All&title=&items_per_page=5&order=changed&sort=asc&page=2', $link->getAttribute('href'));
+ 
+     $this->clickLink('Go to page 3');
+     $session_assert->assertWaitOnAjaxRequest();
+@@ -200,7 +200,7 @@ public function testDefaultFilterPagination(): void {
+     $this->assertNoDuplicateAssetsOnPage();
+ 
+     // Test that no unwanted parameters are added to the URL.
+-    $this->assertEquals('?status=All&type=All&items_per_page=5&title=default_value&order=changed&sort=asc&page=0', $link->getAttribute('href'));
++    $this->assertEquals('?status=All&type=All&title=default_value&items_per_page=5&order=changed&sort=asc&page=0', $link->getAttribute('href'));
+ 
+     // Set the title filter to empty string using the exposed pager.
+     $page->fillField('title', '');
+@@ -220,7 +220,7 @@ public function testDefaultFilterPagination(): void {
+     $this->assertNoDuplicateAssetsOnPage();
+ 
+     // Test that no unwanted parameters are added to the URL.
+-    $this->assertEquals('?status=All&type=All&items_per_page=5&title=&page=0', $link->getAttribute('href'));
++    $this->assertEquals('?status=All&type=All&title=&items_per_page=5&page=0', $link->getAttribute('href'));
+ 
+     // Navigate back to the first page.
+     $this->clickLink('Go to first page');
+-- 
+GitLab
+
+
+From a6ab6da6de36f970d3c033a81ddc331ae6c4c624 Mon Sep 17 00:00:00 2001
+From: Adam Bramley <adam.bramley@previousnext.com.au>
+Date: Tue, 4 Aug 2026 12:54:00 +1000
+Subject: [PATCH 3/3] Use pageText(Not)Contains
+
+---
+ .../ExposedFilterAJAXTest.php                 | 22 ++++++++-----------
+ 1 file changed, 9 insertions(+), 13 deletions(-)
+
+diff --git a/core/modules/views/tests/src/FunctionalJavascript/ExposedFilterAJAXTest.php b/core/modules/views/tests/src/FunctionalJavascript/ExposedFilterAJAXTest.php
+index 0293c5110581..cb599fe93c4a 100644
+--- a/core/modules/views/tests/src/FunctionalJavascript/ExposedFilterAJAXTest.php
++++ b/core/modules/views/tests/src/FunctionalJavascript/ExposedFilterAJAXTest.php
+@@ -270,9 +270,8 @@ public function testUnselectMultiSelectExposedFilter(): void {
+     $page = $this->getSession()->getPage();
+ 
+     $this->drupalGet('admin/content', ['query' => ['type[]' => 'page']]);
+-    $html = $page->getHtml();
+-    $this->assertStringContainsString('Page One', $html);
+-    $this->assertStringNotContainsString('Article One', $html);
++    $assert->pageTextContains('Page One');
++    $assert->pageTextNotContains('Article One');
+ 
+     $select = $page->find('css', 'select[name="type[]"]');
+     $this->assertNotNull($select);
+@@ -280,9 +279,8 @@ public function testUnselectMultiSelectExposedFilter(): void {
+     $page->pressButton('Filter');
+     $assert->assertWaitOnAjaxRequest();
+ 
+-    $html = $page->getHtml();
+-    $this->assertStringContainsString('Page One', $html);
+-    $this->assertStringContainsString('Article One', $html);
++    $assert->pageTextContains('Page One');
++    $assert->pageTextContains('Article One');
+     $url = $this->getSession()->getCurrentUrl();
+     $this->assertStringNotContainsString('type%5B%5D=page', $url);
+     $this->assertStringNotContainsString('type[]=page', $url);
+@@ -290,9 +288,8 @@ public function testUnselectMultiSelectExposedFilter(): void {
+     $this->drupalGet('admin/content', [
+       'query' => ['type[0]' => 'article', 'type[1]' => 'page'],
+     ]);
+-    $html = $page->getHtml();
+-    $this->assertStringContainsString('Page One', $html);
+-    $this->assertStringContainsString('Article One', $html);
++    $assert->pageTextContains('Page One');
++    $assert->pageTextContains('Article One');
+ 
+     $select = $page->find('css', 'select[name="type[]"]');
+     $this->assertNotNull($select);
+@@ -301,10 +298,9 @@ public function testUnselectMultiSelectExposedFilter(): void {
+     $page->pressButton('Filter');
+     $assert->assertWaitOnAjaxRequest();
+ 
+-    $html = $page->getHtml();
+-    $this->assertStringContainsString('Article One', $html);
+-    $this->assertStringNotContainsString('Page One', $html);
+-    $this->assertStringNotContainsString('Page Two', $html);
++    $assert->pageTextContains('Article One');
++    $assert->pageTextNotContains('Page One');
++    $assert->pageTextNotContains('Page Two');
+     $url = $this->getSession()->getCurrentUrl();
+     $this->assertStringNotContainsString('=page', $url);
+   }
+-- 
+GitLab
+
