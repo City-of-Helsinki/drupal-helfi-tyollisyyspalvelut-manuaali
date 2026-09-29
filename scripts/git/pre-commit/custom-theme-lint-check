@@ -56,8 +56,7 @@ do
 done
 
 if ! $PASS; then
-  echo "COMMIT FAILED: Your commit contains files that do not pass Drupal best practice checks."
-  echo "Please fix the reported errors and try again."
+  echo "COMMIT FAILED: Your commit contains files that should pass syntax checks but do not. Please fix the Drupal best practice errors and try again.\n"
   exit 1
 fi
 

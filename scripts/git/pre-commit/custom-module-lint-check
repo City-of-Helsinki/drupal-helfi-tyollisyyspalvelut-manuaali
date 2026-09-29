@@ -34,7 +34,7 @@ do
 done
 
 if ! $PASS; then
-  echo "COMMIT FAILED: Your commit contains files that do not pass Drupal coding standards."
+  echo "COMMIT FAILED: Your commit contains files that should pass syntax checks but do not. Please fix the PHPCS errors and try again.\n"
   exit 1
 fi
 
@@ -51,7 +51,7 @@ do
 done
 
 if ! $PASS; then
-  echo "COMMIT FAILED: Your commit contains files that do not pass Drupal best practice checks."
+  echo "COMMIT FAILED: Your commit contains files that should pass syntax checks but do not. Please fix the Drupal best practice errors and try again.\n"
   exit 1
 fi
 
