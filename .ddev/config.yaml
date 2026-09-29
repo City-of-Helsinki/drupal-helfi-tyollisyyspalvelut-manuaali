@@ -9,12 +9,24 @@ additional_fqdns: []
 database:
     type: mariadb
     version: "11.8"
+webimage_extra_packages: [default-mysql-client]
 use_dns_when_possible: true
 composer_version: "2"
-web_environment: []
+web_environment:
+    - ENVIRONMENT=local
+    - PHP_IDE_CONFIG=serverName=appserver
+    - SIMPLETEST_BASE_URL=https://helfi-manuska.ddev.site
+    - SIMPLETEST_DB=mysql://db:db@db/db
+    - DRUSH_OPTIONS_URI=https://helfi-manuska.ddev.site
+    - XDEBUG_MODE=coverage,debug
+    - FILE_PRIVATE_PATH=/var/www/html/private
+    - DRUSH_ALLOW_XDEBUG=1
 nodejs_version: "24"
 corepack_enable: true
-
+upload_dirs:
+   - sites/default/files/
+   - ../vendor
+   - themes/custom/palvelumanuali/node_modules/
 
 
 # Key features of DDEV's config.yaml:
