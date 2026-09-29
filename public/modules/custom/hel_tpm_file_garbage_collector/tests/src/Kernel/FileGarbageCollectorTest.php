@@ -16,12 +16,14 @@ use Drupal\node\Entity\Node;
 use Drupal\node\Entity\NodeType;
 use Drupal\Tests\content_moderation\Traits\ContentModerationTestTrait;
 use Drupal\workflows\Entity\Workflow;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
- * Test description.
- *
- * @group hel_tpm_file_garbage_collector
+ * Tests file garbage collection with content moderation and translations.
  */
+#[Group('hel_tpm_file_garbage_collector')]
+#[RunTestsInSeparateProcesses]
 final class FileGarbageCollectorTest extends EntityKernelTestBase {
 
   use ContentModerationTestTrait;
@@ -92,6 +94,13 @@ final class FileGarbageCollectorTest extends EntityKernelTestBase {
   private $file3;
 
   /**
+   * File field upload directory.
+   *
+   * @var string
+   */
+  private string $directory;
+
+  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {
@@ -151,7 +160,7 @@ final class FileGarbageCollectorTest extends EntityKernelTestBase {
     ]);
     $this->file2->save();
 
-    file_put_contents('public://example2.txt', $this->randomMachineName());
+    file_put_contents('public://example3.txt', $this->randomMachineName());
     $this->file3 = File::create([
       'uri' => 'public://example3.txt',
     ]);
@@ -199,7 +208,8 @@ final class FileGarbageCollectorTest extends EntityKernelTestBase {
     $this->garbageCollector->collect();
     $this->assertEquals(0, $this->queue->numberOfItems());
 
-    $datetime->add(\DateInterval::createFromDateString('3 months'));
+    // File 1 is removed more than 6 months ago.
+    $datetime->add(\DateInterval::createFromDateString('1 month'));
     $values = ['file_test' => ['target_id' => $this->file2->id()]];
     $this->setNodeValues($node, $values, $datetime->getTimestamp());
 
@@ -207,11 +217,9 @@ final class FileGarbageCollectorTest extends EntityKernelTestBase {
     $this->garbageCollector->collect();
     $this->assertEquals(1, $this->queue->numberOfItems());
 
+    // File 2 is removed now, so it is kept for the retention period.
     $values = ['file_test' => []];
-    $this->setNodeValues($node, $values, $datetime->getTimestamp());
-    $node->set('file_test', []);
-    $node->setNewRevision(TRUE);
-    $node->save();
+    $this->setNodeValues($node, $values, (new DrupalDateTime('now'))->getTimestamp());
 
     // Empty queue before running collection.
     $this->queue->deleteQueue();
@@ -267,7 +275,8 @@ final class FileGarbageCollectorTest extends EntityKernelTestBase {
     // No files removed.
     $this->assertEquals(0, $this->queue->numberOfItems());
 
-    $datetime->add(\DateInterval::createFromDateString('3 months'));
+    // File 1 is removed more than 6 months ago.
+    $datetime->add(\DateInterval::createFromDateString('1 month'));
     $values = [
       'moderation_state' => 'published',
       'file_test' => ['target_id' => $this->file2->id()],
@@ -378,7 +387,8 @@ final class FileGarbageCollectorTest extends EntityKernelTestBase {
     // Files 2 and 3 should be removed.
     $this->assertEquals(2, $this->queue->numberOfItems());
 
-    $datetime = new DrupalDateTime('now');
+    // Remove the remaining files just outside the retention period.
+    $datetime = new DrupalDateTime('-6 months -1 day');
 
     $values = [
       'moderation_state' => 'published',

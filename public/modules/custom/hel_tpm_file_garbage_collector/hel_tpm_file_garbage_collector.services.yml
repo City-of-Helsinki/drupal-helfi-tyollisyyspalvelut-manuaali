@@ -1,4 +1,8 @@
 services:
+  logger.channel.hel_tpm_file_garbage_collector:
+    parent: logger.channel_base
+    arguments: ['hel_tpm_file_garbage_collector']
   hel_tpm_file_garbage_collector.collector:
     class: Drupal\hel_tpm_file_garbage_collector\FileGarbageCollector
-    arguments: ['@database', '@entity_type.manager', '@entity_field.manager', '@queue']
+    arguments: ['@database', '@entity_type.manager', '@entity_field.manager', '@queue', '@event_dispatcher']
+  Drupal\hel_tpm_file_garbage_collector\FileGarbageCollector: '@hel_tpm_file_garbage_collector.collector'

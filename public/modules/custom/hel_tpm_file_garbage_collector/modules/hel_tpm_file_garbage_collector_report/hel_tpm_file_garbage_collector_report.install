@@ -1,0 +1,104 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for File garbage collector report.
+ */
+
+declare(strict_types=1);
+
+use Drupal\hel_tpm_file_garbage_collector_report\FileGarbageReport;
+
+/**
+ * Implements hook_schema().
+ */
+function hel_tpm_file_garbage_collector_report_schema(): array {
+  $schema[FileGarbageReport::TABLE] = [
+    'description' => 'Files deleted or selected for deletion by the file garbage collector.',
+    'fields' => [
+      'fid' => [
+        'description' => 'The file ID.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'status' => [
+        'description' => 'Report status: dry_run or deleted.',
+        'type' => 'varchar_ascii',
+        'length' => 32,
+        'not null' => TRUE,
+      ],
+      'uri' => [
+        'description' => 'The URI of the file.',
+        'type' => 'varchar',
+        'length' => 2048,
+        'not null' => FALSE,
+      ],
+      'filename' => [
+        'description' => 'The name of the file.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+      ],
+      'filemime' => [
+        'description' => 'The MIME type of the file.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+      ],
+      'filesize' => [
+        'description' => 'The size of the file in bytes.',
+        'type' => 'int',
+        'size' => 'big',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ],
+      'file_created' => [
+        'description' => 'The Unix timestamp when the file was uploaded.',
+        'type' => 'int',
+        'not null' => FALSE,
+      ],
+      'file_owner' => [
+        'description' => 'The user ID of the file owner.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ],
+      'usages' => [
+        'description' => 'JSON encoded list of the entities and revisions that used the file.',
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => FALSE,
+      ],
+      'last_used' => [
+        'description' => 'The Unix timestamp when the file was last in use.',
+        'type' => 'int',
+        'not null' => FALSE,
+      ],
+      'references_removed' => [
+        'description' => 'The number of revision field values removed with the file.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ],
+      'created' => [
+        'description' => 'The Unix timestamp when the file was first reported.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'changed' => [
+        'description' => 'The Unix timestamp when the entry was last updated.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+    ],
+    'primary key' => ['fid'],
+    'indexes' => [
+      'status_changed' => ['status', 'changed'],
+      'changed' => ['changed'],
+    ],
+  ];
+  return $schema;
+}
