@@ -1,40 +1,58 @@
 #!/bin/bash
 
-TOP=$(git rev-parse --show-toplevel);
-LANDO_ROOT="/app"
+TOP=$(git rev-parse --show-toplevel)
+
 STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM -- "$TOP/public/modules/custom")
 
-if [[ "$STAGED_FILES" = "" ]]; then
+if [[ -z "$STAGED_FILES" ]]; then
   exit 0
 fi
 
+PASS=true
+
+run_tool() {
+  if ddev describe >/dev/null 2>&1; then
+    ddev "$@"
+  elif lando info >/dev/null 2>&1; then
+    lando "$@"
+  else
+    echo "No running DDEV or Lando environment found."
+    exit 1
+  fi
+}
+
 echo "Checking Drupal coding standards"
+
 for FILE in $STAGED_FILES
 do
-  lando phpcs "$LANDO_ROOT/$FILE";
-  if [[ "$?" != 0 ]]; then
+  run_tool phpcs "$FILE"
+
+  if [[ $? -ne 0 ]]; then
     echo "PHPCS Failed: $FILE"
     PASS=false
   fi
 done
 
 if ! $PASS; then
-  echo "COMMIT FAILED: Your commit contains files that should pass syntax checks but do not. Please fix the PHPCS errors and try again.\n"
+  echo "COMMIT FAILED: Your commit contains files that do not pass Drupal coding standards."
   exit 1
 fi
 
 echo "Checking Drupal best practices"
+
 for FILE in $STAGED_FILES
 do
-  lando phpcsp "$LANDO_ROOT/$FILE";
+  run_tool phpcsp "$FILE"
 
-  if [[ "$?" != 0 ]]; then
+  if [[ $? -ne 0 ]]; then
     echo "PHPCSP Failed: $FILE"
     PASS=false
   fi
 done
 
 if ! $PASS; then
-  echo "COMMIT FAILED: Your commit contains files that should pass syntax checks but do not. Please fix the Drupal best practice errors and try again.\n"
+  echo "COMMIT FAILED: Your commit contains files that do not pass Drupal best practice checks."
   exit 1
 fi
+
+exit 0
