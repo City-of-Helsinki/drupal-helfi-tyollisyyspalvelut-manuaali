@@ -31,7 +31,8 @@
       });
 
       $(document).ajaxComplete(function () {
-        let description = $(this).find('[data-drupal-field-elements="description"], [class="form-item__description"]');
+        // Only fields configured to show their descriptions as tooltips.
+        let description = $('[data-description-tooltip="1"]').find('[data-drupal-field-elements="description"], [class="form-item__description"]');
         description.each(function() {
           addTooltip(this);
           moveDescriptionAfterLabel(this);
