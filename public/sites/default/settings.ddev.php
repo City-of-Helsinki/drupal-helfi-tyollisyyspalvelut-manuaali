@@ -63,4 +63,3 @@ $config['system.logging']['error_level'] = 'verbose';
 // https://www.drupal.org/project/drupal/issues/3505776
 
 $settings['aggregate_gc_threshold'] = 0;
-$settings['file_private_path'] = getenv('FILE_PRIVATE_PATH');

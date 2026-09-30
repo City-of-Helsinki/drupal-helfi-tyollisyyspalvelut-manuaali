@@ -234,6 +234,13 @@
         margin-bottom: 0;
       }
     }
+    .field--name-entitygroupfield {
+      .field__item {
+        @include large {
+          width: min-content;
+        }
+      }
+    }
 
     .archiving-guides {
       @include xl {
