@@ -35,8 +35,21 @@
   ]
 %}
   <nav{{ attributes.addClass(classes) }}>
-    <a class="main-menu__link font-size--default" href="/user/logi">{{'Log in'|t}}</a>
+      <a class="main-menu__link font-size--default" href="/user/login">{{'Log in'|t}}</a>
       {% block mobilecontent %}
+{#        {{ content }}#}
+      {% endblock %}
+    <button id="loginDropdownButton-mobile" class="btn btn-menu hide-tblt" type="button" data-bs-toggle="dropdown"  data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
+      <span class="login-text">{{'Log in'|t}}</span>
+      {% include "@atoms/images/icons/_icon.twig" with {
+        icon_base_class: 'icon',
+        icon_name: 'padlock',
+        icon_modifiers: ['small', 'white'],
+      } %}
+    </button>
+    <div class='dropdown-menu dropdown-menu-end'>
+      {% block content %}
         {{ content }}
       {% endblock %}
+    </div>
   </nav>

@@ -34,13 +34,16 @@
         icon_name: "menu",
       } %}
     </span>
-    <span class="toggle-expand__close">
+    <div class="toggle-expand__close">
       {% include "@atoms/images/icons/_icon.twig" with {
         icon_base_class: "icon",
         icon_blockname: "toggle-expand-close",
         icon_name: "close",
       } %}
-    </span>
+      <span class="font-size--tiny font-weight--bold">
+        {{ 'close'|t }}
+      </span>
+    </div>
   </a>
   <div id="main-nav" class="main-nav">
 

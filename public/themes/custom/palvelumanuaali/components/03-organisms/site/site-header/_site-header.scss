@@ -35,8 +35,25 @@ body:not(.admin-toolbar-enabled) {
 .header__primary {
   .mobile-user-menu {
     display: block;
-    margin-top: $space;
+    margin-left: -16px;
+    margin-right: -16px;
     @include xl { display: none;}
+    a {
+      display: flex;
+      align-items: center;
+      line-height: 32px;
+      &::before {
+        content: "";
+        width: 32px;
+        height: 32px;
+        background-repeat: no-repeat;
+        display: block;
+        margin-right: 11px;
+        background-image: url("../../assets/icons/user-image.svg");
+        background-position: center;
+        background-size: 30px;
+      }
+    }
   }
 }
 
@@ -336,6 +353,18 @@ body:not(.admin-toolbar-enabled) {
         z-index: unset;
       }
     }
+    .block-language-blocklanguage-interface {
+      right: 60px !important;
+      top: 6px !important;
+      margin: 0 !important;
+      .btn {
+        padding-left: 0;
+        padding-right: 0;
+        .icon {
+          margin: auto;
+        }
+      }
+    }
 
     .menu--account {
         display: none;
@@ -380,6 +409,7 @@ body:not(.admin-toolbar-enabled) {
       width: 44px;
       height: 44px;
       margin-top: 6px;
+      right: 0;
     }
 
     .block--header-search-block{
@@ -388,7 +418,9 @@ body:not(.admin-toolbar-enabled) {
     #block-kirjautuminen {
       display: none;
     }
-    .menu--favorites {display: block}
+    .menu--favorites {
+      right: 60px !important;
+    }
   }
 
   &__branding {
@@ -531,7 +563,6 @@ body:not(.admin-toolbar-enabled) {
     }
   }
   a {
-    color: transparent;
     @include xl {
       font-weight: 600;
       color: clr(text);
@@ -819,8 +850,6 @@ body:not(.admin-toolbar-enabled) {
     #search-suggestions {
       .suggestion-item {
         &::before {
-          // @include icons();
-          // background-image: "\EA06";
           background-image: url('../../assets/icons/magnifier2.svg');
           height: 16px;
           width: 16px;

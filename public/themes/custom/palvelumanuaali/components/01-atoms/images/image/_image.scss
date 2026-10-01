@@ -30,6 +30,13 @@ figure {
   }
 }
 
+.logo-link:has(.logo__image--hidden-mobile) {
+  display: none;
+  @include xl {
+    display: block;
+  }
+}
+
 .logo-small__image {
   &--hidden-lg {
     display: block;
@@ -39,5 +46,20 @@ figure {
     @include xl {
       display: none;
     }
+  }
+  &--hidden-lg-inner {
+    display: block;
+    @include xl {
+      display: none;
+    }
+  }
+}
+.logo-link:has(.logo-small__image--hidden-lg-inner) {
+  display: block;
+  position: absolute;
+  top: 12px;
+  z-index: 30;
+  @include xl {
+    display: none;
   }
 }
