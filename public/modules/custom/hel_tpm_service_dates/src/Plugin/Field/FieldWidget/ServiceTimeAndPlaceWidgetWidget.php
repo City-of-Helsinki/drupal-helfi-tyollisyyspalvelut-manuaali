@@ -39,6 +39,14 @@ class ServiceTimeAndPlaceWidgetWidget extends ParagraphsClassicAsymmetricWidget 
     'field_multiple_dates' => [
       'multiple_dates',
     ],
+    'field_time_additional_info_html' => [
+      'date_not_available',
+      'start_and_end_date',
+      'service_continous',
+      'service_multiple_dates',
+      'multiple_dates',
+      'separate_dates',
+    ],
   ];
 
   /**
