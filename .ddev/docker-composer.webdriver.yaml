@@ -1,0 +1,16 @@
+services:
+  chrome:
+    image: drupalci/webdriver-chromedriver:production
+    container_name: ddev-${DDEV_SITENAME}-chrome
+    command: >
+      chromedriver
+      --host=0.0.0.0
+      --port=9515
+      --log-path=/tmp/chromedriver.log
+      --verbose
+      --allowed-ips=
+      --allowed-origins=*
+    ports:
+      - "9515:9515"
+    security_opt:
+      - seccomp:unconfined
