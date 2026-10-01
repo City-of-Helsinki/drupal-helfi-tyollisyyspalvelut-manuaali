@@ -234,14 +234,6 @@
         margin-bottom: 0;
       }
     }
-    .field--name-entitygroupfield {
-      .field__item {
-        @include large {
-          width: min-content;
-        }
-      }
-    }
-
     .archiving-guides {
       @include xl {
         margin-bottom: $space-triple;
@@ -256,6 +248,14 @@
           outline: 2px solid clr(accent-high);
           border-radius: 0;
         }
+      }
+    }
+  }
+
+  .field--name-entitygroupfield {
+    .tag-pill {
+      @include large {
+        width: min-content;
       }
     }
   }
