@@ -756,8 +756,9 @@ table {
           color: clr(alt-header-color);
         }
       }
-      // Without JavaScript the description field is shown in the row.
-      > .file-item__description {
+      // Without JavaScript the description field is shown in the row. It is
+      // hidden when the field is disabled, e.g. on a translation form.
+      > .file-item__description:not(.hidden) {
         display: flex;
         flex-basis: 100%;
         align-items: center;

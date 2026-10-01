@@ -371,9 +371,17 @@ function hel_tpm_general_field_widget_single_element_file_generic_form_alter(arr
  * Process callback for file widget elements with a description field.
  *
  * Adds an edit button to every uploaded file. The edit button opens the
- * description field in a dialog.
+ * description field in a dialog. When the field is disabled, e.g. on a
+ * translation form when the field is not translatable, the edit and upload
+ * buttons are left out.
  */
 function _hel_tpm_general_file_description_process(array $element): array {
+  // A disabled field (e.g. on a translation form when the field is not
+  // translatable) cannot get new files, so the upload button is not shown.
+  if (!empty($element['#disabled']) && empty($element['#files'])) {
+    $element['#access'] = FALSE;
+    return $element;
+  }
   if (!isset($element['description']) || empty($element['#files'])) {
     return $element;
   }
@@ -390,6 +398,13 @@ function _hel_tpm_general_file_description_process(array $element): array {
   $file_key = 'file_' . $file->id();
   if ($description !== '' && isset($element[$file_key]['filename'])) {
     $element[$file_key]['filename']['#description'] = $description;
+  }
+
+  // The field is disabled e.g. on a translation form when the field is not
+  // translatable.
+  if (!empty($element['#disabled'])) {
+    $element['description']['#wrapper_attributes']['class'][] = 'hidden';
+    return $element;
   }
 
   // Shown by JavaScript, the description field stays inline without it.
