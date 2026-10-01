@@ -31,16 +31,15 @@ body:not(.admin-toolbar-enabled) {
   display: none;
 }
 
-.lgin-on {
-  .header__primary {
-    .mobile-user-menu {
-      display: block;
-      margin-top: $space;
-        @include xl { display: none;}
 
-    }
+.header__primary {
+  .mobile-user-menu {
+    display: block;
+    margin-top: $space;
+    @include xl { display: none;}
   }
 }
+
 
 .slide-in-menu {
   margin-top: $space-two-and-half;
