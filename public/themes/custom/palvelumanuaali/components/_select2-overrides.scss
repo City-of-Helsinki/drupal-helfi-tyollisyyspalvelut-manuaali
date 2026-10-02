@@ -201,13 +201,13 @@
 .select2-container--palvelumanuaali .select2-results__option[aria-disabled=true] {
   color: #999; }
 
-.select2-container--palvelumanuaali .select2-results__option[aria-selected=true] {
+.select2-container--palvelumanuaali .select2-results__option--selected {
   color: #1E40B6;
   font-weight: bold;
   position: relative;
 }
 
-.select2-container--palvelumanuaali .select2-results__option[aria-selected=true]::before {
+.select2-container--palvelumanuaali .select2-results__option--selected::before {
   background-image: url('../../assets/icons/check.svg');
   display: inline-block;
   font-style: normal;
