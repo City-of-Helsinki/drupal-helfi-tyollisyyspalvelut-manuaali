@@ -5,11 +5,11 @@ dependencies:
   config:
     - filter.format.plain_text_format
   module:
-    - eu_cookie_compliance
     - field_permissions
     - file
     - filter
     - hel_tpm_general
+    - klaro
     - paragraphs_type_permissions
 id: specialist
 label: Specialist
@@ -18,7 +18,7 @@ is_admin: null
 permissions:
   - 'access internal service fields'
   - 'delete own files'
-  - 'display eu cookie compliance popup'
+  - 'use klaro'
   - 'use text format plain_text_format'
   - 'view field_age'
   - 'view field_career_markings'
@@ -43,6 +43,4 @@ permissions:
   - 'view paragraph content contact_information'
   - 'view paragraph content content'
   - 'view paragraph content service_language'
-  - 'view paragraph content service_price'
   - 'view paragraph content service_time_and_place'
-  - 'view paragraph content target_group'

@@ -6,10 +6,10 @@ dependencies:
     - filter.format.plain_text_format
     - search_api_autocomplete.search.solr_service_search
   module:
-    - eu_cookie_compliance
     - field_permissions
     - filter
     - hel_tpm_contact_info
+    - klaro
     - media
     - paragraphs_type_permissions
     - search_api_autocomplete
@@ -22,7 +22,7 @@ weight: 0
 is_admin: false
 permissions:
   - 'access content'
-  - 'display eu cookie compliance popup'
+  - 'use klaro'
   - 'use search_api_autocomplete for solr_service_search'
   - 'use text format plain_text_format'
   - 'view contact info'
@@ -43,13 +43,10 @@ permissions:
   - 'view paragraph content link'
   - 'view paragraph content link_card_row'
   - 'view paragraph content link_card_with_image'
-  - 'view paragraph content long_text_field_with_toolbar'
   - 'view paragraph content municipality_guide'
   - 'view paragraph content quick_link'
   - 'view paragraph content quick_link_row'
   - 'view paragraph content service_language'
   - 'view paragraph content service_list'
-  - 'view paragraph content service_price'
   - 'view paragraph content service_time_and_place'
-  - 'view paragraph content target_group'
   - 'view paragraph content url_and_file'
