@@ -61,7 +61,7 @@
   <div{{ title_attributes.addClass(title_classes) }}>
   {% include "@atoms/text/headings/_heading.twig" with {
     "heading_level": 3,
-    "heading": 'Attachments (open in a new tab):'|t,
+    "heading": 'Attachments'|t,
     "heading_modifiers": ['semibold','margin-bottom-extra'],
     "heading_base_class": 'h5',
   } %}
@@ -69,17 +69,7 @@
   <div class="field__items">
     {% for item in items %}
       <div{{ item.attributes.addClass('field__item') }}>
-      {% include "@atoms/images/icons/_icon.twig" with {
-        icon_base_class: 'icon',
-        icon_name: 'file_1',
-        icon_modifiers: ['small','absolute-left-regular'],
-      } %}
-        {{item.content}}
-        {% include "@atoms/images/icons/_icon.twig" with {
-          icon_base_class: 'icon',
-          icon_name: 'download_1',
-          icon_modifiers: ['small','absolute-right-regular'],
-        } %}
+        {{ item.content }}
       </div>
     {% endfor %}
   </div>
