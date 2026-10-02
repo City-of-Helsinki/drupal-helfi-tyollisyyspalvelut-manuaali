@@ -354,9 +354,11 @@ body:not(.admin-toolbar-enabled) {
       }
     }
     .block-language-blocklanguage-interface {
-      right: 60px !important;
-      top: 6px !important;
-      margin: 0 !important;
+      @media only screen and (max-width: $xl) {
+        right: 65px;
+        top: 4px;
+        margin: 0;
+      }
       .btn {
         padding-left: 0;
         padding-right: 0;
@@ -406,10 +408,10 @@ body:not(.admin-toolbar-enabled) {
       margin-left: -10px;
       padding: 0;
       padding: 10px;
-      width: 44px;
+      width: 54px;
       height: 44px;
-      margin-top: 6px;
-      right: 0;
+      margin-top: 3px;
+      right: -12px;
     }
 
     .block--header-search-block{
@@ -419,7 +421,7 @@ body:not(.admin-toolbar-enabled) {
       display: none;
     }
     .menu--favorites {
-      right: 60px !important;
+      right: 64px;
     }
   }
 
@@ -491,11 +493,11 @@ body:not(.admin-toolbar-enabled) {
   .block-language-blocklanguage-interface {
     display: inline-block;
     float: right;
-    margin-right: 20px;
     position: absolute;
-    top: 0;
-    right: 0;
      @include xl {
+       margin-right: 20px;
+       top: 0;
+       right: 0;
        position: relative;
        top: unset;
        right: unset;
@@ -507,13 +509,15 @@ body:not(.admin-toolbar-enabled) {
     float: right;
     position: absolute;
     top: 0;
-    right: 37px;
-    width: 44px;
+    width: 50px;
+    margin-right: 2px;
+    margin-left: 2px;
      @include xl {
        position: relative;
        top: unset;
        right: unset;
        width: unset;
+       margin-left: unset;
        margin-right: $space;
        align-content: center;
      }
