@@ -20,4 +20,13 @@
         responsive_image_blockname: 'logo-small',
       } %}
     {% endif %}
+    {% if inner %}
+      {% include "@atoms/images/image/responsive-image.twig" with {
+        output_image_tag: true,
+        image_src: sidebar__logo_small_src,
+        responsive_image_modifiers: 'hidden-lg-inner',
+        image_alt: 'Service Manual - To front page'|t,
+        responsive_image_blockname: 'logo-small',
+      } %}
+    {% endif %}
   {% endblock %}

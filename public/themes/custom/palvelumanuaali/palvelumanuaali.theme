@@ -132,6 +132,7 @@ function palvelumanuaali_preprocess_links__language_block(&$variables): void {
     if ($langcode == $current_langcode) {
       $link['link']['#langcode'] = $langcode;
       $variables['links'][$langcode] = $link;
+      $link['link']['#long'] = $variables['links'][$langcode]['text'];
     }
     if ($langcode == $current_langcode) {
       unset($variables['links'][$langcode]);
