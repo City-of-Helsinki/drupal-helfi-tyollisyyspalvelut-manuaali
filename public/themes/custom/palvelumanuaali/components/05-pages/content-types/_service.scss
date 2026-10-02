@@ -234,7 +234,6 @@
         margin-bottom: 0;
       }
     }
-
     .archiving-guides {
       @include xl {
         margin-bottom: $space-triple;
@@ -249,6 +248,14 @@
           outline: 2px solid clr(accent-high);
           border-radius: 0;
         }
+      }
+    }
+  }
+
+  .field--name-entitygroupfield {
+    .tag-pill {
+      @include large {
+        width: min-content;
       }
     }
   }
@@ -281,6 +288,7 @@
 
   .service-language {
     display: inline-flex;
+    height: 24px;
   }
 
   .field--name-field-responsible-updatee .field__item {

@@ -313,8 +313,11 @@ details>.form-wrapper:last-child {
         margin-bottom: 0;
         position: relative;
         &::after {
-          @include icons;
-          content: "\EA06";
+          background-color: transparent;
+          background-image: url('../../assets/icons/magnifier.svg');
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: 16px;
           height: 16px;
           width: 16px;
           right: 0;
@@ -522,5 +525,17 @@ details>.form-wrapper:last-child {
 .node-service-location-form {
   .form-text {
     margin-bottom: $space;
+  }
+}
+
+.field--name-field-responsible-municipality {
+  .select2-selection--clearable {
+    display: flex;
+    button {
+      order: 2;
+      margin-left: -18px;
+      z-index: 10;
+      margin-top: 5px;
+    }
   }
 }
