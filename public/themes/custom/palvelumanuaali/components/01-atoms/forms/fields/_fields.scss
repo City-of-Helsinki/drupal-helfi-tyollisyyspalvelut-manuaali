@@ -564,28 +564,107 @@
 .field--name-field-internal-files,
 .field--name-field-file {
   > .field__items {
-    .file,
-    a {
-      display: block;
-      width: 100%;
-    }
     .field__item {
       display: block;
-      position: relative;
       background-color: clr(background);
       border-radius: 8px;
-      &:hover {
-        background-color: clr(background-border);
-      }
-    }
-    a {
-      border-radius: 8px;
-      color: clr(text);
-      text-decoration: none;
-      font-size: 14px;
-      padding: $space 0 $space $space-three-and-half;
       margin-bottom: $space-one-half;
-      position: relative;
+    }
+  }
+}
+
+.file-info {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-one-half $space-double;
+  padding: $space $space-one-and-half $space $space;
+  color: clr(text);
+  font-size: $small-caption;
+  line-height: 24px;
+
+  .icon {
+    flex-shrink: 0;
+  }
+
+  &__info {
+    display: flex;
+    flex: 1 1 20rem;
+    align-items: center;
+    gap: $space-three-fourths;
+    min-width: 0;
+  }
+
+  // Name and format/size wrap together next to the icon.
+  &__text {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 $space;
+    min-width: 0;
+  }
+
+  // The text rules are scoped to .file-info so that they win over wrappers
+  // such as .text-normal, which set the size of every span inside them.
+  & &__name {
+    font-size: $small-caption;
+    font-weight: 500;
+    line-height: 24px;
+    overflow-wrap: anywhere;
+  }
+
+  & &__meta {
+    display: inline-flex;
+    gap: $space-one-half;
+    color: clr(gray);
+    font-size: $small-caption;
+    font-weight: 400;
+    line-height: 24px;
+    white-space: nowrap;
+
+    span {
+      font: inherit;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-one-half $space-double;
+  }
+
+  & &__action-text {
+    font-size: $small-caption;
+    font-weight: 600;
+    line-height: 24px;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+  }
+
+  & &__action {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-one-half;
+    color: clr(footer-color);
+    font-size: $small-caption;
+    font-weight: 600;
+    line-height: 24px;
+    text-decoration: none;
+    white-space: nowrap;
+
+    &:visited {
+      color: clr(footer-color);
+    }
+
+    &:hover,
+    &:focus {
+      color: clr(footer-color);
+
+      .file-info__action-text {
+        text-decoration-thickness: 2px;
+      }
     }
   }
 }

@@ -60,24 +60,14 @@
   <div{{ title_attributes.addClass(title_classes) }}>
   {% include "@atoms/text/headings/_heading.twig" with {
     "heading_level": 5,
-    "heading": 'Sisäiset liitteet (aukeavat uuteen välilehteen)',
+    "heading": 'Sisäiset liitteet',
     "heading_modifiers": ['semibold','margin-bottom-extra'],
   } %}
   </div>
   <div class="field__items">
     {% for item in items %}
       <div{{ item.attributes.addClass('field__item') }}>
-      {% include "@atoms/images/icons/_icon.twig" with {
-        icon_base_class: 'icon',
-        icon_name: 'file_1',
-        icon_modifiers: ['small','absolute-left-regular'],
-      } %}
-        {{item.content}}
-        {% include "@atoms/images/icons/_icon.twig" with {
-          icon_base_class: 'icon',
-          icon_name: 'download_1',
-          icon_modifiers: ['small','absolute-right-regular'],
-        } %}
+        {{ item.content }}
       </div>
     {% endfor %}
   </div>

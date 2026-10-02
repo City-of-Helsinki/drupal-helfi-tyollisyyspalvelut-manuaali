@@ -1,0 +1,129 @@
+// "Add attachment" button of the file widget. The label of the file input is
+// styled as a button and the native file input is hidden visually.
+.details-file-field > .js-form-type-managed-file {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $space-one-half;
+  margin-top: $space-one-half;
+
+  > .form-item__label {
+    @include button-base;
+    @include button-medium;
+    @include button-no-color-with-round-border;
+
+    margin: 0;
+  }
+
+  &:focus-within > .form-item__label {
+    outline: 2px solid clr(primary);
+    outline-offset: 2px;
+  }
+
+  .form-managed-file {
+    flex-basis: 100%;
+
+    &:not(:has(.ajax-progress, .messages)) {
+      display: contents;
+    }
+  }
+
+  // Number of files, size limit and allowed file types, shown as text.
+  > .form-item__description {
+    flex-basis: 100%;
+    order: 0;
+    width: auto;
+    height: auto;
+    margin: 0;
+    font-size: $small-caption;
+    line-height: 24px;
+  }
+
+  .form-file {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+// Dialog for editing the description of an uploaded file.
+.file-description-dialog.ui-dialog {
+  z-index: $zi-modal;
+  border-radius: 8px;
+
+  .ui-dialog-title {
+    font-size: 1.125rem;
+    font-weight: 500;
+  }
+
+  .ui-dialog-content {
+    padding: $space-one-and-half 0 0;
+  }
+
+  .form-item {
+    margin-bottom: $space-one-and-half;
+  }
+
+  .form-item__label {
+    display: block;
+    margin-bottom: $space-one-half;
+    font-size: $small-font;
+    font-weight: 500;
+  }
+
+  .form-text {
+    width: 100%;
+    box-sizing: border-box;
+    height: 48px;
+    padding: 0 $space;
+    font-size: $small-caption;
+  }
+
+  // Same look as disabled fields, without the focus styles.
+  .form-text[readonly] {
+    &,
+    &:hover,
+    &:focus {
+      box-shadow: inset 0 0 0 2px $gray-light;
+      background-color: $near-white;
+      color: $gray-light;
+      cursor: default;
+    }
+  }
+
+  .ui-dialog-buttonpane {
+    margin: 0;
+    padding: $space-one-half 0 0;
+    border: 0;
+  }
+
+  .ui-dialog-buttonset {
+    display: flex;
+    justify-content: space-between;
+    float: none;
+    gap: $space;
+  }
+
+  .ui-dialog-buttonset .button {
+    @include button-medium;
+    @include button-round-corners;
+
+    min-width: 7.5rem;
+    margin: 0;
+    font-size: $space;
+    font-weight: 700;
+  }
+
+  .file-description-dialog__cancel {
+    @include button-no-color-with-round-border;
+  }
+
+  .file-description-dialog__save {
+    @include button-color-blue;
+
+    border: 2px solid clr(background-section);
+  }
+}
