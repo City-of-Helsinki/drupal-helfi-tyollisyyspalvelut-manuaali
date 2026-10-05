@@ -7,6 +7,7 @@
 
 use Drupal\hel_tpm_tmgmt\FieldProcessorMaxwidth;
 use Drupal\hel_tpm_tmgmt\LinkFieldProcessorOverride;
+use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\tmgmt_content\DefaultFieldProcessor;
 
 /**
@@ -45,5 +46,21 @@ function hel_tpm_tmgmt_entity_type_alter(&$info) {
     $handlers = $content_type->getHandlerClasses();
     $handlers['form']['edit'] = 'Drupal\hel_tpm_tmgmt\Form\HelTpmTmgmtJobItemForm';
     $content_type->setHandlerClass('form', $handlers['form']);
+  }
+}
+
+/**
+ * Implements hook_tmgmt_translatable_fields_alter().
+ */
+function hel_tpm_tmgmt_tmgmt_translatable_fields_alter(&$entity, &$translatable_fields) {
+  if (empty($translatable_fields)) {
+    return;
+  }
+  if ($entity instanceof Paragraph) {
+    $display = \Drupal::service('entity_display.repository')->getFormDisplay($entity->getEntityTypeId(), $entity->bundle(), 'default');
+    $hidden_fields = $display->get('hidden');
+    foreach ($hidden_fields as $field_name => $field) {
+      unset($translatable_fields[$field_name]);
+    }
   }
 }

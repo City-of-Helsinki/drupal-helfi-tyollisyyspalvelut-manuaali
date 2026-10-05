@@ -108,7 +108,7 @@ class LeaveGroupTest extends GroupBrowserTestBase {
   /**
    * Data provider for testLeavingGroup().
    */
-  public function provideLeavingGroupScenarios() {
+  public static function provideLeavingGroupScenarios() {
     $scenarios['canNotLeaveGroup'] = [
       [
         'view group',

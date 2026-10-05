@@ -131,7 +131,7 @@ class GroupRelationshipFormAccessTest extends GroupKernelTestBase {
    * @return array
    *   Provided data.
    */
-  public function outsiderFormAccessProvider(): array {
+  public static function outsiderFormAccessProvider(): array {
     return [
       'no-permissions' => [
         [],
@@ -184,7 +184,7 @@ class GroupRelationshipFormAccessTest extends GroupKernelTestBase {
    * @return array
    *   Provided data.
    */
-  public function memberFormAccessProvider(): array {
+  public static function memberFormAccessProvider(): array {
     return [
       'no-permissions' => [
         [],
@@ -236,7 +236,7 @@ class GroupRelationshipFormAccessTest extends GroupKernelTestBase {
    * @return array
    *   Provided data.
    */
-  public function groupAdminFormAccessProvider(): array {
+  public static function groupAdminFormAccessProvider(): array {
     return [
       'no-permissions' => [
         [],

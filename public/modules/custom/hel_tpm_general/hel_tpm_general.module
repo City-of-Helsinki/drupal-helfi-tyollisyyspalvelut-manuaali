@@ -35,6 +35,18 @@ function hel_tpm_general_theme($existing, $type, $theme, $path) {
         'attributes' => [],
       ],
     ],
+    'hel_tpm_general_file_info' => [
+      'template' => 'file-info',
+      'variables' => [
+        'title' => '',
+        'filename' => '',
+        'extension' => '',
+        'size' => '',
+        'url' => '',
+        'opens_in_browser' => FALSE,
+        'langcode' => NULL,
+      ],
+    ],
   ];
 }
 
@@ -118,6 +130,28 @@ function hel_tpm_general_node_view(array &$build, EntityInterface $entity, Entit
       ],
     ];
   }
+}
+
+/**
+ * Implements hook_preprocess_status_messages().
+ *
+ * Hides the core content_translation message shown on the translation overview
+ * page for every translation that was published before but is currently
+ * unpublished.
+ */
+function hel_tpm_general_preprocess_status_messages(&$variables): void {
+  if (\Drupal::routeMatch()->getRouteName() !== 'entity.node.content_translation_overview') {
+    return;
+  }
+  if (empty($variables['message_list']['warning'])) {
+    return;
+  }
+
+  $target = (string) t('The "Delete translation" action is only available for published translations.');
+  $variables['message_list']['warning'] = array_filter(
+    $variables['message_list']['warning'],
+    fn ($message) => (string) $message !== $target
+  );
 }
 
 /**
@@ -315,6 +349,85 @@ function _hel_tpm_general_create_switcher_links(EntityInterface $entity, string 
   // phpcs:ignore Drupal.Semantics.FunctionT.NotLiteralString
   return Link::createFromRoute(t($route['label']), $route['route'], ['node' => $entity->id()]);
 
+}
+
+/**
+ * Implements hook_field_widget_complete_WIDGET_TYPE_form_alter().
+ */
+function hel_tpm_general_field_widget_complete_file_generic_form_alter(array &$field_widget_complete_form, FormStateInterface $form_state, array $context): void {
+  if (isset($field_widget_complete_form['widget']['#file_upload_title'])) {
+    $field_widget_complete_form['widget']['#file_upload_title'] = t('Add attachment');
+  }
+}
+
+/**
+ * Implements hook_field_widget_single_element_WIDGET_TYPE_form_alter().
+ */
+function hel_tpm_general_field_widget_single_element_file_generic_form_alter(array &$element, FormStateInterface $form_state, array $context): void {
+  $element['#process'][] = '_hel_tpm_general_file_description_process';
+}
+
+/**
+ * Process callback for file widget elements with a description field.
+ *
+ * Adds an edit button to every uploaded file. The edit button opens the
+ * description field in a dialog. When the field is disabled, e.g. on a
+ * translation form when the field is not translatable, the edit and upload
+ * buttons are left out.
+ */
+function _hel_tpm_general_file_description_process(array $element): array {
+  // A disabled field (e.g. on a translation form when the field is not
+  // translatable) cannot get new files, so the upload button is not shown.
+  if (!empty($element['#disabled']) && empty($element['#files'])) {
+    $element['#access'] = FALSE;
+    return $element;
+  }
+  if (!isset($element['description']) || empty($element['#files'])) {
+    return $element;
+  }
+  /** @var \Drupal\file\FileInterface $file */
+  $file = reset($element['#files']);
+
+  unset($element['description']['#description']);
+  $element['description']['#title'] = t('File description');
+  $element['description']['#attributes']['placeholder'] = t('Shown instead of the file name');
+  $element['description']['#wrapper_attributes']['class'][] = 'file-item__description';
+
+  // Show the description instead of the file name, like on the node page.
+  $description = trim((string) ($element['description']['#value'] ?? ''));
+  $file_key = 'file_' . $file->id();
+  if ($description !== '' && isset($element[$file_key]['filename'])) {
+    $element[$file_key]['filename']['#description'] = $description;
+  }
+
+  // The field is disabled e.g. on a translation form when the field is not
+  // translatable.
+  if (!empty($element['#disabled'])) {
+    $element['description']['#wrapper_attributes']['class'][] = 'hidden';
+    return $element;
+  }
+
+  // Shown by JavaScript, the description field stays inline without it.
+  $element['edit'] = [
+    '#type' => 'html_tag',
+    '#tag' => 'button',
+    '#value' => t('Edit'),
+    '#attributes' => [
+      'type' => 'button',
+      'class' => ['file-item__edit'],
+      'hidden' => 'hidden',
+      'aria-haspopup' => 'dialog',
+      'aria-label' => t('Edit @file', ['@file' => $file->getFilename()]),
+      'data-file-name' => $file->getFilename(),
+      'data-dialog-title' => t('Attached file'),
+      'data-file-name-label' => t('File name'),
+      'data-cancel-label' => t('Cancel'),
+      'data-save-label' => t('Save'),
+    ],
+  ];
+  $element['#attached']['library'][] = 'hel_tpm_general/file_description_dialog';
+
+  return $element;
 }
 
 /**

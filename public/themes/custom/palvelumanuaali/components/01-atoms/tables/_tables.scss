@@ -669,7 +669,8 @@ table {
         box-sizing: border-box;
         border-bottom: 2px solid clr(form-border);
         border-radius: 8px;
-        height: 48px;
+        align-items: flex-start;
+        min-height: 48px;
         background: clr(background-dropdown);
         margin-bottom: $space;
         padding: $space-three-fourths $space-double $space-three-fourths 20px;
@@ -710,6 +711,85 @@ table {
         }
       }
     }
+    // File name, edit button and the description field of a file.
+    .form-managed-file {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      gap: $space-one-half;
+      line-height: 24px;
+      // A long name wraps inside its own box, so the edit button stays on the
+      // first line next to the remove button.
+      > .file {
+        flex: 1 1 0;
+        min-width: 0;
+      }
+      > .file a {
+        color: clr(text);
+        font-size: $space;
+        font-weight: 400;
+        text-decoration: none;
+        overflow-wrap: anywhere;
+        &:hover,
+        &:focus {
+          text-decoration: underline;
+        }
+      }
+      // File size.
+      > .file + span {
+        display: none;
+      }
+      .file-item__edit {
+        flex-shrink: 0;
+        margin-left: auto;
+        padding: 0;
+        white-space: nowrap;
+        border: 0;
+        background: transparent;
+        color: clr(background-section);
+        font-size: $small-caption;
+        font-weight: 700;
+        line-height: 24px;
+        cursor: pointer;
+        &:hover,
+        &:focus {
+          color: clr(alt-header-color);
+        }
+      }
+      // Without JavaScript the description field is shown in the row. It is
+      // hidden when the field is disabled, e.g. on a translation form.
+      > .file-item__description:not(.hidden) {
+        display: flex;
+        flex-basis: 100%;
+        align-items: center;
+        gap: $space-one-half;
+        margin: 0;
+        .form-item__label {
+          margin: 0;
+          font-size: $small-font;
+        }
+        .form-text {
+          flex: 1;
+          min-width: 0;
+          max-width: 40rem;
+          height: 32px;
+          padding: 0 $space-one-half;
+          font-size: $small-font;
+        }
+      }
+    }
+    tbody td > .form-submit {
+      font-size: $small-caption;
+      white-space: nowrap;
+      &:hover,
+      &:focus {
+        color: clr(alt-header-color);
+      }
+    }
+    tbody tr td:first-child {
+      flex: 1;
+      padding-right: $space-double;
+    }
     a.tabledrag-handle {
       margin-left: 0;
       margin-right: $space-one-and-half;
@@ -726,12 +806,8 @@ table {
     }
 }
 
-.tmgmt-job-item-form {
-  tr {
-    table-layout: fixed;
-    display: table;
-    width: calc(100vw - 48px);
-  }
+/* Fixes the translation management tool's job item comparison fields to use the same width. */
+.tmgmt-job-item-form table.tmgmt-ui-review > tbody tr {
   .tmgmt-ui-data-item-label,
   .tmgmt-ui-data-item-actions {
     width: 10%;

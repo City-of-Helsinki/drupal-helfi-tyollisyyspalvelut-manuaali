@@ -464,7 +464,7 @@ index c11ac3c..fb3e62d 100644
 +        if ($req && $empty) {
 +          $this->context
 +            ->buildViolation($constraint->message, ['@field_label' => $sublabel])
-+            ->atPath("$field_name[$delta].$subname")
++            ->atPath("{$field_name}[$delta].$subname")
 +            ->addViolation();
 +        }
        }
@@ -1122,7 +1122,7 @@ index fb3e62d..163e022 100644
            $this->context
 -            ->buildViolation($constraint->message, ['@field_label' => $sublabel])
 +            ->buildViolation($constraint->message, ['@field_label' => $subfield_label])
-             ->atPath("$field_name[$delta].$subname")
+             ->atPath("{$field_name}[$delta].$subname")
              ->addViolation();
          }
 diff --git a/tests/src/Kernel/ParagraphsContentModerationValidatorTest.php b/tests/src/Kernel/ParagraphsContentModerationValidatorTest.php

@@ -991,12 +991,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              root: '0'
-              admin: '0'
-              editor: '0'
-              specialist: '0'
-              specialist_editor: '0'
             placeholder: ''
           is_grouped: false
           group_info:
@@ -1010,7 +1004,7 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          use_tokens: 0
+          use_tokens: false
         moderation_state:
           id: moderation_state
           table: node_field_revision
@@ -1038,12 +1032,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              root: '0'
-              admin: '0'
-              editor: '0'
-              specialist: '0'
-              specialist_editor: '0'
             reduce: false
           is_grouped: false
           group_info:

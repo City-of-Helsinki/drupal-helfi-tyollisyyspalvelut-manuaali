@@ -397,9 +397,13 @@ $button-colors: (
   &--arrow-left {
     @include arrow-left;
   }
+  &--margin-top-one-and-half {
+    margin-top: $space-one-and-half;
+  }
   &--margin-top-double {
     margin-top: $space-double;
   }
+
   &--padding-left-right-double {
     padding-left: $space-double;
     padding-right: $space-double;
@@ -472,7 +476,6 @@ $button-colors: (
   .login-text {
     @include button-color-blue;
     @include button-round-corners;
-    border: 2px solid $blue20;
     padding: 12px 32px 12px 32px;
     font-size: 14px;
     line-height: 24px;
@@ -486,18 +489,19 @@ $button-colors: (
     height: 20px;
     border-radius: 50%;
     padding: 0;
-    margin-left: 22px;
+    margin-left: 16px;
   }
 }
 
 #languageSwitcherButton {
-  width: 44px;
+  width: 54px;
   height: 44px;
   margin-left: 0;
   position: relative;
   border: 0;
   display: grid;
-  padding: 10px; // TODO: as classes?
+  padding-top: 10px; // TODO: as classes?
+  padding-bottom:10px;
   @include xl {
     width: unset;
     position: unset;
@@ -511,7 +515,7 @@ $button-colors: (
   }
   &:hover {
     .links {
-      background-image: url("../../assets/icons/world.svg");
+      background-image: url("../../assets/icons/world-black.svg");
     }
     .language-code {
       color: clr(background-section);
@@ -525,14 +529,15 @@ $button-colors: (
     border-radius: 0;
   }
   .links {
-    margin-right: $space;
-    height: 24px;
-    width: 24px;
+    height: 22px;
+    width: 22px;
     vertical-align: middle;
-    background-image: url("../../assets/icons/world-black.svg");
+    background-image: url("../../assets/icons/world.svg");
     background-repeat: none;
+    background-size: 22px;
     @include xl {
       vertical-align: top;
+      margin-right: $space;
     }
   }
   .language-code {
@@ -542,6 +547,20 @@ $button-colors: (
       color: clr(text);
     }
   }
+  .language-code {
+    line-height: 24px;
+    color: transparent;
+    @include xl {
+      color: clr(text);
+    }
+  }
+  .language-long {
+    line-height: 24px;
+    @include xl {
+      color: clr(text);
+    }
+  }
+
   .icon--dropdown  {
     background-image: url("../../assets/icons/arrow-sm-down-black.svg");
     background-repeat: none;
@@ -964,12 +983,15 @@ input[data-drupal-selector="edit-field-contact-info-external-actions-ief-add"]{
 button {
   &.shwpd {
     @extend .background-default;
+    @extend .focus-outline;
     background-image: url("../../assets/icons/eye.svg");
     background-size: 16px;
     background-position: center;
     width: 32px;
     height: 32px;
     margin-left: -40px;
+    background-color: $blue20;
+    border-radius:50%;
   }
   &.shwpd.eye-open {
     @extend .background-default;
@@ -992,6 +1014,9 @@ button {
     background-color: transparent;
     color: transparent;
   }
+}
+.modal .close-icon-button {
+  margin-left: auto;
 }
 
 .js-media-library-open-button {

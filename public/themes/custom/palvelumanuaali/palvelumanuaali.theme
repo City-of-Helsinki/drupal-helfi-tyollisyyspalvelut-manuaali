@@ -6,7 +6,10 @@
  */
 
 use Drupal\Core\Template\Attribute;
+use Drupal\Core\Url;
 use Drupal\content_moderation\Entity\ContentModerationState;
+use Drupal\node\NodeInterface;
+use Drupal\node\NodeTypeInterface;
 use Drupal\views_infinite_scroll\Plugin\views\pager\InfiniteScroll;
 
 /**
@@ -39,14 +42,65 @@ function palvelumanuaali_preprocess_node(&$variables): void {
 /**
  * Implements hook_preprocess_HOOK().
  *
+ * Prepares variables for page title templates.
+ */
+function palvelumanuaali_preprocess_page_title(array &$variables): void {
+  $route_match = \Drupal::routeMatch();
+
+  switch ($route_match->getRouteName()) {
+    case 'node.add':
+      // Alter page title when adding a new node.
+      $node_type = $route_match->getParameter('node_type');
+      if ($node_type instanceof NodeTypeInterface) {
+        $variables['title'] = t('Add new @type_singular', [
+          '@type_singular' => mb_strtolower($node_type->label()),
+        ]);
+      }
+      break;
+
+    case 'entity.node.edit_form':
+      // Only show service label when editing a service.
+      $node = $route_match->getParameter('node');
+      if ($node instanceof NodeInterface && $node->bundle() === 'service') {
+        $langcode = \Drupal::languageManager()->getCurrentLanguage()->getId();
+        if ($node->hasTranslation($langcode)) {
+          $variables['title'] = $node->getTranslation($langcode)->getTitle();
+        }
+        else {
+          $variables['title'] = $node->getTitle();
+        }
+      }
+      break;
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
  * Prepares variables for breadcrumb templates.
  */
 function palvelumanuaali_preprocess_breadcrumb(&$variables): void {
   $request = \Drupal::request();
-  $route = \Drupal::routeMatch()->getRouteObject();
+  $route_match = \Drupal::routeMatch();
+  $route = $route_match->getRouteObject();
   if ($variables['breadcrumb']) {
     $variables['title'] = \Drupal::service('title_resolver')->getTitle($request, $route);
+
+    // The menu_breadcrumb module appends the current page to breadcrumb. As the
+    // template also adds the title, the title would be shown twice in some
+    // cases. Remove the duplicate item by comparing the last breadcrumb item
+    // URL to the current URL. This requires that menu_breadcrumb is set to show
+    // the current page as a link. By doing so, it also fixes the issue where
+    // some parent breadcrumb items were not clickable links.
+    $last_item = end($variables['breadcrumb']);
+    if ($last_item && !empty($last_item['url'])) {
+      $current_url = Url::fromRouteMatch($route_match)->toString();
+      if ($last_item['url'] === $current_url) {
+        array_pop($variables['breadcrumb']);
+      }
+    }
   }
+
   $variables['#cache']['contexts'][] = 'url';
 }
 
@@ -78,6 +132,7 @@ function palvelumanuaali_preprocess_links__language_block(&$variables): void {
     if ($langcode == $current_langcode) {
       $link['link']['#langcode'] = $langcode;
       $variables['links'][$langcode] = $link;
+      $link['link']['#long'] = $variables['links'][$langcode]['text'];
     }
     if ($langcode == $current_langcode) {
       unset($variables['links'][$langcode]);
@@ -181,17 +236,16 @@ function palvelumanuaali_preprocess_textarea(&$variables): void {
  * Prepares variables for details element templates.
  */
 function palvelumanuaali_preprocess_details(&$variables): void {
-  if ($node = \Drupal::request()->attributes->get('node')) {
-    if ($node->bundle() !== 'service') {
-      return;
-    }
-    $variables['node__customer_view'] = \Drupal::service('entity_type.manager')
-      ->getViewBuilder('node')
-      ->view($node, 'customer_view');
-    $variables['node__internal_view'] = \Drupal::service('entity_type.manager')
-      ->getViewBuilder('node')
-      ->view($node, 'internal');
+  // On revision routes the 'node' parameter is the default revision, so
+  // prefer the revision being viewed.
+  $route_match = \Drupal::routeMatch();
+  $node = $route_match->getParameter('node_revision') ?? $route_match->getParameter('node');
+  if (!$node instanceof NodeInterface || $node->bundle() !== 'service') {
+    return;
   }
+  $view_builder = \Drupal::entityTypeManager()->getViewBuilder('node');
+  $variables['node__customer_view'] = $view_builder->view($node, 'customer_view');
+  $variables['node__internal_view'] = $view_builder->view($node, 'internal');
 }
 
 /**
@@ -410,7 +464,8 @@ function palvelumanuaali_theme_suggestions_fieldset_alter(array &$suggestions, a
  */
 function palvelumanuaali_theme_suggestions_form_element_label_alter(array &$suggestions, array $variables, $hook): void {
   $element_id = 'edit-langcode-';
-  if ((strpos($variables['element']['#id'], $element_id) === 0) and ($variables['element']['#form_element_type'] === 'radio')) {
+  $id = $variables['element']['#id'] ?? '';
+  if (str_starts_with($id, $element_id) && ($variables['element']['#form_element_type'] ?? NULL) === 'radio') {
     $suggestions[] = $hook . '__langcode';
   }
 }
@@ -515,7 +570,12 @@ function _palvelumanuaali_preprocess_view_card_liftup(array &$variables): void {
   $entity_group_field = $variables['node']->entitygroupfield;
   if ($entity_group_field->count() > 0) {
     $group_content = $entity_group_field->get(0)->entity;
-    $variables['organizing_group'] = $group_content->getGroup()->label();
+    $group = $group_content->getGroup();
+    $current_language = \Drupal::languageManager()->getCurrentLanguage()->getId();
+    if ($group->language()->getId() !== $current_language && $group->hasTranslation($current_language)) {
+      $group = $group->getTranslation($current_language);
+    }
+    $variables['organizing_group'] = $group->label();
   }
 }
 
@@ -546,7 +606,12 @@ function _palvelumanuaali_preprocess_taxonomy_card(array &$variables): void {
   $entity_group_field = $node->entitygroupfield;
   if ($entity_group_field->count() > 0) {
     $group_content = $entity_group_field->get(0)->entity;
-    $variables['organizing_group'] = $group_content->getGroup()->label();
+    $group = $group_content->getGroup();
+    $current_language = \Drupal::languageManager()->getCurrentLanguage()->getId();
+    if ($group->language()->getId() !== $current_language && $group->hasTranslation($current_language)) {
+      $group = $group->getTranslation($current_language);
+    }
+    $variables['organizing_group'] = $group->label();
   }
 }
 
@@ -718,5 +783,16 @@ function palvelumanuaali_preprocess_pager(&$variables): void {
     $page = explode('=', $href);
     $variables['items']['last']['text'] = (int) $page[1] + 1;
     $variables['items']['last']['attributes']->addClass('pager__link');
+  }
+}
+
+/**
+ * Implements hook_preprocess_block().
+ */
+function palvelumanuaali_preprocess_block(array &$variables) {
+  if (($variables['elements']['#plugin_id'] ?? '') === 'user_login_block') {
+    if (isset($variables['content']['user_links']['#items']['request_password']['#title'])) {
+      $variables['content']['user_links']['#items']['request_password']['#title'] = t('Forgot password?');
+    }
   }
 }

@@ -28,6 +28,14 @@ entity_reference_selection.hel_tpm_group_group_selection:
       type: string
       label: 'Filter by publishing status'
 
+field.widget.settings.hel_tpm_group_select2_widget:
+  type: field.widget.settings.select2_entity_reference
+  label: 'Hel Group Select2 widget settings'
+
+field.widget.settings.hel_tpm_group_autocomplete_widget:
+  type: field.widget.settings.entitygroupfield_autocomplete_widget
+  label: 'Hel Group autocomplete widget settings'
+
 # Schema definition for views group label filter.
 views.filter.group_label_filter:
   type: views.filter.many_to_one

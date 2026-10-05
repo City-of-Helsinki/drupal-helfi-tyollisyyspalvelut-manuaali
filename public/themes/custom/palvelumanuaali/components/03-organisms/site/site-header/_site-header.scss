@@ -31,16 +31,32 @@ body:not(.admin-toolbar-enabled) {
   display: none;
 }
 
-.lgin-on {
-  .header__primary {
-    .mobile-user-menu {
-      display: block;
-      margin-top: $space;
-        @include xl { display: none;}
 
+.header__primary {
+  .mobile-user-menu {
+    display: block;
+    margin-left: -16px;
+    margin-right: -16px;
+    @include xl { display: none;}
+    a {
+      display: flex;
+      align-items: center;
+      line-height: 32px;
+      &::before {
+        content: "";
+        width: 32px;
+        height: 32px;
+        background-repeat: no-repeat;
+        display: block;
+        margin-right: 11px;
+        background-image: url("../../assets/icons/user-image.svg");
+        background-position: center;
+        background-size: 30px;
+      }
     }
   }
 }
+
 
 .slide-in-menu {
   margin-top: $space-two-and-half;
@@ -337,6 +353,20 @@ body:not(.admin-toolbar-enabled) {
         z-index: unset;
       }
     }
+    .block-language-blocklanguage-interface {
+      @media only screen and (max-width: $xl) {
+        right: 65px;
+        top: 4px;
+        margin: 0;
+      }
+      .btn {
+        padding-left: 0;
+        padding-right: 0;
+        .icon {
+          margin: auto;
+        }
+      }
+    }
 
     .menu--account {
         display: none;
@@ -378,9 +408,10 @@ body:not(.admin-toolbar-enabled) {
       margin-left: -10px;
       padding: 0;
       padding: 10px;
-      width: 44px;
+      width: 54px;
       height: 44px;
-      margin-top: 6px;
+      margin-top: 3px;
+      right: -12px;
     }
 
     .block--header-search-block{
@@ -389,7 +420,9 @@ body:not(.admin-toolbar-enabled) {
     #block-kirjautuminen {
       display: none;
     }
-    .menu--favorites {display: block}
+    .menu--favorites {
+      right: 64px;
+    }
   }
 
   &__branding {
@@ -460,11 +493,11 @@ body:not(.admin-toolbar-enabled) {
   .block-language-blocklanguage-interface {
     display: inline-block;
     float: right;
-    margin-right: 20px;
     position: absolute;
-    top: 0;
-    right: 0;
      @include xl {
+       margin-right: 20px;
+       top: 0;
+       right: 0;
        position: relative;
        top: unset;
        right: unset;
@@ -476,13 +509,15 @@ body:not(.admin-toolbar-enabled) {
     float: right;
     position: absolute;
     top: 0;
-    right: 37px;
-    width: 44px;
+    width: 50px;
+    margin-right: 2px;
+    margin-left: 2px;
      @include xl {
        position: relative;
        top: unset;
        right: unset;
        width: unset;
+       margin-left: unset;
        margin-right: $space;
        align-content: center;
      }
@@ -532,7 +567,6 @@ body:not(.admin-toolbar-enabled) {
     }
   }
   a {
-    color: transparent;
     @include xl {
       font-weight: 600;
       color: clr(text);
@@ -701,13 +735,11 @@ body:not(.admin-toolbar-enabled) {
 }
 
 .block-user-login-block {
+  .h6 {
+    @extend .margin--bottom-two-and-half;
+  }
   .form-item {
     position: relative;
-    &:focus-within {
-      &::before {
-        color: clr(alt-header-color)!important;
-      }
-    }
     .form-item__description {
       display: none;
     }
@@ -727,37 +759,11 @@ body:not(.admin-toolbar-enabled) {
     }
     input {
       border-radius: 8px;
-      padding-left: 51px;
+      padding-left: 16px;
       background: clr(sidebar-color);
       &:focus {
         box-shadow: inset 0px 0px 0px 2px clr(background-section);
         outline: none;
-      }
-    }
-    &:first-child {
-      &::before {
-        @include icons;
-        content: "\EA02";
-        position: absolute;
-        left: 18px;
-        bottom: 15px;
-        color: clr(gray);
-      }
-
-    }
-    &:nth-child(2) {
-      &::before {
-        @include icons;
-        content: "\EA04";
-        position: absolute;
-        left: 18px;
-        bottom: 15px;
-        color: clr(gray);
-      }
-      &:focus {
-        &::before {
-          color: clr(alt-header-color);
-        }
       }
     }
   }
@@ -765,10 +771,10 @@ body:not(.admin-toolbar-enabled) {
     border-radius: 8px;
     box-shadow: 0px 8px 16px rgba(30, 64, 182, 0.2);
     background-color: clr(text-inverse);
-    padding-bottom: 32px;
+    padding: 28px 35px 28px 23px;
     top:24px !important;
     @include large {
-      width: 336px;
+      width: 370px;
     }
     .form-actions{
       display: flex;
@@ -779,7 +785,8 @@ body:not(.admin-toolbar-enabled) {
       margin-bottom: 0;
       padding: 0;
       width: fit-content;
-      margin-top: -32px;
+      margin-top: 14px;
+      width: 100%;
     }
     a {
       font-size: 12px;
@@ -847,14 +854,14 @@ body:not(.admin-toolbar-enabled) {
     #search-suggestions {
       .suggestion-item {
         &::before {
-          @include icons;
-          content: "\EA06";
+          background-image: url('../../assets/icons/magnifier2.svg');
           height: 16px;
           width: 16px;
           margin-top: auto;
           margin-bottom: auto;
           margin-right: $space;
           color: $blue40;
+          content:"";
         }
         &:hover {
           &::before {

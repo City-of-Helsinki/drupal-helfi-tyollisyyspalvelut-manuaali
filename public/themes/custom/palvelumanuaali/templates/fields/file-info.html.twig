@@ -1,0 +1,58 @@
+{#
+/**
+ * @file
+ * Theme override for a file with format, size and actions.
+ *
+ * Available variables:
+ * - title: File description, or file name when no description is given.
+ * - filename: Actual file name, used for the download attribute.
+ * - extension: File type in upper case, e.g. "PDF".
+ * - size: Formatted file size.
+ * - url: File URL.
+ * - opens_in_browser: Whether the file (PDF or image) can be opened in a new
+ *   browser tab.
+ * - langcode: Language of the texts, or NULL for the interface language.
+ *
+ * @see hel_tpm_general_theme()
+ */
+#}
+{% set t_options = langcode ? {'langcode': langcode} : {} %}
+<div class="file-info">
+  <span class="file-info__info">
+    {% include "@atoms/images/icons/_icon.twig" with {
+      icon_base_class: 'icon',
+      icon_name: 'file_1',
+      icon_modifiers: ['small'],
+      icon_decorative: true,
+    } %}
+    <span class="file-info__text">
+      <span class="file-info__name">{{ title }}</span>
+      <span class="file-info__meta">
+        {%- if extension %}<span class="file-info__type">{{ extension }}</span> {% endif -%}
+        <span class="file-info__size">{{ size }}</span>
+      </span>
+    </span>
+  </span>
+  <span class="file-info__actions">
+    {% if opens_in_browser %}
+      <a class="file-info__action file-info__action--open" href="{{ url }}" target="_blank" rel="noopener" aria-label="{{ 'Open @file in a new tab'|t({'@file': title}, t_options) }}">
+        <span class="file-info__action-text">{{ 'Open in browser'|t({}, t_options) }}</span>
+        {% include "@atoms/images/icons/_icon.twig" with {
+          icon_base_class: 'icon',
+          icon_name: 'arrow-right-2-ext-dark',
+          icon_modifiers: ['small'],
+          icon_decorative: true,
+        } %}
+      </a>
+    {% endif %}
+    <a class="file-info__action file-info__action--download" href="{{ url }}" download="{{ filename }}" aria-label="{{ 'Download @file'|t({'@file': title}, t_options) }}">
+      <span class="file-info__action-text">{{ 'Download'|t({}, t_options) }}</span>
+      {% include "@atoms/images/icons/_icon.twig" with {
+        icon_base_class: 'icon',
+        icon_name: 'download_1',
+        icon_modifiers: ['small'],
+        icon_decorative: true,
+      } %}
+    </a>
+  </span>
+</div>

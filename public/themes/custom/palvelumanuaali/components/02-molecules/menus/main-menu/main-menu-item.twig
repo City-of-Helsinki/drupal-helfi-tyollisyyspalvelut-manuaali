@@ -35,7 +35,7 @@
       link_additional_classes: item_additional_classes,
     } %}
     {% if item.below %}
-      <span class="expand-sub"></span>
+      <span tabindex="0" class="expand-sub"></span>
       {{ menus.menu_links(item.below, attributes, menu_level + 1, menu_class, menu_modifiers, menu_blockname, item_base_class, original_item_modifiers, item_blockname, directory) }}
     {% endif %}
   {% endblock %}

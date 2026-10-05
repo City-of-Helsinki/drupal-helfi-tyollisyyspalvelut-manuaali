@@ -53,6 +53,8 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
     'purge',
     'dblog',
     'system',
+    'views',
+    'views_bulk_operations',
   ];
 
   /**
@@ -108,12 +110,14 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
     $this->installEntitySchema('message');
     $this->installEntitySchema('group');
     $this->installEntitySchema('group_content');
+    $this->installEntitySchema('action');
     $this->installSchema('node', ['node_access']);
     $this->installSchema('dblog', ['watchdog']);
     $this->installConfig(['field', 'node', 'system']);
     $this->installConfig([
       'content_moderation',
       'hel_tpm_update_reminder_test',
+      'views_bulk_operations',
     ]);
 
     $this->cron = \Drupal::service('cron');

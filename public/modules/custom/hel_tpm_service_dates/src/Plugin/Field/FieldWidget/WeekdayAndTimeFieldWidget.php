@@ -12,6 +12,7 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\hel_tpm_service_dates\WeekdayAndTimeValue;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 
 /**
@@ -288,11 +289,11 @@ final class WeekdayAndTimeFieldWidget extends WidgetBase {
     ];
 
     if (!empty($values['time']['start'])) {
-      $element['start']['#default_value'] = $values['time']['start'];
+      $element['start']['#default_value'] = DrupalDateTime::createFromFormat('H:i:s', WeekdayAndTimeValue::time($values['time']['start']));
     }
 
     if (!empty($values['time']['end'])) {
-      $element['end']['#default_value'] = $values['time']['end'];
+      $element['end']['#default_value'] = DrupalDateTime::createFromFormat('H:i:s', WeekdayAndTimeValue::time($values['time']['end']));
     }
 
     return $element;
@@ -334,26 +335,10 @@ final class WeekdayAndTimeFieldWidget extends WidgetBase {
       }
     }
 
-    // Make sure dates are in proper format. This fixes issue when field values
-    // are saved in incorrect format after failed validation.
-    if (!empty($values)) {
-      foreach ($values as &$value) {
-        if (empty($value['value'])) {
-          continue;
-        }
-        foreach ($value['value'] as &$rows) {
-          foreach ($rows as &$row) {
-            foreach ($row['time'] as &$time) {
-              if (!is_array($time)) {
-                continue;
-              }
-              if (empty($time['object']) || !$time['object'] instanceof DrupalDateTime) {
-                continue;
-              }
-              $time = $time['object'];
-            }
-          }
-        }
+    // Validation uses date objects; storage contains only time strings.
+    foreach ($values as &$value) {
+      if (!empty($value['value'])) {
+        $value['value'] = WeekdayAndTimeValue::normalize($value['value']);
       }
     }
 

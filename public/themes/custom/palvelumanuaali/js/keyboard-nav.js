@@ -3,29 +3,32 @@
 
   Drupal.behaviors.handleKeyboard = {
     attach: function (context, settings) {
-      selectRemove();
       makeChoiceRemoversFocusable();
       addLabeledBy();
 
       $(document).on('select2:select', function () {
         $('.select2-selection__choice__remove').attr('tabindex', '0');
         $('.select2-selection__choice__remove').attr('aria-label', 'Poista valinta');
+      }).on('select2:unselect', function () {
+        $('.select2-selection__choice__remove').attr('tabindex', '0');
+        $('.select2-selection__choice__remove').attr('aria-label', 'Poista valinta');
+      }).on('select:highlight' , function(){
+        $('.select2-results__option--selected').attr('aria-selected', 'true');
+    }).on('select:focus' , function(){
+        $('.select2-results__option--selected').attr('aria-selected', 'true');
       });
 
-      /**
-       * Pager navigation.
-       */
-      function selectRemove() {
-        $(once('.select2-selection__choice', '.select2-selection__choice__remove', context)).each(function() {
-          $(this).on("keydown",function(e) {
-            if (e.key === "Enter") {
-              e.preventDefault();
-              $(this).trigger('click');
-            }
-          });
+      $(document).on(
+        'keydown',
+        '.select2-selection__choice__remove',
+        function (e) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            this.click();
+          }
+        }
+      );
 
-        });
-      }
 
       function makeChoiceRemoversFocusable() {
         $('.select2-selection__choice__remove').attr('tabindex', '0');
@@ -38,7 +41,6 @@
           $(this).attr('aria-labeledby', $(this).parent().parent().parent().siblings('label')[0]['id']);
         });
       }
-
     }
   };
 })(jQuery, Drupal, this);

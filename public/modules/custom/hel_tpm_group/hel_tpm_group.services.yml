@@ -36,3 +36,7 @@ services:
    decorates: group.relation_handler.access_control
    arguments: [ '@entity_type.manager', '@group_relation_type.manager' ]
    shared: false
+
+  hel_tpm_group.reactivate_group_member_access:
+    class: Drupal\hel_tpm_group\Access\ReactivateGroupMemberAccess
+    arguments: ['@current_user', '@current_route_match']

@@ -8,6 +8,7 @@ dependencies:
     - field.field.paragraph.municipality_guide.field_municipality
     - paragraphs.paragraphs_type.municipality_guide
   module:
+    - hel_tpm_general
     - text
 id: paragraph.municipality_guide.default
 targetEntityType: paragraph
@@ -22,10 +23,11 @@ content:
     weight: 1
     region: content
   field_municipality:
-    type: entity_reference_label
+    type: hel_tpm_general_entity_reference_label_language
     label: hidden
     settings:
       link: false
+      langcode: fi
     third_party_settings: {  }
     weight: 0
     region: content

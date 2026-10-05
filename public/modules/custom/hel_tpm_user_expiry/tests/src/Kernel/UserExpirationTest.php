@@ -227,7 +227,7 @@ final class UserExpirationTest extends GroupKernelTestBase {
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function testDisabledUserExpiration() {
-    $user = $this->createLastAccessUser(2, '-220 days');
+    $user = $this->createLastAccessUser(2, 1, '-220 days');
 
     SettingsUtility::disableUserExpiration();
 
@@ -250,7 +250,7 @@ final class UserExpirationTest extends GroupKernelTestBase {
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function testDisablingAndEnabling() {
-    $user = $this->createLastAccessUser(2, '-220 days');
+    $user = $this->createLastAccessUser(2, 1, '-220 days');
 
     SettingsUtility::disableUserExpiration();
 
@@ -277,7 +277,7 @@ final class UserExpirationTest extends GroupKernelTestBase {
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function testBlockingMailByTemplate() {
-    $this->createLastAccessUser(2, '-220 days');
+    $this->createLastAccessUser(2, 1, '-220 days');
 
     // Only run specific cron function for keeping the item in queue.
     _hel_tpm_user_expiry_notification_cron();
@@ -338,43 +338,59 @@ final class UserExpirationTest extends GroupKernelTestBase {
    */
   public function testUserExpirationAnonymization(): void {
     $users = [
-      'inactive' => $this->createLastAccessUser(2, '-220 days'),
-      'active' => $this->createLastAccessUser(3),
-      'user_id_1' => $this->createLastAccessUser(1, '-220 days'),
+      'blocked_user_1' => $this->createLastAccessUser(1, 0, '-220 days', '-220 days'),
+      'active_recently_changed' => $this->createLastAccessUser(2, 0, '-15 days', '-15 days'),
+      'blocked_recently_changed' => $this->createLastAccessUser(3, 0, '-15 days', '-15 days'),
+      'active_not_recently_changed' => $this->createLastAccessUser(4, 1, '-20 days', '-40 days'),
+      'blocked_not_recently_changed' => $this->createLastAccessUser(5, 0, '-20 days', '-40 days'),
     ];
 
-    $this->group->addMember($users['inactive']);
+    $this->group->addMember($users['blocked_not_recently_changed']);
 
     $this->cron->run();
     $this->cronRunHelper('-2 weeks', $users);
     $this->cronRunHelper('-2 days', $users);
 
-    $inactiveOldValues = $this->getFieldsForAnonymizationTest($users['inactive']);
-    $activeOldValues = $this->getFieldsForAnonymizationTest($users['active']);
-    $uid1OldValues = $this->getFieldsForAnonymizationTest($users['user_id_1']);
+    $oldValues = [
+      'blocked_user_1' => $this->getFieldsForAnonymizationTest($users['blocked_user_1']),
+      'active_recently_changed' => $this->getFieldsForAnonymizationTest($users['active_recently_changed']),
+      'blocked_recently_changed' => $this->getFieldsForAnonymizationTest($users['blocked_recently_changed']),
+      'active_not_recently_changed' => $this->getFieldsForAnonymizationTest($users['active_not_recently_changed']),
+      'blocked_not_recently_changed' => $this->getFieldsForAnonymizationTest($users['blocked_not_recently_changed']),
+    ];
 
     $this->cronRunHelper('-30 days', $users);
-    $users['inactive'] = $this->reloadEntity($users['inactive']);
-    $users['active'] = $this->reloadEntity($users['active']);
-    $users['user_id_1'] = $this->reloadEntity($users['user_id_1']);
+    $users['blocked_user_1'] = $this->reloadEntity($users['blocked_user_1']);
+    $users['active_recently_changed'] = $this->reloadEntity($users['active_recently_changed']);
+    $users['blocked_recently_changed'] = $this->reloadEntity($users['blocked_recently_changed']);
+    $users['active_not_recently_changed'] = $this->reloadEntity($users['active_not_recently_changed']);
+    $users['blocked_not_recently_changed'] = $this->reloadEntity($users['blocked_not_recently_changed']);
 
-    // Ensure values are anonymized for user with enough inactivation time.
-    foreach ($inactiveOldValues as $key => $oldValue) {
-      $this->assertNotEquals($oldValue, $users['inactive']->get($key)->value);
+    // Ensure values are not anonymized for blocked user with ID 1.
+    foreach ($oldValues['blocked_user_1'] as $key => $oldValue) {
+      $this->assertEquals($oldValue, $users['blocked_user_1']->get($key)->value);
     }
 
-    $this->assertEmpty($this->group->getMember($users['inactive']));
-
-    // Ensure values are not anonymized for user without enough inactivation
-    // time.
-    foreach ($activeOldValues as $key => $oldValue) {
-      $this->assertEquals($oldValue, $users['active']->get($key)->value);
+    // Ensure values are not anonymized for active and recently changed user.
+    foreach ($oldValues['active_recently_changed'] as $key => $oldValue) {
+      $this->assertEquals($oldValue, $users['active_recently_changed']->get($key)->value);
     }
 
-    // Ensure values are not anonymized for user ID 1.
-    foreach ($uid1OldValues as $key => $oldValue) {
-      $this->assertEquals($oldValue, $users['user_id_1']->get($key)->value);
+    // Ensure values are not anonymized for blocked and recently changed user.
+    foreach ($oldValues['blocked_recently_changed'] as $key => $oldValue) {
+      $this->assertEquals($oldValue, $users['blocked_recently_changed']->get($key)->value);
     }
+
+    // Ensure values are not anonymized for active but long-unchanged user.
+    foreach ($oldValues['active_not_recently_changed'] as $key => $oldValue) {
+      $this->assertEquals($oldValue, $users['active_not_recently_changed']->get($key)->value);
+    }
+
+    // Ensure values are anonymized for blocked and long-unchanged user.
+    foreach ($oldValues['blocked_not_recently_changed'] as $key => $oldValue) {
+      $this->assertNotEquals($oldValue, $users['blocked_not_recently_changed']->get($key)->value);
+    }
+    $this->assertEmpty($this->group->getMembers());
   }
 
   /**
@@ -383,18 +399,18 @@ final class UserExpirationTest extends GroupKernelTestBase {
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function testUserExpirationBlockedUser() {
-    $blockedUser = $this->createLastAccessUser(2, '-220 days', 0);
+    $blockedUser = $this->createLastAccessUser(2, 0, '-220 days');
     $blockedUserOriginalValues = $this->getFieldsForAnonymizationTest($blockedUser);
     $this->assertEquals('0', $blockedUser->get('status')->value);
 
     $this->cron->run();
-    // Ensure the first notification is not sent for blocked user.
+    // Ensure the first notification is not sent to blocked user.
     $this->assertEmpty($this->drupalGetMails([
       'id' => 'message_notify_1st_user_account_expiry_reminder',
     ]));
 
     $this->cronRunHelper('-2 weeks', [$blockedUser]);
-    // Ensure the second notification is not sent for blocked user.
+    // Ensure the second notification is not sent to blocked user.
     $this->assertEmpty($this->drupalGetMails([
       'id' => 'message_notify_2nd_user_account_expiry_reminder',
     ]));
@@ -407,11 +423,11 @@ final class UserExpirationTest extends GroupKernelTestBase {
     // Ensure the blocked user is still blocked.
     $this->assertEquals('0', $blockedUser->get('status')->value);
 
-    $this->cronRunHelper('-30 days', [$blockedUser]);
+    $this->cronRunHelper('-32 days', [$blockedUser]);
     $blockedUser = $this->reloadEntity($blockedUser);
-    // Ensure values are not anonymized for already blocked user.
+    // Ensure blocked and long-unchanged user is anonymized.
     foreach ($blockedUserOriginalValues as $key => $oldValue) {
-      $this->assertEquals($oldValue, $blockedUser->get($key)->value);
+      $this->assertNotEquals($oldValue, $blockedUser->get($key)->value);
     }
     // Ensure the blocked user is still blocked.
     $this->assertEquals('0', $blockedUser->get('status')->value);
@@ -429,14 +445,14 @@ final class UserExpirationTest extends GroupKernelTestBase {
    */
   public function testBlockedUserAnonymization() {
     $date = new DrupalDateTime('now -1 months');
-    $blockedUser = $this->createLastAccessUser(2, '-250 days', 1);
+    $blockedUser = $this->createLastAccessUser(2, 1, '-250 days');
     $originalValues = $this->getFieldsForAnonymizationTest($blockedUser);
     $blockedUser->set('status', 0);
     $blockedUser->setChangedTime($date->getTimestamp());
     $blockedUser->save();
 
     $date = new DrupalDateTime('now -2 weeks');
-    $blockedUser1 = $this->createLastAccessUser(3, '-220 days', 1);
+    $blockedUser1 = $this->createLastAccessUser(3, 1, '-220 days');
     $originalValues1 = $this->getFieldsForAnonymizationTest($blockedUser1);
 
     $blockedUser1->set('status', 0);
@@ -466,7 +482,7 @@ final class UserExpirationTest extends GroupKernelTestBase {
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function testReActivatedUserStaysActive() {
-    $user = $this->createLastAccessUser(2, '-220 days', 0);
+    $user = $this->createLastAccessUser(2, 0, '-220 days');
     $this->assertEquals('0', $user->get('status')->value);
 
     $user->set('status', 1);
@@ -501,22 +517,25 @@ final class UserExpirationTest extends GroupKernelTestBase {
   }
 
   /**
-   * Creates a user with given inactivity period.
+   * Creates a user with a given inactivity period.
    *
    * @param int $uid
    *   The user id.
-   * @param string $lastAccess
-   *   The strtotime format of user's last access.
    * @param int $status
    *   The user status.
+   * @param string $lastAccess
+   *   User last access time in strtotime format.
+   * @param string $lastChanged
+   *   User last changed time in strtotime format.
    *
    * @return \Drupal\user\UserInterface
    *   The user entity.
    *
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  protected function createLastAccessUser(int $uid = 1, string $lastAccess = '-166 days', int $status = 1): UserInterface {
+  protected function createLastAccessUser(int $uid = 1, int $status = 1, string $lastAccess = '-166 days', string $lastChanged = '-166 days'): UserInterface {
     $access = strtotime($lastAccess);
+    $changed = strtotime($lastChanged);
     $user = $this->createUser([], NULL, FALSE, [
       'uid' => $uid,
       'mail' => 'test-' . $uid . 'tpm.test',
@@ -525,6 +544,7 @@ final class UserExpirationTest extends GroupKernelTestBase {
       'field_employer' => 'Test employer ' . $uid,
       'created' => $access,
       'access' => $access,
+      'changed' => $changed,
       'status' => $status,
     ]);
     $this->connection->update('users_field_data')
@@ -532,6 +552,7 @@ final class UserExpirationTest extends GroupKernelTestBase {
       ->fields([
         'access' => $access,
         'created' => $access,
+        'changed' => $changed,
       ])
       ->execute();
     return $user;
@@ -584,7 +605,7 @@ final class UserExpirationTest extends GroupKernelTestBase {
   }
 
   /**
-   * Update expiry notified timestamp helper.
+   * Update helper for expiry-notified timestamp.
    *
    * @param string $date
    *   Date in strtotime format.

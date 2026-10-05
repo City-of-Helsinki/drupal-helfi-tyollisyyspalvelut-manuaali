@@ -52,7 +52,14 @@ final class ServiceRequireOnPublishConstraintValidator extends RequireOnPublishV
    *   TRUE if the entity is published, FALSE otherwise.
    */
   protected function determinePublishedStatus($entity): bool {
-    if ($this->isParagraphEntity($entity) && ($parent = $entity->getParentEntity())) {
+    if ($this->isParagraphEntity($entity)) {
+      $parent = $entity->getParentEntity();
+      // Unsaved hosts validate paragraph fields through their reference field.
+      // A paragraph's own published flag does not reflect its host's state.
+      if (!$parent) {
+        return FALSE;
+      }
+
       return $this->determineParagraphPublishedStatus($parent);
     }
 

@@ -19,7 +19,6 @@ module:
   config: 0
   config_translation: 0
   content_lock: 0
-  content_lock_timeout: 0
   content_moderation: 0
   context: 0
   context_ui: 0
@@ -42,7 +41,6 @@ module:
   encrypt: 0
   entity: 0
   entity_browser: 0
-  entity_diff_ui: 0
   entity_export_csv: 0
   entity_reference_revisions: 0
   entitygroupfield: 0
@@ -64,8 +62,6 @@ module:
   flexible_permissions: 0
   gcontent_moderation: 0
   gdpr: 0
-  geoblock: 0
-  geoblock_maxmind: 0
   ggroup: 0
   ggroup_role_mapper: 0
   ginvite: 0
@@ -73,8 +69,11 @@ module:
   group: 0
   group_roles_management: 0
   health_check: 0
+  hel_tpm_better_locale_interface: 0
   hel_tpm_contact_info: 0
   hel_tpm_editorial: 0
+  hel_tpm_file_garbage_collector: 0
+  hel_tpm_file_garbage_collector_report: 0
   hel_tpm_forms: 0
   hel_tpm_general: 0
   hel_tpm_group: 0
@@ -98,6 +97,7 @@ module:
   jquery_ui_tooltip: 0
   jquery_ui_touch_punch: 0
   key: 0
+  klaro: 0
   language: 0
   layout_discovery: 0
   link: 0
@@ -127,7 +127,6 @@ module:
   nodeaccess: 0
   notification_message: 0
   options: 0
-  other_view_filter: 0
   page_cache: 0
   paragraphs_asymmetric_translation_widgets: 0
   paragraphs_type_permissions: 0
@@ -135,7 +134,6 @@ module:
   password_policy_username: 0
   path: 0
   path_alias: 0
-  pdf_api: 0
   phpass: 0
   purge: 0
   purge_processor_cron: 0
@@ -164,10 +162,12 @@ module:
   serialization: 0
   service_manual_workflow: 0
   shortcut: 0
+  simple_sitemap: 0
   simplei: 0
   svg_image: 0
   svg_image_responsive: 0
   symfony_mailer: 0
+  symfony_mailer_log: 0
   syslog: 0
   system: 0
   taxonomy: 0
@@ -184,6 +184,7 @@ module:
   toolbar: 0
   twig_tweak: 0
   update: 0
+  upgrade_status: 0
   user: 0
   varnish_purge_tags: 0
   varnish_purger: 0
@@ -197,8 +198,10 @@ module:
   views_field_view: 0
   views_infinite_scroll: 0
   views_load_more: 0
+  views_negate: 0
   views_ui: 0
   workflows: 0
+  action: 1
   pathauto: 1
   selective_better_exposed_filters: 1
   content_translation: 10
@@ -209,11 +212,9 @@ module:
   paragraphs: 11
   hel_tpm_service_stats: 100
   minimal: 1000
-  eu_cookie_compliance: 1001
 theme:
   stable: 0
   palvelumanuaali: 0
   claro: 0
   stable9: 0
-  emulsify: 0
 profile: minimal
