@@ -1,0 +1,91 @@
+/**
+ * @file
+ * Base layout for the dropdown filters. The theme provides the look.
+ */
+
+.multi-select-container {
+  position: relative;
+}
+
+/* The closed details content would otherwise add a flex gap. */
+.form-item__dropdown details.multi-select-container {
+  gap: 0;
+}
+
+.multi-select-button {
+  display: block;
+  min-width: 200px;
+  overflow: hidden;
+  cursor: pointer;
+  list-style: none;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.multi-select-button::-webkit-details-marker {
+  display: none;
+}
+
+.multi-select-button .trim-label {
+  display: inline-block;
+  overflow: hidden;
+  max-width: 14ch;
+  vertical-align: bottom;
+  text-overflow: ellipsis;
+}
+
+.multi-select-menu {
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  left: 0;
+  min-width: 100%;
+  margin: 1em 0;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.multi-select-menuitems,
+.multi-select-menuitems .select-group {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.multi-select-menuitem {
+  position: relative;
+  display: block;
+  padding: 0.6em 1em 0.6em 30px;
+  white-space: nowrap;
+  font-size: 0.875em;
+}
+
+.select-group .multi-select-menuitem {
+  padding-left: 2.5rem;
+}
+
+.multi-select-menuitem input,
+.group--parent-label input {
+  position: absolute;
+  opacity: 0;
+}
+
+.select-group .group--parent-label {
+  display: block;
+  width: 100%;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 25px;
+}
+
+.select-group .group--parent-label label {
+  display: block;
+  cursor: pointer;
+}
+
+.multi-select-menuitem:has(input:focus-visible),
+.group--parent-label:has(input:focus-visible) {
+  outline: 2px solid currentColor;
+  outline-offset: -2px;
+}

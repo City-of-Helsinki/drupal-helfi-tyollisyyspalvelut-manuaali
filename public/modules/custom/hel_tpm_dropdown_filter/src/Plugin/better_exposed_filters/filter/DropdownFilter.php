@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\hel_tpm_search\Plugin\better_exposed_filters\filter;
+namespace Drupal\hel_tpm_dropdown_filter\Plugin\better_exposed_filters\filter;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\ContentEntityBase;
@@ -8,20 +8,21 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Security\TrustedCallbackInterface;
 use Drupal\better_exposed_filters\Plugin\better_exposed_filters\filter\FilterWidgetBase;
 use Drupal\selective_better_exposed_filters\Plugin\better_exposed_filters\filter\SelectiveFilterBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Default widget implementation.
+ * Renders an exposed filter as checkboxes inside a dropdown.
  *
  * @BetterExposedFiltersFilterWidget(
- *   id = "bef_dropdown_multiselet",
- *   label = @Translation("Multiselect Dropdown"),
+ *   id = "hel_tpm_dropdown_filter",
+ *   label = @Translation("Dropdown checkboxes"),
  * )
  */
-class DropdownMultiselect extends FilterWidgetBase implements ContainerFactoryPluginInterface {
+class DropdownFilter extends FilterWidgetBase implements ContainerFactoryPluginInterface, TrustedCallbackInterface {
 
   /**
    * Entity type manager.
@@ -72,6 +73,7 @@ class DropdownMultiselect extends FilterWidgetBase implements ContainerFactoryPl
   public function defaultConfiguration(): array {
     $configuration = parent::defaultConfiguration() + SelectiveFilterBase::defaultConfiguration();
     $configuration['term_optgroup'] = FALSE;
+    $configuration['single_select'] = FALSE;
     return $configuration;
   }
 
@@ -88,11 +90,16 @@ class DropdownMultiselect extends FilterWidgetBase implements ContainerFactoryPl
       '#title' => $this->t('Render terms in optgroup'),
       '#default_value' => !empty($this->configuration['term_optgroup']),
     ];
+    $form['single_select'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Allow selecting only one option at a time'),
+      '#default_value' => !empty($this->configuration['single_select']),
+    ];
     return $form;
   }
 
   /**
-   * Add multiselect support for dropdown filter.
+   * Renders the filter as checkboxes inside a dropdown.
    *
    * @param array $form
    *   Form array.
@@ -111,49 +118,104 @@ class DropdownMultiselect extends FilterWidgetBase implements ContainerFactoryPl
       $filter->options['expose']['identifier'];
 
     parent::exposedFormAlter($form, $form_state);
-
-    if (!empty($form[$field_id]['#options']) && $form[$field_id]['#type'] != 'select') {
-      $form[$field_id]['#type'] = 'select';
-      $form[$field_id]['#multiple'] = TRUE;
-    }
-
-    if ($this->configuration['term_optgroup']) {
-      $this->createOptGroups($form[$field_id]);
-    }
-
-    $form[$field_id]['#attributes']['class'][] = 'dropdownMultiselect';
-
-    $form['#attached']['library'][] = 'hel_tpm_search/dropdown_multiselect';
-
-    /** @var \Drupal\views\Plugin\views\filter\FilterPluginBase $filter */
-    $filter = $this->handler;
     SelectiveFilterBase::exposedFormAlter($this->view, $filter, $this->configuration, $form, $form_state);
+
+    if (empty($form[$field_id]['#options'])) {
+      return;
+    }
+    $element = &$form[$field_id];
+    if ($element['#type'] === 'select' && empty($element['#multiple'])) {
+      return;
+    }
+
+    $options = $this->flattenOptions($element['#options']);
+    $groups = [];
+    if ($this->configuration['term_optgroup']) {
+      $groups = $this->getTermGroups(array_keys($options));
+      // Only child terms are selectable, ordered by group.
+      $grouped = array_fill_keys(array_merge(...array_values($groups)), NULL);
+      $options = array_intersect_key(array_replace($grouped, $options), $grouped);
+    }
+
+    $element['#type'] = 'checkboxes';
+    $element['#options'] = $options;
+    unset($element['#multiple'], $element['#size']);
+    $element['#theme'] = 'hel_tpm_dropdown_filter';
+    $element['#pre_render'][] = [static::class, 'preRenderDropdown'];
+    $element['#dropdown_groups'] = $groups;
+    $element['#dropdown_single'] = !empty($this->configuration['single_select']);
+
+    $form['#attached']['library'][] = 'hel_tpm_dropdown_filter/dropdown_filter';
   }
 
   /**
-   * Create optgroup from taxonomy terms.
+   * Pre-render callback for the dropdown filter.
    *
-   * @param array $field
-   *   Select field.
+   * @param array $element
+   *   The checkboxes element.
    *
-   * @return void
-   *   -
+   * @return array
+   *   The element.
+   */
+  public static function preRenderDropdown(array $element): array {
+    // The template renders the label and description, so remove the fieldset
+    // that checkboxes elements are wrapped in.
+    $element['#theme_wrappers'] = [];
+    return $element;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function trustedCallbacks(): array {
+    return ['preRenderDropdown'];
+  }
+
+  /**
+   * Flattens optgroups and converts option labels to strings.
+   *
+   * @param array $options
+   *   Select options.
+   *
+   * @return array
+   *   Option labels keyed by option value.
+   */
+  private function flattenOptions(array $options): array {
+    $flat = [];
+    foreach ($options as $key => $option) {
+      if (is_array($option)) {
+        $flat += $this->flattenOptions($option);
+      }
+      elseif (is_object($option) && isset($option->option)) {
+        $flat += array_map('strval', $option->option);
+      }
+      else {
+        $flat[$key] = (string) $option;
+      }
+    }
+    return $flat;
+  }
+
+  /**
+   * Groups taxonomy terms by their parent term.
+   *
+   * @param array $tids
+   *   Term IDs.
+   *
+   * @return array
+   *   Term IDs keyed by translated parent term label, in term order.
    *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  private function createOptGroups(array &$field) {
-    if ($field['#type'] !== 'select') {
-      return;
-    }
-    $optgroup = [];
-    $options = $field['#options'];
-    $terms = $this->entityTypeManager->getStorage('taxonomy_term')->loadMultiple(array_keys($options));
+  private function getTermGroups(array $tids): array {
+    $groups = [];
+    $terms = $this->entityTypeManager->getStorage('taxonomy_term')->loadMultiple($tids);
     // Add parents first so that the parent term order is preserved.
     foreach ($terms as $term) {
       /** @var \Drupal\taxonomy\Entity\Term $term */
       if (empty($term->parent->entity)) {
-        $optgroup[$this->getTranslatedLabel($term)] = [];
+        $groups[$this->getTranslatedLabel($term)] = [];
       }
     }
     // Add terms to parents preserving the term order.
@@ -161,12 +223,11 @@ class DropdownMultiselect extends FilterWidgetBase implements ContainerFactoryPl
       /** @var \Drupal\taxonomy\Entity\Term $term */
       $parent = $term->parent->entity;
       if (!empty($parent)) {
-        $optgroup[$this->getTranslatedLabel($parent)][$term->id()] = $this->getTranslatedLabel($term);
+        $groups[$this->getTranslatedLabel($parent)][] = $term->id();
       }
     }
     // Remove empty parents.
-    $optgroup = array_filter($optgroup);
-    $field['#options'] = $optgroup;
+    return array_filter($groups);
   }
 
   /**
