@@ -8,13 +8,13 @@ dependencies:
     - workflows.workflow.service_moderation
   module:
     - content_moderation
-    - eu_cookie_compliance
     - field_permissions
     - file
     - filter
     - flag
     - flag_lists
     - hel_tpm_contact_info
+    - klaro
     - media
     - node
     - paragraphs_type_permissions
@@ -29,10 +29,10 @@ is_admin: false
 permissions:
   - 'access content'
   - 'delete own files'
-  - 'display eu cookie compliance popup'
   - 'edit own flag lists'
   - 'flag cart'
   - 'unflag cart'
+  - 'use klaro'
   - 'use search_api_autocomplete for solr_service_search'
   - 'use service_moderation transition create_new_draft'
   - 'use service_moderation transition outdated'

@@ -4,11 +4,11 @@ status: true
 dependencies:
   module:
     - dropzonejs
-    - eu_cookie_compliance
     - field_permissions
     - file
     - hel_tpm_general
     - hel_tpm_group
+    - klaro
     - paragraphs_type_permissions
 id: specialist_editor
 label: 'Specialist editor'
@@ -71,7 +71,6 @@ permissions:
   - 'delete paragraph content service_language'
   - 'delete paragraph content service_time_and_place'
   - 'delete paragraph content url_and_file'
-  - 'display eu cookie compliance popup'
   - 'dropzone upload files'
   - 'edit field_age'
   - 'edit field_career_markings'
@@ -129,6 +128,7 @@ permissions:
   - 'update paragraph content service_language'
   - 'update paragraph content service_time_and_place'
   - 'update paragraph content url_and_file'
+  - 'use klaro'
   - 'view field_age'
   - 'view field_career_markings'
   - 'view field_contact_info'

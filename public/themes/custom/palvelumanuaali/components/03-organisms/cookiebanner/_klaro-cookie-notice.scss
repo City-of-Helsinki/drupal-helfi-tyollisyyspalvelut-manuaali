@@ -1,0 +1,141 @@
+// Klaro cookie notice
+
+@keyframes klaro-cookie-notice-slide-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.klaro .cookie-notice:not(.cookie-modal-notice) {
+  position: fixed;
+  z-index: 99999;
+  top: auto;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: $space-double $space-one-and-half;
+  text-align: left;
+  color: clr(text-inverse);
+  border: 0;
+  border-radius: 0;
+  background-color: clr(footer-color);
+  box-shadow: none;
+  animation: klaro-cookie-notice-slide-up 1s ease-out;
+  @include body-copy;
+  @include xl {
+    padding: $space-double;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+
+  .cn-body {
+    display: grid;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    grid-template-columns: minmax(0, 1fr);
+    @include large {
+      max-width: 80%;
+      grid-template-columns: fit-content(60%) fit-content(40%);
+      grid-template-rows: auto auto;
+      justify-content: space-around;
+    }
+    @include xl {
+      justify-content: space-between;
+    }
+
+    h2 {
+      display: block;
+      margin: 5px 0 5px;
+      color: clr(text-inverse);
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 24px;
+      grid-column: 1;
+    }
+
+    > p {
+      margin: 0 0 $space-two-and-half;
+      color: clr(text-inverse);
+      font-size: $small-caption;
+      font-weight: 700;
+      line-height: 24px;
+      grid-column: 1;
+      @include large {
+        margin-bottom: 0;
+      }
+
+      // Klaro wraps HTML descriptions in a span inside the notice paragraph.
+      p {
+        display: inline;
+        margin: 0;
+        color: inherit;
+        font: inherit;
+      }
+    }
+
+    a {
+      display: inline;
+      color: clr(text-inverse);
+      font-weight: 600;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .cn-ok,
+    .cn-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      gap: $space-double;
+      @include large {
+        gap: $space;
+      }
+    }
+
+    .cn-ok {
+      flex-wrap: nowrap;
+      grid-column: 1;
+      justify-self: center;
+      @include large {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+        justify-self: stretch;
+      }
+    }
+
+    .cn-buttons button.cm-btn {
+      @include button-round-corners;
+      @include button-base;
+      @include button-color-blue;
+      @include button-medium;
+
+      overflow: visible;
+      width: auto;
+      margin: 1em 5px 0 0;
+      padding-right: $space-double;
+      padding-left: $space-double;
+      vertical-align: middle;
+      white-space: nowrap;
+      font-family: Arial, sans-serif;
+      background-image: none;
+      box-shadow: none;
+      text-shadow: none;
+      &:active {
+        position: relative;
+        top: 1px;
+      }
+    }
+  }
+}
