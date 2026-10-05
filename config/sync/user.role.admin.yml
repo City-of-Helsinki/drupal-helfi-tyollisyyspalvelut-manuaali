@@ -37,6 +37,7 @@ dependencies:
     - flag_lists
     - group
     - hel_tpm_contact_info
+    - hel_tpm_file_garbage_collector_report
     - hel_tpm_general
     - hel_tpm_group
     - hel_tpm_update_reminder
@@ -127,15 +128,12 @@ permissions:
   - 'create paragraph content link'
   - 'create paragraph content link_card_row'
   - 'create paragraph content link_card_with_image'
-  - 'create paragraph content long_text_field_with_toolbar'
   - 'create paragraph content municipality_guide'
   - 'create paragraph content quick_link'
   - 'create paragraph content quick_link_row'
   - 'create paragraph content service_language'
   - 'create paragraph content service_list'
-  - 'create paragraph content service_price'
   - 'create paragraph content service_time_and_place'
-  - 'create paragraph content target_group'
   - 'create paragraph content url_and_file'
   - 'create service_provider group'
   - 'create terms in employment_status'
@@ -167,14 +165,11 @@ permissions:
   - 'delete paragraph content link'
   - 'delete paragraph content link_card_row'
   - 'delete paragraph content link_card_with_image'
-  - 'delete paragraph content long_text_field_with_toolbar'
   - 'delete paragraph content municipality_guide'
   - 'delete paragraph content quick_link'
   - 'delete paragraph content quick_link_row'
   - 'delete paragraph content service_language'
-  - 'delete paragraph content service_price'
   - 'delete paragraph content service_time_and_place'
-  - 'delete paragraph content target_group'
   - 'delete paragraph content url_and_file'
   - 'delete terms in employment_status'
   - 'delete terms in language_level'
@@ -269,14 +264,11 @@ permissions:
   - 'update paragraph content link'
   - 'update paragraph content link_card_row'
   - 'update paragraph content link_card_with_image'
-  - 'update paragraph content long_text_field_with_toolbar'
   - 'update paragraph content municipality_guide'
   - 'update paragraph content quick_link'
   - 'update paragraph content quick_link_row'
   - 'update paragraph content service_language'
-  - 'update paragraph content service_price'
   - 'update paragraph content service_time_and_place'
-  - 'update paragraph content target_group'
   - 'update paragraph content url_and_file'
   - 'use admin toolbar search'
   - 'use service_moderation transition archived'
@@ -309,6 +301,7 @@ permissions:
   - 'view field_service_suits_job_search'
   - 'view field_statements'
   - 'view field_statements_unemployment'
+  - 'view file garbage collector report'
   - 'view latest version'
   - 'view own field_age'
   - 'view own field_career_markings'

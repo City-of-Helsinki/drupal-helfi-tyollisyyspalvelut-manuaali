@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * @file
+ * Module file for garbage collector test.
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_entity_presave().
+ */
+function hel_tpm_file_garbage_collector_test_entity_presave(EntityInterface $entity) {
+  if ($entity instanceof NodeInterface && $entity->isTranslatable() && !$entity->isNew()) {
+    $active_langcode = $entity->language()->getId();
+    $translations = $entity->getTranslationLanguages();
+    foreach ($translations as $translation_langcode => $translation_language) {
+      // Prevent secondary languages from disrupting other translations.
+      if ($translation_langcode !== $active_langcode) {
+        $translation = $entity->getTranslation($translation_language->getId());
+        $translation->setRevisionTranslationAffected(FALSE);
+      }
+    }
+  }
+}
