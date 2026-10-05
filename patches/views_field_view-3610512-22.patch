@@ -1,0 +1,28 @@
+From dd9fba4bcd7cf05b0fb72ce53f7d724459c7f6b5 Mon Sep 17 00:00:00 2001
+From: Daniel Cothran <2440-andileco@users.noreply.drupalcode.org>
+Date: Tue, 4 Aug 2026 17:31:27 +0000
+Subject: [PATCH] Update file View.php
+
+---
+ src/Plugin/views/field/View.php | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/src/Plugin/views/field/View.php b/src/Plugin/views/field/View.php
+index df7e525..484148e 100644
+--- a/src/Plugin/views/field/View.php
++++ b/src/Plugin/views/field/View.php
+@@ -102,6 +102,11 @@ class View extends FieldPluginBase {
+   public function buildOptionsForm(&$form, FormStateInterface $form_state) {
+     parent::buildOptionsForm($form, $form_state);
+ 
++    // @todo Remove before Drupal 13.
++    if (!function_exists('views_ui_build_form_url')) {
++      $this->moduleHandler->loadInclude('views_ui', 'inc', 'admin');
++    }
++
+     $view_options = Views::getViewsAsOptions(TRUE, 'all', NULL, FALSE, TRUE);
+ 
+     $form['views_field_view'] = [
+-- 
+GitLab
+

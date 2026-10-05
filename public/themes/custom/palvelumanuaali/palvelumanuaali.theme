@@ -132,6 +132,7 @@ function palvelumanuaali_preprocess_links__language_block(&$variables): void {
     if ($langcode == $current_langcode) {
       $link['link']['#langcode'] = $langcode;
       $variables['links'][$langcode] = $link;
+      $link['link']['#long'] = $variables['links'][$langcode]['text'];
     }
     if ($langcode == $current_langcode) {
       unset($variables['links'][$langcode]);
@@ -235,17 +236,16 @@ function palvelumanuaali_preprocess_textarea(&$variables): void {
  * Prepares variables for details element templates.
  */
 function palvelumanuaali_preprocess_details(&$variables): void {
-  if ($node = \Drupal::request()->attributes->get('node')) {
-    if ($node->bundle() !== 'service') {
-      return;
-    }
-    $variables['node__customer_view'] = \Drupal::service('entity_type.manager')
-      ->getViewBuilder('node')
-      ->view($node, 'customer_view');
-    $variables['node__internal_view'] = \Drupal::service('entity_type.manager')
-      ->getViewBuilder('node')
-      ->view($node, 'internal');
+  // On revision routes the 'node' parameter is the default revision, so
+  // prefer the revision being viewed.
+  $route_match = \Drupal::routeMatch();
+  $node = $route_match->getParameter('node_revision') ?? $route_match->getParameter('node');
+  if (!$node instanceof NodeInterface || $node->bundle() !== 'service') {
+    return;
   }
+  $view_builder = \Drupal::entityTypeManager()->getViewBuilder('node');
+  $variables['node__customer_view'] = $view_builder->view($node, 'customer_view');
+  $variables['node__internal_view'] = $view_builder->view($node, 'internal');
 }
 
 /**
