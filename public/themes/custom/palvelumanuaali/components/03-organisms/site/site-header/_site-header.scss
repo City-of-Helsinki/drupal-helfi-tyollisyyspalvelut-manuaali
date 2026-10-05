@@ -412,6 +412,11 @@ body:not(.admin-toolbar-enabled) {
       height: 44px;
       margin-top: 3px;
       right: -12px;
+      &:hover {
+        .toggle-expand__close span {
+          color: clr(text);
+        }
+      }
     }
 
     .block--header-search-block{

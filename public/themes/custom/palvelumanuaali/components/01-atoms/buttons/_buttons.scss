@@ -516,9 +516,21 @@ $button-colors: (
   &:hover {
     .links {
       background-image: url("../../assets/icons/world-black.svg");
+      @include xl {
+        background-image: url("../../assets/icons/world.svg");
+      }
+    }
+    .language-long {
+      color: clr(text);
+      @include xl {
+        color: clr(background-section);
+      }
     }
     .language-code {
-      color: clr(background-section);
+      color: clr(text);
+      @include xl {
+        color: clr(background-section);
+      }
     }
     .icon--dropdown {
       background-image: url("../../assets/icons/arrow-sm-down.svg");
@@ -536,6 +548,7 @@ $button-colors: (
     background-repeat: none;
     background-size: 22px;
     @include xl {
+      background-image: url("../../assets/icons/world-black.svg");
       vertical-align: top;
       margin-right: $space;
     }

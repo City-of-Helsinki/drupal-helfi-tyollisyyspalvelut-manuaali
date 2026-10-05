@@ -13,6 +13,12 @@
   display: inline-block;
   padding: $space;
   text-decoration: none;
+  &:hover {
+    text-decoration: none;
+    .toggle-expand-close__icon {
+      background-image: url("../../assets/icons/close-black.svg");
+    }
+  }
 }
 
 .toggle-expand {
@@ -38,11 +44,16 @@
   margin: 0 auto;
 }
 
+
 .toggle-expand-close__icon {
   height: 24px;
   width: 24px;
   margin: 0 auto;
+  background-image: url("../../assets/icons/close.svg");
+  background-repeat: no-repeat;
 }
+
+
 
 
 
