@@ -114,6 +114,10 @@
           display: block;
           background-repeat: no-repeat;
           background-image: url("../../assets/icons/heart.svg");
+          @include xl {
+            background-image: url("../../assets/icons/heart-black.svg");
+
+          }
           @extend .icon--small;
           width: 100%;
           background-position: center;
@@ -130,16 +134,23 @@
           }
           &::before {
             background-image: url("../../assets/icons/heart-black.svg");
+            @include xl {
+              background-image: url("../../assets/icons/heart.svg");
+            }
           }
         }
       }
       &:hover {
         a {
+          color: clr(text);
           @include xl {
             color: clr(background-section);
           }
           &::before {
             background-image: url("../../assets/icons/heart-black.svg");
+            @include xl {
+              background-image: url("../../assets/icons/heart.svg");
+            }
           }
         }
       }

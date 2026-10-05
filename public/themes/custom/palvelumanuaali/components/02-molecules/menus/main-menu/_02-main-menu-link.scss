@@ -36,11 +36,11 @@
   @media only screen and (max-width: $xl) {
     width: 100%;
     padding: $space $space-triple $space 20px;
-  }
-  &:hover {
-    background-color: clr(background-dropdown);
-    +.expand-sub {
+    &:hover {
       background-color: clr(background-dropdown);
+      +.expand-sub {
+        background-color: clr(background-dropdown);
+      }
     }
   }
   @include xl {
