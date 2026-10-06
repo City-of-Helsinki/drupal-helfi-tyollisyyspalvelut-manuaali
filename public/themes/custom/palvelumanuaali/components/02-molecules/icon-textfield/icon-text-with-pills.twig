@@ -91,14 +91,18 @@
      {% if combined_field %}
        {% for item in items %}
          <div{{ item.attributes.addClass(item_classes) }}>
-           {{item.content|render }}
+           <div class="width-checker">
+            {{item.content|render }}
+           </div>
          </div>
        {% endfor %}
      {% elseif spaceless %}
        {% for item in items %}
          {% apply spaceless %}
            <div{{ item.attributes.addClass(item_classes) }}>
+                <div class="width-checker">
              {{item.content}}
+                </div>
            </div>
          {% endapply %}
        {% endfor %}
@@ -106,7 +110,9 @@
       {% for item in items %}
         {% apply spaceless %}
           <div{{ item.attributes.addClass(item_classes) }}>
+               <div class="width-checker">
             {{item.content }}
+               </div>
           </div>
         {% endapply %}
       {% endfor %}
