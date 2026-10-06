@@ -59,8 +59,10 @@
     {{"Service organiser"|t}}
   </div>
   {% for item in items %}
-    <div{{ item.attributes.addClass('field__item').addClass('tag-pill').addClass('tag-pill--alt') }}>
+    <div class="tag-pill tag-pill--alt">
+    <div{{ item.attributes.addClass('field__item').addClass('width-checker') }}>
       {{ item.content }}
+    </div>
     </div>
   {% endfor %}
 </div>
