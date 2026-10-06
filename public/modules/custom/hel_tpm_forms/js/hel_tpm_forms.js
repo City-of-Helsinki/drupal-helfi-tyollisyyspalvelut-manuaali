@@ -98,16 +98,29 @@
 
         });
 
-        $(document).ajaxComplete(function () {
+        $(document).ajaxComplete(function (event, xhr, settings) {
+          // Only react to a specific AJAX callback.
+          if (!settings.extraData['_triggering_element_name']){
+            return;
+          }
+          if (!settings.extraData['_triggering_element_name'].includes('field_service_time_and_location_service_time_and_place_add_more')){
+            return;
+          }
           setTimeout(function () {
             const $newRow = $('.field-service-time-and-location-values > tbody > .table__row').last();
             const $ajaxAdded = $newRow.find('.ajax-new-content');
+
             if ($ajaxAdded.length) {
               const $firstField = $newRow.find('.form-text').first();
-              $newRow.find('.form-text').first().focus();
-              $firstField[0].scrollIntoView({
-                behavior: 'smooth',
-                block: 'center'
+
+              $firstField[0].focus({ preventScroll: true });
+              const elementTop = $firstField.offset().top;
+              const viewportHeight = window.innerHeight;
+              const elementHeight = $firstField.outerHeight();
+
+              window.scrollTo({
+                top: elementTop - (viewportHeight / 2) + (elementHeight / 2),
+                behavior: 'smooth'
               });
             }
           }, 1000);
