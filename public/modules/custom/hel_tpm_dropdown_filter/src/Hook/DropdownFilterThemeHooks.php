@@ -92,7 +92,6 @@ class DropdownFilterThemeHooks {
     $variables['groups'] = $groups;
     $variables['items'] = $groups ? [] : $items;
     $variables['dropdown_modifiers'] = '';
-    $variables['dropdown_suffix'] = NULL;
   }
 
 }

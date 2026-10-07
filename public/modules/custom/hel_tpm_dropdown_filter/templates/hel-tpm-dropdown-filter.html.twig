@@ -17,9 +17,8 @@
  * - items: Options that are not in a group. Each item has an id, name,
  *   value, label, checked and disabled.
  * - dropdown_modifiers: Classes for the dropdown wrapper, set by the theme.
- * - dropdown_suffix: Content after the dropdown, set by the theme.
  *
- * @see template_preprocess_hel_tpm_dropdown_filter()
+ * @see \Drupal\hel_tpm_dropdown_filter\Hook\DropdownFilterThemeHooks::preprocessDropdownFilter()
  */
 #}
 {% macro option(item) %}
@@ -63,6 +62,5 @@
         </fieldset>
       </div>
     </details>
-    {{ dropdown_suffix }}
   </div>
 </div>

@@ -186,3 +186,45 @@
   }
 
 }
+
+// The arrow of the dropdown button. Blue, or white when an option is selected,
+// and flipped when the dropdown is open.
+.form-item__dropdown .multi-select-container {
+  .multi-select-button {
+    position: relative;
+    &:before {
+      background-image: url('../../assets/icons/arrow-sm-down.svg');
+      background-repeat: no-repeat;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      content:"";
+      left: 0;
+      top: 0;
+      // 2px below the center, whatever the button height is.
+      background-position: right 4px top calc(50% + 2px);
+    }
+  }
+  &.multi-select-container--open {
+    .multi-select-button {
+      &:before {
+        transform: rotateX(180deg);
+        // Keeps the flipped arrow in the same place as the closed one.
+        background-position: right 4px top calc(50% - 2px);
+      }
+    }
+  }
+  &.active {
+    .multi-select-button {
+      &:before {
+        background-image: url('../../assets/icons/arrow-sm-down-white.svg');
+      }
+    }
+  }
+}
+
+// The language filter on group pages. Aligns the arrow with the other selects
+// on the page, also when the dropdown is open.
+.form-item__dropdown.select--details-select .multi-select-container .multi-select-button:before {
+  background-position: right 8px center;
+}
