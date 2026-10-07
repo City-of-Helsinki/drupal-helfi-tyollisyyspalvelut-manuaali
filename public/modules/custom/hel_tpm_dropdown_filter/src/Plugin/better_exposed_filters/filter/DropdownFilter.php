@@ -8,6 +8,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Render\Element\Checkboxes;
 use Drupal\Core\Security\TrustedCallbackInterface;
 use Drupal\better_exposed_filters\Plugin\better_exposed_filters\filter\FilterWidgetBase;
 use Drupal\selective_better_exposed_filters\Plugin\better_exposed_filters\filter\SelectiveFilterBase;
@@ -137,11 +138,14 @@ class DropdownFilter extends FilterWidgetBase implements ContainerFactoryPluginI
       $options = array_intersect_key(array_replace($grouped, $options), $grouped);
     }
 
+    $this->normalizeUserInput($form_state, $field_id);
+
     $element['#type'] = 'checkboxes';
     $element['#options'] = $options;
     unset($element['#multiple'], $element['#size']);
     $element['#theme'] = 'hel_tpm_dropdown_filter';
     $element['#pre_render'][] = [static::class, 'preRenderDropdown'];
+    $element['#element_validate'][] = [static::class, 'validateDropdown'];
     $element['#dropdown_groups'] = $groups;
     $element['#dropdown_single'] = !empty($this->configuration['single_select']);
 
@@ -169,6 +173,52 @@ class DropdownFilter extends FilterWidgetBase implements ContainerFactoryPluginI
    */
   public static function trustedCallbacks(): array {
     return ['preRenderDropdown'];
+  }
+
+  /**
+   * Removes unchecked options from the submitted value.
+   *
+   * Form API submits unchecked checkboxes as option => 0. Filters expect
+   * only the selected values, like the select element this replaces.
+   *
+   * @param array $element
+   *   The checkboxes element.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
+   */
+  public static function validateDropdown(array &$element, FormStateInterface $form_state): void {
+    $value = $form_state->getValue($element['#parents']);
+    if (is_array($value)) {
+      $checked = Checkboxes::getCheckedCheckboxes($value);
+      $form_state->setValueForElement($element, array_intersect_key($value, array_flip($checked)));
+    }
+  }
+
+  /**
+   * Converts the submitted value of the filter to a list of options.
+   *
+   * Checkboxes expect an array and fail on other input, so a URL like
+   * ?field=value would otherwise cause an error.
+   *
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
+   * @param string $field_id
+   *   The filter identifier.
+   */
+  private function normalizeUserInput(FormStateInterface $form_state, string $field_id): void {
+    $input = $form_state->getUserInput();
+    if (!array_key_exists($field_id, $input)) {
+      return;
+    }
+    $value = is_array($input[$field_id]) ? $input[$field_id] : [$input[$field_id]];
+    $value = array_filter($value, fn ($item) => is_string($item) && $item !== '');
+    if ($value) {
+      $input[$field_id] = $value;
+    }
+    else {
+      unset($input[$field_id]);
+    }
+    $form_state->setUserInput($input);
   }
 
   /**

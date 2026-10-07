@@ -136,6 +136,30 @@ final class DropdownFilterTest extends BrowserTestBase {
   }
 
   /**
+   * Tests that malformed URLs don't cause errors.
+   */
+  public function testMalformedQuery(): void {
+    $this->useDropdownFilter();
+    $assert = $this->assertSession();
+
+    // A single value is used as the selection.
+    $this->drupalGet('bef-test', ['query' => ['field_bef_letters_value' => 'b']]);
+    $assert->statusCodeEquals(200);
+    $assert->elementExists('css', self::LETTERS . ' input[name="field_bef_letters_value[b]"][checked]');
+    $assert->pageTextContains('Page Two');
+    $assert->pageTextNotContains('Page One');
+
+    // Empty and nested values are ignored.
+    foreach (['', [['a']], ['a' => ['a']]] as $value) {
+      $this->drupalGet('bef-test', ['query' => ['field_bef_letters_value' => $value]]);
+      $assert->statusCodeEquals(200);
+      $assert->elementNotExists('css', self::LETTERS . ' input[checked]');
+      $assert->pageTextContains('Page One');
+      $assert->pageTextContains('Page Three');
+    }
+  }
+
+  /**
    * Tests that the filter works without JavaScript.
    */
   public function testSubmit(): void {
