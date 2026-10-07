@@ -188,6 +188,11 @@ function hel_tpm_general_user_presave($entity) {
   if ($entity->id() == 1) {
     return;
   }
+  // The username is generated from the email address, e.g. the anonymous
+  // user has none.
+  if (empty($entity->getEmail())) {
+    return;
+  }
   $username = _hel_tpm_general_generate_username($entity);
   // No point updating anything if the generated name was just the same.
   if ($entity->label() == $username) {

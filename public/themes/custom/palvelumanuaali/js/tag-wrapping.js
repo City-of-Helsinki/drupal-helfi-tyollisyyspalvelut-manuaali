@@ -20,8 +20,8 @@
           parent.style.width = widthPadded + 'px';
         });
       }
-      window.addEventListener('load', updateWidths);
-      window.addEventListener('resize', updateWidths);
+      window.addEventListener('load', updateTagWidths);
+      window.addEventListener('resize', updateTagWidths);
     }
   };
 })(jQuery, Drupal, this);
