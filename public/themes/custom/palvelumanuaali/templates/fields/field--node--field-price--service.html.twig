@@ -51,7 +51,7 @@
   <div{{ attributes.addClass(classes, 'field__items') }}>
     {% for item in items %}
       <div{{ item.attributes.addClass('field__item').addClass('tag-pill').addClass('tag-pill--alt') }}>
-        <span>{{"Service fees "|t}}</span> {{item.content}}
+        <div class="width-checker"><span>{{"Service fees "|t}}</span> {{item.content}}</div>
       </div>
     {% endfor %}
   </div>
