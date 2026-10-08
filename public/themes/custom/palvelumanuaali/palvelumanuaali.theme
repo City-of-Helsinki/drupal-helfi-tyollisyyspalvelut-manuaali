@@ -796,3 +796,17 @@ function palvelumanuaali_preprocess_block(array &$variables) {
     }
   }
 }
+
+/**
+ * Implements hook_preprocess_HOOK() for hel_tpm_dropdown_filter.
+ *
+ * Uses the same dropdown styles as the corresponding select templates.
+ */
+function palvelumanuaali_preprocess_hel_tpm_dropdown_filter(array &$variables): void {
+  if (($variables['element']['#name'] ?? '') === 'langcode') {
+    $variables['dropdown_modifiers'] = 'select--details-select';
+  }
+  else {
+    $variables['dropdown_modifiers'] = 'select--white-rounded select--search-background';
+  }
+}
