@@ -48,10 +48,11 @@ user-menu:
 
 analytics:
   js:
+    # Klaro blocks this file until consent based on its name "matomo.js",
+    # see the "matomo" Klaro service. Do not rename it.
     js/matomo.js: {}
   dependencies:
     - core/drupal
-    - core/jquery
 
 search-filters:
   js:
