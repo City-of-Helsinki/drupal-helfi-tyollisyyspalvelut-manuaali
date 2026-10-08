@@ -5,12 +5,14 @@
  * The dropdowns are native details elements with checkboxes. This closes the
  * dropdown after each selection, so that further selections can't be made
  * while the auto-submit AJAX request is running, and handles closing on
- * outside click, single selection and selecting whole option groups.
+ * outside click, single selection, selecting whole option groups and moving
+ * between the options with arrow keys.
  */
 (function (Drupal, once) {
   'use strict';
 
   const openClass = 'multi-select-container--open';
+  const navigationKeys = ['ArrowDown', 'ArrowUp', 'Home', 'End'];
 
   // The filter changed last, so focus can be moved back to it after the AJAX
   // request has replaced the form.
@@ -51,6 +53,48 @@
       summary.textContent = summary.dataset.placeholder;
     }
     details.classList.toggle('active', selected.length > 0);
+  }
+
+  // The checkboxes the arrow keys move between, in display order. Includes
+  // the group toggles.
+  function navigableCheckboxes(details) {
+    return Array.from(details.querySelectorAll('input[type="checkbox"]:not(:disabled)'));
+  }
+
+  // Moves focus with the arrow keys like in a select: ArrowDown on the button
+  // opens the dropdown, ArrowUp and ArrowDown move between the options and
+  // Home and End move to the first and last option.
+  function navigate(event, details, summary) {
+    const checkboxes = navigableCheckboxes(details);
+    if (!checkboxes.length) {
+      return;
+    }
+
+    if (event.target === summary) {
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        details.open = true;
+        checkboxes[0].focus();
+      }
+      return;
+    }
+
+    const index = checkboxes.indexOf(event.target);
+    if (index === -1) {
+      return;
+    }
+    event.preventDefault();
+    if (event.key === 'ArrowUp' && index === 0) {
+      summary.focus();
+      return;
+    }
+    const targets = {
+      ArrowDown: Math.min(index + 1, checkboxes.length - 1),
+      ArrowUp: index - 1,
+      Home: 0,
+      End: checkboxes.length - 1,
+    };
+    checkboxes[targets[event.key]].focus();
   }
 
   function close(details) {
@@ -115,6 +159,9 @@
       else if (event.key === 'Escape' && details.open) {
         close(details);
         summary.focus();
+      }
+      else if (navigationKeys.includes(event.key) && !event.altKey && !event.ctrlKey && !event.metaKey && !event.shiftKey) {
+        navigate(event, details, summary);
       }
     });
 

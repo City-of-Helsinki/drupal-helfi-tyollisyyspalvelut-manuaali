@@ -59,6 +59,14 @@ final class DropdownFilterJavascriptTest extends WebDriverTestBase {
   private const KEY_ESCAPE = "\u{E00C}";
 
   /**
+   * WebDriver key codes for the arrow, Home and End keys.
+   */
+  private const KEY_UP = "\u{E013}";
+  private const KEY_DOWN = "\u{E015}";
+  private const KEY_HOME = "\u{E011}";
+  private const KEY_END = "\u{E010}";
+
+  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {
@@ -230,6 +238,59 @@ final class DropdownFilterJavascriptTest extends WebDriverTestBase {
   }
 
   /**
+   * Tests moving between the options with arrow keys.
+   */
+  public function testArrowKeys(): void {
+    $this->useDropdownFilter();
+    $this->drupalGet('bef-test');
+    $assert = $this->assertSession();
+    $letter = fn (string $value) => self::LETTERS . ' input[value="' . $value . '"]';
+
+    // ArrowDown on the button opens the dropdown and focuses the first option.
+    $this->pressKey(self::LETTERS . ' summary', self::KEY_DOWN);
+    $this->assertTrue($this->isOpen(self::LETTERS));
+    $this->assertTrue($this->isFocused($letter('a')));
+
+    // ArrowDown and ArrowUp move between the options.
+    $this->sendKey(self::KEY_DOWN);
+    $this->assertTrue($this->isFocused($letter('b')));
+    $this->sendKey(self::KEY_DOWN);
+    $this->assertTrue($this->isFocused($letter('c')));
+    $this->sendKey(self::KEY_UP);
+    $this->assertTrue($this->isFocused($letter('b')));
+
+    // End and Home move to the last and first option. ArrowDown stays on the
+    // last option.
+    $this->sendKey(self::KEY_END);
+    $this->assertTrue($this->isFocused($letter('e')));
+    $this->sendKey(self::KEY_DOWN);
+    $this->assertTrue($this->isFocused($letter('e')));
+    $this->sendKey(self::KEY_HOME);
+    $this->assertTrue($this->isFocused($letter('a')));
+
+    // ArrowUp on the first option moves back to the button and keeps the
+    // dropdown open.
+    $this->sendKey(self::KEY_UP);
+    $this->assertTrue($this->isFocused(self::LETTERS . ' summary'));
+    $this->assertTrue($this->isOpen(self::LETTERS));
+
+    // Moving doesn't change the selection, Space does.
+    $this->sendKey(self::KEY_DOWN);
+    $this->sendKey(self::KEY_DOWN);
+    $this->assertSame([], $this->getCheckedValues(self::LETTERS));
+    $this->sendKey(' ');
+    $assert->assertWaitOnAjaxRequest();
+    $this->assertSame(['b'], $this->getCheckedValues(self::LETTERS));
+
+    // Group toggles are included, in display order: first the toggle of the
+    // first group, then the first option of that group.
+    $this->pressKey(self::LOCATION . ' summary', self::KEY_DOWN);
+    $this->assertTrue($this->isFocused(self::LOCATION . ' [data-dropdown-filter-group]'));
+    $this->sendKey(self::KEY_DOWN);
+    $this->assertTrue($this->isFocused(self::LOCATION . ' input:not([data-dropdown-filter-group])'));
+  }
+
+  /**
    * Tests closing the dropdown when interacting with other elements.
    */
   public function testClosing(): void {
@@ -364,7 +425,16 @@ final class DropdownFilterJavascriptTest extends WebDriverTestBase {
   private function pressKey(string $selector, string $key): void {
     $this->assertSession()->elementExists('css', $selector);
     $this->getSession()->executeScript('document.querySelector(\'' . $selector . '\').focus()');
+    $this->sendKey($key);
+  }
 
+  /**
+   * Presses a key on the focused element.
+   *
+   * @param string $key
+   *   The key, as a character or WebDriver key code.
+   */
+  private function sendKey(string $key): void {
     /** @var \Behat\Mink\Driver\Selenium2Driver $driver */
     $driver = $this->getSession()->getDriver();
     $session = $driver->getWebDriverSession();
