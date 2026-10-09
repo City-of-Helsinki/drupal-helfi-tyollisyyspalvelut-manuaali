@@ -1,4 +1,4 @@
-(function ($, Drupal, drupalSettings) {
+(function ($, Drupal, drupalSettings, once) {
   Drupal.behaviors.hel_tpm_forms = {
     attach: function (context, settings) {
       addError();
@@ -9,7 +9,7 @@
       // hide age range on the first a page of service entity form.
       function toggleAgeRange() {
         let ageGroupRadio = '.field--name-field-age-groups .form-item .form-checkbox';
-        toggleAgeField(ageGroupRadio)
+        toggleAgeField(ageGroupRadio);
 
         //handle age accordion
         $(ageGroupRadio).click(function() {
@@ -80,7 +80,55 @@
           }
         });
       }
-
     }
   }
-})(jQuery, Drupal, drupalSettings);
+
+  let addParagraphClicked = false;
+
+    Drupal.behaviors.serviceTimeParagraphScroll = {
+      attach(context) {
+        once(
+          'service-time-add-button',
+          '.field--widget-hel-tpm-service-dates-service-time-and-place-widget .paragraphs-dropbutton-wrapper input',
+          context
+        ).forEach(function (button) {
+          $(button).on('click', function () {
+            addParagraphClicked = true;
+          });
+
+        });
+
+        $(document).ajaxComplete(function (event, xhr, settings) {
+          // Only react to a specific AJAX callback.
+          if (!settings.extraData['_triggering_element_name']){
+            return;
+          }
+          if (!settings.extraData['_triggering_element_name'].includes('field_service_time_and_location_service_time_and_place_add_more')){
+            return;
+          }
+          setTimeout(function () {
+            const $newRow = $('.field-service-time-and-location-values > tbody > .table__row').last();
+            const $ajaxAdded = $newRow.find('.ajax-new-content');
+
+            if ($ajaxAdded.length) {
+              const $firstField = $newRow.find('.form-text').first();
+
+              $firstField[0].focus({ preventScroll: true });
+              const elementTop = $firstField.offset().top;
+              const viewportHeight = window.innerHeight;
+              const elementHeight = $firstField.outerHeight();
+
+              window.scrollTo({
+                top: elementTop - (viewportHeight / 2) + (elementHeight / 2),
+                behavior: 'smooth'
+              });
+            }
+          }, 1000);
+
+        });
+
+      }
+    };
+
+
+})(jQuery, Drupal, drupalSettings, once );
