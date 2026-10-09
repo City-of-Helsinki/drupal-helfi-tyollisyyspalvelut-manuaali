@@ -9,6 +9,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Entity\Display\EntityFormDisplayInterface;
 
 /**
  * Implements hook_theme().
@@ -25,9 +26,92 @@ function hel_tpm_forms_theme($existing, $type, $theme, $path) {
       'template' => 'hel_tpm_steps',
       'variables' => [
         'content' => NULL,
+        'steps' => [],
       ],
     ],
   ];
+}
+
+
+/**
+ * Builds stepper items from the form display's field groups.
+ *
+ * @param \Drupal\Core\Entity\Display\EntityFormDisplayInterface $form_display
+ *   The form display used by the current form.
+ *
+ * @return array
+ *   List of steps with 'id', 'html_id' and 'label', sorted by weight.
+ */
+function hel_tpm_forms_get_form_steps(EntityFormDisplayInterface &$form_display, ?array $form = NULL): array {
+  if (!$form_display) {
+    return [];
+  }
+
+  $all_groups = $form_display->getThirdPartySettings('field_group');
+  $stepper_groups = array_filter($all_groups, fn($g) =>
+    empty($g['parent_name'])
+    && ($g['region'] ?? 'content') !== 'hidden'
+    && ($g['format_type'] ?? '') === 'html_element'
+  );
+
+  uasort($stepper_groups, fn($a, $b) => ($a['weight'] ?? 0) <=> ($b['weight'] ?? 0));
+
+  $steps = [];
+  foreach ($stepper_groups as $name => $group) {
+    $steps[] = [
+      'id' => $name,
+      'html_id' => $group['format_settings']['id'] ?? '',
+      'label' => $group['label'],
+      'accessible' => hel_tpm_forms_group_is_accessible($name, $all_groups, $form),
+    ];
+  }
+  return $steps;
+}
+
+/**
+ * Checks recursively whether the user can access at least one field in a group.
+ *
+ * @param string $group_name
+ *   Machine name of the group to check.
+ * @param array $all_groups
+ *   All field group settings from the form display.
+ * @param array|null $form
+ *   The form array.
+ * @param array $visited
+ *   Groups already checked, to guard against circular nesting.
+ *
+ * @return bool
+ *   TRUE if at least one field inside the group (at any depth) is accessible.
+ */
+function hel_tpm_forms_group_is_accessible(string $group_name, array $all_groups, array $form, array $visited = []): bool {
+  // Without the form there's nothing to check against; assume accessible.
+  if (empty($form)) {
+    return TRUE;
+  }
+  if (isset($visited[$group_name]) || !isset($all_groups[$group_name])) {
+    return FALSE;
+  }
+  $visited[$group_name] = TRUE;
+
+  foreach ($all_groups[$group_name]['children'] ?? [] as $child) {
+    // Child is a nested field group.
+    if (isset($all_groups[$child])) {
+      if (($all_groups[$child]['region'] ?? 'content') === 'hidden') {
+        continue;
+      }
+      if (hel_tpm_forms_group_is_accessible($child, $all_groups, $form, $visited)) {
+        return TRUE;
+      }
+      continue;
+    }
+
+    // Child is a field or other form element.
+    if (isset($form[$child]) && ($form[$child]['#access'] ?? TRUE) !== FALSE) {
+      return TRUE;
+    }
+  }
+
+  return FALSE;
 }
 
 /**
@@ -313,8 +397,17 @@ function hel_tpm_forms_node_service_form_alter_helper(&$form, FormStateInterface
     }
   }
 
+  $form_object = $form_state->getFormObject();
+  $form_display = $form_object instanceof \Drupal\Core\Entity\ContentEntityFormInterface
+    ? $form_object->getFormDisplay($form_state)
+    : NULL;
+
   $form['paging_footer'] = [
     '#theme' => 'hel_tpm_steps',
+    '#steps' => hel_tpm_forms_get_form_steps($form_display, $form),
+    '#cache' => [
+      'tags' => $form_display->getCacheTags(),
+    ],
   ];
 
   $form['#attached']['library'][] = 'hel_tpm_forms/hel_tpm_forms';

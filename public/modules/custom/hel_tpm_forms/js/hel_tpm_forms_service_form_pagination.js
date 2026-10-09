@@ -1,171 +1,192 @@
 (function ($, Drupal, drupalSettings) {
-  Drupal.behaviors.hel_tpm_forms_service_form_pagination = {
+  Drupal.behaviors.custom_module_forms_service_form_pagination = {
     attach: function (context, settings) {
-      let tabs = document.getElementsByClassName("tab");
+      const tabs = document.getElementsByClassName('tab');
+      const steps = Array.from(document.querySelectorAll('.step'));
+      const lines = document.getElementsByClassName('step-line');
+
+      if (!tabs.length || !steps.length) {
+        return;
+      }
+
+      mapStepsToTabs();
       defaultTab();
       nextPrevNav();
       stepNav();
 
       /**
+       * Gives each accessible step button the index of the tab it opens.
+       *
+       * Inaccessible field groups are not rendered as tabs, so button
+       * positions and tab indexes differ after the first disabled step.
+       */
+      function mapStepsToTabs() {
+        let tabIndex = 0;
+        steps.forEach(function (step) {
+          if (isDisabled(step)) {
+            step.removeAttribute('data-tab');
+            return;
+          }
+          step.dataset.tab = tabIndex++;
+        });
+
+        if (tabIndex !== tabs.length) {
+          console.warn('Stepper: ' + tabIndex + ' accessible steps but ' + tabs.length + ' tabs.');
+        }
+      }
+
+      function isDisabled(step) {
+        return step.getAttribute('aria-disabled') === 'true';
+      }
+
+      /**
        * Default tab logic.
        */
       function defaultTab() {
-        let currentTab = getCurrentTab();
-        showTab(currentTab); // Display the current tab
+        showTab(getCurrentTab());
       }
 
       /**
        * Provides for next and previous navigation events.
        */
       function nextPrevNav() {
-        $(once('prev-click-event', '.btn-prev', context)).each(function() {
-          $(this).click(function() {
-            nextPrev(-1);
-          })
+        $(once('prev-click-event', '.btn-prev', context)).on('click', function (e) {
+          e.preventDefault();
+          nextPrev(-1);
         });
 
-        $(once('next-click-event', '.btn-next', context)).each(function() {
-          $(this).click(function() {
-            nextPrev(1);
-          })
+        $(once('next-click-event', '.btn-next', context)).on('click', function (e) {
+          e.preventDefault();
+          nextPrev(1);
         });
       }
 
       /**
        * Pager navigation.
+       *
+       * A <button> fires "click" on Enter and Space as well, so no separate
+       * keyboard handler is needed.
        */
       function stepNav() {
-        $(once('step-event', '.step', context)).each(function() {
-          $(this).click(function() {
-            let step = $(this).attr('data-step');
-            switchTab(step);
-          });
-          $(this).on("keyup",function(e) {
-            if (e.key === "Enter") {
-              let step = $(this).attr('data-step');
-              switchTab(step);
-            }
-          });
+        $(once('step-event', '.step', context)).on('click', function (e) {
+          e.preventDefault();
+          if (isDisabled(this) || this.dataset.tab === undefined) {
+            return;
+          }
+          switchTab(Number(this.dataset.tab));
         });
       }
 
       /**
        * Update url step parameter.
-       *
-       * @param step
        */
-      function updateStepParam(step) {
-        let urlParams = new URLSearchParams(window.location.search);
-        urlParams.set('step', step);
-        history.replaceState(null, null, "?"+urlParams.toString());
+      function updateStepParam(n) {
+        const urlParams = new URLSearchParams(window.location.search);
+        urlParams.set('step', n);
+        history.replaceState(null, '', '?' + urlParams.toString());
       }
 
       /**
        * Switch tab.
-       *
-       * @param n
        */
       function switchTab(n) {
-        let currentTab = getCurrentTab();
-        $(tabs).each(function () {
-          this.style.display = "none";
-        });
-        currentTab = Number(n);
-        showTab(currentTab);
+        showTab(n);
         scrollTop();
       }
 
       /**
-       * Show selected tab function.
-       *
-       * @param n
+       * Keeps a tab index within the available tabs.
+       */
+      function clampTab(n) {
+        n = Number(n);
+        if (!Number.isInteger(n) || n < 0) {
+          return 0;
+        }
+        return Math.min(n, tabs.length - 1);
+      }
+
+      /**
+       * Show selected tab.
        */
       function showTab(n) {
-        n = Number(n);
+        n = clampTab(n);
 
-        // This function will display the specified tab of the form ...
-        tabs[n].style.display = "block";
-        let lastTab = tabs.length - 1;
-        let nextBtn = document.getElementById('nextBtn');
-        let prevBtn = document.getElementById('prevBtn');
-        // ... and fix the Previous/Next buttons:
-        if (n > 0) {
-          prevBtn.hidden = false;
-          nextBtn.hidden = false;
-        }
-        else {
-          prevBtn.hidden = true
-        }
+        Array.from(tabs).forEach(function (tab) {
+          tab.style.display = 'none';
+        });
+        tabs[n].style.display = 'block';
 
-        if (n === 0) {
-           nextBtn.hidden = false;
+        const lastTab = tabs.length - 1;
+        const nextBtn = document.getElementById('nextBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        if (prevBtn) {
+          prevBtn.hidden = n === 0;
         }
-
-        if (n === lastTab) {
-          nextBtn.hidden = true;
+        if (nextBtn) {
+          nextBtn.hidden = n === lastTab;
         }
 
         updateStepParam(n);
-        // ... and run a function that displays the correct step indicator:
         fixStepIndicator(n);
       }
 
       /**
-       * Method for scrolling window to top.
+       * Scrolls to the active step and moves focus there.
        */
       function scrollTop() {
-        // I have no idea why this needs this to work but it does
-        $(this).scrollTop();
-        const pageTitle = document.getElementsByClassName("multistep-nav active");
-        const scrollElement = pageTitle[0];
-        scrollElement.scrollIntoView();
-        scrollElement.focus();
+        const active = document.querySelector('.multistep-nav.active');
+        if (active) {
+          active.scrollIntoView();
+          active.focus();
+        }
       }
 
       /**
-       * Helper function to get current tab from url parameter.
-       *
-       * @returns {number}
+       * Get current tab index from url parameter.
        */
       function getCurrentTab() {
-        let currentTab = 0;
-        let urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.has('step')) {
-          currentTab = urlParams.get('step');
-          currentTab = Number(currentTab);
-        }
-        return Number(currentTab);
+        const urlParams = new URLSearchParams(window.location.search);
+        return clampTab(urlParams.get('step') ?? 0);
       }
 
       function nextPrev(n) {
-        let currentTab = getCurrentTab();
-        currentTab = currentTab + Number(n);
-        // Otherwise, display the correct tab:
-        switchTab(currentTab)
+        switchTab(getCurrentTab() + Number(n));
       }
 
+      /**
+       * Marks the button for tab n as active.
+       */
       function fixStepIndicator(n) {
-        // This function removes the "active" class of all steps...
-        let i, x = document.getElementsByClassName("step");
-        for (i = 0; i < x.length; i++) {
-          x[i].className = x[i].className.replace(" active", "");
-          x[i].ariaCurrent = x[i].ariaCurrent.replace("step", "false");
+        let activeIndex = -1;
+
+        steps.forEach(function (step, index) {
+          step.classList.remove('active');
+          step.removeAttribute('aria-current');
+          if (step.dataset.tab !== undefined && Number(step.dataset.tab) === n) {
+            activeIndex = index;
+          }
+        });
+
+        if (activeIndex === -1) {
+          return;
         }
-        //... and adds the "active" class to the current step:
-        x[n].className += " active";
-        x[n].ariaCurrent = "step";
-        fixLineIndicator(n);
+        steps[activeIndex].classList.add('active');
+        steps[activeIndex].setAttribute('aria-current', 'step');
+        fixLineIndicator(activeIndex);
       }
-      function fixLineIndicator(n) {
-        //This function adds handles adding active class when page is
-        let x = document.getElementsByClassName("step-line");
-        for (i = 0; i < x.length; i++) {
-          x[i].className = x[i].className.replace(" active", "");
-        }
-        if (n != 0) {
-          x[n - 1].className += " active";
+
+      /**
+       * Lines are positioned between buttons, so they use the button
+       * position, not the tab index.
+       */
+      function fixLineIndicator(buttonIndex) {
+        Array.from(lines).forEach(function (line) {
+          line.classList.remove('active');
+        });
+        if (buttonIndex > 0 && lines[buttonIndex - 1]) {
+          lines[buttonIndex - 1].classList.add('active');
         }
       }
     }
-  }
+  };
 })(jQuery, Drupal, drupalSettings);

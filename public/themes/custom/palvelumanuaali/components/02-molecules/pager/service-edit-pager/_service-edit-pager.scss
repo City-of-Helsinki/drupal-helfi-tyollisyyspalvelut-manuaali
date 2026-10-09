@@ -23,6 +23,12 @@
       opacity: 1;
     }
   }
+  .step[aria-disabled='true'] {
+    .nav-icon {
+      background-color: $gray-lighter;
+      color: $gray;
+    }
+  }
   .nav-icon {
     margin: auto;
     font-weight: bold;
@@ -34,6 +40,7 @@
     line-height: 32px;
     color: $blue100;
     cursor: pointer;
+    display: block;
   }
   .active, .done {
     .nav-icon {
