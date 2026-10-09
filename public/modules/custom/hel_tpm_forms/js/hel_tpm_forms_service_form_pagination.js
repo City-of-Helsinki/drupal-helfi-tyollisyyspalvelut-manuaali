@@ -172,20 +172,6 @@
         }
         steps[activeIndex].classList.add('active');
         steps[activeIndex].setAttribute('aria-current', 'step');
-        fixLineIndicator(activeIndex);
-      }
-
-      /**
-       * Lines are positioned between buttons, so they use the button
-       * position, not the tab index.
-       */
-      function fixLineIndicator(buttonIndex) {
-        Array.from(lines).forEach(function (line) {
-          line.classList.remove('active');
-        });
-        if (buttonIndex > 0 && lines[buttonIndex - 1]) {
-          lines[buttonIndex - 1].classList.add('active');
-        }
       }
     }
   };

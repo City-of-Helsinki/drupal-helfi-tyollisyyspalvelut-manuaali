@@ -13,21 +13,16 @@
 
 <nav class='node-service-edit-form-pager node-form prevent-scroll'>
   <ol class='stepper multistep-nav-wrapper'>
-    <div class="stepper-wrapper">
-      <div class="step-lines">
-        {% for i in range(2, step_count) %}
-          <div class="step-line"></div>
-        {% endfor %}
-      </div>
-    </div>
- {% for step in steps %}
+  {% for step in steps %}
+    <li class="multistep-nav-item{{ not step.accessible ? ' is-disabled' }}">
       <button type="button" id="step-{{ loop.index}}" class="step nav-step-{{ loop.index - 1 }} multistep-nav" aria-current="false" aria-label="{{ step.label }} {{ loop.index }}/{{ step_count }}"  data-step="{{ loop.index -1 }}"
               {% if step.html_id %} aria-controls="{{ step.html_id }}"{% endif %}
               {% if not step.accessible %} aria-disabled="true" aria-describedby="multistep-nav-disabled-desc"{% endif %}>
         <span class="step__number nav-icon">{{ loop.index }}</span>
         <span class="step__label label">{{ step.label }}</span>
       </button>
-    {% endfor %}
+    </li>
+  {% endfor %}
   </ol>
   <p id="multistep-nav-disabled-desc" class="visually-hidden">
     {{ 'You do not have access to this step.'|t }}
