@@ -1,0 +1,9 @@
+name: 'File garbage collector report'
+type: module
+description: 'Lists files deleted, or selected for deletion in dry run mode, by the file garbage collector.'
+package: Custom
+core_version_requirement: ^11.1
+dependencies:
+  - hel_tpm_file_garbage_collector:hel_tpm_file_garbage_collector
+  - drupal:user
+  - drupal:views

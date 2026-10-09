@@ -35,34 +35,10 @@
   ]
 %}
   <nav{{ attributes.addClass(classes) }}>
-    <button id="loginlinkButton-mobile" class="btn-menu hide-dxl login-btn-mobile" type="button">
-      {{'Log in'|t}}
-      {% do attributes.removeAttribute('id') %}
-      {% do attributes.removeAttribute('class') %}
-        {% include "@atoms/images/icons/_icon.twig" with {
-                icon_base_class: 'icon',
-                icon_name: 'user-white',
-                icon_modifiers: ['small', 'blue'],
-              } %}
-    </button>
-    <div class='slide-in-loginform slide-in-menu-end hide-desktop'>
-      <button id="loginlinkButton-mobile" class="btn btn-menu-close hide-dxl" type="button">
-        {% include "@atoms/images/icons/_icon.twig" with {
-          icon_base_class: "icon",
-          icon_blockname: "toggle-expand-close",
-          icon_name: "close",
-        } %}
-        <span class="visually-hidden">
-          {{'Close'|t}}
-        </span>
-      </button>
-      <span class="login-text d--block ta--center margin--left-right-auto">
-        {{'Log in:'|t}}
-      </span>
+      <a class="main-menu__link font-size--default" href="/user/login">{{'Log in'|t}}</a>
       {% block mobilecontent %}
-        {{ content }}
+{#        {{ content }}#}
       {% endblock %}
-    </div>
     <button id="loginDropdownButton-mobile" class="btn btn-menu hide-tblt" type="button" data-bs-toggle="dropdown"  data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
       <span class="login-text">{{'Log in'|t}}</span>
       {% include "@atoms/images/icons/_icon.twig" with {

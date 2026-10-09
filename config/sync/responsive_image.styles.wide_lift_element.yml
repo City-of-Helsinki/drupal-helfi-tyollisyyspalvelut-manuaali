@@ -7,39 +7,39 @@ dependencies:
     - image.style.wide_medium_800x466
     - image.style.wide_mobile_532x312
   theme:
-    - emulsify
+    - palvelumanuaali
 id: wide_lift_element
 label: 'Wide lift element'
 image_style_mappings:
   -
     image_mapping_type: image_style
     image_mapping: wide_large_1200x699
-    breakpoint_id: whisk.xxlarge
+    breakpoint_id: palvelumanuaali.large
     multiplier: 1x
   -
     image_mapping_type: image_style
     image_mapping: wide_large_1200x699
-    breakpoint_id: whisk.xlarge
-    multiplier: 1x
-  -
-    image_mapping_type: image_style
-    image_mapping: wide_large_1200x699
-    breakpoint_id: whisk.large
+    breakpoint_id: palvelumanuaali.medium
     multiplier: 1x
   -
     image_mapping_type: image_style
     image_mapping: wide_medium_800x466
-    breakpoint_id: whisk.medium
+    breakpoint_id: palvelumanuaali.small-large
     multiplier: 1x
   -
     image_mapping_type: image_style
     image_mapping: wide_medium_800x466
-    breakpoint_id: whisk.small
+    breakpoint_id: palvelumanuaali.small-med
+    multiplier: 1x
+  -
+    image_mapping_type: image_style
+    image_mapping: wide_medium_800x466
+    breakpoint_id: palvelumanuaali.small
     multiplier: 1x
   -
     image_mapping_type: image_style
     image_mapping: wide_mobile_532x312
-    breakpoint_id: whisk.xsmall
+    breakpoint_id: palvelumanuaali.mobile-only
     multiplier: 1x
-breakpoint_group: emulsify
+breakpoint_group: palvelumanuaali
 fallback_image_style: wide_large_1200x699

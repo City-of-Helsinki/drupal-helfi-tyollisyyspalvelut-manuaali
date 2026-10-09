@@ -1,0 +1,65 @@
+label: 'File garbage collector report'
+description: 'Files deleted, or selected for deletion in dry run mode, by the file garbage collector.'
+display:
+  default:
+    display_title: Default
+    display_options:
+      title: 'File garbage collector'
+      fields:
+        fid:
+          label: 'File ID'
+        status:
+          label: Status
+        filename:
+          label: File
+        uri:
+          label: URI
+        filemime:
+          label: Type
+        filesize:
+          label: Size
+        file_created:
+          label: Uploaded
+        name:
+          label: Owner
+        usages:
+          label: 'Used in'
+        last_used:
+          label: 'Last used'
+        references_removed:
+          label: 'Revision values removed'
+        changed:
+          label: Reported
+      pager:
+        options:
+          tags:
+            next: 'Next ›'
+            previous: '‹ Previous'
+            first: '« First'
+            last: 'Last »'
+          expose:
+            items_per_page_label: 'Items per page'
+            items_per_page_options_all_label: '- All -'
+            offset_label: Offset
+      exposed_form:
+        options:
+          submit_button: Filter
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      empty:
+        area_text_custom:
+          content: 'No files have been reported.'
+      filters:
+        status:
+          expose:
+            label: Status
+        filename:
+          expose:
+            label: 'File name'
+      header:
+        result:
+          content: 'Displaying @start - @end of @total'
+  page_1:
+    display_title: Page

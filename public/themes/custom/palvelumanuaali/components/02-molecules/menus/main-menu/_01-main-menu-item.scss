@@ -32,11 +32,14 @@ $main-menu-desktop-padding: calc(207px + $space-double);
   background-repeat: no-repeat;
   background-position: center;
   width: 42px;
-  height: 32px;
+  height: 52px;
   display: block;
   top: 0;
   right: 0;
   background-size: 24px;
+  &:hover {
+    cursor: pointer;
+  }
   @include xl {
     display: none;
   }

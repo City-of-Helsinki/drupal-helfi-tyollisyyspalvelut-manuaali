@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for File garbage collector module.
+ */
+
+declare(strict_types=1);
+
+/**
+ * Add file garbage collector settings in dry run mode.
+ */
+function hel_tpm_file_garbage_collector_update_10001(): void {
+  $config = \Drupal::configFactory()->getEditable('hel_tpm_file_garbage_collector.settings');
+  if ($config->isNew()) {
+    $config->set('mode', 'dry_run')->save();
+  }
+}

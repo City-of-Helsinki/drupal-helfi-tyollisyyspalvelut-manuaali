@@ -32,13 +32,17 @@ $main-menu-medium: $medium;
 .main-menu {
   @include list-reset;
   z-index: $zi-main-menu;
+  @media only screen and (max-width: $xl) {
+    border-top: 1px solid clr(background);
+    border-bottom: 1px solid $gray-light;
+  }
   >li {
-    margin-bottom: $space-one-half;
+    margin-bottom: 0;
     @include xl {
       margin-bottom: inherit;
     }
   }
-  @include medium {
+  @include xl {
     border-bottom: none;
   }
 }

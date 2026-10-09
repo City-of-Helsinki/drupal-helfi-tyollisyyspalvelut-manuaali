@@ -28,17 +28,27 @@
 .main-menu__link {
   color: clr(text);
   display: block;
-  padding: $space-one-half $space-triple $space-one-half $space-one-and-half;
   text-decoration: none;
-  letter-spacing: 1px;
   @extend .header-text-dsk;
   font-size: 12px;
   font-weight: 600;
   line-height: 20px;
+  @media only screen and (max-width: $xl) {
+    width: 100%;
+    padding: $space $space-triple $space 20px;
+    &:hover {
+      background-color: clr(background-dropdown);
+      +.expand-sub {
+        background-color: clr(background-dropdown);
+      }
+    }
+  }
   @include xl {
+    letter-spacing: 1px;
     font-size: 16px;
     font-weight: 700;
     line-height: 24px; /* 200% */
+    width: inherit;
   }
 
   &--with-sub {
@@ -74,12 +84,6 @@
   }
   @include xxl {
     line-height: 24px;
-  }
-}
-
-.main-menu__item--sub {
-  &:hover, &:focus, &:focus-within {
-
   }
 }
 

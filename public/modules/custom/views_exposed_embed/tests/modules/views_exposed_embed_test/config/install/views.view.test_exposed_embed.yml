@@ -1,0 +1,211 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - entity_test
+    - views_exposed_embed
+id: test_exposed_embed
+label: 'Test exposed embed'
+module: views
+description: ''
+tag: ''
+base_table: entity_test
+base_field: id
+display:
+  default:
+    id: default
+    display_title: Default
+    display_plugin: default
+    position: 0
+    display_options:
+      title: 'Test exposed embed'
+      fields:
+        name:
+          id: name
+          table: entity_test
+          field: name
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: entity_test
+          entity_field: name
+          plugin_id: field
+          label: ''
+          exclude: false
+          type: string
+          settings:
+            link_to_entity: false
+      filters:
+        type:
+          id: type
+          table: entity_test
+          field: type
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: entity_test
+          entity_field: type
+          plugin_id: in_operator
+          operator: in
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: type_op
+            label: Type
+            description: ''
+            use_operator: false
+            operator: type_op
+            identifier: type
+            required: false
+            remember: false
+            multiple: true
+            reduce: false
+          is_grouped: false
+        name:
+          id: name
+          table: entity_test
+          field: name
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: entity_test
+          entity_field: name
+          plugin_id: string
+          operator: contains
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: name_op
+            label: Name
+            description: ''
+            use_operator: true
+            operator: name_op
+            identifier: name
+            required: false
+            remember: false
+            multiple: false
+            placeholder: ''
+          is_grouped: false
+        name_grouped:
+          id: name_grouped
+          table: entity_test
+          field: name
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: entity_test
+          entity_field: name
+          plugin_id: string
+          operator: '='
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: name_grouped_op
+            label: 'Name group'
+            description: ''
+            use_operator: false
+            operator: name_grouped_op
+            identifier: name_group
+            required: false
+            remember: false
+            multiple: false
+            placeholder: ''
+          is_grouped: true
+          group_info:
+            label: 'Name group'
+            description: ''
+            identifier: name_group
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items:
+              1:
+                title: Foo
+                operator: '='
+                value: 'Foo item'
+        name_hidden:
+          id: name_hidden
+          table: entity_test
+          field: name
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: entity_test
+          entity_field: name
+          plugin_id: string
+          operator: not
+          value: Secret
+          group: 1
+          exposed: false
+          is_grouped: false
+      sorts:
+        id:
+          id: id
+          table: entity_test
+          field: id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: entity_test
+          entity_field: id
+          plugin_id: standard
+          order: ASC
+          exposed: false
+      pager:
+        type: none
+        options:
+          offset: 0
+      exposed_form:
+        type: basic
+        options:
+          submit_button: Apply
+          reset_button: false
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      access:
+        type: none
+        options: {  }
+      cache:
+        type: none
+        options: {  }
+      style:
+        type: default
+      row:
+        type: fields
+      query:
+        type: views_query
+        options: {  }
+  exposed_embed_1:
+    id: exposed_embed_1
+    display_title: 'Exposed Embed'
+    display_plugin: exposed_embed
+    position: 1
+    display_options: {  }
+  exposed_embed_disabled:
+    id: exposed_embed_disabled
+    display_title: 'Disabled embed'
+    display_plugin: exposed_embed
+    position: 2
+    display_options:
+      enabled: false
+  exposed_embed_restricted:
+    id: exposed_embed_restricted
+    display_title: 'Restricted embed'
+    display_plugin: exposed_embed
+    position: 3
+    display_options:
+      access:
+        type: perm
+        options:
+          perm: 'view test entity'
+      defaults:
+        access: false

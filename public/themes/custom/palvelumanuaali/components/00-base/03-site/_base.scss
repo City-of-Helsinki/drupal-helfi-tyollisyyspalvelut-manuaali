@@ -57,11 +57,22 @@ body {
     @include large {
       display: block;
     }
+    &-only {
+      @media only screen and (max-width: $xl) {
+        display: none;
+      }
+    }
   }
   &-desktop {
     display: block;
     @include large {
       display: none;
+    }
+  }
+  &-dsk-only {
+    display: none;
+    @media only screen and (max-width: $xl) {
+      display: block;
     }
   }
   //desktop-extra-large
@@ -735,4 +746,15 @@ article ul,
   &:focus-within {
     outline: 2px solid clr(primary);
   }
+}
+
+.offset-outline {
+  outline-offset: 2px;
+}
+
+.container-inline div {
+  display: inline-block;
+}
+.width-checker {
+  display: inline;
 }

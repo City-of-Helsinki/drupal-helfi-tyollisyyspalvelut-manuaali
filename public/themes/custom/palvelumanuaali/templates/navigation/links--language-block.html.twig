@@ -44,8 +44,11 @@
       {% if loop.first %}
         <button id="languageSwitcherButton" class="btn btn-menu" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <span class="icon icon--small links"></span>
-          <span class="language-code">
+          <span class="language-code hide-mobile-only">
             {{ item.link['#langcode'] }}
+          </span>
+          <span class="language-long hide-dsk-only color--bright-blue font-size--tiny font-weight--bold">
+            {{ item.link['#long'] }}
           </span>
           <span class="icon icon--small icon--dropdown hide-mobile"></span>
         </button>

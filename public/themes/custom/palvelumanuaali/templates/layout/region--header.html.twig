@@ -20,6 +20,7 @@
 {% set link_url = url('<front>') %}
 
 {% extends "@organisms/site/site-header/site-header.twig" %}
+
 {% block header__branding %}
   {% include "@organisms/site/site-sidebar/_site-sidebar-branding.twig" with {
     large: "yes",
@@ -35,3 +36,10 @@
   } %}
   {{ drupal_block('system_menu_block:account') }}
 {% endblock %}
+{% block inner__branding %}
+  {% include "@organisms/site/site-sidebar/_site-sidebar-branding.twig" with {
+    inner: "yes",
+    logo_link__url: link_url,
+  } %}
+{% endblock %}
+

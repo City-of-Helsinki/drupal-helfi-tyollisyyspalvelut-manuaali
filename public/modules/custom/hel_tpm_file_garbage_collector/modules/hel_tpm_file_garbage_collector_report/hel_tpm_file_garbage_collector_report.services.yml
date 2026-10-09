@@ -1,0 +1,10 @@
+services:
+  hel_tpm_file_garbage_collector_report.report:
+    class: Drupal\hel_tpm_file_garbage_collector_report\FileGarbageReport
+    arguments: ['@database', '@entity_type.manager', '@datetime.time', '@cache_tags.invalidator']
+  Drupal\hel_tpm_file_garbage_collector_report\FileGarbageReport: '@hel_tpm_file_garbage_collector_report.report'
+  hel_tpm_file_garbage_collector_report.subscriber:
+    class: Drupal\hel_tpm_file_garbage_collector_report\EventSubscriber\FileGarbageReportSubscriber
+    arguments: ['@hel_tpm_file_garbage_collector_report.report']
+    tags:
+      - { name: event_subscriber }
