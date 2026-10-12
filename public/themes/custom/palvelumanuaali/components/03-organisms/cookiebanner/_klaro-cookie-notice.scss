@@ -73,6 +73,11 @@
         margin-bottom: 0;
       }
 
+      // Klaro underlines the consent change notice by default.
+      &.cn-changes {
+        text-decoration: none;
+      }
+
       // Klaro wraps HTML descriptions in a span inside the notice paragraph.
       p {
         display: inline;
@@ -86,10 +91,7 @@
       display: inline;
       color: clr(text-inverse);
       font-weight: 600;
-      text-decoration: none;
-      &:hover {
-        text-decoration: underline;
-      }
+      text-decoration: underline;
     }
 
     .cn-ok,
