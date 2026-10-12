@@ -6,8 +6,11 @@ namespace Drupal\hel_tpm_group\Plugin\views\field;
 
 use Drupal\Core\Cache\CacheableDependencyInterface;
 use Drupal\Core\Cache\UnchangingCacheableDependencyTrait;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageInterface;
+use Drupal\Core\Url;
 use Drupal\views\Attribute\ViewsField;
+use Drupal\views\ResultRow;
 use Drupal\views\Plugin\ViewsHandlerManager;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Drupal\views\Plugin\views\field\FieldPluginBase;
@@ -39,6 +42,27 @@ final class GroupTranslatedLabel extends FieldPluginBase implements CacheableDep
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->joinManager = $join_manager;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function defineOptions(): array {
+    $options = parent::defineOptions();
+    $options['link_to_entity'] = ['default' => FALSE];
+    return $options;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function buildOptionsForm(&$form, FormStateInterface $form_state): void {
+    $form['link_to_entity'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Link to the group'),
+      '#default_value' => !empty($this->options['link_to_entity']),
+    ];
+    parent::buildOptionsForm($form, $form_state);
   }
 
   /**
@@ -80,6 +104,22 @@ final class GroupTranslatedLabel extends FieldPluginBase implements CacheableDep
       $this->tableAlias . '_label_translated',
       $params,
     );
+
+    if (!empty($this->options['link_to_entity'])) {
+      $this->addAdditionalFields(['id']);
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function render(ResultRow $values) {
+    if (!empty($this->options['link_to_entity'])) {
+      $id = $this->getValue($values, 'id');
+      $this->options['alter']['make_link'] = !empty($id);
+      $this->options['alter']['url'] = $id ? Url::fromRoute('entity.group.canonical', ['group' => $id]) : NULL;
+    }
+    return parent::render($values);
   }
 
   /**
