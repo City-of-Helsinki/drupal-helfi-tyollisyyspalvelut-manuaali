@@ -10,10 +10,13 @@ dependencies:
   module:
     - epp
     - require_on_publish
+    - tmgmt_content
 third_party_settings:
   epp:
     value: '[current-page:url:args:value:1]'
     on_update: 0
+  tmgmt_content:
+    excluded: false
   require_on_publish:
     require_on_publish: true
 id: node.service.field_service_producer
@@ -21,7 +24,7 @@ field_name: field_service_producer
 entity_type: node
 bundle: service
 label: Palveluntuottaja
-description: ''
+description: 'Oletuksena näkyy oma organisaatiosi. Jos palvelu järjestetään yhteistyössä monen organisaation kesken, lisää yhteistyökumppanit listalta. Jos palvelu on ostopalvelu, poista oma organisaatiosi ja lisää ostopalveluntuottaja(t) listalta.'
 required: false
 translatable: false
 default_value: {  }
