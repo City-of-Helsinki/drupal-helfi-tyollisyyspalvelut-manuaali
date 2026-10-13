@@ -159,7 +159,6 @@ third_party_settings:
         required_fields: true
     group_pla:
       children:
-        - field_implementation_extra_info
         - field_service_time_and_location
       label: 'Aika ja paikka'
       region: content
@@ -232,12 +231,13 @@ third_party_settings:
       children:
         - title
         - field_description
+        - field_implementation_extra_info
         - field_service_set
         - field_service_languages
         - field_free_service
         - field_price
         - field_price_description
-      label: Perustiedot
+      label: "<h2 class='h4'>Palvelun perustiedot</h2>"
       region: content
       parent_name: group_basic_information
       weight: 1
@@ -246,6 +246,7 @@ third_party_settings:
         classes: 'form-background--white form-background--regular-padding'
         show_empty_fields: false
         id: ''
+        label_as_html: true
         description: ''
         required_fields: false
     group_basic_info_2:
@@ -709,11 +710,11 @@ content:
     weight: 32
     region: content
     settings:
-      display_label: true
+      display_label: false
     third_party_settings: {  }
   field_implementation_extra_info:
     type: select2_entity_reference
-    weight: 16
+    weight: 29
     region: content
     settings:
       width: 100%
@@ -966,7 +967,7 @@ content:
     third_party_settings: {  }
   field_service_languages:
     type: hel_tpm_editorial_paragraphs_accessibility
-    weight: 30
+    weight: 31
     region: content
     settings:
       title: 'Paragraafi '
@@ -1027,7 +1028,7 @@ content:
         maxlength_js_enforce: false
   field_service_set:
     type: optgroup_term_select2
-    weight: 29
+    weight: 30
     region: content
     settings: {  }
     third_party_settings: {  }
