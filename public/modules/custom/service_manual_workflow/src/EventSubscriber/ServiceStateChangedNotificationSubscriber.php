@@ -3,6 +3,7 @@
 namespace Drupal\service_manual_workflow\EventSubscriber;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\content_moderation\Entity\ContentModerationStateInterface;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManager;
@@ -74,8 +75,7 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
   public function draftToReadyToPublish(ServiceModerationEvent $event): void {
     $account = $event->getAccount();
     $state = $event->getModerationState();
-    $storage = $this->entityTypeManager->getStorage($state->content_entity_type_id->value);
-    $entity = $storage->load($state->content_entity_id->value);
+    $entity = $this->loadModeratedEntity($state);
 
     if (!$this->notifyGroupAdministration($account, $entity)) {
       return;
@@ -99,7 +99,7 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
 
     // Dispatch messages to group administration.
     foreach ($accounts as $user) {
-      $this->dispatchMessage($entity, $user, 'group_ready_to_publish_notificat');
+      $this->dispatchMessage($entity, $user, 'group_ready_to_publish_notificat', $entity->language()->getId());
       $this->messenger->addStatus($this->t('Notified @group administration', ['@group' => $group->label()]));
     }
   }
@@ -118,8 +118,7 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
    */
   public function readyToPublishToPublished(ServiceModerationEvent $event): void {
     $state = $event->getModerationState();
-    $storage = $this->entityTypeManager->getStorage($state->content_entity_type_id->value);
-    $entity = $storage->load($state->content_entity_id->value);
+    $entity = $this->loadModeratedEntity($state);
 
     if (!$this->notifyServiceProvider($entity)) {
       return;
@@ -128,6 +127,33 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
     $service_provider_updatee = $entity->get('field_service_provider_updatee')->entity;
     // Send content published notification to service provider updatee.
     $this->dispatchMessage($entity, $service_provider_updatee, 'content_has_been_published');
+  }
+
+  /**
+   * Loads the moderated entity in the language of the moderation state.
+   *
+   * @param \Drupal\content_moderation\Entity\ContentModerationStateInterface $state
+   *   Content moderation state object.
+   *
+   * @return \Drupal\Core\Entity\ContentEntityInterface|null
+   *   The moderated entity translation, or NULL if the entity was not found.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   */
+  protected function loadModeratedEntity(ContentModerationStateInterface $state): ?ContentEntityInterface {
+    $storage = $this->entityTypeManager->getStorage($state->content_entity_type_id->value);
+    $entity = $storage->load($state->content_entity_id->value);
+    if (!$entity instanceof ContentEntityInterface) {
+      return NULL;
+    }
+
+    $langcode = $state->language()->getId();
+    if ($entity->hasTranslation($langcode)) {
+      $entity = $entity->getTranslation($langcode);
+    }
+
+    return $entity;
   }
 
   /**
@@ -231,6 +257,9 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
    *   User object.
    * @param string $message_template
    *   Message template id.
+   * @param string|null $render_langcode
+   *   (optional) The language the message is rendered in. This affects both
+   *   the message template text and the tokens, e.g. the node translation.
    *
    * @return void
    *   -
@@ -240,14 +269,14 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
    * @throws \Drupal\Core\Entity\EntityStorageException
    * @throws \Drupal\message_notify\Exception\MessageNotifyException
    * */
-  protected function dispatchMessage(EntityInterface $node, UserInterface $account, string $message_template): void {
+  protected function dispatchMessage(EntityInterface $node, UserInterface $account, string $message_template, ?string $render_langcode = NULL): void {
     $current_user = $this->entityTypeManager->getStorage('user')->load($this->currentUser->id());
 
     $this->messageSender->createAndSend($message_template, $account, [
       'field_node' => $node,
       'field_user' => $account,
       'field_message_author' => $current_user,
-    ]);
+    ], NULL, $render_langcode);
   }
 
   /**

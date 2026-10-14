@@ -42,6 +42,10 @@ class MessageSender {
    *   Array of arrays holding field keys and field values.
    * @param array|null $context
    *   The key and value of the context object.
+   * @param string|null $langcode
+   *   (optional) The language the message is rendered in. This affects both
+   *   the message template text and the token replacements. Defaults to the
+   *   current interface language.
    *
    * @return bool
    *   TRUE if mail is sent, FALSE otherwise.
@@ -49,11 +53,14 @@ class MessageSender {
    * @throws \Drupal\Core\Entity\EntityStorageException
    * @throws \Drupal\message_notify\Exception\MessageNotifyException
    */
-  public function createAndSend(string $template, UserInterface $account, array $fields, ?array $context = NULL): bool {
+  public function createAndSend(string $template, UserInterface $account, array $fields, ?array $context = NULL, ?string $langcode = NULL): bool {
     $message = Message::create([
       'template' => $template,
     ]);
     $message->setOwner($account);
+    if ($langcode) {
+      $message->setLanguage($langcode);
+    }
 
     foreach ($fields as $key => $value) {
       $message->set($key, $value);
