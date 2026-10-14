@@ -508,7 +508,7 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id): void {
       $form['content_translation']['#access'] = FALSE;
 
       if (isset($form['field_description']['widget'][0]['value']['#title'])) {
-        $label = t("Service's short description");
+        $label = t("Short description of the service");
         $form['field_description']['widget'][0]['value']['#title'] = $label;
       }
       if (isset($form['field_service_languages']['widget']['add_more'])) {

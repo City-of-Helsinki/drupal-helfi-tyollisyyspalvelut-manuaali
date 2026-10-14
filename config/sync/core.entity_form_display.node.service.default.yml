@@ -1107,11 +1107,12 @@ content:
     region: content
     settings:
       size: 60
-      placeholder: ''
+      placeholder: 'Kirjoita palvelua kuvaava nimi'
     third_party_settings:
       maxlength:
         maxlength_js: 120
-        maxlength_js_label: 'Merkkimäärä rajattu @limit merkkiin, jäljellä: <strong>@remaining</strong>'
+        maxlength_js_label: '@remaining merkkiä käytettävissä'
+        maxlength_js_enforce: false
   uid:
     type: select2_entity_reference
     weight: 6

@@ -15,7 +15,7 @@ third_party_settings:
     group_add:
       label: 'Ytterligare information'
     group_basic_info_1:
-      label: Basuppgifter
+      label: "<h2 class='h4'>Tjänstens basuppgifter</h2>"
     group_basic_info_2:
       label: Målgrupp
     group_basic_info_3:
@@ -55,6 +55,8 @@ content:
       maxlength:
         maxlength_js_label: 'Innehåll begränsat till @limit tecken, kvar: <strong>@remaining</strong>'
   title:
+    settings:
+      placeholder: 'Skriv in ett namn som beskriver tjänsten'
     third_party_settings:
       maxlength:
-        maxlength_js_label: 'Innehåll begränsat till @limit tecken, kvar: <strong>@remaining</strong>'
+        maxlength_js_label: '@remaining tecken kan användas'
