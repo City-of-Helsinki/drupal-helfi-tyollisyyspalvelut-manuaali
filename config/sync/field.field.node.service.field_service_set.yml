@@ -7,12 +7,11 @@ dependencies:
     - node.type.service
     - taxonomy.vocabulary.service_set
   module:
-    - epp
     - require_on_publish
+    - tmgmt_content
 third_party_settings:
-  epp:
-    value: ''
-    on_update: 0
+  tmgmt_content:
+    excluded: false
   require_on_publish:
     require_on_publish: true
 id: node.service.field_service_set
