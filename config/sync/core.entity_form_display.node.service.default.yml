@@ -250,13 +250,13 @@ third_party_settings:
         required_fields: false
     group_basic_info_2:
       children:
-        - field_life_situations
-        - field_age_groups
-        - field_age
         - field_municipality_irrelevant
         - field_target_group_municipality
+        - field_age_groups
+        - field_age
+        - field_life_situations
         - field_target_group_description
-      label: Kohderyhmä
+      label: '<h2 class="h4>Kohderyhmä</h2>'
       region: content
       parent_name: group_basic_information
       weight: 3
@@ -265,6 +265,7 @@ third_party_settings:
         classes: 'form-background--white form-background--regular-padding'
         show_empty_fields: false
         id: ''
+        label_as_html: true
         description: ''
         required_fields: true
     group_basic_info_3:
@@ -588,7 +589,7 @@ content:
     third_party_settings: {  }
   field_age:
     type: range
-    weight: 12
+    weight: 16
     region: content
     settings:
       label:
@@ -600,7 +601,7 @@ content:
     third_party_settings: {  }
   field_age_groups:
     type: options_buttons
-    weight: 11
+    weight: 15
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -757,7 +758,7 @@ content:
     third_party_settings: {  }
   field_life_situations:
     type: select2_entity_reference
-    weight: 9
+    weight: 17
     region: content
     settings:
       width: 100%
@@ -1059,7 +1060,7 @@ content:
     third_party_settings: {  }
   field_target_group_description:
     type: text_textarea
-    weight: 15
+    weight: 18
     region: content
     settings:
       rows: 5
