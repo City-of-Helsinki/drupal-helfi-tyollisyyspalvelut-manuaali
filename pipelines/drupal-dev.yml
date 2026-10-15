@@ -5,13 +5,14 @@ trigger:
   branches:
     include:
       - develop
+      - feature/*
   paths:
     exclude:
     - '*release-please*'
     - '*.md'
     - '.github/'
-    - 'pipelines/drupal-release.yml'
-    - 'pipelines/drupal-review.yml'
+    - 'pipelines/drupal-stageprod.yml'
+    - 'pipelines/drupal-test.yml'
     - '*compose*'
 
 # Pull request (PR) triggers cause a pipeline to run whenever a pull request is

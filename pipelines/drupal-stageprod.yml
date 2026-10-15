@@ -1,6 +1,16 @@
 # Continuous integration (CI) triggers cause a pipeline to run whenever you push
 # an update to the specified branches or you push specified tags.
-trigger: none
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+  paths:
+    exclude:
+    - '*.md'
+    - '.github/'
+    - 'pipelines/drupal-dev.yml'
+    - 'pipelines/drupal-test.yml'
 
 # Pull request (PR) triggers cause a pipeline to run whenever a pull request is
 # opened with one of the specified target branches, or when updates are made to
@@ -26,7 +36,7 @@ resources:
 
 extends:
   # Filename in Azure DevOps Repository
-  template: components/drupal/pipelines/drupal-production.yml@tyollisyysptv-pipelines
+  template: components/drupal/pipelines/drupal-staging.yml@tyollisyysptv-pipelines
   # parameters:
     # Application build arguments and config map values as key value pairs.
     # Does not contain all buildArguments or configMap values, the rest located in tyollisyysptv-pipelines
