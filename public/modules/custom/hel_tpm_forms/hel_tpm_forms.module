@@ -10,6 +10,7 @@ use Drupal\field\Entity\FieldConfig;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Entity\Display\EntityFormDisplayInterface;
+use Drupal\Core\Entity\ContentEntityFormInterface;
 
 /**
  * Implements hook_theme().
@@ -31,7 +32,6 @@ function hel_tpm_forms_theme($existing, $type, $theme, $path) {
     ],
   ];
 }
-
 
 /**
  * Builds stepper items from the form display's field groups.
@@ -398,7 +398,7 @@ function hel_tpm_forms_node_service_form_alter_helper(&$form, FormStateInterface
   }
 
   $form_object = $form_state->getFormObject();
-  $form_display = $form_object instanceof \Drupal\Core\Entity\ContentEntityFormInterface
+  $form_display = $form_object instanceof ContentEntityFormInterface
     ? $form_object->getFormDisplay($form_state)
     : NULL;
 
