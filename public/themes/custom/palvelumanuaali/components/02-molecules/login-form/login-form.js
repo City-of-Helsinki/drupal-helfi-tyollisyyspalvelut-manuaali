@@ -2,7 +2,7 @@
   'use strict';
 Drupal.behaviors.loginForm = {
       attach: function (context, settings) {
-
+/*    left here as menu ledger will be introduced in the future
       let body = $('body');
       let loginBlock = $('.header__primary .mobile-user-menu .block-user-login-block');
       let toggleLogin = $('>.btn-menu', loginBlock);
@@ -28,7 +28,7 @@ Drupal.behaviors.loginForm = {
         setTimeout(function() { sidebarLogin.removeClass('slide-out-right'); }, 1000);
         e.preventDefault();
       });
-    }
+    }*/
   },
 };
 })(jQuery, Drupal, this);
