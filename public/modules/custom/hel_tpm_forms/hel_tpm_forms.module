@@ -43,10 +43,6 @@ function hel_tpm_forms_theme($existing, $type, $theme, $path) {
  *   List of steps with 'id', 'html_id' and 'label', sorted by weight.
  */
 function hel_tpm_forms_get_form_steps(EntityFormDisplayInterface &$form_display, ?array $form = NULL): array {
-  if (!$form_display) {
-    return [];
-  }
-
   $all_groups = $form_display->getThirdPartySettings('field_group');
   $stepper_groups = array_filter($all_groups, fn($g) =>
     empty($g['parent_name'])
@@ -83,7 +79,7 @@ function hel_tpm_forms_get_form_steps(EntityFormDisplayInterface &$form_display,
  * @return bool
  *   TRUE if at least one field inside the group (at any depth) is accessible.
  */
-function hel_tpm_forms_group_is_accessible(string $group_name, array $all_groups, array $form, array $visited = []): bool {
+function hel_tpm_forms_group_is_accessible(string $group_name, array $all_groups, ?array $form, array $visited = []): bool {
   // Without the form there's nothing to check against; assume accessible.
   if (empty($form)) {
     return TRUE;
