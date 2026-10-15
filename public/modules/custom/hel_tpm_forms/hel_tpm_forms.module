@@ -43,6 +43,10 @@ function hel_tpm_forms_theme($existing, $type, $theme, $path) {
  *   List of steps with 'id', 'html_id' and 'label', sorted by weight.
  */
 function hel_tpm_forms_get_form_steps(EntityFormDisplayInterface &$form_display, ?array $form = NULL): array {
+  if (!$form_display) {
+    return [];
+  }
+
   $all_groups = $form_display->getThirdPartySettings('field_group');
   $stepper_groups = array_filter($all_groups, fn($g) =>
     empty($g['parent_name'])
