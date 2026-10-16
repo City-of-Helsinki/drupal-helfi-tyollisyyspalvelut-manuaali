@@ -7,21 +7,24 @@
  * - content: The content of this block.
  *
  * @see template_preprocess_block()
- */
-#}
+ */ #}
 
-<div class='node-service-edit-form-pager node-form prevent-scroll'>
-  <div class='stepper multistep-nav-wrapper'>
-    <div class="stepper-wrapper">
-      <div class="step-lines">
-        <div class="step-line"></div>
-        <div class="step-line"></div>
-        <div class="step-line"></div>
-      </div>
-    </div>
-    <div role="button" tabindex="0" id='step-1' data-step=0 class="step nav-step-0 multistep-nav" aria-current="false" aria-label="{{ 'Perustiedot. Vaihe 1/4' }}"><div class='nav-icon'>1</div><div class='label'>{{'Basic information'|t}}</div></div>
-    <div role="button" tabindex="0" id='step-2' data-step=1 class="step nav-step-1 multistep-nav" aria-current="false" aria-label="{{ 'Aika ja paikka. Vaihe 2/4' }}"><div class='nav-icon'>2</div><div class='label'>{{'Place and time'|t}}</div></div>
-    <div role="button" tabindex="0" id='step-3' data-step=2 class="step nav-step-2 multistep-nav" aria-current="false" aria-label="{{ 'Kuvaus ja työohje. Vaihe 3/4' }}"><div class='nav-icon'>3</div><div class='label'>{{'Description and work instructions'|t}}</div></div>
-    <div role="button" tabindex="0" id='step-4' data-step=3 class="step nav-step-3 multistep-nav" aria-current="false" aria-label="{{ 'Lisätiedot. Vaihe 4/4' }}"><div class='nav-icon'>4</div><div class='label'>{{'Additional information'|t}}</div></div>
-  </div>
-</div>
+{% set step_count = steps|length %}
+
+<nav class='node-service-edit-form-pager node-form prevent-scroll'>
+  <ol class='stepper multistep-nav-wrapper'>
+  {% for step in steps %}
+    <li class="multistep-nav-item{{ not step.accessible ? ' is-disabled' }}">
+      <button type="button" id="step-{{ loop.index}}" class="step nav-step-{{ loop.index - 1 }} multistep-nav" aria-current="false" aria-label="{{ step.label }} {{ loop.index }}/{{ step_count }}"  data-step="{{ loop.index -1 }}"
+              {% if step.html_id %} aria-controls="{{ step.html_id }}"{% endif %}
+              {% if not step.accessible %} aria-disabled="true" aria-describedby="multistep-nav-disabled-desc"{% endif %}>
+        <span class="step__number nav-icon">{{ loop.index }}</span>
+        <span class="step__label label">{{ step.label }}</span>
+      </button>
+    </li>
+  {% endfor %}
+  </ol>
+  <p id="multistep-nav-disabled-desc" class="visually-hidden">
+    {{ 'You do not have access to this step.'|t }}
+  </p>
+</nav>
