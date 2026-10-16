@@ -46,6 +46,10 @@ class ServiceReadyToPublishNotificationTest extends GroupKernelTestBase {
     'ggroup',
     'ggroup_role_mapper',
     'token',
+    'inline_entity_form',
+    'ief_table_view_mode',
+    'purge',
+    'hel_tpm_general',
   ];
 
   /**
@@ -109,7 +113,7 @@ class ServiceReadyToPublishNotificationTest extends GroupKernelTestBase {
         'format' => 'plain_text',
       ],
       [
-        'value' => 'Message text: [message:field_node:entity:url]',
+        'value' => 'Message text: [message:field_node:entity:latest-revision-url]',
         'format' => 'plain_text',
       ],
     ];
@@ -160,7 +164,10 @@ class ServiceReadyToPublishNotificationTest extends GroupKernelTestBase {
 
     $this->assertEquals('Message text: English service', $mail['subject']);
     $this->assertStringContainsString('Message text: ', $mail['body']);
+    // The translation has never been published, so its drafts are default
+    // revisions and the latest version route would be forbidden.
     $this->assertStringContainsString($translation->toUrl('canonical', ['absolute' => TRUE])->toString(), $mail['body']);
+    $this->assertStringNotContainsString('/latest', $mail['body']);
     $this->assertStringNotContainsString($node->getTranslation('fi')->toUrl('canonical', ['absolute' => TRUE])->toString(), $mail['body']);
 
     // Setting the original translation ready to publish uses Finnish tokens.
@@ -171,6 +178,19 @@ class ServiceReadyToPublishNotificationTest extends GroupKernelTestBase {
     $mails = $this->getMails(['id' => 'message_notify_group_ready_to_publish_notificat']);
     $this->assertCount(2, $mails);
     $this->assertEquals('Message text: Finnish service', end($mails)['subject']);
+
+    // Once published, new drafts are pending revisions and the link points to
+    // the latest version.
+    $original->set('moderation_state', 'published');
+    $original->save();
+    $original->set('moderation_state', 'draft');
+    $original->save();
+    $original->set('moderation_state', 'ready_to_publish');
+    $original->save();
+
+    $mails = $this->getMails(['id' => 'message_notify_group_ready_to_publish_notificat']);
+    $this->assertCount(3, $mails);
+    $this->assertStringContainsString($original->toUrl('latest-version', ['absolute' => TRUE])->toString(), end($mails)['body']);
   }
 
 }
