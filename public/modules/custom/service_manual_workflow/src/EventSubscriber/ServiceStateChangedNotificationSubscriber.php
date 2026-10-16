@@ -71,13 +71,15 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
    *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   * @throws \Drupal\message_notify\Exception\MessageNotifyException
    */
   public function draftToReadyToPublish(ServiceModerationEvent $event): void {
     $account = $event->getAccount();
     $state = $event->getModerationState();
     $entity = $this->loadModeratedEntity($state);
 
-    if (!$this->notifyGroupAdministration($account, $entity)) {
+    if (!$entity || !$this->notifyGroupAdministration($account, $entity)) {
       return;
     }
     // Get content group.
@@ -115,12 +117,14 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
    *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   * @throws \Drupal\message_notify\Exception\MessageNotifyException
    */
   public function readyToPublishToPublished(ServiceModerationEvent $event): void {
     $state = $event->getModerationState();
     $entity = $this->loadModeratedEntity($state);
 
-    if (!$this->notifyServiceProvider($entity)) {
+    if (!$entity || !$this->notifyServiceProvider($entity)) {
       return;
     }
 
@@ -130,21 +134,22 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
   }
 
   /**
-   * Loads the moderated entity in the language of the moderation state.
+   * Loads the moderated node in the language of the moderation state.
    *
    * @param \Drupal\content_moderation\Entity\ContentModerationStateInterface $state
    *   Content moderation state object.
    *
-   * @return \Drupal\Core\Entity\ContentEntityInterface|null
-   *   The moderated entity translation, or NULL if the entity was not found.
+   * @return \Drupal\node\NodeInterface|null
+   *   The moderated node translation, or NULL if the moderated entity is not
+   *   a node.
    *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  protected function loadModeratedEntity(ContentModerationStateInterface $state): ?ContentEntityInterface {
-    $storage = $this->entityTypeManager->getStorage($state->content_entity_type_id->value);
-    $entity = $storage->load($state->content_entity_id->value);
-    if (!$entity instanceof ContentEntityInterface) {
+  protected function loadModeratedEntity(ContentModerationStateInterface $state): ?NodeInterface {
+    $storage = $this->entityTypeManager->getStorage($state->get('content_entity_type_id')->value);
+    $entity = $storage->load($state->get('content_entity_id')->value);
+    if (!$entity instanceof NodeInterface) {
       return NULL;
     }
 
@@ -218,6 +223,9 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
    *
    * @return array
    *   Array of users.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   protected function getPublishersFromEntityGroup(NodeInterface $entity) : array {
     $group = $this->getGroup($entity);
@@ -302,7 +310,7 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
    * @return bool
    *   Returns TRUE if administration could be notified.
    */
-  protected function notifyGroupAdministration(AccountProxyInterface $account, ContentEntityInterface $node) {
+  protected function notifyGroupAdministration(AccountProxyInterface $account, ContentEntityInterface $node): bool {
     $valid_transitions = $this->stateTransitionValidation->getValidTransitions($node, $account);
     return empty($valid_transitions['publish']);
   }
