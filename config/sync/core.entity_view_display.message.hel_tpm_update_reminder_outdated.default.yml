@@ -3,6 +3,7 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - field.field.message.hel_tpm_update_reminder_outdated.field_message_author
     - field.field.message.hel_tpm_update_reminder_outdated.field_node
     - field.field.message.hel_tpm_update_reminder_outdated.field_user
     - message.template.hel_tpm_update_reminder_outdated
@@ -13,6 +14,14 @@ targetEntityType: message
 bundle: hel_tpm_update_reminder_outdated
 mode: default
 content:
+  field_message_author:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 3
+    region: content
   field_node:
     type: entity_reference_label
     label: above
