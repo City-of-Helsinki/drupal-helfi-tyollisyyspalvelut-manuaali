@@ -86,6 +86,7 @@
 
 .multi-select-menuitem:has(input:focus-visible),
 .group--parent-label:has(input:focus-visible) {
-  outline: 2px solid currentColor;
-  outline-offset: -2px;
+  /* The browser's own focus ring, as on a focused element. */
+  outline: 1px auto Highlight;
+  outline: 1px auto -webkit-focus-ring-color;
 }

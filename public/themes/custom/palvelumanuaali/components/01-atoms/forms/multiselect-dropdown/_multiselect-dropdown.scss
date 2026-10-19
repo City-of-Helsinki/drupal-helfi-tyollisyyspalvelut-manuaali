@@ -144,7 +144,7 @@
       padding-bottom: $space;
     }
     &:hover,
-    &:focus {
+    &:has(input:focus-visible) {
       background: clr(background);
       font-weight: 400;
       color: clr(text);
@@ -156,7 +156,7 @@
   .select-group .group--parent-label {
     padding: .75rem 1rem .75rem 1rem;
     &:hover,
-    &:focus {
+    &:has(input:focus-visible) {
       background: clr(background);
       color: clr(text);
     }
