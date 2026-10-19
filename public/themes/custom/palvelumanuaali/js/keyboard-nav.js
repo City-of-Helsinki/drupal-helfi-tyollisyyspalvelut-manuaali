@@ -5,7 +5,6 @@
         attach: function (context, settings) {
             makeChoiceRemoversFocusable();
             addLabeledBy();
-            updateWidths();
 
             $(document).on('select2:select', function () {
                 $('.select2-selection__choice__remove').attr('tabindex', '0');
