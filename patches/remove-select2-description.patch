@@ -1,0 +1,26 @@
+diff --git a/src/Plugin/Field/FieldWidget/Select2EntityReferenceWidget.php b/src/Plugin/Field/FieldWidget/Select2EntityReferenceWidget.php
+index 636e500..6159091 100644
+--- a/src/Plugin/Field/FieldWidget/Select2EntityReferenceWidget.php
++++ b/src/Plugin/Field/FieldWidget/Select2EntityReferenceWidget.php
+@@ -188,21 +188,6 @@ class Select2EntityReferenceWidget extends Select2Widget {
+     // Do not display a 'multiple' select box if there is only one option. But
+     // with 'autocreate' or 'autocomplete' we want to ignore that.
+     $element['#multiple'] = $this->multiple && ((is_countable($this->options) ? count($this->options) : 0) > 1 || isset($element['#autocreate']) || $element['#autocomplete']);
+-
+-    if ($element['#multiple']) {
+-      $entity_definition = $this->entityTypeManager->getDefinition($element['#target_type']);
+-      $message = $this->t("Drag to re-order @entity_types.", ['@entity_types' => $entity_definition->getPluralLabel()]);
+-      if (!empty($element['#description'])) {
+-        $element['#description'] = [
+-          '#theme' => 'item_list',
+-          '#items' => [$element['#description'], $message],
+-        ];
+-      }
+-      else {
+-        $element['#description'] = $message;
+-      }
+-    }
+-
+     return $element;
+   }
+ 

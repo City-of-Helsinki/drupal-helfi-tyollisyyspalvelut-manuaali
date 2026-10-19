@@ -2,17 +2,17 @@ langcode: en
 status: true
 dependencies:
   config:
-    - filter.format.plain_text_format
+    - filter.format.plain_text
 template: hel_tpm_update_reminder_outdated
 label: hel_tpm_update_reminder_outdated
 description: 'Service outdated message'
 text:
   -
-    value: 'Service [message:field_node:entity:title] is outdated'
-    format: plain_text_format
+    value: 'Service [message:field_node:entity:title] is outdated. Contact: [message:field_message_author:entity:mail]'
+    format: plain_text
 settings:
   'token options':
-    clear: false
+    clear: true
     'token replace': true
   purge_override: false
   purge_methods: {  }

@@ -15,7 +15,7 @@ third_party_settings:
     group_add:
       label: 'Additional information'
     group_basic_info_1:
-      label: 'Basic information'
+      label: "<h2 class='h4'>Basic information</h2>"
     group_basic_info_2:
       label: 'Target group'
     group_basic_info_3:
@@ -48,6 +48,10 @@ third_party_settings:
       label: 'Sisäiset liitteet ja linkit'
     group_public_links_and_files:
       label: 'Links and attachments'
+    group_responsible_for_updating:
+      label: 'Persons responsible for service updates'
+    group_service_maintainers:
+      label: "<h2 class='h4'>Service administrators</h2>"
 content:
   entitygroupfield:
     settings:
@@ -63,6 +67,8 @@ content:
       maxlength:
         maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
   title:
+    settings:
+      placeholder: 'Enter a name that describes the service'
     third_party_settings:
       maxlength:
-        maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
+        maxlength_js_label: '@remaining characters available'

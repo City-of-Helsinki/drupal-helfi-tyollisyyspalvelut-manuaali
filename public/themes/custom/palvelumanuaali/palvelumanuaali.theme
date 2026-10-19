@@ -506,6 +506,15 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id): void {
         $form['field_service_languages']['#disabled'] = TRUE;
       }
       $form['content_translation']['#access'] = FALSE;
+
+      if (isset($form['field_description']['widget'][0]['value']['#title'])) {
+        $label = t("Short description of the service");
+        $form['field_description']['widget'][0]['value']['#title'] = $label;
+      }
+      if (isset($form['field_service_languages']['widget']['add_more'])) {
+        $label = t("Add new language");
+        $form['field_service_languages']['widget']['add_more']['add_more_button_service_language']['#value'] = $label;
+      }
     }
 
     if ($form_id == 'node_basic_page_form' || $form_id == 'node_basic_page_edit_form') {

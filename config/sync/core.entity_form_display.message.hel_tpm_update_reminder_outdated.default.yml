@@ -3,6 +3,7 @@ langcode: fi
 status: true
 dependencies:
   config:
+    - field.field.message.hel_tpm_update_reminder_outdated.field_message_author
     - field.field.message.hel_tpm_update_reminder_outdated.field_node
     - field.field.message.hel_tpm_update_reminder_outdated.field_user
     - message.template.hel_tpm_update_reminder_outdated
@@ -16,6 +17,16 @@ content:
     weight: 10
     region: content
     settings: {  }
+    third_party_settings: {  }
+  field_message_author:
+    type: entity_reference_autocomplete
+    weight: 14
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
   field_node:
     type: entity_reference_autocomplete
