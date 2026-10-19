@@ -3,7 +3,6 @@
     attach: function (context, settings) {
       const tabs = document.getElementsByClassName('tab');
       const steps = Array.from(document.querySelectorAll('.step'));
-      const lines = document.getElementsByClassName('step-line');
 
       if (!tabs.length || !steps.length) {
         return;
