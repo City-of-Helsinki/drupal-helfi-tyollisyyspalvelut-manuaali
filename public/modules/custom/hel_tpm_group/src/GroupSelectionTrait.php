@@ -36,20 +36,13 @@ trait GroupSelectionTrait {
       return $groups;
     }
 
-    if ($node->isNew()) {
-      $group = $this->routeMatch->getParameter('group');
-      if (empty($group)) {
-        return [];
-      }
-      if ($load_groups === FALSE) {
-        $groups[] = $this->routeMatch->getParameter('group')->id();
-      }
-      else {
-        $groups[] = $this->routeMatch->getParameter('group');
-      }
+    $route_group = $node->isNew() ? $this->routeMatch?->getParameter('group') : NULL;
+    if (!empty($route_group)) {
+      $groups[] = $load_groups ? $route_group : $route_group->id();
     }
+    // Saved services, and new services created outside a group, get their
+    // groups from the group field, which the service form keeps up to date.
     elseif (!empty($node->entitygroupfield)) {
-      // Get groups from node.
       foreach ($node->entitygroupfield->referencedEntities() as $group) {
         if (empty($group)) {
           continue;
