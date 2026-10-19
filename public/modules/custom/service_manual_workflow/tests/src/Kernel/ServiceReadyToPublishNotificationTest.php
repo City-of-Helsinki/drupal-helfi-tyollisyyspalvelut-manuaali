@@ -60,6 +60,13 @@ class ServiceReadyToPublishNotificationTest extends GroupKernelTestBase {
   private $spGroup;
 
   /**
+   * Service provider user.
+   *
+   * @var \Drupal\Core\Entity\EntityInterface|\Drupal\user\Entity\User
+   */
+  private $spUser;
+
+  /**
    * Responsible updatee user.
    *
    * @var \Drupal\Core\Entity\EntityInterface|\Drupal\user\Entity\User
@@ -98,38 +105,46 @@ class ServiceReadyToPublishNotificationTest extends GroupKernelTestBase {
     $this->container->get('kernel')->rebuildContainer();
     \Drupal::service('content_translation.manager')->setEnabled('node', 'service', TRUE);
 
-    $template = 'group_ready_to_publish_notificat';
-    // Mail subject and body view displays.
-    foreach (['mail_subject' => 0, 'mail_body' => 1] as $view_mode => $delta) {
-      EntityViewDisplay::load('message.' . $template . '.' . $view_mode)
-        ->setComponent('partial_' . $delta, ['weight' => 0])
+    // Like on the site, the ready to publish message links to the latest
+    // version and the published message to the published service.
+    $url_tokens = [
+      'group_ready_to_publish_notificat' => '[message:field_node:entity:latest-revision-url]',
+      'content_has_been_published' => '[message:field_node:entity:url]',
+    ];
+    foreach ($url_tokens as $template => $url_token) {
+      // Like on the site, the message text is the same in all languages.
+      $text = [
+        [
+          'value' => 'Message text: [message:field_node:entity:title]',
+          'format' => 'plain_text',
+        ],
+        [
+          'value' => 'Message text: ' . $url_token,
+          'format' => 'plain_text',
+        ],
+      ];
+
+      // Mail subject and body view displays.
+      foreach (['mail_subject' => 0, 'mail_body' => 1] as $view_mode => $delta) {
+        EntityViewDisplay::load('message.' . $template . '.' . $view_mode)
+          ->setComponent('partial_' . $delta, ['weight' => 0])
+          ->save();
+      }
+
+      $config_name = 'message.template.' . $template;
+      $this->config($config_name)->set('text', $text)->save();
+      \Drupal::languageManager()->getLanguageConfigOverride('fi', $config_name)
+        ->set('text', $text)
         ->save();
     }
-
-    // Like on the site, the message text is the same in all languages.
-    $text = [
-      [
-        'value' => 'Message text: [message:field_node:entity:title]',
-        'format' => 'plain_text',
-      ],
-      [
-        'value' => 'Message text: [message:field_node:entity:latest-revision-url]',
-        'format' => 'plain_text',
-      ],
-    ];
-    $config_name = 'message.template.' . $template;
-    $this->config($config_name)->set('text', $text)->save();
-    \Drupal::languageManager()->getLanguageConfigOverride('fi', $config_name)
-      ->set('text', $text)
-      ->save();
 
     $current_user = $this->getCurrentUser();
     $current_user->set('mail', \Drupal::config('system.site')->get('mail'));
     $current_user->save();
 
-    $sp_user = $this->createUserWithRoles(['editor']);
+    $this->spUser = $this->createUserWithRoles(['editor']);
     $this->spGroup = $this->createGroup(['type' => 'service_provider']);
-    $this->spGroup->addMember($sp_user, ['group_roles' => 'service_provider-editor']);
+    $this->spGroup->addMember($this->spUser, ['group_roles' => 'service_provider-editor']);
 
     $this->updateeUser = $this->createUserWithRoles(['specialist editor', 'editor']);
   }
@@ -191,6 +206,42 @@ class ServiceReadyToPublishNotificationTest extends GroupKernelTestBase {
     $mails = $this->getMails(['id' => 'message_notify_group_ready_to_publish_notificat']);
     $this->assertCount(3, $mails);
     $this->assertStringContainsString($original->toUrl('latest-version', ['absolute' => TRUE])->toString(), end($mails)['body']);
+  }
+
+  /**
+   * Tests the node tokens use the translation that was published.
+   */
+  public function testTranslatedServicePublishedNotification() {
+    $node = $this->createNode([
+      'type' => 'service',
+      'langcode' => 'fi',
+      'title' => 'Finnish service',
+      'moderation_state' => 'ready_to_publish',
+    ]);
+    $node->set('field_responsible_updatee', $this->updateeUser);
+    $node->set('field_service_provider_updatee', $this->spUser);
+    $node->save();
+    $this->spGroup->addRelationship($node, 'group_node:service');
+
+    $translation = $node->addTranslation('en', [
+      'title' => 'English service',
+      'moderation_state' => 'ready_to_publish',
+    ]);
+    $translation->save();
+
+    $original = $node->getTranslation('fi');
+    $original->set('moderation_state', 'published');
+    $original->save();
+    $translation->set('moderation_state', 'published');
+    $translation->save();
+
+    $mails = $this->getMails(['id' => 'message_notify_content_has_been_published']);
+    $this->assertCount(2, $mails);
+    $this->assertEquals($this->spUser->getEmail(), $mails[0]['to']);
+    $this->assertEquals('Message text: Finnish service', $mails[0]['subject']);
+    $this->assertEquals($this->spUser->getEmail(), $mails[1]['to']);
+    $this->assertEquals('Message text: English service', $mails[1]['subject']);
+    $this->assertStringContainsString($translation->toUrl('canonical', ['absolute' => TRUE])->toString(), $mails[1]['body']);
   }
 
 }

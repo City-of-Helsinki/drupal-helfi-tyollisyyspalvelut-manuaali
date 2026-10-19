@@ -130,7 +130,7 @@ class ServiceStateChangedNotificationSubscriber implements EventSubscriberInterf
 
     $service_provider_updatee = $entity->get('field_service_provider_updatee')->entity;
     // Send content published notification to service provider updatee.
-    $this->dispatchMessage($entity, $service_provider_updatee, 'content_has_been_published');
+    $this->dispatchMessage($entity, $service_provider_updatee, 'content_has_been_published', $entity->language()->getId());
   }
 
   /**
