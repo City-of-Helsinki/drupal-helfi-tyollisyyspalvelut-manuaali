@@ -6,6 +6,14 @@ label: 'Service has been published'
 description: ''
 text:
   -
-    value: "Service [message:field_node:entity:title] has been published"
-    format: filtered_html
-settings: {  }
+    value: 'Service [message:field_node:entity:title] has been published'
+    format: plain_text
+  -
+    value: 'Service [message:field_node:entity:title] has been published: [message:field_node:entity:url]'
+    format: plain_text
+settings:
+  'token options':
+    clear: false
+    'token replace': true
+  purge_override: false
+  purge_methods: {  }

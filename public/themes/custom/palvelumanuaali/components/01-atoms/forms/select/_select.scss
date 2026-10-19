@@ -111,39 +111,9 @@
 .select--search-background {
   background-color: clr(text-inverse);
   border-radius: 8px;
-  .multi-select-container {
-      .multi-select-button {
-        position: relative;
-        &:before {
-          background-image: url('../../assets/icons/arrow-sm-down.svg');
-          background-repeat: no-repeat;
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          content:"";
-          left: 0;
-          top: 0;
-          background-position: top 8px right 4px;
-          @include xl-zoom {
-            background-position: top 10px right 4px;
-          }
-        }
-      }
-    &.multi-select-container--open {
-      .multi-select-button {
-        &:before {
-          transform: rotateX(180deg);
-          background-position: top 7px right 4px;
-        }
-      }
-    }
-    &.active {
-      .multi-select-button {
-        background-color: transparent;
-        &:before {
-          background-image: url('../../assets/icons/arrow-sm-down-white.svg');
-        }
-      }
+  .multi-select-container.active {
+    .multi-select-button {
+      background-color: transparent;
     }
   }
 }

@@ -7,16 +7,15 @@ dependencies:
     - paragraphs.paragraphs_type.service_language
     - taxonomy.vocabulary.language_level
   module:
-    - epp
+    - tmgmt_content
 third_party_settings:
-  epp:
-    value: ''
-    on_update: 0
+  tmgmt_content:
+    excluded: false
 id: paragraph.service_language.field_level
 field_name: field_level
 entity_type: paragraph
 bundle: service_language
-label: Kielitaitotaso
+label: Taitotaso
 description: ''
 required: false
 translatable: false
