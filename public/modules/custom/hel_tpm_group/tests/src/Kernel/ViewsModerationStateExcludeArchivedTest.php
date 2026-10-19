@@ -6,16 +6,19 @@ namespace Drupal\Tests\hel_tpm_group\Kernel;
 
 use Drupal\Tests\user\Traits\UserCreationTrait;
 use Drupal\Tests\views\Kernel\ViewsKernelTestBase;
+use Drupal\hel_tpm_group\Plugin\views\filter\ModerationStateExcludeArchived;
 use Drupal\node\Entity\Node;
 use Drupal\views\Views;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests for moderation_state_filter_exclude_archived views filter.
- *
- * @coversDefaultClass \Drupal\hel_tpm_group\Plugin\views\filter\ModerationStateExcludeArchived
- *
- * @group hel_tpm_group
  */
+#[CoversClass(ModerationStateExcludeArchived::class)]
+#[Group('hel_tpm_group')]
+#[RunTestsInSeparateProcesses]
 class ViewsModerationStateExcludeArchivedTest extends ViewsKernelTestBase {
 
   use UserCreationTrait {

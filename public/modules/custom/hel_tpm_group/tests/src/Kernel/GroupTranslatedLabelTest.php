@@ -10,11 +10,13 @@ use Drupal\language\Entity\ConfigurableLanguage;
 use Drupal\views\Entity\View;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests querying and rendering translated group labels.
  */
 #[Group('hel_tpm_group')]
+#[RunTestsInSeparateProcesses]
 class GroupTranslatedLabelTest extends GroupKernelTestBase {
 
   /**

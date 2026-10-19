@@ -16,13 +16,16 @@ use Drupal\hel_tpm_group\Plugin\views\field\GroupAdminReactivateMemberLink;
 use Drupal\user\UserInterface;
 use Drupal\views\Entity\View;
 use Drupal\views\ResultRow;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests the group member reactivation Views field.
- *
- * @group hel_tpm_group
- * @coversDefaultClass \Drupal\hel_tpm_group\Plugin\views\field\GroupAdminReactivateMemberLink
  */
+#[CoversClass(GroupAdminReactivateMemberLink::class)]
+#[Group('hel_tpm_group')]
+#[RunTestsInSeparateProcesses]
 final class GroupAdminReactivateMemberLinkTest extends GroupKernelTestBase {
 
   /**
@@ -65,12 +68,6 @@ final class GroupAdminReactivateMemberLinkTest extends GroupKernelTestBase {
 
   /**
    * Tests plugin creation and the Views integration methods.
-   *
-   * @covers ::create
-   * @covers ::__construct
-   * @covers ::buildOptionsForm
-   * @covers ::query
-   * @covers ::getUrlInfo
    */
   public function testPluginIntegration(): void {
     $handler = $this->createHandler([]);
@@ -101,9 +98,6 @@ final class GroupAdminReactivateMemberLinkTest extends GroupKernelTestBase {
 
   /**
    * Tests that field-level access fails closed and is group-specific.
-   *
-   * @covers ::access
-   * @covers ::getGroup
    */
   public function testFieldAccess(): void {
     $group = $this->createGroup(['type' => 'reactivate_link_test']);
@@ -124,9 +118,6 @@ final class GroupAdminReactivateMemberLinkTest extends GroupKernelTestBase {
 
   /**
    * Tests the link route, parameters, title, and destination.
-   *
-   * @covers ::render
-   * @covers ::createReactivationLink
    */
   public function testRenderedLink(): void {
     [$membership, $group] = $this->createBlockedMembership();
@@ -148,9 +139,6 @@ final class GroupAdminReactivateMemberLinkTest extends GroupKernelTestBase {
 
   /**
    * Tests that inaccessible rows never disclose a reactivation link.
-   *
-   * @covers ::render
-   * @covers ::createReactivationLink
    */
   public function testLinkSecurity(): void {
     [$membership, $group, $blocked] = $this->createBlockedMembership();

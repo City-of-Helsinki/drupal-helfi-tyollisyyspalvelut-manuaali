@@ -8,12 +8,14 @@ use Drupal\group\Entity\GroupRoleInterface;
 use Drupal\group\PermissionScopeInterface;
 use Drupal\hel_tpm_group\Event\GroupMembershipChanged;
 use Drupal\hel_tpm_group\Event\GroupSiteWideRoleChanged;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Test description.
- *
- * @group hel_tpm_group
  */
+#[Group('hel_tpm_group')]
+#[RunTestsInSeparateProcesses]
 class HelTpmGroupSubscriberTest extends GroupKernelTestBase {
 
   /**

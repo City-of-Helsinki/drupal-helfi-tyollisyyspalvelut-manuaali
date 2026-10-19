@@ -12,10 +12,14 @@ use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
 use Drupal\Tests\service_manual_workflow\Traits\ServiceManualWorkflowTestTrait;
 use Drupal\Tests\user\Traits\UserCreationTrait;
 use Drupal\hel_tpm_group\Plugin\QueueWorker\ServicesMissingUpdatersQueue;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Provides tests for missing service updaters.
  */
+#[Group('hel_tpm_group')]
+#[RunTestsInSeparateProcesses]
 class ServicesMissingUpdatersNotificationTest extends GroupKernelTestBase {
   use UserCreationTrait;
   use ContentModerationTestTrait;
