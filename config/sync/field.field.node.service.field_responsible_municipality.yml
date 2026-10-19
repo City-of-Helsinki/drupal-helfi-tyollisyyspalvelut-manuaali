@@ -6,12 +6,20 @@ dependencies:
     - field.storage.node.field_responsible_municipality
     - group.type.organisation
     - node.type.service
+  module:
+    - require_on_publish
+    - tmgmt_content
+third_party_settings:
+  tmgmt_content:
+    excluded: false
+  require_on_publish:
+    require_on_publish: true
 id: node.service.field_responsible_municipality
 field_name: field_responsible_municipality
 entity_type: node
 bundle: service
 label: 'Responsible municipality'
-description: ''
+description: 'By default, the information on the municipality responsible for the service is set automatically and only administrators can edit it.'
 required: false
 translatable: false
 default_value: {  }

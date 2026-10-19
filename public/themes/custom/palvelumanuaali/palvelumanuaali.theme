@@ -506,6 +506,15 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id): void {
         $form['field_service_languages']['#disabled'] = TRUE;
       }
       $form['content_translation']['#access'] = FALSE;
+
+      if (isset($form['field_description']['widget'][0]['value']['#title'])) {
+        $label = t("Short description of the service");
+        $form['field_description']['widget'][0]['value']['#title'] = $label;
+      }
+      if (isset($form['field_service_languages']['widget']['add_more'])) {
+        $label = t("Add new language");
+        $form['field_service_languages']['widget']['add_more']['add_more_button_service_language']['#value'] = $label;
+      }
     }
 
     if ($form_id == 'node_basic_page_form' || $form_id == 'node_basic_page_edit_form') {
@@ -794,5 +803,19 @@ function palvelumanuaali_preprocess_block(array &$variables) {
     if (isset($variables['content']['user_links']['#items']['request_password']['#title'])) {
       $variables['content']['user_links']['#items']['request_password']['#title'] = t('Forgot password?');
     }
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for hel_tpm_dropdown_filter.
+ *
+ * Uses the same dropdown styles as the corresponding select templates.
+ */
+function palvelumanuaali_preprocess_hel_tpm_dropdown_filter(array &$variables): void {
+  if (($variables['element']['#name'] ?? '') === 'langcode') {
+    $variables['dropdown_modifiers'] = 'select--details-select';
+  }
+  else {
+    $variables['dropdown_modifiers'] = 'select--white-rounded select--search-background';
   }
 }

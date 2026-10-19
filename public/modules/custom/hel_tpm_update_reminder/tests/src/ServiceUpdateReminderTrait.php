@@ -8,6 +8,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\group\Entity\GroupInterface;
 use Drupal\hel_tpm_update_reminder\UpdateReminderUtility;
 use Drupal\node\Entity\Node;
+use Drupal\user\UserInterface;
 
 /**
  * Provides utility methods for handling service update reminders.
@@ -121,6 +122,19 @@ trait ServiceUpdateReminderTrait {
   }
 
   /**
+   * Creates an active user with a random email address.
+   *
+   * @return \Drupal\user\UserInterface
+   *   The created user.
+   */
+  protected function createUserWithMail(): UserInterface {
+    return $this->createUser([], NULL, FALSE, [
+      'mail' => $this->randomMachineName(8) . '@tpm.test',
+      'status' => 1,
+    ]);
+  }
+
+  /**
    * Creates and updates a service with given moderation state transition.
    *
    * @param string $fromState
@@ -140,10 +154,7 @@ trait ServiceUpdateReminderTrait {
   protected function createServiceWithTransition(string $fromState, string $toState, int $days, bool $addUser = FALSE): EntityInterface {
     $user = NULL;
     if ($addUser) {
-      $user = $this->createUser([], NULL, FALSE, [
-        'mail' => $this->randomMachineName(8) . '@tpm.test',
-        'status' => 1,
-      ]);
+      $user = $this->createUserWithMail();
       $this->group->addMember($user);
     }
     // Make sure newly created services are behind new ones.

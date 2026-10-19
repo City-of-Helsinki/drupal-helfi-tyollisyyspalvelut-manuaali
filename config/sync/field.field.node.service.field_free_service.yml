@@ -5,17 +5,22 @@ dependencies:
   config:
     - field.storage.node.field_free_service
     - node.type.service
+  module:
+    - tmgmt_content
+third_party_settings:
+  tmgmt_content:
+    excluded: false
 id: node.service.field_free_service
 field_name: field_free_service
 entity_type: node
 bundle: service
-label: 'Palvelu on maksullinen'
-description: ''
+label: 'Palvelun hintatieto'
+description: 'Valitse "Palvelu on maksullinen", jos palvelu tai jokin sen osa on maksullinen. Valitse "Palvelu on maksullinen" myös, jos palvelu on jollekin asiakasryhmälle maksullinen.'
 required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
-  on_label: Käytössä
-  off_label: 'Pois päältä'
+  on_label: 'Palvelu on maksullinen'
+  off_label: 'Palvelu on maksuton'
 field_type: boolean

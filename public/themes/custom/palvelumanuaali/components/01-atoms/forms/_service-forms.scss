@@ -536,6 +536,26 @@
   .form-fieldset--no-padding {
     padding: 0;
   }
+
+  //Add required star until the field if reworked
+  .field--name-field-age-groups {
+    legend {
+      span {
+        @extend .js-form-required;
+      }
+    }
+  }
+  // hide these until field is reworked
+  .field--name-field-age {
+    legend {
+      display: none;
+    }
+    .form-item {
+      > label {
+        display: none;
+      }
+    }
+  }
 }
 
 .field--name-field-service-languages {

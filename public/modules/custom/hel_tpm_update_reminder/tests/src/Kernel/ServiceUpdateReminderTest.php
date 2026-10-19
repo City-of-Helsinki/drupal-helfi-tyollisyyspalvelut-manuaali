@@ -34,6 +34,7 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
   protected static $modules = [
     'content_moderation',
     'content_translation',
+    'filter',
     'language',
     'workflows',
     'node',
@@ -53,6 +54,7 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
     'purge',
     'dblog',
     'system',
+    'token',
     'views',
     'views_bulk_operations',
   ];
@@ -113,7 +115,7 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
     $this->installEntitySchema('action');
     $this->installSchema('node', ['node_access']);
     $this->installSchema('dblog', ['watchdog']);
-    $this->installConfig(['field', 'node', 'system']);
+    $this->installConfig(['field', 'filter', 'node', 'system']);
     $this->installConfig([
       'content_moderation',
       'hel_tpm_update_reminder_test',
@@ -620,6 +622,98 @@ final class ServiceUpdateReminderTest extends GroupKernelTestBase {
     $this->assertEquals(2, count($this->getReminderMails()));
     $this->assertEquals(1, count($this->getOutdatedMails()));
     $this->assertEquals(3, UpdateReminderUtility::getMessagesSent((int) $service->id()));
+  }
+
+  /**
+   * Tests the message author in outdated messages.
+   *
+   * Both updaters should receive a message with the service provider updater
+   * set as the message author.
+   *
+   * @return void
+   *   -
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  public function testOutdatedMessageAuthor(): void {
+    $service = $this->createServiceWithTransition('ready_to_publish', 'published', UpdateReminderUtility::LIMIT_1 + 1, TRUE);
+    $serviceProvider = $service->get('field_service_provider_updatee')->entity;
+    $responsible = $this->createUserWithMail();
+    $service = $this->updateService((int) $service->id(), [
+      'field_responsible_updatee' => $responsible,
+    ], UpdateReminderUtility::LIMIT_1 + 1);
+
+    $this->outdateService((int) $service->id());
+    $this->assertEquals(2, count($this->getOutdatedMails()));
+
+    $messages = $this->loadOutdatedMessages();
+    $this->assertCount(2, $messages);
+    $recipients = [];
+    foreach ($messages as $message) {
+      $recipients[] = $message->getOwnerId();
+      $this->assertEquals($serviceProvider->id(), $message->get('field_message_author')->target_id);
+      $this->assertStringContainsString('Contact: ' . $serviceProvider->getEmail(), (string) $message->getText('en')[0]);
+    }
+    $this->assertEqualsCanonicalizing([$serviceProvider->id(), $responsible->id()], $recipients);
+  }
+
+  /**
+   * Tests outdated message without service provider updater.
+   *
+   * The responsible updater should still receive the message, and the unset
+   * message author token should be cleared from the text.
+   *
+   * @return void
+   *   -
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  public function testOutdatedMessageWithoutServiceProvider(): void {
+    $service = $this->createServiceWithTransition('ready_to_publish', 'published', UpdateReminderUtility::LIMIT_1 + 1);
+    $this->assertTrue($service->get('field_service_provider_updatee')->isEmpty());
+    $responsible = $this->createUserWithMail();
+    $service = $this->updateService((int) $service->id(), [
+      'field_responsible_updatee' => $responsible,
+    ], UpdateReminderUtility::LIMIT_1 + 1);
+
+    $this->outdateService((int) $service->id());
+    $this->assertEquals(1, count($this->getOutdatedMails()));
+    $this->assertEquals('outdated', $this->reloadEntity($service)->get('moderation_state')->value);
+
+    $messages = $this->loadOutdatedMessages();
+    $this->assertCount(1, $messages);
+    $message = reset($messages);
+    $this->assertEquals($responsible->id(), $message->getOwnerId());
+    $this->assertTrue($message->get('field_message_author')->isEmpty());
+    // The cleared token should leave nothing after the contact label.
+    $text = trim(strip_tags((string) $message->getText('en')[0]));
+    $this->assertEquals('Service ' . $service->getTitle() . ' is outdated. Contact:', $text);
+  }
+
+  /**
+   * Processes the service with the update reminder queue worker to outdate it.
+   *
+   * @param int $nid
+   *   The service node id.
+   */
+  private function outdateService(int $nid): void {
+    UpdateReminderUtility::setMessagesSentState($nid, 2);
+    $this->setRemindedTimestampToValue($nid, UpdateReminderUtility::LIMIT_3 + 1);
+    \Drupal::service('plugin.manager.queue_worker')
+      ->createInstance('hel_tpm_update_reminder_service')
+      ->processItem($nid);
+  }
+
+  /**
+   * Loads all outdated messages.
+   *
+   * @return \Drupal\message\MessageInterface[]
+   *   The messages.
+   */
+  private function loadOutdatedMessages(): array {
+    return $this->entityTypeManager->getStorage('message')->loadByProperties([
+      'template' => 'hel_tpm_update_reminder_outdated',
+    ]);
   }
 
   /**

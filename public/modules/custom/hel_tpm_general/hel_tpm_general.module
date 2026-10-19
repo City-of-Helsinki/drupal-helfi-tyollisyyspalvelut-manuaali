@@ -236,12 +236,24 @@ function hel_tpm_general_tokens(string $type, array $tokens, array $data, array 
         'absolute' => TRUE,
       ];
 
+      $translation = $node;
       if (!empty($options['langcode']) && $node->hasTranslation($options['langcode'])) {
-        $url_options['language'] = $node->getTranslation($options['langcode'])->language();
+        $translation = $node->getTranslation($options['langcode']);
+        $url_options['language'] = $translation->language();
+      }
+
+      // The latest version route is only accessible when the translation has
+      // a pending revision. E.g. a translation that has never been published
+      // saves its drafts as default revisions, so link to the canonical page
+      // which already shows the latest version.
+      $rel = 'canonical';
+      if (\Drupal::hasService('content_moderation.moderation_information')
+        && \Drupal::service('content_moderation.moderation_information')->hasPendingRevision($translation)) {
+        $rel = 'latest-version';
       }
 
       $replacements[$original] = $node
-        ->toUrl('latest-version', $url_options)
+        ->toUrl($rel, $url_options)
         ->toString();
     }
   }
