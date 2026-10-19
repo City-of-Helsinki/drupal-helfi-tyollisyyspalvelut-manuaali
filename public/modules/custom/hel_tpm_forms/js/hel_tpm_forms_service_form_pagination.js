@@ -50,12 +50,10 @@
        */
       function nextPrevNav() {
         $(once('prev-click-event', '.btn-prev', context)).on('click', function (e) {
-       //   e.preventDefault();
           nextPrev(-1);
         });
 
         $(once('next-click-event', '.btn-next', context)).on('click', function (e) {
-        //  e.preventDefault();
           nextPrev(1);
         });
       }
