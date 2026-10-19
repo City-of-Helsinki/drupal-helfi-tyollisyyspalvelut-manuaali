@@ -5,6 +5,7 @@
  *
  * Available variables:
  * - content: The content of this block.
+ * - steps: The steps genereted from service field group labels
  *
  * @see template_preprocess_block()
  */ #}
@@ -15,7 +16,7 @@
   <ol class='stepper multistep-nav-wrapper'>
   {% for step in steps %}
     <li class="multistep-nav-item{{ not step.accessible ? ' is-disabled' }}">
-      <button type="button" id="step-{{ loop.index}}" class="step nav-step-{{ loop.index - 1 }} multistep-nav" aria-current="false" aria-label="{{ step.label }} {{ loop.index }}/{{ step_count }}"  data-step="{{ loop.index -1 }}"
+      <button type="button" id="step-{{ loop.index}}" class="step nav-step-{{ loop.index - 1 }} multistep-nav" aria-current="false" aria-label="{{ loop.index }}/{{ step_count }}: {{ step.label }}"  data-step="{{ loop.index -1 }}"
               {% if step.html_id %} aria-controls="{{ step.html_id }}"{% endif %}
               {% if not step.accessible %} aria-disabled="true" aria-describedby="multistep-nav-disabled-desc"{% endif %}>
         <span class="step__number nav-icon">{{ loop.index }}</span>
