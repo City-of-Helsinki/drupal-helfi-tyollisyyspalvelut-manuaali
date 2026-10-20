@@ -234,7 +234,7 @@ third_party_settings:
         - field_free_service
         - field_price
         - field_price_description
-      label: "<h2 class='h4'>Palvelun perustiedot</h2>"
+      label: 'Palvelun perustiedot'
       region: content
       parent_name: group_basic_information
       weight: 30
@@ -243,7 +243,7 @@ third_party_settings:
         classes: 'form-background--white form-background--regular-padding'
         show_empty_fields: false
         id: ''
-        label_as_html: true
+        label_as_html: false
         description: ''
         required_fields: false
     group_basic_info_2:
@@ -254,7 +254,7 @@ third_party_settings:
         - field_age
         - field_life_situations
         - field_target_group_description
-      label: '<h2 class="h4>Kohderyhmä</h2>'
+      label: Kohderyhmä
       region: content
       parent_name: group_basic_information
       weight: 31
@@ -263,7 +263,7 @@ third_party_settings:
         classes: 'form-background--white form-background--regular-padding'
         show_empty_fields: false
         id: ''
-        label_as_html: true
+        label_as_html: false
         description: ''
         required_fields: true
     group_basic_info_3:
@@ -594,7 +594,7 @@ third_party_settings:
       children:
         - entitygroupfield
         - group_responsible_for_updating
-      label: "<h2 class='h4'>Palvelun ylläpitäjät</h2>"
+      label: 'Palvelun ylläpitäjät'
       region: content
       parent_name: group_basic_information
       weight: 29
@@ -603,7 +603,7 @@ third_party_settings:
         classes: 'form-background--white form-background--regular-padding'
         show_empty_fields: false
         id: ''
-        label_as_html: true
+        label_as_html: false
         description: ''
         required_fields: false
     group_responsible_for_updating:
