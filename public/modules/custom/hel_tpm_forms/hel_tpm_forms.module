@@ -19,6 +19,19 @@ function hel_tpm_forms_theme($existing, $type, $theme, $path) {
       'template' => 'hel_tpm_navigation',
       'variables' => [
         'content' => NULL,
+        'start_page' => FALSE,
+      ],
+    ],
+    'hel_tpm_info_box' => [
+      'template' => 'hel_tpm_info_box',
+      'variables' => [
+        'content' => NULL,
+      ],
+    ],
+    'hel_tpm_service_start_actions' => [
+      'template' => 'hel_tpm_service_start_actions',
+      'variables' => [
+        'exit_url' => NULL,
       ],
     ],
     'hel_tpm_steps' => [

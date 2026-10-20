@@ -5,6 +5,7 @@
  *
  * Available variables:
  * - content: The content of this block.
+ * - start_page: Whether the first step has a button back to the start page.
  *
  * @see template_preprocess_block()
  */
@@ -12,6 +13,16 @@
 
 <div class='nav page-controls'>
   <div class='button-wrapper'>
+    {% if start_page %}
+      <button class='button btn-prev btn-start-page' type="button" hidden>
+        {% include "@atoms/images/icons/_icon.twig" with {
+          icon_base_class: 'icon',
+          icon_name: 'arrow-left',
+          icon_modifiers: ['small'],
+        } %}
+        {{ 'Previous'|t }}
+      </button>
+    {% endif %}
     <button class='button btn-prev' type="button" id="prevBtn">
       {% include "@atoms/images/icons/_icon.twig" with {
         icon_base_class: 'icon',
