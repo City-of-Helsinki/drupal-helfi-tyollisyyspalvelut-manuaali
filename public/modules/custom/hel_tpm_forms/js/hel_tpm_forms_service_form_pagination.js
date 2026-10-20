@@ -8,34 +8,53 @@
         return;
       }
 
-      mapStepsToTabs();
       defaultTab();
       nextPrevNav();
       stepNav();
 
-      /**
-       * Gives each accessible step button the index of the tab it opens.
-       *
-       * Inaccessible field groups are not rendered as tabs, so button
-       * positions and tab indexes differ after the first disabled step.
-       */
-      function mapStepsToTabs() {
-        let tabIndex = 0;
-        steps.forEach(function (step) {
-          if (isDisabled(step)) {
-            step.removeAttribute('data-tab');
-            return;
-          }
-          step.dataset.tab = tabIndex++;
-        });
-
-        if (tabIndex !== tabs.length) {
-          console.warn('Stepper: ' + tabIndex + ' accessible steps but ' + tabs.length + ' tabs.');
-        }
-      }
-
       function isDisabled(step) {
         return step.getAttribute('aria-disabled') === 'true';
+      }
+
+      /**
+       * A tab can be opened if it exists and its step is not disabled.
+       */
+      function isTabEnabled(n) {
+        return n >= 0 && n < tabs.length && steps[n] && !isDisabled(steps[n]);
+      }
+
+      /**
+       * Finds the nearest enabled tab from `start` in `direction` (1 or -1).
+       *
+       * @returns {number} Tab index, or -1 if there is none.
+       */
+      function findEnabledTab(start, direction) {
+        for (let n = start; n >= 0 && n < tabs.length; n += direction) {
+          if (isTabEnabled(n)) {
+            return n;
+          }
+        }
+        return -1;
+      }
+
+      /**
+       * Turns any requested index into an enabled tab index.
+       */
+      function resolveTab(n) {
+        n = Number(n);
+        if (!Number.isInteger(n)) {
+          n = 0;
+        }
+        n = Math.max(0, Math.min(n, tabs.length - 1));
+        if (isTabEnabled(n)) {
+          return n;
+        }
+        const forward = findEnabledTab(n + 1, 1);
+        if (forward !== -1) {
+          return forward;
+        }
+        const backward = findEnabledTab(n - 1, -1);
+        return backward !== -1 ? backward : 0;
       }
 
       /**
@@ -72,10 +91,10 @@
       function stepNav() {
         $(once('step-event', '.step', context)).on('click', function (e) {
           e.preventDefault();
-          if (isDisabled(this) || this.dataset.tab === undefined) {
+          if (isDisabled(this)) {
             return;
           }
-          switchTab(Number(this.dataset.tab));
+          switchTab(steps.indexOf(this));
         });
       }
 
@@ -97,35 +116,24 @@
       }
 
       /**
-       * Keeps a tab index within the available tabs.
-       */
-      function clampTab(n) {
-        n = Number(n);
-        if (!Number.isInteger(n) || n < 0) {
-          return 0;
-        }
-        return Math.min(n, tabs.length - 1);
-      }
-
-      /**
        * Show selected tab.
        */
       function showTab(n) {
-        n = clampTab(n);
+        n = resolveTab(n);
 
         Array.from(tabs).forEach(function (tab) {
           tab.style.display = 'none';
         });
         tabs[n].style.display = 'block';
 
-        const lastTab = tabs.length - 1;
+        //const lastTab = tabs.length - 1;
         const nextBtn = document.getElementById('nextBtn');
         const prevBtn = document.getElementById('prevBtn');
         if (prevBtn) {
-          prevBtn.hidden = n === 0;
+          prevBtn.hidden = findEnabledTab(n - 1, -1) === -1;
         }
         if (nextBtn) {
-          nextBtn.hidden = n === lastTab;
+          nextBtn.hidden = findEnabledTab(n + 1, 1) === -1;
         }
 
         updateStepParam(n);
@@ -150,32 +158,30 @@
        */
       function getCurrentTab() {
         const urlParams = new URLSearchParams(window.location.search);
-        return clampTab(urlParams.get('step') ?? 0);
+        return resolveTab(urlParams.get('step') ?? 0);
       }
 
-      function nextPrev(n) {
-        switchTab(getCurrentTab() + Number(n));
+      function nextPrev(direction) {
+        const target = findEnabledTab(getCurrentTab() + direction, direction);
+        if (target !== -1) {
+          switchTab(target);
+        }
       }
 
       /**
        * Marks the button for tab n as active.
        */
       function fixStepIndicator(n) {
-        let activeIndex = -1;
-
         steps.forEach(function (step, index) {
-          step.classList.remove('active');
-          step.removeAttribute('aria-current');
-          if (step.dataset.tab !== undefined && Number(step.dataset.tab) === n) {
-            activeIndex = index;
+          const isActive = index === n;
+          step.classList.toggle('active', isActive);
+          if (isActive) {
+            step.setAttribute('aria-current', 'step');
+          }
+          else {
+            step.removeAttribute('aria-current');
           }
         });
-
-        if (activeIndex === -1) {
-          return;
-        }
-        steps[activeIndex].classList.add('active');
-        steps[activeIndex].setAttribute('aria-current', 'step');
       }
     }
   };

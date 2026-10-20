@@ -15,10 +15,10 @@
 <nav class='node-service-edit-form-pager node-form prevent-scroll'>
   <ol class='stepper multistep-nav-wrapper'>
   {% for step in steps %}
-    <li class="multistep-nav-item{{ not step.accessible ? ' is-disabled' }}">
+    <li class="multistep-nav-item{{ step.disabled ? ' is-disabled' }}">
       <button type="button" id="step-{{ loop.index}}" class="step nav-step-{{ loop.index - 1 }} multistep-nav" aria-current="false" aria-label="{{ loop.index }}/{{ step_count }}: {{ step.label }}"  data-step="{{ loop.index -1 }}"
               {% if step.html_id %} aria-controls="{{ step.html_id }}"{% endif %}
-              {% if not step.accessible %} aria-disabled="true" aria-describedby="multistep-nav-disabled-desc"{% endif %}>
+              {% if step.disabled %} aria-disabled="true" aria-describedby="multistep-nav-disabled-desc"{% endif %}>
         <span class="step__number nav-icon">{{ loop.index }}</span>
         <span class="step__label label">{{ step.label }}</span>
       </button>
