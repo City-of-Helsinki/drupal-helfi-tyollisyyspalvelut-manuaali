@@ -7,12 +7,16 @@ dependencies:
     - node.type.service
   module:
     - options
+    - tmgmt_content
+third_party_settings:
+  tmgmt_content:
+    excluded: false
 id: node.service.field_age_groups
 field_name: field_age_groups
 entity_type: node
 bundle: service
 label: Ikä
-description: ''
+description: 'Kirjaa palvelun kohderyhmän tarkka ikähaarukka. Jos palveluun voi osallistua minkäikäinen asiakas tahansa, valitse "Kaikille työikäisille".'
 required: false
 translatable: false
 default_value: {  }

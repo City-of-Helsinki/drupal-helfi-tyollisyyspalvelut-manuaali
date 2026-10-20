@@ -234,7 +234,7 @@ third_party_settings:
         - field_free_service
         - field_price
         - field_price_description
-      label: "<h2 class='h4'>Palvelun perustiedot</h2>"
+      label: 'Palvelun perustiedot'
       region: content
       parent_name: group_basic_information
       weight: 30
@@ -243,16 +243,16 @@ third_party_settings:
         classes: 'form-background--white form-background--regular-padding'
         show_empty_fields: false
         id: ''
-        label_as_html: true
+        label_as_html: false
         description: ''
         required_fields: false
     group_basic_info_2:
       children:
-        - field_life_situations
-        - field_age_groups
-        - field_age
         - field_municipality_irrelevant
         - field_target_group_municipality
+        - field_age_groups
+        - field_age
+        - field_life_situations
         - field_target_group_description
       label: Kohderyhmä
       region: content
@@ -263,6 +263,7 @@ third_party_settings:
         classes: 'form-background--white form-background--regular-padding'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         description: ''
         required_fields: true
     group_basic_info_3:
@@ -593,7 +594,7 @@ third_party_settings:
       children:
         - entitygroupfield
         - group_responsible_for_updating
-      label: "<h2 class='h4'>Palvelun ylläpitäjät</h2>"
+      label: 'Palvelun ylläpitäjät'
       region: content
       parent_name: group_basic_information
       weight: 29
@@ -602,7 +603,7 @@ third_party_settings:
         classes: 'form-background--white form-background--regular-padding'
         show_empty_fields: false
         id: ''
-        label_as_html: true
+        label_as_html: false
         description: ''
         required_fields: false
     group_responsible_for_updating:
@@ -662,7 +663,7 @@ content:
     third_party_settings: {  }
   field_age:
     type: range
-    weight: 12
+    weight: 16
     region: content
     settings:
       label:
@@ -674,7 +675,7 @@ content:
     third_party_settings: {  }
   field_age_groups:
     type: options_buttons
-    weight: 10
+    weight: 15
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -837,7 +838,7 @@ content:
     third_party_settings: {  }
   field_life_situations:
     type: select2_entity_reference
-    weight: 9
+    weight: 17
     region: content
     settings:
       width: 100%
@@ -1139,7 +1140,7 @@ content:
     third_party_settings: {  }
   field_target_group_description:
     type: text_textarea
-    weight: 15
+    weight: 18
     region: content
     settings:
       rows: 5
