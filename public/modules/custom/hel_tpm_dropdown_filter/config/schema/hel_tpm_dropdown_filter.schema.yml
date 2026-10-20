@@ -1,0 +1,22 @@
+better_exposed_filters.filter.hel_tpm_dropdown_filter:
+  label: 'Dropdown checkboxes'
+  type: better_exposed_filters_filter_widget
+  mapping:
+    options_show_only_used:
+      type: boolean
+      label: 'Show only used terms'
+    options_show_only_used_filtered:
+      type: boolean
+      label: 'Filter terms based on filtered result set'
+    options_hide_when_empty:
+      type: boolean
+      label: 'Hide widget if no options'
+    options_show_items_count:
+      type: boolean
+      label: 'Show count of items'
+    term_optgroup:
+      type: boolean
+      label: 'Group terms by parent term'
+    single_select:
+      type: boolean
+      label: 'Allow selecting only one option at a time'
