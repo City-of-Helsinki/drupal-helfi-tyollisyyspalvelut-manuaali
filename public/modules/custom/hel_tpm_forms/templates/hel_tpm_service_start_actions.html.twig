@@ -1,0 +1,33 @@
+{#
+/**
+ * @file
+ * Buttons of the service creation form start page.
+ *
+ * Uses the same markup as the step navigation of the form.
+ *
+ * Available variables:
+ * - exit_url: URL of the page the exit link leads to.
+ *
+ * @see hel_tpm_navigation.html.twig
+ */
+#}
+<div class='nav page-controls service-start__actions'>
+  <div class='button-wrapper'>
+    <a class='button btn-prev service-start__exit' href="{{ exit_url }}">
+      {% include "@atoms/images/icons/_icon.twig" with {
+        icon_base_class: 'icon',
+        icon_name: 'arrow-left',
+        icon_modifiers: ['small'],
+      } %}
+      {{ 'Exit'|t }}
+    </a>
+    <button class='button btn-next service-start__start' type="button">
+      <span class='text-wrapper'>{{ 'Start'|t }}</span>
+      {% include "@atoms/images/icons/_icon.twig" with {
+        icon_base_class: 'icon',
+        icon_name: 'arrow-right',
+        icon_modifiers: ['small'],
+      } %}
+    </button>
+  </div>
+</div>

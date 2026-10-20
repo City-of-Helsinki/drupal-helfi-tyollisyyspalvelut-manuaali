@@ -16,6 +16,7 @@ dependencies:
     - field.field.node.service.field_field_client_consent_descr
     - field.field.node.service.field_free_service
     - field.field.node.service.field_implementation_extra_info
+    - field.field.node.service.field_info_language
     - field.field.node.service.field_instructions_markup
     - field.field.node.service.field_internal_files
     - field.field.node.service.field_internal_links
@@ -279,9 +280,45 @@ third_party_settings:
         id: ''
         description: ''
         required_fields: true
-    group_details_sidebar:
+    group_service_start_language:
       children:
         - langcode
+        - field_info_language
+      label: 'Palvelun kieliversio'
+      region: content
+      parent_name: group_service_start
+      weight: 0
+      format_type: fieldset
+      format_settings:
+        classes: 'service-start__row w-100 form-background--white form-background--regular-padding'
+        show_empty_fields: false
+        id: ''
+        description: ''
+        required_fields: false
+    group_service_start:
+      children:
+        - group_service_start_language
+      label: 'Uuden palvelun aloitussivu'
+      region: content
+      parent_name: group_details_sidebar
+      weight: -10
+      format_type: html_element
+      format_settings:
+        classes: service-start
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: false
+    group_details_sidebar:
+      children:
+        - group_service_start
         - moderation_state
         - created
         - status
@@ -759,6 +796,12 @@ content:
       match_operator: CONTAINS
       match_limit: 10
     third_party_settings: {  }
+  field_info_language:
+    type: hel_tpm_forms_info_box
+    weight: 11
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   field_instructions_markup:
     type: markup
     weight: 5
@@ -1119,11 +1162,15 @@ content:
     settings: {  }
     third_party_settings: {  }
   langcode:
-    type: language_select
+    type: hel_tpm_forms_language_radios
     weight: 10
     region: content
     settings:
       include_locked: false
+      option_labels:
+        en: Englanniksi
+        fi: Suomeksi
+        sv: Ruotsiksi
     third_party_settings: {  }
   moderation_state:
     type: moderation_state_default
