@@ -1,0 +1,26 @@
+uuid: 1650958d-e0d5-4d05-9ecc-455647c5e9a9
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_info_language
+    - node.type.service
+  module:
+    - markup
+id: node.service.field_info_language
+field_name: field_info_language
+entity_type: node
+bundle: service
+label: 'Kieliversion ohje'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    markup: null
+default_value_callback: ''
+settings:
+  markup:
+    value: "<p>Lisää tästä vain kokonaan uusi palvelu. Voit lisätä kuvaukselle käännöksen myöhemmin.</p>\r\n<p>Jos haluat lisätä olemassa olevalle palvelukuvaukselle käännöksen, tee se kyseisen palvelukuvauksen kautta välilehdellä \"Käännä\".</p>\r\n"
+    format: full_html
+field_type: markup

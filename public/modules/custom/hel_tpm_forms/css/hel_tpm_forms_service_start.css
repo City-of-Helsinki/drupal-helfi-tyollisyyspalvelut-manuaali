@@ -1,0 +1,17 @@
+/*
+ * Visibility of the service creation form start page. The start page is
+ * themed in the palvelumanuaali theme.
+ */
+.service-start-hidden {
+  display: none !important;
+}
+
+/* Only the start page is shown while on the start page. */
+.service-start-active > :not(.service-start) {
+  display: none !important;
+}
+
+/* The buttons are shown only while on the start page. */
+form:not(.service-start-active) .service-start__actions {
+  display: none;
+}
