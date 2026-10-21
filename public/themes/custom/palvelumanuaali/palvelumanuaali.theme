@@ -515,6 +515,14 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id): void {
         $label = t("Add new language");
         $form['field_service_languages']['widget']['add_more']['add_more_button_service_language']['#value'] = $label;
       }
+      if (isset($form['field_contact_info']['widget']['#field_title'])) {
+        $label = t("Contact information for employment office");
+        $form['field_contact_info']['widget']['#field_title'] = $label;
+      }
+      if (isset($form['field_contact_info_external']['widget']['#field_title'])) {
+        $label = t("Contact information for customer");
+        $form['field_contact_info_external']['widget']['#field_title'] = $label;
+      }
     }
 
     if ($form_id == 'node_basic_page_form' || $form_id == 'node_basic_page_edit_form') {
