@@ -519,7 +519,7 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id): void {
         $label = t("Contact information for employment office");
         $form['field_contact_info']['widget']['#field_title'] = $label;
       }
-      if (isset($form['field_contact_info_external']['value']['#field_title'])) {
+      if (isset($form['field_contact_info_external']['widget']['#field_title'])) {
         $label = t("Contact information for customer");
         $form['field_contact_info_external']['widget']['#field_title'] = $label;
       }
