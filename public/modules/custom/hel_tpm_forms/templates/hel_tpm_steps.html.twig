@@ -22,7 +22,7 @@
               {% if step.html_id %}aria-controls="{{ step.html_id }}"{% endif %}
         {% if step.disabled %}aria-disabled="true" aria-describedby="multistep-nav-disabled-desc"{% endif %}>
         <span class="step__number nav-icon" aria-hidden="true">{{ loop.index }}</span>
-        <span class="visually-hidden">{{ 'Step @cqurrent of @total:'|t({'@current': loop.index, '@total': step_count}) }}</span>
+        <span class="visually-hidden">{{ 'Step @current of @total:'|t({'@current': loop.index, '@total': step_count}) }}</span>
         <span class="step__label label">{{ step.label }}</span>
       </button>
     </li>
