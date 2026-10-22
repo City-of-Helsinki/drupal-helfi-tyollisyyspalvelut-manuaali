@@ -56,7 +56,7 @@ function hel_tpm_forms_theme($existing, $type, $theme, $path) {
  * @return array
  *   List of steps with 'id', 'html_id' and 'label', sorted by weight.
  */
-function hel_tpm_forms_get_form_steps(EntityFormDisplayInterface &$form_display, ?array $form = NULL): array {
+function hel_tpm_forms_get_form_steps(?EntityFormDisplayInterface $form_display): array {
   if (!$form_display) {
     return [];
   }
@@ -372,7 +372,7 @@ function hel_tpm_forms_node_service_form_alter_helper(&$form, FormStateInterface
 
   $form['paging_footer'] = [
     '#theme' => 'hel_tpm_steps',
-    '#steps' => hel_tpm_forms_get_form_steps($form_display, $form),
+    '#steps' => hel_tpm_forms_get_form_steps($form_display),
     '#cache' => [
       'tags' => $form_display ? $form_display->getCacheTags() : [],
     ],
@@ -398,7 +398,7 @@ function hel_tpm_forms_stepper_after_build(array $form): array {
 
   foreach ($form['paging_footer']['#steps'] as $delta => $step) {
     $name = $step['id'];
-    $is_empty = !isset($form[$name]) || hel_tpm_forms_element_is_empty($form[$name], $group_names);
+    $is_empty = !isset($form[$name]) || hel_tpm_forms_element_is_empty($form[$name]);
 
     $form['paging_footer']['#steps'][$delta]['disabled'] = $is_empty;
   }
@@ -412,17 +412,15 @@ function hel_tpm_forms_stepper_after_build(array $form): array {
  *
  * @param array $element
  *   The field group's form element.
- * @param string[] $group_names
- *   Machine names of all field groups, used to recurse into nested groups.
  *
  * @return bool
  *   TRUE if nothing inside the group (at any depth) is visible.
  */
-function hel_tpm_forms_element_is_empty(array $element, array $group_names): bool {
-  if (!Element::isVisibleElement($element)) {
-    return TRUE;
-  } else {
+function hel_tpm_forms_element_is_empty(array $element): bool {
+  if (Element::isVisibleElement($element)) {
     return FALSE;
+  } else {
+    return TRUE;
   }
 }
 

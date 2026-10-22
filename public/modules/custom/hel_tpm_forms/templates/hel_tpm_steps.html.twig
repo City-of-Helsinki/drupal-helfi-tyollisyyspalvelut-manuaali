@@ -16,10 +16,13 @@
   <ol class='stepper multistep-nav-wrapper'>
   {% for step in steps %}
     <li class="multistep-nav-item{{ step.disabled ? ' is-disabled' }}">
-      <button type="button" id="step-{{ loop.index}}" class="step nav-step-{{ loop.index - 1 }} multistep-nav" aria-current="false" aria-label="{{ loop.index }}/{{ step_count }}: {{ step.label }}"  data-step="{{ loop.index -1 }}"
-              {% if step.html_id %} aria-controls="{{ step.html_id }}"{% endif %}
-              {% if step.disabled %} aria-disabled="true" aria-describedby="multistep-nav-disabled-desc"{% endif %}>
-        <span class="step__number nav-icon">{{ loop.index }}</span>
+      <button type="button"
+              id="step-{{ loop.index }}"
+              class="step nav-step-{{ loop.index0 }} multistep-nav{{ step.disabled ? ' is-disabled' }}"
+              {% if step.html_id %}aria-controls="{{ step.html_id }}"{% endif %}
+        {% if step.disabled %}aria-disabled="true" aria-describedby="multistep-nav-disabled-desc"{% endif %}>
+        <span class="step__number nav-icon" aria-hidden="true">{{ loop.index }}</span>
+        <span class="visually-hidden">{{ 'Step @cqurrent of @total:'|t({'@current': loop.index, '@total': step_count}) }}</span>
         <span class="step__label label">{{ step.label }}</span>
       </button>
     </li>
