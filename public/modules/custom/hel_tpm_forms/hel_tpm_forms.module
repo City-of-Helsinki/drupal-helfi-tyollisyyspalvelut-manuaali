@@ -394,8 +394,6 @@ function hel_tpm_forms_stepper_after_build(array $form): array {
     return $form;
   }
 
-  $group_names = array_keys($form['#fieldgroups'] ?? []);
-
   foreach ($form['paging_footer']['#steps'] as $delta => $step) {
     $name = $step['id'];
     $is_empty = !isset($form[$name]) || hel_tpm_forms_element_is_empty($form[$name]);
@@ -405,7 +403,6 @@ function hel_tpm_forms_stepper_after_build(array $form): array {
 
   return $form;
 }
-
 
 /**
  * Checks whether a field group element has no visible content.
@@ -419,9 +416,8 @@ function hel_tpm_forms_stepper_after_build(array $form): array {
 function hel_tpm_forms_element_is_empty(array $element): bool {
   if (Element::isVisibleElement($element)) {
     return FALSE;
-  } else {
-    return TRUE;
   }
+  return TRUE;
 }
 
 /**
