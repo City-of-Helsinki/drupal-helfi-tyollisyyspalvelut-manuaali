@@ -12,7 +12,7 @@
 
 {% set step_count = steps|length %}
 
-<nav class='node-service-edit-form-pager node-form prevent-scroll'>
+<nav class='node-service-edit-form-pager node-form prevent-scroll' aria-label="{{ 'Form steps'|t({'context': 'Form stepper'}) }}">
   <ol class='stepper multistep-nav-wrapper'>
   {% for step in steps %}
     <li class="multistep-nav-item{{ step.disabled ? ' is-disabled' }}">
@@ -22,13 +22,13 @@
               {% if step.html_id %}aria-controls="{{ step.html_id }}"{% endif %}
         {% if step.disabled %}aria-disabled="true" aria-describedby="multistep-nav-disabled-desc"{% endif %}>
         <span class="step__number nav-icon" aria-hidden="true">{{ loop.index }}</span>
-        <span class="visually-hidden">{{ 'Step @current of @total:'|t({'@current': loop.index, '@total': step_count}) }}</span>
+        <span class="visually-hidden">{{ 'Step @current of @total:'|t({'@current': loop.index, '@total': step_count},{'context': 'Form stepper'}) }}</span>
         <span class="step__label label">{{ step.label }}</span>
       </button>
     </li>
   {% endfor %}
   </ol>
   <p id="multistep-nav-disabled-desc" class="visually-hidden">
-    {{ 'You do not have access to this step.'|t }}
+    {{ 'You do not have access to this step.'|t({'context': 'Form stepper'}) }}
   </p>
 </nav>
