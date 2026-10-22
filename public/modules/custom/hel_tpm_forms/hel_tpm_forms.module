@@ -400,7 +400,6 @@ function hel_tpm_forms_stepper_after_build(array $form): array {
 
     $form['paging_footer']['#steps'][$delta]['disabled'] = $is_empty;
   }
-
   return $form;
 }
 
