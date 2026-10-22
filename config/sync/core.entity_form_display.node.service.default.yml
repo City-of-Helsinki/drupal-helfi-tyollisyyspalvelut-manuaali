@@ -117,8 +117,8 @@ third_party_settings:
     group_customer:
       children:
         - field_attendance_text
-        - field_service_benefits
         - field_service_requirements
+        - field_service_benefits
         - group_participation_concent
         - field_field_client_consent_descr
         - field_service_execution_text
@@ -183,7 +183,7 @@ third_party_settings:
     group_servi:
       children:
         - group_tabs
-      label: 'Kuvaus ja työohje'
+      label: Palvelukuvaus
       region: content
       parent_name: ''
       weight: 3
@@ -192,6 +192,7 @@ third_party_settings:
         classes: 'tab tab-2'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: true
         label_element: h3
@@ -1011,7 +1012,7 @@ content:
     third_party_settings: {  }
   field_service_benefits:
     type: text_textarea
-    weight: 10
+    weight: 11
     region: content
     settings:
       rows: 5
@@ -1096,7 +1097,7 @@ content:
     third_party_settings: {  }
   field_service_requirements:
     type: text_textarea
-    weight: 11
+    weight: 10
     region: content
     settings:
       rows: 5
