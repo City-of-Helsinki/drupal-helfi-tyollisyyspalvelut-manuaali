@@ -15,13 +15,15 @@ third_party_settings:
     group_add:
       label: 'Additional information'
     group_basic_info_1:
-      label: 'Basic information'
+      label: "Basic information"
     group_basic_info_2:
       label: 'Target group'
     group_basic_info_3:
       label: 'Service accessibility'
     group_details_sidebar:
       label: 'Additional information'
+    group_service_start_language:
+      label: 'Service language version'
     group_service_obligatoryness:
       label: 'Palvelun velvoittavuus'
     group_statements_unemploym:
@@ -46,15 +48,27 @@ third_party_settings:
       label: 'Sisäiset liitteet ja linkit'
     group_public_links_and_files:
       label: 'Links and attachments'
+    group_responsible_for_updating:
+      label: 'Persons responsible for service updates'
+    group_service_maintainers:
+      label: "Service administrators"
 content:
   entitygroupfield:
     settings:
       label: 'Service organiser'
+  langcode:
+    settings:
+      option_labels:
+        en: English
+        fi: Finnish
+        sv: Swedish
   field_description:
     third_party_settings:
       maxlength:
         maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
   title:
+    settings:
+      placeholder: 'Enter a name that describes the service'
     third_party_settings:
       maxlength:
-        maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
+        maxlength_js_label: '@remaining characters available'

@@ -15,13 +15,15 @@ third_party_settings:
     group_add:
       label: 'Ytterligare information'
     group_basic_info_1:
-      label: Basuppgifter
+      label: "Tjänstens basuppgifter"
     group_basic_info_2:
       label: Målgrupp
     group_basic_info_3:
       label: 'Tjänstens tillgänglighet'
     group_details_sidebar:
       label: 'Ytterligare information'
+    group_service_start_language:
+      label: 'Tjänstens språkversion'
     group_service_obligatoryness:
       label: 'Palvelun velvoittavuus'
     group_statements_unemploym:
@@ -46,15 +48,27 @@ third_party_settings:
       label: 'Sisäiset liitteet ja linkit'
     group_public_links_and_files:
       label: 'Länkar och bilagor'
+    group_responsible_for_updating:
+      label: 'Ansvar för att uppdatera tjänsten'
+    group_service_maintainers:
+      label: "Tjänstens administratörer"
 content:
   entitygroupfield:
     settings:
       label: Tjänsteanordnare
+  langcode:
+    settings:
+      option_labels:
+        en: Engelska
+        fi: Finska
+        sv: Svenska
   field_description:
     third_party_settings:
       maxlength:
         maxlength_js_label: 'Innehåll begränsat till @limit tecken, kvar: <strong>@remaining</strong>'
   title:
+    settings:
+      placeholder: 'Skriv in ett namn som beskriver tjänsten'
     third_party_settings:
       maxlength:
-        maxlength_js_label: 'Innehåll begränsat till @limit tecken, kvar: <strong>@remaining</strong>'
+        maxlength_js_label: '@remaining tecken kan användas'

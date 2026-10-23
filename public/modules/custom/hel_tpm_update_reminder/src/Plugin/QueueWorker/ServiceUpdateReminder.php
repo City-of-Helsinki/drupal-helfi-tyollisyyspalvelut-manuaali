@@ -226,16 +226,21 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
       $service = $storage->loadRevision($vid);
     }
 
+    // The service provider updater is shown in the message as a contact.
+    $serviceProviderAccount = $service?->get('field_service_provider_updatee')?->entity;
+    $fields = [
+      'field_message_author' => $serviceProviderAccount,
+    ];
+
     $serviceProviderInformed = FALSE;
-    if (!empty($service?->get('field_service_provider_updatee')?->entity)) {
-      $serviceProviderAccount = $service->get('field_service_provider_updatee')->entity;
-      $serviceProviderInformed = $this->sendMessage('hel_tpm_update_reminder_outdated', $serviceProviderAccount, $service);
+    if (!empty($serviceProviderAccount)) {
+      $serviceProviderInformed = $this->sendMessage('hel_tpm_update_reminder_outdated', $serviceProviderAccount, $service, $fields);
     }
 
     $responsibleInformed = FALSE;
     if (!empty($service?->get('field_responsible_updatee')?->entity)) {
       $responsibleAccount = $service->get('field_responsible_updatee')->entity;
-      $responsibleInformed = $this->sendMessage('hel_tpm_update_reminder_outdated', $responsibleAccount, $service);
+      $responsibleInformed = $this->sendMessage('hel_tpm_update_reminder_outdated', $responsibleAccount, $service, $fields);
     }
 
     if ($serviceProviderInformed || $responsibleInformed) {
@@ -264,6 +269,8 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
    *   The user to receive the message.
    * @param \Drupal\node\NodeInterface $service
    *   The service node attached to message.
+   * @param array $fields
+   *   Additional message field values keyed by field name.
    *
    * @return bool
    *   Boolean value denoting success or failure of sending the message.
@@ -271,7 +278,7 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
    * @throws \Drupal\Core\Entity\EntityStorageException
    * @throws \Drupal\message_notify\Exception\MessageNotifyException
    */
-  protected function sendMessage(string $template, User $account, NodeInterface $service): bool {
+  protected function sendMessage(string $template, User $account, NodeInterface $service, array $fields = []): bool {
     if ($account->isBlocked()) {
       return FALSE;
     }
@@ -279,7 +286,7 @@ final class ServiceUpdateReminder extends QueueWorkerBase implements ContainerFa
     return $this->messageSender->createAndSend($template, $account, [
       'field_node' => $service,
       'field_user' => $account,
-    ]);
+    ] + $fields);
   }
 
 }

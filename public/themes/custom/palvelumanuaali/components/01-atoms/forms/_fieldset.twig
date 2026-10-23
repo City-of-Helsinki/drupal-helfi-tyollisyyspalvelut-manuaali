@@ -21,6 +21,7 @@
  */
 #}
 
+
 {%
   set classes = [
     'form-fieldset',
@@ -49,7 +50,7 @@
   %}
   {# Always wrap fieldset legends in a SPAN for CSS positioning. #}
   {% if legend.title %}
-    <legend {{ legend.attributes.addClass(legend_classes) }}><span {{ legend_span.attributes.addClass(legend_span_classes) }}>{{ legend.title }}</span></legend>
+    <legend {{ legend.attributes.addClass(legend_classes) }}><span {{ legend_span.attributes.addClass(legend_span_classes) }}>{% if h2 == 'yes' %}<h2 class="h4">{% endif %}{{ legend.title }}{% if h2 == 'yes' %}</h2>{% endif %}</span></legend>
   {% endif %}
   {% if description.content %}
     <div{{ description.attributes.addClass('description') }}>{{ description.content }}</div>

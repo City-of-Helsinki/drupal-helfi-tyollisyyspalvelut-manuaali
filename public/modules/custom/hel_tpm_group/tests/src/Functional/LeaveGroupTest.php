@@ -6,14 +6,19 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Tests\group\Functional\GroupBrowserTestBase;
 use Drupal\group\Entity\Group;
 use Drupal\group\PermissionScopeInterface;
+use Drupal\hel_tpm_group\Plugin\Group\RelationHandler\LeaveGroupAccessControl;
 use Drupal\user\RoleInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group as GroupAttribute;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests leaving group access.
- *
- * @coversDefaultClass \Drupal\hel_tpm_group\Plugin\Group\RelationHandler\LeaveGroupAccessControl
- * @group group
  */
+#[CoversClass(LeaveGroupAccessControl::class)]
+#[GroupAttribute('group')]
+#[RunTestsInSeparateProcesses]
 class LeaveGroupTest extends GroupBrowserTestBase {
   use StringTranslationTrait;
 
@@ -70,11 +75,10 @@ class LeaveGroupTest extends GroupBrowserTestBase {
    *
    * @todo Add support for testing the 'leave group' permission.
    *
-   * @dataProvider provideLeavingGroupScenarios
-   *
    * @throws \Behat\Mink\Exception\ExpectationException
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
+  #[DataProvider('provideLeavingGroupScenarios')]
   public function testLeavingGroup($permissions = []) {
     $this->createGroupRole([
       'group_type' => $this->group->bundle(),

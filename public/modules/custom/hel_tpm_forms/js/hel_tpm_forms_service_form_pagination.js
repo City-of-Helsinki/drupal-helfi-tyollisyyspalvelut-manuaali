@@ -18,13 +18,14 @@
        * Provides for next and previous navigation events.
        */
       function nextPrevNav() {
-        $(once('prev-click-event', '.btn-prev', context)).each(function() {
+        // Bound by id, as the button classes are also used by other buttons.
+        $(once('prev-click-event', '#prevBtn', context)).each(function() {
           $(this).click(function() {
             nextPrev(-1);
           })
         });
 
-        $(once('next-click-event', '.btn-next', context)).each(function() {
+        $(once('next-click-event', '#nextBtn', context)).each(function() {
           $(this).click(function() {
             nextPrev(1);
           })
@@ -108,6 +109,8 @@
         updateStepParam(n);
         // ... and run a function that displays the correct step indicator:
         fixStepIndicator(n);
+        // Let other scripts react to the step change.
+        document.dispatchEvent(new CustomEvent('hel_tpm_forms:step-change', {detail: {step: n}}));
       }
 
       /**

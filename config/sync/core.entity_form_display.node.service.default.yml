@@ -16,6 +16,7 @@ dependencies:
     - field.field.node.service.field_field_client_consent_descr
     - field.field.node.service.field_free_service
     - field.field.node.service.field_implementation_extra_info
+    - field.field.node.service.field_info_language
     - field.field.node.service.field_instructions_markup
     - field.field.node.service.field_internal_files
     - field.field.node.service.field_internal_links
@@ -137,6 +138,7 @@ third_party_settings:
         required_fields: true
     group_basic_information:
       children:
+        - group_service_maintainers
         - group_basic_info_1
         - group_basic_info_2
         - group_basic_info_3
@@ -159,7 +161,6 @@ third_party_settings:
         required_fields: true
     group_pla:
       children:
-        - field_implementation_extra_info
         - field_service_time_and_location
       label: 'Aika ja paikka'
       region: content
@@ -203,11 +204,6 @@ third_party_settings:
       children:
         - field_contact_info_external
         - field_contact_info
-        - entitygroupfield
-        - field_service_producer
-        - field_service_provider_updatee
-        - field_responsible_municipality
-        - field_responsible_updatee
         - field_other_services
         - field_days_since_last_state_chan
       label: Lisätiedot
@@ -232,39 +228,42 @@ third_party_settings:
       children:
         - title
         - field_description
+        - field_implementation_extra_info
         - field_service_set
         - field_service_languages
         - field_free_service
         - field_price
         - field_price_description
-      label: Perustiedot
+      label: 'Palvelun perustiedot'
       region: content
       parent_name: group_basic_information
-      weight: 1
+      weight: 30
       format_type: fieldset
       format_settings:
         classes: 'form-background--white form-background--regular-padding'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         description: ''
         required_fields: false
     group_basic_info_2:
       children:
-        - field_life_situations
-        - field_age_groups
-        - field_age
         - field_municipality_irrelevant
         - field_target_group_municipality
+        - field_age_groups
+        - field_age
+        - field_life_situations
         - field_target_group_description
       label: Kohderyhmä
       region: content
       parent_name: group_basic_information
-      weight: 3
+      weight: 31
       format_type: fieldset
       format_settings:
         classes: 'form-background--white form-background--regular-padding'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         description: ''
         required_fields: true
     group_basic_info_3:
@@ -273,7 +272,7 @@ third_party_settings:
       label: Saavutettavuus
       region: content
       parent_name: group_basic_information
-      weight: 4
+      weight: 32
       format_type: fieldset
       format_settings:
         classes: 'form-background--white form-background--regular-padding'
@@ -281,9 +280,45 @@ third_party_settings:
         id: ''
         description: ''
         required_fields: true
-    group_details_sidebar:
+    group_service_start_language:
       children:
         - langcode
+        - field_info_language
+      label: 'Palvelun kieliversio'
+      region: content
+      parent_name: group_service_start
+      weight: 0
+      format_type: fieldset
+      format_settings:
+        classes: 'service-start__row w-100 form-background--white form-background--regular-padding'
+        show_empty_fields: false
+        id: ''
+        description: ''
+        required_fields: false
+    group_service_start:
+      children:
+        - group_service_start_language
+      label: 'Uuden palvelun aloitussivu'
+      region: content
+      parent_name: group_details_sidebar
+      weight: -10
+      format_type: html_element
+      format_settings:
+        classes: service-start
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: false
+    group_details_sidebar:
+      children:
+        - group_service_start
         - moderation_state
         - created
         - status
@@ -555,6 +590,46 @@ third_party_settings:
         effect: none
         speed: fast
         required_fields: true
+    group_service_maintainers:
+      children:
+        - entitygroupfield
+        - group_responsible_for_updating
+      label: 'Palvelun ylläpitäjät'
+      region: content
+      parent_name: group_basic_information
+      weight: 29
+      format_type: fieldset
+      format_settings:
+        classes: 'form-background--white form-background--regular-padding'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        description: ''
+        required_fields: false
+    group_responsible_for_updating:
+      children:
+        - field_service_producer
+        - field_service_provider_updatee
+        - field_responsible_municipality
+        - field_responsible_updatee
+      label: 'Palvelun päivittämisvastuut'
+      region: content
+      parent_name: group_service_maintainers
+      weight: 20
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: true
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: true
+        label_element: h3
+        label_element_classes: h5
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: true
 id: node.service.default
 targetEntityType: node
 bundle: service
@@ -572,7 +647,7 @@ content:
     region: content
     settings:
       help_text: ''
-      label: 'Palvelun järjestäjä'
+      label: 'Organisaatioryhmä, jossa palvelu sijaitsee järjestelmässä '
       multiple: true
       required: true
     third_party_settings: {  }
@@ -588,7 +663,7 @@ content:
     third_party_settings: {  }
   field_age:
     type: range
-    weight: 12
+    weight: 16
     region: content
     settings:
       label:
@@ -600,7 +675,7 @@ content:
     third_party_settings: {  }
   field_age_groups:
     type: options_buttons
-    weight: 11
+    weight: 15
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -709,17 +784,23 @@ content:
     weight: 32
     region: content
     settings:
-      display_label: true
+      display_label: false
     third_party_settings: {  }
   field_implementation_extra_info:
     type: select2_entity_reference
-    weight: 16
+    weight: 29
     region: content
     settings:
       width: 100%
       autocomplete: false
       match_operator: CONTAINS
       match_limit: 10
+    third_party_settings: {  }
+  field_info_language:
+    type: hel_tpm_forms_info_box
+    weight: 11
+    region: content
+    settings: {  }
     third_party_settings: {  }
   field_instructions_markup:
     type: markup
@@ -757,7 +838,7 @@ content:
     third_party_settings: {  }
   field_life_situations:
     type: select2_entity_reference
-    weight: 9
+    weight: 17
     region: content
     settings:
       width: 100%
@@ -966,7 +1047,7 @@ content:
     third_party_settings: {  }
   field_service_languages:
     type: hel_tpm_editorial_paragraphs_accessibility
-    weight: 30
+    weight: 31
     region: content
     settings:
       title: 'Paragraafi '
@@ -1027,7 +1108,7 @@ content:
         maxlength_js_enforce: false
   field_service_set:
     type: optgroup_term_select2
-    weight: 29
+    weight: 30
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -1059,7 +1140,7 @@ content:
     third_party_settings: {  }
   field_target_group_description:
     type: text_textarea
-    weight: 15
+    weight: 18
     region: content
     settings:
       rows: 5
@@ -1081,11 +1162,15 @@ content:
     settings: {  }
     third_party_settings: {  }
   langcode:
-    type: language_select
+    type: hel_tpm_forms_language_radios
     weight: 10
     region: content
     settings:
       include_locked: false
+      option_labels:
+        en: Englanniksi
+        fi: Suomeksi
+        sv: Ruotsiksi
     third_party_settings: {  }
   moderation_state:
     type: moderation_state_default
@@ -1106,11 +1191,12 @@ content:
     region: content
     settings:
       size: 60
-      placeholder: ''
+      placeholder: 'Kirjoita palvelua kuvaava nimi'
     third_party_settings:
       maxlength:
         maxlength_js: 120
-        maxlength_js_label: 'Merkkimäärä rajattu @limit merkkiin, jäljellä: <strong>@remaining</strong>'
+        maxlength_js_label: '@remaining merkkiä käytettävissä'
+        maxlength_js_enforce: false
   uid:
     type: select2_entity_reference
     weight: 6

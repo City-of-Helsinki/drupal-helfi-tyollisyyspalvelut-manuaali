@@ -1,6 +1,6 @@
 # Custom module library for general purposes.
 hel_tpm_forms:
-  version: 2.0.5
+  version: 2.0.6
   js:
     js/hel_tpm_forms.js: {}
     js/hel_tpm_forms_service_form_pagination.js: {}
@@ -20,6 +20,19 @@ simple_select2:
     - core/drupal
     - core/drupalSettings
     - select2/select2
+
+service_start:
+  version: 1.0.0
+  js:
+    js/hel_tpm_forms_service_start.js: {}
+  css:
+    component:
+      css/hel_tpm_forms_service_start.css: {}
+  dependencies:
+    - core/drupal
+    - core/drupal.dialog
+    - core/drupalSettings
+    - core/once
 
 service_custom_submit:
   version: 2.0.1
