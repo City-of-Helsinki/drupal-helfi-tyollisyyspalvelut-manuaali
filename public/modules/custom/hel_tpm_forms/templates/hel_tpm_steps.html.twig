@@ -19,6 +19,7 @@
       <button type="button"
               id="step-{{ loop.index }}"
               class="step nav-step-{{ loop.index0 }} multistep-nav{{ step.disabled ? ' is-disabled' }}"
+              data-step="{{ loop.index -1 }}"
               {% if step.html_id %}aria-controls="{{ step.html_id }}"{% endif %}
         {% if step.disabled %}aria-disabled="true" aria-describedby="multistep-nav-disabled-desc"{% endif %}>
         <span class="step__number nav-icon" aria-hidden="true">{{ loop.index }}</span>

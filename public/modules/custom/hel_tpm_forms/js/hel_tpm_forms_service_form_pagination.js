@@ -1,5 +1,5 @@
 (function ($, Drupal, once) {
-  Drupal.behaviors.custom_module_forms_service_form_pagination = {
+  Drupal.behaviors.serviceFormPagination = {
     attach: function (context, settings) {
       const tabs = Array.from(document.getElementsByClassName('tab'));
       const steps = Array.from(document.querySelectorAll('.step'));
@@ -49,6 +49,9 @@
             steps[index].setAttribute('aria-disabled', 'true');
             steps[index].classList.add('is-disabled');
             console.warn('Stepper: no tab found for step ' + (index + 1) + '.');
+          }
+          if (tab) {
+            tab.dataset.stepIndex = index;
           }
         });
 
