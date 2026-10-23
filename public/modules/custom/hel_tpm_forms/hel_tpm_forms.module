@@ -6,9 +6,12 @@
  */
 
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\Core\Render\Element;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Entity\Display\EntityFormDisplayInterface;
+use Drupal\Core\Entity\ContentEntityFormInterface;
 
 /**
  * Implements hook_theme().
@@ -38,9 +41,45 @@ function hel_tpm_forms_theme($existing, $type, $theme, $path) {
       'template' => 'hel_tpm_steps',
       'variables' => [
         'content' => NULL,
+        'steps' => [],
       ],
     ],
   ];
+}
+
+/**
+ * Builds stepper items from the form display's field groups.
+ *
+ * @param \Drupal\Core\Entity\Display\EntityFormDisplayInterface $form_display
+ *   The form display used by the current form.
+ *
+ * @return array
+ *   List of steps with 'id', 'html_id' and 'label', sorted by weight.
+ */
+function hel_tpm_forms_get_form_steps(?EntityFormDisplayInterface $form_display): array {
+  if (!$form_display) {
+    return [];
+  }
+
+  $groups = $form_display->getThirdPartySettings('field_group');
+  $groups = array_filter($groups, fn($g) =>
+    empty($g['parent_name'])
+    && ($g['region'] ?? 'content') !== 'hidden'
+    && ($g['format_type'] ?? '') === 'html_element'
+  );
+
+  uasort($groups, fn($a, $b) => ($a['weight'] ?? 0) <=> ($b['weight'] ?? 0));
+
+  $steps = [];
+  foreach ($groups as $name => $group) {
+    $steps[] = [
+      'id' => $name,
+      'html_id' => $group['format_settings']['id'] ?? '',
+      'label' => $group['label'],
+      'disabled' => FALSE,
+    ];
+  }
+  return $steps;
 }
 
 /**
@@ -326,15 +365,58 @@ function hel_tpm_forms_node_service_form_alter_helper(&$form, FormStateInterface
     }
   }
 
+  $form_object = $form_state->getFormObject();
+  $form_display = $form_object instanceof ContentEntityFormInterface
+    ? $form_object->getFormDisplay($form_state)
+    : NULL;
+
   $form['paging_footer'] = [
     '#theme' => 'hel_tpm_steps',
+    '#steps' => hel_tpm_forms_get_form_steps($form_display),
+    '#cache' => [
+      'tags' => $form_display ? $form_display->getCacheTags() : [],
+    ],
   ];
 
+  $form['#after_build'][] = 'hel_tpm_forms_stepper_after_build';
   $form['#attached']['library'][] = 'hel_tpm_forms/hel_tpm_forms';
 
   $form['#validate'][] = 'hel_tpm_forms_validate_service_form_helper';
 
   hel_tpm_forms_publish_service_action($form, $form_state);
+}
+
+/**
+ * Disables stepper steps whose field group has no visible content.
+ */
+function hel_tpm_forms_stepper_after_build(array $form): array {
+  if (empty($form['paging_footer']['#steps'])) {
+    return $form;
+  }
+
+  foreach ($form['paging_footer']['#steps'] as $delta => $step) {
+    $name = $step['id'];
+    $is_empty = !isset($form[$name]) || hel_tpm_forms_element_is_empty($form[$name]);
+
+    $form['paging_footer']['#steps'][$delta]['disabled'] = $is_empty;
+  }
+  return $form;
+}
+
+/**
+ * Checks whether a field group element has no visible content.
+ *
+ * @param array $element
+ *   The field group's form element.
+ *
+ * @return bool
+ *   TRUE if nothing inside the group (at any depth) is visible.
+ */
+function hel_tpm_forms_element_is_empty(array $element): bool {
+  if (Element::isVisibleElement($element)) {
+    return FALSE;
+  }
+  return TRUE;
 }
 
 /**
