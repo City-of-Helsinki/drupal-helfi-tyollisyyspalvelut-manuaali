@@ -77,7 +77,6 @@ third_party_settings:
   field_group:
     group_tabs:
       children:
-        - group_customer
         - group_specialist
       label: Tabs
       region: content
@@ -123,19 +122,19 @@ third_party_settings:
         - field_field_client_consent_descr
         - field_service_execution_text
         - group_public_links_and_files
-      label: Asiakasnäkymä
+      label: 'Palveluun osallistuminen'
       region: content
-      parent_name: group_tabs
+      parent_name: group_servi
       weight: 5
-      format_type: tab
+      format_type: fieldset
       format_settings:
         classes: ''
         show_empty_fields: false
         id: ''
         label_as_html: false
-        formatter: open
         description: ''
         required_fields: true
+        formatter: open
     group_basic_information:
       children:
         - group_service_maintainers
@@ -183,6 +182,7 @@ third_party_settings:
     group_servi:
       children:
         - group_tabs
+        - group_customer
       label: Palvelukuvaus
       region: content
       parent_name: ''
@@ -194,7 +194,7 @@ third_party_settings:
         id: ''
         label_as_html: false
         element: div
-        show_label: true
+        show_label: false
         label_element: h3
         label_element_classes: tab--title
         attributes: ''
