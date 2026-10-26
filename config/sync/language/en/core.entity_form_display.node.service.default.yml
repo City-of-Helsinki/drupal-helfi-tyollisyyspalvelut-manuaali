@@ -13,7 +13,7 @@ third_party_settings:
     group_servi:
       label: 'Service description'
     group_add:
-      label: 'Työohje'
+      label: Työohje
     group_basic_info_1:
       label: 'Basic information'
     group_basic_info_2:
@@ -45,11 +45,13 @@ third_party_settings:
     group_liitteet_ja_linkit:
       label: 'Sisäiset liitteet ja linkit'
     group_public_links_and_files:
-      label: 'Links and attachments'
+      label: 'Links and attachments for the client'
     group_responsible_for_updating:
       label: 'Persons responsible for service updates'
     group_service_maintainers:
       label: 'Service administrators'
+    group_p3_g4:
+      label: 'Other services'
 content:
   entitygroupfield:
     settings:
@@ -64,6 +66,10 @@ content:
     third_party_settings:
       maxlength:
         maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
+  field_public_links:
+    settings:
+      placeholder_url: 'Enter link address'
+      placeholder_title: 'Enter link name'
   title:
     settings:
       placeholder: 'Enter a name that describes the service'

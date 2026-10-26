@@ -9,11 +9,11 @@ third_party_settings:
     group_basic_information:
       label: Basuppgifter
     group_pla:
-      label: 'Ärendehantering'
+      label: Ärendehantering
     group_servi:
-      label: 'Servicebeskrivning'
+      label: Servicebeskrivning
     group_add:
-      label: 'Työohje'
+      label: Työohje
     group_basic_info_1:
       label: 'Tjänstens basuppgifter'
     group_basic_info_2:
@@ -45,11 +45,13 @@ third_party_settings:
     group_liitteet_ja_linkit:
       label: 'Sisäiset liitteet ja linkit'
     group_public_links_and_files:
-      label: 'Länkar och bilagor'
+      label: 'Länkar och bilagor till kunden'
     group_responsible_for_updating:
       label: 'Ansvar för att uppdatera tjänsten'
     group_service_maintainers:
       label: 'Tjänstens administratörer'
+    group_p3_g4:
+      label: 'Övriga tjänster'
 content:
   entitygroupfield:
     settings:
@@ -64,6 +66,10 @@ content:
     third_party_settings:
       maxlength:
         maxlength_js_label: 'Innehåll begränsat till @limit tecken, kvar: <strong>@remaining</strong>'
+  field_public_links:
+    settings:
+      placeholder_url: 'Skriv in länkens adress'
+      placeholder_title: 'Skriv in länkens namn'
   title:
     settings:
       placeholder: 'Skriv in ett namn som beskriver tjänsten'

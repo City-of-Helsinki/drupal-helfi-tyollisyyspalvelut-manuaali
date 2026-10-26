@@ -120,7 +120,6 @@ third_party_settings:
         - field_service_benefits
         - group_participation_concent
         - field_field_client_consent_descr
-        - group_public_links_and_files
         - group_tabs
       label: 'Palveluun osallistuminen'
       region: content
@@ -139,8 +138,7 @@ third_party_settings:
         - group_service_maintainers
         - group_basic_info_1
         - group_basic_info_2
-        - group_basic_info_3
-      label: 'Perustiedot'
+      label: Perustiedot
       region: content
       parent_name: ''
       weight: 1
@@ -160,7 +158,7 @@ third_party_settings:
     group_pla:
       children:
         - field_service_time_and_location
-      label: 'Asiointi'
+      label: Asiointi
       region: content
       parent_name: ''
       weight: 2
@@ -182,7 +180,9 @@ third_party_settings:
       children:
         - group_customer
         - group_p3_g2
-      label: 'Palvelukuvaus'
+        - group_public_links_and_files
+        - group_p3_g4
+      label: Palvelukuvaus
       region: content
       parent_name: ''
       weight: 3
@@ -204,9 +204,8 @@ third_party_settings:
       children:
         - field_contact_info_external
         - field_contact_info
-        - field_other_services
         - field_days_since_last_state_chan
-      label: 'Työohje'
+      label: Työohje
       region: content
       parent_name: ''
       weight: 4
@@ -559,23 +558,17 @@ third_party_settings:
       children:
         - field_public_links
         - field_public_files
-      label: 'Liitteet ja linkit'
+      label: 'Linkit ja liitteet asiakkaalle'
       region: content
-      parent_name: group_customer
-      weight: 15
-      format_type: html_element
+      parent_name: group_servi
+      weight: 21
+      format_type: fieldset
       format_settings:
-        classes: fieldset-internal-files-and-attachments
+        classes: 'fieldset-internal-files-and-attachments form-background--white form-background--regular-padding'
         show_empty_fields: false
         id: ''
         label_as_html: false
-        element: div
-        show_label: true
-        label_element: legend
-        label_element_classes: field-group--title
-        attributes: ''
-        effect: none
-        speed: fast
+        description: ''
         required_fields: true
     group_service_maintainers:
       children:
@@ -619,12 +612,27 @@ third_party_settings:
         required_fields: true
     group_p3_g2:
       children:
-        - field_accessibility
         - field_service_execution_text
+        - field_accessibility
       label: Toteustapa
       region: content
       parent_name: group_servi
       weight: 20
+      format_type: fieldset
+      format_settings:
+        classes: 'form-background--white form-background--regular-padding'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        description: ''
+        required_fields: true
+    group_p3_g4:
+      children:
+        - field_other_services
+      label: 'Muut palvelut'
+      region: content
+      parent_name: group_servi
+      weight: 22
       format_type: fieldset
       format_settings:
         classes: 'form-background--white form-background--regular-padding'
@@ -967,8 +975,8 @@ content:
     weight: 16
     region: content
     settings:
-      placeholder_url: ''
-      placeholder_title: ''
+      placeholder_url: 'Kirjoita linkin osoite'
+      placeholder_title: 'Kirjoita linkin nimi'
       target_bundles:
         basic_page: basic_page
         landing_page: '0'

@@ -515,6 +515,10 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id): void {
         $label = t("Add new language");
         $form['field_service_languages']['widget']['add_more']['add_more_button_service_language']['#value'] = $label;
       }
+      if (isset($form['field_public_links']['widget']['add_more'])) {
+        $label = t("Add new link");
+        $form['field_public_links']['widget']['add_more']['#value'] = $label;
+      }
     }
 
     if ($form_id == 'node_basic_page_form' || $form_id == 'node_basic_page_edit_form') {
