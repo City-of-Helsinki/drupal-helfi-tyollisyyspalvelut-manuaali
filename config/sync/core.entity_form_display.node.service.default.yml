@@ -200,9 +200,9 @@ third_party_settings:
         required_fields: true
     group_add:
       children:
+        - group_p4_g1
         - field_contact_info_external
         - field_contact_info
-        - group_p4_g1
         - field_other_services
         - field_days_since_last_state_chan
       label: Työohje
@@ -216,7 +216,7 @@ third_party_settings:
         id: ''
         label_as_html: false
         element: div
-        show_label: true
+        show_label: false
         label_element: h3
         label_element_classes: tab--title
         attributes: ''
@@ -463,28 +463,6 @@ third_party_settings:
         effect: none
         speed: fast
         required_fields: true
-    group_service_requirements:
-      children:
-        - field_service_req_speacialist
-        - field_municipality_guidance
-      label: 'Osallistumisen edellytykset'
-      region: content
-      parent_name: group_p4_g1
-      weight: 10
-      format_type: html_element
-      format_settings:
-        classes: group--margin-border-bottom
-        show_empty_fields: false
-        id: ''
-        label_as_html: false
-        element: div
-        show_label: true
-        label_element: legend
-        label_element_classes: field-group--title
-        attributes: ''
-        effect: none
-        speed: fast
-        required_fields: true
     group_markings_for_service:
       children:
         - field_career_markings
@@ -497,27 +475,6 @@ third_party_settings:
         classes: group--margin-border-bottom
         show_empty_fields: false
         id: ''
-        element: div
-        show_label: true
-        label_element: legend
-        label_element_classes: field-group--title
-        attributes: ''
-        effect: none
-        speed: fast
-        required_fields: true
-    group_guidance_to_service:
-      children:
-        - field_service_coordination
-      label: 'Ohjaus palveluun'
-      region: content
-      parent_name: group_p4_g1
-      weight: 9
-      format_type: html_element
-      format_settings:
-        classes: group--margin-bottom
-        show_empty_fields: false
-        id: ''
-        label_as_html: false
         element: div
         show_label: true
         label_element: legend
@@ -631,12 +588,13 @@ third_party_settings:
         required_fields: true
     group_p4_g1:
       children:
-        - group_guidance_to_service
-        - group_service_requirements
+        - field_service_coordination
+        - field_service_req_speacialist
+        - field_municipality_guidance
       label: Työohje
       region: content
       parent_name: group_add
-      weight: 20
+      weight: 16
       format_type: fieldset
       format_settings:
         classes: 'form-background--white form-background--regular-padding'
@@ -723,7 +681,7 @@ content:
     third_party_settings: {  }
   field_contact_info:
     type: ief_no_confirm_widget
-    weight: 16
+    weight: 18
     region: content
     settings:
       form_mode: default
@@ -744,7 +702,7 @@ content:
         ief_popup_enabled: true
   field_contact_info_external:
     type: ief_no_confirm_widget
-    weight: 15
+    weight: 17
     region: content
     settings:
       form_mode: default
@@ -765,7 +723,7 @@ content:
         ief_popup_enabled: true
   field_days_since_last_state_chan:
     type: hel_tpm_service_stats_days_since_last_state_change_widget
-    weight: 23
+    weight: 20
     region: content
     settings:
       placeholder: ''
@@ -871,7 +829,7 @@ content:
     third_party_settings: {  }
   field_municipality_guidance:
     type: municipality_specific_ief_widget
-    weight: 10
+    weight: 11
     region: content
     settings:
       form_mode: default
@@ -944,7 +902,7 @@ content:
     third_party_settings: {  }
   field_other_services:
     type: select2_entity_reference
-    weight: 22
+    weight: 19
     region: content
     settings:
       width: 100%
@@ -1103,7 +1061,7 @@ content:
     third_party_settings: {  }
   field_service_req_speacialist:
     type: text_textarea
-    weight: 7
+    weight: 10
     region: content
     settings:
       rows: 5
