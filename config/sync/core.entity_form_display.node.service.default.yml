@@ -159,8 +159,9 @@ third_party_settings:
         required_fields: true
     group_pla:
       children:
-        - field_service_time_and_location
-      label: Asiointi
+        - group_p2_g1
+        - group_p2_g2
+      label: 'Aika ja paikka'
       region: content
       parent_name: ''
       weight: 2
@@ -171,7 +172,7 @@ third_party_settings:
         id: ''
         label_as_html: false
         element: div
-        show_label: true
+        show_label: false
         label_element: h3
         label_element_classes: tab--title
         attributes: ''
@@ -202,8 +203,6 @@ third_party_settings:
         required_fields: true
     group_add:
       children:
-        - field_contact_info_external
-        - field_contact_info
         - field_other_services
         - field_days_since_last_state_chan
       label: Työohje
@@ -633,6 +632,37 @@ third_party_settings:
         label_as_html: false
         description: ''
         required_fields: true
+    group_p2_g1:
+      children:
+        - field_service_time_and_location
+      label: 'Asiointikanava ja -aika'
+      region: content
+      parent_name: group_pla
+      weight: 20
+      format_type: fieldset
+      format_settings:
+        classes: 'form-background--white form-background--regular-padding'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        description: ''
+        required_fields: false
+    group_p2_g2:
+      children:
+        - field_contact_info_external
+        - field_contact_info
+      label: Yhteystiedot
+      region: content
+      parent_name: group_pla
+      weight: 20
+      format_type: fieldset
+      format_settings:
+        classes: 'form-background--white form-background--regular-padding'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        description: ''
+        required_fields: false
 id: node.service.default
 targetEntityType: node
 bundle: service
