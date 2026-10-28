@@ -295,6 +295,18 @@
       opacity: unset;
       cursor: default;
     }
+    .field--name-field-public-links {
+      .field-label {
+        display:block;
+        border: 0;
+        .label {
+          @extend .font-size--view-label;
+          @extend .font-weight--bold;
+          text-transform: initial;
+          letter-spacing: initial;
+        }
+      }
+    }
 
     .table__heading-cell,
     .field-multiple-drag,

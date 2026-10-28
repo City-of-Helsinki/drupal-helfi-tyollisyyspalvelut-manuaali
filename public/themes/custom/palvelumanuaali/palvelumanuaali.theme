@@ -7,6 +7,7 @@
 
 use Drupal\Core\Template\Attribute;
 use Drupal\Core\Url;
+use Drupal\Core\Render\Element;
 use Drupal\content_moderation\Entity\ContentModerationState;
 use Drupal\node\NodeInterface;
 use Drupal\node\NodeTypeInterface;
@@ -515,9 +516,28 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id): void {
         $label = t("Add new language");
         $form['field_service_languages']['widget']['add_more']['add_more_button_service_language']['#value'] = $label;
       }
-      if (isset($form['field_public_links']['widget']['add_more'])) {
-        $label = t("Add new link");
-        $form['field_public_links']['widget']['add_more']['#value'] = $label;
+
+      if (isset($form['field_public_links']['widget'])) {
+        $widget = &$form['field_public_links']['widget'];
+        $t_options = ['context' => 'Public links field'];
+        $form['field_public_links']['widget']['#title'] = t('Links', [], $t_options);
+
+        // "Add another item" button label.
+        if (isset($widget['add_more'])) {
+          $widget['add_more']['#value'] = t('Add new link');
+        }
+        // Relabel the URL and title of every link item.
+        foreach (Element::children($widget) as $delta) {
+          if (!is_numeric($delta)) {
+            continue; // skips 'add_more' etc.
+          }
+          if (isset($widget[$delta]['uri'])) {
+            $widget[$delta]['uri']['#title'] = t('Link address', [], $t_options);
+          }
+          if (isset($widget[$delta]['title'])) {
+            $widget[$delta]['title']['#title'] = t('Link text', [], $t_options);
+          }
+        }
       }
     }
 
