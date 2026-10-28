@@ -91,7 +91,6 @@ third_party_settings:
         width_breakpoint: 640
     group_specialist:
       children:
-        - group_markings_for_service
         - group_statements_unemploym
         - group_measures_during
         - group_exceptions
@@ -203,6 +202,7 @@ third_party_settings:
         - field_other_services
         - group_p4_g2
         - group_p4_g3
+        - group_p4_g4
         - field_days_since_last_state_chan
       label: Työohje
       region: content
@@ -321,29 +321,6 @@ third_party_settings:
         description: ''
         required_fields: false
         weight: 0
-    group_statements_unemploym:
-      children:
-        - field_statements
-        - field_statements_unemployment
-        - field_other_preferences
-      label: 'Lausunnot ja työttömyysturva'
-      region: content
-      parent_name: group_specialist
-      weight: 13
-      format_type: html_element
-      format_settings:
-        classes: group--margin-border-bottom
-        show_empty_fields: false
-        id: ''
-        label_as_html: false
-        element: div
-        show_label: true
-        label_element: legend
-        label_element_classes: 'h5 field-group--title '
-        attributes: ''
-        effect: none
-        speed: fast
-        required_fields: false
     group_complementary_job_search:
       children:
         - field_service_suits_info
@@ -614,6 +591,23 @@ third_party_settings:
       children:
         - field_career_markings
       label: 'Merkinnät asiakastietojärjestelmään'
+      region: content
+      parent_name: group_add
+      weight: 20
+      format_type: fieldset
+      format_settings:
+        classes: 'form-background--white form-background--regular-padding'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        description: ''
+        required_fields: true
+    group_p4_g4:
+      children:
+        - field_statements
+        - field_statements_unemployment
+        - field_other_preferences
+      label: 'Lausunnot ja työttömyysturva'
       region: content
       parent_name: group_add
       weight: 20
