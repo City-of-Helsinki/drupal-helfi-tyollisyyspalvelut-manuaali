@@ -120,7 +120,6 @@ third_party_settings:
         - field_service_benefits
         - group_participation_concent
         - field_field_client_consent_descr
-        - field_service_execution_text
         - group_public_links_and_files
         - group_tabs
       label: 'Palveluun osallistuminen'
@@ -182,6 +181,7 @@ third_party_settings:
     group_servi:
       children:
         - group_customer
+        - group_p3_g2
       label: Palvelukuvaus
       region: content
       parent_name: ''
@@ -264,20 +264,6 @@ third_party_settings:
         show_empty_fields: false
         id: ''
         label_as_html: false
-        description: ''
-        required_fields: true
-    group_basic_info_3:
-      children:
-        - field_accessibility
-      label: Saavutettavuus
-      region: content
-      parent_name: group_basic_information
-      weight: 32
-      format_type: fieldset
-      format_settings:
-        classes: 'form-background--white form-background--regular-padding'
-        show_empty_fields: false
-        id: ''
         description: ''
         required_fields: true
     group_service_start_language:
@@ -630,6 +616,22 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+        required_fields: true
+    group_p3_g2:
+      children:
+        - field_accessibility
+        - field_service_execution_text
+      label: Toteutustapa
+      region: content
+      parent_name: group_servi
+      weight: 20
+      format_type: fieldset
+      format_settings:
+        classes: 'form-background--white form-background--regular-padding'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        description: ''
         required_fields: true
 id: node.service.default
 targetEntityType: node
