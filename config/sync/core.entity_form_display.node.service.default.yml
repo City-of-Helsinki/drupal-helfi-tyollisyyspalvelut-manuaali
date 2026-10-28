@@ -92,8 +92,6 @@ third_party_settings:
         width_breakpoint: 640
     group_specialist:
       children:
-        - group_guidance_to_service
-        - group_service_requirements
         - group_service_obligatoryness
         - group_markings_for_service
         - group_statements_unemploym
@@ -142,7 +140,7 @@ third_party_settings:
         - group_basic_info_1
         - group_basic_info_2
         - group_basic_info_3
-      label: 'Perustiedot'
+      label: Perustiedot
       region: content
       parent_name: ''
       weight: 1
@@ -162,7 +160,7 @@ third_party_settings:
     group_pla:
       children:
         - field_service_time_and_location
-      label: 'Asiointi'
+      label: Asiointi
       region: content
       parent_name: ''
       weight: 2
@@ -183,7 +181,7 @@ third_party_settings:
     group_servi:
       children:
         - group_tabs
-      label: 'Palvelukuvaus'
+      label: Palvelukuvaus
       region: content
       parent_name: ''
       weight: 3
@@ -204,9 +202,10 @@ third_party_settings:
       children:
         - field_contact_info_external
         - field_contact_info
+        - group_p4_g1
         - field_other_services
         - field_days_since_last_state_chan
-      label: 'Työohje'
+      label: Työohje
       region: content
       parent_name: ''
       weight: 4
@@ -470,7 +469,7 @@ third_party_settings:
         - field_municipality_guidance
       label: 'Osallistumisen edellytykset'
       region: content
-      parent_name: group_specialist
+      parent_name: group_p4_g1
       weight: 10
       format_type: html_element
       format_settings:
@@ -511,7 +510,7 @@ third_party_settings:
         - field_service_coordination
       label: 'Ohjaus palveluun'
       region: content
-      parent_name: group_specialist
+      parent_name: group_p4_g1
       weight: 9
       format_type: html_element
       format_settings:
@@ -629,6 +628,22 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+        required_fields: true
+    group_p4_g1:
+      children:
+        - group_guidance_to_service
+        - group_service_requirements
+      label: Työohje
+      region: content
+      parent_name: group_add
+      weight: 20
+      format_type: fieldset
+      format_settings:
+        classes: 'form-background--white form-background--regular-padding'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        description: ''
         required_fields: true
 id: node.service.default
 targetEntityType: node
