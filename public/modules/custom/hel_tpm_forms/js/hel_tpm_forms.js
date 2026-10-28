@@ -32,13 +32,24 @@
         }
       }
 
+      /**
+       * Highlights step buttons whose tab contains validation errors.
+       *
+       * Uses data-step-index set by the pagination script, as tab and button
+       * positions differ when a disabled step has no tab.
+       */
       function addError() {
-        let x = $(".tab.field-group-html-element");
-        x.each(function(index) {
-          if ($(this).find('.error').length !== 0) {
-            let errorStep ='.nav-step-' + index;
-            $(errorStep).addClass('highlight-error');
+        const steps = document.querySelectorAll('.step');
+
+        document.querySelectorAll('.tab.field-group-html-element').forEach(function (tab) {
+          const index = Number(tab.dataset.stepIndex);
+          if (!Number.isInteger(index) || !steps[index]) {
+            return;
           }
+
+          const step = steps[index];
+          const hasError = tab.querySelector('.error, [aria-invalid="true"]') !== null;
+          step.classList.toggle('highlight-error', hasError);
         });
       }
 

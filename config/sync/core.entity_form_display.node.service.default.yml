@@ -77,12 +77,11 @@ third_party_settings:
   field_group:
     group_tabs:
       children:
-        - group_customer
         - group_specialist
       label: Tabs
       region: content
-      parent_name: group_servi
-      weight: 10
+      parent_name: group_customer
+      weight: 16
       format_type: tabs
       format_settings:
         classes: ''
@@ -117,23 +116,22 @@ third_party_settings:
     group_customer:
       children:
         - field_attendance_text
-        - field_service_benefits
         - field_service_requirements
+        - field_service_benefits
         - group_participation_concent
         - field_field_client_consent_descr
-        - field_service_execution_text
         - group_public_links_and_files
-      label: Asiakasnäkymä
+        - group_tabs
+      label: 'Palveluun osallistuminen'
       region: content
-      parent_name: group_tabs
+      parent_name: group_servi
       weight: 5
-      format_type: tab
+      format_type: fieldset
       format_settings:
-        classes: ''
+        classes: 'form-background--white form-background--regular-padding'
         show_empty_fields: false
         id: ''
         label_as_html: false
-        formatter: open
         description: ''
         required_fields: true
     group_basic_information:
@@ -142,7 +140,7 @@ third_party_settings:
         - group_basic_info_1
         - group_basic_info_2
         - group_basic_info_3
-      label: 'Basic information'
+      label: Perustiedot
       region: content
       parent_name: ''
       weight: 1
@@ -183,8 +181,9 @@ third_party_settings:
         required_fields: true
     group_servi:
       children:
-        - group_tabs
-      label: 'Kuvaus ja työohje'
+        - group_customer
+        - group_p3_g2
+      label: Palvelukuvaus
       region: content
       parent_name: ''
       weight: 3
@@ -193,8 +192,9 @@ third_party_settings:
         classes: 'tab tab-2'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
-        show_label: true
+        show_label: false
         label_element: h3
         label_element_classes: tab--title
         attributes: ''
@@ -205,7 +205,7 @@ third_party_settings:
       children:
         - field_other_services
         - field_days_since_last_state_chan
-      label: Lisätiedot
+      label: Työohje
       region: content
       parent_name: ''
       weight: 4
@@ -263,20 +263,6 @@ third_party_settings:
         show_empty_fields: false
         id: ''
         label_as_html: false
-        description: ''
-        required_fields: true
-    group_basic_info_3:
-      children:
-        - field_accessibility
-      label: Saavutettavuus
-      region: content
-      parent_name: group_basic_information
-      weight: 32
-      format_type: fieldset
-      format_settings:
-        classes: 'form-background--white form-background--regular-padding'
-        show_empty_fields: false
-        id: ''
         description: ''
         required_fields: true
     group_service_start_language:
@@ -529,7 +515,7 @@ third_party_settings:
     group_participation_concent:
       children:
         - field_client_consent
-      label: Asiakassuostumus
+      label: 'Suostumus henkilötietojen keräämiseen'
       region: content
       parent_name: group_customer
       weight: 12
@@ -538,6 +524,7 @@ third_party_settings:
         classes: form-wrapper
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: true
         label_element: legend
@@ -628,6 +615,22 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+        required_fields: true
+    group_p3_g2:
+      children:
+        - field_accessibility
+        - field_service_execution_text
+      label: Toteutustapa
+      region: content
+      parent_name: group_servi
+      weight: 20
+      format_type: fieldset
+      format_settings:
+        classes: 'form-background--white form-background--regular-padding'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        description: ''
         required_fields: true
     group_p2_g1:
       children:
@@ -1041,7 +1044,7 @@ content:
     third_party_settings: {  }
   field_service_benefits:
     type: text_textarea
-    weight: 10
+    weight: 11
     region: content
     settings:
       rows: 5
@@ -1126,7 +1129,7 @@ content:
     third_party_settings: {  }
   field_service_requirements:
     type: text_textarea
-    weight: 11
+    weight: 10
     region: content
     settings:
       rows: 5

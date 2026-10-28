@@ -8,7 +8,10 @@ dependencies:
   module:
     - require_on_publish
     - text
+    - tmgmt_content
 third_party_settings:
+  tmgmt_content:
+    excluded: false
   require_on_publish:
     require_on_publish: true
 id: node.service.field_attendance_text
@@ -16,7 +19,7 @@ field_name: field_attendance_text
 entity_type: node
 bundle: service
 label: Osallistuminen
-description: 'Kuvaa asiakkaalle miten hän pääsee osallistumaan palveluun. Mm. mahdolliset ilmoittautumiskäytännöt ja kanavat sekä osallistumiseen liittyvät ehdot, kuten ennakkotiedot/-taidot ja tarvittavat välineet.'
+description: 'Kerro asiakkaalle, kuinka hän pääsee osallistumaan, sekä mitkä ovat ilmoittautumiskäytännöt ja -kanavat.'
 required: false
 translatable: true
 default_value: {  }
