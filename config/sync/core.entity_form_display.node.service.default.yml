@@ -91,7 +91,6 @@ third_party_settings:
         width_breakpoint: 640
     group_specialist:
       children:
-        - group_service_obligatoryness
         - group_markings_for_service
         - group_statements_unemploym
         - group_measures_during
@@ -137,7 +136,6 @@ third_party_settings:
         - group_service_maintainers
         - group_basic_info_1
         - group_basic_info_2
-        - group_basic_info_3
       label: Perustiedot
       region: content
       parent_name: ''
@@ -203,6 +201,8 @@ third_party_settings:
       children:
         - group_p4_g1
         - field_other_services
+        - group_p4_g2
+        - group_p4_g3
         - field_days_since_last_state_chan
       label: Työohje
       region: content
@@ -321,28 +321,6 @@ third_party_settings:
         description: ''
         required_fields: false
         weight: 0
-    group_service_obligatoryness:
-      children:
-        - field_obligatoryness
-        - field_obligatoryness_freetext
-      label: 'Palvelun velvoittavuus'
-      region: content
-      parent_name: group_specialist
-      weight: 11
-      format_type: html_element
-      format_settings:
-        classes: group--margin-border-bottom
-        show_empty_fields: false
-        id: ''
-        label_as_html: false
-        element: div
-        show_label: false
-        label_element: legend
-        label_element_classes: field-group--title
-        attributes: ''
-        effect: none
-        speed: fast
-        required_fields: true
     group_statements_unemploym:
       children:
         - field_statements
@@ -444,26 +422,6 @@ third_party_settings:
         show_label: true
         label_element: legend
         label_element_classes: 'field-group--title '
-        attributes: ''
-        effect: none
-        speed: fast
-        required_fields: true
-    group_markings_for_service:
-      children:
-        - field_career_markings
-      label: 'Merkinnät asiakastietojärjestelmään'
-      region: content
-      parent_name: group_specialist
-      weight: 12
-      format_type: html_element
-      format_settings:
-        classes: group--margin-border-bottom
-        show_empty_fields: false
-        id: ''
-        element: div
-        show_label: true
-        label_element: legend
-        label_element_classes: field-group--title
         attributes: ''
         effect: none
         speed: fast
@@ -591,8 +549,8 @@ third_party_settings:
         required_fields: true
     group_p3_g2:
       children:
-        - field_accessibility
         - field_service_execution_text
+        - field_accessibility
       label: Toteutustapa
       region: content
       parent_name: group_servi
@@ -636,6 +594,37 @@ third_party_settings:
         label_as_html: false
         description: ''
         required_fields: false
+    group_p4_g2:
+      children:
+        - field_obligatoryness
+        - field_obligatoryness_freetext
+      label: 'Palvelun velvoittavuus'
+      region: content
+      parent_name: group_add
+      weight: 20
+      format_type: fieldset
+      format_settings:
+        classes: 'form-background--white form-background--regular-padding'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        description: ''
+        required_fields: true
+    group_p4_g3:
+      children:
+        - field_career_markings
+      label: 'Merkinnät asiakastietojärjestelmään'
+      region: content
+      parent_name: group_add
+      weight: 20
+      format_type: fieldset
+      format_settings:
+        classes: 'form-background--white form-background--regular-padding'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        description: ''
+        required_fields: true
 id: node.service.default
 targetEntityType: node
 bundle: service
