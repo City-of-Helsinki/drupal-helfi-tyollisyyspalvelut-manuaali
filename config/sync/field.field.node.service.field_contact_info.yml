@@ -5,12 +5,17 @@ dependencies:
   config:
     - field.storage.node.field_contact_info
     - node.type.service
+  module:
+    - tmgmt_content
+third_party_settings:
+  tmgmt_content:
+    excluded: false
 id: node.service.field_contact_info
 field_name: field_contact_info
 entity_type: node
 bundle: service
 label: 'Sisäiset yhteystiedot'
-description: ''
+description: 'Nämä yhteystiedot näkyvät vain työllisyysalueen työntekijöille.'
 required: false
 translatable: true
 default_value: {  }
@@ -23,5 +28,4 @@ settings:
       field: _none
       direction: ASC
     auto_create: true
-    auto_create_bundle: ''
 field_type: entity_reference
