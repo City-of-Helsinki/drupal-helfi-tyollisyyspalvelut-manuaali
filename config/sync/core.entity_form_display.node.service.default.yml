@@ -91,10 +91,6 @@ third_party_settings:
         width_breakpoint: 640
     group_specialist:
       children:
-        - group_statements_unemploym
-        - group_measures_during
-        - group_exceptions
-        - group_archive_guide
         - group_liitteet_ja_linkit
       label: 'Asiantuntijan työohje'
       region: content
@@ -203,6 +199,9 @@ third_party_settings:
         - group_p4_g2
         - group_p4_g3
         - group_p4_g4
+        - group_p4_g5
+        - group_p4_g6
+        - group_p4_g7
         - field_days_since_last_state_chan
       label: Työohje
       region: content
@@ -342,67 +341,6 @@ third_party_settings:
         effect: none
         speed: fast
         required_fields: false
-    group_exceptions:
-      children:
-        - field_service_exceptions
-        - field_municipality_specific
-      label: Poikkeustilanteet
-      region: content
-      parent_name: group_specialist
-      weight: 15
-      format_type: html_element
-      format_settings:
-        classes: group--margin-border-bottom
-        show_empty_fields: false
-        id: ''
-        element: div
-        show_label: true
-        label_element: legend
-        label_element_classes: 'field-group--title '
-        attributes: ''
-        effect: none
-        speed: fast
-        required_fields: true
-    group_measures_during:
-      children:
-        - field_measures_during_attendance
-      label: 'Toimenpiteet osallistumisen ajalta'
-      region: content
-      parent_name: group_specialist
-      weight: 14
-      format_type: html_element
-      format_settings:
-        classes: group--margin-border-bottom
-        show_empty_fields: false
-        id: ''
-        element: div
-        show_label: true
-        label_element: legend
-        label_element_classes: field-group--title
-        attributes: ''
-        effect: none
-        speed: fast
-        required_fields: true
-    group_archive_guide:
-      children:
-        - field_related_archive
-      label: Arkistointiohje
-      region: content
-      parent_name: group_specialist
-      weight: 17
-      format_type: html_element
-      format_settings:
-        classes: group--margin-border-bottom
-        show_empty_fields: false
-        id: ''
-        element: div
-        show_label: true
-        label_element: legend
-        label_element_classes: 'field-group--title '
-        attributes: ''
-        effect: none
-        speed: fast
-        required_fields: true
     group_participation_concent:
       children:
         - field_client_consent
@@ -608,6 +546,51 @@ third_party_settings:
         - field_statements_unemployment
         - field_other_preferences
       label: 'Lausunnot ja työttömyysturva'
+      region: content
+      parent_name: group_add
+      weight: 20
+      format_type: fieldset
+      format_settings:
+        classes: 'form-background--white form-background--regular-padding'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        description: ''
+        required_fields: true
+    group_p4_g5:
+      children:
+        - field_measures_during_attendance
+      label: 'Toimenpiteet osallistumisen ajalta'
+      region: content
+      parent_name: group_add
+      weight: 20
+      format_type: fieldset
+      format_settings:
+        classes: 'form-background--white form-background--regular-padding'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        description: ''
+        required_fields: true
+    group_p4_g6:
+      children:
+        - field_service_exceptions
+      label: Poikkeustilanteet
+      region: content
+      parent_name: group_add
+      weight: 20
+      format_type: fieldset
+      format_settings:
+        classes: 'form-background--white form-background--regular-padding'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        description: ''
+        required_fields: true
+    group_p4_g7:
+      children:
+        - field_related_archive
+      label: Arkistointiohje
       region: content
       parent_name: group_add
       weight: 20
@@ -871,27 +854,6 @@ content:
     settings:
       display_label: true
     third_party_settings: {  }
-  field_municipality_specific:
-    type: municipality_specific_ief_widget
-    weight: 8
-    region: content
-    settings:
-      form_mode: default
-      override_labels: true
-      label_singular: 'kuntakohtainen poikkeustilanne'
-      label_plural: 'kuntakohtaiset poikkeustilanteet'
-      allow_new: true
-      allow_existing: false
-      match_operator: CONTAINS
-      allow_duplicate: false
-      collapsible: false
-      collapsed: false
-      revision: false
-      removed_reference: optional
-      prevent_translation_deletion: false
-    third_party_settings:
-      ief_popup:
-        ief_popup_enabled: true
   field_obligatoryness:
     type: options_buttons
     weight: 9
@@ -1197,6 +1159,7 @@ content:
       match_limit: 10
     third_party_settings: {  }
 hidden:
+  field_municipality_specific: true
   field_service_radioactivity: true
   field_service_suits_info: true
   field_service_suits_job_search: true
