@@ -1277,6 +1277,43 @@ function hel_tpm_general_update_20133(&$sandbox) {
 }
 
 /**
+ * Delete taxonomy terms whose vocabulary no longer exists.
+ */
+function hel_tpm_general_update_20134(array &$sandbox): string {
+  $entity_type_manager = \Drupal::entityTypeManager();
+  $term_storage = $entity_type_manager->getStorage('taxonomy_term');
+  $vocabularies = array_keys($entity_type_manager->getStorage('taxonomy_vocabulary')->loadMultiple());
+
+  $query = static function () use ($term_storage, $vocabularies) {
+    $query = $term_storage->getQuery()->accessCheck(FALSE);
+    if (!empty($vocabularies)) {
+      $query->condition('vid', $vocabularies, 'NOT IN');
+    }
+    return $query;
+  };
+
+  if (!isset($sandbox['max'])) {
+    $sandbox['max'] = (int) $query()->count()->execute();
+    $sandbox['progress'] = 0;
+  }
+
+  // Deleted terms drop out of the result, so always fetch the first batch.
+  $tids = $query()
+    ->sort('tid')
+    ->range(0, 50)
+    ->execute();
+
+  if (!empty($tids)) {
+    $term_storage->delete($term_storage->loadMultiple($tids));
+    $sandbox['progress'] += count($tids);
+  }
+
+  $sandbox['#finished'] = (empty($tids) || empty($sandbox['max'])) ? 1 : min(1, $sandbox['progress'] / $sandbox['max']);
+
+  return (string) t('Deleted @count taxonomy terms without an existing vocabulary.', ['@count' => $sandbox['progress']]);
+}
+
+/**
  * Inserts a row into the specified field's database tables.
  *
  * This function inserts values for a given field into the appropriate database
