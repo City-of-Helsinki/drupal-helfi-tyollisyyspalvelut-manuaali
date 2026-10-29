@@ -90,8 +90,7 @@ third_party_settings:
         direction: horizontal
         width_breakpoint: 640
     group_specialist:
-      children:
-        - group_liitteet_ja_linkit
+      children: {  }
       label: 'Asiantuntijan työohje'
       region: content
       parent_name: group_tabs
@@ -202,6 +201,7 @@ third_party_settings:
         - group_p4_g5
         - group_p4_g6
         - group_p4_g7
+        - group_p4_g8
         - field_days_since_last_state_chan
       label: Työohje
       region: content
@@ -362,27 +362,6 @@ third_party_settings:
         effect: none
         speed: fast
         required_fields: false
-    group_liitteet_ja_linkit:
-      children:
-        - field_internal_links
-        - field_internal_files
-      label: 'Sisäiset liitteet ja linkit'
-      region: content
-      parent_name: group_specialist
-      weight: 18
-      format_type: html_element
-      format_settings:
-        classes: fieldset-internal-files-and-attachments
-        show_empty_fields: false
-        id: ''
-        element: div
-        show_label: true
-        label_element: legend
-        label_element_classes: field-group--title
-        attributes: ''
-        effect: none
-        speed: fast
-        required_fields: true
     group_public_links_and_files:
       children:
         - field_public_links
@@ -591,6 +570,22 @@ third_party_settings:
       children:
         - field_related_archive
       label: Arkistointiohje
+      region: content
+      parent_name: group_add
+      weight: 20
+      format_type: fieldset
+      format_settings:
+        classes: 'form-background--white form-background--regular-padding'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        description: ''
+        required_fields: true
+    group_p4_g8:
+      children:
+        - field_internal_links
+        - field_internal_files
+      label: 'Työohjeen sisäiset linkit ja liitteet'
       region: content
       parent_name: group_add
       weight: 20
@@ -915,8 +910,8 @@ content:
     weight: 16
     region: content
     settings:
-      placeholder_url: ''
-      placeholder_title: ''
+      placeholder_url: 'Kirjoita linkin osoite'
+      placeholder_title: 'Kirjoita linkin nimi'
       target_bundles:
         basic_page: basic_page
         landing_page: '0'
