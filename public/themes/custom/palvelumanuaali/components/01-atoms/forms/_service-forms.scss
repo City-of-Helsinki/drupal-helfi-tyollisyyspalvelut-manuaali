@@ -214,7 +214,8 @@
 
   > .tab-0,
   > .tab-1,
-  > .tab-2 {
+  > .tab-2,
+  > .tab-3 {
     grid-row: 3;
     grid-column: 1/3;
     border-radius: 8px;
@@ -232,29 +233,10 @@
     }
   }
 
-  > .tab-3 {
-    grid-row: 3;
-    padding: $space;
-    border-radius: 8px;
-    background-color: clr(text-inverse);
-    grid-column: 1/3;
-    @include large {
-      padding: 48px 56px;
-    }
-    @include xl {
-      grid-column: 1/2;
-      grid-row: 4;
-      margin-top: -92px;
-    }
-    @media (min-width:1470px) {
-      margin-top: -68px;
-    }
-  }
-
   > .tab-0 >.form-fieldset,
   > .tab-1 >.form-fieldset,
   > .tab-2 >.form-fieldset,
-  > .tab-3 {
+  > .tab-3 >.form-fieldset {
 
     .fieldgroup,
     .form-item {
@@ -553,6 +535,13 @@
       > label {
         display: none;
       }
+    }
+  }
+  .field--name-field-service-exceptions,
+  .field--name-field-measures-during-attendance {
+    label {
+      //to be replaced by display: none after the description has been moved
+      font-size: 0;
     }
   }
 }
