@@ -527,7 +527,7 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id): void {
         // Relabel the URL and title of every link item.
         foreach (Element::children($widget) as $delta) {
           if (!is_numeric($delta)) {
-            continue; // skips 'add_more' etc.
+            continue;
           }
           if (isset($widget[$delta]['uri'])) {
             $widget[$delta]['uri']['#title'] = t('Link address', [], $t_options);
