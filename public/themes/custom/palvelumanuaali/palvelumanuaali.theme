@@ -520,7 +520,6 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id): void {
         $widget = &$form['field_public_links']['widget'];
         $t_options = ['context' => 'Public links field'];
         $form['field_public_links']['widget']['#title'] = t('Links', [], $t_options);
-
         // "Add another item" button label.
         if (isset($widget['add_more'])) {
           $widget['add_more']['#value'] = t('Add new link');
@@ -532,9 +531,11 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id): void {
           }
           if (isset($widget[$delta]['uri'])) {
             $widget[$delta]['uri']['#title'] = t('Link address', [], $t_options);
+            $widget[$delta]['uri']['#description'] = '';
           }
           if (isset($widget[$delta]['title'])) {
             $widget[$delta]['title']['#title'] = t('Link name', [], $t_options);
+            $widget[$delta]['title']['#description'] = '';
           }
         }
       }
@@ -561,9 +562,11 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id): void {
           }
           if (isset($widget[$delta]['uri'])) {
             $widget[$delta]['uri']['#title'] = 'Linkin osoite';
+            $widget[$delta]['uri']['#description'] = '';
           }
           if (isset($widget[$delta]['title'])) {
             $widget[$delta]['title']['#title'] = 'Linkin nimi';
+            $widget[$delta]['title']['#description'] = '';
           }
         }
       }
