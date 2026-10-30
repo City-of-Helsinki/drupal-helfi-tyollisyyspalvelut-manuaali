@@ -516,7 +516,6 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id): void {
         $label = t("Add new language");
         $form['field_service_languages']['widget']['add_more']['add_more_button_service_language']['#value'] = $label;
       }
-
       if (isset($form['field_public_links']['widget'])) {
         $widget = &$form['field_public_links']['widget'];
         $t_options = ['context' => 'Public links field'];
@@ -536,6 +535,35 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id): void {
           }
           if (isset($widget[$delta]['title'])) {
             $widget[$delta]['title']['#title'] = t('Link text', [], $t_options);
+          }
+        }
+      }
+      if (isset($form['field_contact_info']['widget']['#field_title'])) {
+        $label = t("Contact information for employment office");
+        $form['field_contact_info']['widget']['#field_title'] = $label;
+      }
+      if (isset($form['field_contact_info_external']['widget']['#field_title'])) {
+        $label = t("Contact information for customer");
+        $form['field_contact_info_external']['widget']['#field_title'] = $label;
+      }
+      if (isset($form['field_internal_links']['widget'])) {
+        $widget = &$form['field_internal_links']['widget'];
+        $form['field_internal_links']['widget']['#title'] = 'Linkit';
+
+        // "Add another item" button label.
+        if (isset($widget['add_more'])) {
+          $widget['add_more']['#value'] = 'Lisää uusi linkki';
+        }
+        // Relabel the URL and title of every link item.
+        foreach (Element::children($widget) as $delta) {
+          if (!is_numeric($delta)) {
+            continue;
+          }
+          if (isset($widget[$delta]['uri'])) {
+            $widget[$delta]['uri']['#title'] = 'Linkin osoite';
+          }
+          if (isset($widget[$delta]['title'])) {
+            $widget[$delta]['title']['#title'] = 'Linkin nimi';
           }
         }
       }
