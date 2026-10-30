@@ -526,7 +526,6 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id): void {
       }
       if (isset($form['field_internal_links']['widget'])) {
         $widget = &$form['field_internal_links']['widget'];
-        $t_options = ['context' => 'Public links field'];
         $form['field_internal_links']['widget']['#title'] = 'Linkit';
 
         // "Add another item" button label.
