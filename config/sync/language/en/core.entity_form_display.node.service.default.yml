@@ -31,13 +31,15 @@ third_party_settings:
     group_participation_concent:
       label: 'Consent to the collection of personal data'
     group_public_links_and_files:
-      label: 'Links and attachments'
+      label: 'Links and attachments for the client'
     group_responsible_for_updating:
       label: 'Persons responsible for service updates'
     group_service_maintainers:
       label: 'Service administrators'
     group_p3_g2:
       label: Implementation
+    group_p3_g4:
+      label: 'Other services'
 content:
   entitygroupfield:
     settings:
@@ -52,6 +54,10 @@ content:
     third_party_settings:
       maxlength:
         maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
+  field_public_links:
+    settings:
+      placeholder_url: 'Enter link address'
+      placeholder_title: 'Enter link name'
   title:
     settings:
       placeholder: 'Enter a name that describes the service'

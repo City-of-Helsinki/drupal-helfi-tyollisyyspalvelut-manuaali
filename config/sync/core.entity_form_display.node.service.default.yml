@@ -111,7 +111,6 @@ third_party_settings:
         - field_service_benefits
         - group_participation_concent
         - field_field_client_consent_descr
-        - group_public_links_and_files
         - group_tabs
       label: 'Palveluun osallistuminen'
       region: content
@@ -151,7 +150,7 @@ third_party_settings:
       children:
         - group_p2_g1
         - group_p2_g2
-      label: 'Aika ja paikka'
+      label: Asiointi
       region: content
       parent_name: ''
       weight: 2
@@ -173,6 +172,8 @@ third_party_settings:
       children:
         - group_customer
         - group_p3_g2
+        - group_public_links_and_files
+        - group_p3_g4
       label: Palvelukuvaus
       region: content
       parent_name: ''
@@ -194,7 +195,6 @@ third_party_settings:
     group_add:
       children:
         - group_p4_g1
-        - field_other_services
         - group_p4_g2
         - group_p4_g3
         - group_p4_g4
@@ -366,23 +366,17 @@ third_party_settings:
       children:
         - field_public_links
         - field_public_files
-      label: 'Liitteet ja linkit'
+      label: 'Linkit ja liitteet asiakkaalle'
       region: content
-      parent_name: group_customer
-      weight: 15
-      format_type: html_element
+      parent_name: group_servi
+      weight: 21
+      format_type: fieldset
       format_settings:
-        classes: fieldset-internal-files-and-attachments
+        classes: 'fieldset-internal-files-and-attachments form-background--white form-background--regular-padding'
         show_empty_fields: false
         id: ''
         label_as_html: false
-        element: div
-        show_label: true
-        label_element: legend
-        label_element_classes: field-group--title
-        attributes: ''
-        effect: none
-        speed: fast
+        description: ''
         required_fields: true
     group_service_maintainers:
       children:
@@ -589,6 +583,21 @@ third_party_settings:
       region: content
       parent_name: group_add
       weight: 20
+      format_type: fieldset
+      format_settings:
+        classes: 'form-background--white form-background--regular-padding'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        description: ''
+        required_fields: true
+    group_p3_g4:
+      children:
+        - field_other_services
+      label: 'Muut palvelut'
+      region: content
+      parent_name: group_servi
+      weight: 22
       format_type: fieldset
       format_settings:
         classes: 'form-background--white form-background--regular-padding'
