@@ -530,12 +530,12 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id): void {
 
         // "Add another item" button label.
         if (isset($widget['add_more'])) {
-          $widget['add_more']['#value'] ='Lisää uusi linkki';
+          $widget['add_more']['#value'] = 'Lisää uusi linkki';
         }
         // Relabel the URL and title of every link item.
         foreach (Element::children($widget) as $delta) {
           if (!is_numeric($delta)) {
-            continue; // skips 'add_more' etc.
+            continue;
           }
           if (isset($widget[$delta]['uri'])) {
             $widget[$delta]['uri']['#title'] = 'Linkin osoite';
