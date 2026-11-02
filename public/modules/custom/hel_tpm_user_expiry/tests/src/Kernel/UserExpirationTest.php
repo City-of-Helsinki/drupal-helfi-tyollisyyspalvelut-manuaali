@@ -542,6 +542,50 @@ final class UserExpirationTest extends GroupKernelTestBase {
   }
 
   /**
+   * Test logging in clears the notification state.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  public function testLoginClearsNotificationState(): void {
+    $user = $this->createLastAccessUser(2);
+    $state_name = 'hel_tpm_user_expiry.notified.' . $user->id();
+
+    $this->cron->run();
+    $this->assertEquals(1, \Drupal::state()->get($state_name)['count']);
+
+    \Drupal::moduleHandler()->invokeAll('user_login', [$user]);
+    // Ensure the notification state is cleared on login.
+    $this->assertNull(\Drupal::state()->get($state_name));
+  }
+
+  /**
+   * Test anonymized users are not anonymized again.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  public function testAnonymizedUserIsExcluded(): void {
+    $user = $this->createLastAccessUser(2, 0, '-220 days', '-40 days');
+
+    $this->cron->run();
+    $user = $this->reloadEntity($user);
+    $anonymized_mail = $user->getEmail();
+    // Ensure the user is anonymized and stored as anonymized.
+    $this->assertStringEndsWith('@anonymous.invalid', $anonymized_mail);
+    $this->assertContains($user->id(), \Drupal::state()->get('hel_tpm_user_expiry.anonymized_users'));
+
+    // Ensure anonymized user is not anonymized again when it matches the
+    // anonymization criteria again.
+    $this->connection->update('users_field_data')
+      ->condition('uid', $user->id())
+      ->fields(['changed' => strtotime('-40 days')])
+      ->execute();
+    $this->resetCronLastRun();
+    _hel_tpm_user_expiry_anonymize_blocked_users();
+    $user = $this->reloadEntity($user);
+    $this->assertEquals($anonymized_mail, $user->getEmail());
+  }
+
+  /**
    * Creates a user with a given inactivity period.
    *
    * @param int $uid
