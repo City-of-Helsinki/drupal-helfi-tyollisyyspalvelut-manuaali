@@ -628,8 +628,28 @@ function hel_tpm_forms_field_widget_single_element_form_alter(array &$element, F
     // roles of an user and refreshing services form.
     $element['#attributes']['autocomplete'] = 'off';
   }
-
   _hel_tpm_forms_paragraph_remove_confirm_step($element, $form_state, $context);
+
+  if (($element['#type'] === 'text_format') ?? NULL) {
+    $element['#after_build'][] = '_hel_tpm_forms_text_format_description_before';
+  }
+  // Plain textarea (no text format): this alone is enough.
+  elseif (($element['value']['#type'] ?? NULL) === 'textarea') {
+    $element['value']['#description_display'] = 'before';
+  }
+}
+
+/**
+ * After-build: put the description between the label and the textarea.
+ */
+function _hel_tpm_forms_text_format_description_before(array $element) {
+  if (!empty($element['#description']) && isset($element['value'])) {
+    $element['value']['#description'] = $element['#description'];
+    $element['value']['#description_display'] = 'before';
+    $element['value']['#attributes']['aria-describedby'] = $element['value']['#id'] . '--description';
+    unset($element['#description']);
+  }
+  return $element;
 }
 
 /**
