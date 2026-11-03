@@ -13,12 +13,14 @@ use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\Tests\user\Traits\UserCreationTrait;
 use Drupal\hel_tpm_user_expiry\SettingsUtility;
 use Drupal\user\UserInterface;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
- * Test description.
- *
- * @group hel_tpm_user_expiry
+ * Tests user expiration notifications, deactivation and anonymization.
  */
+#[Group('hel_tpm_user_expiry')]
+#[RunTestsInSeparateProcesses]
 final class UserExpirationTest extends GroupKernelTestBase {
 
   use UserCreationTrait;
@@ -104,6 +106,8 @@ final class UserExpirationTest extends GroupKernelTestBase {
   /**
    * Delete users created in GroupKernelTestBase.
    *
+   * Frees user IDs 1 and 2 so tests can create users with fixed IDs.
+   *
    * @return void
    *   -
    *
@@ -132,8 +136,14 @@ final class UserExpirationTest extends GroupKernelTestBase {
     // Confirm cron is not ran again within 12 hours.
     $this->assertEquals($last_run, \Drupal::state()->get('hel_tpm_user_expiry.last_run'));
 
+    // Confirm cron is not ran again just before 12 hours have passed.
+    $request_time = \Drupal::time()->getRequestTime();
+    \Drupal::state()->set('hel_tpm_user_expiry.last_run', $request_time - 43199);
+    $this->cron->run();
+    $this->assertEquals($request_time - 43199, \Drupal::state()->get('hel_tpm_user_expiry.last_run'));
+
     // Confirm cron runs after 12 hours since last run.
-    \Drupal::state()->set('hel_tpm_user_expiry.last_run', strtotime('12 hours', 0));
+    \Drupal::state()->set('hel_tpm_user_expiry.last_run', $request_time - 43200);
     $this->cron->run();
     $this->assertEquals(\Drupal::time()->getRequestTime(), \Drupal::state()->get('hel_tpm_user_expiry.last_run'));
   }
@@ -149,7 +159,10 @@ final class UserExpirationTest extends GroupKernelTestBase {
     $userId2 = $this->createUser([], NULL, FALSE, [
       'uid' => 2,
     ]);
-    $this->cron->run();
+
+    // Run only the queueing cron function to prevent the queue from being
+    // processed. Recently created users are not queued.
+    _hel_tpm_user_expiry_notification_cron();
     $this->assertEquals(0, $this->queue->numberOfItems());
 
     $this->resetCronLastRun();
@@ -169,8 +182,7 @@ final class UserExpirationTest extends GroupKernelTestBase {
       ])
       ->execute();
 
-    // Run only hel_tpm_user_expiry_cron() to prevent queue from running.
-    hel_tpm_user_expiry_cron();
+    _hel_tpm_user_expiry_notification_cron();
     // User with id 2 is included and user with id 1 is excluded.
     $this->assertEquals(1, $this->queue->numberOfItems());
   }
@@ -339,7 +351,7 @@ final class UserExpirationTest extends GroupKernelTestBase {
   public function testUserExpirationAnonymization(): void {
     $users = [
       'blocked_user_1' => $this->createLastAccessUser(1, 0, '-220 days', '-220 days'),
-      'active_recently_changed' => $this->createLastAccessUser(2, 0, '-15 days', '-15 days'),
+      'active_recently_changed' => $this->createLastAccessUser(2, 1, '-15 days', '-15 days'),
       'blocked_recently_changed' => $this->createLastAccessUser(3, 0, '-15 days', '-15 days'),
       'active_not_recently_changed' => $this->createLastAccessUser(4, 1, '-20 days', '-40 days'),
       'blocked_not_recently_changed' => $this->createLastAccessUser(5, 0, '-20 days', '-40 days'),
@@ -347,24 +359,10 @@ final class UserExpirationTest extends GroupKernelTestBase {
 
     $this->group->addMember($users['blocked_not_recently_changed']);
 
+    $oldValues = array_map([$this, 'getFieldsForAnonymizationTest'], $users);
+
     $this->cron->run();
-    $this->cronRunHelper('-2 weeks', $users);
-    $this->cronRunHelper('-2 days', $users);
-
-    $oldValues = [
-      'blocked_user_1' => $this->getFieldsForAnonymizationTest($users['blocked_user_1']),
-      'active_recently_changed' => $this->getFieldsForAnonymizationTest($users['active_recently_changed']),
-      'blocked_recently_changed' => $this->getFieldsForAnonymizationTest($users['blocked_recently_changed']),
-      'active_not_recently_changed' => $this->getFieldsForAnonymizationTest($users['active_not_recently_changed']),
-      'blocked_not_recently_changed' => $this->getFieldsForAnonymizationTest($users['blocked_not_recently_changed']),
-    ];
-
-    $this->cronRunHelper('-30 days', $users);
-    $users['blocked_user_1'] = $this->reloadEntity($users['blocked_user_1']);
-    $users['active_recently_changed'] = $this->reloadEntity($users['active_recently_changed']);
-    $users['blocked_recently_changed'] = $this->reloadEntity($users['blocked_recently_changed']);
-    $users['active_not_recently_changed'] = $this->reloadEntity($users['active_not_recently_changed']);
-    $users['blocked_not_recently_changed'] = $this->reloadEntity($users['blocked_not_recently_changed']);
+    $users = array_map([$this, 'reloadEntity'], $users);
 
     // Ensure values are not anonymized for blocked user with ID 1.
     foreach ($oldValues['blocked_user_1'] as $key => $oldValue) {
@@ -399,7 +397,8 @@ final class UserExpirationTest extends GroupKernelTestBase {
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function testUserExpirationBlockedUser() {
-    $blockedUser = $this->createLastAccessUser(2, 0, '-220 days');
+    // Blocked user that was changed recently, so it is not anonymized yet.
+    $blockedUser = $this->createLastAccessUser(2, 0, '-220 days', '-15 days');
     $blockedUserOriginalValues = $this->getFieldsForAnonymizationTest($blockedUser);
     $this->assertEquals('0', $blockedUser->get('status')->value);
 
@@ -420,11 +419,23 @@ final class UserExpirationTest extends GroupKernelTestBase {
     $this->assertEmpty($this->drupalGetMails([
       'id' => 'message_notify_hel_tpm_user_expiry_blocked',
     ]));
-    // Ensure the blocked user is still blocked.
-    $this->assertEquals('0', $blockedUser->get('status')->value);
-
-    $this->cronRunHelper('-32 days', [$blockedUser]);
     $blockedUser = $this->reloadEntity($blockedUser);
+    // Ensure the blocked user is still blocked and not anonymized.
+    $this->assertEquals('0', $blockedUser->get('status')->value);
+    foreach ($blockedUserOriginalValues as $key => $oldValue) {
+      $this->assertEquals($oldValue, $blockedUser->get($key)->value);
+    }
+
+    // Move the last change of the blocked user past the anonymization limit.
+    $this->connection->update('users_field_data')
+      ->condition('uid', $blockedUser->id())
+      ->fields(['changed' => strtotime('-32 days')])
+      ->execute();
+    $this->resetCronLastRun();
+    $this->cron->run();
+    $blockedUser = $this->reloadEntity($blockedUser);
+    // Ensure no mails were sent at any point.
+    $this->assertCount(0, $this->drupalGetMails());
     // Ensure blocked and long-unchanged user is anonymized.
     foreach ($blockedUserOriginalValues as $key => $oldValue) {
       $this->assertNotEquals($oldValue, $blockedUser->get($key)->value);
@@ -436,12 +447,13 @@ final class UserExpirationTest extends GroupKernelTestBase {
   /**
    * Tests the anonymization of a blocked user.
    *
-   * This method verifies that after running the cron,
-   * a blocked user's specified fields are anonymized
-   * and no longer match the original values.
+   * This method verifies that after running the cron, a blocked user's
+   * specified fields are anonymized and no longer match the original values.
    *
    * @return void
    *   No return value.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function testBlockedUserAnonymization() {
     $date = new DrupalDateTime('now -1 months');
@@ -474,7 +486,7 @@ final class UserExpirationTest extends GroupKernelTestBase {
   }
 
   /**
-   * Test re-activated accounts stay active for configured period of time.
+   * Test re-activated accounts go through the full expiration cycle again.
    *
    * @return void
    *   Void.
@@ -485,24 +497,37 @@ final class UserExpirationTest extends GroupKernelTestBase {
     $user = $this->createLastAccessUser(2, 0, '-220 days');
     $this->assertEquals('0', $user->get('status')->value);
 
+    // Simulate a user that has been deactivated by the expiration process.
+    $state_name = 'hel_tpm_user_expiry.notified.' . $user->id();
+    \Drupal::state()->set($state_name, [
+      'count' => 3,
+      'timestamp' => strtotime('-30 days'),
+    ]);
+
     $user->set('status', 1);
     $user->save();
     $user = $this->reloadEntity($user);
 
     $this->assertEquals(\Drupal::time()->getRequestTime(), $user->get('access')->value, 'Access time not updated');
+    // Ensure the notification state is cleared on re-activation.
+    $this->assertNull(\Drupal::state()->get($state_name));
 
     // Confirm re-activated user isn't queued.
-    hel_tpm_user_expiry_cron();
+    _hel_tpm_user_expiry_notification_cron();
     $this->assertEquals(0, $this->queue->numberOfItems());
     $this->resetCronLastRun();
 
-    // Set last access to.
+    // Set last access past the inactivity limit.
     $user->set('access', strtotime('-166 days'));
     $user->save();
 
     $this->cron->run();
     $user = $this->reloadEntity($user);
-    // Ensure user is active after the first cron run.
+    // Ensure the first reminder is sent and user is active after the first
+    // cron run.
+    $this->assertCount(1, $this->drupalGetMails([
+      'id' => 'message_notify_1st_user_account_expiry_reminder',
+    ]));
     $this->assertEquals('1', $user->get('status')->value);
 
     $this->cronRunHelper('-2 weeks', [$user]);
@@ -514,6 +539,50 @@ final class UserExpirationTest extends GroupKernelTestBase {
     $user = $this->reloadEntity($user);
     // Ensure user is blocked after two more days.
     $this->assertEquals('0', $user->get('status')->value);
+  }
+
+  /**
+   * Test logging in clears the notification state.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  public function testLoginClearsNotificationState(): void {
+    $user = $this->createLastAccessUser(2);
+    $state_name = 'hel_tpm_user_expiry.notified.' . $user->id();
+
+    $this->cron->run();
+    $this->assertEquals(1, \Drupal::state()->get($state_name)['count']);
+
+    \Drupal::moduleHandler()->invokeAll('user_login', [$user]);
+    // Ensure the notification state is cleared on login.
+    $this->assertNull(\Drupal::state()->get($state_name));
+  }
+
+  /**
+   * Test anonymized users are not anonymized again.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  public function testAnonymizedUserIsExcluded(): void {
+    $user = $this->createLastAccessUser(2, 0, '-220 days', '-40 days');
+
+    $this->cron->run();
+    $user = $this->reloadEntity($user);
+    $anonymized_mail = $user->getEmail();
+    // Ensure the user is anonymized and stored as anonymized.
+    $this->assertStringEndsWith('@anonymous.invalid', $anonymized_mail);
+    $this->assertContains($user->id(), \Drupal::state()->get('hel_tpm_user_expiry.anonymized_users'));
+
+    // Ensure anonymized user is not anonymized again when it matches the
+    // anonymization criteria again.
+    $this->connection->update('users_field_data')
+      ->condition('uid', $user->id())
+      ->fields(['changed' => strtotime('-40 days')])
+      ->execute();
+    $this->resetCronLastRun();
+    _hel_tpm_user_expiry_anonymize_blocked_users();
+    $user = $this->reloadEntity($user);
+    $this->assertEquals($anonymized_mail, $user->getEmail());
   }
 
   /**
@@ -538,7 +607,7 @@ final class UserExpirationTest extends GroupKernelTestBase {
     $changed = strtotime($lastChanged);
     $user = $this->createUser([], NULL, FALSE, [
       'uid' => $uid,
-      'mail' => 'test-' . $uid . 'tpm.test',
+      'mail' => 'test-' . $uid . '@tpm.test',
       'field_name' => 'Test name ' . $uid,
       'field_job_title' => 'Test job title ' . $uid,
       'field_employer' => 'Test employer ' . $uid,
@@ -598,10 +667,14 @@ final class UserExpirationTest extends GroupKernelTestBase {
   }
 
   /**
-   * Reset last cron run state.
+   * Reset last cron run state of all user expiry cron tasks.
    */
   protected function resetCronLastRun(): void {
-    \Drupal::state()->delete('hel_tpm_user_expiry.last_run');
+    \Drupal::state()->deleteMultiple([
+      'hel_tpm_user_expiry.last_run',
+      'hel_tpm_user_expiry.block_unactivated_users_last_run',
+      'hel_tpm_user_expiry.anonymize_blocked_users_last_run',
+    ]);
   }
 
   /**
