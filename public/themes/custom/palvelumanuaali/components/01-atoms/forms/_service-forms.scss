@@ -567,6 +567,16 @@
       font-size: 0;
     }
   }
+  .field--widget-string-textarea {
+    >.form-item {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: column;
+      .counter {
+        order: 1;
+      }
+    }
+  }
 }
 
 .field--name-field-service-languages {
