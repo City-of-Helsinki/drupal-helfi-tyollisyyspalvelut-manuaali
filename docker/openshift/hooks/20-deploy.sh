@@ -2,8 +2,6 @@
 
 source /init.sh
 
-cd /var/www/html/public
-
 if [ ! -n "$OPENSHIFT_BUILD_NAME" ]; then
   echo "OPENSHIFT_BUILD_NAME is not defined. Exiting early."
   exit 1
