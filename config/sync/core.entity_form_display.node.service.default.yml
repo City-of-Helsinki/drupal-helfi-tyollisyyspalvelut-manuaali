@@ -740,7 +740,7 @@ content:
     third_party_settings:
       maxlength:
         maxlength_js: 250
-        maxlength_js_label: 'Merkkimäärä rajattu @limit merkkiin, jäljellä: <strong>@remaining</strong>'
+        maxlength_js_label: '@remaining merkkiä käytettävissä'
         maxlength_js_enforce: true
   field_field_client_consent_descr:
     type: text_textarea
@@ -755,11 +755,10 @@ content:
         maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
         maxlength_js_enforce: false
   field_free_service:
-    type: boolean_checkbox
+    type: options_buttons
     weight: 32
     region: content
-    settings:
-      display_label: false
+    settings: {  }
     third_party_settings: {  }
   field_implementation_extra_info:
     type: select2_entity_reference
@@ -905,7 +904,11 @@ content:
     settings:
       rows: 5
       placeholder: ''
-    third_party_settings: {  }
+    third_party_settings:
+      maxlength:
+        maxlength_js: 500
+        maxlength_js_label: '@remaining merkkiä käytettävissä'
+        maxlength_js_enforce: true
   field_public_files:
     type: file_generic
     weight: 17
