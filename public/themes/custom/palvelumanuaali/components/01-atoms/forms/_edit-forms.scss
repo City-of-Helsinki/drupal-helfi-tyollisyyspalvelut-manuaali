@@ -31,6 +31,17 @@
     }
   }
 }
+.block--main-block >.node-basic-page-form,
+.block--main-block >.node-landing-page-form {
+  .edit-advanced-content-wrapper,
+  .edit-advanced-form{
+    grid-row: 5;
+    grid-column: 1/3;
+    @include xl {
+      grid-row: 2;
+    }
+  }
+}
 
 .block--main-block >.node-form,
 .group-form {
