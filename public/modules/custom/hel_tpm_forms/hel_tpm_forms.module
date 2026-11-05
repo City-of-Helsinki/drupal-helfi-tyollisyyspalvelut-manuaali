@@ -121,17 +121,13 @@ function hel_tpm_forms_service_price_form_alter_helper(array &$form, FormStateIn
     return;
   }
 
-  $form['field_price']['#states'] = [
-    'visible' => [
-      ':input[name="field_free_service[value]"]' => ['checked' => TRUE],
-    ],
+  // field_free_service radios: '0' = free service, '1' = service has costs.
+  $has_costs = [
+    ':input[name="field_free_service"]' => ['value' => '1'],
   ];
 
-  $form['field_price']['widget'][0]['value']['#states'] = [
-    'required' => [
-      ':input[name="field_free_service[value]"]' => ['checked' => TRUE],
-    ],
-  ];
+  $form['field_price']['#states'] = ['visible' => $has_costs];
+  $form['field_price']['widget'][0]['value']['#states'] = ['required' => $has_costs];
 
   $form['#validate'][] = 'hel_tpm_forms_field_price_required_validate';
 }
@@ -148,8 +144,9 @@ function hel_tpm_forms_service_price_form_alter_helper(array &$form, FormStateIn
  *   -
  */
 function hel_tpm_forms_field_price_required_validate(array $form, FormStateInterface &$form_state) {
-  $field_free_service_value = $form_state->getValue('field_free_service', NULL);
-  if (empty($field_free_service_value) || $field_free_service_value['value'] != 1) {
+  // Price is required only when "The service has costs" ('1') is selected.
+  $free_service = $form_state->getValue(['field_free_service', 0, 'value']);
+  if ((string) $free_service !== '1') {
     return;
   }
   $price_value = $form_state->getValue('field_price');
@@ -261,7 +258,7 @@ function hel_tpm_forms_service_empty_price_field(EntityInterface &$entity) {
     return;
   }
 
-  // Field value is actually 1 if paid service, 0 otherwise.
+  // Field value is 1 if the service has costs, 0 if it is free.
   $paid_service = $entity->get('field_free_service')->value;
   if (!$paid_service) {
     // Empty the price information if service is not paid service.
