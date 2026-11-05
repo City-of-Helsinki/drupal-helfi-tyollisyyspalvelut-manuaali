@@ -244,8 +244,7 @@ third_party_settings:
         required_fields: false
     group_basic_info_2:
       children:
-        - field_municipality_irrelevant
-        - field_target_group_municipality
+        - group_p1_g3_sg1
         - field_age_groups
         - field_age
         - field_life_situations
@@ -605,6 +604,28 @@ third_party_settings:
         label_as_html: false
         description: ''
         required_fields: true
+    group_p1_g3_sg1:
+      children:
+        - field_municipality_irrelevant
+        - field_target_group_municipality
+      label: 'Asiakkaan kotikunta'
+      region: content
+      parent_name: group_basic_info_2
+      weight: 34
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: true
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: true
 id: node.service.default
 targetEntityType: node
 bundle: service
@@ -638,7 +659,7 @@ content:
     third_party_settings: {  }
   field_age:
     type: range
-    weight: 16
+    weight: 38
     region: content
     settings:
       label:
@@ -650,7 +671,7 @@ content:
     third_party_settings: {  }
   field_age_groups:
     type: options_buttons
-    weight: 15
+    weight: 37
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -812,7 +833,7 @@ content:
     third_party_settings: {  }
   field_life_situations:
     type: select2_entity_reference
-    weight: 17
+    weight: 39
     region: content
     settings:
       width: 100%
@@ -851,7 +872,7 @@ content:
         ief_popup_enabled: true
   field_municipality_irrelevant:
     type: boolean_checkbox
-    weight: 13
+    weight: 35
     region: content
     settings:
       display_label: true
@@ -899,7 +920,7 @@ content:
     third_party_settings: {  }
   field_price_description:
     type: text_textarea
-    weight: 34
+    weight: 35
     region: content
     settings:
       rows: 5
@@ -1097,7 +1118,7 @@ content:
     third_party_settings: {  }
   field_target_group_description:
     type: text_textarea
-    weight: 18
+    weight: 40
     region: content
     settings:
       rows: 5
@@ -1105,7 +1126,7 @@ content:
     third_party_settings: {  }
   field_target_group_municipality:
     type: select2_entity_reference
-    weight: 14
+    weight: 36
     region: content
     settings:
       width: 100%
