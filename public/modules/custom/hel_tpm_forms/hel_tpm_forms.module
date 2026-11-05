@@ -389,7 +389,7 @@ function hel_tpm_forms_node_service_form_alter_helper(&$form, FormStateInterface
 /**
  * Implements hook_field_group_form_process().
  */
-function hel_tpm_forms_field_group_form_process(array &$element, &$group, &$complete_form) {
+function hel_tpm_forms_field_group_form_process(array &$element, &$group) {
   if ($group->group_name !== 'group_p1_g3_sg1' || $group->entity_type !== 'node' || $group->bundle !== 'service') {
     return;
   }
