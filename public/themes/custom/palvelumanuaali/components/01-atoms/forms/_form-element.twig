@@ -47,6 +47,7 @@
 
 {% set additional_class = additional_class %}
 {% set classes = classes %}
+{% set description_display = description_display %}
 
 {% if classes is empty %}
 {%
@@ -61,6 +62,7 @@
   set description_classes = [
     'form-item__description',
     description_display == 'invisible' ? 'visually-hidden',
+    description_display == 'before' ? 'description-before',
   ]
 %}
 {% set form_element__base_class = 'form-item' %}
