@@ -1,0 +1,29 @@
+{#
+/**
+ * @file
+ * Theme override for a service location node in the location_accessibility
+ * view mode.
+ *
+ * Rendered under the service location field on the service edit form to show
+ * the selected location's accessibility information.
+ *
+ * Available variables:
+ * - node: The node entity with limited access to object properties and methods.
+ * - label: The title of the node.
+ * - content: All node items. Use {{ content }} to print them all,
+ *   or print a subset such as {{ content.field_example }}.
+ * - attributes: HTML attributes for the containing element.
+ * - title_attributes: Same as attributes, except applied to the title element.
+ * - content_attributes: Same as attributes, except applied to the main
+ *   content element.
+ * - view_mode: View mode; "location_accessibility".
+ *
+ * @see template_preprocess_node()
+ */
+#}
+
+{# The description is added to group_location_accessibility in
+   \Drupal\hel_tpm_forms\Hook\LocationAccessibilityHooks. #}
+<div {{ bem('location-accessibility') }}>
+  {{ content|without('links') }}
+</div>

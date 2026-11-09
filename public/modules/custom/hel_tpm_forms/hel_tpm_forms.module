@@ -12,6 +12,11 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Entity\Display\EntityFormDisplayInterface;
 use Drupal\Core\Entity\ContentEntityFormInterface;
+use Drupal\Component\Utility\Html;
+use Drupal\Component\Utility\NestedArray;
+use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\Core\Entity\Element\EntityAutocomplete;
+use Drupal\node\NodeInterface;
 
 /**
  * Implements hook_theme().
@@ -182,18 +187,227 @@ function hel_tpm_forms_time_and_location_form_helper(&$form, FormStateInterface 
     return;
   }
 
+  // Re-syncs the location accessibility display after browser form restore.
+  $form['#attached']['library'][] = 'hel_tpm_forms/hel_tpm_forms';
+
   for ($i = 0; $i <= $form[$field_key]['widget']['#max_delta']; $i++) {
     if (empty($form[$field_key]['widget'][$i])) {
       continue;
     }
 
-    $input = sprintf(':input[name="field_service_time_and_location[%s][subform][field_service_location][0][target_id]"]', $i);
-    $form[$field_key]['widget'][$i]['subform']['field_location_additional_info_1']['#states'] = [
-      'visible' => [
-        $input => ['empty' => FALSE],
-      ],
-    ];
+    $subform = &$form[$field_key]['widget'][$i]['subform'];
+
+    // Show service location only when the "location" channel is selected and
+    // require it while it is visible. Server-side check:
+    // hel_tpm_forms_validate_service_location_required().
+    if (isset($subform['field_service_location'], $subform['field_service_channel'])) {
+      $channel_input = sprintf(':input[name="%s[%s][subform][field_service_channel]"]', $field_key, $i);
+      $subform['field_service_location']['#states'] = [
+        'visible' => [
+          $channel_input => ['value' => 'location'],
+        ],
+      ];
+      if (isset($subform['field_service_location']['widget'][0]['target_id'])) {
+        $subform['field_service_location']['widget'][0]['target_id']['#states'] = [
+          'required' => [
+            $channel_input => ['value' => 'location'],
+          ],
+        ];
+      }
+    }
+
+    hel_tpm_forms_location_accessibility_attach($subform, $form_state, $field_key, $i);
+
+    // Show channel additional info whenever any service channel is selected.
+    if (isset($subform['field_location_additional_info_1'], $subform['field_service_channel'])) {
+      $channel_input = sprintf(':input[name="%s[%s][subform][field_service_channel]"]', $field_key, $i);
+      $channel_options = array_diff(
+        array_keys($subform['field_service_channel']['widget']['#options'] ?? []),
+        ['_none'],
+      );
+      // Multiple conditions for the same selector are OR'ed by #states.
+      $subform['field_location_additional_info_1']['#states'] = [
+        'visible' => [
+          $channel_input => array_map(
+            static fn (int|string $value): array => ['value' => (string) $value],
+            array_values($channel_options),
+          ),
+        ],
+      ];
+    }
+    unset($subform);
   }
+
+  $form['#validate'][] = 'hel_tpm_forms_validate_service_location_required';
+}
+
+/**
+ * Requires field_service_location when the "location" channel is selected.
+ *
+ * @param array $form
+ *   The form array.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The form state.
+ */
+function hel_tpm_forms_validate_service_location_required(array &$form, FormStateInterface $form_state): void {
+  // Only validate on real saves, not on AJAX actions such as paragraph
+  // "Add more" or the location accessibility preview.
+  $trigger = $form_state->getTriggeringElement();
+  if (isset($trigger['#limit_validation_errors']) && $trigger['#limit_validation_errors'] !== FALSE) {
+    return;
+  }
+
+  $field_key = 'field_service_time_and_location';
+  $items = $form_state->getValue($field_key);
+  if (!is_array($items)) {
+    return;
+  }
+
+  foreach ($items as $delta => $item) {
+    // Skip non-item keys (add_more etc.) and closed/removed paragraphs.
+    if (!is_numeric($delta) || !isset($item['subform']) || !is_array($item['subform'])) {
+      continue;
+    }
+    $channel = $item['subform']['field_service_channel'][0]['value'] ?? NULL;
+    if ($channel !== 'location') {
+      continue;
+    }
+    if (!empty($item['subform']['field_service_location'][0]['target_id'])) {
+      continue;
+    }
+
+    $element = $form[$field_key]['widget'][$delta]['subform']['field_service_location']['widget'][0]['target_id'] ?? NULL;
+    $title = $element['#title'] ?? $form[$field_key]['widget'][$delta]['subform']['field_service_location']['widget']['#title'] ?? t('Location');
+    $name = sprintf('%s][%s][subform][field_service_location][0][target_id', $field_key, $delta);
+    $form_state->setErrorByName($name, t('@name field is required.', ['@name' => $title]));
+  }
+}
+
+/**
+ * Adds the selected location's accessibility display under the location field.
+ *
+ * @param array $subform
+ *   The paragraph subform.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The form state.
+ * @param string $field_key
+ *   The parent paragraph field name.
+ * @param int $delta
+ *   The paragraph delta.
+ */
+function hel_tpm_forms_location_accessibility_attach(array &$subform, FormStateInterface $form_state, string $field_key, int $delta): void {
+  if (empty($subform['field_service_location']['widget'][0]['target_id'])) {
+    return;
+  }
+  $element = &$subform['field_service_location']['widget'][0]['target_id'];
+  $wrapper_id = Html::getId(sprintf('hel-tpm-location-accessibility-%s-%d', $field_key, $delta));
+
+  // Prefer submitted input (form rebuilds), fall back to the saved value.
+  $input_parents = [$field_key, $delta, 'subform', 'field_service_location', 0, 'target_id'];
+  $input_exists = FALSE;
+  $input = NestedArray::getValue($form_state->getUserInput(), $input_parents, $input_exists);
+  if ($input_exists) {
+    $location = hel_tpm_forms_location_from_autocomplete_input(is_string($input) ? $input : NULL);
+  }
+  else {
+    $default = $element['#default_value'] ?? NULL;
+    $location = $default instanceof NodeInterface ? $default : NULL;
+  }
+
+  $element['#ajax'] = [
+    'callback' => 'hel_tpm_forms_location_accessibility_ajax',
+    'event' => 'autocompleteclose change',
+    'wrapper' => $wrapper_id,
+    'progress' => ['type' => 'none'],
+  ];
+  // Don't validate the whole node form when the preview is refreshed.
+  $element['#limit_validation_errors'] = [];
+  // Lets JS find the display to re-sync after browser form restore.
+  $element['#attributes']['data-location-accessibility-wrapper'] = $wrapper_id;
+
+  $build = hel_tpm_forms_location_accessibility_build($location, $wrapper_id);
+  // Hidden by CSS until JS confirms the input still matches the rendered
+  // value; prevents a flash of a stale display after browser form restore.
+  $build['#attributes']['data-location-accessibility-pending'] = '';
+  $subform['field_service_location']['location_accessibility'] = $build;
+}
+
+/**
+ * AJAX callback: re-renders the location accessibility display.
+ *
+ * Node forms are served from the form cache on AJAX requests, so the display
+ * is built here from the submitted value instead of relying on a rebuild.
+ */
+function hel_tpm_forms_location_accessibility_ajax(array &$form, FormStateInterface $form_state): array {
+  $trigger = $form_state->getTriggeringElement();
+  $wrapper_id = $trigger['#ajax']['wrapper'] ?? '';
+  $value = $trigger['#value'] ?? NULL;
+  return hel_tpm_forms_location_accessibility_build(
+    hel_tpm_forms_location_from_autocomplete_input(is_string($value) ? $value : NULL),
+    $wrapper_id
+  );
+}
+
+/**
+ * Loads the service location node referenced by an autocomplete input.
+ *
+ * @param string|null $input
+ *   Raw autocomplete input, e.g. "Address 1, 00100 Helsinki (123)".
+ *
+ * @return \Drupal\node\NodeInterface|null
+ *   The service location node, or NULL.
+ */
+function hel_tpm_forms_location_from_autocomplete_input(?string $input): ?NodeInterface {
+  if ($input === NULL || trim($input) === '') {
+    return NULL;
+  }
+  $nid = EntityAutocomplete::extractEntityIdFromAutocompleteInput($input);
+  if (empty($nid)) {
+    return NULL;
+  }
+  $node = \Drupal::entityTypeManager()->getStorage('node')->load($nid);
+  if (!$node instanceof NodeInterface || $node->bundle() !== 'service_location') {
+    return NULL;
+  }
+  return $node;
+}
+
+/**
+ * Builds the wrapper with the location's accessibility display.
+ *
+ * @param \Drupal\node\NodeInterface|null $location
+ *   The selected service location, if any.
+ * @param string $wrapper_id
+ *   The AJAX wrapper HTML id.
+ *
+ * @return array
+ *   Render array.
+ */
+function hel_tpm_forms_location_accessibility_build(?NodeInterface $location, string $wrapper_id): array {
+  $build = [
+    '#type' => 'container',
+    '#attributes' => [
+      'id' => $wrapper_id,
+      'class' => ['hel-tpm-location-accessibility'],
+      'aria-live' => 'polite',
+    ],
+    '#weight' => 100,
+  ];
+
+  if (!$location) {
+    return $build;
+  }
+
+  $access = $location->access('view', NULL, TRUE);
+  $cacheability = CacheableMetadata::createFromObject($access);
+  if ($access->isAllowed()) {
+    $build['content'] = \Drupal::entityTypeManager()
+      ->getViewBuilder('node')
+      ->view($location, 'location_accessibility');
+  }
+  $cacheability->applyTo($build);
+
+  return $build;
 }
 
 /**
