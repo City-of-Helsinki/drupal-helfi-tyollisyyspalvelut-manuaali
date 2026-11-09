@@ -8,9 +8,9 @@ if [ ! -n "$OPENSHIFT_BUILD_NAME" ]; then
 fi
 
 
-if deployment_in_progress; then                                                                                                                                                                                                                                                                                                      │
-  echo "Deployment already in progress or done for $OPENSHIFT_BUILD_NAME. Skipping."                                                                                                                                                                                                                                                 │
-  return 0                                                                                                                                                                                                                                                                                                                           │
+if deployment_in_progress; then
+  echo "Deployment already in progress or done for $OPENSHIFT_BUILD_NAME. Skipping."
+  return 0
 fi
 
 echo "Starting deploy: $(date)"
