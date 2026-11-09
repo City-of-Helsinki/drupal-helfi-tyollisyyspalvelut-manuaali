@@ -11,11 +11,15 @@ use Drupal\group\Entity\GroupMembership;
 use Drupal\group\Entity\GroupMembershipInterface;
 use Drupal\group\Entity\GroupRoleInterface;
 use Drupal\group\PermissionScopeInterface;
+use Drupal\hel_tpm_group\Plugin\views\field\GroupAdminReactivateMemberLink;
 use Drupal\user\RoleInterface;
 use Drupal\user\UserInterface;
 use Drupal\views\Entity\View;
 use Drupal\views\ResultRow;
 use Drupal\views\ViewExecutable;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Security tests for the "reactivate group member" views link field.
@@ -38,13 +42,12 @@ use Drupal\views\ViewExecutable;
  * so every case below switches identity with setCurrentUser() instead of
  * handing an account to the access manager.
  *
- * @coversDefaultClass \Drupal\hel_tpm_group\Plugin\views\field\GroupAdminReactivateMemberLink
- *
  * @see \Drupal\hel_tpm_group\Access\ReactivateGroupMemberAccess
  * @see \Drupal\views\Plugin\views\field\EntityLink
- *
- * @group hel_tpm_group
  */
+#[CoversClass(GroupAdminReactivateMemberLink::class)]
+#[Group('hel_tpm_group')]
+#[RunTestsInSeparateProcesses]
 class GroupAdminReactivateMemberLinkSecurityTest extends GroupKernelTestBase {
 
   /**
@@ -132,8 +135,6 @@ class GroupAdminReactivateMemberLinkSecurityTest extends GroupKernelTestBase {
    *
    * Without an argument the handler cannot know which group's permissions to
    * check, so it must fail closed rather than fall back to "no restriction".
-   *
-   * @covers ::access
    */
   public function testFieldAccessDeniedWithoutGroupArgument(): void {
     $group = $this->createGroup(['type' => $this->groupType->id()]);
@@ -147,8 +148,6 @@ class GroupAdminReactivateMemberLinkSecurityTest extends GroupKernelTestBase {
 
   /**
    * The column is hidden when the group argument points at a missing group.
-   *
-   * @covers ::access
    */
   public function testFieldAccessDeniedForUnknownGroup(): void {
     $admin = $this->createUser();
@@ -159,8 +158,6 @@ class GroupAdminReactivateMemberLinkSecurityTest extends GroupKernelTestBase {
 
   /**
    * The column is hidden from a member without the group permission.
-   *
-   * @covers ::access
    */
   public function testFieldAccessDeniedForPlainMember(): void {
     $group = $this->createGroup(['type' => $this->groupType->id()]);
@@ -177,8 +174,6 @@ class GroupAdminReactivateMemberLinkSecurityTest extends GroupKernelTestBase {
    *
    * Global user administration permissions must not stand in for the group
    * permission.
-   *
-   * @covers ::access
    */
   public function testFieldAccessDeniedForNonMemberUserAdmin(): void {
     $group = $this->createGroup(['type' => $this->groupType->id()]);
@@ -196,8 +191,6 @@ class GroupAdminReactivateMemberLinkSecurityTest extends GroupKernelTestBase {
 
   /**
    * The column is shown to a member holding the group permission.
-   *
-   * @covers ::access
    */
   public function testFieldAccessAllowedForGroupAdmin(): void {
     $group = $this->createGroup(['type' => $this->groupType->id()]);
@@ -214,8 +207,6 @@ class GroupAdminReactivateMemberLinkSecurityTest extends GroupKernelTestBase {
    *
    * Holding 'reactivate group members' somewhere must not carry over into
    * groups where the user holds nothing.
-   *
-   * @covers ::access
    */
   public function testFieldAccessDeniedForForeignGroupAdmin(): void {
     $ownGroup = $this->createGroup(['type' => $this->groupType->id()]);
@@ -230,8 +221,6 @@ class GroupAdminReactivateMemberLinkSecurityTest extends GroupKernelTestBase {
 
   /**
    * No link is rendered for a member without the group permission.
-   *
-   * @covers ::render
    */
   public function testLinkNotRenderedForPlainMember(): void {
     $group = $this->createGroup(['type' => $this->groupType->id()]);
@@ -249,8 +238,6 @@ class GroupAdminReactivateMemberLinkSecurityTest extends GroupKernelTestBase {
    *
    * This is the cross-group escalation case: the row belongs to group A while
    * the current user only administers group B.
-   *
-   * @covers ::render
    */
   public function testLinkNotRenderedForForeignGroupAdmin(): void {
     $groupA = $this->createGroup(['type' => $this->groupType->id()]);
@@ -271,8 +258,6 @@ class GroupAdminReactivateMemberLinkSecurityTest extends GroupKernelTestBase {
    *
    * Reactivation only makes sense for a blocked account, and offering it for an
    * active one would let a group admin touch a live account.
-   *
-   * @covers ::render
    */
   public function testLinkNotRenderedForActiveMember(): void {
     $group = $this->createGroup(['type' => $this->groupType->id()]);
@@ -289,8 +274,6 @@ class GroupAdminReactivateMemberLinkSecurityTest extends GroupKernelTestBase {
    *
    * A single group's admin must not be able to reactivate an account that
    * other groups also own.
-   *
-   * @covers ::render
    */
   public function testLinkNotRenderedForMemberOfMultipleGroups(): void {
     $group = $this->createGroup(['type' => $this->groupType->id()]);
@@ -310,8 +293,6 @@ class GroupAdminReactivateMemberLinkSecurityTest extends GroupKernelTestBase {
    *
    * Counterpart to the negative cases: proves they fail for the right reason
    * and not because the handler never renders anything.
-   *
-   * @covers ::render
    */
   public function testLinkRenderedForAuthorisedGroupAdmin(): void {
     $group = $this->createGroup(['type' => $this->groupType->id()]);

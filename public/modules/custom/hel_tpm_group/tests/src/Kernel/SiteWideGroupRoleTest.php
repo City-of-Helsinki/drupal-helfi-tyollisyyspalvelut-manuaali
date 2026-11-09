@@ -5,12 +5,14 @@ namespace Drupal\Tests\hel_tpm_group\Kernel;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\group\PermissionScopeInterface;
 use Drupal\user\RoleInterface;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Test description.
- *
- * @group hel_tpm_group
  */
+#[Group('hel_tpm_group')]
+#[RunTestsInSeparateProcesses]
 class SiteWideGroupRoleTest extends GroupKernelTestBase {
 
   /**

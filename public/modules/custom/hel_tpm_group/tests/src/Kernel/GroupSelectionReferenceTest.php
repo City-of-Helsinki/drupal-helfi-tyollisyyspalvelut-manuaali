@@ -10,18 +10,21 @@ use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\group\Entity\Group;
 use Drupal\group\Entity\GroupInterface;
 use Drupal\group\PermissionScopeInterface;
+use Drupal\hel_tpm_group\Plugin\EntityReferenceSelection\GroupSelection;
 use Drupal\node\Entity\Node;
 use Drupal\node\Entity\NodeType;
 use Drupal\user\Entity\User;
 use Drupal\user\RoleInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group as GroupAttribute;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests field reference for general group selection.
- *
- * @coversDefaultClass \Drupal\hel_tpm_group\Plugin\EntityReferenceSelection\GroupSelection
- *
- * @group hel_tpm_group
  */
+#[CoversClass(GroupSelection::class)]
+#[GroupAttribute('hel_tpm_group')]
+#[RunTestsInSeparateProcesses]
 class GroupSelectionReferenceTest extends GroupKernelTestBase {
 
   use EntityReferenceFieldCreationTrait;

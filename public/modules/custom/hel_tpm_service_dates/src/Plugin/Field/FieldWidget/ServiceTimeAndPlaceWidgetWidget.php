@@ -50,6 +50,15 @@ class ServiceTimeAndPlaceWidgetWidget extends ParagraphsClassicAsymmetricWidget 
   ];
 
   /**
+   * Mapped fields that are only toggled visible, but not required.
+   *
+   * @var string[]
+   */
+  public static array $optionalDependencyFields = [
+    'field_time_additional_info_html',
+  ];
+
+  /**
    * {@inheritdoc}
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
@@ -76,7 +85,7 @@ class ServiceTimeAndPlaceWidgetWidget extends ParagraphsClassicAsymmetricWidget 
    * @return void
    *   Return nothing.
    */
-  protected function disableUntranslatableFields(&$element) {
+  protected function disableUntranslatableFields(&$element): void {
     foreach ($element['subform'] as &$field) {
       if (!is_array($field)) {
         continue;
@@ -99,7 +108,7 @@ class ServiceTimeAndPlaceWidgetWidget extends ParagraphsClassicAsymmetricWidget 
    * @return void
    *   -
    */
-  protected function createFieldStatesRules(array &$element) {
+  protected function createFieldStatesRules(array &$element): void {
     if (empty($element['subform']['field_date_selection'])) {
       return;
     }
@@ -180,7 +189,7 @@ class ServiceTimeAndPlaceWidgetWidget extends ParagraphsClassicAsymmetricWidget 
    * @return void
    *   -
    */
-  protected function clearUnselectedDateFields(array $element, FormStateInterface &$form_state) {
+  protected function clearUnselectedDateFields(array $element, FormStateInterface &$form_state): void {
     $values = $form_state->getValues();
 
     $controller = $element['subform']['field_date_selection'];
@@ -222,7 +231,7 @@ class ServiceTimeAndPlaceWidgetWidget extends ParagraphsClassicAsymmetricWidget 
    * @return void
    *   -
    */
-  protected function validateRequiredDependencyFields(array $element, FormStateInterface &$form_state) {
+  protected function validateRequiredDependencyFields(array $element, FormStateInterface &$form_state): void {
     $values = $form_state->getValues();
     if (empty($element['subform']['field_date_selection'])) {
       return;
@@ -239,6 +248,10 @@ class ServiceTimeAndPlaceWidgetWidget extends ParagraphsClassicAsymmetricWidget 
     }
 
     foreach (self::$dependencyMapping as $field => $dependencies) {
+
+      if (in_array($field, self::$optionalDependencyFields)) {
+        continue;
+      }
 
       if (!in_array($controller_value, $dependencies)) {
         continue;

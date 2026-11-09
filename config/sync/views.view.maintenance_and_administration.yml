@@ -204,7 +204,22 @@ display:
           empty: true
           content: 'Ei listattavia sisältöjä'
           tokenize: false
-      sorts: {  }
+      sorts:
+        label:
+          id: label
+          table: groups_field_data
+          field: label
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: group
+          entity_field: label
+          plugin_id: standard
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: ''
+          exposed: false
       arguments:
         uid:
           id: uid
@@ -296,6 +311,46 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
+        default_langcode:
+          id: default_langcode
+          table: groups_field_data
+          field: default_langcode
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: group
+          entity_field: default_langcode
+          plugin_id: boolean
+          operator: '='
+          value: '1'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
       filter_groups:
         operator: AND
         groups:
@@ -339,6 +394,7 @@ display:
           empty_table: true
           caption: ''
           description: ''
+          class: ''
       row:
         type: fields
       query:
@@ -382,7 +438,7 @@ display:
           group_content_plugins:
             group_membership: group_membership
             group_invitation: '0'
-      group_by: true
+      group_by: false
       header:
         area_text_custom:
           id: area_text_custom
@@ -396,12 +452,12 @@ display:
           content: '<span>Valitse organisaatio:</span>'
           tokenize: false
       footer: {  }
+      rendering_language: '***LANGUAGE_language_interface***'
       display_extenders:
         ajax_history: {  }
     cache_metadata:
       max-age: -1
       contexts:
-        - 'languages:language_content'
         - 'languages:language_interface'
         - url
         - url.query_args
@@ -624,13 +680,13 @@ display:
           field_api_classes: false
       defaults:
         fields: false
+      rendering_language: '***LANGUAGE_language_interface***'
       display_extenders:
         ajax_history: {  }
       path: hallinta-ja-yllapito
     cache_metadata:
       max-age: -1
       contexts:
-        - 'languages:language_content'
         - 'languages:language_interface'
         - url
         - url.query_args

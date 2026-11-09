@@ -7,6 +7,7 @@
 
 use Drupal\Core\Template\Attribute;
 use Drupal\Core\Url;
+use Drupal\Core\Render\Element;
 use Drupal\content_moderation\Entity\ContentModerationState;
 use Drupal\node\NodeInterface;
 use Drupal\node\NodeTypeInterface;
@@ -506,6 +507,69 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id): void {
         $form['field_service_languages']['#disabled'] = TRUE;
       }
       $form['content_translation']['#access'] = FALSE;
+
+      if (isset($form['field_description']['widget'][0]['value']['#title'])) {
+        $label = t("Short description of the service");
+        $form['field_description']['widget'][0]['value']['#title'] = $label;
+      }
+      if (isset($form['field_service_languages']['widget']['add_more'])) {
+        $label = t("Add new language");
+        $form['field_service_languages']['widget']['add_more']['add_more_button_service_language']['#value'] = $label;
+      }
+      if (isset($form['field_public_links']['widget'])) {
+        $widget = &$form['field_public_links']['widget'];
+        $t_options = ['context' => 'Public links field'];
+        $form['field_public_links']['widget']['#title'] = t('Links', [], $t_options);
+        // "Add another item" button label.
+        if (isset($widget['add_more'])) {
+          $widget['add_more']['#value'] = t('Add new link');
+        }
+        // Relabel the URL and title of every link item.
+        foreach (Element::children($widget) as $delta) {
+          if (!is_numeric($delta)) {
+            continue;
+          }
+          if (isset($widget[$delta]['uri'])) {
+            $widget[$delta]['uri']['#title'] = t('Link address', [], $t_options);
+            $widget[$delta]['uri']['#description'] = '';
+          }
+          if (isset($widget[$delta]['title'])) {
+            $widget[$delta]['title']['#title'] = t('Link name', [], $t_options);
+            $widget[$delta]['title']['#description'] = '';
+          }
+        }
+      }
+      if (isset($form['field_contact_info']['widget']['#field_title'])) {
+        $label = t("Contact information for employment office");
+        $form['field_contact_info']['widget']['#field_title'] = $label;
+      }
+      if (isset($form['field_contact_info_external']['widget']['#field_title'])) {
+        $label = t("Contact information for customer");
+        $form['field_contact_info_external']['widget']['#field_title'] = $label;
+      }
+      if (isset($form['field_internal_links']['widget'])) {
+        $widget = &$form['field_internal_links']['widget'];
+        $form['field_internal_links']['widget']['#title'] = 'Linkit';
+
+        // "Add another item" button label.
+        if (isset($widget['add_more'])) {
+          $widget['add_more']['#value'] = 'Lisää uusi linkki';
+        }
+        // Relabel the URL and title of every link item.
+        foreach (Element::children($widget) as $delta) {
+          if (!is_numeric($delta)) {
+            continue;
+          }
+          if (isset($widget[$delta]['uri'])) {
+            $widget[$delta]['uri']['#title'] = 'Linkin osoite';
+            $widget[$delta]['uri']['#description'] = '';
+          }
+          if (isset($widget[$delta]['title'])) {
+            $widget[$delta]['title']['#title'] = 'Linkin nimi';
+            $widget[$delta]['title']['#description'] = '';
+          }
+        }
+      }
     }
 
     if ($form_id == 'node_basic_page_form' || $form_id == 'node_basic_page_edit_form') {
@@ -794,5 +858,19 @@ function palvelumanuaali_preprocess_block(array &$variables) {
     if (isset($variables['content']['user_links']['#items']['request_password']['#title'])) {
       $variables['content']['user_links']['#items']['request_password']['#title'] = t('Forgot password?');
     }
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for hel_tpm_dropdown_filter.
+ *
+ * Uses the same dropdown styles as the corresponding select templates.
+ */
+function palvelumanuaali_preprocess_hel_tpm_dropdown_filter(array &$variables): void {
+  if (($variables['element']['#name'] ?? '') === 'langcode') {
+    $variables['dropdown_modifiers'] = 'select--details-select';
+  }
+  else {
+    $variables['dropdown_modifiers'] = 'select--white-rounded select--search-background';
   }
 }

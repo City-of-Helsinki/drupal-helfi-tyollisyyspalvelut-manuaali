@@ -1,0 +1,41 @@
+// Start page of the service creation form.
+//
+// Provided by the hel_tpm_forms module: the start page fields are in form
+// boxes (fieldsets) of a field and its info box, followed by the exit and
+// start buttons. The boxes are styled by the form-background classes.
+
+// While the start page is shown, it spans the whole grid of the node form
+// (main content and sidebar columns).
+.service-start-active > .service-start {
+  grid-column: 1 / -1;
+}
+
+.service-start {
+  // A field and its info box side by side.
+  &__row {
+    display: grid;
+    gap: $space-double;
+
+    @include large {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+      align-items: start;
+
+      // The legend spans the whole box and the field and its info box are
+      // inline below it.
+      > legend {
+        grid-column: 1 / -1;
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  // The options of a start page field are listed vertically.
+  .form-item--radio {
+    display: block;
+  }
+
+  .form-item--radio-button {
+    margin-right: 0;
+    margin-bottom: $space-one-half;
+  }
+}

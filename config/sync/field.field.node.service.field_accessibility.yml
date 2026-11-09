@@ -6,12 +6,17 @@ dependencies:
     - field.storage.node.field_accessibility
     - node.type.service
     - taxonomy.vocabulary.service_accessiblity
+  module:
+    - tmgmt_content
+third_party_settings:
+  tmgmt_content:
+    excluded: false
 id: node.service.field_accessibility
 field_name: field_accessibility
 entity_type: node
 bundle: service
-label: 'Palvelun saavutettavuustiedot (valinnainen)'
-description: ''
+label: 'Palvelun saavutettavuustiedot'
+description: 'Valitse yksi tai useampi vaihtoehto, jotka kuvaavat, miten saavutettavuus on palvelun toteutuksessa huomioitu.'
 required: false
 translatable: false
 default_value: {  }

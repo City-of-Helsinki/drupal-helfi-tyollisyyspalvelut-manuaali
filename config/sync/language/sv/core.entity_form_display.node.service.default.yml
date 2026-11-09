@@ -5,56 +5,62 @@ third_party_settings:
     group_specialist:
       label: 'Instruktion för sakkunniga'
     group_customer:
-      label: Kundsidan
+      label: 'Deltagande i tjänsten'
     group_basic_information:
       label: Basuppgifter
     group_pla:
-      label: 'Plats och tid'
+      label: Ärendehantering
     group_servi:
-      label: 'Beskrivning och arbetsinstruktion'
+      label: Servicebeskrivning
     group_add:
-      label: 'Ytterligare information'
+      label: Työohje
     group_basic_info_1:
-      label: Basuppgifter
+      label: 'Tjänstens basuppgifter'
     group_basic_info_2:
       label: Målgrupp
-    group_basic_info_3:
-      label: 'Tjänstens tillgänglighet'
+    group_p2_g1:
+      label: 'Kanal och tid för ärendehantering'
+    group_p2_g2:
+      label: Kontaktinformation
     group_details_sidebar:
       label: 'Ytterligare information'
-    group_service_obligatoryness:
-      label: 'Palvelun velvoittavuus'
-    group_statements_unemploym:
-      label: 'Lausunnot ja työttömyysetuus'
+    group_service_start_language:
+      label: 'Tjänstens språkversion'
     group_complementary_job_search:
       label: 'Täydentävä työnhakukeskustelu'
-    group_exceptions:
-      label: Poikkeustilanteet
-    group_measures_during:
-      label: 'Toimenpiteet osallistumisen ajalta'
-    group_archive_guide:
-      label: Arkistointiohje
-    group_service_requirements:
-      label: 'Osallistumisen edellytykset'
-    group_markings_for_service:
-      label: 'Merkinnät asiakastietojärjestelmään'
-    group_guidance_to_service:
-      label: 'Ohjaus palveluun'
     group_participation_concent:
-      label: 'Kundens samtycke'
-    group_liitteet_ja_linkit:
-      label: 'Sisäiset liitteet ja linkit'
+      label: 'Samtycke till insamling av personuppgifter'
     group_public_links_and_files:
-      label: 'Länkar och bilagor'
+      label: 'Länkar och bilagor till kunden'
+    group_responsible_for_updating:
+      label: 'Ansvar för att uppdatera tjänsten'
+    group_service_maintainers:
+      label: 'Tjänstens administratörer'
+    group_p3_g2:
+      label: Organisationssätt
+    group_p3_g4:
+      label: 'Övriga tjänster'
 content:
   entitygroupfield:
     settings:
       label: Tjänsteanordnare
+  langcode:
+    settings:
+      option_labels:
+        en: Engelska
+        fi: Finska
+        sv: Svenska
   field_description:
     third_party_settings:
       maxlength:
         maxlength_js_label: 'Innehåll begränsat till @limit tecken, kvar: <strong>@remaining</strong>'
+  field_public_links:
+    settings:
+      placeholder_url: 'Skriv in länkens adress'
+      placeholder_title: 'Skriv in länkens namn'
   title:
+    settings:
+      placeholder: 'Skriv in ett namn som beskriver tjänsten'
     third_party_settings:
       maxlength:
-        maxlength_js_label: 'Innehåll begränsat till @limit tecken, kvar: <strong>@remaining</strong>'
+        maxlength_js_label: '@remaining tecken kan användas'

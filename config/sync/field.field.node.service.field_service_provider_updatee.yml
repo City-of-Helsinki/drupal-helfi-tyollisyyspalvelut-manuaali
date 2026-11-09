@@ -5,12 +5,17 @@ dependencies:
   config:
     - field.storage.node.field_service_provider_updatee
     - node.type.service
+  module:
+    - tmgmt_content
+third_party_settings:
+  tmgmt_content:
+    excluded: false
 id: node.service.field_service_provider_updatee
 field_name: field_service_provider_updatee
 entity_type: node
 bundle: service
 label: 'Service provider’s person responsible for updates'
-description: 'The responsible person is the owner of the service in the organization. They know the service and monitor the up-to-dateness of the information. '
+description: 'Select the person who will be responsible for updating the service and who has been designated as the owner of the service. The person responsible for updates will maintain the service’s details and receive system notifications concerning the service via email. In an employment area’s own services, the service provider and the municipality may designate the same person to be responsible for updates.'
 required: true
 translatable: false
 default_value: {  }

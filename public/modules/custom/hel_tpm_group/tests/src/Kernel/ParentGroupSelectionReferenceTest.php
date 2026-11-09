@@ -10,18 +10,21 @@ use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\group\Entity\Group;
 use Drupal\group\Entity\GroupInterface;
 use Drupal\group\PermissionScopeInterface;
+use Drupal\hel_tpm_group\Plugin\EntityReferenceSelection\ParentGroupSelection;
 use Drupal\node\Entity\Node;
 use Drupal\node\Entity\NodeType;
 use Drupal\user\Entity\User;
 use Drupal\user\RoleInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group as GroupAttribute;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
- * Tests field reference for group user selection.
- *
- * @coversDefaultClass \Drupal\hel_tpm_group\Plugin\EntityReferenceSelection\GroupUserSelection
- *
- * @group hel_tpm_group
+ * Tests field reference for parent group selection.
  */
+#[CoversClass(ParentGroupSelection::class)]
+#[GroupAttribute('hel_tpm_group')]
+#[RunTestsInSeparateProcesses]
 class ParentGroupSelectionReferenceTest extends GroupKernelTestBase {
 
   use EntityReferenceFieldCreationTrait;
@@ -236,9 +239,8 @@ class ParentGroupSelectionReferenceTest extends GroupKernelTestBase {
    *
    * @return void
    *   -
-   *
-   * @group exclude
    */
+  #[GroupAttribute('exclude')]
   public function testSubgroupHasParentGroupAlso(): void {
     /** @var \Drupal\Core\Entity\EntityAutocompleteMatcherInterface $autocomplete */
     $autocomplete = \Drupal::service('entity.autocomplete_matcher');

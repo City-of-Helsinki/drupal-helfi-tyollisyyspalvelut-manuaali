@@ -4,12 +4,14 @@ namespace Drupal\Tests\hel_tpm_group\Kernel;
 
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\user\Entity\Role;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests hel_tpm_group.module helper functions.
- *
- * @group hel_tpm_group
  */
+#[Group('hel_tpm_group')]
+#[RunTestsInSeparateProcesses]
 class HelTpmGroupModuleTest extends KernelTestBase {
 
   /**

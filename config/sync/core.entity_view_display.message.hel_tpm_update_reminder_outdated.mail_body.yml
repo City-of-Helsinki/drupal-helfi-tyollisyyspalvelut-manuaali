@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.message.mail_body
+    - field.field.message.hel_tpm_update_reminder_outdated.field_message_author
     - field.field.message.hel_tpm_update_reminder_outdated.field_node
     - field.field.message.hel_tpm_update_reminder_outdated.field_user
     - message.template.hel_tpm_update_reminder_outdated
@@ -21,6 +22,7 @@ hidden:
   entity_print_view_epub: true
   entity_print_view_pdf: true
   entity_print_view_word_docx: true
+  field_message_author: true
   field_node: true
   field_user: true
   partial_0: true

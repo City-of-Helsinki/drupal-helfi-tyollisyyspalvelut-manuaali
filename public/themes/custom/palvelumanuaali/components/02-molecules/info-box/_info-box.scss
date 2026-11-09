@@ -1,0 +1,30 @@
+// Info box shown next to a form field.
+// Rendered by the "Info box" field widget of the hel_tpm_forms module.
+.info-box {
+  display: flex;
+  gap: $space;
+  padding: $space-one-and-half;
+  border-radius: 8px;
+  background-color: #F7F9FD;
+  box-shadow: 0 8px 16px 0 rgba(30, 64, 182, 0.2);
+
+  // Decorative icon, so it is not announced by screen readers.
+  &::before {
+    content: "";
+    display: block;
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    background-image: url("../../assets/icons/info.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  &__content {
+    min-width: 0;
+
+    > :last-child {
+      margin-bottom: 0;
+    }
+  }
+}

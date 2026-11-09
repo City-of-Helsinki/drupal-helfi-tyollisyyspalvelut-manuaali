@@ -1,0 +1,66 @@
+{#
+/**
+ * @file
+ * Exposed filter rendered as checkboxes inside a dropdown.
+ *
+ * The dropdown is a native details element, so the filter works without
+ * JavaScript too.
+ *
+ * Available variables:
+ * - attributes: HTML attributes for the wrapper element.
+ * - id: The ID of the checkboxes element.
+ * - title: The filter label.
+ * - placeholder: Text shown when nothing is selected. The filter description,
+ *   or "- Any -" if there is none.
+ * - selected: Labels of the selected options.
+ * - groups: Option groups, each with a label and items.
+ * - items: Options that are not in a group. Each item has an id, name,
+ *   value, label, checked and disabled.
+ * - dropdown_modifiers: Classes for the dropdown wrapper, set by the theme.
+ *
+ * @see \Drupal\hel_tpm_dropdown_filter\Hook\DropdownFilterThemeHooks::preprocessDropdownFilter()
+ */
+#}
+{% macro option(item) %}
+  <label class="multi-select-menuitem" for="{{ item.id }}">
+    <input type="checkbox" id="{{ item.id }}" name="{{ item.name }}" value="{{ item.value }}" autocomplete="off"{{ item.checked ? ' checked' }}{{ item.disabled ? ' disabled' }}>
+    <span class="checkbox" aria-hidden="true"></span>
+    {{ item.label }}
+  </label>
+{% endmacro %}
+
+<div{{ attributes }}>
+  <span class="form-item__label" id="{{ id }}--label">{{ title }}</span>
+  <div class="form-item__dropdown {{ dropdown_modifiers }}">
+    <details class="multi-select-container{{ selected ? ' active' }}" data-dropdown-filter-details>
+      <summary class="multi-select-button" id="{{ id }}--summary" aria-labelledby="{{ id }}--label {{ id }}--summary" data-placeholder="{{ placeholder }}">
+        {%- if selected -%}
+          <span class="trim-label">{{ selected|first }}</span>{{ selected|length > 1 ? ' +' ~ (selected|length - 1) }}
+        {%- else -%}
+          {{ placeholder }}
+        {%- endif -%}
+      </summary>
+      <div class="multi-select-menu">
+        <fieldset class="multi-select-menuitems" id="{{ id }}">
+          <legend class="visually-hidden">{{ title }}</legend>
+          {% for group in groups %}
+            <fieldset class="select-group">
+              <legend class="group--parent-label">
+                <label>
+                  <input type="checkbox" autocomplete="off" data-dropdown-filter-group data-bef-auto-submit-exclude>
+                  {{ group.label }}
+                </label>
+              </legend>
+              {% for item in group.items %}
+                {{ _self.option(item) }}
+              {% endfor %}
+            </fieldset>
+          {% endfor %}
+          {% for item in items %}
+            {{ _self.option(item) }}
+          {% endfor %}
+        </fieldset>
+      </div>
+    </details>
+  </div>
+</div>

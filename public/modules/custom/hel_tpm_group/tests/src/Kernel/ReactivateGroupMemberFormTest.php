@@ -16,19 +16,23 @@ use Drupal\group\Entity\GroupTypeInterface;
 use Drupal\group\PermissionScopeInterface;
 use Drupal\hel_tpm_group\Access\ReactivateGroupMemberAccess;
 use Drupal\hel_tpm_group\Form\ReactivateGroupMemberForm;
+use Drupal\hel_tpm_group\Plugin\views\field\GroupAdminReactivateMemberLink;
 use Drupal\user\UserInterface;
 use Drupal\views\Entity\View;
 use Drupal\views\ResultRow;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**
  * Tests group member reactivation functionality and access control.
- *
- * @group hel_tpm_group
- * @coversDefaultClass \Drupal\hel_tpm_group\Form\ReactivateGroupMemberForm
- * @covers \Drupal\hel_tpm_group\Access\ReactivateGroupMemberAccess
- * @covers \Drupal\hel_tpm_group\Plugin\views\field\GroupAdminReactivateMemberLink
  */
+#[CoversClass(ReactivateGroupMemberForm::class)]
+#[CoversClass(ReactivateGroupMemberAccess::class)]
+#[CoversClass(GroupAdminReactivateMemberLink::class)]
+#[Group('hel_tpm_group')]
+#[RunTestsInSeparateProcesses]
 final class ReactivateGroupMemberFormTest extends GroupKernelTestBase {
 
   /**
@@ -78,8 +82,6 @@ final class ReactivateGroupMemberFormTest extends GroupKernelTestBase {
 
   /**
    * Tests that users without access cannot build the form.
-   *
-   * @covers ::buildForm
    */
   public function testBuildFormRequiresAccess(): void {
     [$membership] = $this->createMembership();
@@ -90,8 +92,6 @@ final class ReactivateGroupMemberFormTest extends GroupKernelTestBase {
 
   /**
    * Tests that an administrator cannot reactivate another group's member.
-   *
-   * @covers ::buildForm
    */
   public function testForeignGroupAdminCannotBuildForm(): void {
     [$membership] = $this->createMembership();
@@ -103,8 +103,6 @@ final class ReactivateGroupMemberFormTest extends GroupKernelTestBase {
 
   /**
    * Tests that an active account cannot be reactivated.
-   *
-   * @covers ::buildForm
    */
   public function testActiveMemberCannotBeReactivated(): void {
     [$membership, $group, $member] = $this->createMembership();
@@ -116,8 +114,6 @@ final class ReactivateGroupMemberFormTest extends GroupKernelTestBase {
 
   /**
    * Tests that a member shared by multiple groups cannot be reactivated.
-   *
-   * @covers ::buildForm
    */
   public function testMemberOfMultipleGroupsCannotBeReactivated(): void {
     [$membership, $group, $member] = $this->createMembership();
@@ -130,8 +126,6 @@ final class ReactivateGroupMemberFormTest extends GroupKernelTestBase {
 
   /**
    * Tests that validation repeats the access check.
-   *
-   * @covers ::validateForm
    */
   public function testValidationRechecksAccess(): void {
     [$membership, $group] = $this->createMembership();
@@ -150,9 +144,6 @@ final class ReactivateGroupMemberFormTest extends GroupKernelTestBase {
 
   /**
    * Tests that an authorised submission activates the member.
-   *
-   * @covers ::buildForm
-   * @covers ::submitForm
    */
   public function testAuthorisedSubmissionActivatesMember(): void {
     [$membership, $group, $blocked] = $this->createMembership();

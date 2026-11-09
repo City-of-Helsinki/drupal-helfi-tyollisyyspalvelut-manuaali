@@ -343,7 +343,9 @@ function hel_tpm_group_node_access_records(NodeInterface $node): array {
   }
 
   $grants = [];
-  foreach ($group_ids as $group_id) {
+  // A group can be both a direct group and a supergroup of the node, so remove
+  // duplicates to avoid writing the same grant twice.
+  foreach (array_unique($group_ids) as $group_id) {
     $grants[] = [
       'realm' => 'hel_tpm_group_unpublished_realm',
       'gid' => $group_id,

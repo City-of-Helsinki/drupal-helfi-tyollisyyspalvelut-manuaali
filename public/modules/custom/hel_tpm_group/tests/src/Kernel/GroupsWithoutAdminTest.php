@@ -11,12 +11,14 @@ use Drupal\Tests\service_manual_workflow\Traits\ServiceManualWorkflowTestTrait;
 use Drupal\Tests\user\Traits\UserCreationTrait;
 use Drupal\group\Entity\GroupInterface;
 use Drupal\user\Entity\User;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Test description.
- *
- * @group hel_tpm_group
  */
+#[Group('hel_tpm_group')]
+#[RunTestsInSeparateProcesses]
 final class GroupsWithoutAdminTest extends GroupKernelTestBase {
 
   use UserCreationTrait;

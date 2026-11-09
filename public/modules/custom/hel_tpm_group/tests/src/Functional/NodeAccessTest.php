@@ -3,12 +3,14 @@
 namespace Drupal\Tests\hel_tpm_group\Functional;
 
 use Drupal\Tests\BrowserTestBase;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests basic node access with hel_tpm_group module.
- *
- * @group diff
  */
+#[Group('diff')]
+#[RunTestsInSeparateProcesses]
 class NodeAccessTest extends BrowserTestBase {
 
   /**

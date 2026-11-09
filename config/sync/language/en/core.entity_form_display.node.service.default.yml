@@ -5,56 +5,62 @@ third_party_settings:
     group_specialist:
       label: 'Work instructions for specialists'
     group_customer:
-      label: 'Customer view'
+      label: 'Participation in the service'
     group_basic_information:
       label: 'Basic information'
     group_pla:
-      label: 'Place and time'
+      label: 'Use of service'
     group_servi:
-      label: 'Description and work instructions'
+      label: 'Service description'
     group_add:
-      label: 'Additional information'
+      label: Työohje
     group_basic_info_1:
       label: 'Basic information'
     group_basic_info_2:
       label: 'Target group'
-    group_basic_info_3:
-      label: 'Service accessibility'
     group_details_sidebar:
       label: 'Additional information'
-    group_service_obligatoryness:
-      label: 'Palvelun velvoittavuus'
-    group_statements_unemploym:
-      label: 'Lausunnot ja työttömyysetuus'
+    group_p2_g1:
+      label: 'Service channel and time'
+    group_p2_g2:
+      label: 'Contact information'
+    group_service_start_language:
+      label: 'Service language version'
     group_complementary_job_search:
       label: 'Täydentävä työnhakukeskustelu'
-    group_exceptions:
-      label: Poikkeustilanteet
-    group_measures_during:
-      label: 'Toimenpiteet osallistumisen ajalta'
-    group_archive_guide:
-      label: Arkistointiohje
-    group_service_requirements:
-      label: 'Osallistumisen edellytykset'
-    group_markings_for_service:
-      label: 'Merkinnät asiakastietojärjestelmään'
-    group_guidance_to_service:
-      label: 'Ohjaus palveluun'
     group_participation_concent:
-      label: 'Customer consent'
-    group_liitteet_ja_linkit:
-      label: 'Sisäiset liitteet ja linkit'
+      label: 'Consent to the collection of personal data'
     group_public_links_and_files:
-      label: 'Links and attachments'
+      label: 'Links and attachments for the client'
+    group_responsible_for_updating:
+      label: 'Persons responsible for service updates'
+    group_service_maintainers:
+      label: 'Service administrators'
+    group_p3_g2:
+      label: Implementation
+    group_p3_g4:
+      label: 'Other services'
 content:
   entitygroupfield:
     settings:
       label: 'Service organiser'
+  langcode:
+    settings:
+      option_labels:
+        en: English
+        fi: Finnish
+        sv: Swedish
   field_description:
     third_party_settings:
       maxlength:
         maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
+  field_public_links:
+    settings:
+      placeholder_url: 'Enter link address'
+      placeholder_title: 'Enter link name'
   title:
+    settings:
+      placeholder: 'Enter a name that describes the service'
     third_party_settings:
       maxlength:
-        maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
+        maxlength_js_label: '@remaining characters available'

@@ -11,16 +11,19 @@ use Drupal\Tests\field\Traits\EntityReferenceFieldCreationTrait;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\Tests\hel_tpm_group\Traits\GroupInitTrait;
 use Drupal\Tests\service_manual_workflow\Traits\ServiceManualWorkflowTestTrait;
+use Drupal\hel_tpm_group\Plugin\Action\CloseGroup;
 use Drupal\language\Entity\ConfigurableLanguage;
 use Drupal\system\Entity\Action;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
- * Tests field reference for group user selection.
- *
- * @coversDefaultClass \Drupal\hel_tpm_group\Plugin\EntityReferenceSelection\GroupUserSelection
- *
- * @group hel_tpm_group
+ * Tests the close group action.
  */
+#[CoversClass(CloseGroup::class)]
+#[Group('hel_tpm_group')]
+#[RunTestsInSeparateProcesses]
 class GroupCloseGroupTest extends GroupKernelTestBase {
 
   use EntityReferenceFieldCreationTrait;

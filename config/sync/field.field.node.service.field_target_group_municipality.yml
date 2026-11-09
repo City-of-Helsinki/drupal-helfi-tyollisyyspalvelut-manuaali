@@ -6,12 +6,17 @@ dependencies:
     - field.storage.node.field_target_group_municipality
     - node.type.service
     - taxonomy.vocabulary.municipality
+  module:
+    - tmgmt_content
+third_party_settings:
+  tmgmt_content:
+    excluded: false
 id: node.service.field_target_group_municipality
 field_name: field_target_group_municipality
 entity_type: node
 bundle: service
-label: Kotikunta
-description: ''
+label: 'Asiakkaan kotikunta'
+description: 'Valitse ne kunnat, joissa toimivan työllisyysalueen asiakkaat voivat osallistua palveluun. Jos palveluun voi osallistua kuka tahansa kotikunnasta riippumatta, valitse "Kotikunnalla ei merkitystä".'
 required: false
 translatable: false
 default_value: {  }

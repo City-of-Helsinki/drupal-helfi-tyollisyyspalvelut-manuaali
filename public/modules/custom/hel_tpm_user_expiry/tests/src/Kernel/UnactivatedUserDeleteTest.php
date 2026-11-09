@@ -7,23 +7,25 @@ namespace Drupal\Tests\hel_tpm_user_expiry\Kernel;
 use Drupal\Core\Database\Database;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Test\AssertMailTrait;
 use Drupal\KernelTests\Core\Entity\EntityKernelTestBase;
 use Drupal\Tests\user\Traits\UserCreationTrait;
 use Drupal\user\UserInterface;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
- * Test description.
+ * Tests deletion of users who have never activated their account.
  *
- * @group hel_tpm_user_expiry
+ * An unactivated user is an active account (status 1) that has never logged
+ * in (access 0), i.e. the user has not used the one-time login link sent on
+ * account creation. Such accounts are deleted once the account is older than
+ * the one-time login link lifetime.
  */
+#[Group('hel_tpm_user_expiry')]
+#[RunTestsInSeparateProcesses]
 final class UnactivatedUserDeleteTest extends EntityKernelTestBase {
 
   use UserCreationTrait;
-
-  use AssertMailTrait {
-    getMails as drupalGetMails;
-  }
 
   /**
    * {@inheritdoc}
@@ -55,13 +57,6 @@ final class UnactivatedUserDeleteTest extends EntityKernelTestBase {
   protected $cron;
 
   /**
-   * The queue container.
-   *
-   * @var \Drupal\Core\Queue\DatabaseQueue
-   */
-  protected $queue;
-
-  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {
@@ -78,52 +73,61 @@ final class UnactivatedUserDeleteTest extends EntityKernelTestBase {
   }
 
   /**
-   * Test unactivated user blocking.
+   * Test unactivated user deletion.
    */
-  public function testUnactivatedUserBlock(): void {
-    $user = $this->createLastAccessUser(2);
-    $user2 = $this->createLastAccessUser(3, "-5 days");
-    $user3 = $this->createLastAccessUser(4, "-8 days", '-1 days');
+  public function testUnactivatedUserDelete(): void {
+    $admin_user = $this->createLastAccessUser(1, "-8 days");
+    $blocked_user = $this->createLastAccessUser(5, "-8 days", NULL, 0);
+    $expired_user = $this->createLastAccessUser(2, "-8 days");
+    $pending_user = $this->createLastAccessUser(3, "-5 days");
+    $activated_user = $this->createLastAccessUser(4, "-8 days", '-1 days');
 
     $this->cron->run();
 
-    $user = $this->reloadUser($user);
+    // Confirm user 1 is never deleted even if it has never logged in.
+    $this->assertNotNull($this->reloadUser($admin_user));
 
-    $this->assertNull($user);
+    // Confirm blocked user who has never logged in is not deleted.
+    $this->assertNotNull($this->reloadUser($blocked_user));
 
-    $user2 = $this->reloadUser($user2);
-    $this->assertEquals('1', $user2->get('status')->value);
+    // Confirm unactivated user older than the password reset timeout is
+    // deleted.
+    $this->assertNull($this->reloadUser($expired_user));
 
-    $user3 = $this->reloadUser($user3);
-    $this->assertEquals('1', $user3->get('status')->value);
+    // Confirm unactivated user within the password reset timeout is kept.
+    $pending_user = $this->reloadUser($pending_user);
+    $this->assertNotNull($pending_user);
+
+    // Confirm activated user is not deleted.
+    $this->assertNotNull($this->reloadUser($activated_user));
 
     $this->resetCronLastRun();
 
     $date = new DrupalDateTime('-8 days');
-    // Set user2 created to -8 days.
-    $user2->set('created', $date->getTimestamp());
-    $user2->save();
+    // Set pending user created to -8 days.
+    $pending_user->set('created', $date->getTimestamp());
+    $pending_user->save();
 
     $this->cron->run();
-    $user2 = $this->reloadUser($user2);
+    $pending_user = $this->reloadUser($pending_user);
 
-    // Confirm user is removed.
-    $this->assertNull($user2);
+    // Confirm pending user is now deleted after the timeout.
+    $this->assertNull($pending_user);
 
-    // Confirm user3 is not blocked.
-    $user3 = $this->reloadUser($user3);
-    $this->assertEquals('1', $user3->get('status')->value);
+    // Confirm activated user is not deleted.
+    $this->assertNotNull($this->reloadUser($activated_user));
   }
 
   /**
-   * Creates a user with given inactivity period.
+   * Creates a user with given created and last access times and status.
    *
    * @param int $uid
    *   The user id.
    * @param string $created
-   *   Created timestamp.
+   *   Created time in strtotime format.
    * @param string|null $access
-   *   Last access timestamp.
+   *   Last access time in strtotime format. NULL means the user has never
+   *   logged in.
    * @param int $status
    *   User status.
    *
@@ -133,8 +137,8 @@ final class UnactivatedUserDeleteTest extends EntityKernelTestBase {
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
   protected function createLastAccessUser(
-    int $uid = 1,
-    string $created = '-7 days -3 hours',
+    int $uid,
+    string $created,
     ?string $access = NULL,
     int $status = 1,
   ): UserInterface {
@@ -144,7 +148,7 @@ final class UnactivatedUserDeleteTest extends EntityKernelTestBase {
     $created = new DrupalDateTime($created);
     $user = $this->createUser([], NULL, FALSE, [
       'uid' => $uid,
-      'mail' => 'test-' . $uid . 'tpm.test',
+      'mail' => 'test-' . $uid . '@tpm.test',
       'created' => $created->getTimestamp(),
       'access' => !empty($access) ? $access->getTimestamp() : 0,
       'status' => $status,
@@ -163,7 +167,7 @@ final class UnactivatedUserDeleteTest extends EntityKernelTestBase {
   /**
    * Reset last cron run state.
    */
-  protected function resetCronLastRun() {
+  protected function resetCronLastRun(): void {
     \Drupal::state()->delete('hel_tpm_user_expiry.block_unactivated_users_last_run');
   }
 
@@ -173,8 +177,11 @@ final class UnactivatedUserDeleteTest extends EntityKernelTestBase {
    * @param \Drupal\Core\Entity\EntityInterface $entity
    *   The entity to be reloaded.
    *
-   * @return \Drupal\Core\Entity\EntityInterface
+   * @return \Drupal\Core\Entity\EntityInterface|null
    *   The reloaded entity.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   protected function reloadUser(EntityInterface $entity):? EntityInterface {
     $controller = $this->entityTypeManager->getStorage($entity->getEntityTypeId());

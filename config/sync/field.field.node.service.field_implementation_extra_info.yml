@@ -7,12 +7,11 @@ dependencies:
     - node.type.service
     - taxonomy.vocabulary.service_implementation_type
   module:
-    - epp
     - require_on_publish
+    - tmgmt_content
 third_party_settings:
-  epp:
-    value: ''
-    on_update: 0
+  tmgmt_content:
+    excluded: false
   require_on_publish:
     require_on_publish: true
 id: node.service.field_implementation_extra_info
@@ -20,7 +19,7 @@ field_name: field_implementation_extra_info
 entity_type: node
 bundle: service
 label: Implementation
-description: 'State which methods or format the service was implemented with. Please remember to update the information if the implementation method changes. '
+description: 'Select the ways in which the service is implemented.'
 required: false
 translatable: false
 default_value: {  }

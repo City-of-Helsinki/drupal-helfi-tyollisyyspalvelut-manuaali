@@ -7,7 +7,10 @@ dependencies:
     - node.type.service
   module:
     - require_on_publish
+    - tmgmt_content
 third_party_settings:
+  tmgmt_content:
+    excluded: false
   require_on_publish:
     require_on_publish: true
 id: node.service.field_responsible_updatee
@@ -15,7 +18,7 @@ field_name: field_responsible_updatee
 entity_type: node
 bundle: service
 label: 'Kunnan vastuupäivittäjä'
-description: ''
+description: 'Valitse palvelulle kunnan vastuupäivittäjä, joka laatii asiantuntijan työohjeet, hyväksyy palveluntuottajan tekemät muutokset ja julkaisee palvelun. Työllisyysalueen omissa palveluissa palveluntuottajan ja kunnan vastuupäivittäjä voivat olla sama henkilö.'
 required: false
 translatable: false
 default_value: {  }

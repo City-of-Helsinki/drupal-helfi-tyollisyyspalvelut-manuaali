@@ -8,7 +8,12 @@ use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\Tests\group\Traits\NodeTypeCreationTrait;
 use Drupal\group\Entity\GroupInterface;
 use Drupal\group\PermissionScopeInterface;
+use Drupal\hel_tpm_group\EventSubscriber\HelTpmGroupRouteSubscriber;
 use Drupal\user\RoleInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -16,11 +21,10 @@ use Symfony\Component\HttpFoundation\Request;
  * Tests added permission requirements for group content forms.
  *
  * @see \Drupal\hel_tpm_group\EventSubscriber\HelTpmGroupRouteSubscriber::alterRoutes()
- *
- * @coversDefaultClass \Drupal\hel_tpm_group\EventSubscriber\HelTpmGroupRouteSubscriber
- *
- * @group hel_tpm_group
  */
+#[CoversClass(HelTpmGroupRouteSubscriber::class)]
+#[Group('hel_tpm_group')]
+#[RunTestsInSeparateProcesses]
 class GroupRelationshipFormAccessTest extends GroupKernelTestBase {
 
   use NodeTypeCreationTrait;
@@ -107,9 +111,8 @@ class GroupRelationshipFormAccessTest extends GroupKernelTestBase {
    *   -
    *
    * @throws \Exception
-   *
-   * @dataProvider outsiderFormAccessProvider
    */
+  #[DataProvider('outsiderFormAccessProvider')]
   public function testOutsiderFormAccess(array $userPermissions, bool $shouldAccess) {
     $outsider = $this->createUser(
       $userPermissions
@@ -158,9 +161,8 @@ class GroupRelationshipFormAccessTest extends GroupKernelTestBase {
    *   -
    *
    * @throws \Exception
-   *
-   * @dataProvider memberFormAccessProvider
    */
+  #[DataProvider('memberFormAccessProvider')]
   public function testMemberFormAccess(array $userPermissions, array $groupPermissions, bool $shouldAccess) {
     $member = $this->createUser(
       $userPermissions
@@ -216,9 +218,8 @@ class GroupRelationshipFormAccessTest extends GroupKernelTestBase {
    *   -
    *
    * @throws \Exception
-   *
-   * @dataProvider groupAdminFormAccessProvider
    */
+  #[DataProvider('groupAdminFormAccessProvider')]
   public function testGroupAdminFormAccess(array $userPermissions, bool $shouldAccess) {
     $admin = $this->createUser(
       $userPermissions
