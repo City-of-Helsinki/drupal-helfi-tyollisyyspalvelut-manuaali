@@ -1,0 +1,29 @@
+{#
+/**
+ * @file
+ * Theme override for URL and link text elements of the link custom labels
+ * widget (hel_tpm_forms_link_custom_labels).
+ *
+ * Same as form-element.html.twig, but renders the description after the
+ * input.
+ *
+ * @see form-element.html.twig
+ * @see \Drupal\hel_tpm_forms\Plugin\Field\FieldWidget\LinkCustomLabelsWidget
+ */
+#}
+{%
+  set classes = [
+    'js-form-item',
+    'form-item',
+    'js-form-type-' ~ type|clean_class,
+    'form-item-' ~ name|clean_class,
+    'js-form-item-' ~ name|clean_class,
+    title_display not in ['after', 'before'] ? 'form-no-label',
+    disabled == 'disabled' ? 'form-disabled',
+    errors ? 'form-item--error',
+    'form-item--no-margin',
+  ]
+%}
+{% include "@atoms/forms/_form-element.twig" with {
+  description_display: 'after',
+}%}
