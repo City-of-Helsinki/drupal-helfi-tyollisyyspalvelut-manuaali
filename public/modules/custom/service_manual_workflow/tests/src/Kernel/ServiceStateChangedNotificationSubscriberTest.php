@@ -6,6 +6,7 @@ use Drupal\Core\Test\AssertMailTrait;
 use Drupal\hel_tpm_mail_tools\Utility\PreventMailUtility;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\Tests\service_manual_workflow\Traits\ServiceManualWorkflowTestTrait;
+use Drupal\user\UserInterface;
 
 /**
  * Tests if a specific module is enabled.
@@ -223,6 +224,56 @@ class ServiceStateChangedNotificationSubscriberTest extends GroupKernelTestBase 
     $this->assertEquals($this->orgUser->getEmail(), $mails[0]['to']);
     $this->assertEquals('message_notify_group_ready_to_publish_notificat', $mails[1]['id']);
     $this->assertEquals($this->orgUser3->getEmail(), $mails[1]['to']);
+  }
+
+  /**
+   * Test blocked group administrators are not notified.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  public function testBlockedAdministratorNotNotified() {
+    $this->blockUser($this->orgUser3);
+
+    $this->drupalSetCurrentUser($this->spUser);
+    $spNode = $this->createNode([
+      'type' => 'service',
+      'uid' => $this->spUser->id(),
+      'moderation_state' => 'draft',
+    ]);
+    $spNode->set('field_responsible_municipality', $this->orgGroup);
+    $spNode->save();
+    $this->spGroup->addRelationship($spNode, 'group_node:service');
+    $spNode->set('moderation_state', 'ready_to_publish');
+    $spNode->save();
+
+    $mails = $this->getReadyToPublishMails();
+    $this->assertCount(1, $mails);
+    $this->assertEquals($this->orgUser->getEmail(), $mails[0]['to']);
+
+    // With all administrators blocked, nobody in the group is notified.
+    $this->blockUser($this->orgUser);
+    $spNode->set('moderation_state', 'draft');
+    $spNode->save();
+    $spNode->set('moderation_state', 'ready_to_publish');
+    $spNode->save();
+
+    $this->assertCount(1, $this->getReadyToPublishMails());
+  }
+
+  /**
+   * Blocks the given user.
+   *
+   * @param \Drupal\user\UserInterface $user
+   *   The user to block.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  protected function blockUser(UserInterface $user): void {
+    $user->block();
+    $user->save();
+    // The cached group memberships hold the user objects loaded before
+    // blocking.
+    \Drupal::entityTypeManager()->getStorage('group_content')->resetCache();
   }
 
   /**

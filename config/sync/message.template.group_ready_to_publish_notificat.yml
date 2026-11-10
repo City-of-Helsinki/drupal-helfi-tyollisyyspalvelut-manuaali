@@ -5,6 +5,11 @@ dependencies:
   config:
     - filter.format.email_html
     - filter.format.plain_text_format
+  module:
+    - hel_tpm_mail_tools
+third_party_settings:
+  hel_tpm_mail_tools:
+    keep_sent_language: true
 template: group_ready_to_publish_notificat
 label: group_ready_to_publish_notificat
 description: 'Ready to publish notification'

@@ -182,7 +182,11 @@ class PreventMailUtility {
    *   not supported.
    */
   public static function isTemplateBlocked(string $template): ?bool {
-    return self::isMessageBlocked(self::getFlag($template));
+    $flag = self::getFlag($template);
+    if ($flag === NULL) {
+      return NULL;
+    }
+    return self::isMessageBlocked((string) $flag);
   }
 
   /**
