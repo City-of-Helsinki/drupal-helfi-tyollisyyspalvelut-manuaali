@@ -56,6 +56,11 @@ class ParagraphsAccessibilityWidget extends ParagraphsWidget {
    */
   protected function buildButtonsAddMode() {
     $add_more_elements = parent::buildButtonsAddMode();
+
+    // Remove the "to %type" suffix Paragraphs adds after the add button in
+    // dropdown mode; it renders as a stray "to" in the English form.
+    unset($add_more_elements['#suffix']);
+
     $add_label_override = $this->getSetting('add_label');
 
     // If label hasn't been overridden return elements.
