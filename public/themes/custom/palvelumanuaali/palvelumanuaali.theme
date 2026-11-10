@@ -5,6 +5,8 @@
  * Functions to support theming.
  */
 
+use Drupal\Component\Utility\Html;
+use Drupal\Core\StringTranslation\ByteSizeMarkup;
 use Drupal\Core\Template\Attribute;
 use Drupal\Core\Url;
 use Drupal\Core\Render\Element;
@@ -508,6 +510,10 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id): void {
       }
       $form['content_translation']['#access'] = FALSE;
 
+
+      if (isset($form['field_municipality_guidance']['widget']['actions']['ief_add']['#value'])) {
+        $form['field_municipality_guidance']['widget']['actions']['ief_add']['#value'] ='Lisää uusi Kuntakohtainen ohje';
+      }
       if (isset($form['field_description']['widget'][0]['value']['#title'])) {
         $label = t("Short description of the service");
         $form['field_description']['widget'][0]['value']['#title'] = $label;
@@ -550,7 +556,6 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id): void {
       if (isset($form['field_internal_links']['widget'])) {
         $widget = &$form['field_internal_links']['widget'];
         $form['field_internal_links']['widget']['#title'] = 'Linkit';
-
         // "Add another item" button label.
         if (isset($widget['add_more'])) {
           $widget['add_more']['#value'] = 'Lisää uusi linkki';
@@ -568,6 +573,45 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id): void {
             $widget[$delta]['title']['#title'] = 'Linkin nimi';
             $widget[$delta]['title']['#description'] = '';
           }
+          if (isset($widget[$delta]['_actions']['delete']['#value'])) {
+            $widget[$delta]['_actions']['delete']['#value'] = 'Poista';
+          }
+        }
+      }
+      if (isset($form['field_internal_files']['widget'])) {
+        $widget = &$form['field_internal_files']['widget'];
+
+        // "Add another item" button label.
+        if (isset($widget['#file_upload_title'])) {
+          $widget['#file_upload_title'] = 'Lisää liitetiedosto';
+        }
+        // Upload help text (cardinality, size limit, allowed types). Core
+        // renders this from '#file_upload_description' in
+        // FileWidget::processMultiple(), so overriding it here affects only
+        // this field and keeps the values from the field settings.
+        if (isset($widget['#file_upload_description'])) {
+          $help = $widget['#file_upload_description'];
+          $validators = $help['#upload_validators'] ?? [];
+          $cardinality = $help['#cardinality'] ?? NULL;
+          $lines = [];
+          if ($cardinality == -1) {
+            $lines[] = ' Kenttään on mahdollista ladata rajoittamaton määrä tiedostoja.';
+          }
+          elseif ($cardinality == 1) {
+            $lines[] = 'Vain yksi tiedosto.';
+          }
+          elseif ($cardinality) {
+            $lines[] = 'Enintään ' . (int) $cardinality . ' tiedostoa.';
+          }
+          if (!empty($validators['FileSizeLimit']['fileLimit'])) {
+            $lines[] = 'Rajoitus: ' . ByteSizeMarkup::create($validators['FileSizeLimit']['fileLimit'], 'fi') . '.';
+          }
+          if (!empty($validators['FileExtension']['extensions'])) {
+            $lines[] = 'Sallitut tiedostotyypit: ' . Html::escape($validators['FileExtension']['extensions']) . '.';
+          }
+          $widget['#file_upload_description'] = [
+            '#markup' => implode('<br>', $lines),
+          ];
         }
       }
     }

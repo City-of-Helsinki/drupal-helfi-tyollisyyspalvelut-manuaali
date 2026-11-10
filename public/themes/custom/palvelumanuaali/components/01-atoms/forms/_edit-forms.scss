@@ -279,6 +279,13 @@ details>.form-wrapper:last-child {
     font-size: 12px;
     font-weight: 600;
   }
+
+  .form-item__label:not(.option),
+  .node--label,
+  .form-composite > legend,
+  .form-composite > legend > span {
+    @include form-label-h6;
+  }
 }
 
 .field--name-field-dates {
@@ -510,6 +517,15 @@ details>.form-wrapper:last-child {
         background-color: clr(text-inverse);
       }
     }
+  }
+  .description {
+    margin-bottom: $space-one-fourth;
+    @extend .font-size--small-paragraph;
+  }
+  .counter {
+    @extend .font-size--small-paragraph;
+    color: clr(gray);
+    margin-top: $space-one-fourth;
   }
 }
 
