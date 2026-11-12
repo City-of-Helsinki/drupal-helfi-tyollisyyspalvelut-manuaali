@@ -14,6 +14,18 @@ $phone-service-number-code-gap: 8px;
 .node-service-form,
 .node-service-edit-form {
   .field--name-field-service-time-and-location .field--name-field-phone-service-number {
+    // Phone numbers are short and names can be long, so the name gets more
+    // room than in the shared 4:3 layout of _online-service-link.scss.
+    @include medium {
+      .js-form-type-tel {
+        flex: 2 1 0;
+      }
+
+      .js-form-type-textfield {
+        flex: 3 1 0;
+      }
+    }
+
     .telephone-with-title__number--country-code {
       // Fills the height of the number input (same grid cell) and centers the
       // country code in it. As an inline box the code would sit on the text
