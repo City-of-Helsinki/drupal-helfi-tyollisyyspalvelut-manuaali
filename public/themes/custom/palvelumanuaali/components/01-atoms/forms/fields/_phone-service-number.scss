@@ -1,0 +1,64 @@
+// Country code inside the telephone number input of the phone service number
+// (field_phone_service_number) in the service form time and place paragraph.
+// Widget: hel_tpm_telephone_with_title_default.
+//
+// The shared input, label and layout styles are in _online-service-link.scss.
+// The country code input is rendered as the field prefix of the number input
+// and placed on top of it by hel_tpm_general/telephone_country_code (grid).
+// Here it is made to look like plain text at the start of the number input.
+
+$phone-service-number-inset: 16px;
+$phone-service-number-code-width: 36px;
+$phone-service-number-code-gap: 8px;
+
+.node-service-form,
+.node-service-edit-form {
+  .field--name-field-service-time-and-location .field--name-field-phone-service-number {
+    .telephone-with-title__number--country-code {
+      // Fills the height of the number input (same grid cell) and centers the
+      // country code in it. As an inline box the code would sit on the text
+      // baseline, a few pixels too high.
+      > .field-prefix {
+        align-items: center;
+        align-self: stretch;
+        display: flex;
+        line-height: 0;
+        margin: 0;
+        padding: 0 0 0 $phone-service-number-inset;
+      }
+
+      // The number starts after the country code.
+      > .form-tel {
+        padding-left: $phone-service-number-inset + $phone-service-number-code-width + $phone-service-number-code-gap;
+      }
+
+      // The country code input has the .form-text class, so the input styles
+      // of the shared rules are reset here.
+      .field-prefix .form-text {
+        background: transparent;
+        border: 0;
+        border-radius: 4px;
+        box-shadow: none;
+        box-sizing: border-box;
+        color: clr(text);
+        display: block;
+        font-family: $font-body;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        height: 24px;
+        letter-spacing: 0;
+        line-height: 24px;
+        margin: 0;
+        padding: 0;
+        width: $phone-service-number-code-width;
+
+        &:focus {
+          box-shadow: none;
+          outline: 2px solid clr(primary);
+          outline-offset: 2px;
+        }
+      }
+    }
+  }
+}

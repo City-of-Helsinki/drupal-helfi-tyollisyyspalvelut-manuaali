@@ -78,6 +78,62 @@ field.formatter.settings.hel_tpm_general_time_and_place_formatter:
   type: mapping
   label: Time and Place formatter formatter settings
 
+field.storage_settings.hel_tpm_telephone_with_title:
+  type: mapping
+  label: 'Telephone with title storage settings'
+
+field.field_settings.hel_tpm_telephone_with_title:
+  type: mapping
+  label: 'Telephone with title field settings'
+  mapping:
+    title_required:
+      type: boolean
+      label: 'Require title'
+    title_label:
+      type: label
+      label: 'Title label'
+    title_description:
+      type: text
+      label: 'Title help text'
+    value_label:
+      type: label
+      label: 'Telephone number label'
+    value_description:
+      type: text
+      label: 'Telephone number help text'
+    add_more_label:
+      type: label
+      label: '"Add another item" button label'
+
+field.value.hel_tpm_telephone_with_title:
+  type: mapping
+  label: 'Default value'
+  mapping:
+    value:
+      type: string
+      label: 'Telephone number'
+    title:
+      type: label
+      label: 'Title'
+
+field.widget.settings.hel_tpm_telephone_with_title_default:
+  type: mapping
+  label: 'Telephone with title widget settings'
+  mapping:
+    placeholder_title:
+      type: label
+      label: 'Placeholder for title'
+    placeholder_value:
+      type: string
+      label: 'Placeholder for telephone number'
+    country_code:
+      type: string
+      label: 'Country code'
+
+field.formatter.settings.hel_tpm_telephone_with_title_link:
+  type: mapping
+  label: 'Telephone with title formatter settings'
+
 filter_settings.external_links_to_new_tab:
   type: mapping
   mapping:

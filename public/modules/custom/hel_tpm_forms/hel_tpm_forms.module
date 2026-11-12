@@ -235,6 +235,36 @@ function hel_tpm_forms_time_and_location_form_helper(&$form, FormStateInterface 
       }
     }
 
+    // Show phone service number only when the "telephone_service" channel is
+    // selected and require the number while it is visible. Server-side check:
+    // hel_tpm_forms_validate_service_location_required().
+    if (isset($subform['field_phone_service_number'], $subform['field_service_channel'])) {
+      $channel_input = sprintf(':input[name="%s[%s][subform][field_service_channel]"]', $field_key, $i);
+      $subform['field_phone_service_number']['#states'] = [
+        'visible' => [
+          $channel_input => ['value' => 'telephone_service'],
+        ],
+      ];
+      if (isset($subform['field_phone_service_number']['widget'][0]['value'])) {
+        $subform['field_phone_service_number']['widget'][0]['value']['#states'] = [
+          'required' => [
+            $channel_input => ['value' => 'telephone_service'],
+          ],
+        ];
+      }
+      // The title (service name) is required with the number when the field
+      // requires it. Enforced on save by the field type's constraint.
+      $phone_field_definition = \Drupal::service('entity_field.manager')
+        ->getFieldDefinitions('paragraph', 'service_time_and_place')['field_phone_service_number'] ?? NULL;
+      if ($phone_field_definition?->getSetting('title_required') && isset($subform['field_phone_service_number']['widget'][0]['title'])) {
+        $subform['field_phone_service_number']['widget'][0]['title']['#states'] = [
+          'required' => [
+            $channel_input => ['value' => 'telephone_service'],
+          ],
+        ];
+      }
+    }
+
     hel_tpm_forms_location_accessibility_attach($subform, $form_state, $field_key, $i);
 
     // Show channel additional info whenever any service channel is selected.
@@ -265,6 +295,8 @@ function hel_tpm_forms_time_and_location_form_helper(&$form, FormStateInterface 
  *
  * - field_service_location when the "location" channel is selected.
  * - field_online_service_link when the "online_service" channel is selected.
+ * - field_phone_service_number when the "telephone_service" channel is
+ *   selected.
  *
  * @param array $form
  *   The form array.
@@ -289,6 +321,7 @@ function hel_tpm_forms_validate_service_location_required(array &$form, FormStat
   $required_by_channel = [
     'location' => ['field_service_location', 'target_id', t('Location')],
     'online_service' => ['field_online_service_link', 'uri', t('Online service link')],
+    'telephone_service' => ['field_phone_service_number', 'value', t('Phone number')],
   ];
 
   foreach ($items as $delta => $item) {
