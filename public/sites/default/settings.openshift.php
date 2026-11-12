@@ -9,7 +9,8 @@ $databases['default']['default'] = [
   'prefix' => '',
   'host' => getenv('DRUPAL_DB_HOST'),
   'port' => getenv('DRUPAL_DB_PORT') ?: 3306,
-  'namespace' => 'Drupal\Core\Database\Driver\mysql',
+  'namespace' => 'Drupal\mysql\Driver\Database\mysql',
+  'autoload' => 'core/modules/mysql/src/Driver/Database/mysql/',
   'driver' => 'mysql',
 ];
 
@@ -140,7 +141,10 @@ $config['system.performance']['js']['preprocess'] = TRUE;
 
 // Enable reverse proxy settings.
 $settings['reverse_proxy'] = TRUE;
-$settings['reverse_proxy_addresses'][] = $_SERVER['REMOTE_ADDR'];
+// REMOTE_ADDR is not set on CLI (drush, preflight checks).
+if (isset($_SERVER['REMOTE_ADDR'])) {
+  $settings['reverse_proxy_addresses'][] = $_SERVER['REMOTE_ADDR'];
+}
 $settings['reverse_proxy_trusted_headers'] = Request::HEADER_X_FORWARDED_FOR | Request::HEADER_X_FORWARDED_HOST | Request::HEADER_X_FORWARDED_PORT | Request::HEADER_X_FORWARDED_PROTO;
 $settings['reverse_proxy_host_header'] = 'X_FORWARDED_HOST';
 

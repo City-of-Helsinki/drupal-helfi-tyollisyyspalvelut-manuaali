@@ -1,0 +1,30 @@
+uuid: 626272da-9087-4e23-8396-da3670cf7573
+langcode: fi
+status: true
+dependencies:
+  module:
+    - options
+    - paragraphs
+id: paragraph.field_service_channel
+field_name: field_service_channel
+entity_type: paragraph
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: location
+      label: Toimipaikka
+    -
+      value: online_service
+      label: Verkkopalvelu
+    -
+      value: telephone_service
+      label: Puhelinpalvelu
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

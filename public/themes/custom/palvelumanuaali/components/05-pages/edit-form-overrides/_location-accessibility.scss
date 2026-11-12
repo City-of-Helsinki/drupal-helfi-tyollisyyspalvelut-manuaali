@@ -1,0 +1,73 @@
+// Read-only box styled like a text field, e.g. the selected service location's
+// accessibility information on the service edit form.
+.infobox {
+  background: white;
+  border-radius: 8px;
+  border: 2px solid;
+  border-color: $blue100;
+  color: $blue130;
+  font-size: 14px;
+  line-height: 28px;
+  padding: 16px 24px;
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Accessibility information of the selected service location, shown under
+// the location field on the service edit form.
+.location-accessibility {
+  margin-top: $space-one-and-half;
+
+  // group_location_accessibility label.
+  h6 {
+    color: clr(text);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    margin-bottom: 0;
+  }
+
+  &__description {
+    color: clr(text);
+    font-size: 14px;
+    line-height: 24px;
+    margin-bottom: 8px;
+
+    a {
+      color: $blue100;
+
+      &:hover,
+      &:focus {
+        color: $blue130;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  // Accessibility terms inline. With a hidden label, field.html.twig puts
+  // .field__items (and for a single value .field__item) on the field wrapper
+  // itself, so reset both the wrapper and its items.
+  .field--name-field-accessibility {
+    display: block;
+    font-weight: 600;
+    margin-bottom: $space-one-and-half;
+
+    .field__item {
+      display: inline;
+      p {
+        display: inline;
+      }
+    }
+  }
+
+  .long-text p {
+    margin-bottom: 0;
+  }
+
+  .field--name-field-accessibility-info {
+    font-weight: 400;
+    margin-top: $space-double;
+  }
+}
