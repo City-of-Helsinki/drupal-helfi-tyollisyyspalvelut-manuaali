@@ -1,0 +1,31 @@
+uuid: 5f701068-4929-4077-9f8b-dd1b48bd7346
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_phone_service_number
+    - paragraphs.paragraphs_type.service_time_and_place
+  module:
+    - hel_tpm_general
+    - tmgmt_content
+third_party_settings:
+  tmgmt_content:
+    excluded: true
+id: paragraph.service_time_and_place.field_phone_service_number
+field_name: field_phone_service_number
+entity_type: paragraph
+bundle: service_time_and_place
+label: 'Palvelun puhelinnumero'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  title_required: true
+  title_label: 'Puhelinpalvelun nimi'
+  title_description: 'Nimi näkyy numeron yhteydessä palvelukuvauksessa'
+  value_label: 'Palvelun puhelinnumero'
+  value_description: 'Lisää numero maatunnuksineen, muodossa +358 123456789'
+  add_more_label: 'Lisää uusi puhelinnumero'
+field_type: hel_tpm_telephone_with_title

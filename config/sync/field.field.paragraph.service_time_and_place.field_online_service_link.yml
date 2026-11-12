@@ -1,0 +1,27 @@
+uuid: 130da0dd-b020-442a-8a11-d1ddf39a4fc6
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_online_service_link
+    - paragraphs.paragraphs_type.service_time_and_place
+  module:
+    - link
+    - tmgmt_content
+third_party_settings:
+  tmgmt_content:
+    excluded: false
+id: paragraph.service_time_and_place.field_online_service_link
+field_name: field_online_service_link
+entity_type: paragraph
+bundle: service_time_and_place
+label: 'Verkkopalvelun osoite'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 2
+  link_type: 16
+field_type: link

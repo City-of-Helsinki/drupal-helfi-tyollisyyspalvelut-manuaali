@@ -8,6 +8,8 @@ dependencies:
     - field.field.paragraph.service_time_and_place.field_location_additional_info
     - field.field.paragraph.service_time_and_place.field_location_additional_info_1
     - field.field.paragraph.service_time_and_place.field_multiple_dates
+    - field.field.paragraph.service_time_and_place.field_online_service_link
+    - field.field.paragraph.service_time_and_place.field_phone_service_number
     - field.field.paragraph.service_time_and_place.field_separate_time
     - field.field.paragraph.service_time_and_place.field_service_channel
     - field.field.paragraph.service_time_and_place.field_service_location
@@ -18,6 +20,8 @@ dependencies:
     - paragraphs.paragraphs_type.service_time_and_place
   module:
     - field_group
+    - hel_tpm_forms
+    - hel_tpm_general
     - hel_tpm_service_dates
     - text
 third_party_settings:
@@ -27,6 +31,8 @@ third_party_settings:
         - group_label
         - field_service_channel
         - field_service_location
+        - field_online_service_link
+        - field_phone_service_number
         - field_location_additional_info_1
         - group_time
       label: ''
@@ -52,7 +58,7 @@ third_party_settings:
       label: Ajankohta
       region: content
       parent_name: group_location
-      weight: 5
+      weight: 7
       format_type: html_element
       format_settings:
         classes: event-times
@@ -108,7 +114,7 @@ content:
     third_party_settings: {  }
   field_location_additional_info_1:
     type: text_textarea
-    weight: 4
+    weight: 6
     region: content
     settings:
       rows: 5
@@ -121,6 +127,28 @@ content:
     settings:
       disable_end_date: false
       display_time_label: 0
+    third_party_settings: {  }
+  field_online_service_link:
+    type: hel_tpm_forms_link_custom_labels
+    weight: 4
+    region: content
+    settings:
+      placeholder_url: 'Lisää osoite'
+      placeholder_title: 'Lisää nimi'
+      uri_label: 'Verkkopalvelun osoite'
+      uri_description: 'Lisää osoite URL-muodossa, esim. https://tyollisyys.palvelumanuaali.fi'
+      title_label: 'Verkkopalvelun nimi'
+      title_description: 'Verkkopalvelun nimi näkyy palvelukuvauksessa'
+      add_more_label: 'Lisää uusi verkko-osoite'
+    third_party_settings: {  }
+  field_phone_service_number:
+    type: hel_tpm_telephone_with_title_default
+    weight: 5
+    region: content
+    settings:
+      placeholder_title: 'Lisää nimi'
+      placeholder_value: ''
+      country_code: '+358'
     third_party_settings: {  }
   field_service_channel:
     type: options_buttons

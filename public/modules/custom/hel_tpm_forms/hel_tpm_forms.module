@@ -216,6 +216,55 @@ function hel_tpm_forms_time_and_location_form_helper(&$form, FormStateInterface 
       }
     }
 
+    // Show online service link only when the "online_service" channel is
+    // selected and require it while it is visible. Server-side check:
+    // hel_tpm_forms_validate_service_location_required().
+    if (isset($subform['field_online_service_link'], $subform['field_service_channel'])) {
+      $channel_input = sprintf(':input[name="%s[%s][subform][field_service_channel]"]', $field_key, $i);
+      $subform['field_online_service_link']['#states'] = [
+        'visible' => [
+          $channel_input => ['value' => 'online_service'],
+        ],
+      ];
+      if (isset($subform['field_online_service_link']['widget'][0]['uri'])) {
+        $subform['field_online_service_link']['widget'][0]['uri']['#states'] = [
+          'required' => [
+            $channel_input => ['value' => 'online_service'],
+          ],
+        ];
+      }
+    }
+
+    // Show phone service number only when the "telephone_service" channel is
+    // selected and require the number while it is visible. Server-side check:
+    // hel_tpm_forms_validate_service_location_required().
+    if (isset($subform['field_phone_service_number'], $subform['field_service_channel'])) {
+      $channel_input = sprintf(':input[name="%s[%s][subform][field_service_channel]"]', $field_key, $i);
+      $subform['field_phone_service_number']['#states'] = [
+        'visible' => [
+          $channel_input => ['value' => 'telephone_service'],
+        ],
+      ];
+      if (isset($subform['field_phone_service_number']['widget'][0]['value'])) {
+        $subform['field_phone_service_number']['widget'][0]['value']['#states'] = [
+          'required' => [
+            $channel_input => ['value' => 'telephone_service'],
+          ],
+        ];
+      }
+      // The title (service name) is required with the number when the field
+      // requires it. Enforced on save by the field type's constraint.
+      $phone_field_definition = \Drupal::service('entity_field.manager')
+        ->getFieldDefinitions('paragraph', 'service_time_and_place')['field_phone_service_number'] ?? NULL;
+      if ($phone_field_definition?->getSetting('title_required') && isset($subform['field_phone_service_number']['widget'][0]['title'])) {
+        $subform['field_phone_service_number']['widget'][0]['title']['#states'] = [
+          'required' => [
+            $channel_input => ['value' => 'telephone_service'],
+          ],
+        ];
+      }
+    }
+
     hel_tpm_forms_location_accessibility_attach($subform, $form_state, $field_key, $i);
 
     // Show channel additional info whenever any service channel is selected.
@@ -242,7 +291,12 @@ function hel_tpm_forms_time_and_location_form_helper(&$form, FormStateInterface 
 }
 
 /**
- * Requires field_service_location when the "location" channel is selected.
+ * Requires channel specific fields based on the selected service channel.
+ *
+ * - field_service_location when the "location" channel is selected.
+ * - field_online_service_link when the "online_service" channel is selected.
+ * - field_phone_service_number when the "telephone_service" channel is
+ *   selected.
  *
  * @param array $form
  *   The form array.
@@ -263,22 +317,35 @@ function hel_tpm_forms_validate_service_location_required(array &$form, FormStat
     return;
   }
 
+  // Channel value => [field name, value property, fallback title].
+  $required_by_channel = [
+    'location' => ['field_service_location', 'target_id', t('Location')],
+    'online_service' => ['field_online_service_link', 'uri', t('Online service link')],
+    'telephone_service' => ['field_phone_service_number', 'value', t('Phone number')],
+  ];
+
   foreach ($items as $delta => $item) {
     // Skip non-item keys (add_more etc.) and closed/removed paragraphs.
     if (!is_numeric($delta) || !isset($item['subform']) || !is_array($item['subform'])) {
       continue;
     }
     $channel = $item['subform']['field_service_channel'][0]['value'] ?? NULL;
-    if ($channel !== 'location') {
+    if (!isset($required_by_channel[$channel])) {
       continue;
     }
-    if (!empty($item['subform']['field_service_location'][0]['target_id'])) {
+    [$field_name, $property, $fallback_title] = $required_by_channel[$channel];
+    $subform = $form[$field_key]['widget'][$delta]['subform'] ?? [];
+    // The field is not on the paragraph form (e.g. not yet configured).
+    if (!isset($subform[$field_name])) {
+      continue;
+    }
+    if (!empty($item['subform'][$field_name][0][$property])) {
       continue;
     }
 
-    $element = $form[$field_key]['widget'][$delta]['subform']['field_service_location']['widget'][0]['target_id'] ?? NULL;
-    $title = $element['#title'] ?? $form[$field_key]['widget'][$delta]['subform']['field_service_location']['widget']['#title'] ?? t('Location');
-    $name = sprintf('%s][%s][subform][field_service_location][0][target_id', $field_key, $delta);
+    $element = $subform[$field_name]['widget'][0][$property] ?? NULL;
+    $title = $element['#title'] ?? $subform[$field_name]['widget']['#title'] ?? $fallback_title;
+    $name = sprintf('%s][%s][subform][%s][0][%s', $field_key, $delta, $field_name, $property);
     $form_state->setErrorByName($name, t('@name field is required.', ['@name' => $title]));
   }
 }

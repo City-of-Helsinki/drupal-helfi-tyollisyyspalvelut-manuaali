@@ -8,6 +8,8 @@ dependencies:
     - field.field.paragraph.service_time_and_place.field_location_additional_info
     - field.field.paragraph.service_time_and_place.field_location_additional_info_1
     - field.field.paragraph.service_time_and_place.field_multiple_dates
+    - field.field.paragraph.service_time_and_place.field_online_service_link
+    - field.field.paragraph.service_time_and_place.field_phone_service_number
     - field.field.paragraph.service_time_and_place.field_separate_time
     - field.field.paragraph.service_time_and_place.field_service_channel
     - field.field.paragraph.service_time_and_place.field_service_location
@@ -18,7 +20,9 @@ dependencies:
     - paragraphs.paragraphs_type.service_time_and_place
   module:
     - datetime_range
+    - hel_tpm_general
     - hel_tpm_service_dates
+    - link
     - options
     - text
 id: paragraph.service_time_and_place.default
@@ -61,6 +65,25 @@ content:
       separator: '-'
     third_party_settings: {  }
     weight: 7
+    region: content
+  field_online_service_link:
+    type: link
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 8
+    region: content
+  field_phone_service_number:
+    type: hel_tpm_telephone_with_title_link
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 9
     region: content
   field_service_location:
     type: entity_reference_entity_view
