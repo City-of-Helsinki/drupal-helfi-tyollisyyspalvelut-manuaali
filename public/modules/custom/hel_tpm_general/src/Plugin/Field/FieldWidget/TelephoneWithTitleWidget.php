@@ -246,8 +246,9 @@ class TelephoneWithTitleWidget extends WidgetBase implements TrustedCallbackInte
    */
   public function errorElement(array $element, ConstraintViolationInterface $error, array $form, FormStateInterface $form_state): array|bool {
     // Show the error on the sub-element (title or number) it belongs to. The
-    // property path is set by WidgetBase::flagErrors().
-    $property = $error->arrayPropertyPath[0] ?? NULL;
+    // property path is relative to the field, e.g. "0.title", like in core's
+    // LinkWidget::errorElement().
+    $property = explode('.', $error->getPropertyPath())[1] ?? NULL;
     if ($property !== NULL && isset($element[$property])) {
       return $element[$property];
     }
