@@ -60,10 +60,10 @@
     {% endif %}
     {% for item in items %}
       <div{{ item.attributes.addClass('field__item') }}>
-        {{ item.content }}
-        {% if not loop.last %}
-          <p>{{","}}&nbsp;</p>
-        {% endif %}
+        {{- item.content -}}
+        {%- if not loop.last -%}
+          <p>,&nbsp;</p>
+        {%- endif -%}
       </div>
     {% endfor %}
     {% if multiple %}

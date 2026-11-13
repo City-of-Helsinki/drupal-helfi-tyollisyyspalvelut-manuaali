@@ -94,6 +94,49 @@
     }
   }
 
+  /**
+   * Re-syncs the location accessibility display after browser form restore.
+   *
+   * On reload the server renders the display from the saved location, but the
+   * browser may restore a different (or emptied) input value. The display is
+   * hidden by CSS (data-location-accessibility-pending) until checked here:
+   * - input unchanged: reveal the display;
+   * - input emptied: clear the display;
+   * - input changed: trigger "change" so the AJAX callback replaces the
+   *   display (the replacement is not pending, so it shows).
+   */
+  Drupal.behaviors.helTpmLocationAccessibilitySync = {
+    attach(context) {
+      const inputs = once(
+        'hel-tpm-location-accessibility-sync',
+        'input[data-location-accessibility-wrapper]',
+        context
+      );
+      if (!inputs.length) {
+        return;
+      }
+      // Defer until all behaviors (incl. Drupal.ajax bindings) are attached.
+      setTimeout(function () {
+        inputs.forEach(function (input) {
+          const wrapper = document.getElementById(input.dataset.locationAccessibilityWrapper);
+          if (!wrapper) {
+            return;
+          }
+          if (input.value === input.defaultValue) {
+            wrapper.removeAttribute('data-location-accessibility-pending');
+          }
+          else if (input.value.trim() === '') {
+            wrapper.replaceChildren();
+            wrapper.removeAttribute('data-location-accessibility-pending');
+          }
+          else {
+            $(input).trigger('change');
+          }
+        });
+      }, 0);
+    }
+  };
+
   let addParagraphClicked = false;
 
     Drupal.behaviors.serviceTimeParagraphScroll = {
