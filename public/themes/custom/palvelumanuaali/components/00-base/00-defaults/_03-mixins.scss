@@ -20,6 +20,25 @@
   line-height: 24px;
 }
 
+// Form field label typography. Mirrors the font values of the .h6 class
+// (heading-xxs mixin in 01-atoms/text/headings/_headings.scss): 16px/24px,
+// weight 600 from the xl-zoom breakpoint up, 13px/16px below it. Defined here
+// instead of including heading-xxs, because the form partials are compiled
+// before the headings partial. Keep the two in sync. Color and margin are
+// left to the label rules.
+@mixin form-label-h6 {
+  font-family: $font-heading;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 13px;
+  line-height: 1rem;
+  letter-spacing: 0;
+  @include xl-zoom {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+}
+
 @mixin clearfix {
   &::after {
     clear: both;

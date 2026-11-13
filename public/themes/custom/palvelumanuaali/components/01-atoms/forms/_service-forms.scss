@@ -19,10 +19,6 @@
     display: none;
   }
 
-  .description {
-    margin-bottom: $space;
-  }
-
   table {
     background-color: unset;
     margin: 0;
@@ -251,7 +247,8 @@
       }
       legend,
       legend > span {
-        @extend .form-item__label;
+        @include form-label-h6;
+        margin-bottom: $space-one-half;
       }
 
       > .h2,
