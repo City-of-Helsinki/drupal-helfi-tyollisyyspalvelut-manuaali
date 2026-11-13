@@ -250,6 +250,11 @@
         "drupal-scaffold": {
             "locations": {
                 "web-root": "public/"
+            },
+            "file-mapping": {
+                "[web-root]/robots.txt": {
+                    "append": "robots-additions.txt"
+                }
             }
         },
         "hooks": {
