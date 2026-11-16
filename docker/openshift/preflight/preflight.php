@@ -60,6 +60,12 @@ function environment_variable_isset(array $items) : bool {
 }
 
 $class_loader = require_once './../vendor/autoload.php';
+
+// settings.php expects $app_root and $site_path, which are normally
+// provided by DrupalKernel. Define them here since settings.php is
+// included outside of a Drupal bootstrap.
+$app_root = dirname(__DIR__, 3) . '/public';
+$site_path = 'sites/default';
 require_once './sites/default/settings.php'; // NOSONAR
 
 $candidates = [
