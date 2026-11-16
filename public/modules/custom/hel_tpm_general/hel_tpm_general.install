@@ -5,6 +5,7 @@
  * Hel tpm general install file.
  */
 
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Site\Settings;
 use Drupal\field\Entity\FieldConfig;
@@ -1311,6 +1312,83 @@ function hel_tpm_general_update_20134(array &$sandbox): string {
   $sandbox['#finished'] = (empty($tids) || empty($sandbox['max'])) ? 1 : min(1, $sandbox['progress'] / $sandbox['max']);
 
   return (string) t('Deleted @count taxonomy terms without an existing vocabulary.', ['@count' => $sandbox['progress']]);
+}
+
+/**
+ * Set "location" as the service channel of existing time and place paragraphs.
+ */
+function hel_tpm_general_update_20135(): string {
+  $field_name = 'field_service_channel';
+  $bundle = 'service_time_and_place';
+  $value = 'location';
+
+  // Deploy runs database updates before the configuration import, so create
+  // the field from the sync directory if it does not exist yet.
+  _hel_tpm_general_ensure_entity_fields('paragraph', $bundle, [$field_name]);
+
+  $database = \Drupal::database();
+  $entity_type_manager = \Drupal::entityTypeManager();
+  $entity_type = $entity_type_manager->getDefinition('paragraph');
+  $field_tables = _hel_tpm_general_get_field_tables($field_name, 'paragraph');
+
+  // Every translation of every paragraph (revision) gets the value, like any
+  // untranslatable field. Paragraphs that already have a channel are skipped.
+  $sources = [
+    'base' => [$entity_type->getDataTable(), ['entity_id', 'langcode']],
+    'revision' => [$entity_type->getRevisionDataTable(), ['revision_id', 'langcode']],
+  ];
+  $counts = [];
+  foreach ($sources as $key => [$source_table, $join_columns]) {
+    $field_table = $field_tables[$key];
+    $join = [];
+    foreach ($join_columns as $column) {
+      $source_column = $column === 'entity_id' ? 'id' : $column;
+      $join[] = "f.$column = p.$source_column";
+    }
+
+    $select = $database->select($source_table, 'p');
+    // The revision data table has no bundle column, so the bundle comes from
+    // the base table.
+    $select->join($entity_type->getBaseTable(), 'b', 'b.id = p.id');
+    $select->leftJoin($field_table, 'f', implode(' AND ', $join));
+    $select->fields('p', ['id', 'revision_id', 'langcode']);
+    $select->fields('b', ['type']);
+    $select->addExpression('0', 'deleted');
+    $select->addExpression('0', 'delta');
+    $select->addExpression(':value', 'channel', [':value' => $value]);
+    $select->condition('b.type', $bundle);
+    $select->isNull('f.entity_id');
+
+    $counts[$key] = (int) $select->countQuery()->execute()->fetchField();
+    if ($counts[$key] > 0) {
+      $database->insert($field_table)
+        ->fields([
+          'entity_id',
+          'revision_id',
+          'langcode',
+          'bundle',
+          'deleted',
+          'delta',
+          $field_name . '_value',
+        ])
+        ->from($select)
+        ->execute();
+    }
+  }
+
+  $storage = $entity_type_manager->getStorage('paragraph');
+  $ids = $storage->getQuery()
+    ->accessCheck(FALSE)
+    ->condition('type', $bundle)
+    ->execute();
+  $storage->resetCache();
+  Cache::invalidateTags(array_map(static fn ($id): string => 'paragraph:' . $id, array_values($ids)));
+
+  return (string) t('Set the service channel to "@value" in @base paragraph translations and @revision paragraph revision translations.', [
+    '@value' => $value,
+    '@base' => $counts['base'],
+    '@revision' => $counts['revision'],
+  ]);
 }
 
 /**
