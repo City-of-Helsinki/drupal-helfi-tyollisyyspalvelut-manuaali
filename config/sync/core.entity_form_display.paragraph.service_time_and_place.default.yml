@@ -8,7 +8,9 @@ dependencies:
     - field.field.paragraph.service_time_and_place.field_location_additional_info
     - field.field.paragraph.service_time_and_place.field_location_additional_info_1
     - field.field.paragraph.service_time_and_place.field_multiple_dates
+    - field.field.paragraph.service_time_and_place.field_online_service_link
     - field.field.paragraph.service_time_and_place.field_separate_time
+    - field.field.paragraph.service_time_and_place.field_service_channel
     - field.field.paragraph.service_time_and_place.field_service_location
     - field.field.paragraph.service_time_and_place.field_start_and_end_date
     - field.field.paragraph.service_time_and_place.field_time_additional_info
@@ -17,6 +19,7 @@ dependencies:
     - paragraphs.paragraphs_type.service_time_and_place
   module:
     - field_group
+    - hel_tpm_forms
     - hel_tpm_service_dates
     - text
 third_party_settings:
@@ -24,7 +27,9 @@ third_party_settings:
     group_location:
       children:
         - group_label
+        - field_service_channel
         - field_service_location
+        - field_online_service_link
         - field_location_additional_info_1
         - group_time
       label: ''
@@ -50,7 +55,7 @@ third_party_settings:
       label: Ajankohta
       region: content
       parent_name: group_location
-      weight: 5
+      weight: 6
       format_type: html_element
       format_settings:
         classes: event-times
@@ -67,7 +72,7 @@ third_party_settings:
         required_fields: true
     group_label:
       children: {  }
-      label: Paikka
+      label: 'Asiointikanava ja -aika'
       region: content
       parent_name: group_location
       weight: 1
@@ -106,7 +111,7 @@ content:
     third_party_settings: {  }
   field_location_additional_info_1:
     type: text_textarea
-    weight: 4
+    weight: 5
     region: content
     settings:
       rows: 5
@@ -120,9 +125,28 @@ content:
       disable_end_date: false
       display_time_label: 0
     third_party_settings: {  }
+  field_online_service_link:
+    type: hel_tpm_forms_link_custom_labels
+    weight: 4
+    region: content
+    settings:
+      placeholder_url: 'Lisää osoite'
+      placeholder_title: 'Lisää nimi'
+      uri_label: 'Verkkopalvelun osoite'
+      uri_description: 'Lisää osoite URL-muodossa, esim. https://tyollisyys.palvelumanuaali.fi'
+      title_label: 'Verkkopalvelun nimi'
+      title_description: 'Verkkopalvelun nimi näkyy palvelukuvauksessa'
+      add_more_label: 'Lisää uusi verkko-osoite'
+    third_party_settings: {  }
+  field_service_channel:
+    type: options_buttons
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   field_service_location:
     type: entity_reference_autocomplete
-    weight: 2
+    weight: 3
     region: content
     settings:
       match_operator: CONTAINS

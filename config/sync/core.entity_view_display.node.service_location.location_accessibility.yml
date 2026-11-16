@@ -1,0 +1,92 @@
+uuid: 7e824b0e-d412-49aa-8fdd-5444397b3278
+langcode: fi
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.location_accessibility
+    - field.field.node.service_location.field_accessibility
+    - field.field.node.service_location.field_accessibility_details
+    - field.field.node.service_location.field_accessibility_info
+    - field.field.node.service_location.field_address
+    - node.type.service_location
+  module:
+    - field_group
+    - hel_tpm_forms
+    - text
+    - user
+third_party_settings:
+  field_group:
+    group_location_accessibility:
+      children:
+        - group_infobox
+      label: 'Toimipaikan esteettömyystiedot'
+      parent_name: ''
+      region: content
+      weight: 0
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: true
+        label_element: h6
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_infobox:
+      children:
+        - field_accessibility
+        - field_accessibility_info
+      label: Infobox
+      parent_name: group_location_accessibility
+      region: content
+      weight: 20
+      format_type: html_element
+      format_settings:
+        classes: infobox
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+id: node.service_location.location_accessibility
+targetEntityType: node
+bundle: service_location
+mode: location_accessibility
+content:
+  field_accessibility:
+    type: entity_reference_translated_label
+    label: hidden
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 21
+    region: content
+  field_accessibility_info:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 22
+    region: content
+hidden:
+  entity_print_view_epub: true
+  entity_print_view_pdf: true
+  entity_print_view_word_docx: true
+  entitygroupfield: true
+  field_accessibility_details: true
+  field_address: true
+  flag_cart: true
+  flag_flag_list_template_1: true
+  flag_lists: true
+  langcode: true
+  links: true
+  search_api_excerpt: true
