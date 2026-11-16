@@ -1392,6 +1392,39 @@ function hel_tpm_general_update_20135(): string {
 }
 
 /**
+ * Separate paragraphs shared between translations of translatable fields.
+ *
+ * Basic pages translated before their paragraphs became asymmetrically
+ * translatable (TP-1440) share paragraph entities between translations, which
+ * makes saving some of the translations fail.
+ */
+function hel_tpm_general_update_20136(array &$sandbox): string {
+  /** @var \Drupal\hel_tpm_general\SharedTranslationParagraphFixer $fixer */
+  $fixer = \Drupal::service('hel_tpm_general.shared_translation_paragraph_fixer');
+  $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+
+  if (!isset($sandbox['ids'])) {
+    $sandbox['ids'] = $fixer->findAffectedEntityIds('node');
+    $sandbox['max'] = count($sandbox['ids']);
+    $sandbox['fixed'] = [];
+  }
+
+  foreach (array_splice($sandbox['ids'], 0, 10) as $nid) {
+    $node = $node_storage->load($nid);
+    if ($node && $fixer->fixEntity($node)) {
+      $sandbox['fixed'][] = $nid;
+    }
+  }
+
+  $sandbox['#finished'] = empty($sandbox['ids']) ? 1 : 1 - count($sandbox['ids']) / $sandbox['max'];
+
+  return (string) t('Separated shared translation paragraphs on @count nodes: @nids', [
+    '@count' => count($sandbox['fixed']),
+    '@nids' => implode(', ', $sandbox['fixed']) ?: '-',
+  ]);
+}
+
+/**
  * Inserts a row into the specified field's database tables.
  *
  * This function inserts values for a given field into the appropriate database
