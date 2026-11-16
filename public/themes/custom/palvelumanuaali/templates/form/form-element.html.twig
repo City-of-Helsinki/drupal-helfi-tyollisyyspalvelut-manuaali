@@ -58,5 +58,5 @@
   ]
 %}
 {% include "@atoms/forms/_form-element.twig" with {
-  description_display: 'before',
+  description_display: theme_description_display|default('before'),
 }%}

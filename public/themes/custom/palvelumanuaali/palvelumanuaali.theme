@@ -302,6 +302,21 @@ function palvelumanuaali_preprocess_paragraph(&$variables): void {
 }
 
 /**
+ * Implements hook_preprocess_HOOK().
+ *
+ * Prepares variables for form element templates.
+ *
+ * The theme shows form element descriptions before the input. An element can
+ * show its description elsewhere by setting '#description_display_override',
+ * e.g. to 'after'. Core's '#description_display' can't be used for this,
+ * because core always sets it to 'after' by default.
+ */
+function palvelumanuaali_preprocess_form_element(array &$variables): void {
+  $override = $variables['element']['#description_display_override'] ?? NULL;
+  $variables['theme_description_display'] = in_array($override, ['before', 'after', 'invisible'], TRUE) ? $override : 'before';
+}
+
+/**
  * Implements hook_theme_suggestions_HOOK_alter().
  *
  * Add template suggestions for form element.
