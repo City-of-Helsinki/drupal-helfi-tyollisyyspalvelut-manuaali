@@ -1,0 +1,67 @@
+/**
+ * @file
+ * Shows the country code input inside the telephone number input.
+ *
+ * The country code input is rendered as the field prefix of the number input.
+ * The prefix and the number input are placed in the same grid cell, so the
+ * country code looks like part of the number input but can still be edited.
+ * The label stays above and the errors and the description below.
+ *
+ * The front-end theme renders the prefix as .field-prefix, Claro as
+ * .form-item__prefix.
+ */
+.form-item.telephone-with-title__number--country-code {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  /* When the form item is taller than its content (e.g. stretched in a flex
+     row next to an item with a longer description), keep the rows at their
+     content height. By default the extra height is spread over the rows,
+     which moves the input down and the country code off center. */
+  align-content: start;
+}
+
+.form-item.telephone-with-title__number--country-code > * {
+  grid-column: 1;
+}
+
+.form-item.telephone-with-title__number--country-code > .field-prefix,
+.form-item.telephone-with-title__number--country-code > .form-item__prefix,
+.form-item.telephone-with-title__number--country-code > input {
+  grid-row: 2;
+}
+
+.form-item.telephone-with-title__number--country-code > .field-prefix,
+.form-item.telephone-with-title__number--country-code > .form-item__prefix {
+  z-index: 1;
+  align-self: center;
+  justify-self: start;
+  margin: 0;
+  padding: 0 0 0 8px;
+}
+
+.form-item.telephone-with-title__number--country-code > input.form-tel {
+  box-sizing: border-box;
+  width: 100%;
+  padding-inline-start: 4.25rem;
+}
+
+/* Looks like plain text inside the number input until focused. */
+.form-item.telephone-with-title__number--country-code input.telephone-with-title__country-code-input {
+  box-sizing: border-box;
+  width: 3.5rem;
+  height: auto;
+  margin: 0;
+  padding: 0 8px;
+  color: inherit;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  box-shadow: none;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.form-item.telephone-with-title__number--country-code input.telephone-with-title__country-code-input:focus {
+  outline: 2px solid currentColor;
+  outline-offset: 0;
+}
