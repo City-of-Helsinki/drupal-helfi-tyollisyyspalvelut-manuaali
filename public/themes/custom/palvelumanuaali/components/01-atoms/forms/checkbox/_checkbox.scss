@@ -8,8 +8,32 @@
   align-items: center;
   input {
     margin-right: $space-one-half;
-    width: 16px;
-    height: 16px;
+  }
+  .form-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    flex: 0 0 24px;
+    width: 24px;
+    height: 24px;
+    margin-top: 0;
+    margin-bottom: 0;
+    border: 2px solid clr(light-border);
+    border-radius: 4px;
+    background: clr(text-inverse);
+    cursor: pointer;
+
+    &:checked {
+      border-color: clr(background-section);
+      background: clr(background-section) url('../../assets/icons/check-white.svg') no-repeat center / 14px 11px;
+    }
+    &:focus-visible {
+      outline: 2px solid clr(background-section);
+      outline-offset: 2px;
+    }
+    &:disabled {
+      border-color: $gray-light;
+      cursor: not-allowed;
+    }
   }
   label {
     max-width: 30ch;

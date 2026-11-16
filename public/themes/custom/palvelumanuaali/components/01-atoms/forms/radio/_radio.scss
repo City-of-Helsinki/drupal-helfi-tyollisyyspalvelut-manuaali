@@ -18,8 +18,31 @@
   @include xl {
     margin-right: $space-one-and-half;
   }
-  .form-radio{
-    max-width: 13px;
+  .form-radio {
+    appearance: none;
+    -webkit-appearance: none;
+    flex: 0 0 24px;
+    width: 24px;
+    height: 24px;
+    margin: 0;
+    border: 2px solid clr(light-border);
+    border-radius: 50%;
+    background: clr(text-inverse);
+    cursor: pointer;
+
+    &:checked {
+      border-color: clr(background-section);
+      // Inner dot: 8px radius leaves a ~2px white gap inside the 20px inner area.
+      background: radial-gradient(circle, clr(background-section) 0 8px, clr(text-inverse) 8.5px);
+    }
+    &:focus-visible {
+      outline: 2px solid clr(background-section);
+      outline-offset: 2px;
+    }
+    &:disabled {
+      border-color: $gray-light;
+      cursor: not-allowed;
+    }
   }
   label {
       margin-left: $space-one-half;
