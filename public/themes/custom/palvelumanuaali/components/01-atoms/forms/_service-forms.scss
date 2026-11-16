@@ -567,7 +567,8 @@
       font-size: 0;
     }
   }
-  .field--widget-string-textarea {
+  .field--widget-string-textarea,
+  .field--name-field-price-description .js-text-format-wrapper{
     >.form-item {
       display: flex;
       flex-wrap: wrap;
@@ -575,6 +576,12 @@
       .counter {
         order: 1;
       }
+    }
+  }
+  .field--name-field-free-service {
+    .form-item--radio {
+      display: flex;
+      flex-direction: column;
     }
   }
 }
