@@ -1,0 +1,301 @@
+diff --git a/src/EntityExportCsvManager.php b/src/EntityExportCsvManager.php
+index d91fb11..13a63ca 100644
+--- a/src/EntityExportCsvManager.php
++++ b/src/EntityExportCsvManager.php
+@@ -315,16 +315,55 @@ class EntityExportCsvManager implements EntityExportCsvManagerInterface {
+     }
+   }
+ 
++  /**
++   * Get configurations for given entity type bundle.
++   *
++   * @param string $entity_type_id
++   *  Entity type ie. node
++   * @param string $bundle
++   *  Entity bundle.
++   *
++   * @return array
++   *  Options array of configurations.
++   *
++   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
++   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
++   */
++  public function getBundleConfigurationOptions($entity_type_id, $bundle) {
++    $options = [];
++    $configs = $this->getConfigurations($entity_type_id, $bundle);
++    if (empty($configs)) {
++      return $options;
++    }
++    foreach ($configs as $key => $config) {
++      $options[$key] = $config->label();
++    }
++    return $options;
++  }
++
++  /**
++   * {@inheritdoc}
++   */
++  public function getConfigurationFields(string $configuration_id) {
++    $configuration = $this->entityTypeManager->getStorage('entity_export_csv')->load($configuration_id);
++    $config['delimiter'] = $configuration->getDelimiter();
++    $config += $configuration->getFields();
++    return $config;
++  }
++
+   /**
+    * {@inheritdoc}
+    */
+-  public function getConfigurations($entity_type_id = '') {
++  public function getConfigurations($entity_type_id = '', $bundle = '') {
+     $entity_export_csv = [];
+     $query = $this->entityTypeManager->getStorage('entity_export_csv')->getQuery();
+     $query->condition('status', 1);
+     if (!empty($entity_type_id)) {
+       $query->condition('entity_type_id', $entity_type_id);
+     }
++    if (!empty($bundle)) {
++      $query->condition('bundle', $bundle);
++    }
+     $result = $query->accessCheck(TRUE)->execute();
+     if (!empty($result)) {
+       $entity_export_csv = $this->entityTypeManager->getStorage('entity_export_csv')->loadMultiple($result);
+diff --git a/src/EntityExportCsvManagerInterface.php b/src/EntityExportCsvManagerInterface.php
+index e116c46..8e52154 100644
+--- a/src/EntityExportCsvManagerInterface.php
++++ b/src/EntityExportCsvManagerInterface.php
+@@ -109,10 +109,39 @@ interface EntityExportCsvManagerInterface {
+   public function getBundleFieldDefinitions($entity_type_id, $bundle);
+ 
+   /**
++   * Get configurations for given entity type bundle.
++   *
++   * @param string $entity_type_id
++   *  The entity type id.
++   * @param string $bundle
++   *  The bundle id.
++   *
++   * @return array
++   *  Options array of configurations.
++   *
++   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
++   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
++   */
++  public function getBundleConfigurationOptions($entity_type_id, $bundle);
++
++  /**
++   * Get export field settings for give configuration.
++   *
++   * @param string $configuration_id
++   *   The configuration id.
++   *
++   * @return mixed
++   */
++  public function getConfigurationFields(string $configuration_id);
++
++    /**
+    * Get the entity export csv configurations.
+    *
+    * @param string $entity_type_id
+    *   The entity type id.
++   * @param string $bundle
++   *   The entity bundle id.
++   *
+    *
+    * @return \Drupal\entity_export_csv\Entity\EntityExportCsvInterface[]
+    *   The entity export csv config entities.
+@@ -120,7 +149,7 @@ interface EntityExportCsvManagerInterface {
+    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+    */
+-  public function getConfigurations($entity_type_id = '');
++  public function getConfigurations($entity_type_id = '', $bundle = '');
+ 
+   /**
+    * Sort the fields given the fields configuration default value order.
+diff --git a/src/Form/EntityExportCsv.php b/src/Form/EntityExportCsv.php
+index a9894ee..2a4f4d3 100644
+--- a/src/Form/EntityExportCsv.php
++++ b/src/Form/EntityExportCsv.php
+@@ -4,6 +4,7 @@ namespace Drupal\entity_export_csv\Form;
+ 
+ use Drupal\Component\Utility\Html;
+ use Drupal\Core\Config\ConfigFactoryInterface;
++use Drupal\Core\Entity\EntityTypeManager;
+ use Drupal\Core\Form\FormBase;
+ use Drupal\Core\Form\FormStateInterface;
+ use Drupal\Core\Language\LanguageManagerInterface;
+@@ -47,6 +48,13 @@ class EntityExportCsv extends FormBase {
+    */
+   protected $languageManager;
+ 
++  /**
++   * The entity type manager.
++   *
++   * @var \Drupal\Core\Entity\EntityTypeManager
++   */
++  protected $entityTypeManager;
++
+   /**
+    * Define entity export csv form constructor.
+    *
+@@ -61,12 +69,13 @@ class EntityExportCsv extends FormBase {
+    * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
+    *   The language manager.
+    */
+-  public function __construct(ConfigFactoryInterface $config_factory, FieldTypeExportManagerInterface $field_type_export_manager, UserDataInterface $user_data, EntityExportCsvManagerInterface $entity_export_csv_manager, LanguageManagerInterface $language_manager) {
++  public function __construct(ConfigFactoryInterface $config_factory, FieldTypeExportManagerInterface $field_type_export_manager, UserDataInterface $user_data, EntityExportCsvManagerInterface $entity_export_csv_manager, LanguageManagerInterface $language_manager, EntityTypeManager $entity_type_manager) {
+     $this->setConfigFactory($config_factory);
+     $this->fieldTypeExportManager = $field_type_export_manager;
+     $this->userData = $user_data;
+     $this->manager = $entity_export_csv_manager;
+     $this->languageManager = $language_manager;
++    $this->entityTypeManager = $entity_type_manager;
+   }
+ 
+   /**
+@@ -78,7 +87,8 @@ class EntityExportCsv extends FormBase {
+       $container->get('plugin.manager.field_type_export'),
+       $container->get('user.data'),
+       $container->get('entity_export_csv.manager'),
+-      $container->get('language_manager')
++      $container->get('language_manager'),
++      $container->get('entity_type.manager')
+     );
+   }
+ 
+@@ -118,7 +128,6 @@ class EntityExportCsv extends FormBase {
+       ];
+     }
+ 
+-    $user_data = $this->userData->get('entity_export_csv', $this->currentUser()->id(), 'entity_export_csv') ?: [];
+     $form['entity_type'] = [
+       '#type' => 'select',
+       '#title' => $this->t('Entity type'),
+@@ -151,11 +160,30 @@ class EntityExportCsv extends FormBase {
+         '#ajax' => [
+           'event' => 'change',
+           'method' => 'replaceWith',
+-          'wrapper' => 'fields-wrapper',
+-          'callback' => [$this, 'ajaxReplaceFieldsCallback'],
++          'wrapper' => 'bundle-wrapper',
++          'callback' => [$this, 'ajaxReplaceBundleCallback'],
+         ],
+       ];
+ 
++      $bundle = $this->getElementPropertyValue('bundle', $form_state, '');
++      if (!empty($bundle)) {
++        $bundle_config = $this->manager->getBundleConfigurationOptions($entity_type_id, $bundle);
++
++        $form['bundle_wrapper']['bundle_config'] = [
++          '#type' => 'select',
++          '#title' => $this->t('Select configuration'),
++          '#description' => $this->t('Select configuration used for bundle export'),
++          '#options' => ['' => $this->t('- Select -')] + $bundle_config,
++          '#default_value' => $this->getElementPropertyValue('bundle_config', $form_state, ''),
++          '#ajax' => [
++            'event' => 'change',
++            'method' => 'replaceWith',
++            'wrapper' => 'fields-wrapper',
++            'callback' => [$this, 'ajaxReplaceFieldsCallback'],
++          ],
++        ];
++      }
++
+       $form['bundle_wrapper']['fields'] = [
+         '#type' => 'container',
+         '#prefix' => '<div id="fields-wrapper">',
+@@ -168,6 +196,16 @@ class EntityExportCsv extends FormBase {
+         ],
+       ];
+ 
++      $bundle_config_selection = $this->getElementPropertyValue('bundle_config', $form_state, '');
++
++      if (empty($bundle_config_selection)) {
++        $export_config = $this->userData->get('entity_export_csv', $this->currentUser()->id(), 'entity_export_csv') ?: [];
++      }
++      else {
++        $export_config[$entity_type_id][$bundle] = $this->manager->getConfigurationFields($bundle_config_selection);
++      }
++
++
+       $bundle = $this->getElementPropertyValue('bundle', $form_state, '');
+       if ($bundle) {
+         $triggering_element = $form_state->getTriggeringElement();
+@@ -175,16 +213,21 @@ class EntityExportCsv extends FormBase {
+         // between bundle with same fields, the first settings are still selected
+         // because the user input is already set for this field (but for
+         // an another bundle).
+-        if (!empty($triggering_element['#name']) && $triggering_element['#name'] === 'bundle') {
++        $triggers = [
++          'bundle',
++          'bundle_config'
++        ];
++        if (!empty($triggering_element['#name']) && in_array($triggering_element['#name'], $triggers)) {
+           $user_input = $form_state->getUserInput();
+           $user_input['fields'] = [];
+           $form_state->setUserInput($user_input);
+         }
++
+         $form['bundle_wrapper']['fields']['#title'] = $this->t('Select fields to export');
+         $fields = $this->manager->getBundleFieldsEnabled($entity_type_id, $bundle, TRUE);
+         $user_default_values = [];
+-        if (!empty($user_data[$entity_type_id][$bundle])) {
+-          $user_default_values = $user_data[$entity_type_id][$bundle];
++        if (!empty($export_config[$entity_type_id][$bundle])) {
++          $user_default_values = $export_config[$entity_type_id][$bundle];
+         }
+         if (!empty($user_default_values)) {
+           $this->manager->sortNaturalFields($fields, $user_default_values);
+@@ -335,20 +378,31 @@ class EntityExportCsv extends FormBase {
+     $delimiter = $values['fields']['delimiter'];
+     unset($values['fields']['delimiter']);
+ 
++    $bundle_config = $values['bundle_config'];
++    unset($values['bundle_config']);
++
+     $entity_type_id = $values['entity_type'];
+     $bundle_id = $values['bundle'];
+     $fields = $values['fields'];
+ 
+-    $user_data = $this->userData->get('entity_export_csv', $this->currentUser()->id(), 'entity_export_csv') ?: [];
+-    if (!empty($save)) {
+-      $user_data[$entity_type_id][$bundle_id] = ['delimiter' => $delimiter] + $fields;
++    if (empty($bundle_config)) {
++      $user_data = $this->userData->get('entity_export_csv', $this->currentUser()->id(), 'entity_export_csv') ?: [];
++      if (!empty($save)) {
++        $user_data[$entity_type_id][$bundle_id] = ['delimiter' => $delimiter] + $fields;
++      }
++      else {
++        if (isset($user_data[$entity_type_id][$bundle_id])) {
++          unset($user_data[$entity_type_id][$bundle_id]);
++        }
++      }
++      $this->userData->set('entity_export_csv', $this->currentUser()->id(), 'entity_export_csv', $user_data);
+     }
+     else {
+-      if (isset($user_data[$entity_type_id][$bundle_id])) {
+-        unset($user_data[$entity_type_id][$bundle_id]);
+-      }
++      $entity_export_csv = $this->entityTypeManager->getStorage('entity_export_csv')->load($bundle_config);
++      $entity_export_csv->setDelimiter($delimiter);
++      $entity_export_csv->setFields($values['fields']);
++      $entity_export_csv->save();
+     }
+-    $this->userData->set('entity_export_csv', $this->currentUser()->id(), 'entity_export_csv', $user_data);
+     $triggering_element = $form_state->getTriggeringElement();
+     if ($triggering_element['#name'] === 'save') {
+       $this->messenger()->addStatus($this->t('Settings successfully updated.'));
+diff --git a/src/Form/EntityExportCsvTrait.php b/src/Form/EntityExportCsvTrait.php
+index d596802..f029088 100644
+--- a/src/Form/EntityExportCsvTrait.php
++++ b/src/Form/EntityExportCsvTrait.php
+@@ -109,7 +109,8 @@ trait EntityExportCsvTrait {
+    *   The property value.
+    */
+   protected function getElementPropertyValue($property, FormStateInterface $form_state, $default = '', $triggering_element = NULL) {
+-    if (!empty($triggering_element['#name']) && $triggering_element['#name'] === 'bundle') {
++    $triggers = ['bundle', 'bundle_config'];
++    if (!empty($triggering_element['#name']) && in_array($triggering_element['#name'], $triggers)) {
+       return $default;
+     }
+     return $form_state->hasValue($property)
