@@ -5,6 +5,11 @@ dependencies:
   config:
     - filter.format.email_html
     - filter.format.plain_text_format
+  module:
+    - hel_tpm_mail_tools
+third_party_settings:
+  hel_tpm_mail_tools:
+    keep_sent_language: true
 template: content_has_been_published
 label: content_has_been_published
 description: 'Service has been published'
