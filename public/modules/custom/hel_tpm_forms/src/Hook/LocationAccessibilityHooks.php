@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\hel_tpm_forms\Hook;
 
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\node\NodeInterface;
@@ -14,6 +15,62 @@ use Drupal\node\NodeInterface;
 final class LocationAccessibilityHooks {
 
   use StringTranslationTrait;
+
+  /**
+   * Pseudo field shown when the location has no accessibility information.
+   */
+  public const MISSING_NOTICE = 'location_accessibility_missing';
+
+  /**
+   * Declares the missing accessibility information pseudo field.
+   */
+  #[Hook('entity_extra_field_info')]
+  public function entityExtraFieldInfo(): array {
+    $extra['node']['service_location']['display'][self::MISSING_NOTICE] = [
+      'label' => $this->t('Missing accessibility information notice'),
+      'description' => $this->t('Shown when the location has no accessibility information.'),
+      'weight' => 30,
+      'visible' => FALSE,
+    ];
+    return $extra;
+  }
+
+  /**
+   * Adds the notice when the location has no accessibility information.
+   */
+  #[Hook('node_view')]
+  public function nodeView(array &$build, NodeInterface $node, EntityViewDisplayInterface $display, string $view_mode): void {
+    if ($node->bundle() !== 'service_location'
+      || !$display->getComponent(self::MISSING_NOTICE)
+      || $this->hasAccessibilityInformation($node)) {
+      return;
+    }
+
+    $build[self::MISSING_NOTICE] = [
+      '#type' => 'html_tag',
+      '#tag' => 'p',
+      '#attributes' => [
+        'class' => ['location-accessibility__missing'],
+      ],
+      'text' => [
+        '#type' => 'html_tag',
+        '#tag' => 'strong',
+        '#value' => $this->t('No accessibility information has been added for this location.'),
+      ],
+    ];
+  }
+
+  /**
+   * Checks whether the location has any accessibility information to show.
+   */
+  private function hasAccessibilityInformation(NodeInterface $node): bool {
+    if ($node->hasField('field_accessibility')
+      && $node->get('field_accessibility')->referencedEntities()) {
+      return TRUE;
+    }
+    return $node->hasField('field_accessibility_info')
+      && !$node->get('field_accessibility_info')->isEmpty();
+  }
 
   /**
    * Adds the description under the location accessibility group label.

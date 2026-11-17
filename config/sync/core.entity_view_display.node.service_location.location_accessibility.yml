@@ -40,6 +40,7 @@ third_party_settings:
       children:
         - field_accessibility
         - field_accessibility_info
+        - location_accessibility_missing
       label: Infobox
       parent_name: group_location_accessibility
       region: content
@@ -76,6 +77,11 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 22
+    region: content
+  location_accessibility_missing:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 23
     region: content
 hidden:
   entity_print_view_epub: true
