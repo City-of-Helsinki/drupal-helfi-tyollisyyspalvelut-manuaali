@@ -19,10 +19,6 @@
     display: none;
   }
 
-  .description {
-    margin-bottom: $space;
-  }
-
   table {
     background-color: unset;
     margin: 0;
@@ -251,7 +247,8 @@
       }
       legend,
       legend > span {
-        @extend .form-item__label;
+        @include form-label-h6;
+        margin-bottom: $space-one-half;
       }
 
       > .h2,
@@ -488,16 +485,6 @@
       border-radius: 8px;
       padding: 12px 16px;
     }
-  }
-
-  .field--name-entitygroupfield,
-  .field--name-field-contact-info,
-  .field--name-field-service-provider-updatee,
-  .field--name-field-responsible-updatee,
-  .group--margin-border-bottom {
-    padding-bottom: $space-three-and-half;
-    margin-bottom: $space-triple !important;
-    border-bottom: 2px solid clr(background-border);
   }
 
   .group--margin-bottom {
