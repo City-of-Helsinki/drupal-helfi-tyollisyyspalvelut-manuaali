@@ -29,3 +29,7 @@ services:
     ]
     tags:
       - { name: event_subscriber }
+
+  hel_tpm_general.shared_translation_paragraph_fixer:
+    class: Drupal\hel_tpm_general\SharedTranslationParagraphFixer
+    arguments: ['@entity_type.manager', '@entity_field.manager', '@database']
