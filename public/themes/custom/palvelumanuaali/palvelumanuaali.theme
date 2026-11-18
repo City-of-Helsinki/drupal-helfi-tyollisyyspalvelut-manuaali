@@ -559,11 +559,11 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id): void {
         }
       }
       if (isset($form['field_contact_info']['widget']['#field_title'])) {
-        $label = t("Contact information for employment office");
+        $label = t("Contact information for employment services authority");
         $form['field_contact_info']['widget']['#field_title'] = $label;
       }
       if (isset($form['field_contact_info_external']['widget']['#field_title'])) {
-        $label = t("Contact information for customer");
+        $label = t("Contact information for clients");
         $form['field_contact_info_external']['widget']['#field_title'] = $label;
       }
       if (isset($form['field_internal_links']['widget'])) {
