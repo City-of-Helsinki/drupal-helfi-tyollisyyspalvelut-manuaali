@@ -558,13 +558,25 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id): void {
           }
         }
       }
+      if (isset($form['field_service_time_and_location']['widget']['add_more']['add_more_button_service_time_and_place'])) {
+        $label = t("Add new service channel");
+        $form['field_service_time_and_location']['widget']['add_more']['add_more_button_service_time_and_place']['#value'] = $label;
+      }
       if (isset($form['field_contact_info']['widget']['#field_title'])) {
         $label = t("Contact information for employment services authority");
         $form['field_contact_info']['widget']['#field_title'] = $label;
       }
+      if (isset($form['field_contact_info']['widget']['actions']['ief_add']['#value'])) {
+        $label = t("Add new contact information for employment services authority");
+        $form['field_contact_info']['widget']['actions']['ief_add']['#value'] = $label;
+      }
       if (isset($form['field_contact_info_external']['widget']['#field_title'])) {
         $label = t("Contact information for clients");
         $form['field_contact_info_external']['widget']['#field_title'] = $label;
+      }
+      if (isset($form['field_contact_info_external']['widget']['actions']['ief_add']['#value'])) {
+        $label = t("Add new contact information for clients");
+        $form['field_contact_info_external']['widget']['actions']['ief_add']['#value'] = $label;
       }
       if (isset($form['field_internal_links']['widget'])) {
         $widget = &$form['field_internal_links']['widget'];
