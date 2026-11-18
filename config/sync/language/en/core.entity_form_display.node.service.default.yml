@@ -57,11 +57,23 @@ content:
   field_description:
     third_party_settings:
       maxlength:
-        maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
+        maxlength_js_label: '@remaining characters available'
+  field_price_description:
+    third_party_settings:
+      maxlength:
+        maxlength_js_label: '@remaining characters available'
+  field_internal_links:
+    settings:
+      placeholder_url: 'Enter link address'
+      placeholder_title: 'Enter link name'
+      uri_description: 'Add the address in URL format, e.g. https://palvelumanuaali.fi'
+      title_description: 'The name of the link will be displayed in the service description'
   field_public_links:
     settings:
       placeholder_url: 'Enter link address'
       placeholder_title: 'Enter link name'
+      uri_description: 'Add the address in URL format, e.g. https://palvelumanuaali.fi'
+      title_description: 'The name of the link will be displayed in the service description'
   title:
     settings:
       placeholder: 'Enter a name that describes the service'

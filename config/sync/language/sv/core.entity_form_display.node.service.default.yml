@@ -57,11 +57,23 @@ content:
   field_description:
     third_party_settings:
       maxlength:
-        maxlength_js_label: 'Innehåll begränsat till @limit tecken, kvar: <strong>@remaining</strong>'
+        maxlength_js_label: '@remaining tecken kan användas'
+  field_price_description:
+    third_party_settings:
+      maxlength:
+        maxlength_js_label: '@remaining tecken kan användas'
+  field_internal_links:
+    settings:
+      placeholder_url: 'Skriv in länkens adress'
+      placeholder_title: 'Skriv in länkens namn'
+      uri_description: 'Lägg till adressen i URL-format, till exempel https://palvelumanuaali.fi'
+      title_description: 'Länkens namn syns i servicebeskrivningen'
   field_public_links:
     settings:
       placeholder_url: 'Skriv in länkens adress'
       placeholder_title: 'Skriv in länkens namn'
+      uri_description: 'Lägg till adressen i URL-format, till exempel https://palvelumanuaali.fi'
+      title_description: 'Länkens namn syns i servicebeskrivningen'
   title:
     settings:
       placeholder: 'Skriv in ett namn som beskriver tjänsten'
