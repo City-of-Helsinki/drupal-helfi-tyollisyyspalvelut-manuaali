@@ -155,6 +155,14 @@ $online-service-link-label-gap: 0.25rem;
         outline: 0;
       }
 
+      // Untranslatable fields are disabled when editing a translation. Same
+      // look as .disabled-form-element, which loses to the rules above.
+      &:disabled {
+        background-color: $near-white;
+        box-shadow: inset 0 0 0 2px $gray-light;
+        color: $gray-light;
+      }
+
       // Validation error. The shared .form-item .error style (field-error
       // mixin) has a lower specificity than the box-shadow above, so the
       // error highlight is repeated here. Only the box-shadow is used, the
