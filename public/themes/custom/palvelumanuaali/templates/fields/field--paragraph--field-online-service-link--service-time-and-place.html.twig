@@ -3,11 +3,46 @@
  * @file
  * Online service link of the service time and place paragraph.
  *
- * Uses the default field template with a customer view specific label.
+ * Same structure as the channel additional information field
+ * (icon + text wrapper) with a customer view specific label.
  *
- * @see field.html.twig
+ * @see field--paragraph--field-location-additional-info-1--service-time-and-place.html.twig
  */
 #}
-{% include '@palvelumanuaali/templates/fields/field.html.twig' with {
-  label: 'Online service'|t({}, {'context': 'customer-view'}),
-} %}
+{%
+  set classes = [
+    'field',
+    'field--name-' ~ field_name|clean_class,
+    'field--type-' ~ field_type|clean_class,
+    'field--label-' ~ label_display,
+  ]
+%}
+{%
+  set title_classes = [
+    'field__label',
+    label_display == 'visually_hidden' ? 'visually-hidden',
+  ]
+%}
+<div{{ attributes.addClass(classes) }}>
+  {# Empty attributes: bem() would otherwise copy the field's classes to the icon. #}
+  {% include "@atoms/images/icons/_icon.twig" with {
+    icon_base_class: 'icon',
+    icon_name: 'web',
+    icon_modifiers: ['small'],
+    attributes: create_attribute(),
+  } %}
+  <div class='text-wrapper'>
+    {% if not label_hidden %}
+      <div{{ title_attributes.addClass(title_classes) }}>{{ 'Online service'|t({}, {'context': 'customer-view'}) }}</div>
+    {% endif %}
+    {% if multiple %}
+      <div class="field__items">
+    {% endif %}
+    {% for item in items %}
+      <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
+    {% endfor %}
+    {% if multiple %}
+      </div>
+    {% endif %}
+  </div>
+</div>
