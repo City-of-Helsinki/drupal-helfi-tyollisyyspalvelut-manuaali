@@ -1,0 +1,13 @@
+{#
+/**
+ * @file
+ * Online service link of the service time and place paragraph.
+ *
+ * Uses the default field template with a customer view specific label.
+ *
+ * @see field.html.twig
+ */
+#}
+{% include '@palvelumanuaali/templates/fields/field.html.twig' with {
+  label: 'Online service'|t({}, {'context': 'customer-view'}),
+} %}
