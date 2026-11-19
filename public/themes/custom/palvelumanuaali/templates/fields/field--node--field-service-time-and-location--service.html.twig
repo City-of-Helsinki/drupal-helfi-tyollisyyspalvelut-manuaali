@@ -76,7 +76,7 @@
   {% else %}
     {% for item in items %}
       {% embed "@molecules/card/card.twig" with {
-        card__modifiers: ['bg-light-blue', 'square-left', 'border-left-light-blue', 'bottom-gutter', 'padded-xxl', 'service-card'],
+        card__modifiers: ['bg-light-blue', 'square', 'bottom-gutter-md', 'service-card'],
         attributes: create_attribute(),
       } %}
         {% block card__content %}
@@ -95,7 +95,7 @@
     {% endif %}
     {% for item in items %}
       {% embed "@molecules/card/card.twig" with {
-        card__modifiers: ['bg-light-blue', 'square-left', 'border-left-light-blue', 'bottom-gutter', 'padded-xxl', 'service-card'],
+        card__modifiers: ['bg-light-blue', 'square', 'bottom-gutter-md', 'service-card'],
         attributes: create_attribute(),
       } %}
         {% block card__content %}
