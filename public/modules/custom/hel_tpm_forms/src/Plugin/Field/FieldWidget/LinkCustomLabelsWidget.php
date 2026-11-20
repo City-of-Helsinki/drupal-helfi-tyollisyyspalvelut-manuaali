@@ -150,6 +150,26 @@ class LinkCustomLabelsWidget extends AutoSchemeLinkWidget {
 
   /**
    * {@inheritdoc}
+   *
+   * Unlimited fields with values get no extra empty item. A new item is added
+   * only with the add more button. An empty field still shows one item.
+   */
+  public function form(FieldItemListInterface $items, array &$form, FormStateInterface $form_state, $get_delta = NULL): array {
+    $field_name = $this->fieldDefinition->getName();
+    $parents = $form['#parents'];
+    // Core renders items_count + 1 items for unlimited fields. Set the initial
+    // count before core does, so that only the existing items are rendered.
+    if ($get_delta === NULL && $this->isUnlimited() && !static::getWidgetState($parents, $field_name, $form_state)) {
+      static::setWidgetState($parents, $field_name, $form_state, [
+        'items_count' => max(count($items) - 1, 0),
+        'array_parents' => [],
+      ]);
+    }
+    return parent::form($items, $form, $form_state, $get_delta);
+  }
+
+  /**
+   * {@inheritdoc}
    */
   protected function formMultipleElements(FieldItemListInterface $items, array &$form, FormStateInterface $form_state): array {
     $elements = parent::formMultipleElements($items, $form, $form_state);

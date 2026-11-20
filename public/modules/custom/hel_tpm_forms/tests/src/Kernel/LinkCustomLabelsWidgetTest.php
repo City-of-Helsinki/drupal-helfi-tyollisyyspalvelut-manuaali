@@ -112,6 +112,38 @@ class LinkCustomLabelsWidgetTest extends KernelTestBase {
   }
 
   /**
+   * Tests that saved values get no extra empty item.
+   *
+   * @covers ::form
+   */
+  public function testNoExtraEmptyItem(): void {
+    $this->container->get('entity_display.repository')
+      ->getFormDisplay('entity_test', 'entity_test')
+      ->setComponent('field_links', ['type' => 'hel_tpm_forms_link_custom_labels'])
+      ->save();
+    $form_builder = $this->container->get('entity.form_builder');
+
+    // An empty field shows one item.
+    $widget = $form_builder->getForm(EntityTest::create(), 'default')['field_links']['widget'];
+    $this->assertSame(0, $widget['#max_delta']);
+    $this->assertArrayHasKey(0, $widget);
+
+    // A field with values shows only the saved values.
+    $entity = EntityTest::create([
+      'field_links' => [
+        ['uri' => 'https://example.com'],
+        ['uri' => 'https://example.org'],
+      ],
+    ]);
+    $entity->save();
+    $widget = $form_builder->getForm($entity, 'default')['field_links']['widget'];
+    $this->assertSame(1, $widget['#max_delta']);
+    $this->assertArrayHasKey(1, $widget);
+    $this->assertArrayNotHasKey(2, $widget);
+    $this->assertArrayHasKey('add_more', $widget);
+  }
+
+  /**
    * Builds the link field widget element with the given widget settings.
    *
    * @param array $settings

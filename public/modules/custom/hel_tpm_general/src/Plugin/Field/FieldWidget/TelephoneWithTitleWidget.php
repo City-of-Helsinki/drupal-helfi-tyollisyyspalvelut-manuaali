@@ -7,6 +7,7 @@ namespace Drupal\hel_tpm_general\Plugin\Field\FieldWidget;
 use Drupal\Core\Field\Attribute\FieldWidget;
 use Drupal\Core\Field\FieldFilteredMarkup;
 use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Security\TrustedCallbackInterface;
@@ -226,6 +227,27 @@ class TelephoneWithTitleWidget extends WidgetBase implements TrustedCallbackInte
         '%name' => $element['#title'],
       ]));
     }
+  }
+
+  /**
+   * {@inheritdoc}
+   *
+   * Unlimited fields with values get no extra empty item. A new item is added
+   * only with the add more button. An empty field still shows one item.
+   */
+  public function form(FieldItemListInterface $items, array &$form, FormStateInterface $form_state, $get_delta = NULL): array {
+    $field_name = $this->fieldDefinition->getName();
+    $parents = $form['#parents'];
+    $unlimited = $this->fieldDefinition->getFieldStorageDefinition()->getCardinality() === FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED;
+    // Core renders items_count + 1 items for unlimited fields. Set the initial
+    // count before core does, so that only the existing items are rendered.
+    if ($get_delta === NULL && $unlimited && !static::getWidgetState($parents, $field_name, $form_state)) {
+      static::setWidgetState($parents, $field_name, $form_state, [
+        'items_count' => max(count($items) - 1, 0),
+        'array_parents' => [],
+      ]);
+    }
+    return parent::form($items, $form, $form_state, $get_delta);
   }
 
   /**
