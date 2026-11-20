@@ -346,7 +346,7 @@ $card-font-small-heading: 15px;
   .icon {
     min-width: 24px;
     width: 24px;
-    height: 24px;
+    height: 30px;
     margin-right: $space;
     order: unset;
     display: block;
@@ -417,6 +417,9 @@ $card-font-small-heading: 15px;
           display: none;
         }
       }
+    }
+    .field__item {
+      margin-bottom: 0;
     }
   }
 
@@ -540,6 +543,9 @@ $card-font-small-heading: 15px;
    @include xl {
       margin-bottom: 30px;
    }
+    .field__label {
+      font-weight: bold;
+    }
   }
 
   .field--name-field-accessibility-details {
