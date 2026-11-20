@@ -534,8 +534,7 @@ $card-font-small-heading: 15px;
       display: inline;
     }
   }
-
-  .accessibility-wrapper {
+  .service-time-and-place .accessibility-wrapper {
     order: 3;
     margin-bottom: $space-one-and-half;
     margin-left: 40px;
@@ -543,8 +542,8 @@ $card-font-small-heading: 15px;
    @include xl {
       margin-bottom: 30px;
    }
-    .field__label {
-      font-weight: bold;
+    >.field__label {
+      font-weight: 800;
     }
   }
 
