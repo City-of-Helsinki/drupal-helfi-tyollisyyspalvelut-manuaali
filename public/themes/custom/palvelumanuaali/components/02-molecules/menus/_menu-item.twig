@@ -38,7 +38,9 @@
       } %}
     {% endif %}
     {% if item.below %}
-      <span tabindex="0" class="expand-sub"></span>
+      <button type="button" class="expand-sub" aria-expanded="false">
+        <span class="visually-hidden">{{ 'Show submenu: @title'|t({'@title': item.title}) }}</span>
+      </button>
       {{ menus.menu_links(item.below, attributes, menu_level + 1, menu_class, menu_modifiers, menu_blockname, item_base_class, original_item_modifiers, item_blockname, directory) }}
     {% endif %}
   {% endblock %}

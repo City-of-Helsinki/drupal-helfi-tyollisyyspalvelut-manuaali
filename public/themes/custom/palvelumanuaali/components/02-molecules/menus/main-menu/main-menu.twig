@@ -26,21 +26,24 @@
 {{ attach_library('palvelumanuaali/main-menu') }}
 
 <nav>
-  <a href="#" id="toggle-expand" class="toggle-expand" aria-haspopup="true" aria-expanded="false">
+  <button type="button" class="toggle-expand" aria-expanded="false" aria-controls="main-nav">
     <span class="toggle-expand__open">
-      {% include "@atoms/images/icons/_icon.twig" with {
-        icon_base_class: "icon",
-        icon_blockname: "toggle-expand",
-        icon_name: "menu",
-      } %}
+      <span aria-hidden="true">
+        {% include "@atoms/images/icons/_icon.twig" with {
+          icon_base_class: "icon",
+          icon_blockname: "toggle-expand",
+          icon_name: "menu",
+        } %}
+      </span>
+      <span class="visually-hidden">{{ 'Menu'|t }}</span>
     </span>
-    <div class="toggle-expand__close">
-      <span class="toggle-expand-close__icon"></span>
+    <span class="toggle-expand__close">
+      <span class="toggle-expand-close__icon" aria-hidden="true"></span>
       <span class="font-size--tiny font-weight--bold color--bright-blue">
         {{ 'Close'|t }}
       </span>
-    </div>
-  </a>
+    </span>
+  </button>
   <div id="main-nav" class="main-nav">
 
     {% set menu_class = "main-menu" %}
