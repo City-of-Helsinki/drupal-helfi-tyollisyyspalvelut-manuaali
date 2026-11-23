@@ -1,0 +1,25 @@
+{#
+/**
+ * @file
+ * Theme override for a telephone number with a title.
+ *
+ * The number is displayed before the title.
+ *
+ * Available variables:
+ * - title: The title, e.g. the name of the phone service. Can be empty.
+ * - number: The telephone number as entered.
+ * - url: The tel: URL of the number, or NULL if there is no number.
+ *
+ * @see hel_tpm_general/templates/telephone-with-title.html.twig
+ */
+#}
+<div class="telephone-with-title">
+  {% if url %}
+    <a class="telephone-with-title__number" href="{{ url }}">{{ number }}</a>
+  {% else %}
+    <span class="telephone-with-title__number">{{ number }}</span>
+  {% endif %}
+  {% if title %}
+    <span class="telephone-with-title__title">{{ title }}</span>
+  {% endif %}
+</div>

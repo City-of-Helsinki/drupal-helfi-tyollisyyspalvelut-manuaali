@@ -51,9 +51,37 @@
     'field_weekday_and_time'
   ]
 %}
+{% set channel = paragraph.field_service_channel.value %}
+{% set date_selection = paragraph.field_date_selection.value %}
+{% set show_time = date_selection and date_selection != 'service_no_time' %}
+{# Only the field matching the selected service channel is displayed. #}
+{% set channel_fields = {
+    'location': 'field_service_location',
+    'online_service': 'field_online_service_link',
+    'telephone_service': 'field_phone_service_number',
+  }
+%}
+{% set channel_field = channel_fields[channel] ?? null %}
+{% set handled_fields = date_fields|merge([
+    'field_service_location',
+    'field_online_service_link',
+    'field_phone_service_number',
+    'field_location_additional_info_1',
+    'field_time_additional_info_html',
+  ])
+%}
 <div{{ attributes.addClass(classes) }}>
-  {{content|without(date_fields)}}
-  {% if (content.field_date_selection['0']['#markup']) %}
+  {% if channel_field %}
+    {{ attribute(content, channel_field) }}
+  {% else %}
+    {# Legacy paragraphs without a channel: keep the previous behavior. #}
+    {{ content.field_service_location }}
+    {{ content.field_online_service_link }}
+    {{ content.field_phone_service_number }}
+  {% endif %}
+  {{ content.field_location_additional_info_1 }}
+  {{ content|without(handled_fields) }}
+  {% if show_time %}
     <div class='date-wrapper o--five d--flex'>
       {% include "@atoms/images/icons/_icon.twig" with {
       icon_base_class: 'icon',
@@ -67,5 +95,6 @@
         {% endfor %}
       </div>
     </div>
+    {{ content.field_time_additional_info_html }}
   {% endif %}
 </div>

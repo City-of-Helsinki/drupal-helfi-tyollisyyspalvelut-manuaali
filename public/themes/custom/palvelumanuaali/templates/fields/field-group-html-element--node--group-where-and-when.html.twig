@@ -18,7 +18,7 @@
 
 <{{ wrapper_element }} {{ attributes }}>
 {% if title %}
-  <{{ title_element }}{{ title_attributes }}>{{'Where and when?'|t}}</{{ title_element }}>
+  <{{ title_element }}{{ title_attributes }}>{{ 'Service channel'|t({}, {'context': 'customer-view'}) }}</{{ title_element }}>
 {% endif %}
   {% if collapsible %}
 <div class="field-group-wrapper">

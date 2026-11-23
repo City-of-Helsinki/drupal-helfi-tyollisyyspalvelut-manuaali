@@ -95,6 +95,10 @@ $card-font-small-heading: 15px;
   border-radius: 0px 16px 16px 0px;
 }
 
+.card--square{
+  border-radius: 0px;
+}
+
 .card--border-left-blue {
   border-left: 4px solid $blue100;
 }
@@ -117,6 +121,13 @@ $card-font-small-heading: 15px;
 
 .card--bottom-gutter {
   margin-bottom: $space;
+}
+
+.card--bottom-gutter-md {
+  margin-bottom: $space;
+  @include xl {
+    margin-bottom: 20px;
+  }
 }
 
 .card--bottom-gutter-large {
@@ -328,12 +339,14 @@ $card-font-small-heading: 15px;
     .date-wrapper {
       width: 100%;
       margin-bottom: $space;
+      // After the channel additional info (2), before the time info (6).
+      order: 5;
     }
   }
   .icon {
     min-width: 24px;
     width: 24px;
-    height: 24px;
+    height: 30px;
     margin-right: $space;
     order: unset;
     display: block;
@@ -405,6 +418,9 @@ $card-font-small-heading: 15px;
         }
       }
     }
+    .field__item {
+      margin-bottom: 0;
+    }
   }
 
   .field--name-field-time-additional-info-html {
@@ -425,6 +441,22 @@ $card-font-small-heading: 15px;
     }
     .field__label {
       margin-bottom: $space-one-half;
+    }
+  }
+
+  // Service channel fields: same layout as the channel additional info.
+  .field--name-field-online-service-link,
+  .field--name-field-phone-service-number {
+    width: 100%;
+    margin-bottom: $space;
+    display: flex;
+    @include large {
+      margin-bottom: $space-one-and-half;
+    }
+    .telephone-with-title {
+      display: flex;
+      flex-wrap: wrap;
+      column-gap: 1rem;
     }
   }
 
@@ -502,8 +534,7 @@ $card-font-small-heading: 15px;
       display: inline;
     }
   }
-
-  .accessibility-wrapper {
+  .service-time-and-place .accessibility-wrapper {
     order: 3;
     margin-bottom: $space-one-and-half;
     margin-left: 40px;
@@ -511,6 +542,9 @@ $card-font-small-heading: 15px;
    @include xl {
       margin-bottom: 30px;
    }
+    >.field__label {
+      font-weight: 800;
+    }
   }
 
   .field--name-field-accessibility-details {
