@@ -15,6 +15,7 @@ use Drupal\Core\Render\Element;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\group\Entity\GroupRelationshipInterface;
+use Drupal\hel_tpm_group\Plugin\Field\FieldWidget\EntityGroupFieldSelect2Widget;
 use Drupal\node\NodeInterface;
 
 /**
@@ -41,15 +42,6 @@ class ServiceProviderUpdateeHooks {
    * HTML ID of the updatee field wrapper.
    */
   protected const WRAPPER_ID = 'hel-tpm-group-service-provider-updatee';
-
-  /**
-   * Group widget buttons that change the groups of the service.
-   */
-  protected const ITEM_BUTTONS = [
-    'remove_button',
-    'confirm_remove_button',
-    'restore_button',
-  ];
 
   public function __construct(
     protected readonly AccountProxyInterface $currentUser,
@@ -87,7 +79,7 @@ class ServiceProviderUpdateeHooks {
     $form[self::UPDATEE_FIELD]['#suffix'] = '</div>';
     $form[self::UPDATEE_FIELD]['#hel_tpm_group_updatee'] = TRUE;
 
-    $this->attachAjax($form[self::GROUP_FIELD]['widget']);
+    $this->attachAjax($form[self::GROUP_FIELD]['widget'], $form['#parents'] ?? []);
   }
 
   /**
@@ -122,20 +114,13 @@ class ServiceProviderUpdateeHooks {
   }
 
   /**
-   * Ajax callback for the group widget buttons.
+   * Ajax callback for the group selection.
    *
-   * Runs the group widget's own callback and also replaces the updatee field,
-   * whose options were rebuilt for the changed groups.
+   * Replaces the updatee field, whose options were rebuilt for the changed
+   * group.
    */
   public static function groupWidgetAjax(array &$form, FormStateInterface $form_state): AjaxResponse {
-    $button = $form_state->getTriggeringElement();
-    $callback = $form_state->prepareCallback($button['#hel_tpm_group_ajax_callback']);
-    $group_widget = call_user_func_array($callback, [&$form, $form_state]);
-
     $response = new AjaxResponse();
-    // Without a selector the wrapper of the triggering button is replaced.
-    $response->addCommand(new ReplaceCommand(NULL, $group_widget));
-
     $updatee = static::findUpdatee($form);
     if ($updatee !== NULL && ($updatee['#access'] ?? TRUE)) {
       // Field groups nest fields with #group, and an element with #group is
@@ -155,55 +140,31 @@ class ServiceProviderUpdateeHooks {
    *   The form state.
    *
    * @return \Drupal\group\Entity\GroupRelationshipInterface[]
-   *   Saved and unsaved relationships, excluding removed ones.
+   *   Saved and unsaved relationships of the selected groups.
    */
   protected function getFormRelationships(array $form, FormStateInterface $form_state): array {
     $widget_state = WidgetBase::getWidgetState($form['#parents'] ?? [], self::GROUP_FIELD, $form_state);
-
-    $relationships = [];
-    foreach ($widget_state['gcontent'] ?? [] as $item) {
-      // Items marked for removal aren't saved either.
-      if (in_array($item['mode'] ?? '', ['remove', 'removed'], TRUE)) {
-        continue;
-      }
-      if (($item['entity'] ?? NULL) instanceof GroupRelationshipInterface) {
-        $relationships[] = $item['entity'];
-      }
-    }
-    return $relationships;
+    return EntityGroupFieldSelect2Widget::getSelectedRelationships($widget_state);
   }
 
   /**
-   * Makes the group widget buttons refresh the updatee field too.
+   * Makes changing the group refresh the updatee field.
    *
    * @param array $widget
-   *   The group widget elements.
+   *   The group widget element.
+   * @param array $parents
+   *   The parents of the field in the form.
    */
-  protected function attachAjax(array &$widget): void {
-    if (isset($widget['add_more']['add_more_button'])) {
-      $this->overrideAjax($widget['add_more']['add_more_button']);
-    }
-    foreach (Element::children($widget) as $delta) {
-      foreach (self::ITEM_BUTTONS as $button) {
-        if (isset($widget[$delta]['top']['links'][$button])) {
-          $this->overrideAjax($widget[$delta]['top']['links'][$button]);
-        }
-      }
-    }
-  }
-
-  /**
-   * Replaces the Ajax callback of a button, keeping the original one.
-   *
-   * @param array $button
-   *   The button element.
-   */
-  protected function overrideAjax(array &$button): void {
-    if (empty($button['#ajax']['callback'])) {
+  protected function attachAjax(array &$widget, array $parents): void {
+    if (!empty($widget['#disabled'])) {
       return;
     }
-    $button['#hel_tpm_group_ajax_callback'] = $button['#ajax']['callback'];
-    $button['#ajax']['callback'] = [static::class, 'groupWidgetAjax'];
+    $widget['#ajax'] = [
+      'callback' => [static::class, 'groupWidgetAjax'],
+      'event' => 'change',
+    ];
+    // Validate only the group selection when the group changes.
+    $widget['#limit_validation_errors'] = [array_merge($parents, [self::GROUP_FIELD])];
   }
 
   /**
