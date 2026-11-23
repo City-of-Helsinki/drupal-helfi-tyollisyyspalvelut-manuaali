@@ -15,6 +15,16 @@
             "url": "https://packages.drupal.org/8"
         },
         {
+            "type": "vcs",
+            "url": "https://github.com/City-of-Helsinki/php-resilient-logger.git",
+            "no-api": true
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/City-of-Helsinki/php-logger-extra.git",
+            "no-api": true
+        },
+        {
             "type": "package",
             "package": {
               "name": "twbs/bootstrap-dist",
@@ -46,6 +56,8 @@
     "require": {
         "php": ">=8.3",
         "ext-pdo": "*",
+        "city-of-helsinki/php-logger-extra": "^1.0",
+        "city-of-helsinki/php-resilient-logger": "^2.0",
         "composer/installers": "^2.3",
         "cweagans/composer-patches": "~1.0",
         "drupal/action": "^0.2.2",

@@ -1,0 +1,33 @@
+parameters:
+  # Entity types whose operations are written to the audit log.
+  # Each item: { entity_type: 'node', bundle: 'article' (optional),
+  # operations: ['ENTITY_READ', 'ENTITY_CREATE', ...] (optional) }.
+  # Without 'operations' CREATE, UPDATE and DELETE are logged.
+  hel_tpm_audit_log.audit_log_entity_types:
+    - { entity_type: 'node' }
+    - { entity_type: 'user' }
+
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  logger.channel.hel_tpm_audit_log:
+    parent: logger.channel_base
+    arguments: ['hel_tpm_audit_log']
+
+  # Adds a request id to the logger context (and X-Request-ID response
+  # header). Same service id as in helfi_api_base so the middleware is not
+  # registered twice if both modules are ever enabled.
+  logger_extra.request_id_middleware:
+    class: LoggerExtra\RequestIdMiddleware
+    tags:
+      - { name: http_middleware, priority: 250 }
+
+  Drupal\hel_tpm_audit_log\AuditLog\AuditLogService:
+    tags:
+      - { name: needs_destruction }
+  Drupal\hel_tpm_audit_log\AuditLog\AuditLogServiceInterface: '@Drupal\hel_tpm_audit_log\AuditLog\AuditLogService'
+
+  Drupal\hel_tpm_audit_log\AuditLog\EventSubscriber\AuditLogActorSubscriber: ~
+  Drupal\hel_tpm_audit_log\AuditLog\EventSubscriber\AuditLogRequestIdSubscriber: ~
