@@ -7,6 +7,7 @@ namespace Drupal\Tests\hel_tpm_general\Kernel;
 use Drupal\Core\Access\AccessManagerInterface;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Access\AccessResultInterface;
+use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -16,6 +17,7 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\hel_tpm_general\Plugin\views\field\LinkToLatestTranslationRevision;
 use Drupal\KernelTests\KernelTestBase;
+use Drupal\content_moderation\ModerationInformationInterface;
 use Drupal\views\ResultRow;
 
 /**
@@ -41,13 +43,31 @@ final class LinkToLatestTranslationRevisionTest extends KernelTestBase {
   ];
 
   /**
-   * Tests that URL generation always uses the latest-version link template.
+   * Tests that the latest-version template is used for pending revisions.
    */
-  public function testGetUrlInfoUsesLatestVersionTemplate(): void {
+  public function testGetUrlInfoUsesLatestVersionTemplateWithPendingRevision(): void {
     $url = Url::fromRoute('entity.node.latest_version', ['node' => 1]);
     $entity = $this->createEntityExpectingUrl('latest-version', $url);
 
-    $plugin = $this->createPlugin();
+    $plugin = $this->createPlugin(moderation_information: $this->createModerationInformation($entity, TRUE));
+    $this->setOptions($plugin, absolute: TRUE);
+
+    $result = $this->invokeProtectedMethod($plugin, 'getUrlInfo', [
+      $this->createRow($entity),
+    ]);
+
+    $this->assertSame($url, $result);
+    $this->assertTrue($result->getOption('absolute'));
+  }
+
+  /**
+   * Tests that the canonical template is used without a pending revision.
+   */
+  public function testGetUrlInfoUsesCanonicalTemplateWithoutPendingRevision(): void {
+    $url = Url::fromRoute('entity.node.canonical', ['node' => 1]);
+    $entity = $this->createEntityExpectingUrl('canonical', $url);
+
+    $plugin = $this->createPlugin(moderation_information: $this->createModerationInformation($entity, FALSE));
     $this->setOptions($plugin, absolute: TRUE);
 
     $result = $this->invokeProtectedMethod($plugin, 'getUrlInfo', [
@@ -69,8 +89,14 @@ final class LinkToLatestTranslationRevisionTest extends KernelTestBase {
     $entity
       ->method('language')
       ->willReturn($language);
+    $entity
+      ->method('getTranslationLanguages')
+      ->willReturn(['fi' => $language]);
 
-    $plugin = $this->createPlugin(multilingual: TRUE);
+    $plugin = $this->createPlugin(
+      multilingual: TRUE,
+      moderation_information: $this->createModerationInformation($entity, TRUE),
+    );
     $this->setOptions($plugin);
 
     $result = $this->invokeProtectedMethod($plugin, 'getUrlInfo', [
@@ -84,9 +110,9 @@ final class LinkToLatestTranslationRevisionTest extends KernelTestBase {
   }
 
   /**
-   * Tests that access is checked directly on the entity.
+   * Tests that update access is checked directly on the entity.
    */
-  public function testCheckUrlAccessChecksEditAccessOnEntity(): void {
+  public function testCheckUrlAccessChecksUpdateAccessOnEntity(): void {
     $account = $this->createMock(AccountInterface::class);
     $entity = $this->createEntityExpectingAccess($account, AccessResult::allowed());
 
@@ -103,9 +129,9 @@ final class LinkToLatestTranslationRevisionTest extends KernelTestBase {
   }
 
   /**
-   * Tests that multilingual access still checks edit access on the entity.
+   * Tests that multilingual access still checks update access on the entity.
    */
-  public function testCheckUrlAccessChecksEditAccessWhenMultilingual(): void {
+  public function testCheckUrlAccessChecksUpdateAccessWhenMultilingual(): void {
     $account = $this->createMock(AccountInterface::class);
     $language = $this->createLanguage('fi');
 
@@ -151,9 +177,9 @@ final class LinkToLatestTranslationRevisionTest extends KernelTestBase {
   }
 
   /**
-   * Tests render output for denied edit access results.
+   * Tests render output for denied update access results.
    */
-  public function testRenderDoesNotOutputLinkWhenEditAccessIsDenied(): void {
+  public function testRenderDoesNotOutputLinkWhenUpdateAccessIsDenied(): void {
     $account = $this->createMock(AccountInterface::class);
     $entity = $this->createEntityExpectingAccess($account, AccessResult::forbidden());
     $entity
@@ -195,6 +221,8 @@ final class LinkToLatestTranslationRevisionTest extends KernelTestBase {
    *   The access manager.
    * @param \Drupal\Core\Entity\EntityRepositoryInterface|null $entity_repository
    *   The entity repository.
+   * @param \Drupal\content_moderation\ModerationInformationInterface|null $moderation_information
+   *   The moderation information service.
    *
    * @return \Drupal\hel_tpm_general\Plugin\views\field\LinkToLatestTranslationRevision
    *   The plugin instance.
@@ -203,6 +231,7 @@ final class LinkToLatestTranslationRevisionTest extends KernelTestBase {
     bool $multilingual = FALSE,
     ?AccessManagerInterface $access_manager = NULL,
     ?EntityRepositoryInterface $entity_repository = NULL,
+    ?ModerationInformationInterface $moderation_information = NULL,
   ): LinkToLatestTranslationRevision {
     $access_manager ??= $this->createMock(AccessManagerInterface::class);
     $entity_type_manager = $this->createMock(EntityTypeManagerInterface::class);
@@ -213,7 +242,7 @@ final class LinkToLatestTranslationRevisionTest extends KernelTestBase {
       ->method('isMultilingual')
       ->willReturn($multilingual);
 
-    return new LinkToLatestTranslationRevision(
+    $plugin = new LinkToLatestTranslationRevision(
       [],
       'link_to_latest_translation_revision',
       [],
@@ -222,6 +251,31 @@ final class LinkToLatestTranslationRevisionTest extends KernelTestBase {
       $entity_repository,
       $language_manager,
     );
+    $this->setProtectedProperty($plugin, 'moderationInformation', $moderation_information);
+
+    return $plugin;
+  }
+
+  /**
+   * Creates a moderation information mock.
+   *
+   * @param \Drupal\Core\Entity\EntityInterface $entity
+   *   The entity expected in the pending revision check.
+   * @param bool $has_pending_revision
+   *   Whether the entity has a pending revision.
+   *
+   * @return \Drupal\content_moderation\ModerationInformationInterface
+   *   The moderation information mock.
+   */
+  private function createModerationInformation(EntityInterface $entity, bool $has_pending_revision): ModerationInformationInterface {
+    $moderation_information = $this->createMock(ModerationInformationInterface::class);
+    $moderation_information
+      ->expects($this->once())
+      ->method('hasPendingRevision')
+      ->with($entity)
+      ->willReturn($has_pending_revision);
+
+    return $moderation_information;
   }
 
   /**
@@ -270,7 +324,7 @@ final class LinkToLatestTranslationRevisionTest extends KernelTestBase {
    *   The entity mock.
    */
   private function createEntityExpectingUrl(string $template, Url $url): EntityInterface {
-    $entity = $this->createMock(EntityInterface::class);
+    $entity = $this->createMock(ContentEntityInterface::class);
     $entity
       ->expects($this->once())
       ->method('toUrl')
@@ -281,7 +335,7 @@ final class LinkToLatestTranslationRevisionTest extends KernelTestBase {
   }
 
   /**
-   * Creates an entity mock expecting an edit access check.
+   * Creates an entity mock expecting an update access check.
    *
    * @param \Drupal\Core\Session\AccountInterface $account
    *   The account expected in the access check.
@@ -296,7 +350,7 @@ final class LinkToLatestTranslationRevisionTest extends KernelTestBase {
     $entity
       ->expects($this->once())
       ->method('access')
-      ->with('edit', $account, TRUE)
+      ->with('update', $account, TRUE)
       ->willReturn($access_result);
 
     return $entity;
