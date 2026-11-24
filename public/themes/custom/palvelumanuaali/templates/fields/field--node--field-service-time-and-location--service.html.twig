@@ -53,13 +53,16 @@
   ]
 %}
 
+{# Each card gets empty attributes: bem() in card.twig would otherwise copy
+   the field wrapper's classes to the card. #}
 {% if label_hidden %}
   {% if multiple %}
     <div{{ attributes.addClass(classes, 'field__items') }}>
 
       {% for item in items %}
         {% embed "@molecules/card/card.twig" with {
-          card__modifiers: ['bg-light-blue', 'square-left', 'border-left-light-blue', 'bottom-gutter', 'padded-xxl', 'service-card']
+          card__modifiers: ['bg-light-blue', 'square', 'bottom-gutter-md', 'service-card'],
+          attributes: create_attribute(),
         } %}
           {% block card__content %}
             <div{{ item.attributes.addClass('field__item') }}>
@@ -73,7 +76,8 @@
   {% else %}
     {% for item in items %}
       {% embed "@molecules/card/card.twig" with {
-        card__modifiers: ['bg-light-blue', 'square-left', 'border-left-light-blue', 'bottom-gutter', 'padded-xxl', 'service-card']
+        card__modifiers: ['bg-light-blue', 'square', 'bottom-gutter-md', 'service-card'],
+        attributes: create_attribute(),
       } %}
         {% block card__content %}
           <div{{ item.attributes.addClass(classes, 'field__item') }}>
@@ -91,7 +95,8 @@
     {% endif %}
     {% for item in items %}
       {% embed "@molecules/card/card.twig" with {
-        card__modifiers: ['bg-light-blue', 'square-left', 'border-left-light-blue', 'bottom-gutter', 'padded-xxl', 'service-card']
+        card__modifiers: ['bg-light-blue', 'square', 'bottom-gutter-md', 'service-card'],
+        attributes: create_attribute(),
       } %}
         {% block card__content %}
           <div{{ item.attributes.addClass('field__item') }}>

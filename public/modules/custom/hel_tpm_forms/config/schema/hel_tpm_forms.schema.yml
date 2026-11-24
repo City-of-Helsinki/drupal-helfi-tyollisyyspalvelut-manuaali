@@ -36,3 +36,23 @@ field.widget.settings.limited_link_widget:
       sequence:
         type: string
         label: 'Role'
+
+field.widget.settings.hel_tpm_forms_link_custom_labels:
+  type: field.widget.settings.auto_scheme_link_widget
+  label: 'Link (custom labels) widget settings'
+  mapping:
+    uri_label:
+      type: label
+      label: 'URL label'
+    uri_description:
+      type: text
+      label: 'URL description'
+    title_label:
+      type: label
+      label: 'Link text label'
+    title_description:
+      type: text
+      label: 'Link text description'
+    add_more_label:
+      type: label
+      label: 'Add more button text'

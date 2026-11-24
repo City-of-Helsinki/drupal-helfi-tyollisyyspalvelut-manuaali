@@ -44,8 +44,10 @@ class MessageSender {
    *   The key and value of the context object.
    * @param string|null $langcode
    *   (optional) The language the message is rendered in. This affects both
-   *   the message template text and the token replacements. Defaults to the
-   *   current interface language.
+   *   the message template text and the token replacements. The language is
+   *   stored as the message langcode, so the message is rendered in the same
+   *   language when it is loaded later. Defaults to the current interface
+   *   language.
    *
    * @return bool
    *   TRUE if mail is sent, FALSE otherwise.
@@ -59,6 +61,7 @@ class MessageSender {
     ]);
     $message->setOwner($account);
     if ($langcode) {
+      $message->set('langcode', $langcode);
       $message->setLanguage($langcode);
     }
 

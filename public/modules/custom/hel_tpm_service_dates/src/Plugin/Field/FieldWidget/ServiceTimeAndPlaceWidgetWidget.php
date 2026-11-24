@@ -73,6 +73,37 @@ class ServiceTimeAndPlaceWidgetWidget extends ParagraphsClassicAsymmetricWidget 
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public function formMultipleElements(FieldItemListInterface $items, array &$form, FormStateInterface $form_state) {
+    $elements = parent::formMultipleElements($items, $form, $form_state);
+    $this->preventRemovingLastItem($elements);
+    return $elements;
+  }
+
+  /**
+   * Hides the remove button when only one paragraph item is left.
+   *
+   * Removed items are already excluded from the elements by the parent
+   * widget, so the remaining numeric children are the visible items. The
+   * whole widget is rebuilt on add/remove AJAX requests, so the button
+   * reappears as soon as another item is added.
+   *
+   * @param array $elements
+   *   The multiple-value widget elements.
+   */
+  protected function preventRemovingLastItem(array &$elements): void {
+    $deltas = array_filter(array_keys($elements), 'is_int');
+    if (count($deltas) !== 1) {
+      return;
+    }
+    $delta = reset($deltas);
+    if (isset($elements[$delta]['top']['links']['remove_button'])) {
+      $elements[$delta]['top']['links']['remove_button']['#access'] = FALSE;
+    }
+  }
+
+  /**
    * Disables untranslatable fields in the provided form element.
    *
    * Iterates through the 'subform' array of the provided element and modifies

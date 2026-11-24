@@ -559,6 +559,35 @@ final class UserExpirationTest extends GroupKernelTestBase {
   }
 
   /**
+   * Test processing a queue item of a user deleted after being queued.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  public function testDeletedUserInQueue(): void {
+    $user = $this->createLastAccessUser(2);
+
+    // Simulate a user who has already received the first reminder.
+    $state_name = 'hel_tpm_user_expiry.notified.' . $user->id();
+    \Drupal::state()->set($state_name, [
+      'count' => 1,
+      'timestamp' => strtotime('-2 weeks'),
+    ]);
+
+    _hel_tpm_user_expiry_notification_cron();
+    $this->assertEquals(1, $this->queue->numberOfItems());
+
+    $user->delete();
+
+    // Ensure the cron run completes and the item of the deleted user is
+    // removed from the queue instead of being retried on every cron run.
+    $this->assertTrue($this->cron->run());
+    $this->assertEquals(0, $this->queue->numberOfItems());
+    $this->assertCount(0, $this->drupalGetMails());
+    // Ensure the notification state of the deleted user is cleared.
+    $this->assertNull(\Drupal::state()->get($state_name));
+  }
+
+  /**
    * Test anonymized users are not anonymized again.
    *
    * @throws \Drupal\Core\Entity\EntityStorageException

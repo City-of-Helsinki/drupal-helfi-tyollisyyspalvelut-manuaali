@@ -93,4 +93,14 @@ final class PreventMailTest extends EntityKernelTestBase {
     $this->assertCount(1, $this->getMails());
   }
 
+  /**
+   * Tests the block state of message templates.
+   */
+  public function testTemplateBlocked() {
+    $this->assertFalse(PreventMailUtility::isTemplateBlocked('group_ready_to_publish_notificat'));
+    PreventMailUtility::blockMessage(PreventMailUtility::SERVICES_READY_TO_PUBLISH);
+    $this->assertTrue(PreventMailUtility::isTemplateBlocked('group_ready_to_publish_notificat'));
+    $this->assertNull(PreventMailUtility::isTemplateBlocked('unknown_template'));
+  }
+
 }

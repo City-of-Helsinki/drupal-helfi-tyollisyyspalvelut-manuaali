@@ -10,6 +10,9 @@ services:
     decoration_priority: 9
     arguments: ['@plugin.manager.purge.queue', '@database', '@config.factory']
 
+  hel_tpm_general.phone_number_handler:
+    class: Drupal\hel_tpm_general\PhoneNumberHandler
+
   hel_tpm_general.revision_list_route_event_subscriber:
     class: Drupal\hel_tpm_general\EventSubscriber\RevisionListRouteSubscriber
     arguments: ['@entity_type.manager']
