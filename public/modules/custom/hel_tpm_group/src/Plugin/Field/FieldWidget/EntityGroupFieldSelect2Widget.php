@@ -7,6 +7,7 @@ namespace Drupal\hel_tpm_group\Plugin\Field\FieldWidget;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Form\OptGroup;
 use Drupal\entitygroupfield\Plugin\Field\FieldWidget\EntityGroupFieldSelectWidget;
 use Drupal\group\Entity\GroupInterface;
 use Drupal\group\Entity\GroupRelationshipInterface;
@@ -181,7 +182,10 @@ class EntityGroupFieldSelect2Widget extends EntityGroupFieldSelectWidget {
   /**
    * Element validate callback storing the selected group in the widget state.
    *
-   * The state keeps the selection when the form is rebuilt.
+   * The state keeps the selection when the form is rebuilt. Element validate
+   * callbacks run even when the form API has rejected the value as an illegal
+   * choice, so only groups among the options are stored. The other selected
+   * relationships are built from the state without access checks.
    */
   public static function validateSelection(array &$element, FormStateInterface $form_state, array &$complete_form): void {
     $state = static::getWidgetState($element['#field_parents'], $element['#field_name'], $form_state);
@@ -189,6 +193,9 @@ class EntityGroupFieldSelect2Widget extends EntityGroupFieldSelectWidget {
       return;
     }
     $value = $element['#value'] ?? NULL;
+    if ($value !== NULL && $value !== '' && (!is_scalar($value) || !array_key_exists($value, OptGroup::flattenOptions($element['#options'] ?? [])))) {
+      return;
+    }
     $state['selected'] = ($value === NULL || $value === '') ? [] : [$value];
     static::setWidgetState($element['#field_parents'], $element['#field_name'], $form_state, $state);
   }

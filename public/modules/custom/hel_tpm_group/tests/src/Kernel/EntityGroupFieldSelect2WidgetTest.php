@@ -6,6 +6,7 @@ namespace Drupal\Tests\hel_tpm_group\Kernel;
 
 use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\Core\Form\FormState;
+use Drupal\Core\Form\OptGroup;
 use Drupal\Tests\content_moderation\Traits\ContentModerationTestTrait;
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;
 use Drupal\Tests\hel_tpm_group\Traits\GroupInitTrait;
@@ -144,6 +145,39 @@ class EntityGroupFieldSelect2WidgetTest extends GroupKernelTestBase {
 
     $this->submitWidget($node, $form_state, $this->spGroup);
     $this->assertSame($sp_relationship_ids, array_keys($this->loadRelationships($node)));
+  }
+
+  /**
+   * Tests that a group missing from the options isn't stored as selected.
+   */
+  public function testIllegalChoiceIsNotStored(): void {
+    $this->setCurrentUser($this->createUser([EntityGroupFieldSelect2Widget::PERMISSION]));
+    $node = $this->createService([$this->orgGroup]);
+
+    $element = $this->buildWidget($node, $form_state);
+    $complete_form = [];
+    $element['#value'] = '999999';
+    EntityGroupFieldSelect2Widget::validateSelection($element, $form_state, $complete_form);
+    $state = EntityGroupFieldSelect2Widget::getWidgetState([], self::FIELD, $form_state);
+    $this->assertEquals([$this->orgGroup->id()], $state['selected']);
+
+    // A group the user can't add the service to isn't an option either.
+    $this->assertArrayNotHasKey($this->spGroup->id(), OptGroup::flattenOptions($element['#options']));
+    $element['#value'] = (string) $this->spGroup->id();
+    EntityGroupFieldSelect2Widget::validateSelection($element, $form_state, $complete_form);
+    $state = EntityGroupFieldSelect2Widget::getWidgetState([], self::FIELD, $form_state);
+    $this->assertEquals([$this->orgGroup->id()], $state['selected']);
+
+    // Legal choices are still stored.
+    $element['#value'] = (string) $this->orgGroup->id();
+    EntityGroupFieldSelect2Widget::validateSelection($element, $form_state, $complete_form);
+    $state = EntityGroupFieldSelect2Widget::getWidgetState([], self::FIELD, $form_state);
+    $this->assertSame([(string) $this->orgGroup->id()], $state['selected']);
+
+    $element['#value'] = '';
+    EntityGroupFieldSelect2Widget::validateSelection($element, $form_state, $complete_form);
+    $state = EntityGroupFieldSelect2Widget::getWidgetState([], self::FIELD, $form_state);
+    $this->assertSame([], $state['selected']);
   }
 
   /**
