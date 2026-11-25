@@ -50,6 +50,15 @@ final class AuditLogEntityHooks {
   private array $loggedEntityTypes = [];
 
   /**
+   * Unchanged versions of updated composite entities (e.g. paragraphs).
+   *
+   * Keyed by entity type id and revision id.
+   *
+   * @var array<string,array<int|string,\Drupal\Core\Entity\ContentEntityInterface>>
+   */
+  private array $compositeOriginals = [];
+
+  /**
    * Constructs a new instance.
    *
    * @param \Drupal\hel_tpm_audit_log\AuditLog\AuditLogServiceInterface $auditLogService
@@ -115,6 +124,7 @@ final class AuditLogEntityHooks {
     if ($previousEntity->hasTranslation($langcode)) {
       $previousEntity = $previousEntity->getTranslation($langcode);
     }
+    $this->restoreCompositeOriginals($previousEntity);
     $differ = new HumanReadableDiffer();
 
     $fields = $this->entityComparison->compareRevisions($previousEntity, $entity);
@@ -134,15 +144,119 @@ final class AuditLogEntityHooks {
    */
   #[Hook('entity_update')]
   public function onEntityUpdate(EntityInterface $entity): void {
-    if (!$this->isLoggable($entity, self::ENTITY_UPDATE)) {
+    if ($this->isComposite($entity)) {
+      $this->storeCompositeOriginal($entity);
+    }
+
+    if ($this->isLoggable($entity, self::ENTITY_UPDATE)) {
+      $extra = [];
+
+      if ($entity instanceof ContentEntityInterface && $entity->getEntityType()->isRevisionable()) {
+        $extra['ContentDiff'] = $this->getEntityDiff($entity) ?? '';
+      }
+      $this->logEvent($entity, self::ENTITY_UPDATE, $extra);
+    }
+
+    // Composite entities are saved before their host's update hook runs.
+    // Forget them once a host has been handled. Only entities that can
+    // reference composites count: other entities, like content moderation
+    // states, are saved during the host's save before this hook runs for it.
+    if (!$this->isComposite($entity) && $this->hasCompositeReferences($entity)) {
+      $this->compositeOriginals = [];
+    }
+  }
+
+  /**
+   * Checks if the entity has entity_reference_revisions fields.
+   *
+   * @param \Drupal\Core\Entity\EntityInterface $entity
+   *   The entity.
+   *
+   * @return bool
+   *   TRUE if the entity can reference composite entities.
+   */
+  private function hasCompositeReferences(EntityInterface $entity): bool {
+    if (!$entity instanceof ContentEntityInterface) {
+      return FALSE;
+    }
+    foreach ($entity->getFieldDefinitions() as $definition) {
+      if ($definition->getType() === 'entity_reference_revisions') {
+        return TRUE;
+      }
+    }
+    return FALSE;
+  }
+
+  /**
+   * Checks if the entity is a composite entity, e.g. a paragraph.
+   *
+   * Composite entities are saved by entity_reference_revisions as part of
+   * their host (parent) entity.
+   *
+   * @param \Drupal\Core\Entity\EntityInterface $entity
+   *   The entity.
+   *
+   * @return bool
+   *   TRUE if the entity is a composite entity.
+   */
+  private function isComposite(EntityInterface $entity): bool {
+    return $entity instanceof ContentEntityInterface
+      && (bool) $entity->getEntityType()->get('entity_revision_parent_id_field');
+  }
+
+  /**
+   * Remembers the unchanged version of an updated composite entity.
+   *
+   * When the host is saved without a new revision, entity_reference_revisions
+   * saves the paragraphs in place before the host's update hook runs. The
+   * host's original then points to the already updated paragraph revisions,
+   * so their previous values are only available here.
+   *
+   * @param \Drupal\Core\Entity\EntityInterface $entity
+   *   The composite entity.
+   */
+  private function storeCompositeOriginal(EntityInterface $entity): void {
+    $original = $entity->getOriginal();
+
+    if ($original instanceof ContentEntityInterface && $original->getRevisionId()) {
+      // Keep the first version seen. A paragraph can be saved more than once
+      // before its host is: e.g. inline entity form saves it in place on form
+      // submit, and entity_reference_revisions saves it again as a new
+      // revision with the host. The second save's original already has the
+      // new values.
+      $this->compositeOriginals[$entity->getEntityTypeId()][$original->getRevisionId()] ??= $original;
+    }
+  }
+
+  /**
+   * Replaces referenced composite entities with their unchanged versions.
+   *
+   * @param \Drupal\Core\Entity\ContentEntityInterface $entity
+   *   The host's original entity. Its references are changed in place.
+   * @param int $depth
+   *   The nesting level, to guard against reference loops.
+   */
+  private function restoreCompositeOriginals(ContentEntityInterface $entity, int $depth = 0): void {
+    if (!$this->compositeOriginals || $depth > 10) {
       return;
     }
-    $extra = [];
+    foreach ($entity->getFields() as $items) {
+      if ($items->getFieldDefinition()->getType() !== 'entity_reference_revisions') {
+        continue;
+      }
+      $targetType = $items->getFieldDefinition()->getSetting('target_type');
 
-    if ($entity instanceof ContentEntityInterface && $entity->getEntityType()->isRevisionable()) {
-      $extra['ContentDiff'] = $this->getEntityDiff($entity) ?? '';
+      foreach ($items as $item) {
+        $original = $this->compositeOriginals[$targetType][$item->target_revision_id] ?? NULL;
+
+        if ($original) {
+          $item->entity = $original;
+        }
+        if ($item->entity instanceof ContentEntityInterface) {
+          $this->restoreCompositeOriginals($item->entity, $depth + 1);
+        }
+      }
     }
-    $this->logEvent($entity, self::ENTITY_UPDATE, $extra);
   }
 
   /**

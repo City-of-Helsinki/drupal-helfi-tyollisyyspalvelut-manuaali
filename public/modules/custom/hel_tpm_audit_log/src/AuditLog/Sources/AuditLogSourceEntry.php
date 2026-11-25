@@ -68,9 +68,10 @@ class AuditLogSourceEntry implements AbstractLogSourceEntry {
       throw new \RuntimeException("Document not found");
     }
 
-    $timestamp = strtotime($result['created_at']);
-    $createdAt = (new \DateTimeImmutable('@' . $timestamp))
-      ->setTimezone(new \DateTimeZone('UTC'));
+    // created_at is written in UTC (gmdate()). Parse it as UTC explicitly:
+    // strtotime() would use PHP's default timezone, which Drupal sets to the
+    // site timezone, and shift the timestamp by the UTC offset.
+    $createdAt = new \DateTimeImmutable($result['created_at'], new \DateTimeZone('UTC'));
 
     $message = json_decode($result['message'], TRUE);
     $data = array_intersect_key(

@@ -15,6 +15,10 @@ names are the same as upstream.
   service provider group memberships). Updates of revisionable content
   entities include a human-readable field diff (`extra.ContentDiff`, via the
   diff module) of the fields shown in the entity's view display.
+  Paragraphs edited, added or removed through their host (e.g. a node form),
+  including nested paragraphs, are part of the host's diff with keys like
+  `<paragraph id>:paragraph.<field>`. This also works for node types that
+  don't create new revisions.
 - Group memberships (`group_content` entities using the `group_membership`
   plugin) also get `extra.group`, `extra.member` and `extra.group_roles`, plus
   `extra.group_roles_before` when an update changed the roles

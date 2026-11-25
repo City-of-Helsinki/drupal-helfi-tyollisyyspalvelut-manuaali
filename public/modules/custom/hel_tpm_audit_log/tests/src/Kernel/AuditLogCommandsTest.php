@@ -73,6 +73,15 @@ class AuditLogCommandsTest extends KernelTestBase {
 
     $this->logEvent();
 
+    // Drupal sets PHP's default timezone to the site timezone. The UTC
+    // created_at value must not be shifted by it.
+    date_default_timezone_set('Europe/Helsinki');
+    $createdAt = $this->container->get(Connection::class)
+      ->select('helfi_audit_logs', 'h')
+      ->fields('h', ['created_at'])
+      ->execute()
+      ->fetchField();
+
     $tester = $this->executeCommand(new AuditLogSubmitUnsentEntriesCommand(...$this->commandArguments()));
     $tester->assertCommandIsSuccessful();
 
@@ -85,6 +94,7 @@ class AuditLogCommandsTest extends KernelTestBase {
     $payload = json_decode((string) $request->getBody(), TRUE, flags: JSON_THROW_ON_ERROR);
     $this->assertSame('ENTITY_CREATE', $payload['audit_event']['operation']);
     $this->assertSame('helfi-audit-log-test', $payload['audit_event']['origin']);
+    $this->assertSame(str_replace(' ', 'T', $createdAt) . '.000Z', $payload['@timestamp']);
 
     // The row was marked sent.
     $isSent = $this->container->get(Connection::class)
