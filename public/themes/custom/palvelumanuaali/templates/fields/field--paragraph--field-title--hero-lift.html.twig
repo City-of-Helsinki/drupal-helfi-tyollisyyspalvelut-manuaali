@@ -44,10 +44,9 @@
     'field--type-' ~ field_type|clean_class,
     'field--label-' ~ label_display,
     label_display == 'inline' ? 'clearfix',
-    'h3',
   ]
 %}
 
     {% for item in items %}
-      <h2 class="field__item h1">{{ item.content }}</h2>
+      <h1 class="field__item h1">{{ item.content }}</h1>
     {% endfor %}
