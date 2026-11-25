@@ -26,7 +26,7 @@
 {{ attach_library('palvelumanuaali/main-menu') }}
 
 <nav>
-  <button type="button" class="toggle-expand" aria-expanded="false" aria-controls="main-nav">
+  <button type="button" class="toggle-expand" aria-expanded="false" aria-controls="main-nav" aria-label="{{ "Close main menu"|t({}, {'context' : 'Mobile main menu'}) }}">
     <span class="toggle-expand__open">
       <span aria-hidden="true">
         {% include "@atoms/images/icons/_icon.twig" with {
