@@ -62,6 +62,15 @@ services:
     type: node:24
   database:
     portforward: 37001
+  elastic8:
+    type: compose
+    services:
+      image: docker.elastic.co/elasticsearch/elasticsearch:8.15.0
+      command: /bin/tini -- /usr/local/bin/docker-entrypoint.sh
+      environment:
+        discovery.type: single-node
+        xpack.security.enabled: "false"
+        ES_JAVA_OPTS: "-Xms512m -Xmx512m"
 tooling:
   # Create additional commands for lando
   install-drupal:
