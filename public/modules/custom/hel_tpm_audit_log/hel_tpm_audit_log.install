@@ -25,7 +25,13 @@ function hel_tpm_audit_log_schema(): array {
         'description' => 'Primary Key: Unique record ID.',
       ],
       'created_at' => [
+        // MySQL/MariaDB use a TIMESTAMP column. Other databases (e.g. SQLite
+        // in tests) need a generic type: store the 'Y-m-d H:i:s' UTC string,
+        // which also sorts and compares correctly as text.
+        'type' => 'varchar_ascii',
+        'length' => 19,
         'mysql_type' => 'timestamp',
+        'pgsql_type' => 'timestamp',
         'not null' => TRUE,
         'description' => 'Timestamp when the record was created.',
         'default' => '2023-06-28 12:00:00',
