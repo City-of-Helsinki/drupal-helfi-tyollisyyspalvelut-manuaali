@@ -26,5 +26,23 @@ $settings['simple_environment_indicator'] = '#00bdbd Lando';
 $config['system.performance']['css']['preprocess'] = FALSE;
 $config['system.performance']['js']['preprocess'] = FALSE;
 
+$settings['resilient_logger'] = [
+  'sources' => [
+    ['class' => \Drupal\hel_tpm_audit_log\AuditLog\Sources\AuditLogSource::class],
+  ],
+  'targets' => [
+    [
+      'class' => \ResilientLogger\Targets\ElasticsearchLogTarget::class,
+      'es_url' => 'http://elastic:9200',
+      'es_username' => '',
+      'es_password' => '',
+      'es_index' => 'audit-log-local',
+      'required' => TRUE,
+    ],
+  ],
+  'origin' => 'palvelumanuaali',
+  'environment' => 'local',
+  'store_old_entries_days' => 30,
+];
 
 include_once $app_root . '/' . $site_path . '/settings.redis.php';

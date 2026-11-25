@@ -5,6 +5,7 @@ declare (strict_types=1);
 namespace Drupal\hel_tpm_audit_log\AuditLog\Event;
 
 use Drupal\Component\EventDispatcher\Event;
+use Drupal\Core\Entity\EntityInterface;
 
 /**
  * Event class for audit log use.
@@ -34,6 +35,9 @@ class AuditLogEvent extends Event {
    *   Who performed the action (user or system).
    * @param \DateTimeImmutable $dateTime
    *   When the action occurred. Defaults to the current UTC time.
+   * @param \Drupal\Core\Entity\EntityInterface|null $entity
+   *   The entity the operation was performed on, if any. Lets subscribers add
+   *   entity specific context; it is not written to the audit log itself.
    */
   public function __construct(
     public string $operation,
@@ -42,6 +46,7 @@ class AuditLogEvent extends Event {
     public array $extra = [],
     public array $actor = [],
     public readonly \DateTimeImmutable $dateTime = new \DateTimeImmutable('now', new \DateTimeZone('UTC')),
+    public readonly ?EntityInterface $entity = NULL,
   ) {
   }
 

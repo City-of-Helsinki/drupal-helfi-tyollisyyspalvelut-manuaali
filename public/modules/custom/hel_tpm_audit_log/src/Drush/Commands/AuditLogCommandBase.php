@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace Drupal\hel_tpm_audit_log\Drush\Commands;
 
 use Drupal\Core\Site\Settings;
-use Drush\Commands\AutowireTrait;
 use ResilientLogger\ResilientLogger;
 use Symfony\Component\Console\Command\Command;
 
 /**
  * A base class for audit log drush commands.
  *
+ * Subclasses must use \Drush\Commands\AutowireTrait themselves: the trait's
+ * create() calls `new self()`, which would point at this abstract class.
+ *
  * @phpstan-import-type ResilientLoggerOptions from \ResilientLogger\Types as LoggerOptions
  */
 abstract class AuditLogCommandBase extends Command {
-
-  use AutowireTrait;
 
   public function __construct(
     private readonly Settings $settings,

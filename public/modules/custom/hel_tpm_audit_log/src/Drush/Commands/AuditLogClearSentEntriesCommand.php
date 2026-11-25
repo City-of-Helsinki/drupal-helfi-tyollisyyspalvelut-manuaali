@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\hel_tpm_audit_log\Drush\Commands;
 
+use Drush\Commands\AutowireTrait;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -17,6 +18,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
   description: 'Clears sent audit log entries that are past the retention period.',
 )]
 final class AuditLogClearSentEntriesCommand extends AuditLogCommandBase {
+
+  use AutowireTrait;
 
   /**
    * {@inheritdoc}

@@ -41,11 +41,13 @@ final class AuditLogEntityHooks {
   public const ENTITY_DELETE = 'ENTITY_DELETE';
 
   /**
-   * The configured entity type matchers.
+   * The configured entity type matchers, keyed by entity type id.
    *
-   * @var array<string,\Drupal\hel_tpm_audit_log\AuditLog\AuditLogEntityType>
+   * An entity type can have several matchers, e.g. one per bundle.
+   *
+   * @var array<string,list<\Drupal\hel_tpm_audit_log\AuditLog\AuditLogEntityType>>
    */
-  private array $loggedEntityTypes;
+  private array $loggedEntityTypes = [];
 
   /**
    * Constructs a new instance.
@@ -64,7 +66,7 @@ final class AuditLogEntityHooks {
   ) {
     foreach ($loggedEntityTypes as $type) {
       $entityType = AuditLogEntityType::fromArray($type);
-      $this->loggedEntityTypes[$entityType->entityType] = $entityType;
+      $this->loggedEntityTypes[$entityType->entityType][] = $entityType;
     }
   }
 
@@ -169,10 +171,12 @@ final class AuditLogEntityHooks {
     if (Settings::get('auditlog_entity_hooks_disable', FALSE)) {
       return FALSE;
     }
-    if (!$type = $this->loggedEntityTypes[$entity->getEntityTypeId()] ?? NULL) {
-      return FALSE;
+    foreach ($this->loggedEntityTypes[$entity->getEntityTypeId()] ?? [] as $type) {
+      if ($type->isLoggable($entity, $operation)) {
+        return TRUE;
+      }
     }
-    return $type->isLoggable($entity, $operation);
+    return FALSE;
   }
 
   /**
@@ -200,6 +204,7 @@ final class AuditLogEntityHooks {
         'name' => (string) $entity->label(),
       ],
       extra: $extra,
+      entity: $entity,
     ));
   }
 

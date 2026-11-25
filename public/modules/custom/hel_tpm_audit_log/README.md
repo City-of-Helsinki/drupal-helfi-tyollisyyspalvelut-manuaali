@@ -11,8 +11,16 @@ names are the same as upstream.
 - `ENTITY_CREATE`, `ENTITY_UPDATE`, `ENTITY_DELETE` (and optionally
   `ENTITY_READ`) for entity types listed in the
   `hel_tpm_audit_log.audit_log_entity_types` service parameter
-  (default: `node`, `user`). Updates of revisionable content entities include
-  a human-readable field diff (`extra.ContentDiff`, via the diff module).
+  (default: `node`, `user`, `contact_info`, `group` and the organisation and
+  service provider group memberships). Updates of revisionable content
+  entities include a human-readable field diff (`extra.ContentDiff`, via the
+  diff module) of the fields shown in the entity's view display.
+- Group memberships (`group_content` entities using the `group_membership`
+  plugin) also get `extra.group`, `extra.member` and `extra.group_roles`, plus
+  `extra.group_roles_before` when an update changed the roles
+  (`AuditLogGroupMembershipSubscriber`). Membership bundles are per group
+  type, so a new group type needs its membership bundle added to the
+  parameter.
 - `USER_LOGIN` and `USER_LOGOUT`.
 - Anything custom code passes to
   `AuditLogServiceInterface::logOperation(new AuditLogEvent(...))`.
@@ -28,6 +36,8 @@ parameters:
   hel_tpm_audit_log.audit_log_entity_types:
     - { entity_type: 'node', bundle: 'service' }
     - { entity_type: 'user', operations: ['ENTITY_CREATE', 'ENTITY_DELETE'] }
+    # An entity type can be listed several times, e.g. once per bundle.
+    - { entity_type: 'group_content', bundle: 'organisation-group_membership' }
 ```
 
 Disable the entity hooks (e.g. during migrations):

@@ -148,5 +148,31 @@ if (isset($_SERVER['REMOTE_ADDR'])) {
 $settings['reverse_proxy_trusted_headers'] = Request::HEADER_X_FORWARDED_FOR | Request::HEADER_X_FORWARDED_HOST | Request::HEADER_X_FORWARDED_PORT | Request::HEADER_X_FORWARDED_PROTO;
 $settings['reverse_proxy_host_header'] = 'X_FORWARDED_HOST';
 
+if (getenv('AUDIT_LOG_ES_URL')) {
+  $settings['resilient_logger'] = [
+    'sources' => [
+      ['class' => \Drupal\hel_tpm_audit_log\AuditLog\Sources\AuditLogSource::class],
+    ],
+    'targets' => [
+      [
+        'class' => \ResilientLogger\Targets\ElasticsearchLogTarget::class,
+        'es_url' => getenv('AUDIT_LOG_ES_URL'),
+        'es_username' => getenv('AUDIT_LOG_ES_USERNAME'),
+        'es_password' => getenv('AUDIT_LOG_ES_PASSWORD'),
+        'es_index' => getenv('AUDIT_LOG_ES_INDEX'),
+        'required' => TRUE,
+      ],
+    ],
+    'origin' => 'palvelumanuaali',
+    // Optional: defaults to the PLATFORM_ENVIRONMENT_TYPE env variable.
+    'environment' => getenv('APP_ENV'),
+    'store_old_entries_days' => 30,
+    'batch_limit' => 5000,
+    'chunk_size' => 500,
+    'schedule_submit_unsent_entries' => '+15min',
+    'schedule_clear_sent_entries' => 'first day of next month midnight',
+  ];
+}
+
 // Enable redis settings.
 include_once $app_root . '/' . $site_path . '/settings.redis.php';

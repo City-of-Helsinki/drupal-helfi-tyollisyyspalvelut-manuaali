@@ -6,6 +6,16 @@ parameters:
   hel_tpm_audit_log.audit_log_entity_types:
     - { entity_type: 'node' }
     - { entity_type: 'user' }
+    # Provided by hel_tpm_contact_info; ignored when that module is disabled.
+    - { entity_type: 'contact_info' }
+    # Group module. Memberships are group_content (group relationship)
+    # entities with one bundle per group type. A new group type needs its
+    # membership bundle added here.
+    - { entity_type: 'group' }
+    # Organisation memberships.
+    - { entity_type: 'group_content', bundle: 'organisation-group_membership' }
+    # Service provider memberships.
+    - { entity_type: 'group_content', bundle: 'group_content_type_a689b6d6f98cc' }
 
 services:
   _defaults:
@@ -31,3 +41,4 @@ services:
 
   Drupal\hel_tpm_audit_log\AuditLog\EventSubscriber\AuditLogActorSubscriber: ~
   Drupal\hel_tpm_audit_log\AuditLog\EventSubscriber\AuditLogRequestIdSubscriber: ~
+  Drupal\hel_tpm_audit_log\AuditLog\EventSubscriber\AuditLogGroupMembershipSubscriber: ~

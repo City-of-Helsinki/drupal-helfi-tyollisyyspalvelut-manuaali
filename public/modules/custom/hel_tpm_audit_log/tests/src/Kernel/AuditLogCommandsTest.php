@@ -173,6 +173,23 @@ class AuditLogCommandsTest extends KernelTestBase {
   }
 
   /**
+   * Test that Drush can instantiate the commands from the container.
+   *
+   * Drush silently drops commands whose create() throws, which hides them
+   * from `drush list`.
+   */
+  public function testCommandsCanBeCreatedFromContainer(): void {
+    $this->assertInstanceOf(
+      AuditLogSubmitUnsentEntriesCommand::class,
+      AuditLogSubmitUnsentEntriesCommand::create($this->container),
+    );
+    $this->assertInstanceOf(
+      AuditLogClearSentEntriesCommand::class,
+      AuditLogClearSentEntriesCommand::create($this->container),
+    );
+  }
+
+  /**
    * Gets the constructor arguments for the audit log commands.
    *
    * @return array{\Drupal\Core\Site\Settings}
