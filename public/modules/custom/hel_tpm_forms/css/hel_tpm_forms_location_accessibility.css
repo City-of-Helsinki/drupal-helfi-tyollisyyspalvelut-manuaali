@@ -1,0 +1,7 @@
+/**
+ * Hide the server-rendered location accessibility display until JS has
+ * checked it against the (possibly browser-restored) location input.
+ */
+.js .hel-tpm-location-accessibility[data-location-accessibility-pending] {
+  display: none;
+}

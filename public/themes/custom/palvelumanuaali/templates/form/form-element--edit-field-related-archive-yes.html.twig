@@ -47,4 +47,6 @@
 {%
   set additional_class = 'form-item-checkbox form-item--no-margin'
 %}
-{% include "@atoms/forms/_form-element.twig" %}
+{% include "@atoms/forms/_form-element.twig" with {
+  description_display: 'before',
+}%}

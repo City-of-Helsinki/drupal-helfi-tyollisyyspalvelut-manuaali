@@ -5,11 +5,12 @@ WORKDIR /var/www/html
 RUN composer install --no-progress --prefer-dist --no-interaction --no-dev --optimize-autoloader
 RUN composer dump-autoload --optimize
 
-RUN mkdir -p /crons /entrypoints
+RUN mkdir -p /crons /entrypoints /hooks
 
 COPY docker/openshift/entrypoints /entrypoints
 COPY docker/openshift/crons/ /crons
+COPY docker/openshift/hooks/ /hooks
 
-RUN chmod -R +x /entrypoints/* /crons/*
+RUN chmod -R +x /entrypoints/* /crons/* /hooks/*
 
 COPY docker/openshift/init.sh /

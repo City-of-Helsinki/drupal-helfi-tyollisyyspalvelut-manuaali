@@ -7,11 +7,15 @@ dependencies:
   module:
     - hel_tpm_contact_info
     - text
+    - tmgmt_content
+third_party_settings:
+  tmgmt_content:
+    excluded: false
 id: contact_info.contact_info.field_municipality
 field_name: field_municipality
 entity_type: contact_info
 bundle: contact_info
-label: 'Lisätiedot (valinnainen)'
+label: Lisätiedot
 description: ''
 required: false
 translatable: true

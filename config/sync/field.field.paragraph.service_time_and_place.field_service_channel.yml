@@ -1,0 +1,25 @@
+uuid: 3d952585-18f2-4cd6-b31b-3a2de105c691
+langcode: fi
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_service_channel
+    - paragraphs.paragraphs_type.service_time_and_place
+  module:
+    - options
+    - tmgmt_content
+third_party_settings:
+  tmgmt_content:
+    excluded: false
+id: paragraph.service_time_and_place.field_service_channel
+field_name: field_service_channel
+entity_type: paragraph
+bundle: service_time_and_place
+label: 'Valitse palvelun asiointikanava'
+description: 'Valitse asiointikanava. Jos palvelulla on useita asiointikanavia, lisää sivun alareunasta uusi.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

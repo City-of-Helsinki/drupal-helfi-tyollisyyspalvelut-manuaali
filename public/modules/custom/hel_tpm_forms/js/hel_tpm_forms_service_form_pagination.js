@@ -1,174 +1,203 @@
-(function ($, Drupal, drupalSettings) {
-  Drupal.behaviors.hel_tpm_forms_service_form_pagination = {
+(function ($, Drupal, once) {
+  Drupal.behaviors.serviceFormPagination = {
     attach: function (context, settings) {
-      let tabs = document.getElementsByClassName("tab");
-      defaultTab();
+      const tabs = Array.from(document.getElementsByClassName('tab'));
+      const steps = Array.from(document.querySelectorAll('.step'));
+
+      if (!tabs.length || !steps.length) {
+        return;
+      }
+
+      // stepTabs[i] is the .tab element for button i, or null if it has none.
+      const stepTabs = mapStepsToTabs();
+
+      defaultStep();
       nextPrevNav();
       stepNav();
 
-      /**
-       * Default tab logic.
-       */
-      function defaultTab() {
-        let currentTab = getCurrentTab();
-        showTab(currentTab); // Display the current tab
+      function isDisabled(step) {
+        return step.getAttribute('aria-disabled') === 'true';
       }
 
       /**
-       * Provides for next and previous navigation events.
+       * Links each step button to its tab.
+       *
+       * Uses aria-controls (the group's HTML id) when available, otherwise
+       * document order. Disabled groups normally render no tab, so they are
+       * skipped in the order unless every step has a tab.
+       */
+      function mapStepsToTabs() {
+        const allTabsRendered = tabs.length === steps.length;
+        let next = 0;
+
+        const map = steps.map(function (step) {
+          const id = step.getAttribute('aria-controls');
+          const byId = id ? document.getElementById(id) : null;
+          if (byId && tabs.includes(byId)) {
+            next = tabs.indexOf(byId) + 1;
+            return byId;
+          }
+          if (isDisabled(step) && !allTabsRendered) {
+            return null;
+          }
+          return tabs[next++] || null;
+        });
+
+        // A step without a tab can't be opened: disable it.
+        map.forEach(function (tab, index) {
+          if (!tab && !isDisabled(steps[index])) {
+            steps[index].setAttribute('aria-disabled', 'true');
+            steps[index].classList.add('is-disabled');
+            console.warn('Stepper: no tab found for step ' + (index + 1) + '.');
+          }
+          if (tab) {
+            tab.dataset.stepIndex = index;
+          }
+        });
+
+        return map;
+      }
+
+      function isStepEnabled(n) {
+        return n >= 0 && n < steps.length && !isDisabled(steps[n]) && stepTabs[n] !== null;
+      }
+
+      /**
+       * Finds the nearest enabled step from `start` in `direction` (1 or -1).
+       *
+       * @returns {number} Step index, or -1 if there is none.
+       */
+      function findEnabledStep(start, direction) {
+        for (let n = start; n >= 0 && n < steps.length; n += direction) {
+          if (isStepEnabled(n)) {
+            return n;
+          }
+        }
+        return -1;
+      }
+
+      /**
+       * Turns any requested index into an enabled step index (-1 if none).
+       */
+      function resolveStep(n) {
+        n = Number(n);
+        if (!Number.isInteger(n)) {
+          n = 0;
+        }
+        n = Math.max(0, Math.min(n, steps.length - 1));
+        if (isStepEnabled(n)) {
+          return n;
+        }
+        const forward = findEnabledStep(n + 1, 1);
+        return forward !== -1 ? forward : findEnabledStep(n - 1, -1);
+      }
+
+      function defaultStep() {
+        showStep(getCurrentStep());
+      }
+
+      /**
+       * Bound by id, as the button classes are also used by other buttons.
        */
       function nextPrevNav() {
-        // Bound by id, as the button classes are also used by other buttons.
-        $(once('prev-click-event', '#prevBtn', context)).each(function() {
-          $(this).click(function() {
-            nextPrev(-1);
-          })
+        $(once('prev-click-event', '#prevBtn', context)).on('click', function (e) {
+          e.preventDefault();
+          nextPrev(-1);
         });
 
-        $(once('next-click-event', '#nextBtn', context)).each(function() {
-          $(this).click(function() {
-            nextPrev(1);
-          })
+        $(once('next-click-event', '#nextBtn', context)).on('click', function (e) {
+          e.preventDefault();
+          nextPrev(1);
         });
       }
 
       /**
-       * Pager navigation.
+       * A <button> fires "click" on Enter and Space as well.
        */
       function stepNav() {
-        $(once('step-event', '.step', context)).each(function() {
-          $(this).click(function() {
-            let step = $(this).attr('data-step');
-            switchTab(step);
-          });
-          $(this).on("keyup",function(e) {
-            if (e.key === "Enter") {
-              let step = $(this).attr('data-step');
-              switchTab(step);
-            }
-          });
+        $(once('step-event', '.step', context)).on('click', function (e) {
+          e.preventDefault();
+          const n = steps.indexOf(this);
+          if (!isStepEnabled(n)) {
+            return;
+          }
+          switchStep(n);
         });
       }
 
-      /**
-       * Update url step parameter.
-       *
-       * @param step
-       */
-      function updateStepParam(step) {
-        let urlParams = new URLSearchParams(window.location.search);
-        urlParams.set('step', step);
-        history.replaceState(null, null, "?"+urlParams.toString());
+      function updateStepParam(n) {
+        const urlParams = new URLSearchParams(window.location.search);
+        urlParams.set('step', n);
+        history.replaceState(null, '', '?' + urlParams.toString());
       }
 
-      /**
-       * Switch tab.
-       *
-       * @param n
-       */
-      function switchTab(n) {
-        let currentTab = getCurrentTab();
-        $(tabs).each(function () {
-          this.style.display = "none";
-        });
-        currentTab = Number(n);
-        showTab(currentTab);
+      function switchStep(n) {
+        showStep(n);
         scrollTop();
       }
 
-      /**
-       * Show selected tab function.
-       *
-       * @param n
-       */
-      function showTab(n) {
-        n = Number(n);
+      function showStep(n) {
+        n = resolveStep(n);
 
-        // This function will display the specified tab of the form ...
-        tabs[n].style.display = "block";
-        let lastTab = tabs.length - 1;
-        let nextBtn = document.getElementById('nextBtn');
-        let prevBtn = document.getElementById('prevBtn');
-        // ... and fix the Previous/Next buttons:
-        if (n > 0) {
-          prevBtn.hidden = false;
-          nextBtn.hidden = false;
-        }
-        else {
-          prevBtn.hidden = true
+        tabs.forEach(function (tab) {
+          tab.style.display = 'none';
+        });
+
+        // No enabled step at all: show the first tab as a fallback.
+        if (n === -1) {
+          tabs[0].style.display = 'block';
+          return;
         }
 
-        if (n === 0) {
-           nextBtn.hidden = false;
-        }
+        stepTabs[n].style.display = 'block';
 
-        if (n === lastTab) {
-          nextBtn.hidden = true;
+        const nextBtn = document.getElementById('nextBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        if (prevBtn) {
+          prevBtn.hidden = findEnabledStep(n - 1, -1) === -1;
+        }
+        if (nextBtn) {
+          nextBtn.hidden = findEnabledStep(n + 1, 1) === -1;
         }
 
         updateStepParam(n);
-        // ... and run a function that displays the correct step indicator:
         fixStepIndicator(n);
         // Let other scripts react to the step change.
         document.dispatchEvent(new CustomEvent('hel_tpm_forms:step-change', {detail: {step: n}}));
       }
 
-      /**
-       * Method for scrolling window to top.
-       */
       function scrollTop() {
-        // I have no idea why this needs this to work but it does
-        $(this).scrollTop();
-        const pageTitle = document.getElementsByClassName("multistep-nav active");
-        const scrollElement = pageTitle[0];
-        scrollElement.scrollIntoView();
-        scrollElement.focus();
-      }
-
-      /**
-       * Helper function to get current tab from url parameter.
-       *
-       * @returns {number}
-       */
-      function getCurrentTab() {
-        let currentTab = 0;
-        let urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.has('step')) {
-          currentTab = urlParams.get('step');
-          currentTab = Number(currentTab);
+        const active = document.querySelector('.multistep-nav.active');
+        if (active) {
+          active.scrollIntoView();
+          active.focus();
         }
-        return Number(currentTab);
       }
 
-      function nextPrev(n) {
-        let currentTab = getCurrentTab();
-        currentTab = currentTab + Number(n);
-        // Otherwise, display the correct tab:
-        switchTab(currentTab)
+      function getCurrentStep() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return resolveStep(urlParams.get('step') ?? 0);
+      }
+
+      function nextPrev(direction) {
+        const target = findEnabledStep(getCurrentStep() + direction, direction);
+        if (target !== -1) {
+          switchStep(target);
+        }
       }
 
       function fixStepIndicator(n) {
-        // This function removes the "active" class of all steps...
-        let i, x = document.getElementsByClassName("step");
-        for (i = 0; i < x.length; i++) {
-          x[i].className = x[i].className.replace(" active", "");
-          x[i].ariaCurrent = x[i].ariaCurrent.replace("step", "false");
-        }
-        //... and adds the "active" class to the current step:
-        x[n].className += " active";
-        x[n].ariaCurrent = "step";
-        fixLineIndicator(n);
-      }
-      function fixLineIndicator(n) {
-        //This function adds handles adding active class when page is
-        let x = document.getElementsByClassName("step-line");
-        for (i = 0; i < x.length; i++) {
-          x[i].className = x[i].className.replace(" active", "");
-        }
-        if (n != 0) {
-          x[n - 1].className += " active";
-        }
+        steps.forEach(function (step, index) {
+          const isActive = index === n;
+          step.classList.toggle('active', isActive);
+          if (isActive) {
+            step.setAttribute('aria-current', 'step');
+          }
+          else {
+            step.removeAttribute('aria-current');
+          }
+        });
       }
     }
-  }
-})(jQuery, Drupal, drupalSettings);
+  };
+})(jQuery, Drupal, once);

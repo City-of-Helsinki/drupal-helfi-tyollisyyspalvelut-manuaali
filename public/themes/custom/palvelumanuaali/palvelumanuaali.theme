@@ -5,8 +5,11 @@
  * Functions to support theming.
  */
 
+use Drupal\Component\Utility\Html;
+use Drupal\Core\StringTranslation\ByteSizeMarkup;
 use Drupal\Core\Template\Attribute;
 use Drupal\Core\Url;
+use Drupal\Core\Render\Element;
 use Drupal\content_moderation\Entity\ContentModerationState;
 use Drupal\node\NodeInterface;
 use Drupal\node\NodeTypeInterface;
@@ -301,6 +304,21 @@ function palvelumanuaali_preprocess_paragraph(&$variables): void {
 }
 
 /**
+ * Implements hook_preprocess_HOOK().
+ *
+ * Prepares variables for form element templates.
+ *
+ * The theme shows form element descriptions before the input. An element can
+ * show its description elsewhere by setting '#description_display_override',
+ * e.g. to 'after'. Core's '#description_display' can't be used for this,
+ * because core always sets it to 'after' by default.
+ */
+function palvelumanuaali_preprocess_form_element(array &$variables): void {
+  $override = $variables['element']['#description_display_override'] ?? NULL;
+  $variables['theme_description_display'] = in_array($override, ['before', 'after', 'invisible'], TRUE) ? $override : 'before';
+}
+
+/**
  * Implements hook_theme_suggestions_HOOK_alter().
  *
  * Add template suggestions for form element.
@@ -506,7 +524,9 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id): void {
         $form['field_service_languages']['#disabled'] = TRUE;
       }
       $form['content_translation']['#access'] = FALSE;
-
+      if (isset($form['field_municipality_guidance']['widget']['actions']['ief_add']['#value'])) {
+        $form['field_municipality_guidance']['widget']['actions']['ief_add']['#value'] = 'Lisää uusi Kuntakohtainen ohje';
+      }
       if (isset($form['field_description']['widget'][0]['value']['#title'])) {
         $label = t("Short description of the service");
         $form['field_description']['widget'][0]['value']['#title'] = $label;
@@ -514,6 +534,98 @@ function palvelumanuaali_form_alter(&$form, $form_state, $form_id): void {
       if (isset($form['field_service_languages']['widget']['add_more'])) {
         $label = t("Add new language");
         $form['field_service_languages']['widget']['add_more']['add_more_button_service_language']['#value'] = $label;
+      }
+      if (isset($form['field_public_links']['widget'])) {
+        $widget = &$form['field_public_links']['widget'];
+        $t_options = ['context' => 'Public links field'];
+        $form['field_public_links']['widget']['#title'] = t('Links', [], $t_options);
+        // "Add another item" button label.
+        if (isset($widget['add_more'])) {
+          $widget['add_more']['#value'] = t('Add new link');
+        }
+        // Relabel the URL and title of every link item.
+        foreach (Element::children($widget) as $delta) {
+          if (!is_numeric($delta)) {
+            continue;
+          }
+          if (isset($widget[$delta]['uri'])) {
+            $widget[$delta]['uri']['#title'] = t('Link address', [], $t_options);
+            $widget[$delta]['uri']['#description'] = '';
+          }
+          if (isset($widget[$delta]['title'])) {
+            $widget[$delta]['title']['#title'] = t('Link name', [], $t_options);
+            $widget[$delta]['title']['#description'] = '';
+          }
+        }
+      }
+      if (isset($form['field_contact_info']['widget']['#field_title'])) {
+        $label = t("Contact information for employment office");
+        $form['field_contact_info']['widget']['#field_title'] = $label;
+      }
+      if (isset($form['field_contact_info_external']['widget']['#field_title'])) {
+        $label = t("Contact information for customer");
+        $form['field_contact_info_external']['widget']['#field_title'] = $label;
+      }
+      if (isset($form['field_internal_links']['widget'])) {
+        $widget = &$form['field_internal_links']['widget'];
+        $form['field_internal_links']['widget']['#title'] = 'Linkit';
+        // "Add another item" button label.
+        if (isset($widget['add_more'])) {
+          $widget['add_more']['#value'] = 'Lisää uusi linkki';
+        }
+        // Relabel the URL and title of every link item.
+        foreach (Element::children($widget) as $delta) {
+          if (!is_numeric($delta)) {
+            continue;
+          }
+          if (isset($widget[$delta]['uri'])) {
+            $widget[$delta]['uri']['#title'] = 'Linkin osoite';
+            $widget[$delta]['uri']['#description'] = '';
+          }
+          if (isset($widget[$delta]['title'])) {
+            $widget[$delta]['title']['#title'] = 'Linkin nimi';
+            $widget[$delta]['title']['#description'] = '';
+          }
+          if (isset($widget[$delta]['_actions']['delete']['#value'])) {
+            $widget[$delta]['_actions']['delete']['#value'] = 'Poista';
+          }
+        }
+      }
+      if (isset($form['field_internal_files']['widget'])) {
+        $widget = &$form['field_internal_files']['widget'];
+
+        // "Add another item" button label.
+        if (isset($widget['#file_upload_title'])) {
+          $widget['#file_upload_title'] = 'Lisää liitetiedosto';
+        }
+        // Upload help text (cardinality, size limit, allowed types). Core
+        // renders this from '#file_upload_description' in
+        // FileWidget::processMultiple(), so overriding it here affects only
+        // this field and keeps the values from the field settings.
+        if (isset($widget['#file_upload_description'])) {
+          $help = $widget['#file_upload_description'];
+          $validators = $help['#upload_validators'] ?? [];
+          $cardinality = $help['#cardinality'] ?? NULL;
+          $lines = [];
+          if ($cardinality == -1) {
+            $lines[] = ' Kenttään on mahdollista ladata rajoittamaton määrä tiedostoja.';
+          }
+          elseif ($cardinality == 1) {
+            $lines[] = 'Vain yksi tiedosto.';
+          }
+          elseif ($cardinality) {
+            $lines[] = 'Enintään ' . (int) $cardinality . ' tiedostoa.';
+          }
+          if (!empty($validators['FileSizeLimit']['fileLimit'])) {
+            $lines[] = 'Rajoitus: ' . ByteSizeMarkup::create($validators['FileSizeLimit']['fileLimit'], 'fi') . '.';
+          }
+          if (!empty($validators['FileExtension']['extensions'])) {
+            $lines[] = 'Sallitut tiedostotyypit: ' . Html::escape($validators['FileExtension']['extensions']) . '.';
+          }
+          $widget['#file_upload_description'] = [
+            '#markup' => implode('<br>', $lines),
+          ];
+        }
       }
     }
 

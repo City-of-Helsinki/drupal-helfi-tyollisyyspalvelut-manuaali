@@ -2,18 +2,16 @@
 
 source /init.sh
 
-cd /var/www/html/public
-
 if [ ! -n "$OPENSHIFT_BUILD_NAME" ]; then
   echo "OPENSHIFT_BUILD_NAME is not defined. Exiting early."
   exit 1
 fi
 
 
-#if deployment_in_progress; then
-#  echo "Deployment already in progress"
-#  exit 1
-#fi
+if deployment_in_progress; then
+  echo "Deployment already in progress or done for $OPENSHIFT_BUILD_NAME. Skipping."
+  return 0
+fi
 
 echo "Starting deploy: $(date)"
 # Populate deploy ID so 20-deploy.sh is skipped.

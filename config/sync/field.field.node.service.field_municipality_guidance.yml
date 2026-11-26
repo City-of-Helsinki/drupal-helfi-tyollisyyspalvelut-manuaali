@@ -8,12 +8,16 @@ dependencies:
     - paragraphs.paragraphs_type.municipality_guide
   module:
     - entity_reference_revisions
+    - tmgmt_content
+third_party_settings:
+  tmgmt_content:
+    excluded: false
 id: node.service.field_municipality_guidance
 field_name: field_municipality_guidance
 entity_type: node
 bundle: service
-label: 'Kuntakohtaiset ohjeet (valinnainen)'
-description: 'Kun palveluun ohjaukseen liittyy kuntakohtaisia poikkeuksia, valitse  <i>Lisää kuntakohtainen ohje </i>. Valitse ensin kunta, jota poikkeus koskee (etsi kirjoittamalla) ja kirjoita ohjeistus  <i>Sisältö </i>-kenttään. '
+label: 'Kuntakohtaiset ohjeet'
+description: 'Kun palveluun ohjaukseen liittyy kuntakohtaisia poikkeuksia, valitse "Lisää uusi kuntakohtainen ohje". Valitse ensin kunta tai kunnat, joita poikkeus koskee ja kirjoita ohjeistus Lisätiedot-kenttään.'
 required: false
 translatable: false
 default_value: {  }
@@ -64,9 +68,6 @@ settings:
       link_card_with_image:
         weight: 36
         enabled: false
-      long_text_field_with_toolbar:
-        weight: 24
-        enabled: false
       municipality_guide:
         weight: 25
         enabled: true
@@ -82,14 +83,8 @@ settings:
       service_list:
         weight: 42
         enabled: false
-      service_price:
-        weight: 27
-        enabled: false
       service_time_and_place:
         weight: 28
-        enabled: false
-      target_group:
-        weight: 29
         enabled: false
       url_and_file:
         weight: 30

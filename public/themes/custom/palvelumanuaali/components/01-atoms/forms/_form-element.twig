@@ -47,6 +47,7 @@
 
 {% set additional_class = additional_class %}
 {% set classes = classes %}
+{% set description_display = description_display %}
 
 {% if classes is empty %}
 {%
@@ -59,8 +60,10 @@
 {% endif %}
 {%
   set description_classes = [
+    'description',
     'form-item__description',
     description_display == 'invisible' ? 'visually-hidden',
+    description_display == 'before' ? 'description-before',
   ]
 %}
 {% set form_element__base_class = 'form-item' %}
@@ -75,7 +78,7 @@
     <span class="field-prefix">{{ prefix }}</span>
   {% endif %}
   {% if description_display == 'before' and description.content %}
-    <div{{ description.attributes }}>
+    <div{{ description.attributes.addClass(description_classes) }}>
       {{ description.content }}
     </div>
   {% endif %}

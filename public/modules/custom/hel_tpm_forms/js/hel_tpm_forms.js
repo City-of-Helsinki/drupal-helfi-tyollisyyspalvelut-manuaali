@@ -32,13 +32,24 @@
         }
       }
 
+      /**
+       * Highlights step buttons whose tab contains validation errors.
+       *
+       * Uses data-step-index set by the pagination script, as tab and button
+       * positions differ when a disabled step has no tab.
+       */
       function addError() {
-        let x = $(".tab.field-group-html-element");
-        x.each(function(index) {
-          if ($(this).find('.error').length !== 0) {
-            let errorStep ='.nav-step-' + index;
-            $(errorStep).addClass('highlight-error');
+        const steps = document.querySelectorAll('.step');
+
+        document.querySelectorAll('.tab.field-group-html-element').forEach(function (tab) {
+          const index = Number(tab.dataset.stepIndex);
+          if (!Number.isInteger(index) || !steps[index]) {
+            return;
           }
+
+          const step = steps[index];
+          const hasError = tab.querySelector('.error, [aria-invalid="true"]') !== null;
+          step.classList.toggle('highlight-error', hasError);
         });
       }
 
@@ -82,6 +93,49 @@
       }
     }
   }
+
+  /**
+   * Re-syncs the location accessibility display after browser form restore.
+   *
+   * On reload the server renders the display from the saved location, but the
+   * browser may restore a different (or emptied) input value. The display is
+   * hidden by CSS (data-location-accessibility-pending) until checked here:
+   * - input unchanged: reveal the display;
+   * - input emptied: clear the display;
+   * - input changed: trigger "change" so the AJAX callback replaces the
+   *   display (the replacement is not pending, so it shows).
+   */
+  Drupal.behaviors.helTpmLocationAccessibilitySync = {
+    attach(context) {
+      const inputs = once(
+        'hel-tpm-location-accessibility-sync',
+        'input[data-location-accessibility-wrapper]',
+        context
+      );
+      if (!inputs.length) {
+        return;
+      }
+      // Defer until all behaviors (incl. Drupal.ajax bindings) are attached.
+      setTimeout(function () {
+        inputs.forEach(function (input) {
+          const wrapper = document.getElementById(input.dataset.locationAccessibilityWrapper);
+          if (!wrapper) {
+            return;
+          }
+          if (input.value === input.defaultValue) {
+            wrapper.removeAttribute('data-location-accessibility-pending');
+          }
+          else if (input.value.trim() === '') {
+            wrapper.replaceChildren();
+            wrapper.removeAttribute('data-location-accessibility-pending');
+          }
+          else {
+            $(input).trigger('change');
+          }
+        });
+      }, 0);
+    }
+  };
 
   let addParagraphClicked = false;
 

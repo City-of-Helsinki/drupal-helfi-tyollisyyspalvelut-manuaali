@@ -474,6 +474,13 @@ article ul,
       line-height: 24px;
     }
   }
+  &--small-paragraph {
+    font-size: $small-font;
+    line-height: 24px;
+    @include xl {
+      font-size: $small-caption;
+    }
+  }
 }
 
 .font-weight {

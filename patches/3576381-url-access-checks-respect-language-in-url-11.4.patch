@@ -1,0 +1,433 @@
+Issue #3576381: Ensure that URL access checks respect the language in the URL,
+remove global language state changes in
+ConfigurableLanguageManager::getLanguageSwitchLinks().
+
+Backport of MR !16451 (commits 01-10, state of 2026-10-19) squashed for
+Drupal 11.4. Test changes are left out because they target core main and do
+not apply to 11.4. The access manager and arguments resolver services use
+explicit arguments instead of autowiring.
+
+https://www.drupal.org/project/drupal/issues/3576381
+
+diff --git a/core/core.services.yml b/core/core.services.yml
+--- a/core/core.services.yml
++++ b/core/core.services.yml
+@@ -1416,11 +1416,12 @@ services:
+     arguments: ['@private_key', '@session_manager.metadata_bag']
+   Drupal\Core\Access\CsrfTokenGenerator: '@csrf_token'
+   access_arguments_resolver_factory:
+     class: Drupal\Core\Access\AccessArgumentsResolverFactory
++    arguments: ['@language_manager']
+   Drupal\Core\Access\AccessArgumentsResolverFactoryInterface: '@access_arguments_resolver_factory'
+   access_manager:
+     class: Drupal\Core\Access\AccessManager
+-    arguments: ['@router.route_provider', '@paramconverter_manager', '@access_arguments_resolver_factory', '@current_user', '@access_manager.check_provider']
++    arguments: ['@router.route_provider', '@paramconverter_manager', '@access_arguments_resolver_factory', '@current_user', '@access_manager.check_provider', '@language_manager']
+   Drupal\Core\Access\AccessManagerInterface: '@access_manager'
+   access_manager.check_provider:
+     class: Drupal\Core\Access\CheckProvider
+diff --git a/core/lib/Drupal/Core/Access/AccessArgumentsResolverFactory.php b/core/lib/Drupal/Core/Access/AccessArgumentsResolverFactory.php
+--- a/core/lib/Drupal/Core/Access/AccessArgumentsResolverFactory.php
++++ b/core/lib/Drupal/Core/Access/AccessArgumentsResolverFactory.php
+@@ -3,14 +3,18 @@
+ namespace Drupal\Core\Access;
+
+ use Drupal\Component\Utility\ArgumentsResolver;
++use Drupal\Core\Language\LanguageManagerInterface;
+ use Drupal\Core\Routing\RouteMatchInterface;
+ use Drupal\Core\Session\AccountInterface;
+ use Symfony\Component\HttpFoundation\Request;
++use Symfony\Component\String\UnicodeString;
+
+ /**
+  * Resolves the arguments to pass to an access check callable.
+  */
+-class AccessArgumentsResolverFactory implements AccessArgumentsResolverFactoryInterface {
++readonly class AccessArgumentsResolverFactory implements AccessArgumentsResolverFactoryInterface {
++
++  public function __construct(protected LanguageManagerInterface $languageManager) {}
+
+   /**
+    * {@inheritdoc}
+@@ -24,6 +28,20 @@ public function getArgumentsResolver(RouteMatchInterface $route_match, AccountIn
+
+     $upcasted_route_arguments = $route_match->getParameters()->all();
+
++    // Provide language objects per available language type. Use matching route
++    // parameter or default ('language_content_', 'language_interface_', etc.)
++    // values if provided, otherwise get the current languages from the language
++    // manager. Note that the default or parameter name is the language type
++    // with an underscore appended to it. This naming is used to make the chance
++    // of a collision with other parameters or defaults defined on a route.
++    foreach (array_keys($this->languageManager->getDefinedLanguageTypesInfo()) as $type) {
++      $param_name = $type . '_';
++      $language = isset($raw_route_arguments[$param_name]) ? $this->languageManager->getLanguage($raw_route_arguments[$param_name]) : $this->languageManager->getCurrentLanguage($type);
++      // Match arguments for both snake- and camel-cased names.
++      $upcasted_route_arguments[$type] = $language;
++      $upcasted_route_arguments[(string) (new UnicodeString($type))->camel()] = $language;
++    }
++
+     // Parameters which are not defined on the route object, but still are
+     // essential for access checking are passed as wildcards to the argument
+     // resolver. An access-check method with a parameter of type Route,
+diff --git a/core/lib/Drupal/Core/Access/AccessManager.php b/core/lib/Drupal/Core/Access/AccessManager.php
+--- a/core/lib/Drupal/Core/Access/AccessManager.php
++++ b/core/lib/Drupal/Core/Access/AccessManager.php
+@@ -2,6 +2,7 @@
+
+ namespace Drupal\Core\Access;
+
++use Drupal\Core\Language\LanguageManagerInterface;
+ use Drupal\Core\ParamConverter\ParamConverterManagerInterface;
+ use Drupal\Core\ParamConverter\ParamNotConvertedException;
+ use Drupal\Core\Routing\RouteMatch;
+@@ -19,61 +20,19 @@
+  * @see \Drupal\Tests\Core\Access\AccessManagerTest
+  */
+ class AccessManager implements AccessManagerInterface {
+-  /**
+-   * The route provider.
+-   *
+-   * @var \Drupal\Core\Routing\RouteProviderInterface
+-   */
+-  protected $routeProvider;
+-
+-  /**
+-   * The paramconverter manager.
+-   *
+-   * @var \Drupal\Core\ParamConverter\ParamConverterManagerInterface
+-   */
+-  protected $paramConverterManager;
+-
+-  /**
+-   * The access arguments resolver.
+-   *
+-   * @var \Drupal\Core\Access\AccessArgumentsResolverFactoryInterface
+-   */
+-  protected $argumentsResolverFactory;
+-
+-  /**
+-   * The current user.
+-   *
+-   * @var \Drupal\Core\Session\AccountInterface
+-   */
+-  protected $currentUser;
+
+-  /**
+-   * The check provider.
+-   *
+-   * @var \Drupal\Core\Access\CheckProviderInterface
+-   */
+-  protected $checkProvider;
+-
+-  /**
+-   * Constructs an AccessManager instance.
+-   *
+-   * @param \Drupal\Core\Routing\RouteProviderInterface $route_provider
+-   *   The route provider.
+-   * @param \Drupal\Core\ParamConverter\ParamConverterManagerInterface $paramconverter_manager
+-   *   The param converter manager.
+-   * @param \Drupal\Core\Access\AccessArgumentsResolverFactoryInterface $arguments_resolver_factory
+-   *   The access arguments resolver.
+-   * @param \Drupal\Core\Session\AccountInterface $current_user
+-   *   The current user.
+-   * @param CheckProviderInterface $check_provider
+-   *   The check access provider.
+-   */
+-  public function __construct(RouteProviderInterface $route_provider, ParamConverterManagerInterface $paramconverter_manager, AccessArgumentsResolverFactoryInterface $arguments_resolver_factory, AccountInterface $current_user, CheckProviderInterface $check_provider) {
+-    $this->routeProvider = $route_provider;
+-    $this->paramConverterManager = $paramconverter_manager;
+-    $this->argumentsResolverFactory = $arguments_resolver_factory;
+-    $this->currentUser = $current_user;
+-    $this->checkProvider = $check_provider;
++  public function __construct(
++    protected RouteProviderInterface $routeProvider,
++    protected ParamConverterManagerInterface $paramConverterManager,
++    protected AccessArgumentsResolverFactoryInterface $argumentsResolverFactory,
++    protected AccountInterface $currentUser,
++    protected CheckProviderInterface $checkProvider,
++    protected ?LanguageManagerInterface $languageManager = NULL,
++  ) {
++    if (!isset($this->languageManager)) {
++      @trigger_error('Calling ' . __METHOD__ . '() without the $languageManager argument is deprecated in drupal:11.5.0 and it will be required in drupal:12.0.0. See https://www.drupal.org/node/3613488', E_USER_DEPRECATED);
++      $this->languageManager = \Drupal::service(LanguageManagerInterface::class);
++    }
+   }
+
+   /**
+@@ -83,6 +42,19 @@ public function checkNamedRoute($route_name, array $parameters = [], ?AccountInt
+     try {
+       $route = $this->routeProvider->getRouteByName($route_name);
+
++      // Set defaults on the route for the languages if provided, so that the
++      // specified language can be used in param converters and access callbacks
++      // for any language-based access control.
++      // @see \Drupal\Core\ParamConverter\EntityConverter::convert()
++      // @see \Drupal\Core\ParamConverter\EntityRevisionParamConverter::convert()
++      // @see \Drupal\Core\Access\AccessArgumentResolverFactory::getArgumentsResolver()
++      foreach (array_keys($this->languageManager->getDefinedLanguageTypesInfo()) as $type) {
++        $param_name = $type . '_';
++        if (isset($parameters[$param_name])) {
++          $route->setDefault($param_name, $parameters[$param_name]);
++        }
++      }
++
+       // ParamConverterManager relies on the route name and object being
+       // available from the parameters array.
+       $parameters[RouteObjectInterface::ROUTE_NAME] = $route_name;
+diff --git a/core/lib/Drupal/Core/ParamConverter/EntityConverter.php b/core/lib/Drupal/Core/ParamConverter/EntityConverter.php
+--- a/core/lib/Drupal/Core/ParamConverter/EntityConverter.php
++++ b/core/lib/Drupal/Core/ParamConverter/EntityConverter.php
+@@ -5,6 +5,7 @@
+ use Drupal\Core\Entity\EntityInterface;
+ use Drupal\Core\Entity\EntityRepositoryInterface;
+ use Drupal\Core\Entity\EntityTypeManagerInterface;
++use Drupal\Core\Language\LanguageInterface;
+ use Symfony\Component\Routing\Route;
+
+ /**
+@@ -115,11 +115,17 @@ public function __construct(EntityTypeManagerInterface $entity_type_manager, Ent
+    */
+   public function convert($value, $definition, $name, array $defaults) {
+     $entity_type_id = $this->getEntityTypeFromDefaults($definition, $name, $defaults);
++    // If the 'language_content_' property is set on route defaults, use that
++    // as the langcode for the entity translation to load. The trailing
++    // underscore is used to avoid collisions with other route parameters or
++    // defaults.
++    $langcode = $defaults[LanguageInterface::TYPE_CONTENT . '_'] ?? NULL;
++    $contexts = $langcode ? ['langcode' => $langcode] : [];
+
+     // If the entity type is revisionable and the parameter has the
+     // "load_latest_revision" flag, load the active variant.
+     if (!empty($definition['load_latest_revision'])) {
+-      $entity = $this->entityRepository->getActive($entity_type_id, $value);
++      $entity = $this->entityRepository->getActive($entity_type_id, $value, $contexts);
+
+       if (
+         !empty($definition['bundle']) &&
+@@ -131,7 +137,7 @@ public function convert($value, $definition, $name, array $defaults) {
+       return $entity;
+     }
+
+-    $contexts = ['operation' => 'entity_upcast'];
++    $contexts += ['operation' => 'entity_upcast'];
+     $entity = $this->entityRepository->getCanonical($entity_type_id, $value, $contexts);
+
+     if (
+diff --git a/core/lib/Drupal/Core/ParamConverter/EntityRevisionParamConverter.php b/core/lib/Drupal/Core/ParamConverter/EntityRevisionParamConverter.php
+--- a/core/lib/Drupal/Core/ParamConverter/EntityRevisionParamConverter.php
++++ b/core/lib/Drupal/Core/ParamConverter/EntityRevisionParamConverter.php
+@@ -2,10 +2,10 @@
+
+ namespace Drupal\Core\ParamConverter;
+
+-use Drupal\Core\Entity\EntityInterface;
+ use Drupal\Core\Entity\EntityRepositoryInterface;
+ use Drupal\Core\Entity\EntityTypeManagerInterface;
+ use Drupal\Core\Entity\TranslatableInterface;
++use Drupal\Core\Language\LanguageInterface;
+ use Symfony\Component\Routing\Route;
+
+ /**
+@@ -66,9 +66,14 @@ public function convert($value, $definition, $name, array $defaults) {
+     $entity = $storage->loadRevision($value);
+
+     // If the entity type is translatable, ensure we return the proper
+     // translation object for the current context.
+-    if ($entity instanceof EntityInterface && $entity instanceof TranslatableInterface) {
+-      $entity = $this->entityRepository->getTranslationFromContext($entity, NULL, ['operation' => 'entity_upcast']);
++    if ($entity instanceof TranslatableInterface) {
++      // If the 'language_content_' property is set on route defaults, use that
++      // as the langcode for the entity translation to load. The trailing
++      // underscore is used to avoid collisions with other route parameters or
++      // defaults.
++      $langcode = $defaults[LanguageInterface::TYPE_CONTENT . '_'] ?? NULL;
++      $entity = $this->entityRepository->getTranslationFromContext($entity, $langcode, ['operation' => 'entity_upcast']);
+     }
+
+     return $entity;
+diff --git a/core/lib/Drupal/Core/Url.php b/core/lib/Drupal/Core/Url.php
+--- a/core/lib/Drupal/Core/Url.php
++++ b/core/lib/Drupal/Core/Url.php
+@@ -6,6 +6,8 @@
+ use Drupal\Component\Utility\UrlHelper;
+ use Drupal\Core\Access\AccessResult;
+ use Drupal\Core\DependencyInjection\DependencySerializationTrait;
++use Drupal\Core\Language\LanguageInterface;
++use Drupal\Core\Language\LanguageManagerInterface;
+ use Drupal\Core\Security\TrustedCallbackInterface;
+ use Drupal\Core\Routing\RouteMatchInterface;
+ use Drupal\Core\Routing\UrlGeneratorInterface;
+@@ -51,6 +53,13 @@ class Url implements TrustedCallbackInterface {
+    */
+   protected $accessManager;
+
++  /**
++   * The language manage.
++   *
++   * @var \Drupal\Core\Language\LanguageManagerInterface
++   */
++  protected LanguageManagerInterface $languageManager;
++
+   /**
+    * The route name.
+    *
+@@ -259,8 +268,12 @@ public static function fromUserInput($user_input, $options = []) {
+    *     added to the anchor tag if you use the \Drupal\Core\Link class to make
+    *     the link.
+    *   - 'language': An optional language object used to look up the alias
+-   *     for the URL. If $options['language'] is omitted, it defaults to the
+-   *     current language for the language type LanguageInterface::TYPE_URL.
++   *     for the URL, or provide as arguments to access check methods. For alias
++   *     lookups, if $options['language'] is omitted, it defaults to the current
++   *     language for the language type LanguageInterface::TYPE_URL. For access
++   *     checks, if $options['language'] is omitted, the argument associated
++   *     with the language type of the access check argument defaults to the
++   *     the current language for the type.
+    *   - 'https': Whether this URL should point to a secure location. If not
+    *     defined, the current scheme is used, so the user stays on HTTP or HTTPS
+    *     respectively. TRUE enforces HTTPS and FALSE enforces HTTP.
+@@ -816,10 +829,23 @@ public function getInternalPath() {
+    *   access is either explicitly forbidden or "no opinion".
+    */
+   public function access(?AccountInterface $account = NULL, $return_as_object = FALSE) {
+-    if ($this->isRouted()) {
+-      return $this->accessManager()->checkNamedRoute($this->getRouteName(), $this->getRouteParameters(), $account, $return_as_object);
++    if (!$this->isRouted()) {
++      return $return_as_object ? AccessResult::allowed() : TRUE;
++    }
++
++    $parameters = $this->getRouteParameters();
++    $language = $this->getOption('language');
++    if ($language instanceof LanguageInterface) {
++      foreach (array_keys($this->languageManager()->getDefinedLanguageTypesInfo()) as $type) {
++        // Provide the langcode as a route parameter that can be upcasted for
++        // entity translation or passed as languages to access callbacks.
++        // @see \Drupal\Core\ParamConverter\EntityConverter::convert()
++        // @see \Drupal\Core\ParamConverter\EntityRevisionParamConverter::convert()
++        // @see \Drupal\Core\Access\AccessArgumentResolverFactory::getArgumentsResolver()
++        $parameters[$type . '_'] ??= $language->getId();
++      }
+     }
+-    return $return_as_object ? AccessResult::allowed() : TRUE;
++    return $this->accessManager()->checkNamedRoute($this->getRouteName(), $parameters, $account, $return_as_object);
+   }
+
+   /**
+@@ -833,6 +859,19 @@ protected function accessManager() {
+     return $this->accessManager;
+   }
+
++  /**
++   * Gets the language manager.
++   *
++   * @return \Drupal\Core\Language\LanguageManagerInterface
++   *   The language manager service.
++   */
++  protected function languageManager(): LanguageManagerInterface {
++    if (!isset($this->languageManager)) {
++      $this->languageManager = \Drupal::service(LanguageManagerInterface::class);
++    }
++    return $this->languageManager;
++  }
++
+   /**
+    * Gets the URL generator.
+    *
+diff --git a/core/modules/language/src/ConfigurableLanguageManager.php b/core/modules/language/src/ConfigurableLanguageManager.php
+--- a/core/modules/language/src/ConfigurableLanguageManager.php
++++ b/core/modules/language/src/ConfigurableLanguageManager.php
+@@ -11,7 +11,6 @@
+ use Drupal\Core\Language\LanguageManager;
+ use Drupal\Core\StringTranslation\TranslatableMarkup;
+ use Drupal\Core\Url;
+-use Drupal\Core\Utility\FiberResumeType;
+ use Drupal\language\Config\LanguageConfigFactoryOverrideInterface;
+ use Drupal\language\Entity\ConfigurableLanguage;
+ use Symfony\Component\HttpFoundation\RequestStack;
+@@ -423,7 +422,6 @@ public function getLanguageSwitchLinks($type, Url $url) {
+     if ($this->negotiator) {
+       foreach ($this->negotiator->getNegotiationMethods($type) as $method_id => $method) {
+         if (is_subclass_of($method['class'], LanguageSwitcherInterface::class)) {
+-          $original_languages = $this->negotiatedLanguages;
+           $result = $this->negotiator->getNegotiationMethodInstance($method_id)->getLanguageSwitchLinks($this->requestStack->getCurrentRequest(), $type, $url);
+
+           if (!empty($result)) {
+@@ -433,42 +431,16 @@ public function getLanguageSwitchLinks($type, Url $url) {
+             $result = array_filter($result, function (array $link): bool {
+               $url = $link['url'] ?? NULL;
+               $language = $link['language'] ?? NULL;
+-              if ($language instanceof LanguageInterface) {
+-                $this->negotiatedLanguages[LanguageInterface::TYPE_CONTENT] = $language;
+-                $this->negotiatedLanguages[LanguageInterface::TYPE_INTERFACE] = $language;
++              if ($url instanceof Url && $language instanceof LanguageInterface) {
++                $url->setOption('language', $language);
+               }
+-
+-              $check_access_fn = function () use ($url) {
+-                try {
+-                  return $url instanceof Url && $url->access();
+-                }
+-                catch (\Exception) {
+-                  return FALSE;
+-                }
+-              };
+-              // If this method is running in a Fiber, contain the URL access
+-              // checks to within child fibers. This is to prevent the
+-              // negotiated languages changes from escaping to other fibers
+-              // where rendering or other processes could run in the context of
+-              // the wrong languages.
+-              if (\Fiber::getCurrent()) {
+-                $fiber = new \Fiber($check_access_fn);
+-                $fiber->start();
+-                while (!$fiber->isTerminated()) {
+-                  if ($fiber->isSuspended()) {
+-                    $resume_type = $fiber->resume();
+-                    if (!$fiber->isTerminated() && $resume_type !== FiberResumeType::Immediate) {
+-                      usleep(500);
+-                    }
+-                  }
+-                }
+-                return $fiber->getReturn();
++              try {
++                return $url instanceof Url && $url->access();
++              }
++              catch (\Exception) {
++                return FALSE;
+               }
+-
+-              // If not running in a fiber, check URL access as usual.
+-              return $check_access_fn();
+             });
+-            $this->negotiatedLanguages = $original_languages;
+
+             $links = (object) ['links' => $result, 'method_id' => $method_id];
+             break;
+diff --git a/core/modules/language/src/Plugin/LanguageNegotiation/LanguageNegotiationContentEntity.php b/core/modules/language/src/Plugin/LanguageNegotiation/LanguageNegotiationContentEntity.php
+--- a/core/modules/language/src/Plugin/LanguageNegotiation/LanguageNegotiationContentEntity.php
++++ b/core/modules/language/src/Plugin/LanguageNegotiation/LanguageNegotiationContentEntity.php
+@@ -154,10 +154,12 @@ public function getLanguageSwitchLinks(Request $request, $type, Url $url) {
+       $langcode = $language->getId();
+       $query[static::QUERY_PARAMETER] = $langcode;
+       $links[$langcode] = [
+-        'url' => $url,
++        // Clone the url because options will be set that differ per language.
++        'url' => clone $url,
+         'title' => $language->getName(),
+         'attributes' => ['class' => ['language-link']],
+         'query' => $query,
++        'language' => $language,
+       ];
+     }
+
+diff --git a/core/modules/language/src/Plugin/LanguageNegotiation/LanguageNegotiationSession.php b/core/modules/language/src/Plugin/LanguageNegotiation/LanguageNegotiationSession.php
+--- a/core/modules/language/src/Plugin/LanguageNegotiation/LanguageNegotiationSession.php
++++ b/core/modules/language/src/Plugin/LanguageNegotiation/LanguageNegotiationSession.php
+@@ -173,6 +173,7 @@ public function getLanguageSwitchLinks(Request $request, $type, Url $url) {
+         'url' => clone $url,
+         'title' => $language->getName(),
+         'attributes' => ['class' => ['language-link']],
++        'language' => $language,
+         'query' => $query,
+       ];
+       if ($language_query != $langcode) {

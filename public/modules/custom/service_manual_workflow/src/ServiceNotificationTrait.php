@@ -87,8 +87,12 @@ trait ServiceNotificationTrait {
       if (empty($roles) || empty($roles[$grid])) {
         continue;
       }
-      // Validate user has publish access for current node.
+      // Blocked users are not notified.
       $account = $relationship->getEntity();
+      if ($account->isBlocked()) {
+        continue;
+      }
+      // Validate user has publish access for current node.
       $allowed = $this->stateTransitionValidation->allowedTransitions($account, $entity, [$group]);
       if (empty($allowed['publish'])) {
         continue;

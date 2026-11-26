@@ -134,6 +134,12 @@ final class UserExpirationNotification extends QueueWorkerBase implements Contai
     /** @var \Drupal\user\UserInterface|null $user */
     $user = $this->entityTypeManager->getStorage('user')->load($this->getUid());
 
+    // User has been deleted after being queued, clear the notification state.
+    if (!$user) {
+      $this->deleteState();
+      return;
+    }
+
     // If user has been notified less than 2 times and last notification
     // has been sent in more.
     if (($count === 0 || $count === 1) && $this->getTimeLimit($count) >= $timestamp) {

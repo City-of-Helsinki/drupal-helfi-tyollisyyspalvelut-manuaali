@@ -1,0 +1,21 @@
+{#
+/**
+ * @file
+ * Default theme implementation for a telephone number with a title.
+ *
+ * Available variables:
+ * - title: The title, e.g. the name of the phone service. Can be empty.
+ * - number: The telephone number as entered.
+ * - url: The tel: URL of the number, or NULL if there is no number.
+ */
+#}
+<div class="telephone-with-title">
+  {% if title %}
+    <span class="telephone-with-title__title">{{ title }}</span>
+  {% endif %}
+  {% if url %}
+    <a class="telephone-with-title__number" href="{{ url }}">{{ number }}</a>
+  {% else %}
+    <span class="telephone-with-title__number">{{ number }}</span>
+  {% endif %}
+</div>

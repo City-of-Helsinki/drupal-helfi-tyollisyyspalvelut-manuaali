@@ -6,9 +6,17 @@
  */
 
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\Core\Render\Element;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Entity\Display\EntityFormDisplayInterface;
+use Drupal\Core\Entity\ContentEntityFormInterface;
+use Drupal\Component\Utility\Html;
+use Drupal\Component\Utility\NestedArray;
+use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\Core\Entity\Element\EntityAutocomplete;
+use Drupal\node\NodeInterface;
 
 /**
  * Implements hook_theme().
@@ -38,9 +46,45 @@ function hel_tpm_forms_theme($existing, $type, $theme, $path) {
       'template' => 'hel_tpm_steps',
       'variables' => [
         'content' => NULL,
+        'steps' => [],
       ],
     ],
   ];
+}
+
+/**
+ * Builds stepper items from the form display's field groups.
+ *
+ * @param \Drupal\Core\Entity\Display\EntityFormDisplayInterface $form_display
+ *   The form display used by the current form.
+ *
+ * @return array
+ *   List of steps with 'id', 'html_id' and 'label', sorted by weight.
+ */
+function hel_tpm_forms_get_form_steps(?EntityFormDisplayInterface $form_display): array {
+  if (!$form_display) {
+    return [];
+  }
+
+  $groups = $form_display->getThirdPartySettings('field_group');
+  $groups = array_filter($groups, fn($g) =>
+    empty($g['parent_name'])
+    && ($g['region'] ?? 'content') !== 'hidden'
+    && ($g['format_type'] ?? '') === 'html_element'
+  );
+
+  uasort($groups, fn($a, $b) => ($a['weight'] ?? 0) <=> ($b['weight'] ?? 0));
+
+  $steps = [];
+  foreach ($groups as $name => $group) {
+    $steps[] = [
+      'id' => $name,
+      'html_id' => $group['format_settings']['id'] ?? '',
+      'label' => $group['label'],
+      'disabled' => FALSE,
+    ];
+  }
+  return $steps;
 }
 
 /**
@@ -82,17 +126,13 @@ function hel_tpm_forms_service_price_form_alter_helper(array &$form, FormStateIn
     return;
   }
 
-  $form['field_price']['#states'] = [
-    'visible' => [
-      ':input[name="field_free_service[value]"]' => ['checked' => TRUE],
-    ],
+  // field_free_service radios: '0' = free service, '1' = service has costs.
+  $has_costs = [
+    ':input[name="field_free_service"]' => ['value' => '1'],
   ];
 
-  $form['field_price']['widget'][0]['value']['#states'] = [
-    'required' => [
-      ':input[name="field_free_service[value]"]' => ['checked' => TRUE],
-    ],
-  ];
+  $form['field_price']['#states'] = ['visible' => $has_costs];
+  $form['field_price']['widget'][0]['value']['#states'] = ['required' => $has_costs];
 
   $form['#validate'][] = 'hel_tpm_forms_field_price_required_validate';
 }
@@ -109,8 +149,9 @@ function hel_tpm_forms_service_price_form_alter_helper(array &$form, FormStateIn
  *   -
  */
 function hel_tpm_forms_field_price_required_validate(array $form, FormStateInterface &$form_state) {
-  $field_free_service_value = $form_state->getValue('field_free_service', NULL);
-  if (empty($field_free_service_value) || $field_free_service_value['value'] != 1) {
+  // Price is required only when "The service has costs" ('1') is selected.
+  $free_service = $form_state->getValue(['field_free_service', 0, 'value']);
+  if ((string) $free_service !== '1') {
     return;
   }
   $price_value = $form_state->getValue('field_price');
@@ -143,18 +184,294 @@ function hel_tpm_forms_time_and_location_form_helper(&$form, FormStateInterface 
     return;
   }
 
+  // Re-syncs the location accessibility display after browser form restore.
+  $form['#attached']['library'][] = 'hel_tpm_forms/hel_tpm_forms';
+
   for ($i = 0; $i <= $form[$field_key]['widget']['#max_delta']; $i++) {
     if (empty($form[$field_key]['widget'][$i])) {
       continue;
     }
 
-    $input = sprintf(':input[name="field_service_time_and_location[%s][subform][field_service_location][0][target_id]"]', $i);
-    $form[$field_key]['widget'][$i]['subform']['field_location_additional_info_1']['#states'] = [
-      'visible' => [
-        $input => ['empty' => FALSE],
-      ],
-    ];
+    $subform = &$form[$field_key]['widget'][$i]['subform'];
+
+    // Show service location only when the "location" channel is selected and
+    // require it while it is visible. Server-side check:
+    // hel_tpm_forms_validate_service_location_required().
+    if (isset($subform['field_service_location'], $subform['field_service_channel'])) {
+      $channel_input = sprintf(':input[name="%s[%s][subform][field_service_channel]"]', $field_key, $i);
+      $subform['field_service_location']['#states'] = [
+        'visible' => [
+          $channel_input => ['value' => 'location'],
+        ],
+      ];
+      if (isset($subform['field_service_location']['widget'][0]['target_id'])) {
+        $subform['field_service_location']['widget'][0]['target_id']['#states'] = [
+          'required' => [
+            $channel_input => ['value' => 'location'],
+          ],
+        ];
+      }
+    }
+
+    // Show online service link only when the "online_service" channel is
+    // selected and require it while it is visible. Server-side check:
+    // hel_tpm_forms_validate_service_location_required().
+    if (isset($subform['field_online_service_link'], $subform['field_service_channel'])) {
+      $channel_input = sprintf(':input[name="%s[%s][subform][field_service_channel]"]', $field_key, $i);
+      $subform['field_online_service_link']['#states'] = [
+        'visible' => [
+          $channel_input => ['value' => 'online_service'],
+        ],
+      ];
+      if (isset($subform['field_online_service_link']['widget'][0]['uri'])) {
+        $subform['field_online_service_link']['widget'][0]['uri']['#states'] = [
+          'required' => [
+            $channel_input => ['value' => 'online_service'],
+          ],
+        ];
+      }
+    }
+
+    // Show phone service number only when the "telephone_service" channel is
+    // selected and require the number while it is visible. Server-side check:
+    // hel_tpm_forms_validate_service_location_required().
+    if (isset($subform['field_phone_service_number'], $subform['field_service_channel'])) {
+      $channel_input = sprintf(':input[name="%s[%s][subform][field_service_channel]"]', $field_key, $i);
+      $subform['field_phone_service_number']['#states'] = [
+        'visible' => [
+          $channel_input => ['value' => 'telephone_service'],
+        ],
+      ];
+      if (isset($subform['field_phone_service_number']['widget'][0]['value'])) {
+        $subform['field_phone_service_number']['widget'][0]['value']['#states'] = [
+          'required' => [
+            $channel_input => ['value' => 'telephone_service'],
+          ],
+        ];
+      }
+      // The title (service name) is required with the number when the field
+      // requires it. Enforced on save by the field type's constraint.
+      $phone_field_definition = \Drupal::service('entity_field.manager')
+        ->getFieldDefinitions('paragraph', 'service_time_and_place')['field_phone_service_number'] ?? NULL;
+      if ($phone_field_definition?->getSetting('title_required') && isset($subform['field_phone_service_number']['widget'][0]['title'])) {
+        $subform['field_phone_service_number']['widget'][0]['title']['#states'] = [
+          'required' => [
+            $channel_input => ['value' => 'telephone_service'],
+          ],
+        ];
+      }
+    }
+
+    hel_tpm_forms_location_accessibility_attach($subform, $form_state, $field_key, $i);
+
+    // Show channel additional info whenever any service channel is selected.
+    if (isset($subform['field_location_additional_info_1'], $subform['field_service_channel'])) {
+      $channel_input = sprintf(':input[name="%s[%s][subform][field_service_channel]"]', $field_key, $i);
+      $channel_options = array_diff(
+        array_keys($subform['field_service_channel']['widget']['#options'] ?? []),
+        ['_none'],
+      );
+      // Multiple conditions for the same selector are OR'ed by #states.
+      $subform['field_location_additional_info_1']['#states'] = [
+        'visible' => [
+          $channel_input => array_map(
+            static fn (int|string $value): array => ['value' => (string) $value],
+            array_values($channel_options),
+          ),
+        ],
+      ];
+    }
+    unset($subform);
   }
+
+  $form['#validate'][] = 'hel_tpm_forms_validate_service_location_required';
+}
+
+/**
+ * Requires channel specific fields based on the selected service channel.
+ *
+ * - field_service_location when the "location" channel is selected.
+ * - field_online_service_link when the "online_service" channel is selected.
+ * - field_phone_service_number when the "telephone_service" channel is
+ *   selected.
+ *
+ * @param array $form
+ *   The form array.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The form state.
+ */
+function hel_tpm_forms_validate_service_location_required(array &$form, FormStateInterface $form_state): void {
+  // Only validate on real saves, not on AJAX actions such as paragraph
+  // "Add more" or the location accessibility preview.
+  $trigger = $form_state->getTriggeringElement();
+  if (isset($trigger['#limit_validation_errors']) && $trigger['#limit_validation_errors'] !== FALSE) {
+    return;
+  }
+
+  $field_key = 'field_service_time_and_location';
+  $items = $form_state->getValue($field_key);
+  if (!is_array($items)) {
+    return;
+  }
+
+  // Channel value => [field name, value property, fallback title].
+  $required_by_channel = [
+    'location' => ['field_service_location', 'target_id', t('Location')],
+    'online_service' => ['field_online_service_link', 'uri', t('Online service link')],
+    'telephone_service' => ['field_phone_service_number', 'value', t('Phone number')],
+  ];
+
+  foreach ($items as $delta => $item) {
+    // Skip non-item keys (add_more etc.) and closed/removed paragraphs.
+    if (!is_numeric($delta) || !isset($item['subform']) || !is_array($item['subform'])) {
+      continue;
+    }
+    $channel = $item['subform']['field_service_channel'][0]['value'] ?? NULL;
+    if (!isset($required_by_channel[$channel])) {
+      continue;
+    }
+    [$field_name, $property, $fallback_title] = $required_by_channel[$channel];
+    $subform = $form[$field_key]['widget'][$delta]['subform'] ?? [];
+    // The field is not on the paragraph form (e.g. not yet configured).
+    if (!isset($subform[$field_name])) {
+      continue;
+    }
+    if (!empty($item['subform'][$field_name][0][$property])) {
+      continue;
+    }
+
+    $element = $subform[$field_name]['widget'][0][$property] ?? NULL;
+    $title = $element['#title'] ?? $subform[$field_name]['widget']['#title'] ?? $fallback_title;
+    $name = sprintf('%s][%s][subform][%s][0][%s', $field_key, $delta, $field_name, $property);
+    $form_state->setErrorByName($name, t('@name field is required.', ['@name' => $title]));
+  }
+}
+
+/**
+ * Adds the selected location's accessibility display under the location field.
+ *
+ * @param array $subform
+ *   The paragraph subform.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The form state.
+ * @param string $field_key
+ *   The parent paragraph field name.
+ * @param int $delta
+ *   The paragraph delta.
+ */
+function hel_tpm_forms_location_accessibility_attach(array &$subform, FormStateInterface $form_state, string $field_key, int $delta): void {
+  if (empty($subform['field_service_location']['widget'][0]['target_id'])) {
+    return;
+  }
+  $element = &$subform['field_service_location']['widget'][0]['target_id'];
+  $wrapper_id = Html::getId(sprintf('hel-tpm-location-accessibility-%s-%d', $field_key, $delta));
+
+  // Prefer submitted input (form rebuilds), fall back to the saved value.
+  $input_parents = [$field_key, $delta, 'subform', 'field_service_location', 0, 'target_id'];
+  $input_exists = FALSE;
+  $input = NestedArray::getValue($form_state->getUserInput(), $input_parents, $input_exists);
+  if ($input_exists) {
+    $location = hel_tpm_forms_location_from_autocomplete_input(is_string($input) ? $input : NULL);
+  }
+  else {
+    $default = $element['#default_value'] ?? NULL;
+    $location = $default instanceof NodeInterface ? $default : NULL;
+  }
+
+  $element['#ajax'] = [
+    'callback' => 'hel_tpm_forms_location_accessibility_ajax',
+    'event' => 'autocompleteclose change',
+    'wrapper' => $wrapper_id,
+    'progress' => ['type' => 'none'],
+  ];
+  // Don't validate the whole node form when the preview is refreshed.
+  $element['#limit_validation_errors'] = [];
+  // Lets JS find the display to re-sync after browser form restore.
+  $element['#attributes']['data-location-accessibility-wrapper'] = $wrapper_id;
+
+  $build = hel_tpm_forms_location_accessibility_build($location, $wrapper_id);
+  // Hidden by CSS until JS confirms the input still matches the rendered
+  // value; prevents a flash of a stale display after browser form restore.
+  $build['#attributes']['data-location-accessibility-pending'] = '';
+  $subform['field_service_location']['location_accessibility'] = $build;
+}
+
+/**
+ * AJAX callback: re-renders the location accessibility display.
+ *
+ * Node forms are served from the form cache on AJAX requests, so the display
+ * is built here from the submitted value instead of relying on a rebuild.
+ */
+function hel_tpm_forms_location_accessibility_ajax(array &$form, FormStateInterface $form_state): array {
+  $trigger = $form_state->getTriggeringElement();
+  $wrapper_id = $trigger['#ajax']['wrapper'] ?? '';
+  $value = $trigger['#value'] ?? NULL;
+  return hel_tpm_forms_location_accessibility_build(
+    hel_tpm_forms_location_from_autocomplete_input(is_string($value) ? $value : NULL),
+    $wrapper_id
+  );
+}
+
+/**
+ * Loads the service location node referenced by an autocomplete input.
+ *
+ * @param string|null $input
+ *   Raw autocomplete input, e.g. "Address 1, 00100 Helsinki (123)".
+ *
+ * @return \Drupal\node\NodeInterface|null
+ *   The service location node, or NULL.
+ */
+function hel_tpm_forms_location_from_autocomplete_input(?string $input): ?NodeInterface {
+  if ($input === NULL || trim($input) === '') {
+    return NULL;
+  }
+  $nid = EntityAutocomplete::extractEntityIdFromAutocompleteInput($input);
+  if (empty($nid)) {
+    return NULL;
+  }
+  $node = \Drupal::entityTypeManager()->getStorage('node')->load($nid);
+  if (!$node instanceof NodeInterface || $node->bundle() !== 'service_location') {
+    return NULL;
+  }
+  return $node;
+}
+
+/**
+ * Builds the wrapper with the location's accessibility display.
+ *
+ * @param \Drupal\node\NodeInterface|null $location
+ *   The selected service location, if any.
+ * @param string $wrapper_id
+ *   The AJAX wrapper HTML id.
+ *
+ * @return array
+ *   Render array.
+ */
+function hel_tpm_forms_location_accessibility_build(?NodeInterface $location, string $wrapper_id): array {
+  $build = [
+    '#type' => 'container',
+    '#attributes' => [
+      'id' => $wrapper_id,
+      'class' => ['hel-tpm-location-accessibility'],
+      'aria-live' => 'polite',
+    ],
+    '#weight' => 100,
+  ];
+
+  if (!$location) {
+    return $build;
+  }
+
+  $access = $location->access('view', NULL, TRUE);
+  $cacheability = CacheableMetadata::createFromObject($access);
+  if ($access->isAllowed()) {
+    $build['content'] = \Drupal::entityTypeManager()
+      ->getViewBuilder('node')
+      ->view($location, 'location_accessibility');
+  }
+  $cacheability->applyTo($build);
+
+  return $build;
 }
 
 /**
@@ -222,7 +539,7 @@ function hel_tpm_forms_service_empty_price_field(EntityInterface &$entity) {
     return;
   }
 
-  // Field value is actually 1 if paid service, 0 otherwise.
+  // Field value is 1 if the service has costs, 0 if it is free.
   $paid_service = $entity->get('field_free_service')->value;
   if (!$paid_service) {
     // Empty the price information if service is not paid service.
@@ -312,6 +629,9 @@ function hel_tpm_forms_node_service_form_alter_helper(&$form, FormStateInterface
       [':input[name="field_municipality_irrelevant[value]"]' => ['checked' => FALSE]],
     ],
   ];
+  // The surrounding field group (group_p1_g3_sg1) displays the municipality
+  // label and description, so hide the widget label visually.
+  $form['field_target_group_municipality']['widget']['#title_display'] = 'invisible';
 
   // Check if current service provider user is included in the options list. If
   // not, add a 'none' option so that when saving the form, a new user must be
@@ -326,15 +646,71 @@ function hel_tpm_forms_node_service_form_alter_helper(&$form, FormStateInterface
     }
   }
 
+  $form_object = $form_state->getFormObject();
+  $form_display = $form_object instanceof ContentEntityFormInterface
+    ? $form_object->getFormDisplay($form_state)
+    : NULL;
+
   $form['paging_footer'] = [
     '#theme' => 'hel_tpm_steps',
+    '#steps' => hel_tpm_forms_get_form_steps($form_display),
+    '#cache' => [
+      'tags' => $form_display ? $form_display->getCacheTags() : [],
+    ],
   ];
 
+  $form['#after_build'][] = 'hel_tpm_forms_stepper_after_build';
   $form['#attached']['library'][] = 'hel_tpm_forms/hel_tpm_forms';
 
   $form['#validate'][] = 'hel_tpm_forms_validate_service_form_helper';
 
   hel_tpm_forms_publish_service_action($form, $form_state);
+}
+
+/**
+ * Implements hook_field_group_form_process().
+ */
+function hel_tpm_forms_field_group_form_process(array &$element, &$group) {
+  if ($group->group_name !== 'group_p1_g3_sg1' || $group->entity_type !== 'node' || $group->bundle !== 'service') {
+    return;
+  }
+  // Either the municipality or "municipality irrelevant" must be given (see
+  // _hel_tpm_forms_validate_municipality()), so mark the whole group required.
+  // The select is only required via #states, which field_group JS can't detect.
+  $element['#required'] = TRUE;
+}
+
+/**
+ * Disables stepper steps whose field group has no visible content.
+ */
+function hel_tpm_forms_stepper_after_build(array $form): array {
+  if (empty($form['paging_footer']['#steps'])) {
+    return $form;
+  }
+
+  foreach ($form['paging_footer']['#steps'] as $delta => $step) {
+    $name = $step['id'];
+    $is_empty = !isset($form[$name]) || hel_tpm_forms_element_is_empty($form[$name]);
+
+    $form['paging_footer']['#steps'][$delta]['disabled'] = $is_empty;
+  }
+  return $form;
+}
+
+/**
+ * Checks whether a field group element has no visible content.
+ *
+ * @param array $element
+ *   The field group's form element.
+ *
+ * @return bool
+ *   TRUE if nothing inside the group (at any depth) is visible.
+ */
+function hel_tpm_forms_element_is_empty(array $element): bool {
+  if (Element::isVisibleElement($element)) {
+    return FALSE;
+  }
+  return TRUE;
 }
 
 /**
@@ -546,8 +922,28 @@ function hel_tpm_forms_field_widget_single_element_form_alter(array &$element, F
     // roles of an user and refreshing services form.
     $element['#attributes']['autocomplete'] = 'off';
   }
-
   _hel_tpm_forms_paragraph_remove_confirm_step($element, $form_state, $context);
+
+  if (($element['#type'] === 'text_format') ?? NULL) {
+    $element['#after_build'][] = '_hel_tpm_forms_text_format_description_before';
+  }
+  // Plain textarea (no text format): this alone is enough.
+  elseif (($element['value']['#type'] ?? NULL) === 'textarea') {
+    $element['value']['#description_display'] = 'before';
+  }
+}
+
+/**
+ * After-build: put the description between the label and the textarea.
+ */
+function _hel_tpm_forms_text_format_description_before(array $element) {
+  if (!empty($element['#description']) && isset($element['value'])) {
+    $element['value']['#description'] = $element['#description'];
+    $element['value']['#description_display'] = 'before';
+    $element['value']['#attributes']['aria-describedby'] = $element['value']['#id'] . '--description';
+    unset($element['#description']);
+  }
+  return $element;
 }
 
 /**
