@@ -4,13 +4,12 @@ trigger:
   batch: true
   branches:
     include:
-      - QA
+      - develop
+      - PLATTA-7612-tyollisyysptv-pipeline-refactor
+      # FIXME
   paths:
-    exclude:
-    - '*.md'
-    - '.github/'
-    - 'pipelines/drupal-stageprod.yml'
-    - 'pipelines/drupal-dev.yml'
+    include:
+    - 'docker/solr/*'
 
 # Pull request (PR) triggers cause a pipeline to run whenever a pull request is
 # opened with one of the specified target branches, or when updates are made to
@@ -33,10 +32,12 @@ resources:
       type: git
       # Azure DevOps project/repository
       name: tyollisyysptv/tyollisyysptv-pipelines
+      # FIXME
+      ref: refs/heads/PLATTA-7612-tyollisyysptv-pipeline-refactor
 
 extends:
   # Filename in Azure DevOps Repository
-  template: components/drupal/pipelines/drupal-test.yml@tyollisyysptv-pipelines
+  template: components/solr-drupal/pipelines/solr-drupal-dev.yml@tyollisyysptv-pipelines
   # parameters:
     # Application build arguments and config map values as key value pairs.
     # Does not contain all buildArguments or configMap values, the rest located in tyollisyysptv-pipelines
