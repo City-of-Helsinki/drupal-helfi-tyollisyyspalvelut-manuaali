@@ -4,15 +4,16 @@
 
 <header id="page-header" {{ bem(header__base_class) }}>
   <div {{ bem('inner', [], header__base_class) }}>
-    <a href="#" id="toggle-expand" tabindex="0" class="toggle-expand hide-desktop" aria-haspopup="true" aria-expanded="false">
-      <span class="toggle-expand__open">
+    <button type="button" class="toggle-expand hide-desktop" aria-expanded="false" aria-controls="main-nav" aria-label="{{ "Open main menu"|t({}, {'context' : 'Mobile main menu'}) }}">
+      <span class="visually-hidden">{{ 'Menu'|t }}</span>
+      <span class="toggle-expand__open" aria-hidden="true">
         {% include "@atoms/images/icons/_icon.twig" with {
           icon_base_class: "icon",
           icon_blockname: "toggle-expand",
           icon_name: "menu",
         } %}
       </span>
-    </a>
+    </button>
     <div {{ bem('primary', [], header__base_class, ['d--flex--dsk', 'flex-wrap--dsk']) }}>
       {% block inner__branding %}{% endblock %}
       {% block header__branding %}{% endblock %}

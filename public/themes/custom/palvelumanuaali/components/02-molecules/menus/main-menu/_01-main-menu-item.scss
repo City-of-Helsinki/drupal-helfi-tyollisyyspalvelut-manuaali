@@ -27,7 +27,13 @@ $main-menu-desktop-padding: calc(207px + $space-double);
 
 /* Expand Button */
 .expand-sub {
-  content: "";
+  appearance: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+  background-color: transparent;
+  color: inherit;
   background-image: url('../../assets/icons/arrow-sm-down-black.svg');
   background-repeat: no-repeat;
   background-position: center;
@@ -40,10 +46,15 @@ $main-menu-desktop-padding: calc(207px + $space-double);
   &:hover {
     cursor: pointer;
   }
+  &:focus-visible {
+    outline: 2px solid $blue100;
+    outline-offset: -2px;
+  }
   @include xl {
     display: none;
   }
-  &--open {
+  &--open,
+  &[aria-expanded="true"] {
     transform: rotate(180deg);
   }
 }

@@ -495,17 +495,20 @@ $button-colors: (
 
 #languageSwitcherButton {
   width: 54px;
-  height: 44px;
+  height: auto;
+  min-height: 44px;
   margin-left: 0;
   position: relative;
   border: 0;
   display: grid;
-  padding-top: 10px; // TODO: as classes?
-  padding-bottom:10px;
+  padding-top: 4px; // TODO: as classes?
+  padding-bottom: 4px;
   @include xl {
     width: unset;
     position: unset;
     display: flex;
+    align-items: center;
+    min-height: unset;
     text-transform: uppercase;
     margin-left: unset;
     padding: 0 .75rem 0 .75rem;
@@ -538,6 +541,7 @@ $button-colors: (
   }
   &:focus-visible {
     outline: 2px solid clr(primary);
+    outline-offset: 2px;
     border-radius: 0;
   }
   .links {
