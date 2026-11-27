@@ -804,25 +804,17 @@ content:
       progress_indicator: throbber
     third_party_settings: {  }
   field_internal_links:
-    type: limited_link_widget
+    type: hel_tpm_forms_link_custom_labels
     weight: 18
     region: content
     settings:
       placeholder_url: 'Kirjoita linkin osoite'
       placeholder_title: 'Kirjoita linkin nimi'
-      target_bundles:
-        basic_page: basic_page
-        landing_page: '0'
-        service: service
-        service_location: '0'
-      bypass_target_bundles_roles:
-        admin: admin
-        anonymous: '0'
-        authenticated: '0'
-        editor: '0'
-        root: root
-        specialist: '0'
-        specialist_editor: '0'
+      uri_label: 'Linkin osoite'
+      uri_description: 'Lisää osoite URL-muodossa, esim. https://palvelumanuaali.fi'
+      title_label: 'Linkin nimi'
+      title_description: 'Linkin nimi näkyy palvelukuvauksessa'
+      add_more_label: 'Lisää uusi linkki'
     third_party_settings: {  }
   field_life_situations:
     type: select2_entity_reference
@@ -931,25 +923,17 @@ content:
       progress_indicator: throbber
     third_party_settings: {  }
   field_public_links:
-    type: limited_link_widget
+    type: hel_tpm_forms_link_custom_labels
     weight: 16
     region: content
     settings:
       placeholder_url: 'Kirjoita linkin osoite'
       placeholder_title: 'Kirjoita linkin nimi'
-      target_bundles:
-        basic_page: basic_page
-        landing_page: '0'
-        service: service
-        service_location: '0'
-      bypass_target_bundles_roles:
-        admin: admin
-        anonymous: '0'
-        authenticated: '0'
-        editor: '0'
-        root: root
-        specialist: '0'
-        specialist_editor: '0'
+      uri_label: 'Linkin osoite'
+      uri_description: 'Lisää osoite URL-muodossa, esim. https://palvelumanuaali.fi'
+      title_label: 'Linkin nimi'
+      title_description: 'Linkin nimi näkyy palvelukuvauksessa'
+      add_more_label: 'Lisää uusi linkki'
     third_party_settings: {  }
   field_related_archive:
     type: options_buttons
