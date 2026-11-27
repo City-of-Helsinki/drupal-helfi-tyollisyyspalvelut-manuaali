@@ -1,3 +1,10 @@
+// Link fields (public/internal links): label and input sizes used to place
+// the remove button level with the inputs.
+$service-link-label-height: 24px;
+$service-link-label-gap: $space-one-half;
+$service-link-input-height: 48px;
+$service-link-remove-size: 24px;
+
 .node-service-edit-form,
 .node-service-form {
   display: grid;
@@ -439,7 +446,7 @@
   .field--name-field-link {
     tr.table__row {
       display: table-row;
-      vertical-align: middle;
+      vertical-align: top;
     }
     .table__cell,
     .table__cell .ajax-new-content {
@@ -450,6 +457,9 @@
       }
       .form-item {
         display: inline-block;
+        // The default baseline alignment uses the last line of the
+        // description, so a wrapped description pushes its item upwards.
+        vertical-align: top;
         &:nth-child(1) {
           max-width: 55%;
         }
@@ -457,8 +467,22 @@
           max-width: 40%;
         }
       }
+      // The label height is fixed here so that the remove button can be
+      // placed level with the inputs below it.
+      .form-item__label {
+        display: block;
+        line-height: $service-link-label-height;
+        margin-bottom: $service-link-label-gap;
+      }
+      // Remove button. It shares the line with the form items (core renders
+      // it in the same cell), so it is top aligned too and pushed down past
+      // the label, centred on the 48px input.
+      > .js-form-submit,
       > input {
-        margin-top: 30px;
+        vertical-align: top;
+        height: $service-link-remove-size;
+        width: $service-link-remove-size;
+        margin-top: calc(#{$service-link-label-height} + #{$service-link-label-gap} + (#{$service-link-input-height} - #{$service-link-remove-size}) / 2);
       }
     }
     > div .details-content-wrapper {

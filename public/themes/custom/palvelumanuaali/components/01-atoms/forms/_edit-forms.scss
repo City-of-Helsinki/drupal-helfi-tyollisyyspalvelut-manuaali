@@ -318,6 +318,9 @@ details>.form-wrapper:last-child {
 .field--name-field-public-links,
 .field--name-field-internal-links,
 .field--name-field-link {
+  .description {
+    color: clr(gray);
+  }
   legend {
     display: none;
   }
@@ -344,7 +347,7 @@ details>.form-wrapper:last-child {
           height: 16px;
           width: 16px;
           right: 0;
-          bottom: 16px;
+          bottom: 48px;
           position: absolute;
           margin-right: $space;
           color: $blue100;
@@ -358,9 +361,10 @@ details>.form-wrapper:last-child {
         margin-left: $space-one-half;
         margin-bottom: 0;
       }
-      .form-item__description {
-        display: none;
-      }
+    }
+    .js-form-submit {
+      margin-top: 0;
+      @include close-button;
     }
   }
 }
