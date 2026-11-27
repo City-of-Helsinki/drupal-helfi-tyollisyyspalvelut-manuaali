@@ -1,6 +1,7 @@
-access htg entity group field autocomplete widget:
-  title: 'Access htg entity group field autocomplete widget'
-  description: 'Give user access to view and edit fields with htg entity group field autocomplete widget'
+assign content to groups:
+  title: 'Assign content to groups'
+  description: 'Allows choosing and changing the group that content belongs to. Only groups where the user is allowed to add content can be chosen. Changing the group removes the content from its previous group, so that group''s members lose access to it. Users without this permission see the group as read-only.'
+  restrict access: true
 access extra member info if group admin:
   title: 'Access extra member information in groups the user administer'
   description: 'Allows the group admin to see extra information (e.g. user status) of the group members.'

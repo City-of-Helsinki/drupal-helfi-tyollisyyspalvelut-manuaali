@@ -32,9 +32,19 @@ field.widget.settings.hel_tpm_group_select2_widget:
   type: field.widget.settings.select2_entity_reference
   label: 'Hel Group Select2 widget settings'
 
-field.widget.settings.hel_tpm_group_autocomplete_widget:
-  type: field.widget.settings.entitygroupfield_autocomplete_widget
-  label: 'Hel Group autocomplete widget settings'
+field.widget.settings.hel_tpm_group_entitygroupfield_select2:
+  type: mapping
+  label: 'Hel Group field Select2 (single group) widget settings'
+  mapping:
+    help_text:
+      type: text
+      label: 'Help text'
+    label:
+      type: label
+      label: 'Label'
+    required:
+      type: boolean
+      label: 'Required'
 
 # Schema definition for views group label filter.
 views.filter.group_label_filter:
